@@ -571,6 +571,8 @@ const ramHistoryData = ref({
       },
     ],
     tooltip: {
+      followCursor: true,
+      custom: undefined,
       x: {
         formatter: value => new Date(value).toLocaleString("en-GB", timeoptions),
       },

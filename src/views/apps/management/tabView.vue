@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="myapps-table-wrapper">
     <VCard class="pa-4">
       <VRow>
         <VCol cols="4">
@@ -10,7 +10,10 @@
             :items="tableOptions.pageOptions"
           />
         </VCol>
-        <VCol cols="8">
+        <VCol
+          cols="8"
+          class="d-flex align-center justify-start"
+        >
           <VTextField
             v-model="tableOptions.filter"
             label="Filter"
@@ -18,6 +21,7 @@
             variant="outlined"
             placeholder="Type to Search"
             :clearable="tableOptions.filter?.length > 0"
+            class="mr-1"
           >
             <template #append-inner>
               <VIcon size="20">
@@ -25,6 +29,166 @@
               </VIcon>
             </template>
           </VTextField>
+          <VMenu v-if="privilege !== 'none'" :close-on-content-click="false">
+            <template #activator="{ props: activatorPropsMenu }">
+              <VTooltip location="top">
+                <template #activator="{ props: tooltipActivatorProps }">
+                  <VBtn
+                    icon="mdi-filter-cog"
+                    density="compact"
+                    variant="text"
+                    color="default"
+                    v-bind="{
+                      ...activatorPropsMenu,
+                      ...tooltipActivatorProps
+                    }"
+                  />
+                </template>
+                <span>Open advanced filter options</span>
+              </VTooltip>
+            </template>
+
+            <VList style="min-width: 300px" class="my-2" @keydown.enter.stop>
+              <!-- Mode Filter (Marketplace, etc.) -->
+              <VListItem>
+                <VSelect
+                  v-model="selectedMode"
+                  :items="modeOptions"
+                  item-title="text"
+                  item-value="value"
+                  label="App Type"
+                  density="compact"
+                  hide-details
+                  class="mt-1"
+                >
+                  <template #prepend-inner>
+                    <VIcon class="mr-1" size="18">mdi-filter</VIcon>
+                  </template>
+                </VSelect>
+              </VListItem>
+
+              <!-- Min HDD -->
+              <VListItem>
+                <VTextField
+                  v-model.number="tableOptions.minHdd"
+                  label="Min HDD (GB)"
+                  type="number"
+                  min="1"
+                  step="1"
+                  density="compact"
+                  hide-details
+                  class="mt-1"
+                >
+                  <template #prepend-inner>
+                    <VIcon class="mr-1" size="18">mdi-harddisk</VIcon>
+                  </template>
+                </VTextField>
+              </VListItem>
+
+              <VListItem>
+                <VTextField
+                  v-model.number="tableOptions.minRam"
+                  label="Min RAM (MB)"
+                  type="number"
+                  min="100"
+                  step="100"
+                  density="compact"
+                  hide-details
+                  class="mt-1"
+                >
+                  <template #prepend-inner>
+                    <VIcon class="mr-1" size="18">mdi-memory</VIcon>
+                  </template>
+                </VTextField>
+              </VListItem>
+
+              <VListItem>
+                <VTextField
+                  v-model.number="tableOptions.minCpu"
+                  label="Min CPU (Cores)"
+                  type="number"
+                  min="0.1"
+                  step="0.1"
+                  density="compact"
+                  hide-details
+                  class="mt-1"
+                >
+                  <template #prepend-inner>
+                    <VIcon class="mr-1" size="18">mdi-speedometer</VIcon>
+                  </template>
+                </VTextField>
+              </VListItem>
+
+              <!-- Min Instances -->
+              <VListItem>
+                <VTextField
+                  v-model.number="tableOptions.minInstances"
+                  label="Min Instances"
+                  type="number"
+                  density="compact"
+                  min="3"
+                  step="1"
+                  hide-details
+                  class="mt-1"
+                >
+                  <template #prepend-inner>
+                    <VIcon class="mr-1" size="18">mdi-map-marker</VIcon>
+                  </template>
+                </VTextField>
+              </VListItem>
+              <VListItem>
+                <VTextField
+                  v-model="inputTag"
+                  label="Repotags"
+                  density="compact"
+                  hide-details
+                  clearable
+                  placeholder="Type and press enter"
+                  class="mt-1"
+                  @keydown.enter.prevent="addRepotag"
+                >
+                  <template #prepend-inner>
+                    <VIcon class="mr-1" size="18">mdi-tag</VIcon>
+                  </template>
+                </VTextField>
+                <div v-if="tableOptions.repotags.length > 0" class="small-checkbox">
+                  <VCheckbox
+                    v-model="tableOptions.matchAllRepotags"
+                    label="Include all tags (match all)"
+                    density="compact"
+                    class="pa-0 ml-1"
+                    hide-details
+                  />
+                </div>
+                
+                <div class="chip-group mt-1">
+                  <VChip
+                    v-for="(tag, index) in tableOptions.repotags"
+                    :key="index"
+                    closable
+                    class="ma-1"
+                    size="small"
+                    color="success"
+                    @click:close="removeRepotag(index)"
+                  >
+                    {{ tag }}
+                  </VChip>
+                </div>
+              </VListItem>
+              <VListItem v-if="hasActiveFilters">
+                <VBtn
+                  block
+                  variant="tonal"
+                  color="error"
+                  density="compact"
+                  @click="resetFilters"
+                >
+                  <VIcon start>mdi-filter-off</VIcon>
+                  Clear All Filters
+                </VBtn>
+              </VListItem>
+            </VList>
+          </VMenu>
         </VCol>
       </VRow>
 
@@ -60,7 +224,6 @@
                 />
                 <div>Loading...</div>
               </div>
-
               <div
                 v-else-if="!loggedIn"
                 class="d-flex align-center justify-center"
@@ -74,7 +237,6 @@
                   Please log in to view your apps.
                 </div>
               </div>
-
               <div
                 v-else-if="appsDataRaw.length > 0 && filteredApps.length === 0"
                 class="d-flex align-center justify-center"
@@ -153,7 +315,7 @@
                   { icon: 'mdi-memory', value: getServiceUsageValue(0, item.name, item), color: 'success' },
                   { icon: 'mdi-harddisk', value: getServiceUsageValue(2, item.name, item), color: 'success' },
                   { icon: 'mdi-map-marker', value: item.instances | 3, color: 'warning' }
-                ]"
+                ].filter(chip => chip.value > 0)"
               />
               <small style="font-size: 12px">
                 <ExpiryLabel
@@ -199,7 +361,7 @@
                     class="mt-4"
                   />
 
-                  <div>
+                  <div  v-if="normalizeComponents(item).length > 0">
                     <h3 class="d-flex align-center justify-start mb-3 mt-3">
                       <VChip
                         color="info"
@@ -243,7 +405,7 @@
 
                     <VWindow
                       v-model="activeTabLocalIndexSpec"
-                      class="pa-4"
+                      class="px-4"
                       :touch="false"
                     >
                       <VWindowItem
@@ -269,7 +431,7 @@
                         appLocationsMap[item.name] &&
                         appLocationsMap[item.name].length
                     "
-                    class="d-flex align-center justify-start mb-4"
+                    class="d-flex align-center justify-start mb-4 mt-4"
                   >
                     <VChip
                       color="info"
@@ -317,6 +479,7 @@
           </template>
         </VDataTable>
       </VSheet>
+
       <div>
         <VRow
           class="mt-3 mb-1"
@@ -365,6 +528,10 @@ const props = defineProps({
     type: [Boolean, Function],
     default: false,
   },
+  privilege: {
+    type: String,
+    default: '',
+  },
 })
 
 const emit = defineEmits(["openAppManagement"])
@@ -378,23 +545,120 @@ const tableOptions = ref({
   sortBy: [],
   sortDesc: false,
   filter: "",
+  repotags: [],
+  matchAllRepotags: false,
 })
+
+const inputTag = ref('')
+
+const modeOptions = [
+  { text: 'All', value: 'all', icon: 'mdi-apps-box' },
+  { text: 'Marketplace', value: 'marketplace', icon: 'mdi-basket' },
+  { text: 'Marketplace Excluded', value: 'marketplaceExcluded', icon: 'mdi-basket-off' },
+]
+
+function isMarketplaceApp(name) {
+  if (name.length >= 14) {
+    const possibleDateString = name.substring(name.length - 13)
+    const possibleDate = Number(possibleDateString)
+    
+    return !isNaN(possibleDate)
+  }
+  
+  return false
+}
+
+const mergedActivatorProps = computed(() => ({
+  ...activatorPropsMenu,
+  ...tooltipActivatorProps,
+}))
+
+const selectedMode = ref('all')
 
 const expanded = ref([])
 const appLocationsMap = ref({})
-const tableKey = ref(0)
 
 const appsDataRaw = computed(() => (Array.isArray(props.apps) ? props.apps : []))
 
+// Filter the apps based on mode and search filter
 const filteredApps = computed(() => {
-  const filter = tableOptions.value.filter?.toLowerCase()
-  if (!filter) return appsDataRaw.value
+  let filtered = appsDataRaw.value
 
-  return appsDataRaw.value.filter(
-    app =>
-      app.name?.toLowerCase().includes(filter) ||
-      app.description?.toLowerCase().includes(filter),
-  )
+  // 1. Filter by app type mode
+  if (selectedMode.value === 'marketplace') {
+    filtered = filtered.filter(app => isMarketplaceApp(app.name))
+  } else if (selectedMode.value === 'marketplaceExcluded') {
+    filtered = filtered.filter(app => !isMarketplaceApp(app.name))
+  }
+
+  // 2. Filter by search keyword
+  const keyword = tableOptions.value.filter?.toLowerCase()
+  if (keyword) {
+    filtered = filtered.filter(app =>
+      app.name?.toLowerCase().includes(keyword) ||
+      app.description?.toLowerCase().includes(keyword),
+    )
+  }
+
+  const inputTags = (tableOptions.value.repotags || []).map(tag => tag.toLowerCase().trim())
+
+  if (inputTags.length > 0) {
+    filtered = filtered.filter(app => {
+      const rawTags = [
+        ...(app.repotag || []),
+        ...(Array.isArray(app.compose) ? app.compose.flatMap(c => c.repotag || []) : []),
+      ]
+      const appTags = rawTags.map(t => t.toLowerCase())
+
+      return tableOptions.value.matchAllRepotags
+        ? inputTags.every(tag => appTags.some(appTag => appTag.includes(tag)))
+        : inputTags.some(tag => appTags.some(appTag => appTag.includes(tag)))
+    })
+  }
+
+  // 4. Filter by minimum HDD
+  if (tableOptions.value.minHdd > 0) {
+    filtered = filtered.filter(app => {
+      const hdd = Array.isArray(app.compose)
+        ? getServiceUsageValue(2, app.name, app)
+        : +app.hdd
+      
+      return hdd >= tableOptions.value.minHdd
+    })
+  }
+
+  // 5. Filter by minimum RAM
+  if (tableOptions.value.minRam > 0) {
+    filtered = filtered.filter(app => {
+      const ram = Array.isArray(app.compose)
+        ? getServiceUsageValue(0, app.name, app)
+        : +app.ram
+      
+      return ram >= tableOptions.value.minRam
+    })
+  }
+
+  // 6. Filter by minimum CPU
+  if (tableOptions.value.minCpu > 0) {
+    filtered = filtered.filter(app => {
+      const cpu = Array.isArray(app.compose)
+        ? +getServiceUsageValue(1, app.name, app)
+        : +app.cpu
+      
+      return cpu >= tableOptions.value.minCpu
+    })
+  }
+
+  // 7. Filter by minimum instances
+  if (tableOptions.value.minInstances > 0) {
+    filtered = filtered.filter(app => {
+      const instanceCount = typeof app.instances === 'number' ? app.instances : 3
+      
+      return instanceCount >= tableOptions.value.minInstances
+    })
+  }
+
+  return filtered
 })
 
 const pageCount = computed(() =>
@@ -426,7 +690,6 @@ async function handleExpandClick(internalItem) {
     nextTick(() => scrollToExpandedRow(name))
     await loadLocations(name)
   }
-  tableKey.value += 1
 }
 
 function scrollToExpandedRow(name) {
@@ -569,6 +832,47 @@ watch(
     }
   },
 )
+
+function addRepotag() {
+  const tag = inputTag.value.trim()
+  if (!tag) return
+
+  // Prevent duplicates (case-insensitive)
+  const exists = tableOptions.value.repotags.some(
+    t => t.toLowerCase() === tag.toLowerCase(),
+  )
+  if (!exists) {
+    tableOptions.value.repotags.push(tag)
+  }
+  inputTag.value = ''
+}
+
+function removeRepotag(index) {
+  tableOptions.value.repotags.splice(index, 1)
+}
+
+function resetFilters() {
+  tableOptions.value.filter = ''
+  tableOptions.value.minHdd = null
+  tableOptions.value.minRam = null
+  tableOptions.value.minCpu = null
+  tableOptions.value.minInstances = null
+  tableOptions.value.repotags = []
+  tableOptions.value.matchAllRepotags = false
+}
+
+const hasActiveFilters = computed(() => {
+  return (
+    tableOptions.value.filter?.trim() ||
+    (Array.isArray(tableOptions.value.repotags) && tableOptions.value.repotags.length > 0) ||
+    (tableOptions.value.minRam ?? 0) > 0 ||
+    (tableOptions.value.minCpu ?? 0) > 0 ||
+    (tableOptions.value.minHdd ?? 0) > 0 ||
+    (tableOptions.value.minInstances ?? 0) > 0 ||
+    tableOptions.value.matchAllRepotags
+  )
+})
+
 onMounted(() => {
   if (props.showStatus) {
     appsGetListRunningApps()
@@ -619,9 +923,8 @@ onMounted(() => {
   padding: 0px;
 }
 .myapps-table .col-name {
-  width: 240px;
   min-width: 240px;
-  max-width: 240px;
+  max-width: 280px;
 }
 .myapps-table .col-description {
   min-width: 200px;
@@ -659,7 +962,7 @@ onMounted(() => {
   max-width: 30px;
 }
 
-/* Target the entire column by using both header and row cell selectors */
+/* Target the first column of MyAppsTable */
 ::v-deep(.myapps-table td.v-data-table__td:nth-child(1)),
 ::v-deep(.myapps-table th.v-data-table__th:nth-child(1)) {
   width: 55px;
@@ -668,12 +971,13 @@ onMounted(() => {
   padding: 0px 0px 0px 10px !important;
 }
 
+/* Target the second column of MyAppsTable */
 ::v-deep(.myapps-table td.v-data-table__td:nth-child(2)),
 ::v-deep(.myapps-table th.v-data-table__th:nth-child(2)) {
-  padding: 0px 0px 0px 0px !important;
+  padding: 0px 10px 0px 0px !important;
   width: 240px;
   min-width: 240px;
-  max-width: 240px;
+  max-width: 290px;
 }
 
 .myapps-table .col-actions {
@@ -718,5 +1022,9 @@ onMounted(() => {
 /* REMOVE BORDER CORRECTLY */
 .tabs-no-slider.v-tabs {
   border-block-end: none !important;
+}
+
+::v-deep(.small-checkbox .v-label) {
+  font-size: 12px !important;
 }
 </style>

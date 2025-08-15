@@ -660,7 +660,7 @@ onBeforeUnmount(() => {
 
 .app-customizer-toggler {
   position: fixed !important;
-  inset-block-start: 20%;
+  inset-block-start: 25%;
   inset-inline-end: 0;
 }
 </style>

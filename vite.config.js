@@ -81,7 +81,10 @@ export default defineConfig(({ mode }) => {
       svgLoader(),
       vidstack(),
     ],
-    define: { 'process.env': {} },
+    define: {
+      'process.env': {},
+      global: 'globalThis', // ✅ important for some node packages
+    },
     resolve: {
       alias: {
         ...aliases,
@@ -90,7 +93,7 @@ export default defineConfig(({ mode }) => {
     server: {
       watch: {
         ignored: ['**/node_modules/**', '**/.git/**'],
-        usePolling: false, // Disable polling unless absolutely necessary
+        usePolling: false,
         awaitWriteFinish: {
           stabilityThreshold: 100,
           pollInterval: 100,
@@ -98,16 +101,19 @@ export default defineConfig(({ mode }) => {
       },
       hmr: {
         overlay: true,
-        protocol: 'ws', // WebSocket for HMR
-        host: 'localhost', // Ensure WebSocket uses localhost, or use an IP if accessing across devices
-        port: 3000, // Same port as your development server
+        protocol: 'ws',
+        host: 'localhost',
+        port: 3000,
       },
-      host: '0.0.0.0', // Listen on all network interfaces for access via localhost and network IP
-      port: 3000, // Ensure your firewall allows this port
-      open: isDev, // Open browser in development mode
+      host: '0.0.0.0',
+      port: 3000,
+      open: isDev,
     },
     build: {
       chunkSizeWarningLimit: 5000,
+      commonjsOptions: {
+        include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
+      },
       rollupOptions: {
         output: {
           manualChunks: {
@@ -119,9 +125,32 @@ export default defineConfig(({ mode }) => {
       },
     },
     optimizeDeps: {
-      include: ['msw, leaflet, leaflet.markercluster'],
-      exclude: ['vuetify'],
+      include: [
+        'msw',
+        'leaflet',
+        'leaflet.markercluster',
+        '@metamask/sdk',
+        '@metamask/providers',
+        'buffer',
+        'process',
+        'events',
+        'util',
+        'eventemitter2',
+      ],
+      exclude: [
+        'vuetify',
+        'dompurify',
+        'vue-i18n',
+        '@intlify/core-base',
+        '@intlify/vue-i18n-bridge',
+        '@intlify/unplugin-vue-i18n',
+      ],
       entries: ['./src/**/*.vue'],
+      esbuildOptions: {
+        define: {
+          global: 'globalThis',
+        },
+      },
     },
     logLevel: isDev ? 'debug' : 'info',
   };

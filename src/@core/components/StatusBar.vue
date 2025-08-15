@@ -146,6 +146,7 @@ import FluxService from "@/services/FluxService"
 import { useFluxStore } from "@/stores/flux"
 import { onMounted, reactive, ref, watch, getCurrentInstance } from "vue"
 import { useI18n } from "vue-i18n"
+import { eventBus } from "@/utils/eventBus"
 
 const { t } = useI18n()
 const instance = getCurrentInstance()
@@ -163,6 +164,9 @@ watch(
     nodeStatus()
   },
 )
+
+
+
 
 const getNodeStatusResponse = reactive({
   nodeStatus: t("status.checkingStatus"),
@@ -253,5 +257,10 @@ onMounted(() => {
   }
 
   nodeStatus()
+  eventBus.on("backendURLChanged", nodeStatus)
+})
+
+onBeforeUnmount(() => {
+  eventBus.off("backendURLChanged", nodeStatus)
 })
 </script>

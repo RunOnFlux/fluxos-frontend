@@ -5,6 +5,10 @@ import qs from 'qs'
 
 export const setupGuards = router => {
   router.beforeEach(async (to, from, next) => {
+
+    if (!to.matched.length || to.name === '$error') {
+      return next()
+    }
     const zelidauth = localStorage.getItem('zelidauth')
     const auth = qs.parse(zelidauth)
     const fluxStore = useFluxStore()
@@ -38,21 +42,25 @@ export const setupGuards = router => {
     }
 
     // ✅ Additional app-level restriction for /apps/manage/:appName
-    if (to.path.startsWith('/apps/manage/') && to.params.appName) {
-      try {
-        const appsResponse = await AppsService.myGlobalAppSpecifications(auth.zelid)
-        const apps = appsResponse?.data?.data || []
-        const ownsApp = apps.some(app => app.name === to.params.appName)
+    if (to.path.startsWith('/apps/manage/') && to.params.appName ) {
+      const userPrivilege = fluxStore.privilege
 
-        if (!ownsApp) {
-          console.warn(`Access denied: You do not own app ${to.params.appName}`)
+      if (userPrivilege !== 'fluxteam') {
+        try {
+          const appsResponse = await AppsService.myGlobalAppSpecifications(auth.zelid)
+          const apps = appsResponse?.data?.data || []
+          const ownsApp = apps.some(app => app.name === to.params.appName)
+
+          if (!ownsApp) {
+            console.warn(`Access denied: You do not own app ${to.params.appName}`)
           
+            return next('/unauthorized')
+          }
+        } catch (err) {
+          console.error('App access check failed:', err.message)
+        
           return next('/unauthorized')
         }
-      } catch (err) {
-        console.error('App access check failed:', err.message)
-        
-        return next('/unauthorized')
       }
     }
 

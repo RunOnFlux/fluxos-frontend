@@ -12,7 +12,7 @@
           size="small"
           icon
           variant="tonal"
-          color="#0288D1"
+          color="default"
           rounded="true"
           class="mr-2"
         >
@@ -178,6 +178,11 @@
                 color="primary"
                 @click="showLogs = !showLogs"
               >
+                <VIcon
+                  :icon="showLogs ? 'mdi-eye-off' : 'mdi-eye'"
+                  start
+                  class="mr-1"
+                />
                 {{ showLogs ? 'Hide Logs' : 'Show Logs' }}
               </VBtn>
               <VExpandTransition>
@@ -228,8 +233,6 @@ const props = defineProps({
   showInstall: {  type: [Boolean, Function], default: false },
   showControl: {  type: [Boolean, Function], default: false },
 })
-
-const emit = defineEmits(['openAppManagement'])
 
 const router = useRouter()
 
@@ -551,7 +554,6 @@ function fullLogOutput() {
   }).join('<br>')
 }
 
-
 const taskColor = computed(() => {
 
   const hasErrorInOutput = output.value.some(entry => {
@@ -582,16 +584,6 @@ const taskColor = computed(() => {
 function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
-
-// onMounted(async () => {
-//   eventBus.on('updateInstalledApp', () => {
-//     installDialog.value.show = true
-//   })
-// })
-
-// onBeforeUnmount(() => {
-//   eventBus.off('updateInstalledApp', updateInstalledApp)
-// })
 </script>
 
 <style>

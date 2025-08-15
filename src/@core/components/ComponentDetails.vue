@@ -149,7 +149,10 @@
       kbd-variant="secondary"
     >
       <template #default>
-        <kbd class="alert-secondary resource-kbd d-flex align-items-center">
+        <kbd
+          class="alert-secondary resource-kbd d-flex align-items-center"
+          style="width: fit-content;"
+        >
           <VIcon
             v-if="/s:|r:|g:/i.test(component?.containerData)"
             size="20"
@@ -185,14 +188,13 @@
 
     <ListEntry
       v-if="component?.secrets"
-      title="Secret Environment Parameters"
-      title-icon="mdi-lock-alert"
-      title-icon-scale="1.2"
+      title="Secrets"
+      title-icon="mdi-shield-lock"
+      title-icon-scale="1.3"
       kbd-variant="secondary"
     >
       <template #default>
         <kbd class="alert-secondary resource-kbd d-inline-flex align-items-center">
-          <VIcon size="18">mdi-lock</VIcon>
           Content Encrypted
         </kbd>
       </template>

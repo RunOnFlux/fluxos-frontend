@@ -110,9 +110,17 @@
     "connectingMessage": "Connecting to the Flux network. FluxOS is running with limited capabilities.",
     "disconnectedMessage": "Not connected to the Flux network. FluxOS is running with limited capabilities."
   },
+  "files": { 
+    "emptyDirectory": "Empty Directory"
+  },
   "$vuetify": {
     "badge": "Badge",
     "noDataText": "No data available",
+    "dataIterator": {
+      "loadingText": "Loading your data, please wait...",
+      "noResultsText": "No matching records found.",
+      "noDataText": "No data available."
+    },
     "close": "Close",
     "open": "open",
     "loading": "loading",

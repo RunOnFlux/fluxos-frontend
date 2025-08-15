@@ -574,6 +574,18 @@ import { computed, nextTick, onMounted, onUnmounted, ref } from "vue"
 import { useI18n } from "vue-i18n"
 import { eventBus } from "@/utils/eventBus"
 
+
+const MMSDK = new MetaMaskSDK({
+  checkInstallationImmediately: true,
+  enableAnalytics: true,
+  dappMetadata: {
+    name: 'Flux Cloud',
+    url: window.location.hostname === 'localhost'
+      ? window.location.origin
+      : 'https://home.runonflux.io',
+  },
+})
+
 const tosLink = "https://cdn.runonflux.io/Flux_Terms_of_Service.pdf"
 const privacyLink = "https://runonflux.io/privacyPolicy"
 
@@ -608,7 +620,7 @@ const showEmailVerify = ref(false)
 const showSsoLoggedIn = ref(false)
 const showEmailLoginProcessing = ref(false)
 
-const infoMessage = ref ("")
+const infoMessage = ref("")
 
 watch(currentTab, _ => {
   emailLoginFormRef.value?.reset()
@@ -631,13 +643,6 @@ const passwordRulesMatch = computed(() => [
 
 const isLocalhost = window.location.hostname === "localhost"
 
-const MMSDK = new MetaMaskSDK({ enableAnalytics: true,  dappMetadata: {
-  name: 'Flux Cloud',
-  url: isLocalhost
-    ? window.location.origin
-    : "https://home.runonflux.io",
-} })
-
 const projectId = "df787edc6839c7de49d527bba9199eaa"
 
 const walletConnectOptions = {
@@ -645,9 +650,7 @@ const walletConnectOptions = {
   metadata: {
     name: "Flux Cloud",
     description: "Flux, Your Gateway to a Decentralized World",
-    url: isLocalhost
-      ? window.location.origin
-      : "https://home.runonflux.io",
+    url: isLocalhost ? window.location.origin : "https://home.runonflux.io",
     icons: ["https://home.runonflux.io/img/logo.png"],
   },
 }
@@ -687,17 +690,17 @@ const loginWithAppleBtn = async () => {
 
 const isMMSDKInitialized = ref(false)
 
-const initMMSDK = async () => {
-  if (isMMSDKInitialized.value) return
-  try {
-    await MMSDK.init()
-    isMMSDKInitialized.value = true
-    console.log("MetaMask SDK initialized")
-  } catch (error) {
-    console.error("MetaMask SDK init error", error)
-    showToast("error", "MetaMask setup failed")
-  }
-}
+// const initMMSDK = async () => {
+//   if (isMMSDKInitialized.value) return
+//   try {
+//     // await MMSDK.init()
+//     isMMSDKInitialized.value = true
+//     console.log("MetaMask SDK initialized")
+//   } catch (error) {
+//     console.error("MetaMask SDK init error", error)
+//     showToast("error", "MetaMask setup failed")
+//   }
+// }
 
 const login = () => {
   IDService.verifyLogin(loginForm.value)
@@ -726,7 +729,7 @@ const handleSignedInUser = async user => {
   try {
     if (user.emailVerified) {
       showSsoLoggedIn.value = true
-      
+
       await getZelIdLoginPhrase()
       await nextTick()
 
@@ -751,13 +754,14 @@ const handleSignedInUser = async user => {
         signature: fluxLogin.data.signature,
         loginPhrase: loginPhrase.value,
       }
-      
+
       const response = await IDService.verifyLogin(authLogin)
 
       infoMessage.value = response
       if (response.data.status === "success") {
         fluxStore.setPrivilege(response.data.data.privilage)
         fluxStore.setZelid(authLogin.zelid)
+        localStorage.setItem('loginType', 'sso')
         localStorage.setItem("zelidauth", qs.stringify(authLogin))
         showToast("success", response.data.data.message)
       } else {
@@ -919,6 +923,7 @@ const initiateLoginWS = async () => {
 
       fluxStore.setPrivilege(data.data.privilage)
       fluxStore.setZelid(zelidauth.zelid)
+      localStorage.setItem('loginType', 'zelcore')
       localStorage.setItem("zelidauth", qs.stringify(zelidauth))
       showToast("success", data.data.message)
     }
@@ -979,6 +984,7 @@ const onSessionConnect = async session => {
   if (response.data.status === "success") {
     fluxStore.setPrivilege(response.data.data.privilage)
     fluxStore.setZelid(walletConnectInfo.zelid)
+    localStorage.setItem('loginType', 'walletconnect')
     localStorage.setItem("zelidauth", qs.stringify(walletConnectInfo))
     showToast("success", response.data.data.message)
   } else {
@@ -995,16 +1001,20 @@ const initMetamask = async () => {
       
       return
     }
+    let provider = MMSDK.getProvider()
 
-    await initMMSDK() // Reinitialize SDK after refresh
+    if (!provider) {
+      await MMSDK.init()
+      provider = MMSDK.getProvider()
+    }
 
-    const provider = MMSDK.getProvider()
-    if (!provider) throw new Error("MetaMask provider not available")
+    if (!provider) {
+      throw new Error("MetaMask provider still not available after init")
+    }
 
     isSigning.value = true
     await getZelIdLoginPhrase()
 
-    // Always reconnect to MetaMask after refresh
     const accounts = await provider.request({ method: "eth_requestAccounts" })
     const account = accounts[0]
     if (!account) throw new Error("No MetaMask account found")
@@ -1026,6 +1036,7 @@ const initMetamask = async () => {
     if (response.data.status === "success") {
       fluxStore.setPrivilege(response.data.data.privilage)
       fluxStore.setZelid(metamaskLogin.zelid)
+      localStorage.setItem("loginType", 'metamask')
       localStorage.setItem("zelidauth", qs.stringify(metamaskLogin))
       showToast("success", response.data.data.message)
     } else {
@@ -1061,6 +1072,7 @@ const initSSP = async () => {
     if (response.data.status === "success") {
       fluxStore.setPrivilege(response.data.data.privilage)
       fluxStore.setZelid(sspLogin.zelid)
+      localStorage.setItem("logintype", 'ssp')
       localStorage.setItem("zelidauth", qs.stringify(sspLogin))
       showToast("success", response.data.data.message)
     } else {
@@ -1090,7 +1102,6 @@ const initZelcore = () => {
   }
 }
 
-
 const handleBackendChange = () => {
   console.log("backendURLChanged triggered")
   backendURL.value = localStorage.getItem("backendURL") || getDetectedBackendURL()
@@ -1099,11 +1110,24 @@ const handleBackendChange = () => {
 }
 
 onMounted(async () => {
+
+  // const { MetaMaskSDK } = await import('@metamask/sdk')
+ 
+  // MMSDK = new MetaMaskSDK({
+  //   enableAnalytics: true,
+  //   dappMetadata: {
+  //     name: "Flux Cloud",
+  //     url: isLocalhost ? window.location.origin : "https://home.runonflux.io",
+  //   },
+  // })
+
+
   eventBus.on("backendURLChanged", handleBackendChange)
 
   // eventBus.on("getZelIdLoginPhrase", getZelIdLoginPhrase)
   getZelIdLoginPhrase()
-  await initMMSDK()
+
+  // await initMMSDK()
 })
 
 onUnmounted(() => {
@@ -1190,7 +1214,7 @@ a:hover img {
   width: 100%;
 }
 div.v-tabs-bar {
-  height: auto;
+  height: auto
 }
 
 /* Base pill style for each tab */
@@ -1208,12 +1232,12 @@ div.v-tabs-bar {
 </style>
 
 <style>
-/* Remove any border from the slide group container */
+/* Remove any border from the slide group container
 .v-slide-group,
 .v-slide-group__container,
 .v-slide-group__content {
   border: none !important;
-}
+} */
 
 .v-btn,
 .v-chip,

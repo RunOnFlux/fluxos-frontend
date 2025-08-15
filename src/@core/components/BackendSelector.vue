@@ -8,14 +8,16 @@ const backendUrl = ref("")
 const customBackend = ref("")
 const customBackendHistory = ref([])
 const detectedURL = ref("")
+const ipPortPattern = /^http:\/\/(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}):(\d+)$/
+const tooltipVisible = ref(false)
 
 const STORAGE_KEY = "backendURL"
 const HISTORY_KEY = "customBackendHistory"
 
 const isValidUrl = url => {
-  // eslint-disable-next-line regexp/no-unused-capturing-group
+   
   const ipWithPort = /^(https?:\/\/(\d{1,3}\.){3}\d{1,3}:\d+)(\/.*)?$/
-  // eslint-disable-next-line regexp/no-unused-capturing-group
+   
   const domainOrLocalhost = /^(https?:\/\/(localhost|([\w-]+\.)+[a-zA-Z]{2,})(:\d+)?)(\/.*)?$/
   
   return ipWithPort.test(url) || domainOrLocalhost.test(url)
@@ -34,6 +36,27 @@ const normalizeUrl = url => {
   } catch {
     return url.trim()
   }
+}
+
+const transformUrl = url => {
+  const match = url.match(ipPortPattern)
+  if (match) {
+    const ip = match[1] // Extracted IP
+    const port = match[2] // Extracted port
+    const sanitizedIp = ip.replace(/\./g, '-')
+
+    saveBackend(`https://${sanitizedIp}-${port}.node.api.runonflux.io`)
+
+    return `https://${sanitizedIp}-${port}.node.api.runonflux.io`
+  }
+  
+  return url // Return the original value if no match
+}
+
+const toggleUrlFormat = event => {
+  event.stopPropagation() // Prevent the event from propagating further
+  backendUrl.value = transformUrl(backendUrl.value) // Set the transformed URL
+  tooltipVisible.value = false
 }
 
 const filteredHistory = computed(() =>
@@ -166,6 +189,28 @@ onMounted(() => {
             class="me-1"
           />
           {{ backendUrl }}
+
+          <VTooltip
+            v-model="tooltipVisible"
+            bottom
+            location="bottom"
+          >
+            <template #activator="{ props: tooltipActivatorProps }">
+              <VIcon
+                v-if="ipPortPattern.test(backendUrl)"
+                class="ml-1"
+                size="20"
+                color="warning"
+                v-bind="tooltipActivatorProps"
+                @click.stop="toggleUrlFormat"
+              >
+                mdi-wifi-lock
+              </VIcon>
+            </template>
+            <template #default>
+              <span>Consider switching to a secure HTTPS connection for better security.</span>
+            </template>
+          </VTooltip>
         </VBtn>
       </template>
 
@@ -210,6 +255,7 @@ onMounted(() => {
     </VMenu>
   </div>
 </template>
+
 
 <style scoped>
 .v-btn,

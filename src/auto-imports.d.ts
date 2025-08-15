@@ -16,10 +16,12 @@ declare global {
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const alphaDashValidator: typeof import('./@core/utils/validators.js')['alphaDashValidator']
   const alphaValidator: typeof import('./@core/utils/validators.js')['alphaValidator']
+  const arrayBufferToBase64: typeof import('./utils/enterpriseCrypto.js')['arrayBufferToBase64']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const auth: typeof import('./utils/firebase.js')['auth']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const avatarText: typeof import('./@core/utils/formatters.js')['avatarText']
+  const base64ToUint8Array: typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']
   const betweenValidator: typeof import('./@core/utils/validators.js')['betweenValidator']
   const colors: typeof import('./utils/colors.js')['default']
   const computed: typeof import('vue')['computed']
@@ -47,6 +49,7 @@ declare global {
   const customRef: typeof import('vue')['customRef']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
+  const decryptEnterpriseWithAes: typeof import('./utils/enterpriseCrypto.js')['decryptEnterpriseWithAes']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
   const definePage: typeof import('unplugin-vue-router/runtime')['definePage']
@@ -54,6 +57,9 @@ declare global {
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const emailValidator: typeof import('./@core/utils/validators.js')['emailValidator']
+  const encryptAesKeyWithRsaKey: typeof import('./utils/enterpriseCrypto.js')['encryptAesKeyWithRsaKey']
+  const encryptEnterpriseWithAes: typeof import('./utils/enterpriseCrypto.js')['encryptEnterpriseWithAes']
+  const encryptMessage: typeof import('./utils/enterpriseCrypto.js')['encryptMessage']
   const eventBus: typeof import('./utils/eventBus.js')['eventBus']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fiatGateways: typeof import('./utils/fiatGateways.js')['default']
@@ -66,11 +72,13 @@ declare global {
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getDetectedBackendURL: typeof import('./utils/backend.js')['getDetectedBackendURL']
+  const getEnterprisePGPKeys: typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']
   const getUser: typeof import('./utils/firebase.js')['getUser']
   const h: typeof import('vue')['h']
   const hexToRgb: typeof import('./@core/utils/colorConverter.js')['hexToRgb']
   const icon: typeof import('leaflet')['icon']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
+  const importRsaPublicKey: typeof import('./utils/enterpriseCrypto.js')['importRsaPublicKey']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const integerValidator: typeof import('./@core/utils/validators.js')['integerValidator']
@@ -264,6 +272,7 @@ declare global {
   const useIntervalFn: typeof import('@vueuse/core')['useIntervalFn']
   const useKeyModifier: typeof import('@vueuse/core')['useKeyModifier']
   const useLastChanged: typeof import('@vueuse/core')['useLastChanged']
+  const useLink: typeof import('vue-router')['useLink']
   const useLocalStorage: typeof import('@vueuse/core')['useLocalStorage']
   const useMagicKeys: typeof import('@vueuse/core')['useMagicKeys']
   const useManualRefHistory: typeof import('@vueuse/core')['useManualRefHistory']
@@ -396,10 +405,12 @@ declare module 'vue' {
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly alphaDashValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaDashValidator']>
     readonly alphaValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaValidator']>
+    readonly arrayBufferToBase64: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['arrayBufferToBase64']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly auth: UnwrapRef<typeof import('./utils/firebase.js')['auth']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly avatarText: UnwrapRef<typeof import('./@core/utils/formatters.js')['avatarText']>
+    readonly base64ToUint8Array: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']>
     readonly betweenValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['betweenValidator']>
     readonly colors: UnwrapRef<typeof import('./utils/colors.js')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -427,6 +438,7 @@ declare module 'vue' {
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly debouncedRef: UnwrapRef<typeof import('@vueuse/core')['debouncedRef']>
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
+    readonly decryptEnterpriseWithAes: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['decryptEnterpriseWithAes']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly definePage: UnwrapRef<typeof import('unplugin-vue-router/runtime')['definePage']>
@@ -434,6 +446,9 @@ declare module 'vue' {
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly emailValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['emailValidator']>
+    readonly encryptAesKeyWithRsaKey: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptAesKeyWithRsaKey']>
+    readonly encryptEnterpriseWithAes: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptEnterpriseWithAes']>
+    readonly encryptMessage: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptMessage']>
     readonly eventBus: UnwrapRef<typeof import('./utils/eventBus.js')['eventBus']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fiatGateways: UnwrapRef<typeof import('./utils/fiatGateways.js')['default']>
@@ -446,10 +461,12 @@ declare module 'vue' {
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getDetectedBackendURL: UnwrapRef<typeof import('./utils/backend.js')['getDetectedBackendURL']>
+    readonly getEnterprisePGPKeys: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']>
     readonly getUser: UnwrapRef<typeof import('./utils/firebase.js')['getUser']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hexToRgb: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['hexToRgb']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
+    readonly importRsaPublicKey: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['importRsaPublicKey']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly integerValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['integerValidator']>

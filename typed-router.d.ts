@@ -23,6 +23,7 @@ declare module 'vue-router/auto-routes' {
     'apps-local': RouteRecordInfo<'apps-local', '/apps/local', Record<never, never>, Record<never, never>>,
     'apps-manage-app-name': RouteRecordInfo<'apps-manage-app-name', '/apps/manage/:appName', { appName: ParamValue<true> }, { appName: ParamValue<false> }>,
     'apps-management': RouteRecordInfo<'apps-management', '/apps/management', Record<never, never>, Record<never, never>>,
+    'apps-register': RouteRecordInfo<'apps-register', '/apps/register', Record<never, never>, Record<never, never>>,
     'dashboards-home': RouteRecordInfo<'dashboards-home', '/dashboards/home', Record<never, never>, Record<never, never>>,
     'dashboards-list': RouteRecordInfo<'dashboards-list', '/dashboards/list', Record<never, never>, Record<never, never>>,
     'dashboards-locations': RouteRecordInfo<'dashboards-locations', '/dashboards/locations', Record<never, never>, Record<never, never>>,

@@ -145,7 +145,7 @@ watch(() => props, () => {
 
 const onSubmit = () => {
 
-  // eslint-disable-next-line no-alert
+   
   alert('submitted...!!')
   emit('updatedData', createAppData.value)
 }

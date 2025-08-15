@@ -5,8 +5,6 @@
         ref="mapContainer"
         style="height: 450px; width: 100%"
       />
-
-      <!-- 🏷️ Tier Info Chip (only after map loaded) -->
       <div
         v-if="!loading && tierDisplay"
         class="tier-label"
@@ -94,9 +92,14 @@ function nodeHttpsUrlFromEndpoint(endpoint, options = {}) {
   return `${scheme}${ipAsName}-${port}.${domain}`
 }
 
+function stripPort(ip) {
+  return ip.includes(':') ? ip.split(':')[0] : ip
+}
+
 async function getGeoFromIp(ip) {
   try {
-    const res = await axios.get(`https://ipapi.co/${ip}/json/`)
+    const plainIp = stripPort(ip) 
+    const res = await axios.get(`https://ipapi.co/${plainIp}/json/`)
     if (res.status === 200) {
       return {
         lat: res.data.latitude,
@@ -125,6 +128,21 @@ async function getNodesViaApi() {
   }
 
   return []
+}
+
+function getNodeTierUrl(ip) {
+  if (ip.includes(':')) {
+    return `http://${ip}/flux/nodetier`
+  }
+  
+  return `http://${ip}:16127/flux/nodetier`
+}
+
+function parseTierResponse(data) {
+  if (typeof data !== 'string') return 'UNKNOWN'
+  const base = data.includes('_') ? data.split('_')[0] : data
+  
+  return base.toUpperCase()
 }
 
 async function getFilteredWithFallback() {
@@ -187,7 +205,34 @@ async function getFilteredWithFallback() {
           }
         }
       } catch (err) {
-        console.error("🔴 Fallback fetch failed for IP:", ip, err)
+        // Parallel fallback: GeoIP and nodetier
+        const [geoFallback, tierFallback] = await Promise.allSettled([
+          getGeoFromIp(ip),
+          axios.get(getNodeTierUrl(ip), { timeout: 5000 }),
+        ])
+
+        const geoData = geoFallback.status === "fulfilled" ? geoFallback.value : null
+
+        const parsedTier = tierFallback.status === "fulfilled"
+          ? parseTierResponse(tierFallback.value.data?.data)
+          : "UNKNOWN"
+
+        if (geoData) {
+          const newNode = {
+            ip,
+            tier: parsedTier,
+            geolocation: {
+              lat: geoData.lat,
+              lon: geoData.lon,
+              org: geoData.org,
+            },
+          }
+
+          fallbackNodes.value.push(newNode)
+          filtered.push(newNode)
+        } else {
+          console.warn(`⚠️ GeoIP fallback also failed for IP: ${ip}`)
+        }
       }
     }
   }
@@ -318,7 +363,7 @@ const tierDisplay = computed(() => {
 
   const nodesToUse = props.showAll
     ? [...fluxList.value, ...fallbackNodes.value]
-    : fluxList.value.filter(n => props.filterNodes.includes(n.ip))
+    : [...fluxList.value, ...fallbackNodes.value].filter(n => props.filterNodes.includes(n.ip))
 
   for (const node of nodesToUse) {
     if (node.tier) {
@@ -405,19 +450,19 @@ onUnmounted(() => {
   position: absolute;
   top: 5px;
   right: 5px;
-  background-color: rgba(33, 150, 243, 0.85); /* ✅ semi-transparent blue */
-  color: #fff; /* ✅ works on both dark/light */
+  background-color: rgba(33, 150, 243, 0.85);
+  color: #fff;
   padding: 4px 10px;
   font-size: 10px;
   font-weight: 500;
   border-radius: 16px;
   white-space: nowrap;
-  display: inline-flex; /* or inline-block */
+  display: inline-flex;
   align-items: center;
-  justify-content: center; /* ✅ center the text horizontally inside */
+  justify-content: center;
   height: 25px !important;
-  width: auto !important; /* ✅ let width shrink to fit content */
-  max-width: 235px;
+  width: auto !important;
+  max-width: 250px;
   overflow: hidden;
   text-overflow: ellipsis;
   z-index: 500;

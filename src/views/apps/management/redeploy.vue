@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-nowrap align-center">
+  <div class="d-flex flex-nowrap align-end justify-end">
     <VTooltip text="Redeploy">
       <template #activator="{ props: redeployBtnProps }">
         <VBtn

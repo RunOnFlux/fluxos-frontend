@@ -1,31 +1,24 @@
 <template>
   <template v-if="!shouldHide">
     <dl
-      class="row"
+      class="grid-row"
       :class="classes"
     >
-      <!-- Title with icon -->
-      <dt class="col-sm-3">
-        <div class="d-flex align-center">
+      <dt>
+        <div class="title-content">
           <VIcon
             v-if="titleIcon"
             :icon="titleIcon"
             :size="Number(titleIconScale) * 18"
             class="mr-1"
           />
-          <span>
-            <slot name="title">
-              {{ title }}
-            </slot>
+          <span class="title-text">
+            <slot name="title">{{ title }}</slot>
           </span>
         </div>
       </dt>
 
-      <!-- Value -->
-      <dd
-        v-if="href.length > 0"
-        class="col-sm-9"
-      >
+      <dd v-if="href.length > 0">
         <a
           :href="href"
           target="_blank"
@@ -51,7 +44,6 @@
 
       <dd
         v-else-if="click"
-        class="col-sm-9"
         @click="$emit('click')"
       >
         <VBtn
@@ -75,10 +67,7 @@
         </VBtn>
       </dd>
 
-      <dd
-        v-else
-        class="col-sm-9"
-      >
+      <dd v-else>
         <slot>
           <kbd
             v-if="kbdVariant"
@@ -101,7 +90,7 @@
 </template>
 
 <script setup>
-import { computed, useSlots, defineEmits } from "vue"
+import { computed, useSlots } from "vue"
 
 const props = defineProps({
   title: String,
@@ -153,7 +142,7 @@ const displayValue = computed(() => {
   if (typeof props.data === "string" && props.data.trim()) return props.data
   if (typeof props.data === "number" && !Number.isNaN(props.data)) return props.data
   if (props.number !== Number.MAX_VALUE) return props.number
-
+  
   return ""
 })
 
@@ -171,31 +160,38 @@ const shouldHide = computed(() => props.hideIfEmpty && isEmpty.value)
 </script>
 
 <style scoped>
-/* Layout */
-dl.row {
-  display: flex;
-  flex-wrap: wrap;
-  margin-bottom: 0.5rem;
+.grid-row {
+  display: grid;
+  grid-template-columns: minmax(auto, 200px) 1fr;
+  column-gap: 3.0rem;
+  align-items: start;
+  margin-bottom: 0.9rem;
 }
 
-dl.row > dt,
-dl.row > dd {
-  display: flex;
-  align-items: baseline;
-  margin-bottom: 0;
+dt, dd {
+  margin: 0;
 }
 
-dl.row > dt.col-sm-3 {
-  width: 25%;
+.title-content {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
   font-weight: 600;
-  padding-top: 2px;
+  min-width: 0;
 }
 
-dl.row > dd.col-sm-9 {
-  width: 75%;
+.title-text {
+  white-space: nowrap;
 }
 
-/* Tonal KBD (soft chips) */
+.value-span {
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  white-space: normal;
+  line-height: 1.5;
+}
+
+/* Tonal KBD */
 .resource-kbd {
   display: inline-block;
   max-width: 100%;
@@ -211,7 +207,7 @@ dl.row > dd.col-sm-9 {
   text-align: left;
 }
 
-/* Tonal colors */
+/* KBD Variants */
 .kbd-primary {
   background-color: rgba(13, 110, 253, 0.1);
   color: #0d6efd;
@@ -242,22 +238,14 @@ dl.row > dd.col-sm-9 {
   color: #0dcaf0;
 }
 
-/* fallback span style */
-.value-span {
-  display: inline-block;
-  word-break: break-word;
-  white-space: normal;
-  line-height: 1.5;
-}
-
-/* Mobile */
+/* Mobile: stack key and value */
 @media (max-width: 576px) {
-  dl.row > dt.col-sm-3,
-  dl.row > dd.col-sm-9 {
-    width: 100% !important;
+  .grid-row {
+    grid-template-columns: 1fr;
+    row-gap: 0.25rem;
   }
 
-  dl.row > dt.col-sm-3 {
+  .title-content {
     margin-bottom: 0.25rem;
   }
 }

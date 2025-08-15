@@ -12,27 +12,27 @@ const props = defineProps({
   },
   iconAfterFalse: {
     type: String,
-    default: 'mdi-close-circle',
-  },
-  iconAfterTrueColor: {
-    type: String,
-    default: 'success',
-  },
-  iconAfterFalseColor: {
-    type: String,
-    default: 'error',
+    default: 'mdi-alert-circle',
   },
   iconState: {
-    type: [Boolean, Function],
+    type: [Function, Boolean],
     required: true,
   },
   textOn: {
     type: String,
-    default: 'Enabled',
+    default: 'Local Specification',
   },
   textOff: {
     type: String,
-    default: 'Disabled',
+    default: 'Global Specification',
+  },
+  toggleTrueLabel: {
+    type: String,
+    default: 'LOCAL',
+  },
+  toggleFalseLabel: {
+    type: String,
+    default: 'GLOBAL',
   },
   color: {
     type: String,
@@ -60,7 +60,9 @@ const emit = defineEmits(['update:modelValue'])
 
 const isToggled = ref(props.modelValue)
 
-watch(isToggled, val => emit('update:modelValue', val))
+watch(isToggled, val => {
+  emit('update:modelValue', val)
+})
 
 const displayText = computed(() => (isToggled.value ? props.textOn : props.textOff))
 
@@ -68,13 +70,17 @@ const iconStateValue = computed(() =>
   typeof props.iconState === 'function' ? props.iconState() : props.iconState,
 )
 
-const trailingIcon = computed(() =>
-  iconStateValue.value ? props.iconAfterTrue : props.iconAfterFalse,
-)
+const trailingIcon = computed(() => {
+  if (!isToggled.value) return null
+  
+  return iconStateValue.value ? props.iconAfterTrue : props.iconAfterFalse
+})
 
-const trailingIconColor = computed(() =>
-  iconStateValue.value ? props.iconAfterTrueColor : props.iconAfterFalseColor,
-)
+const trailingIconColor = computed(() => {
+  if (!isToggled.value) return null
+  
+  return iconStateValue.value ? 'success' : 'error'
+})
 </script>
 
 <template>
@@ -82,11 +88,12 @@ const trailingIconColor = computed(() =>
     :color="color"
     :variant="variant"
     :rounded="rounded"
-    style="width: 100%"
+    class="my-3"
+    style="width: 100%; padding-inline: 12px; overflow: hidden;"
     :class="className"
   >
     <div class="chip-grid">
-      <!-- Left: icon + text + dynamic icon -->
+      <!-- Left: icon + text + trailing icon with tooltip -->
       <div class="chip-left">
         <VIcon
           size="22"
@@ -95,49 +102,83 @@ const trailingIconColor = computed(() =>
           {{ icon }}
         </VIcon>
         <span style="font-size: 18px;">{{ displayText }}</span>
-        <VIcon
-          v-if="isToggled"
-          size="20"
-          class="ml-2"
-          :color="trailingIconColor"
+        <VTooltip
+          v-if="trailingIcon"
+          location="top"
         >
-          {{ trailingIcon }}
-        </VIcon>
+          <template #activator="{ props: trailingIconProps }">
+            <VIcon
+              size="20"
+              class="ml-2"
+              :color="trailingIconColor"
+              v-bind="trailingIconProps"
+            >
+              {{ trailingIcon }}
+            </VIcon>
+          </template>
+          <span>
+            {{ iconStateValue ? 'Application is synced with global network!' : 'Application does not match global specifications!' }}
+          </span>
+        </VTooltip>
       </div>
-
-      <!-- Right: toggle switch -->
-      <VSwitch
-        v-model="isToggled"
-        hide-details
-        inset
-        density="compact"
-        color="primary"
-        class="chip-switch"
-      />
+      <!-- Right: toggle buttons -->
+      <div class="chip-buttons d-flex align-center">
+        <VBtn
+          size="x-small"
+          :variant="isToggled ? 'flat' : 'outlined'"
+          color="primary"
+          class="toggle-btn mr-2"
+          rounded="pill"
+          @click="isToggled = true"
+        >
+          {{ toggleTrueLabel }}
+        </VBtn>
+        <VBtn
+          size="x-small"
+          :variant="!isToggled ? 'flat' : 'outlined'"
+          color="primary"
+          rounded="pill"
+          class="toggle-btn"
+          @click="isToggled = false"
+        >
+          {{ toggleFalseLabel }}
+        </VBtn>
+      </div>
     </div>
   </VChip>
 </template>
 
 <style scoped>
 .chip-grid {
-  display: grid !important;
-  grid-template-columns: 1fr auto !important;
-  align-items: center !important;
-  width: 100% !important;
-  min-width: 0 !important;
-  gap: 12px !important;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  width: 100%;
+  gap: 12px;
 }
 
 .chip-left {
-  display: flex !important;
-  align-items: center !important;
-  min-width: 0 !important;
-  overflow: hidden !important;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  overflow: hidden;
 }
 
-.chip-switch {
-  margin-top: -4px !important;
-  margin-bottom: -4px !important;
+.chip-buttons :deep(.v-btn) {
+  text-transform: none;
+  font-weight: 500;
+  padding: 0 8px;
+  justify-content: center;
+}
+
+.toggle-btn {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  line-height: normal !important;
+  min-height: 22px !important;
+  height: 22px !important;
+  align-items: center !important;
+  display: inline-flex !important;
 }
 
 ::v-deep(.v-chip__content) {

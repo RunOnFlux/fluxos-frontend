@@ -55,6 +55,7 @@
             :api-error="apiError"
             show-status
             :show-control="isFluxAdminLoggedIn"
+            privilege="none"
           />
         </div>
       </VWindowItem>
@@ -69,6 +70,7 @@
             active-apps-tab
             :api-error="apiError"
             :show-install="isFluxAdminLoggedIn"
+            privilege="none"
           />
         </div>
       </VWindowItem>
@@ -172,9 +174,7 @@ onMounted(async () => {
   console.log("Initial data fetching complete")
 })
 
-function isFluxAdminLoggedIn() {
-  return (privilege.value === 'fluxteam')
-}
+const isFluxAdminLoggedIn = computed(() => privilege.value === 'fluxteam')
 
 onBeforeUnmount(() => {
   eventBus.off('backendURLChanged', loadInstalledApps)

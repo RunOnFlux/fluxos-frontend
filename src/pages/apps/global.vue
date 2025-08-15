@@ -53,6 +53,7 @@
             :current-block-height="daemonBlockCount"
             active-apps-tab
             :api-error="apiError"
+            privilege="none"
           />
         </div>
       </VWindowItem>
@@ -66,6 +67,7 @@
             :current-block-height="daemonBlockCount"
             active-apps-tab
             :api-error="apiError"
+            privilege="none"
           />
         </div>
       </VWindowItem>

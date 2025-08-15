@@ -18,7 +18,7 @@ import { VerticalNavLayout } from "@layouts"
 // const STORAGE_KEY = "backendURL"
 // const HISTORY_KEY = "customBackendHistory"
 
-// eslint-disable-next-line regexp/no-unused-capturing-group
+ 
 // const backendRegex = /^(https?:\/\/(localhost|((\d{1,3}\.){3}\d{1,3})|([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,})(:\d+)?)(\/.*)?$/
 // const isValidBackendUrl = url => backendRegex.test(url)
 

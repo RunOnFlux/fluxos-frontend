@@ -16,6 +16,7 @@ export const useFluxStore = defineStore("flux", {
     privilege: "none",
     zelid: "",
     fluxVersion: "",
+    loginType: "",
     xdaoOpen: 0,
   }),
 
@@ -79,6 +80,9 @@ export const useFluxStore = defineStore("flux", {
 
     setFluxSupportTeamFluxID(id) {
       this.config.fluxSupportTeamFluxID = id
+    },
+    setLoginType(type) {
+      this.loginType = type
     },
   },
 })

@@ -7,7 +7,6 @@ export default {
         'x-apicache-bypass': true,
       },
     }
-
     
     return Api().get('/apps/listrunningapps', axiosConfig)
   },
@@ -17,7 +16,6 @@ export default {
         'x-apicache-bypass': true,
       },
     }
-
     
     return Api().get('/apps/listallapps', axiosConfig)
   },
@@ -27,7 +25,6 @@ export default {
         'x-apicache-bypass': true,
       },
     }
-
     
     return Api().get('/apps/installedapps', axiosConfig)
   },
@@ -44,7 +41,6 @@ export default {
         'x-apicache-bypass': true,
       },
     }
-
     
     return Api().get(`/apps/appstop/${app}`, axiosConfig)
   },
@@ -54,7 +50,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/appstart/${app}`, axiosConfig)
   },
@@ -64,7 +59,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/apppause/${app}`, axiosConfig)
   },
@@ -74,7 +68,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/appunpause/${app}`, axiosConfig)
   },
@@ -84,7 +77,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/apprestart/${app}`, axiosConfig)
   },
@@ -97,7 +89,6 @@ export default {
         console.log(progressEvent)
       },
     }
-
     
     return Api().get(`/apps/appremove/${app}`, axiosConfig)
   },
@@ -107,7 +98,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().post('/apps/appregister', JSON.stringify(data), axiosConfig)
   },
@@ -117,7 +107,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().post('/apps/appupdate', JSON.stringify(data), axiosConfig)
   },
@@ -130,7 +119,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().post('/apps/checkdockerexistance', JSON.stringify(data), axiosConfig)
   },
@@ -158,6 +146,16 @@ export default {
   getAppSpecifics(name) {
     return Api().get(`/apps/appspecifications/${name}`)
   },
+  getAppEncryptedSpecifics(name, zelidauthHeader, data) {
+    const axiosConfig = {
+      headers: {
+        zelidauth: zelidauthHeader,
+        'enterprise-key': data,
+      },
+    }
+    
+    return Api().get(`/apps/appspecifications/${name}/true`, axiosConfig)
+  },
   getAppOwner(name) {
     return Api().get(`/apps/appowner/${name}`)
   },
@@ -167,7 +165,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/applog/${app}/100`, axiosConfig)
   },
@@ -177,7 +174,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/apptop/${app}`, axiosConfig)
   },
@@ -187,7 +183,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/appinspect/${app}`, axiosConfig)
   },
@@ -197,7 +192,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/appstats/${app}`, axiosConfig)
   },
@@ -207,7 +201,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/appchanges/${app}`, axiosConfig)
   },
@@ -217,13 +210,11 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     const data = {
       appname: app,
       cmd,
       env: JSON.parse(env),
     }
-
     
     return Api().post('/apps/appexec', JSON.stringify(data), axiosConfig)
   },
@@ -327,6 +318,18 @@ export default {
   appRegistrationVerificaiton(data) {
     return Api().post('/apps/verifyappregistrationspecifications', JSON.stringify(data))
   },
+  getAppPublicKey(zelidauthHeader, data) {
+    const axiosConfig = {
+      headers: {
+        zelidauth: zelidauthHeader,
+      },
+    }
+    
+    return Api().post('/apps/getpublickey', JSON.stringify(data), axiosConfig)
+  },
+  getAppOriginalOwner(app) {
+    return Api().get(`/apps/apporiginalowner/${app}`)
+  },
   appUpdateVerification(data) {
     return Api().post('/apps/verifyappupdatespecifications', JSON.stringify(data))
   },
@@ -336,7 +339,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     
     return Api().get(`/apps/appmonitor/${app}`, axiosConfig)
   },
@@ -346,7 +348,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     if (app) {
       return Api().get(`/apps/startmonitoring/${app}`, axiosConfig)
     }
@@ -359,7 +360,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-
     if (app && deleteData) { // stop monitoring of specific app or app component and delete data
       return Api().get(`/apps/stopmonitoring/${app}/${deleteData}`, axiosConfig)
     }

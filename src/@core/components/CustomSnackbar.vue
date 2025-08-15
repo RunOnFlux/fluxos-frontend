@@ -4,7 +4,7 @@
     :color="snackbarColor"
     :location="snackbarLocation"
     variant="flat"
-    timeout="15000"
+    timeout="4000"
   >
     <VIcon left>
       {{ icon }}

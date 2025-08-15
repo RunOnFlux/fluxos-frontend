@@ -25,7 +25,7 @@
     <ListEntry
       title="Hash"
       :data="app.hash"
-      title-icon="mdi-code-tags"
+      title-icon="mdi-pound-box"
       title-icon-scale="1.3"
       kbd-variant="secondary"
     />
@@ -43,7 +43,6 @@
       title-icon="mdi-earth"
       title-icon-scale="1.3"
       kbd-variant="secondary"
-      hide-if-empty
     >
       <template #default>
         <div class="kbd-list">
@@ -261,5 +260,48 @@ function isExpiringSoon(label) {
   margin-bottom: 0.25rem;
   padding: 0.4rem 0.6rem;
   font-size: 0.85rem;
+}
+
+.alert-primary {
+  background-color: rgba(13, 110, 253, 0.1);
+  color: #0d6efd !important;
+}
+
+.alert-secondary {
+  background-color: rgba(108, 117, 125, 0.1);
+  color: #6c757d !important;
+}
+
+.alert-success {
+  background-color: rgba(25, 135, 84, 0.1);
+  color: rgb(var(--v-theme-success)) !important;
+}
+
+.alert-danger {
+  background-color: rgba(220, 53, 69, 0.1);
+  color: #dc3545 !important;
+}
+
+.alert-warning {
+  background-color: rgba(255, 193, 7, 0.1);
+  color: #ffc107 !important;
+}
+
+.alert-info {
+  background-color: rgba(13, 202, 240, 0.1);
+  color: #0dcaf0 !important;
+}
+
+.resource-kbd {
+  display: inline-block;
+  max-width: 100%;
+  padding: 4px  8px !important;
+  margin-bottom: 4px;
+  border-radius: 15px;
+  font-family: monospace;
+  font-size: 14px;
+  white-space: normal;
+  word-break: break-word;
+  line-height: 1.5;
 }
 </style>

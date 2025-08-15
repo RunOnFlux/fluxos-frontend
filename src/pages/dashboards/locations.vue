@@ -287,23 +287,32 @@ const ensureThemeClass = () => {
 }
 
 onMounted(async () => {
-  console.log("onMounted: Starting")
+  console.log("🟢 onMounted: Starting")
   console.log("Initial theme:", theme.value, "Type:", typeof theme.value)
+
   ensureThemeClass()
+  isLoading.value = true
+
   try {
-    isLoading.value = true
-    console.log("Fetching flux list...")
+    console.log("🔄 Fetching flux list...")
     await getFluxList()
-    console.log("Flux list fetched, waiting for next tick...")
+    console.log("✅ Flux list fetched, awaiting DOM update...")
     await nextTick()
-    console.log("Generating geographic pie...")
-    await generateGeographicPie()
-    console.log("Generating provider pie...")
-    await generateProviderPie()
+
+    // Wait for UI to paint spinner
+    setTimeout(async () => {
+      console.log("📊 Starting both pie generations in parallel...")
+
+      const geoPromise = generateGeographicPie()
+      const providerPromise = generateProviderPie()
+
+      await Promise.all([geoPromise, providerPromise])
+
+      console.log("✅ Both pie charts generated")
+      isLoading.value = false
+    }, 1000)
   } catch (error) {
-    console.error("Error during initialization:", error)
-  } finally {
-    console.log("Setting isLoading to false")
+    console.error("❌ Error during initialization:", error)
     isLoading.value = false
   }
 })

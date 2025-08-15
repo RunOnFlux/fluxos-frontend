@@ -25,6 +25,43 @@ const auth = computed(() => {
   return {}
 })
 
+
+const snackbar = ref({
+  model: false,
+  text: '',
+  color: 'info',
+  icon: 'mdi-information',
+  timeout: 4000,
+})
+
+let snackbarTimeout = null
+
+function showToast(type, message, icon = null, timeout = 4000) {
+  if (snackbarTimeout) clearTimeout(snackbarTimeout)
+
+  snackbar.value = {
+    model: false, // force reset
+    text: message,
+    icon: icon || {
+      success: 'mdi-check-circle',
+      error: 'mdi-alert-circle',
+      warning: 'mdi-alert',
+      info: 'mdi-information',
+      danger: 'mdi-alert-circle',
+    }[type] || 'mdi-information',
+    color: type === 'danger' ? 'error' : type,
+    timeout,
+  }
+
+  requestAnimationFrame(() => {
+    snackbar.value.model = true
+  })
+
+  snackbarTimeout = setTimeout(() => {
+    snackbar.value.model = false
+  }, timeout)
+}
+
 // TODO: Get type from backend
 const userData = {
   id: 1,
@@ -35,77 +72,70 @@ const userData = {
   email: "admin@demo.com",
 }
 
-const logout = async () => {
+async function logout() {
   const zelidauth = localStorage.getItem("zelidauth")
 
-  // Clear local storage and reset store state
   localStorage.removeItem("zelidauth")
+  localStorage.removeItem("loginType")
   fluxStore.setPrivilege("none")
   fluxStore.setZelid("")
 
   try {
-    // Call the logout API
     const response = await IDService.logoutCurrentSession(zelidauth)
-
-    if (response.data.status === "error") {
-      console.error(response.data.data.message)
-    } else {
-      console.log("Logout successful:", response.data.data.message)
-
-      // If the user is already on the root path '/', trigger onMounted
-      if (route.path === "/") {
-        // reload
-        eventBus.emit("getZelIdLoginPhrase")
-      } else {
-        // Otherwise, navigate to '/'
-        await router.push("/")
-      }
-    }
   } catch (error) {
     console.error("API error during logout:", error)
   }
 
-  // Log out from Firebase
+
   try {
     await firebase.auth().signOut()
     console.log("Firebase logged out successfully.")
   } catch (error) {
     console.error("Error during Firebase logout:", error)
   }
+
+  showToast('success', 'Logged out successfully')
+  if (route.path === "/") {
+    eventBus.emit("getZelIdLoginPhrase")
+  } else {
+    await router.push("/")
+  }
 }
 
 const userProfileList = [
   { type: "divider" },
-  {
-    type: "navItem",
-    icon: "tabler-user",
-    title: "Profile",
-  },
-  {
-    type: "navItem",
-    icon: "tabler-settings",
-    title: "Settings",
-  },
-  {
-    type: "navItem",
-    icon: "tabler-file-dollar",
-    title: "Billing Plan",
-    badgeProps: {
-      color: "error",
-      content: "4",
-    },
-  },
-  { type: "divider" },
-  {
-    type: "navItem",
-    icon: "tabler-currency-dollar",
-    title: "Pricing",
-  },
-  {
-    type: "navItem",
-    icon: "tabler-question-mark",
-    title: "FAQ",
-  },
+
+  // {
+  //   type: "navItem",
+  //   icon: "tabler-user",
+  //   title: "Profile",
+  // },
+  // {
+  //   type: "navItem",
+  //   icon: "tabler-settings",
+  //   title: "Settings",
+  // },
+  // {
+  //   type: "navItem",
+  //   icon: "tabler-file-dollar",
+  //   title: "Billing Plan",
+  //   badgeProps: {
+  //     color: "error",
+  //     content: "4",
+  //   },
+  // },
+  // { type: "divider" },
+
+  // {
+  //   type: "navItem",
+  //   icon: "tabler-currency-dollar",
+  //   title: "Pricing",
+  // },
+  // {
+  //   type: "navItem",
+  //   icon: "tabler-question-mark",
+  //   title: "FAQ",
+  // },
 ]
 </script>
 
@@ -233,4 +263,23 @@ const userProfileList = [
       <!-- !SECTION -->
     </VAvatar>
   </VBadge>
+
+  <VSnackbar
+    v-model="snackbar.model"
+    :timeout="snackbar.timeout"
+    :color="snackbar.color"
+    location="top"
+    :elevation="4"
+    variant="flat"
+    class="mb-2"
+  >
+    <div class="d-flex align-center">
+      <VIcon
+        v-if="snackbar.icon"
+        :icon="snackbar.icon"
+        class="me-2"
+      />
+      <span>{{ snackbar.text }}</span>
+    </div>
+  </VSnackbar>
 </template>

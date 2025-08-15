@@ -7,6 +7,7 @@
     >
       <div class="map-inner">
         <MapComponent
+          :key="mapKey"
           class="mb-0"
           :show-all="false"
           :filter-nodes="mapLocations"
@@ -15,11 +16,8 @@
     </div>
   
     <!-- Controls and Table under Map -->
-    <div class="table-wrapper mt-6">
-      <VRow
-        v-if="filteredLocations.length > 5"
-        class="align-center"
-      >
+    <div class="table-wrapper-location mt-4">
+      <VRow class="align-center">
         <!-- Controls -->
         <VCol cols="4">
           <VSelect
@@ -41,136 +39,239 @@
             clearable
             class="flex-grow-1"
           >
-            <template #append-inner>
+            <template #prepend-inner>
               <VIcon size="20">
                 tabler-search
               </VIcon>
+            </template>
+            <template #append-inner>
+              <VTooltip text="Select active instance">
+                <template #activator="{ props: instanceProps }">
+                  <VIcon
+                    v-if="selectedNode"
+                    v-bind="instanceProps"
+                    icon="mdi-map-marker-radius-outline"
+                    size="20"
+                    class="mx-1"
+                    @click="appLocationOptions.filter = selectedNode"
+                  />
+                </template>
+              </VTooltip>
             </template>
           </VTextField>
         </VCol>
       </VRow>
   
       <!-- Data Table -->
-      <VDataTable
-        :headers="appLocationFields"
-        :items="paginatedLocations"
-        :items-per-page="appLocationOptions.perPage"
-        :page="appLocationOptions.currentPage"
-        class="locations-table pa-2 mt-2"
-        :class="filteredLocations.length > 5 ? 'mb-0' : 'mb-2'"
-        hide-default-footer
-        hide-headers
-        fixed-header
-        density="compact"
-        no-data-text="No instances found..."
+      <VSheet
+        border
+        rounded
+        :class="filteredLocations.length >= 5 ? 'mb-2 mt-4' : 'mb-4 mt-4'"
+        style="max-height: none; overflow: visible"
       >
-        <template #headers />
+        <VDataTable
+          :headers="appLocationFields"
+          :items="paginatedLocations"
+          :items-per-page="appLocationOptions.perPage"
+          :page="appLocationOptions.currentPage"
+          class="locations-table"
+          hide-default-footer
+          hide-headers
+          fixed-header
+          density="compact"
+          no-data-text="No instances found..."
+        >
+          <template #headers />
   
-        <template #item.ip="{ item }">
-          <div class="d-flex align-center text-no-wrap">
-            <VChip
-              color="info"
-              size="small"
-              class="mr-2"
-            >
-              <VIcon
-                icon="mdi-laptop"
-                size="18"
-              />
-            </VChip>
-            <VChip
-              color="success"
-              label
-              size="small"
+          <template #item.ip="{ item }">
+            <div class="d-flex align-center text-no-wrap">
+              <VChip
+                color="info"
+                size="small"
+                class="mr-2"
+              >
+                <VIcon
+                  icon="mdi-laptop"
+                  size="18"
+                />
+              </VChip>
+              <VChip
+                color="success"
+                label
+                size="small"
+                class="text-no-wrap"
+                style="border-radius: 15px"
+              >
+                <strong>{{ item.ip }}</strong>
+              </VChip>
+            </div>
+          </template>
+  
+          <template #item.osUptime="{ item }">
+            <span
+              v-bind="props"
               class="text-no-wrap"
-              style="border-radius: 15px"
             >
-              <strong>{{ item.ip }}</strong>
-            </VChip>
-          </div>
-        </template>
-  
-        <template #item.osUptime="{ item }">
-          <span
-            v-bind="props"
-            class="text-no-wrap"
-          >
-            <VTooltip text="System uptime since last reboot">
-              <template #activator="{ props: tooltipProps }">
-                <VChip
-                  color="info"
-                  size="small"
-                  class="mr-2 ml-2 text-no-wrap"
-                  v-bind="tooltipProps"
-                >
-                  <VIcon
-                    icon="mdi-home-clock"
-                    size="18"
-                  />
-                </VChip>
-              </template>
-            </VTooltip>
+              <VTooltip text="System uptime since last reboot">
+                <template #activator="{ props: tooltipProps }">
+                  <VChip
+                    color="info"
+                    size="small"
+                    class="mr-2 ml-2 text-no-wrap"
+                    v-bind="tooltipProps"
+                  >
+                    <VIcon
+                      icon="mdi-home-clock"
+                      size="18"
+                    />
+                  </VChip>
+                </template>
+              </VTooltip>
 
-            <VChip
-              color="success"
-              label
-              size="small"
+              <VChip
+                color="success"
+                label
+                size="small"
+                class="text-no-wrap"
+                style="border-radius: 15px"
+              >
+                <strong>{{ formatUptime(item.osUptime) }}</strong>
+              </VChip>
+            </span>
+          </template>
+
+          <template #item.running="{ item }">
+            <span
+              v-bind="props"
               class="text-no-wrap"
-              style="border-radius: 15px"
             >
-              <strong>{{ formatUptime(item.osUptime) }}</strong>
-            </VChip>
-          </span>
-        </template>
+              <VTooltip text="Time elapsed since installation">
+                <template #activator="{ props: tooltipProps }">
+                  <VChip
+                    color="info"
+                    size="small"
+                    class="mr-2 ml-2 text-no-wrap"
+                    v-bind="tooltipProps"
+                  >
+                    <VIcon
+                      icon="mdi-clock-fast"
+                      size="20"
+                    />
+                  </VChip>
+                </template>
+              </VTooltip>
+
+              <VChip
+                color="success"
+                label
+                size="small"
+                class="text-no-wrap"
+                style="border-radius: 15px"
+              >
+                <strong>{{ timeElapsed(item.runningSince) }}</strong>
+              </VChip>
+            </span>
+          </template>
+
+          <template #item.continent="{ item }">
+            <div
+              v-if="showLocation"
+              class="d-flex align-center text-no-wrap"
+            >
+              <VChip
+                v-if="item.continent"
+                color="success"
+                label
+                size="small"
+                class="text-no-wrap"
+                style="border-radius: 15px"
+              >
+                <strong>{{ item.continent }}</strong>
+              </VChip>
+            </div>
+          </template>
+
+          <template #item.country="{ item }">
+            <div
+              v-if="showLocation"
+              class="d-flex align-center text-no-wrap"
+            >
+              <VChip
+                v-if="item.country"
+                color="success"
+                label
+                size="small"
+                class="text-no-wrap"
+                style="border-radius: 15px"
+              >
+                <strong>{{ item.country }}</strong>
+              </VChip>
+            </div>
+          </template>
+
+          <template #item.region="{ item }">
+            <div
+              v-if="showLocation"
+              class="d-flex align-center text-no-wrap"
+            >
+              <VChip
+                v-if="item.region"
+                color="success"
+                label
+                size="small"
+                class="text-no-wrap"
+                style="border-radius: 15px"
+              >
+                <strong>{{ item.region }}</strong>
+              </VChip>
+            </div>
+          </template>
   
-        <template #item.visit="{ item }">
-          <div class="d-flex justify-end">
-            <VTooltip text="Visit App">
-              <template #activator="{ props: btnProps }">
-                <VBtn
-                  v-bind="btnProps"
-                  size="x-small"
-                  color="primary"
-                  class="mr-2"
-                  rounded="pill"
-                  @click="openApp(item.name, item.ip.split(':')[0], getProperPort(appSpec))"
-                >
-                  <VIcon
-                    start
-                    icon="mdi-door-open"
-                  />
-                  App
-                </VBtn>
-              </template>
-            </VTooltip>
+          <template #item.visit="{ item }">
+            <div class="d-flex justify-end">
+              <VTooltip text="Visit App">
+                <template #activator="{ props: btnProps }">
+                  <VBtn
+                    v-bind="btnProps"
+                    size="x-small"
+                    color="primary"
+                    class="mr-2"
+                    rounded="pill"
+                    @click="openApp(item.name, item.ip.split(':')[0], getProperPort(appSpec))"
+                  >
+                    <VIcon
+                      size="18"
+                      icon="mdi-door-open"
+                    />
+                  </VBtn>
+                </template>
+              </VTooltip>
   
-            <VTooltip text="Visit FluxNode">
-              <template #activator="{ props: btnProps }">
-                <VBtn
-                  v-bind="btnProps"
-                  size="x-small"
-                  variant="outlined"
-                  color="primary"
-                  rounded="pill"
-                  @click="
-                    openNodeFluxOS(
-                      item.ip.split(':')[0],
-                      item.ip.split(':')[1] ? +item.ip.split(':')[1] - 1 : 16126
-                    )
-                  "
-                >
-                  <VIcon
-                    start
-                    icon="mdi-home"
-                  />
-                  FluxNode
-                </VBtn>
-              </template>
-            </VTooltip>
-          </div>
-        </template>
-      </VDataTable>
-  
+              <VTooltip text="Visit FluxNode">
+                <template #activator="{ props: btnProps }">
+                  <VBtn
+                    v-bind="btnProps"
+                    size="x-small"
+                    color="primary"
+                    rounded="pill"
+                    @click="
+                      openNodeFluxOS(
+                        item.ip.split(':')[0],
+                        item.ip.split(':')[1] ? +item.ip.split(':')[1] - 1 : 16126
+                      )
+                    "
+                  >
+                    <VIcon
+                      size="18"
+                      icon="mdi-home"
+                    />
+                  </VBtn>
+                </template>
+              </VTooltip>
+            </div>
+          </template>
+        </VDataTable>
+      </VSheet>
       <!-- Pagination -->
       <div>
         <VPagination
@@ -190,6 +291,7 @@
   
 <script setup>
 import { ref, computed, watch } from "vue"
+import axios from 'axios'
   
 // Props
 const props = defineProps({
@@ -205,6 +307,14 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  showLocation: {
+    type: Boolean,
+    default: false,
+  },
+  selectedNode: {
+    type: String,
+    default: '',
+  },
 })
   
 // Reactive state
@@ -216,25 +326,53 @@ const appLocationOptions = ref({
   currentPage: 1,
   filter: "",
 })
-  
-const appLocationFields = [
+
+const defaultFields = [
   { key: "ip", title: "IP Address",   cellClass: 'column-ip', headerProps: { class: 'column-ip' } },
-  { key: "osUptime", title: "Uptime" },
+  { key: "osUptime", title: "Uptime",  cellClass: 'column-uptime', headerProps: { class: 'column-uptime' } },
+  { key: "running", title: "Running",  cellClass: 'column-running', headerProps: { class: 'column-running' } },
+  ...(props.showLocation
+    ? [{ key: "continent", title: "Continent", sortable: false, cellClass: 'column-continent', headerProps: { class: 'column-continent' } }]
+    : []),
+  ...(props.showLocation
+    ? [{ key: "country", title: "Country", sortable: false, cellClass: 'column-country', headerProps: { class: 'column-country' } }]
+    : []),
+  ...(props.showLocation
+    ? [{ key: "region", title: "Region", sortable: false, cellClass: 'column-region', headerProps: { class: 'column-region' } }]
+    : []),
   { key: "visit", title: "" },
 ]
+
+const appLocationFields = computed(() => defaultFields)
+
+
+
   
 // Computed
 const mapLocations = computed(() => {
-  return props.appLocations.map(l => l.ip)
+  return filteredLocations.value.map(l => l.ip)
+})
+
+const mapKey = computed(() => {
+  return mapLocations.value.map(loc => typeof loc === 'string' ? loc : loc.ip).join(',')
 })
   
 const filteredLocations = computed(() => {
   const filter = appLocationOptions.value.filter?.toLowerCase()
-  if (!filter) return props.appLocations
   
-  return props.appLocations.filter(loc =>
-    loc.ip.toLowerCase().includes(filter),
-  )
+  // If there's no filter text, return all locations
+  if (!filter) return props.appLocations
+
+  return props.appLocations.filter(loc => {
+    // Check if the filter matches any of the fields (IP, Continent, Country, Region)
+    const ipMatch = loc.ip?.toLowerCase().includes(filter)
+    const continentMatch = loc.continent?.toLowerCase().includes(filter)
+    const countryMatch = loc.country?.toLowerCase().includes(filter)
+    const regionMatch = loc.region?.toLowerCase().includes(filter)
+
+    // Return true if any field matches
+    return ipMatch || continentMatch || countryMatch || regionMatch
+  })
 })
   
 const paginatedLocations = computed(() => {
@@ -312,10 +450,87 @@ function openNodeFluxOS(ip, port) {
     console.error("No FluxNode port available")
   }
 }
+
+async function runWithConcurrencyLimit(tasks, limit = 5) {
+  const results = []
+  const executing = []
+
+  for (const task of tasks) {
+    const p = task().then(res => {
+      executing.splice(executing.indexOf(p), 1)
+      
+      return res
+    })
+
+    results.push(p)
+    executing.push(p)
+
+    if (executing.length >= limit) {
+      await Promise.race(executing)
+    }
+  }
+
+  return Promise.all(results)
+}
+
+async function fetchLocationsWithGeolocation() {
+  try {
+    const tasks = props.appLocations.map(node => async () => {
+      const ip = node.ip.split(':')[0]
+      const port = node.ip.split(':')[1] || 16127
+      const url = `http://${ip}:${port}/flux/geolocation`
+
+      try {
+        const geoData = await axios.get(url)
+
+        if (geoData.data?.status === 'success') {
+          node.continent = geoData.data.data.continent || 'N/A'
+          node.country = geoData.data.data.country || 'N/A'
+          node.region = geoData.data.data.regionName || 'N/A'
+        } else {
+          node.continent = 'N/A'
+          node.country = 'N/A'
+          node.region = 'N/A'
+        }
+      } catch (error) {
+        console.error(`Error fetching geolocation for ${ip}:${port}`, error)
+        node.continent = 'N/A'
+        node.country = 'N/A'
+        node.region = 'N/A'
+      }
+    })
+
+    await runWithConcurrencyLimit(tasks, 10)
+  } catch (error) {
+    console.error('Error fetching locations:', error)
+  }
+}
+
+function timeElapsed(dateString) {
+  const givenDate = new Date(dateString)
+  const currentDate = new Date()
+  const timeDiff = currentDate - givenDate
+
+  const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24))
+  const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+  const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60))
+
+
+  // Return formatted time with pluralization
+  return `${days}d ${hours}h ${minutes}m`
+}
+
+onMounted(async () => {
+  if (props.showLocation) {
+    await fetchLocationsWithGeolocation()
+
+    // console.log('appLocations after geolocation:', JSON.stringify(props.appLocations, null, 2))
+  }
+})
 </script>
   
   <style scoped>
-  .table-wrapper {
+  .table-wrapper-location {
     width: 100%;
     min-width: 400px;
     max-width: 100%;
@@ -336,21 +551,24 @@ function openNodeFluxOS(ip, port) {
     border-radius: 8px;
     overflow: hidden;
   }
-  ::v-deep(.column-ip) {
-  width: 150px !important;
-  min-width: 150px !important;
-  max-width: 150px !important;
-  text-align: center !important;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+ 
+
+/* Adjust column width and padding for clarity */
+::v-deep(.locations-table td.v-data-table__td:nth-child(1)),
+::v-deep(.locations-table th.v-data-table__th:nth-child(1)) {
+  padding: 0px 16px 0px 24px !important;
+  min-width: 230px !important;
+  max-width: 255px !important;
+  white-space: nowrap;
 }
 
-/* Target the entire column by using both header and row cell selectors */
-::v-deep(td.v-data-table__td:nth-child(1)),
-::v-deep(th.v-data-table__th:nth-child(1)) {
-  width: 200px !important; /* or whatever width you prefer */
-  min-width: 200px !important;
-  max-width: 270px !important;
+::v-deep(.locations-table td.v-data-table__td:nth-child(2)),
+::v-deep(.locations-table th.v-data-table__th:nth-child(2)),
+::v-deep(.locations-table td.v-data-table__td:nth-child(3)),
+::v-deep(.locations-table th.v-data-table__th:nth-child(3)) {
+  padding: 0 !important;
+  min-width: 155px !important;
+  max-width: 175px !important;
   white-space: nowrap;
 }
   </style>

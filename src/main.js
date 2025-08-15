@@ -7,6 +7,13 @@ import sanitizeHtml from '@/utils/sanitizeHtml'
 import '@core/scss/template/index.scss'
 import '@styles/styles.scss'
 
+import process from 'process'
+import { Buffer } from 'buffer'
+import { EventEmitter2 } from 'eventemitter2'
+
+window.process = process
+window.Buffer = Buffer
+
 // Create vue app
 const app = createApp(App)
 
