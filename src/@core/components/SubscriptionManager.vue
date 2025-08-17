@@ -12,9 +12,9 @@
               rounded="sm"
               class="mr-2 ml-1"
             >
-              <VIcon size="26">mdi-account-cog</VIcon>
+              <VIcon size="26">{{ props.newApp ? 'mdi-package-variant-plus' : 'mdi-account-cog' }}</VIcon>
             </VAvatar>
-            <span class="text-h5">Subscription Management</span>
+            <span class="text-h5">{{ props.newApp ? 'Register New Application' : 'Subscription Management' }}</span>
           </div>
         </div>
       </VCol>
@@ -530,7 +530,7 @@
 
                 <!-- Repository Auth for Enterprise Apps (v7+) -->
                 <VTextField
-                  v-if="props.appSpec?.version >= 7 && appDetails.enterprise"
+                  v-if="props.appSpec?.version >= 7 && isPrivateApp"
                   v-model="component.repoauth"
                   label="Repository Authentication"
                   placeholder="Docker authentication username:apikey"
@@ -543,7 +543,7 @@
 
                 <!-- Secrets for Enterprise Apps (v7) -->
                 <VTextField
-                  v-if="props.appSpec?.version === 7 && appDetails.enterprise"
+                  v-if="props.appSpec?.version === 7 && isPrivateApp"
                   v-model="component.secrets"
                   label="Secrets"
                   placeholder="Enter secrets (will be encrypted)"
@@ -645,6 +645,7 @@
                         v-model.number="newPorts[componentIndex].exposed"
                         type="number"
                         label="Exposed Port"
+                        density="compact"
                         hide-details
                         dense
                         style="max-width: 140px;"
@@ -653,11 +654,12 @@
                         v-model.number="newPorts[componentIndex].container"
                         type="number"
                         label="Container Port"
+                        density="compact"
                         hide-details
                         dense
                         style="max-width: 140px;"
                       />
-                      <VBtn icon color="primary" @click="addPortPair(componentIndex)">
+                      <VBtn icon color="primary" density="compact" @click="addPortPair(componentIndex)">
                         <VIcon size="18">mdi-plus</VIcon>
                       </VBtn>
                     </div>
@@ -744,8 +746,7 @@
                     <VTable dense class="rounded domain-table" :style="{ '--v-table-header-height': '40px' }">
                       <thead>
                         <tr>
-                          <th>Exposed Port</th>
-                          <th>Domain</th>
+                          <th>Port & Domain Configuration</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -753,19 +754,21 @@
                           v-for="(port, portIndex) in component.ports"
                           :key="`domain-port-${portIndex}`"
                         >
-                          <td><VChip size="small" color="success" variant="tonal" label>
-                            <VIcon class="mr-1">mdi-connection</VIcon>
-                            {{ port }}
-                          </VChip></td>
                           <td>
-                            <VTextField
-                              v-model="component.domains[portIndex]"
-                              density="compact"
-                              hide-details
-                              placeholder="Enter domain"
-                              persistent-placeholder
-                              class="small-text-field"
-                            />
+                            <div class="d-flex align-center gap-2">
+                              <VChip size="small" color="success" variant="tonal" label style="flex: 0 0 auto;">
+                                <VIcon class="mr-1">mdi-connection</VIcon>
+                                {{ port }}
+                              </VChip>
+                              <VTextField
+                                v-model="component.domains[portIndex]"
+                                density="compact"
+                                hide-details
+                                placeholder="Enter domain for this port"
+                                persistent-placeholder
+                                class="small-text-field flex-grow-1"
+                              />
+                            </div>
                           </td>
                         </tr>
                       </tbody>
@@ -1758,8 +1761,8 @@ const tabItems = computed(() => {
     { label: 'Components', icon: 'mdi-cube', value: 2 },
   ]
   
-  // Only show Priority/Enterprise Nodes tab for v7+
-  if (props.appSpec?.version >= 7) {
+  // Only show Priority/Enterprise Nodes tab for v7+ private apps
+  if (props.appSpec?.version >= 7 && isPrivateApp.value) {
     baseItems.push({
       label: props.appSpec?.version === 7 ? 'Enterprise Nodes' : 'Priority Nodes',
       icon: 'mdi-server-network',
@@ -2559,7 +2562,7 @@ const filteredSelectedNodes = computed(() => {
   return selectedNodes.value.filter(node => 
     node.ip.toLowerCase().includes(filter) ||
     node.payment_address.toLowerCase().includes(filter) ||
-    node.tier.toLowerCase().includes(filter)
+    node.tier.toLowerCase().includes(filter),
   )
 })
 
@@ -3349,8 +3352,7 @@ async function verifyAppSpec() {
       }
     } else if (appSpecTemp.version === 7) {
       // Handle v7 encryption
-      if (appDetails.value.enterprise) {
-        isPrivateApp.value = true
+      if (isPrivateApp.value) {
         
         // Ensure we have selected nodes
         if (!selectedNodes.value || selectedNodes.value.length === 0) {

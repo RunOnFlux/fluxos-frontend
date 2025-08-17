@@ -21,6 +21,7 @@ export default [
       {
         title: 'menu.application.registerNewApp',  // Key for title without translation
         icon: { icon: 'mdi-package-variant-plus', size: 20 },
+        to: 'apps-register',
       },
       {
         title: 'menu.application.marketplace',  // Key for title without translation
