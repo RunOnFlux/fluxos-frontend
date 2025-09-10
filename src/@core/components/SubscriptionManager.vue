@@ -1023,7 +1023,7 @@
                       <div class="d-flex align-center">
                         <div class="d-flex align-center label-column">
                           <VIcon size="20" class="mr-1">mdi-speedometer</VIcon>
-                          <span>CPU (vCore)</span>
+                          <span>CPU (vCore) </span>
                         </div>
                         <VSlider
                           v-model="component.cpu"
@@ -1032,12 +1032,12 @@
                           :step="0.1"
                           :thumb-label="false"
                           hide-details
-                          class="flex-grow-1 mr-5"
+                          class="flex-grow-1 hardware-slider"
                         />
                         <VTextField
                           v-model.number="component.cpu"
                           type="number"
-                          dense
+                          step="0.1" 
                           hide-details
                           density="compact"
                           variant="outlined"
@@ -1059,7 +1059,7 @@
                           :step="100"
                           :thumb-label="false"
                           hide-details
-                          class="flex-grow-1 mr-5"
+                          class="flex-grow-1 hardware-slider"
                         />
                         <VTextField
                           v-model.number="component.ram"
@@ -1086,7 +1086,7 @@
                           :step="1"
                           :thumb-label="false"
                           hide-details
-                          class="flex-grow-1 mr-5"
+                          class="flex-grow-1 hardware-slider"
                         />
                         <VTextField
                           v-model.number="component.hdd"
@@ -5408,6 +5408,21 @@ async function signMethod() {
   width: 85px;
   min-width: 85px;
   max-width: 85px;
+}
+
+/* Hardware slider consistent sizing and spacing */
+.hardware-slider {
+  margin-left: 16px !important;
+  margin-right: 20px !important;
+  min-width: 150px;
+}
+
+.hardware-slider :deep(.v-slider__thumb) {
+  margin-left: 8px;
+}
+
+.hardware-slider :deep(.v-slider__track-container) {
+  margin-left: 8px;
 }
 
 :deep(.small-text-field input) {
