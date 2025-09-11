@@ -851,7 +851,7 @@
 import { useRouter, useRoute } from "vue-router"
 import { eventBus } from "@/utils/eventBus"
 import axios from "axios"
-import { decryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey } from "@/utils/enterpriseCrypto"
+import { decryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey, isWebCryptoAvailable } from "@/utils/enterpriseCrypto"
 import AppsService from "@/services/AppsService"
 import { useFluxStore } from "@/stores/flux"
 import IDService from "@/services/IDService"
@@ -1577,6 +1577,12 @@ async function getDecryptedEnterpriseFields(options = {}) {
     showToast('error', 'Unable to get encryption pubkey')
 
     return null
+  }
+
+  // Check if WebCrypto is available before proceeding
+  if (!isWebCryptoAvailable()) {
+    console.warn('WebCrypto not available, cannot decrypt enterprise app')
+    throw new Error('Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
   }
 
   const rsaPubKey = await importRsaPublicKey(pubkey)

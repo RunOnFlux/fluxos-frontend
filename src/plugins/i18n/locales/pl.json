@@ -31,6 +31,9 @@
     "fluxXdao": {
       "title": "Flux XDAO"
     },
+    "costCalculator": {
+      "title": "Wycena aplikacji"
+    },
     "apiReference": {
       "title": "Dokumentacja API"
     }

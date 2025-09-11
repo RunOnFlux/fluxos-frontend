@@ -101,7 +101,7 @@ import Management from "@/views/apps/management/manage.vue"
 import MyAppsTab from "@/views/apps/management/tabView.vue"
 import AppsService from "@/services/AppsService"
 import DaemonService from "@/services/DaemonService"
-import { decryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey } from "@/utils/enterpriseCrypto"
+import { decryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey, isWebCryptoAvailable } from "@/utils/enterpriseCrypto"
 
 import { storeToRefs } from "pinia"
 import { useFluxStore } from "@/stores/flux"
@@ -166,6 +166,12 @@ async function decryptIfEnterprise(spec, idx = 0) {
       
       return spec
     }
+    // Check if WebCrypto is available before proceeding
+    if (!isWebCryptoAvailable()) {
+      console.warn(`${tag} ⚠️ WebCrypto not available, skipping enterprise decryption`)
+      return spec
+    }
+
     const pubKeyB64 = pubRes.data.data.trim().replace(/\s+/g, '')
     const rsaPubKey = await importRsaPublicKey(pubKeyB64)
 

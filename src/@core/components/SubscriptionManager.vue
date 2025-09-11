@@ -2247,6 +2247,7 @@ import {
   encryptEnterpriseWithAes,
   encryptMessage,
   getEnterprisePGPKeys,
+  isWebCryptoAvailable,
 } from '@/utils/enterpriseCrypto'
 
 // Import payment images
@@ -4055,6 +4056,12 @@ async function verifyAppSpec() {
         }
         const pubkey = responseGetPublicKey.data.data
         console.log('Retrieved public key length:', pubkey.length)
+
+        // Check if WebCrypto is available before proceeding
+        if (!isWebCryptoAvailable()) {
+          console.warn('WebCrypto not available, cannot use enterprise features')
+          throw new Error('Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+        }
 
         const rsaPubKey = await importRsaPublicKey(pubkey)
         const aesKey = crypto.getRandomValues(new Uint8Array(32))

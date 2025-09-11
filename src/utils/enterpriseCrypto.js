@@ -2,10 +2,39 @@ import { Buffer } from 'buffer'
 import * as openpgp from 'openpgp'
 import axios from 'axios'
 
+// Check if WebCrypto API is available
+function checkWebCryptoAvailability() {
+  if (!window.crypto || !window.crypto.subtle) {
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const isHttps = window.location.protocol === 'https:'
+    
+    let errorMessage = 'WebCrypto API is not available. '
+    
+    if (!isHttps && !isLocalhost) {
+      errorMessage += 'Enterprise features require HTTPS. Please access this application using HTTPS instead of HTTP.'
+    } else if (!isLocalhost) {
+      errorMessage += 'Please use localhost for development or HTTPS for production.'
+    } else {
+      errorMessage += 'This feature requires a modern browser with WebCrypto support.'
+    }
+    
+    throw new Error(errorMessage)
+  }
+}
+
+// Check if WebCrypto is available without throwing
+function isWebCryptoAvailable() {
+  return !!(window.crypto && window.crypto.subtle)
+}
+
+// Polyfill for crypto if needed
+const cryptoApi = window.crypto || window.msCrypto
+
 async function importRsaPublicKey(base64SpkiDer) {
+  checkWebCryptoAvailability()
   const spkiDer = Buffer.from(base64SpkiDer, 'base64')
    
-  return await crypto.subtle.importKey(
+  return await cryptoApi.subtle.importKey(
     'spki',
     spkiDer,
     { name: 'RSA-OAEP', hash: 'SHA-256' },
@@ -40,9 +69,10 @@ function arrayBufferToBase64(buffer) {
 }
 
 async function encryptAesKeyWithRsaKey(aesKey, rsaPubKey) {
+  checkWebCryptoAvailability()
   const base64AesKey = arrayBufferToBase64(aesKey)
 
-  const rsaEncryptedBase64AesKey = await crypto.subtle.encrypt(
+  const rsaEncryptedBase64AesKey = await cryptoApi.subtle.encrypt(
     { name: 'RSA-OAEP' },
     rsaPubKey,
     Buffer.from(base64AesKey),
@@ -60,11 +90,12 @@ async function encryptEnterpriseWithAes(
   aesKey,
   base64RsaEncryptedAesKey,
 ) {
-  const nonce = crypto.getRandomValues(new Uint8Array(12))
+  checkWebCryptoAvailability()
+  const nonce = cryptoApi.getRandomValues(new Uint8Array(12))
   const plaintextEncoded = new TextEncoder().encode(plainText)
   const rsaEncryptedAesKey = base64ToUint8Array(base64RsaEncryptedAesKey)
 
-  const aesCryptoKey = await crypto.subtle.importKey(
+  const aesCryptoKey = await cryptoApi.subtle.importKey(
     'raw',
     aesKey,
     'AES-GCM',
@@ -72,7 +103,7 @@ async function encryptEnterpriseWithAes(
     ['encrypt', 'decrypt'],
   )
 
-  const ciphertextTagBuf = await crypto.subtle.encrypt(
+  const ciphertextTagBuf = await cryptoApi.subtle.encrypt(
     { name: 'AES-GCM', iv: nonce },
     aesCryptoKey,
     plaintextEncoded,
@@ -99,12 +130,13 @@ async function encryptEnterpriseWithAes(
 }
 
 async function decryptEnterpriseWithAes(base64nonceCiphertextTag, aesKey) {
+  checkWebCryptoAvailability()
   const nonceCiphertextTag = base64ToUint8Array(base64nonceCiphertextTag)
 
   const nonce = nonceCiphertextTag.slice(0, 12)
   const ciphertextTag = nonceCiphertextTag.slice(12)
 
-  const aesCryptoKey = await crypto.subtle.importKey(
+  const aesCryptoKey = await cryptoApi.subtle.importKey(
     'raw',
     aesKey,
     'AES-GCM',
@@ -112,7 +144,7 @@ async function decryptEnterpriseWithAes(base64nonceCiphertextTag, aesKey) {
     ['encrypt', 'decrypt'],
   )
 
-  const plainTextBuf = await crypto.subtle.decrypt(
+  const plainTextBuf = await cryptoApi.subtle.decrypt(
     { name: 'AES-GCM', iv: nonce },
     aesCryptoKey,
     ciphertextTag,
@@ -176,6 +208,8 @@ async function getEnterprisePGPKeys(selectedNodes) {
 }
 
 export {
+  checkWebCryptoAvailability,
+  isWebCryptoAvailable,
   importRsaPublicKey,
   base64ToUint8Array,
   arrayBufferToBase64,

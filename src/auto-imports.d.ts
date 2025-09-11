@@ -23,6 +23,7 @@ declare global {
   const avatarText: typeof import('./@core/utils/formatters.js')['avatarText']
   const base64ToUint8Array: typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']
   const betweenValidator: typeof import('./@core/utils/validators.js')['betweenValidator']
+  const checkWebCryptoAvailability: typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']
   const colors: typeof import('./utils/colors.js')['default']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
@@ -92,6 +93,7 @@ declare global {
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
   const isToday: typeof import('./@core/utils/helpers.js')['isToday']
+  const isWebCryptoAvailable: typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']
   const kFormatter: typeof import('./@core/utils/formatters.js')['kFormatter']
   const kkkk: typeof import('./utils/kkkk.js')['default']
   const latLng: typeof import('leaflet')['latLng']
@@ -412,6 +414,7 @@ declare module 'vue' {
     readonly avatarText: UnwrapRef<typeof import('./@core/utils/formatters.js')['avatarText']>
     readonly base64ToUint8Array: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']>
     readonly betweenValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['betweenValidator']>
+    readonly checkWebCryptoAvailability: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']>
     readonly colors: UnwrapRef<typeof import('./utils/colors.js')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
@@ -480,6 +483,7 @@ declare module 'vue' {
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isToday: UnwrapRef<typeof import('./@core/utils/helpers.js')['isToday']>
+    readonly isWebCryptoAvailable: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']>
     readonly kFormatter: UnwrapRef<typeof import('./@core/utils/formatters.js')['kFormatter']>
     readonly lengthValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['lengthValidator']>
     readonly logicAnd: UnwrapRef<typeof import('@vueuse/math')['logicAnd']>
