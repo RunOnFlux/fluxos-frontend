@@ -1582,7 +1582,8 @@ async function getDecryptedEnterpriseFields(options = {}) {
   // Check if WebCrypto is available before proceeding
   if (!isWebCryptoAvailable()) {
     console.warn('WebCrypto not available, cannot decrypt enterprise app')
-    throw new Error('Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+    showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+    return null
   }
 
   const rsaPubKey = await importRsaPublicKey(pubkey)

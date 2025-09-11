@@ -4061,7 +4061,13 @@ async function verifyAppSpec() {
         // Check if WebCrypto is available before proceeding
         if (!isWebCryptoAvailable()) {
           console.warn('WebCrypto not available, cannot use enterprise features')
-          throw new Error('Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+          
+          // Show user-friendly toast instead of blocking error
+          showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert-triangle', 6000)
+          
+          // Reset enterprise mode and return gracefully
+          appSpec.value.enterprise = ''
+          return
         }
 
         const rsaPubKey = await importRsaPublicKey(pubkey)

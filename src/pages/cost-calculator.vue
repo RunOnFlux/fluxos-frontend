@@ -182,11 +182,17 @@
               <div class="mb-4">
                 <VCheckbox
                   :model-value="formData.enterprise === 'enterprise'"
+                  :disabled="!isEnterpriseAvailable"
                   label="Enterprise Application"
                   @update:model-value="(val) => { formData.enterprise = val ? 'enterprise' : ''; console.log('Enterprise changed:', val, 'to:', formData.enterprise); calculateCost(); }"
                 />
                 <p class="text-body-2 text-medium-emphasis ml-8">
-                  Enterprise applications run on Arcane OS with enhanced privacy protection, encrypted data handling, and priority deployment on specialized nodes
+                  <template v-if="isEnterpriseAvailable">
+                    Enterprise applications run on Arcane OS with enhanced privacy protection, encrypted data handling, and priority deployment on specialized nodes
+                  </template>
+                  <template v-else>
+                    Enterprise applications require HTTPS or localhost. Please use a secure connection to access enterprise features.
+                  </template>
                 </p>
               </div>
 
@@ -228,10 +234,18 @@
                     </h3>
                   </div>
                   <div class="text-end">
-                    <div class="text-h5 font-weight-bold text-primary">
-                      {{ costResult.usd ? `$${costResult.usd} USD` : 'Calculating...' }}
+                    <div class="text-h5 font-weight-bold text-success">
+                      <template v-if="calculating">
+                        <div class="d-flex align-center justify-end">
+                          <VIcon icon="tabler-loader" class="spinning-icon me-1" size="24" />
+                          Calculating...
+                        </div>
+                      </template>
+                      <template v-else>
+                        {{ costResult.usd ? `$${costResult.usd} USD` : 'Calculating...' }}
+                      </template>
                     </div>
-                    <div class="text-body-2">
+                    <div v-if="!calculating" class="text-body-2">
                       {{ costResult.flux ? `${costResult.flux} FLUX` : '' }}
                       {{ costResult.discount ? `with ${costResult.discount}% discount` : '' }}
                     </div>
@@ -422,6 +436,23 @@
         </VCardActions>
       </VCard>
     </VDialog>
+
+    <!-- Toast Snackbar -->
+    <VSnackbar
+      v-model="snackbar"
+      :timeout="5000"
+      :color="snackbarColor"
+      location="top center"
+    >
+      <div class="d-flex align-center">
+        <VIcon 
+          icon="mdi-alert" 
+          class="mr-3" 
+          size="32"
+        />
+        {{ snackbarMessage }}
+      </div>
+    </VSnackbar>
   </div>
 </template>
 
@@ -480,6 +511,15 @@ const helpDialog = reactive({
   show: false,
   item: null,
 })
+
+// Snackbar for toast notifications
+const snackbar = ref(false)
+const snackbarMessage = ref("")
+const snackbarColor = ref("success")
+const snackbarIcon = ref("mdi-check-circle")
+
+// WebCrypto availability check for enterprise features
+const isEnterpriseAvailable = computed(() => isWebCryptoAvailable())
 
 // Renewal period options
 const renewalOptions = [
@@ -602,6 +642,8 @@ const calculateCost = async (retryCount = 0) => {
     return
   }
   
+  const startTime = Date.now() // Capture start time for minimum display duration
+  
   calculating.value = true
   costResult.flux = 'Calculating...'
   costResult.usd = ''
@@ -617,7 +659,19 @@ const calculateCost = async (retryCount = 0) => {
     // If enterprise is enabled, prepare enterprise data for v8+
     if (formData.enterprise === 'enterprise') {
       if (!isWebCryptoAvailable()) {
-        throw new Error('WebCrypto API is required for enterprise applications. Please use HTTPS or localhost.')
+        // Gracefully disable enterprise mode and show warning instead of blocking
+        console.warn('WebCrypto API is not available. Enterprise mode disabled. Please use HTTPS or localhost for enterprise applications.')
+        
+        // Show user-friendly toast instead of error in cost display
+        showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+        
+        // Reset enterprise mode and continue with normal calculation
+        formData.enterprise = '' // Reset to standard mode
+        enterpriseValue = ''
+        
+        // Small delay to ensure toast is visible before continuing
+        await new Promise(resolve => setTimeout(resolve, 100))
+        // Don't return - continue with normal calculation
       }
       
       try {
@@ -707,6 +761,15 @@ const calculateCost = async (retryCount = 0) => {
     console.log('Cost calculation response:', response.data)
 
     if (response.data.status !== 'error') {
+      // Add a minimum delay to show the animation
+      const minDisplayTime = 1000 
+      
+      await new Promise(resolve => {
+        const elapsed = Date.now() - startTime
+        const remainingTime = Math.max(0, minDisplayTime - elapsed)
+        setTimeout(resolve, remainingTime)
+      })
+      
       costResult.flux = response.data.data.flux
       costResult.usd = response.data.data.usd
       costResult.discount = response.data.data.fluxDiscount
@@ -716,7 +779,7 @@ const calculateCost = async (retryCount = 0) => {
   } catch (error) {
     console.error('Error calculating cost:', error)
     
-    // Handle different error types
+    // Handle different error types with toast notifications
     if (error.code === 'ERR_NETWORK' || error.response?.status === 504 || error.response?.status >= 500) {
       // Network or server error - try retry
       if (retryCount < 2) {
@@ -725,21 +788,40 @@ const calculateCost = async (retryCount = 0) => {
         setTimeout(() => calculateCost(retryCount + 1), 2000) // Retry after 2 seconds
         return
       } else {
-        costResult.flux = 'API server unavailable'
-        costResult.usd = 'Please try again later'
+        showToast('error', 'API server unavailable. Please try again later.')
       }
     } else if (error.response?.status === 400) {
-      costResult.flux = 'Invalid configuration'
-      costResult.usd = 'Please check your settings'
+      showToast('warning', 'Invalid configuration. Please check your settings.')
     } else {
-      costResult.flux = 'Calculation error'
-      costResult.usd = 'Please try again'
+      showToast('error', 'Calculation error. Please try again.')
     }
     
-    costResult.discount = ''
+    // Keep previous values or show empty if no previous calculation
+    if (!costResult.flux || costResult.flux === 'Calculating...') {
+      costResult.flux = '- FLUX'
+      costResult.usd = '- USD' 
+      costResult.discount = ''
+    }
   } finally {
     calculating.value = false
   }
+}
+
+function showToast(type, message) {
+  snackbarMessage.value = message
+  snackbarColor.value = type === "danger" ? "error" : type
+  
+  // Set appropriate icon based on toast type
+  const iconMap = {
+    success: 'mdi-check-circle',
+    error: 'mdi-alert-circle',
+    warning: 'mdi-alert-triangle',
+    info: 'mdi-information',
+    danger: 'mdi-alert-circle',
+  }
+  snackbarIcon.value = iconMap[type] || 'mdi-information'
+  
+  snackbar.value = true
 }
 
 const selectPreset = preset => {
@@ -851,6 +933,19 @@ const calculatePresetPrices = async () => {
 
 // Lifecycle
 onMounted(async () => {
+  // Check WebCrypto availability and inform users about HTTPS requirement for enterprise features
+  if (!isWebCryptoAvailable()) {
+    const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+    const isHttps = window.location.protocol === 'https:'
+    
+    if (!isHttps && !isLocalhost) {
+      // Show warning toast about enterprise feature limitations on HTTP
+      setTimeout(() => {
+        showToast('warning', 'Enterprise features require HTTPS. Only standard deployments available on HTTP.')
+      }, 1000) // Delay to let page load completely
+    }
+  }
+  
   await fetchFluxPrice()
   await calculateCost()
   await calculatePresetPrices()
@@ -930,6 +1025,20 @@ definePage({
   to {
     transform: translateY(0);
     opacity: 1;
+  }
+}
+
+/* Spinning animation for loader icon */
+.spinning-icon {
+  animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
   }
 }
 </style>

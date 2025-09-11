@@ -1,5 +1,4 @@
 import { Buffer } from 'buffer'
-import * as openpgp from 'openpgp'
 import axios from 'axios'
 
 // Check if WebCrypto API is available
@@ -158,6 +157,14 @@ async function decryptEnterpriseWithAes(base64nonceCiphertextTag, aesKey) {
 // PGP Encryption functions for v7
 async function encryptMessage(message, publicKeys) {
   try {
+    // Check WebCrypto availability first to provide better error messages
+    if (!isWebCryptoAvailable()) {
+      throw new Error('Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+    }
+
+    // Dynamic import of OpenPGP only when needed
+    const openpgp = await import('openpgp')
+    
     const pgpPublicKeys = await Promise.all(
       publicKeys.map(keyArmored => openpgp.readKey({ armoredKey: keyArmored })),
     )
