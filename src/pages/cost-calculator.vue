@@ -322,7 +322,7 @@
                   <th class="text-no-wrap">RAM</th>
                   <th class="text-no-wrap">SSD</th>
                   <th class="text-no-wrap">Cost</th>
-                  <th class="text-no-wrap">Action</th>
+                  <th class="text-no-wrap"></th>
                 </tr>
               </thead>
               <tbody>
@@ -345,7 +345,7 @@
                   </td>
                   <td class="text-no-wrap">
                     <VBtn
-                      variant="outlined"
+                      variant="flat"
                       size="x-small"
                       @click="selectPreset(preset)"
                     >
