@@ -41,12 +41,6 @@
       ],
       "@validators": [
         "./src/@core/utils/validators"
-      ],
-      "@db/*": [
-        "./src/plugins/fake-api/handlers/*"
-      ],
-      "@api-utils/*": [
-        "./src/plugins/fake-api/utils/*"
       ]
     },
     "types": [

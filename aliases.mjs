@@ -11,6 +11,4 @@ export const aliases = {
   '@images': path.resolve(baseDir, './src/assets/images/'),
   '@styles': path.resolve(baseDir, './src/assets/styles/'),
   '@configured-variables': path.resolve(baseDir, './src/assets/styles/variables/_template.scss'),
-  '@db': path.resolve(baseDir, './src/plugins/fake-api/handlers/'),
-  '@api-utils': path.resolve(baseDir, './src/plugins/fake-api/utils/'),
 }

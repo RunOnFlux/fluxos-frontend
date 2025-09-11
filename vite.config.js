@@ -6,7 +6,6 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { VueRouterAutoImports, getPascalCaseRouteName } from 'unplugin-vue-router';
 import VueRouter from 'unplugin-vue-router/vite';
-import { vite as vidstack } from 'vidstack/plugins';
 import { defineConfig } from 'vite';
 import VueDevTools from 'vite-plugin-vue-devtools';
 import { ClientSideLayout } from 'vite-plugin-vue-layouts';
@@ -29,7 +28,7 @@ export default defineConfig(({ mode }) => {
       vue({
         template: {
           compilerOptions: {
-            isCustomElement: (tag) => tag === 'swiper-container' || tag === 'swiper-slide' || tag.startsWith('media-'),
+            isCustomElement: (tag) => tag === 'swiper-container' || tag === 'swiper-slide',
           },
         },
       }),
@@ -79,11 +78,15 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       svgLoader(),
-      vidstack(),
     ],
     define: {
       'process.env': {},
       global: 'globalThis', // ✅ important for some node packages
+      // Disable Lit dev mode in production
+      ...(mode === 'production' && {
+        'globalThis.litIssuedWarnings': 'false',
+        'globalThis.litDevMode': 'false',
+      }),
     },
     resolve: {
       alias: {
@@ -119,14 +122,12 @@ export default defineConfig(({ mode }) => {
           manualChunks: {
             vuetify: ['vuetify'],
             apexcharts: ['vue3-apexcharts'],
-            vidstack: ['vidstack'],
           },
         },
       },
     },
     optimizeDeps: {
       include: [
-        'msw',
         'leaflet',
         'leaflet.markercluster',
         '@metamask/sdk',

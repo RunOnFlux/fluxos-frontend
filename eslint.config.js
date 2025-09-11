@@ -4,7 +4,6 @@ import pluginVue from 'eslint-plugin-vue'
 import pluginImport from 'eslint-plugin-import'
 import pluginPromise from 'eslint-plugin-promise'
 import pluginSonarjs from 'eslint-plugin-sonarjs'
-import pluginCasePolice from 'eslint-plugin-case-police'
 import pluginRegexp from 'eslint-plugin-regexp'
 import pluginRegex from 'eslint-plugin-regex'
 import vueParser from 'vue-eslint-parser'
@@ -20,8 +19,6 @@ const aliases = {
   '@images': path.resolve(baseDir, './src/assets/images/'),
   '@styles': path.resolve(baseDir, './src/assets/styles/'),
   '@configured-variables': path.resolve(baseDir, './src/assets/styles/variables/_template.scss'),
-  '@db': path.resolve(baseDir, './src/plugins/fake-api/handlers/'),
-  '@api-utils': path.resolve(baseDir, './src/plugins/fake-api/utils/'),
 }
 
 export default [
@@ -50,7 +47,6 @@ export default [
       import: pluginImport,
       promise: pluginPromise,
       sonarjs: pluginSonarjs,
-      casePolice: pluginCasePolice,
       regexp: pluginRegexp,
       regex: pluginRegex,
     },
@@ -91,10 +87,10 @@ export default [
       'vue/first-attribute-linebreak': ['error', { singleline: 'beside', multiline: 'below' }],
       'vue/component-name-in-template-casing': ['error', 'PascalCase', {
         registeredComponentsOnly: false,
-        ignores: ['/^swiper-/', 'media-player', 'media-poster', 'media-provider', 'media-video-layout'],
+        ignores: ['/^swiper-/'],
       }],
       'vue/custom-event-name-casing': ['error', 'camelCase', {
-        ignores: ['/^(click):[a-z]+((\\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/', 'media-player', 'media-poster', 'media-provider', 'media-video-layout'],
+        ignores: ['/^(click):[a-z]+((\\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/'],
       }],
       'vue/require-default-prop': 'off',
       'vue/valid-v-slot': 'off',
