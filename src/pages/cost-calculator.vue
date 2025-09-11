@@ -444,7 +444,7 @@ const formData = reactive({
 })
 
 // Synchronization switch
-const syncEnabled = ref(true)
+const syncEnabled = ref(false)
 
 
 // Generate compose array with single component using formData
@@ -733,6 +733,8 @@ const selectPreset = preset => {
   // Reset enterprise options when selecting preset
   formData.enterprise = ''
   formData.staticip = false
+  // Reset synchronization to disabled when selecting preset
+  syncEnabled.value = false
   calculateCost()
 }
 
