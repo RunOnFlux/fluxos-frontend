@@ -214,8 +214,11 @@
                   <template v-if="isEnterpriseAvailable">
                     Enterprise applications run on Arcane OS with enhanced privacy protection, encrypted data handling, and priority deployment on specialized nodes
                   </template>
-                  <template v-else>
+                  <template v-else-if="!isWebCryptoAvailable()">
                     Enterprise applications require HTTPS or localhost. Please use a secure connection to access enterprise features.
+                  </template>
+                  <template v-else>
+                    Enterprise applications require authentication. Please log in to access enterprise features.
                   </template>
                 </p>
               </div>
@@ -546,7 +549,11 @@ const snackbarColor = ref("success")
 const snackbarIcon = ref("mdi-check-circle")
 
 // WebCrypto availability check for enterprise features
-const isEnterpriseAvailable = computed(() => isWebCryptoAvailable())
+const isEnterpriseAvailable = computed(() => {
+  const hasWebCrypto = isWebCryptoAvailable()
+  const hasAuth = !!localStorage.getItem('zelidauth')
+  return hasWebCrypto && hasAuth
+})
 
 // Renewal period options
 const renewalOptions = [
@@ -714,7 +721,10 @@ const calculateCost = async (retryCount = 0) => {
         console.log('getAppPublicKey response:', pubKeyResponse.data)
         
         if (pubKeyResponse.data.status !== 'success') {
-          throw new Error(`Failed to get public key: ${pubKeyResponse.data.data || 'Unknown error'}`)
+          const errorMsg = typeof pubKeyResponse.data.data === 'object' 
+            ? JSON.stringify(pubKeyResponse.data.data) 
+            : pubKeyResponse.data.data || pubKeyResponse.data.message || 'Unknown error'
+          throw new Error(`Failed to get public key: ${errorMsg}`)
         }
         
         const pubKeyB64 = pubKeyResponse.data.data.trim().replace(/\s+/g, '')
