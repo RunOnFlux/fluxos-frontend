@@ -210,7 +210,7 @@
                   label="Enterprise Application"
                   @update:model-value="(val) => { formData.enterprise = val ? 'enterprise' : ''; console.log('Enterprise changed:', val, 'to:', formData.enterprise); calculateCost(); }"
                 />
-                <p class="text-body-2 text-medium-emphasis ml-8">
+                <p class="text-body-2 ml-8" :class="isEnterpriseAvailable ? 'text-medium-emphasis' : 'text-error'">
                   <template v-if="isEnterpriseAvailable">
                     Enterprise applications run on Arcane OS with enhanced privacy protection, encrypted data handling, and priority deployment on specialized nodes
                   </template>
