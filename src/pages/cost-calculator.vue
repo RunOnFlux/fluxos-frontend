@@ -7,24 +7,24 @@
       color="primary"
       elevation="2"
     >
-      <VCardText class="pa-8">
-        <div class="d-flex align-center">
+      <VCardText class="pa-6 pa-sm-8">
+        <div class="d-flex align-center flex-column flex-sm-row text-center text-sm-start">
           <VAvatar
-            size="64"
+            size="72"
             color="primary"
             variant="tonal"
-            class="me-4"
+            class="mb-4 mb-sm-0 me-sm-4"
           >
             <VIcon 
               icon="tabler-calculator" 
-              size="32"
+              size="40"
             />
           </VAvatar>
           <div>
-            <h1 class="text-h3 font-weight-bold mb-2">
-              App Cost Calculator
+            <h1 class="text-h4 text-sm-h3 font-weight-bold mb-2">
+              Cost Calculator
             </h1>
-            <p class="text-h6 text-medium-emphasis mb-0">
+            <p class="text-body-1 text-sm-h6 text-medium-emphasis mb-0">
               Calculate deployment costs for your Flux applications
             </p>
           </div>
@@ -375,13 +375,8 @@
                     :key="helpItem.question"
                     class="px-0"
                   >
-                    <VListItemTitle>
-                      <a 
-                        class="text-primary cursor-pointer"
-                        @click="openHelpDialog(helpItem)"
-                      >
-                        {{ helpItem.question }}
-                      </a>
+                    <VListItemTitle class="text-primary cursor-pointer" @click="openHelpDialog(helpItem)">
+                      {{ helpItem.question }}
                     </VListItemTitle>
                   </VListItem>
                 </VList>
@@ -410,7 +405,7 @@
                   <th class="text-no-wrap">CPU</th>
                   <th class="text-no-wrap">RAM</th>
                   <th class="text-no-wrap">SSD</th>
-                  <th class="text-no-wrap">Cost</th>
+                  <th class="text-no-wrap d-none d-sm-table-cell">Cost</th>
                   <th class="text-no-wrap"></th>
                 </tr>
               </thead>
@@ -423,7 +418,7 @@
                   <td class="text-no-wrap">{{ preset.cpu }}</td>
                   <td class="text-no-wrap">{{ preset.ram }}GB</td>
                   <td class="text-no-wrap">{{ preset.ssd }}GB</td>
-                  <td class="text-no-wrap">
+                  <td class="text-no-wrap d-none d-sm-table-cell">
                     <div class="text-body-2 text-primary">
                       <template v-if="preset.flux === '...'">...</template>
                       <template v-else>{{ preset.flux }} FLUX</template>
@@ -564,7 +559,7 @@ const formData = reactive({
   storage: 1,
   enterprise: '',
   staticip: false,
-  ports: [80], // Default HTTP port as array
+  ports: [3000], // Default non-enterprise port as array
 })
 
 // Synchronization switch
@@ -580,11 +575,11 @@ const generateComposeArray = () => {
     name: "componentName1",
     description: "componentDesc1",
     repotag: "runonflux/jetpack2:latest",
-    ports: parsedPorts.value.length > 0 ? parsedPorts.value : [80], // Use user-defined ports or default to 80
+    ports: parsedPorts.value.length > 0 ? parsedPorts.value : [3000], // Use user-defined ports or default to 3000
     domains: [""],
     environmentParameters: [""],
     commands: [""],
-    containerPorts: parsedPorts.value.length > 0 ? parsedPorts.value : [80], // Match ports with containerPorts
+    containerPorts: parsedPorts.value.length > 0 ? parsedPorts.value : [3000], // Match ports with containerPorts
     containerData: syncEnabled.value ? "g:/data" : "/tmp",
     cpu: formData.cpu.toString(),
     ram: formData.memory.toString(),
@@ -1029,8 +1024,8 @@ const selectPreset = preset => {
   // Reset enterprise options when selecting preset
   formData.enterprise = ''
   formData.staticip = false
-  // Reset ports to default HTTP port
-  formData.ports = [80]
+  // Reset ports to default non-enterprise port
+  formData.ports = [3000]
   // Reset synchronization to disabled when selecting preset
   syncEnabled.value = false
   calculateCost()
@@ -1211,6 +1206,15 @@ definePage({
 
 .cursor-pointer {
   cursor: pointer;
+}
+
+/* Ensure help links stay blue even when truncated */
+.v-list-item-title.text-primary {
+  color: rgb(var(--v-theme-primary)) !important;
+}
+
+.v-list-item-title.text-primary:hover {
+  text-decoration: underline;
 }
 
 /* Preset table styling */
