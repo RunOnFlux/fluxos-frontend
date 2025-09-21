@@ -32,5 +32,6 @@ declare module 'vue-router/auto-routes' {
     'dashboards-resources': RouteRecordInfo<'dashboards-resources', '/dashboards/resources', Record<never, never>, Record<never, never>>,
     'dashboards-rewards': RouteRecordInfo<'dashboards-rewards', '/dashboards/rewards', Record<never, never>, Record<never, never>>,
     'unauthorized': RouteRecordInfo<'unauthorized', '/unauthorized', Record<never, never>, Record<never, never>>,
+    'xdao-app': RouteRecordInfo<'xdao-app', '/xdao-app', Record<never, never>, Record<never, never>>,
   }
 }

@@ -111,6 +111,13 @@ export default defineConfig(({ mode }) => {
       host: '0.0.0.0',
       port: 3000,
       open: isDev,
+      proxy: {
+        '/api/proposals': {
+          target: 'https://stats.runonflux.io',
+          changeOrigin: true,
+          rewrite: (path) => path.replace(/^\/api\/proposals/, '/proposals'),
+        },
+      },
     },
     build: {
       chunkSizeWarningLimit: 5000,

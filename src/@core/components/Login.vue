@@ -32,29 +32,31 @@
           md="4"
         >
           <div class="d-flex justify-center">
-            <VChipGroup
-              v-model="currentTab"
-              class="gap-2"
-              mandatory
-            >
-              <VChip
-                value="one"
-                color="primary"
+            <div class="d-flex gap-3 mb-4 mt-4">
+              <VBtn
+                :variant="currentTab === 'one' ? 'elevated' : 'outlined'"
+                :color="currentTab === 'one' ? 'primary' : 'default'"
+                size="small"
+                @click="currentTab = 'one'"
               >
+                <VIcon icon="mdi-wallet" class="me-1" size="16" />
                 {{ t("login.thirdPartyLogin") }}
-              </VChip>
-              <VChip
-                value="two"
-                color="primary"
+              </VBtn>
+              <VBtn
+                :variant="currentTab === 'two' ? 'elevated' : 'outlined'"
+                :color="currentTab === 'two' ? 'primary' : 'default'"
+                size="small"
+                @click="currentTab = 'two'"
               >
+                <VIcon icon="mdi-email" class="me-1" size="16" />
                 {{ t("login.emailPassword") }}
-              </VChip>
-            </VChipGroup>
+              </VBtn>
+            </div>
           </div>
 
           <VTabsWindow
             v-model="currentTab"
-            style="min-height: 210px"
+            :style="hideTabs ? 'min-height: 210px' : 'min-height: 210px'"
           >
             <!-- 3rd Party -->
             <VTabsWindowItem
@@ -387,7 +389,7 @@
 
     <!-- Manual Login -->
     <VCard
-      v-if="privilege === 'none'"
+      v-if="privilege === 'none' && !hideManualLogin"
       class="mt-6 rounded-xl elevation-4 pa-4"
     >
       <VCardTitle class="mt-2">
@@ -573,6 +575,14 @@ import qs from "qs"
 import { computed, nextTick, onMounted, onUnmounted, ref } from "vue"
 import { useI18n } from "vue-i18n"
 import { eventBus } from "@/utils/eventBus"
+
+// Props
+const props = defineProps({
+  hideManualLogin: {
+    type: Boolean,
+    default: false,
+  },
+})
 
 
 const MMSDK = new MetaMaskSDK({

@@ -3,6 +3,7 @@ export default [
   {
     title: 'menu.fluxXdao.title',
     icon: { icon: 'mdi-account-group' },
+    to: 'xdao-app',
   },
   {
     title: 'menu.costCalculator.title',
