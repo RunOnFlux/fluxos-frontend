@@ -72,19 +72,19 @@
       scrollable
     >
       <VCard>
-        <VCardTitle class="d-flex align-center" :class="selectedActionType === 'upgrade' ? 'pa-2' : 'pa-6'" :style="selectedActionType === 'upgrade' ? 'background-color: rgb(var(--v-theme-primary)); color: white;' : ''">
-          <h3 class="text-h5" :style="selectedActionType === 'upgrade' ? 'color: white;' : ''">
+        <VCardTitle class="d-flex align-center" :class="(selectedActionType === 'upgrade' || selectedActionType === 'renew') ? 'pa-2' : 'pa-6'" :style="(selectedActionType === 'upgrade' || selectedActionType === 'renew') ? 'background-color: rgb(var(--v-theme-primary)); color: white;' : ''">
+          <h3 class="text-h5" :style="(selectedActionType === 'upgrade' || selectedActionType === 'renew') ? 'color: white;' : ''">
             FluxDrive {{ selectedActionType === 'renew' ? 'Renewal' : selectedActionType === 'upgrade' ? 'Upgrade' : 'Checkout' }}
           </h3>
           <VSpacer />
           <VBtn
             icon="mdi-close"
             variant="text"
-            :color="selectedActionType === 'upgrade' ? 'white' : ''"
+            :color="(selectedActionType === 'upgrade' || selectedActionType === 'renew') ? 'white' : ''"
             @click="closeCheckoutDialog"
           />
         </VCardTitle>
-        <VCardText class="pa-6 pt-0">
+        <VCardText :class="(selectedActionType === 'upgrade' || selectedActionType === 'renew') ? 'pa-6 pt-4' : 'pa-6 pt-0'">
           <CheckoutContent
             ref="checkoutContentRef"
             :plan-id="selectedCheckoutPlan"
