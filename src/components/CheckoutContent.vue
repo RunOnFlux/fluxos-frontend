@@ -1027,6 +1027,43 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
   // Store initial subscription state to detect new payments
   let initialSubscriptionState = null
 
+  // For renewals and upgrades, capture initial subscription state for comparison
+  if (props.actionType === 'renew' || props.actionType === 'upgrade') {
+    try {
+      const auth = getAuthFromStorage()
+      const initialPayload = {
+        zelid: auth.zelid || fluxStore.zelid,
+        signature: auth.signature,
+        loginPhrase: auth.loginPhrase,
+      }
+
+      console.log('📸 Capturing initial storage state for renewal monitoring...')
+      console.log('📸 Initial payload:', { zelid: initialPayload.zelid })
+
+      const initialResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(initialPayload),
+      })
+
+      console.log('📸 Initial response status:', initialResponse.status)
+
+      const initialResult = await initialResponse.json()
+      console.log('📸 Initial storage state:', initialResult)
+
+      if (initialResult.active !== undefined) {
+        initialSubscriptionState = initialResult
+        console.log('📸 Initial storage state captured - Active:', initialResult.active, 'Capacity:', initialResult.capacity)
+      } else {
+        console.warn('⚠️ Failed to get initial storage state:', initialResult.error || 'Unknown error')
+      }
+    } catch (error) {
+      console.warn('⚠️ Failed to capture initial storage state:', error)
+    }
+  }
+
   // Clear any existing monitoring
   if (paymentMonitoringInterval) {
     console.log('🧹 Clearing existing payment monitoring')
@@ -1089,30 +1126,60 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
           loginPhrase: auth.loginPhrase,
         }
 
-        console.log('Checking FluxPay subscription status with payload:', subPayload)
+        console.log('Checking subscription status via storage endpoint (FluxCloud method)')
+        console.log('Payload:', { zelid: auth.zelid || fluxStore.zelid })
 
-        const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
+        const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
           },
-          body: new URLSearchParams(subPayload),
+          body: new URLSearchParams({
+            zelid: auth.zelid || fluxStore.zelid,
+            signature: auth.signature,
+            loginPhrase: auth.loginPhrase,
+          }),
         })
 
         const result = await response.json()
-        console.log('FluxPay subscription status check result:', result)
+        console.log('Storage endpoint result:', result)
+        console.log('Subscription active:', result.active)
 
-        // Check if subscription is now active (payment completed)
-        if (result.success && (result.status === 'active' || result.subscription_status === 'active')) {
-          console.log('✅ Subscription is active - payment completed!')
-          clearInterval(checkInterval)
+        // Check if user now has active subscription (payment completed)
+        if (result.active === true) {
+          console.log('✅ Subscription is now active - payment completed!')
+
+          // Compare with initial state for renewals and upgrades
+          if ((props.actionType === 'renew' || props.actionType === 'upgrade') && initialSubscriptionState) {
+            // For renewals and upgrades, check if storage capacity changed
+            const capacityChanged = result.capacity !== initialSubscriptionState.capacity
+            const hasIncreasedCapacity = result.capacity > (initialSubscriptionState.capacity || 10737418240) // Default 10GB
+
+            if (capacityChanged || hasIncreasedCapacity) {
+              console.log(`✅ ${props.actionType === 'upgrade' ? 'Upgrade' : 'Renewal'} detected - storage capacity changed!`)
+              console.log('Previous capacity:', initialSubscriptionState.capacity)
+              console.log('New capacity:', result.capacity)
+            }
+          }
+
+          clearInterval(paymentMonitoringInterval)
+          clearTimeout(paymentMonitoringTimeout)
+          paymentMonitoringInterval = null
+          paymentMonitoringTimeout = null
           fluxPaymentProcessing.value = false
-          showSnackbar('Payment confirmed! Your subscription is now active.', 'success', 8000)
+
+          const message = props.actionType === 'renew'
+            ? 'Payment confirmed! Your subscription has been renewed.'
+            : props.actionType === 'upgrade'
+            ? 'Payment confirmed! Your subscription has been upgraded.'
+            : 'Payment confirmed! Your subscription is now active.'
+
+          showSnackbar(message, 'success', 8000)
           emit('success')
         } else if (result.error) {
-          console.log('Subscription check error (still pending):', result.error)
+          console.log('Storage check error:', result.error)
         } else {
-          console.log('Subscription not yet active:', result)
+          console.log('⏳ Subscription not yet active - continuing to monitor...', result)
         }
       } else {
         console.warn('No payment_id or sub_id provided for monitoring - stopping')
