@@ -407,7 +407,6 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useFluxStore } from '@/stores/flux'
 import { useSnackbar } from '@/composables/useSnackbar'
-import axios from 'axios'
 import qs from 'qs'
 
 // Props
@@ -1008,13 +1007,7 @@ const initializeCryptoComPayment = async () => {
 
 const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux') => {
   // Monitor payment completion by checking subscription status
-  console.log('🔍 PAYMENT MONITORING STARTED')
-  console.log('  - paymentId:', paymentId)
-  console.log('  - subId:', subId)
-  console.log('  - paymentAddr:', paymentAddr)
-  console.log('  - paymentType:', paymentType)
-  console.log('  - actionType:', props.actionType)
-  console.log('  - Stack trace:', new Error().stack)
+  console.log('🔍 Payment monitoring started:', { paymentId, subId, actionType: props.actionType })
 
   // Validate that we have proper identifiers to monitor
   if (!paymentId && !subId) {
@@ -1037,8 +1030,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
         loginPhrase: auth.loginPhrase,
       }
 
-      console.log('📸 Capturing initial storage state for renewal monitoring...')
-      console.log('📸 Initial payload:', { zelid: initialPayload.zelid })
+      console.log('📸 Capturing initial storage state for', props.actionType, 'monitoring...')
 
       const initialResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
         method: 'POST',
@@ -1048,14 +1040,11 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
         body: new URLSearchParams(initialPayload),
       })
 
-      console.log('📸 Initial response status:', initialResponse.status)
-
       const initialResult = await initialResponse.json()
-      console.log('📸 Initial storage state:', initialResult)
 
       if (initialResult.active !== undefined) {
         initialSubscriptionState = initialResult
-        console.log('📸 Initial storage state captured - Active:', initialResult.active, 'Capacity:', initialResult.capacity)
+        console.log('📸 Initial state captured - Active:', initialResult.active, 'Capacity:', (initialResult.capacity_gb || Math.round(initialResult.capacity / 1024 / 1024 / 1024)) + 'GB')
       } else {
         console.warn('⚠️ Failed to get initial storage state:', initialResult.error || 'Unknown error')
       }
@@ -1117,17 +1106,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
           console.warn('Payment check error:', result.error)
         }
       } else if (subId) {
-        // For FluxPay payments with sub_id - check specific subscription status
-        const subPayload = {
-          action: 'READ',
-          sub_id: subId,
-          zelid: auth.zelid || fluxStore.zelid,
-          signature: auth.signature,
-          loginPhrase: auth.loginPhrase,
-        }
-
-        console.log('Checking subscription status via storage endpoint (FluxCloud method)')
-        console.log('Payload:', { zelid: auth.zelid || fluxStore.zelid })
+        // For FluxPay payments - check subscription status via storage endpoint
 
         const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
           method: 'POST',
@@ -1142,8 +1121,6 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
         })
 
         const result = await response.json()
-        console.log('Storage endpoint result:', result)
-        console.log('Subscription active:', result.active)
 
         // Check if user now has active subscription (payment completed)
         if (result.active === true) {
