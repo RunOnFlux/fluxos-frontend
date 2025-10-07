@@ -1,282 +1,258 @@
-# Flux
+# FluxOS - Frontend
 
 ![Flux.png](flux_banner.png)
 
 [![DeepScan grade](https://deepscan.io/api/teams/6436/projects/8442/branches/100920/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=6436&pid=8442&bid=100920)[![CodeFactor](https://www.codefactor.io/repository/github/runonflux/flux/badge)](https://www.codefactor.io/repository/github/runonflux/flux)[![Total alerts](https://img.shields.io/lgtm/alerts/g/RunOnFlux/flux.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RunOnFlux/flux/alerts/)[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/RunOnFlux/flux.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/RunOnFlux/flux/context:javascript)[![codecov](https://codecov.io/gh/RunOnFlux/flux/branch/development/graph/badge.svg?token=N31OUPUWZJ)](https://codecov.io/gh/RunOnFlux/flux)
 
-Flux is available on domains, load balancing the entire Flux network. You can access both UI and API on following main domain
+FluxOS is available on domains, load balancing the entire Flux network:
 
-[Flux](https://home.runonflux.io)
+[FluxOS Home](https://home.runonflux.io)
 
+[API Documentation](https://docs.runonflux.io)
 
-[API](https://api.runonflux.io)
+[Source Code Documentation](https://source.runonflux.io)
 
-## API Documentation
+## About FluxOS Frontend
 
-[API documentation](https://docs.runonflux.io)
+FluxOS Frontend is a modern Vue.js 3 application that provides the user interface for the Flux Network. It enables users to:
 
-## Source code Documentation
+- **Manage Flux Nodes** - Monitor and control Flux nodes through an intuitive web interface
+- **Deploy Applications** - Browse and deploy applications from the Flux Marketplace
+- **Access FluxDrive** - Decentralized file storage and sharing
+- **Monitor Network** - View real-time network statistics and node information
+- **xDAO Integration** - Participate in decentralized governance
+- **Cost Calculator** - Estimate deployment costs for applications
 
-[Source Code documentation](https://source.runonflux.io)
+This is the **frontend-only** repository. For the backend API, see the main [Flux repository](https://github.com/runonflux/flux).
 
-## The gateway to the Flux Network
+## Technology Stack
 
-Flux is the frontend UI to the entire Flux Network, it enables Flux operators to manage their Flux Node easily via a simple web interface. Flux enables an operator to perform all tasks such as updating and maintenance from a simple web interface, instead of having to remotely login to their Flux to manage it.
+- **Vue 3** - Progressive JavaScript framework with Composition API
+- **Vite** - Next-generation frontend build tool
+- **Vuetify 3** - Material Design component framework
+- **Pinia** - State management
+- **Vue Router** - Client-side routing with file-based routing (unplugin-vue-router)
+- **Axios** - HTTP client
+- **Firebase** - Authentication and real-time features
+- **Monaco Editor** - Code editor integration
+- **Web3 Integration** - MetaMask SDK, WalletConnect for blockchain interactions
 
-Flux Requires a reasonably new version of Node.js (npm), MongoDB and Docker. It is a MongoDB, Express.js, Vue.js, Node.js (MEVN) application
+## Key Features
 
-This application communicates locally with the Flux Daemon (fluxd), Benchmark Daemon (fluxbenchd) and other Flux instances.
+### Marketplace
+- Browse applications and games
+- Deploy WordPress sites
+- One-click application deployment
+- Manage subscriptions
 
-Support for Ubuntu 18.04, 20.04, 22.04
+### FluxDrive
+- Decentralized file storage
+- File sharing and management
+- IPFS integration
 
-Support NodeJS 16, 18, 20
+### Node Management
+- Real-time node status
+- Performance monitoring
+- Update management
 
-Support for MongoDB 4.2, 4.4, 5.0, 6.0
+### xDAO
+- Decentralized governance
+- Proposal voting
+- Community features
 
+## Prerequisites
 
-## Application Overview
+- **Node.js** 22.12.0+ (required by Vite 7)
+- **npm** 9 or higher
+- Modern web browser
 
-### Backend Solution - Flux
+## Quick Start
 
-- Provide communication with daemon, benchmark
-- Providing private API, and public API, Flux team API (limited!)
-- Listen and handle frontend requests
-- Requests signing and authenticity verifying
-- Handle communication with other Fluxes
-- Manage Flux applications - smart spawning, distributing workload, termination depending of application subscription.
-- Provide Explorer solution
-- and more!
-
-### Frontend Solution - Home
-
-- Display Flux status information
-- Display Flux Network information
-- Display Flux network information
-- Display Specific application information
-- Provide API access
-- Login into private API part (frontend part)
-- Login into Flux team API part (frontend part)
-- Private: Management of Flux
-- Private: Management of Flux Damone and Benchmark
-- Private: Update, status information
-- and more!
-
-This application is open source and distributed under the GNU AGPLv3 licence
-
-## Start Flux
-
-Flux needs Daemon to be running, use apt.runonflux.io to install flux daemon
-
-build-essential is a recommended dependency
-
-```bash
-
-sudo apt-get install build-essential
-```
-
-Setup Mongodb on Ubuntu 18.04 (LTS):
+### Installation
 
 ```bash
-wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
+# Clone the repository
+git clone https://github.com/runonflux/fluxos-frontend
+cd fluxos-frontend
 
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-
-sudo apt-get update
-
-sudo apt-get install -y mongodb-org
-
-sudo service mongod start
-```
-
-Setup Mongodb on Ubuntu 20.04 (LTS):
-
-```bash
-wget -qO - https://www.mongodb.org/static/pgp/server-5.0.asc | sudo apt-key add -
-
-echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/5.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-5.0.list
-
-sudo apt-get update
-
-sudo apt-get install -y mongodb-org
-
-sudo service mongod start
-```
-
-Setup Mongodb on Red Hat or CentOS:
-
-```bash
-sudo yum install nano
-
-sudo nano /etc/yum.repos.d/mongodb-org-5.0.repo
-
-# Paste below into the mongodb-org-5.0.repo file
-
-[mongodb-org-5.0]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/5.0/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-5.0.asc
-
-
-# exit nano
-
-sudo yum install -y mongodb-org
-
-# Start Mongodb on startup for CentOS 7
-sudo systemctl enable mongod.service
-
-# Start Mongodb on startup for CentOS 5/6
-sudo chkconfig mongod on
-
-# Start Mongodb on CentOS 7
-sudo systemctl start mongod.service
-
-# Start Mongodb on CentOS 5/6
-sudo service mongod start
-```
-
-Install Node Version Manager (NVM) and NodeJS 16/18/20 on Ubuntu 18.04/20.04/22.04:
-
-```bash
-sudo apt-get install curl
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash
-
-source ~/.profile
-
-nvm install 20
-
-nvm use 20
-```
-
-Install Node Version Manager (NVM) and NodeJS 20 on Redhat/CentOS:
-
-```bash
-sudo yum install curl
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.0/install.sh | bash
-
-source ~/.bashrc
-
-nvm install 20
-
-nvm use 20
-```
-
-Install Docker using on Ubuntu 20.04
-
-```bash
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
-sudo apt-get update
-sudo apt install docker-ce
-```
-
-Install Docker using on Ubuntu 18.04
-
-```bash
-sudo apt install apt-transport-https ca-certificates curl software-properties-common
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-sudo apt-get update
-sudo apt install docker-ce
-```
-
-Install Syncthing
-
-```bash
-sudo curl -o /usr/share/keyrings/syncthing-archive-keyring.gpg https://syncthing.net/release-key.gpg
-echo 'deb [signed-by=/usr/share/keyrings/syncthing-archive-keyring.gpg] https://apt.syncthing.net/ syncthing stable' | sudo tee /etc/apt/sources.list.d/syncthing.list
-sudo apt install ca-certificates -y > /dev/null 2>&1
-sudo apt-get update -y
-sudo apt-get install syncthing -y
-```
-
-Install Netcat
-
-```bash
-sudo apt install netcat -y
-```
-
-Clone Flux repo (Ubuntu):
-
-```bash
-sudo apt-get install git
-
-git clone https://github.com/runonflux/flux
-```
-
-Clone Flux repo (Redhat/CentOS):
-
-```bash
-sudo yum install git
-
-git clone https://github.com/runonflux/flux
-```
-
-Allow Inbound Connections on UFW firewall - default ports (if ufw enabled):
-
-```bash
-sudo ufw allow 16126
-sudo ufw allow 16127
-sudo ufw allow 16128
-sudo ufw allow 16129
-```
-
-Install Flux dependancies (Ubuntu/CentOS/Redhat):
-
-```bash
-cd flux
-
+# Install dependencies
 npm install
 ```
 
-To run this as Production:
+### Development
 
 ```bash
-npm start
+# Start development server with hot reload
+npm run dev
 ```
 
-To run this as Development: Start both solutions with
+The application will be available at `http://localhost:3000` (or next available port)
+
+### Building for Production
 
 ```bash
-npm run fluxdev
-npm run homedev
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
 ```
 
-THE SETUP ENDS HERE...
-The following information below provided for brief usage guidelines and/or examples only.
-
-## Flux Home Information
-
-> Frontend interface to interact with the Flux network
-> Uses port 16126 by default
-
-## Build Setup
+### Other Commands
 
 ```bash
-# serve with hot reload at localhost:16126
-npm run homedev
+# Lint and fix code
+npm run lint
 
-# build for production with minification
-npm run homebuild
+# Build iconify icons
+npm run build:icons
 
-# build for production and view the bundle analyzer report
-npm run homebuild --report
+# Fix nested lockfile dependencies
+npm run fix-lockfile
 ```
 
-## Flux Information
+## Project Structure
 
-> Backend interface to interact with the Flux Network
-> Uses port 16127 by default
+```
+fluxos-frontend/
+├── public/           # Static assets
+├── src/
+│   ├── @core/       # Core components and utilities
+│   ├── @layouts/    # Layout components
+│   ├── assets/      # Images, fonts, styles
+│   ├── components/  # Reusable Vue components
+│   ├── pages/       # File-based routing pages
+│   ├── plugins/     # Vue plugins (Vuetify, i18n, etc.)
+│   ├── services/    # API services
+│   ├── stores/      # Pinia stores
+│   └── utils/       # Helper functions
+├── patches/         # npm package patches
+├── scripts/         # Build and maintenance scripts
+└── vite.config.js   # Vite configuration
+```
 
-## Continued Build Setup
+## Environment Variables
 
+Create a `.env` file in the root directory:
+
+```env
+# API Configuration
+VITE_API_URL=https://api.runonflux.io
+
+# Firebase Configuration
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your_project_id
+
+# WalletConnect
+VITE_WALLETCONNECT_PROJECT_ID=your_project_id
+```
+
+## API Integration
+
+This frontend communicates with the Flux backend API. The backend handles:
+
+- Node communication (fluxd, fluxbenchd)
+- Application deployment and management
+- Authentication and authorization
+- Database operations (MongoDB)
+- Docker container management
+
+For backend setup, refer to the [main Flux repository](https://github.com/runonflux/flux).
+
+## Security
+
+### Vulnerability Management
+
+This project uses several tools to manage dependencies securely:
+
+- **patch-package** - Patches vulnerable nested dependencies
+- **npm overrides** - Forces specific package versions
+- **Automated scripts** - Post-install scripts fix known vulnerabilities
+
+Current security status:
+- ✅ All critical and high severity vulnerabilities patched
+- ✅ Moderate vulnerabilities (dompurify) fixed with automated scripts
+- ⚠️ Low severity vulnerabilities in deprecated @walletconnect packages (no fix available)
+
+### Patches Applied
+
+- `monaco-editor` - dompurify vulnerability fix
+- `vue3-perfect-scrollbar` - dependency patches
+
+Patches are automatically applied during `npm install`.
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Opera (latest)
+
+## Contributing
+
+Contributions are welcome! Please:
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## Development Guidelines
+
+- Follow Vue 3 Composition API patterns
+- Use TypeScript types when possible
+- Follow ESLint rules (`npm run lint`)
+- Test thoroughly before submitting PRs
+- Keep components small and reusable
+
+## Troubleshooting
+
+### Port already in use
 ```bash
-# serve with hot reload at localhost:16126
-npm run fluxdev
+# Vite will automatically try the next available port
+# Or specify a port manually:
+npm run dev -- --port 3001
 ```
+
+### Module not found errors
+```bash
+# Clear node_modules and reinstall
+rm -rf node_modules package-lock.json
+npm install
+```
+
+### Build failures
+```bash
+# Check Node.js version
+node --version  # Should be 22.12.0+
+
+# Clear cache and rebuild
+npm cache clean --force
+npm install
+npm run build
+```
+
+## License
+
+This application is open source and distributed under the **GNU AGPLv3** license.
+
+## Links
+
+- [Flux Website](https://runonflux.io)
+- [Flux Documentation](https://docs.runonflux.io)
+- [Flux Discord](https://discord.gg/runonflux)
+- [Flux GitHub](https://github.com/runonflux)
+- [Backend Repository](https://github.com/runonflux/flux)
+
+## Support
+
+For support:
+- Join our [Discord](https://discord.gg/runonflux)
+- Open an issue on [GitHub](https://github.com/runonflux/fluxos-frontend/issues)
+- Visit [Flux Documentation](https://docs.runonflux.io)
+
+---
 
 Made with ❤️ by the Flux Team
