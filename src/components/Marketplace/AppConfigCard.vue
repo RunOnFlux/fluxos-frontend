@@ -63,8 +63,8 @@ const { getConfigResources } = useGameUtils()
 const resources = computed(() => getConfigResources(props.config))
 
 const cardStyle = computed(() => ({
-  borderColor: props.config.highlight || 'transparent',
-  borderWidth: props.config.highlightWidth ? `${props.config.highlightWidth}px` : '0',
+  borderColor: props.config.highlight || 'rgba(255, 255, 255, 0.1)',
+  borderWidth: '2px',
   borderStyle: 'solid',
 }))
 
@@ -96,8 +96,8 @@ const handleInstall = () => {
 .config-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4), 0 0 60px rgba(33, 150, 243, 0.2);
-  border-color: rgba(33, 150, 243, 0.5);
-  border-top: 3px solid #2196F3;
+  border-color: rgba(33, 150, 243, 0.5) !important;
+  border-top: 3px solid #2196F3 !important;
   filter: drop-shadow(0 -4px 12px rgba(33, 150, 243, 0.6));
 }
 
