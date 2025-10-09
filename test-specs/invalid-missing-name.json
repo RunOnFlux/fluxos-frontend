@@ -1,0 +1,18 @@
+{
+  "version": 4,
+  "description": "Invalid spec - missing name field",
+  "owner": "testuser",
+  "compose": [
+    {
+      "name": "web",
+      "description": "Web server component",
+      "repotag": "nginx:latest",
+      "ports": [80],
+      "containerPorts": [80],
+      "cpu": 1,
+      "ram": 512,
+      "hdd": 10
+    }
+  ],
+  "instances": 3
+}

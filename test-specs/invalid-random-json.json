@@ -1,0 +1,8 @@
+{
+  "someField": "random data",
+  "anotherField": 123,
+  "nested": {
+    "data": "this is not a FluxOS spec"
+  },
+  "array": [1, 2, 3]
+}

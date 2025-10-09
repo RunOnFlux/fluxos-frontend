@@ -1,0 +1,8 @@
+{
+  "version": 4,
+  "name": "invalidapp",
+  "description": "Invalid spec - missing compose field",
+  "owner": "testuser",
+  "instances": 3,
+  "staticip": false
+}

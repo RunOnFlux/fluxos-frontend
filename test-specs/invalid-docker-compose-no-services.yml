@@ -1,0 +1,10 @@
+version: '3.8'
+
+# Invalid Docker Compose - no services defined
+networks:
+  mynetwork:
+    driver: bridge
+
+volumes:
+  data:
+    driver: local

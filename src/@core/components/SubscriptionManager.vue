@@ -3,7 +3,7 @@
     <!-- Title -->
     <VRow class="align-center justify-space-between mb-2">
       <VCol cols="12" class="d-flex align-center">
-        <div class="d-flex w-100 align-center border-frame">
+        <div class="d-flex w-100 align-center justify-space-between border-frame">
           <div class="d-flex align-center">
             <VAvatar
               size="35"
@@ -16,6 +16,22 @@
             </VAvatar>
             <span class="text-h5">{{ props.newApp ? 'Register New Application' : 'Subscription Management' }}</span>
           </div>
+          <VTooltip v-if="props.newApp" location="top">
+            <template #activator="{ props: tooltipProps }">
+              <VBtn
+                v-bind="tooltipProps"
+                icon
+                color="success"
+                variant="tonal"
+                size="small"
+                class="import-glow-btn mr-2"
+                @click="showSpecImportDialog = true"
+              >
+                <VIcon size="22">mdi-file-import</VIcon>
+              </VBtn>
+            </template>
+            <span>Import Specification</span>
+          </VTooltip>
         </div>
       </VCol>
     </VRow>
@@ -2280,10 +2296,14 @@
     type="commands"
     @import="handleCommandsImport"
   />
+  <ImportSpecDialog
+    v-model="showSpecImportDialog"
+    @import="handleSpecImport"
+  />
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, onMounted, nextTick } from 'vue'
 import axios from 'axios'
 import geolocations from '@/utils/geolocation'
 import qs from 'qs'
@@ -2296,6 +2316,7 @@ import { storeToRefs } from "pinia"
 import { useFluxStore } from "@/stores/flux"
 import { useTheme } from 'vuetify'
 import ImportJsonDialog from '@/components/dialogs/ImportJsonDialog.vue'
+import ImportSpecDialog from '@/components/dialogs/ImportSpecDialog.vue'
 import { 
   importRsaPublicKey, 
   encryptAesKeyWithRsaKey, 
@@ -2489,6 +2510,95 @@ function removeCommandEntry(i) {
 function handleCommandsImport(commands) {
   commandsDialog.entries.push(...commands)
   showToast('success', `Imported ${commands.length} command(s)`)
+}
+
+function handleSpecImport(spec) {
+  try {
+    // Map imported spec to appSpec and appDetails
+    if (spec.name) {
+      props.appSpec.name = spec.name
+      appDetails.value.name = spec.name
+    }
+    if (spec.description) {
+      props.appSpec.description = spec.description
+      appDetails.value.description = spec.description
+    }
+    if (spec.owner) {
+      props.appSpec.owner = spec.owner
+      appDetails.value.owner = spec.owner
+    }
+    if (spec.repotag) props.appSpec.repotag = spec.repotag
+    if (spec.port) props.appSpec.port = spec.port
+    if (spec.domains) props.appSpec.domains = spec.domains
+    if (spec.tiered !== undefined) props.appSpec.tiered = spec.tiered
+    if (spec.version) props.appSpec.version = spec.version
+
+    // Contacts - required field, provide default if missing
+    props.appSpec.contacts = spec.contacts || []
+    appDetails.value.contacts = Array.isArray(spec.contacts) ? spec.contacts.join(', ') : (spec.contacts || '')
+
+    // Geolocation - required field, provide default if missing
+    props.appSpec.geolocation = spec.geolocation || []
+
+    if (spec.expire) props.appSpec.expire = spec.expire
+    if (spec.nodes) {
+      props.appSpec.nodes = spec.nodes || []
+      appDetails.value.nodes = Array.isArray(spec.nodes) ? spec.nodes.join(', ') : spec.nodes
+    }
+    if (spec.instances !== undefined) {
+      props.appSpec.instances = spec.instances
+      appDetails.value.instances = spec.instances
+    }
+    if (spec.staticip !== undefined) {
+      props.appSpec.staticip = spec.staticip
+      appDetails.value.staticip = spec.staticip
+    }
+    if (spec.enterprise !== undefined) {
+      props.appSpec.enterprise = spec.enterprise
+      appDetails.value.enterprise = spec.enterprise
+    }
+
+    // Handle compose/components - preserve as-is from imported spec
+    if (spec.compose && Array.isArray(spec.compose)) {
+      props.appSpec.compose = spec.compose
+    }
+
+    // Handle legacy single component specs
+    if (!spec.compose && spec.cpu !== undefined) {
+      const component = {
+        name: spec.name || '',
+        description: spec.description || '',
+        repotag: spec.repotag || '',
+        ports: spec.ports || [],
+        domains: spec.domains || [],
+        environmentParameters: spec.environmentParameters || [],
+        commands: spec.commands || [],
+        containerPorts: spec.containerPorts || [],
+        containerData: spec.containerData || '',
+        cpu: spec.cpu || 0.1,
+        ram: spec.ram || 100,
+        hdd: spec.hdd || 1,
+      }
+      // Only add tiered if it exists in original spec
+      if (spec.tiered !== undefined) component.tiered = spec.tiered
+      props.appSpec.compose = [component]
+    }
+
+    // If currently on Validate & Register tab, trigger re-validation
+    if (tab.value === 99) {
+      // Force re-trigger by switching tabs and back
+      const currentTab = tab.value
+      tab.value = 0
+      nextTick(() => {
+        tab.value = currentTab
+      })
+    }
+
+    showToast('success', 'Application specification imported successfully')
+  } catch (error) {
+    console.error('Error importing specification:', error)
+    showToast('error', `Failed to import specification: ${error.message}`)
+  }
 }
 
 function saveCommandChanges() {
@@ -2700,9 +2810,9 @@ onMounted(() => {
   if (props.appSpec && props.appSpec.expire === undefined) {
     props.appSpec.expire = 22000
   }
-  
-  // Lock name if it already exists (for updates)
-  if (props.appSpec?.name) {
+
+  // Lock name only when updating existing app, not for new apps
+  if (!props.newApp && props.appSpec?.name) {
     isNameLocked.value = true
   }
 })
@@ -3690,6 +3800,7 @@ const envDialog = reactive({
 
 const showEnvImportDialog = ref(false)
 const showCommandsImportDialog = ref(false)
+const showSpecImportDialog = ref(false)
 
 watch(() => envDialog.show, val => {
   if (!val) {
@@ -4105,6 +4216,13 @@ async function verifyAppSpec() {
   appSpecFormated.value = null
   try {
     const appSpecTemp = JSON.parse(JSON.stringify(props.appSpec))
+
+    // Ensure required fields exist for version >= 5
+    if (appSpecTemp.version >= 5) {
+      if (!appSpecTemp.contacts) appSpecTemp.contacts = []
+      if (!appSpecTemp.geolocation) appSpecTemp.geolocation = []
+    }
+
     if (blocksToExpire.value !== 'null' && !renewalEnabled.value){
       appSpecTemp.expire = blocksToExpire.value
     }
@@ -5106,7 +5224,7 @@ async function initSignFluxSSO() {
 }
 
 // === Sign with Zelcore ===
-async function initSignZelcore() {
+async function initiateSignWSUpdate() {
   try {
     const zelidauth = localStorage.getItem('zelidauth')
     let zelid
@@ -5117,39 +5235,51 @@ async function initSignZelcore() {
       zelid = authData.zelid
     }
 
+    // Create WebSocket BEFORE triggering sign (like InstallDialog does)
+    let wsURL = localStorage.getItem("backendURL") || getDetectedBackendURL()
+    wsURL = wsURL.replace('https://', 'wss://').replace('http://', 'ws://')
+
+    const sigMsg = `${props.appSpec.owner}${timestamp.value}`
+    const uri = `${wsURL}/ws/sign/${sigMsg}`
+    console.log('Creating WebSocket:', uri)
+
+    websocket.value = new WebSocket(uri)
+
+    websocket.value.onopen = onOpen
+    websocket.value.onclose = onClose
+    websocket.value.onerror = onError
+    websocket.value.onmessage = onMessage
+
+    // Now trigger ZelCore signing
     // signWithZelcore handles long messages, storage upload, and protocol launching
-    await signWithZelcore(dataToSign.value, zelid, callbackValue.value)
+    // Skip WebSocket in signWithZelcore since we handle it separately above
+    await signWithZelcore(dataToSign.value, zelid, callbackValue.value, undefined, true)
   } catch (error) {
     showToast('error', `Zelcore sign error: ${error}`)
   }
 }
 
-async function initiateSignWSUpdate() {
-  await initSignZelcore()
-  let wsURL = localStorage.getItem("backendURL") || getDetectedBackendURL()
-  wsURL = wsURL.replace('https://', 'wss://').replace('http://', 'ws://')
-
-  const sigMsg = `${props.appSpec.owner}${timestamp.value}`
-
-  const uri = `${wsURL}/ws/sign/${sigMsg}`
-  console.log(uri)
-  websocket.value = new WebSocket(uri)
-
-  websocket.value.onopen = onOpen
-  websocket.value.onclose = onClose
-  websocket.value.onerror = onError
-  websocket.value.onmessage = onMessage
+async function initSignZelcore() {
+  // Deprecated - use initiateSignWSUpdate instead
+  await initiateSignWSUpdate()
 }
 
 function onMessage(evt) {
   const parsed = qs.parse(evt.data)
-  console.log(evt)
-  if (parsed.status === 'success' && parsed.data?.signature) {
-    signature.value = parsed.data.signature
+
+  // Check for signature in various formats
+  if (parsed.status === 'success') {
+    if (parsed['data[signature]']) {
+      signature.value = parsed['data[signature]']
+    } else if (parsed.data && typeof parsed.data === 'object' && parsed.data.signature) {
+      signature.value = parsed.data.signature
+    } else if (parsed.signature) {
+      signature.value = parsed.signature
+    }
   }
 }
-function onOpen(evt) { console.log('WS open', evt) }
-function onClose(evt) { console.log('WS closed', evt) }
+function onOpen(evt) { }
+function onClose(evt) { }
 function onError(evt) { console.error('WS error', evt) }
 
 // === WalletConnect ===

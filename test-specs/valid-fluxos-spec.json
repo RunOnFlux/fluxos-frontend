@@ -1,0 +1,49 @@
+{
+  "version": 4,
+  "name": "mytestapp",
+  "description": "A valid FluxOS application specification for testing",
+  "owner": "testuser",
+  "compose": [
+    {
+      "name": "web",
+      "description": "Web server component",
+      "repotag": "nginx:latest",
+      "ports": [80],
+      "domains": [],
+      "environmentParameters": [
+        "NODE_ENV=production"
+      ],
+      "commands": [],
+      "containerPorts": [80],
+      "containerData": "/usr/share/nginx/html",
+      "cpu": 1,
+      "ram": 512,
+      "hdd": 10,
+      "repoauth": ""
+    },
+    {
+      "name": "api",
+      "description": "API backend component",
+      "repotag": "node:18-alpine",
+      "ports": [3000],
+      "domains": [],
+      "environmentParameters": [
+        "PORT=3000",
+        "DATABASE_URL=postgresql://localhost:5432/mydb"
+      ],
+      "commands": ["node", "server.js"],
+      "containerPorts": [3000],
+      "containerData": "/app/data",
+      "cpu": 2,
+      "ram": 1024,
+      "hdd": 20,
+      "repoauth": ""
+    }
+  ],
+  "contacts": [""],
+  "geolocation": [],
+  "instances": 3,
+  "staticip": false,
+  "enterprise": "",
+  "nodes": []
+}

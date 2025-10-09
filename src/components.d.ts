@@ -71,6 +71,7 @@ declare module 'vue' {
     HeaderPanel: typeof import('./components/Marketplace/Panels/HeaderPanel.vue')['default']
     I18n: typeof import('./@core/components/I18n.vue')['default']
     ImportJsonDialog: typeof import('./components/dialogs/ImportJsonDialog.vue')['default']
+    ImportSpecDialog: typeof import('./components/dialogs/ImportSpecDialog.vue')['default']
     InstallDialog: typeof import('./components/Marketplace/InstallDialog.vue')['default']
     JsonViewer: typeof import('./@core/components/JsonViewer.vue')['default']
     ListEntry: typeof import('./@core/components/ListEntry.vue')['default']

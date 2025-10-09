@@ -51,6 +51,7 @@
     "eventemitter2": "^6.4.9",
     "firebase": "^11.6.0",
     "highlight.js": "^11.11.1",
+    "js-yaml": "^4.1.0",
     "jwt-decode": "4.0.0",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",

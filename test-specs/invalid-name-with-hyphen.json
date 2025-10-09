@@ -1,0 +1,20 @@
+{
+  "version": 4,
+  "name": "my-test-app",
+  "description": "Invalid - name contains hyphens",
+  "owner": "testuser",
+  "compose": [
+    {
+      "name": "web",
+      "description": "Web server",
+      "repotag": "nginx:latest",
+      "ports": [80],
+      "containerPorts": [80],
+      "cpu": 1,
+      "ram": 512,
+      "hdd": 10
+    }
+  ],
+  "contacts": [""],
+  "instances": 3
+}
