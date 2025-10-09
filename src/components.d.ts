@@ -70,6 +70,7 @@ declare module 'vue' {
     GroupsPanel: typeof import('./components/Marketplace/Panels/GroupsPanel.vue')['default']
     HeaderPanel: typeof import('./components/Marketplace/Panels/HeaderPanel.vue')['default']
     I18n: typeof import('./@core/components/I18n.vue')['default']
+    ImportJsonDialog: typeof import('./components/dialogs/ImportJsonDialog.vue')['default']
     InstallDialog: typeof import('./components/Marketplace/InstallDialog.vue')['default']
     JsonViewer: typeof import('./@core/components/JsonViewer.vue')['default']
     ListEntry: typeof import('./@core/components/ListEntry.vue')['default']

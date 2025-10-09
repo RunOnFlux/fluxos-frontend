@@ -613,7 +613,7 @@
                     class="mb-3 mr-2"
                     variant="outlined"
                     prepend-icon="mdi-format-list-bulleted"
-                    color="primary"
+                    color="grey"
                     @click="openEnvDialog(componentIndex)"
                   >
                     Environment Variables
@@ -632,7 +632,7 @@
                     class="mb-3 mr-2"
                     variant="outlined"
                     prepend-icon="mdi-console"
-                    color="primary"
+                    color="grey"
                     @click="openCommandsDialog(componentIndex)"
                   >
                     Commands
@@ -794,6 +794,22 @@
                     <VCardTitle class="bg-primary">
                       <div class="d-flex align-center justify-space-between w-100">
                         <span class="text-h5 text-white">Environment Variables</span>
+                        <VTooltip location="top">
+                          <template #activator="{ props }">
+                            <VBtn
+                              v-bind="props"
+                              icon
+                              color="white"
+                              variant="outlined"
+                              size="small"
+                              class="import-glow-btn"
+                              @click="showEnvImportDialog = true"
+                            >
+                              <VIcon size="22">mdi-file-import</VIcon>
+                            </VBtn>
+                          </template>
+                          <span>Import from JSON</span>
+                        </VTooltip>
                       </div>
                     </VCardTitle>
 
@@ -918,7 +934,25 @@
                 >
                   <VCard>
                     <VCardTitle class="bg-primary">
-                      <span class="text-h5 text-white">Container Commands</span>
+                      <div class="d-flex align-center justify-space-between w-100">
+                        <span class="text-h5 text-white">Container Commands</span>
+                        <VTooltip location="top">
+                          <template #activator="{ props }">
+                            <VBtn
+                              v-bind="props"
+                              icon
+                              color="white"
+                              variant="outlined"
+                              size="small"
+                              class="import-glow-btn"
+                              @click="showCommandsImportDialog = true"
+                            >
+                              <VIcon size="22">mdi-file-import</VIcon>
+                            </VBtn>
+                          </template>
+                          <span>Import from JSON</span>
+                        </VTooltip>
+                      </div>
                     </VCardTitle>
 
                     <VCardText>
@@ -2234,6 +2268,18 @@
       </VCardActions>
     </VCard>
   </VDialog>
+
+  <!-- Import JSON Dialogs -->
+  <ImportJsonDialog
+    v-model="showEnvImportDialog"
+    type="env"
+    @import="handleEnvImport"
+  />
+  <ImportJsonDialog
+    v-model="showCommandsImportDialog"
+    type="commands"
+    @import="handleCommandsImport"
+  />
 </template>
 
 <script setup>
@@ -2249,6 +2295,7 @@ import AppsService from "@/services/AppsService"
 import { storeToRefs } from "pinia"
 import { useFluxStore } from "@/stores/flux"
 import { useTheme } from 'vuetify'
+import ImportJsonDialog from '@/components/dialogs/ImportJsonDialog.vue'
 import { 
   importRsaPublicKey, 
   encryptAesKeyWithRsaKey, 
@@ -2437,6 +2484,11 @@ function addCommandEntry() {
 
 function removeCommandEntry(i) {
   commandsDialog.entries.splice(i, 1)
+}
+
+function handleCommandsImport(commands) {
+  commandsDialog.entries.push(...commands)
+  showToast('success', `Imported ${commands.length} command(s)`)
 }
 
 function saveCommandChanges() {
@@ -3636,6 +3688,9 @@ const envDialog = reactive({
   newValue: '',
 })
 
+const showEnvImportDialog = ref(false)
+const showCommandsImportDialog = ref(false)
+
 watch(() => envDialog.show, val => {
   if (!val) {
     envDialog.componentIndex = null
@@ -3680,6 +3735,26 @@ function addEnvEntry() {
 
 function removeEnvEntry(index) {
   envDialog.entries.splice(index, 1)
+}
+
+function handleEnvImport(entries) {
+  let importedCount = 0
+  let skippedCount = 0
+  for (const entry of entries) {
+    // Skip if key already exists
+    if (envDialog.entries.some(e => e.key === entry.key)) {
+      skippedCount++
+      continue
+    }
+    envDialog.entries.push(entry)
+    importedCount++
+  }
+
+  if (skippedCount > 0) {
+    showToast('success', `Imported ${importedCount} environment variable(s), skipped ${skippedCount} duplicate(s)`)
+  } else {
+    showToast('success', `Imported ${importedCount} environment variable(s)`)
+  }
 }
 
 function saveEnvChanges() {
@@ -5691,5 +5766,16 @@ async function signMethod() {
 .card-disabled {
   opacity: 0.6;
   pointer-events: none;
+}
+
+/* Import button glowing effect */
+.import-glow-btn {
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.6) !important;
+  transition: all 0.3s ease !important;
+}
+
+.import-glow-btn:hover {
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.9) !important;
+  transform: scale(1.05);
 }
 </style>
