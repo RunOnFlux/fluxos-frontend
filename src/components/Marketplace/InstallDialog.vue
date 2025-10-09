@@ -3517,13 +3517,13 @@ const signWithWalletConnect = async message => {
 
     console.log('[InstallDialog] ✅ Setting deploymentSignature with:', {
       signatureLength: signature.length,
-      address: connectedAccount.address,
+      address: connectedAccount.address.toLowerCase(),
       method: 'WalletConnect',
     })
 
     deploymentSignature.value = {
       signature: signature,
-      address: connectedAccount.address,
+      address: connectedAccount.address.toLowerCase(), // Backend expects lowercase
       method: 'WalletConnect',
     }
 

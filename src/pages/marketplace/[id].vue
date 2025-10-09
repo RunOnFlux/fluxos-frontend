@@ -522,21 +522,9 @@ const loadAppDetails = async () => {
   }
 
   try {
-    // Get all apps and find the one we need
-    await fetchApps()
-
-    // Find app by UUID or name
-    const foundApp = apps.value.find(a =>
-      a.uuid === appId ||
-      a.name === appId ||
-      a.name?.toLowerCase() === appId.toLowerCase(),
-    )
-
-    if (foundApp) {
-      app.value = foundApp
-    } else {
-      throw new Error('Application not found')
-    }
+    // Fetch detailed app data (includes compose specifications for hardware requirements)
+    const appData = await fetchAppDetails(appId)
+    app.value = appData
   } catch (err) {
     console.error('💥 Failed to load app details:', err)
 

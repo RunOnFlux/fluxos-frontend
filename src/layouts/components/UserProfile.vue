@@ -10,9 +10,13 @@ import { disconnectWalletConnect } from "@/utils/walletService"
 const route = useRoute()
 const router = useRouter()
 const fluxStore = useFluxStore()
-const { privilege } = storeToRefs(fluxStore)
+const { privilege, zelid } = storeToRefs(fluxStore)
 
 const auth = computed(() => {
+  // Force reactivity by accessing zelid from store
+  // When zelid changes in store, this will re-evaluate
+  const currentZelid = zelid.value
+
   const zelidauth = localStorage.getItem("zelidauth")
 
   if (zelidauth) {
@@ -100,13 +104,9 @@ async function logout() {
       console.error("Error during Firebase logout:", error)
     }
   } else if (loginType === 'walletconnect') {
-    // Disconnect WalletConnect if logged in via WalletConnect
-    try {
-      await disconnectWalletConnect()
-      console.log("WalletConnect disconnected successfully")
-    } catch (error) {
-      console.error("Error disconnecting WalletConnect:", error)
-    }
+    // Don't disconnect WalletConnect - keep session active for future logins
+    // The session will be reused on next login without needing to reconnect
+    console.log("WalletConnect session kept active for future logins")
   }
   // For other login types (zelcore, ssp, metamask), no additional cleanup needed
 

@@ -567,7 +567,7 @@ import metamaskLogo from "@images/metamask.svg?url"
 import sspLogoBlack from "@images/ssp-logo-black.svg?url"
 import sspLogoWhite from "@images/ssp-logo-white.svg?url"
 import walletConnectLogo from "@images/walletconnect.svg?url"
-import { openWalletConnect, signWithWalletConnect, closeWalletConnect, signWithMetaMask, disconnectWalletConnect, appKit } from '@/utils/walletService'
+import { openWalletConnect, signWithWalletConnect, closeWalletConnect, signWithMetaMask, disconnectWalletConnect, appKit, isMetaMaskLocked } from '@/utils/walletService'
 import axios from "axios"
 
 import { storeToRefs } from "pinia"
@@ -926,17 +926,25 @@ const initiateLoginWS = async () => {
 
 const initWalletConnect = async () => {
   try {
+    console.log('[Login] 🚀 Starting WalletConnect login flow...')
+
     // Get login phrase first
     await getZelIdLoginPhrase()
+    console.log('[Login] ✅ Login phrase obtained:', loginPhrase.value)
 
     // Open WalletConnect and wait for connection
+    console.log('[Login] 🔗 Opening WalletConnect...')
     const address = await openWalletConnect()
+    console.log('[Login] ✅ Connected with address:', address)
     appKitAccount.value = { address }
 
     // Sign the message (wallet is now connected)
+    console.log('[Login] 📝 Requesting signature for message:', loginPhrase.value)
     try {
       var signature = await signWithWalletConnect(loginPhrase.value)
+      console.log('[Login] ✅ Signature received:', signature?.substring(0, 20) + '...')
     } catch (signError) {
+      console.log('[Login] ❌ Signature error:', signError.message)
       // If session expired, disconnect and reconnect
       if (signError.message && signError.message.includes('Session expired')) {
         // Try to disconnect (may fail if already disconnected)
@@ -980,25 +988,38 @@ const initWalletConnect = async () => {
     }
 
     // Verify login
+    console.log('[Login] 🔐 Preparing login verification...')
     const walletConnectInfo = {
-      zelid: address,
+      zelid: address.toLowerCase(), // Backend expects lowercase
       signature: signature,
       loginPhrase: loginPhrase.value,
     }
+    console.log('[Login] Login info:', {
+      zelid: walletConnectInfo.zelid,
+      signatureLength: walletConnectInfo.signature?.length,
+      loginPhraseLength: walletConnectInfo.loginPhrase?.length,
+    })
 
+    console.log('[Login] 📡 Calling verifyLogin API...')
     const response = await IDService.verifyLogin(walletConnectInfo)
+    console.log('[Login] 📥 verifyLogin response:', response.data)
+
     if (response.data.status === "success") {
+      console.log('[Login] ✅ Login successful!')
       fluxStore.setPrivilege(response.data.data.privilage)
       fluxStore.setZelid(walletConnectInfo.zelid)
       localStorage.setItem('loginType', 'walletconnect')
       localStorage.setItem("zelidauth", qs.stringify(walletConnectInfo))
       emit('loginSuccess')
       showToast("success", response.data.data.message)
-      closeWalletConnect()
+      // Don't close WalletConnect - keep session active for future logins
+      // closeWalletConnect()
     } else {
+      console.log('[Login] ❌ Login failed:', response.data.data.message || response.data.data)
       showToast(response.data.status, response.data.data.message || response.data.data)
     }
   } catch (error) {
+    console.log('[Login] 💥 Login error:', error)
     showToast("error", error.message || "Failed to connect with WalletConnect")
   }
 }
@@ -1014,6 +1035,7 @@ const initMetamask = async () => {
     }
 
     isSigning.value = true
+
     await getZelIdLoginPhrase()
 
     // Use walletService to sign with MetaMask

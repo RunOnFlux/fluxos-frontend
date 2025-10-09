@@ -158,6 +158,8 @@ export const appKit = new Proxy({}, {
 const MMSDK = new MetaMaskSDK({
   checkInstallationImmediately: false,
   enableAnalytics: true,
+  preferDesktop: true, // Prefer extension over SDK modal
+  useDeeplink: false, // Don't use deeplinks when extension is available
   dappMetadata: {
     name: 'Flux Cloud',
     url: isLocalhost ? window.location.origin : 'https://home.runonflux.io',
@@ -321,33 +323,91 @@ export async function signWithWalletConnect(message) {
     // If no valid session, establish fresh connection
     if (!hasValidSession) {
       console.log('[WalletConnect] No valid session detected, establishing fresh connection...')
-      const address = await openWalletConnect() // This handles stale session cleanup
-      console.log('[WalletConnect] ✅ Fresh connection established:', address)
 
-      // Wait for provider to be fully initialized after fresh connection
-      console.log('[WalletConnect] Waiting for provider to initialize...')
-      let providerReady = false
-      let attempts = 0
-      const maxAttempts = 10
+      // Try connection up to 2 times - first attempt might fail after external disconnect
+      let connectionAttempts = 0
+      let address = null
 
-      while (!providerReady && attempts < maxAttempts) {
-        try {
-          const testProvider = await appKit.getWalletProvider()
-          if (testProvider?.namespaces && Object.keys(testProvider.namespaces).length > 0) {
-            providerReady = true
-            console.log('[WalletConnect] ✅ Provider ready for signing')
-          } else {
+      while (connectionAttempts < 2) {
+        connectionAttempts++
+        console.log(`[WalletConnect] Connection attempt ${connectionAttempts}/2`)
+
+        address = await openWalletConnect() // This handles stale session cleanup
+        console.log('[WalletConnect] ✅ Fresh connection established:', address)
+
+        // Wait for provider to be fully initialized after fresh connection
+        console.log('[WalletConnect] Waiting for provider to initialize...')
+        let providerReady = false
+        let attempts = 0
+        const maxAttempts = 6 // 3 seconds per connection attempt
+
+        while (!providerReady && attempts < maxAttempts) {
+          try {
+            const testProvider = await appKit.getWalletProvider()
+            console.log(`[WalletConnect] Provider check attempt ${attempts + 1}/${maxAttempts}:`, {
+              hasProvider: !!testProvider,
+              hasNamespaces: !!testProvider?.namespaces,
+              namespaceCount: testProvider?.namespaces ? Object.keys(testProvider.namespaces).length : 0,
+            })
+
+            if (testProvider?.namespaces && Object.keys(testProvider.namespaces).length > 0) {
+              providerReady = true
+              console.log('[WalletConnect] ✅ Provider ready for signing')
+              break // Exit both loops on success
+            } else {
+              attempts++
+              await new Promise(r => setTimeout(r, 500))
+            }
+          } catch (e) {
+            console.log(`[WalletConnect] Provider check error attempt ${attempts + 1}:`, e.message)
             attempts++
             await new Promise(r => setTimeout(r, 500))
           }
-        } catch (e) {
-          attempts++
-          await new Promise(r => setTimeout(r, 500))
+        }
+
+        if (providerReady) {
+          break // Success, exit retry loop
+        }
+
+        // Attempt failed, try complete disconnect and retry
+        if (connectionAttempts < 2) {
+          console.log('[WalletConnect] Provider initialization failed, disconnecting and retrying...')
+
+          try {
+            await appKit.disconnect()
+
+            // Clear all WalletConnect storage before retry
+            const keysToRemove = []
+            for (let i = 0; i < localStorage.length; i++) {
+              const key = localStorage.key(i)
+              if (key && !key.includes('DEEPLINK_CHOICE') && (
+                key.startsWith('wc@2:') ||
+                key.startsWith('@w3m/') ||
+                key.startsWith('W3M_') ||
+                key.startsWith('@walletconnect/') ||
+                key.startsWith('@reown/') ||
+                key.startsWith('@appkit/') ||
+                key.startsWith('reown') ||
+                key.startsWith('wagmi.') ||
+                key.includes('walletconnect')
+              )) {
+                keysToRemove.push(key)
+              }
+            }
+            keysToRemove.forEach(key => localStorage.removeItem(key))
+            console.log('[WalletConnect] Cleared storage, retrying connection...')
+            await new Promise(r => setTimeout(r, 1000)) // Wait 1 second before retry
+          } catch (e) {
+            console.log('[WalletConnect] Disconnect error (expected):', e.message)
+          }
         }
       }
 
-      if (!providerReady) {
-        throw new Error('Provider failed to initialize after connection')
+      // Check if we succeeded after all attempts
+      const finalProvider = await appKit.getWalletProvider()
+      if (!finalProvider?.namespaces || Object.keys(finalProvider.namespaces).length === 0) {
+        console.log('[WalletConnect] All connection attempts failed')
+        throw new Error('WalletConnect session failed to initialize. Please refresh the page and try again.')
       }
     } else {
       console.log('[WalletConnect] ✅ Reusing existing valid session')
@@ -390,15 +450,29 @@ export async function signWithWalletConnect(message) {
     console.log('[WalletConnect] Waiting for user to sign in wallet...')
 
     // Add timeout for signing request
+    let timeoutId
     const signaturePromise = provider.request({
       method: 'personal_sign',
       params: [message, address],
+    }).then(sig => {
+      console.log('[WalletConnect] 🎯 Provider.request resolved with signature')
+      clearTimeout(timeoutId) // Clear timeout on success
+
+      return sig
+    }).catch(err => {
+      console.log('[WalletConnect] ❌ Provider.request rejected:', err.message)
+      clearTimeout(timeoutId) // Clear timeout on error
+      throw err
     })
 
     const timeoutPromise = new Promise((_, reject) => {
-      setTimeout(() => reject(new Error('Signature request timed out after 5 minutes')), 300000)
+      timeoutId = setTimeout(() => {
+        console.log('[WalletConnect] ⏰ Signature timeout reached (2 minutes)')
+        reject(new Error('Signature request timed out after 2 minutes'))
+      }, 120000) // 2 minutes
     })
 
+    console.log('[WalletConnect] ⏳ Racing between signature and timeout...')
     const signature = await Promise.race([signaturePromise, timeoutPromise])
 
     console.log('[WalletConnect] ✅ Signature received:', signature.substring(0, 20) + '...')
@@ -598,6 +672,22 @@ export function closeWalletConnect() {
  * @returns {Promise<object>} MetaMask provider
  */
 async function getMetaMaskProvider() {
+  // Check if extension is installed first
+  if (typeof window !== 'undefined' && window.ethereum?.isMetaMask) {
+    // SDK should detect and use the extension
+    let provider = MMSDK.getProvider()
+
+    if (!provider) {
+      await MMSDK.init()
+      provider = MMSDK.getProvider()
+    }
+
+    if (provider) {
+      return provider
+    }
+  }
+
+  // No extension found, SDK will handle mobile or show install prompt
   let provider = MMSDK.getProvider()
 
   if (!provider) {
@@ -606,18 +696,55 @@ async function getMetaMaskProvider() {
   }
 
   if (!provider) {
-    throw new Error("MetaMask provider not available")
+    throw new Error("MetaMask not installed. Please install MetaMask extension or mobile app.")
   }
 
   return provider
 }
 
 /**
+ * Check if MetaMask is locked
+ * @returns {Promise<boolean>} True if locked, false if unlocked, null if cannot determine
+ */
+export async function isMetaMaskLocked() {
+  try {
+    const provider = await getMetaMaskProvider()
+
+    // Check if extension is available
+    if (!window.ethereum?.isMetaMask) {
+      return null
+    }
+
+    // Try to check accounts first
+    const accounts = await provider.request({ method: "eth_accounts" })
+
+    // If no accounts, definitely need to connect (might be locked or just not connected)
+    if (accounts.length === 0) {
+      return true // Treat as locked to show the info message
+    }
+
+    // Has accounts - try a simple read operation to verify wallet is truly accessible
+    // eth_chainId should work even when locked if already connected
+    try {
+      await provider.request({ method: "eth_chainId" })
+
+      return false // Can access, so unlocked
+    } catch (e) {
+      return true // Cannot access despite having accounts, likely locked
+    }
+  } catch (e) {
+    return null // Cannot determine
+  }
+}
+
+/**
  * Connect to MetaMask and get account
+ * Simple implementation matching original behavior
  * @returns {Promise<string>} Connected account address
  */
 export async function connectMetaMask() {
   const provider = await getMetaMaskProvider()
+
   const accounts = await provider.request({ method: "eth_requestAccounts" })
   const account = accounts[0]
 
@@ -641,12 +768,29 @@ export async function signWithMetaMask(message, account) {
     account = await connectMetaMask()
   }
 
-  const signature = await provider.request({
+  // Sign with plain text message (not hex)
+  const signaturePromise = provider.request({
     method: "personal_sign",
     params: [message, account],
   })
 
-  return { address: account, signature }
+  // Add timeout with helpful message about unlocking
+  let timeoutId
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = setTimeout(() => {
+      reject(new Error('Please unlock MetaMask extension and try again.'))
+    }, 20000) // 20 seconds timeout
+  })
+
+  try {
+    const signature = await Promise.race([signaturePromise, timeoutPromise])
+    clearTimeout(timeoutId)
+
+    return { address: account, signature }
+  } catch (error) {
+    clearTimeout(timeoutId)
+    throw error
+  }
 }
 
 /**

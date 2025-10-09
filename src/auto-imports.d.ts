@@ -90,6 +90,7 @@ declare global {
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isEmpty: typeof import('./@core/utils/helpers.js')['isEmpty']
   const isEmptyArray: typeof import('./@core/utils/helpers.js')['isEmptyArray']
+  const isMetaMaskLocked: typeof import('./utils/walletService.js')['isMetaMaskLocked']
   const isNullOrUndefined: typeof import('./@core/utils/helpers.js')['isNullOrUndefined']
   const isObject: typeof import('./@core/utils/helpers.js')['isObject']
   const isProxy: typeof import('vue')['isProxy']
@@ -503,6 +504,7 @@ declare module 'vue' {
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
     readonly isEmpty: UnwrapRef<typeof import('./@core/utils/helpers.js')['isEmpty']>
     readonly isEmptyArray: UnwrapRef<typeof import('./@core/utils/helpers.js')['isEmptyArray']>
+    readonly isMetaMaskLocked: UnwrapRef<typeof import('./utils/walletService.js')['isMetaMaskLocked']>
     readonly isNullOrUndefined: UnwrapRef<typeof import('./@core/utils/helpers.js')['isNullOrUndefined']>
     readonly isObject: UnwrapRef<typeof import('./@core/utils/helpers.js')['isObject']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
