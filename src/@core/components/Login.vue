@@ -567,7 +567,7 @@ import metamaskLogo from "@images/metamask.svg?url"
 import sspLogoBlack from "@images/ssp-logo-black.svg?url"
 import sspLogoWhite from "@images/ssp-logo-white.svg?url"
 import walletConnectLogo from "@images/walletconnect.svg?url"
-import { openWalletConnect, signWithWalletConnect, closeWalletConnect, signWithMetaMask, disconnectWalletConnect, appKit, isMetaMaskLocked } from '@/utils/walletService'
+import { openWalletConnect, signWithWalletConnect, closeWalletConnect, signWithMetaMask, disconnectWalletConnect, appKit } from '@/utils/walletService'
 import axios from "axios"
 
 import { storeToRefs } from "pinia"

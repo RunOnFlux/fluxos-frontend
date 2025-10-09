@@ -703,41 +703,6 @@ async function getMetaMaskProvider() {
 }
 
 /**
- * Check if MetaMask is locked
- * @returns {Promise<boolean>} True if locked, false if unlocked, null if cannot determine
- */
-export async function isMetaMaskLocked() {
-  try {
-    const provider = await getMetaMaskProvider()
-
-    // Check if extension is available
-    if (!window.ethereum?.isMetaMask) {
-      return null
-    }
-
-    // Try to check accounts first
-    const accounts = await provider.request({ method: "eth_accounts" })
-
-    // If no accounts, definitely need to connect (might be locked or just not connected)
-    if (accounts.length === 0) {
-      return true // Treat as locked to show the info message
-    }
-
-    // Has accounts - try a simple read operation to verify wallet is truly accessible
-    // eth_chainId should work even when locked if already connected
-    try {
-      await provider.request({ method: "eth_chainId" })
-
-      return false // Can access, so unlocked
-    } catch (e) {
-      return true // Cannot access despite having accounts, likely locked
-    }
-  } catch (e) {
-    return null // Cannot determine
-  }
-}
-
-/**
  * Connect to MetaMask and get account
  * Simple implementation matching original behavior
  * @returns {Promise<string>} Connected account address

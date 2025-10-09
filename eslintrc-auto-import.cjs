@@ -98,7 +98,6 @@ module.exports = {
     "isDefined": true,
     "isEmpty": true,
     "isEmptyArray": true,
-    "isMetaMaskLocked": true,
     "isNullOrUndefined": true,
     "isObject": true,
     "isProxy": true,
