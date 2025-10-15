@@ -530,15 +530,29 @@ onMounted(async () => {
 </script>
   
   <style scoped>
+  .table-wrapper {
+    overflow: visible;
+  }
+
   .table-wrapper-location {
     width: 100%;
-    min-width: 400px;
     max-width: 100%;
     margin: auto;
+    padding-top: 4px;
+    overflow-x: hidden;
+    overflow-y: visible;
   }
+
+  @media (min-width: 961px) {
+    .table-wrapper-location {
+      min-width: 400px;
+    }
+  }
+
   .map-wrapper {
     width: 100%;
-    overflow-x: auto;
+    max-width: 100%;
+    overflow: hidden;
     display: flex;
     justify-content: center;
   }

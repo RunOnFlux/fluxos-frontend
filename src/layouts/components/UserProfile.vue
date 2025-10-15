@@ -108,6 +108,7 @@ async function logout() {
     // The session will be reused on next login without needing to reconnect
     console.log("WalletConnect session kept active for future logins")
   }
+
   // For other login types (zelcore, ssp, metamask), no additional cleanup needed
 
   showToast('success', 'Logged out successfully')

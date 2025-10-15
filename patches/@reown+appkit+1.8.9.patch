@@ -1,9 +1,0 @@
-diff --git a/node_modules/@reown/appkit/dist/esm/exports/constants.js b/node_modules/@reown/appkit/dist/esm/exports/constants.js
-index b3cf065..dab120a 100644
---- a/node_modules/@reown/appkit/dist/esm/exports/constants.js
-+++ b/node_modules/@reown/appkit/dist/esm/exports/constants.js
-@@ -1,2 +1,2 @@
--export const PACKAGE_VERSION = '1.8.7';
-+export const PACKAGE_VERSION = '1.8.9';
- //# sourceMappingURL=constants.js.map
-\ No newline at end of file

@@ -45,6 +45,7 @@ declare module 'vue' {
     CardStatisticsVerticalSimple: typeof import('./@core/components/CardStatisticsVerticalSimple.vue')['default']
     CheckoutContent: typeof import('./components/CheckoutContent.vue')['default']
     ComponentDetails: typeof import('./@core/components/ComponentDetails.vue')['default']
+    ComponentDetailsCircular: typeof import('./@core/components/ComponentDetailsCircular.vue')['default']
     ConfirmCustomDialog: typeof import('./@core/components/ConfirmCustomDialog.vue')['default']
     ConfirmDialog: typeof import('./components/dialogs/ConfirmDialog.vue')['default']
     CreateAppDialog: typeof import('./components/dialogs/CreateAppDialog.vue')['default']

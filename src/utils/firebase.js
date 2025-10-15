@@ -47,10 +47,11 @@ export async function loginWithGoogle() {
     const provider = new firebase.auth.GoogleAuthProvider()
 
     provider.setCustomParameters({ prompt: 'select_account' })
-    
+
     return await auth.signInWithPopup(provider)
   } catch (error) {
-    return null
+    console.error('Google login error:', error)
+    throw error
   }
 }
 

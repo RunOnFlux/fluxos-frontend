@@ -238,11 +238,34 @@ dt, dd {
   color: #0dcaf0;
 }
 
+/* Tablet and mobile: reduce gap and allow wrapping */
+@media (max-width: 960px) {
+  .grid-row {
+    grid-template-columns: 220px 1fr;
+    column-gap: 0.5rem;
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .title-content {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .title-text {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
 /* Mobile: stack key and value */
 @media (max-width: 576px) {
   .grid-row {
     grid-template-columns: 1fr;
     row-gap: 0.25rem;
+    column-gap: 0;
   }
 
   .title-content {

@@ -213,8 +213,8 @@
       <VSheet
         border
         rounded
-        class="mt-4"
-        style="max-height: none; overflow: visible"
+        class="mt-4 table-sheet"
+        style="max-height: none;"
       >
         <VDataTable
           v-model:page="tableOptions.currentPage"
@@ -442,7 +442,7 @@
               :data-name="item.name"
             >
               <td :colspan="columns.length">
-                <div class="pa-0">
+                <div class="pa-0 expanded-content-wrapper">
                   <AppDetailsCard
                     :app="item"
                     :active-apps-tab="activeAppsTab"
@@ -474,13 +474,14 @@
                       color="primary"
                       height="30"
                       hide-slider
-                      class="my-2 tabs-no-slider"
+                      class="mb-4 tabs-no-slider"
                     >
                       <VTab
                         v-for="(component, index) in normalizeComponents(item)"
                         :key="index"
                         :value="index"
                         class="tab-chip"
+                        variant="flat"
                       >
                         <VIcon
                           size="18"
@@ -494,7 +495,7 @@
 
                     <VWindow
                       v-model="activeTabLocalIndexSpec"
-                      class="px-4"
+                      class="px-4 window-content"
                       :touch="false"
                     >
                       <VWindowItem
@@ -514,38 +515,40 @@
                       </VWindowItem>
                     </VWindow>
                   </div>
-                  <h3
-                    v-if="
-                      activeAppsTab &&
-                        appLocationsMap[item.name] &&
-                        appLocationsMap[item.name].length
-                    "
-                    class="d-flex align-center justify-start mb-4 mt-4"
-                  >
-                    <VChip
-                      color="info"
-                      variant="tonal"
-                      class="composition-chip"
+                  <div class="locations-wrapper">
+                    <h3
+                      v-if="
+                        activeAppsTab &&
+                          appLocationsMap[item.name] &&
+                          appLocationsMap[item.name].length
+                      "
+                      class="d-flex align-center justify-start mb-4 mt-4"
                     >
-                      <VIcon
-                        size="22"
-                        class="ml-1"
+                      <VChip
+                        color="info"
+                        variant="tonal"
+                        class="composition-chip"
                       >
-                        mdi-map-marker-radius
-                      </VIcon>
-                      <span class="ml-2">Locations</span>
-                    </VChip>
-                  </h3>
-                  <Locations
-                    v-if="
-                      activeAppsTab &&
-                        appLocationsMap[item.name] &&
-                        appLocationsMap[item.name].length
-                    "
-                    :app-locations="appLocationsMap[item.name] || []"
-                    :expanded="expanded.includes(item.name)"
-                    :app-spec="item"
-                  />
+                        <VIcon
+                          size="22"
+                          class="ml-1"
+                        >
+                          mdi-map-marker-radius
+                        </VIcon>
+                        <span class="ml-2">Locations</span>
+                      </VChip>
+                    </h3>
+                    <Locations
+                      v-if="
+                        activeAppsTab &&
+                          appLocationsMap[item.name] &&
+                          appLocationsMap[item.name].length
+                      "
+                      :app-locations="appLocationsMap[item.name] || []"
+                      :expanded="expanded.includes(item.name)"
+                      :app-spec="item"
+                    />
+                  </div>
                 </div>
               </td>
             </tr>
@@ -595,7 +598,7 @@
 </template>
 
 <script setup>
-import { ref, computed, nextTick, onMounted, watch } from "vue"
+import { ref, computed, nextTick, onMounted, onUnmounted, watch } from "vue"
 import Manage from "@/views/apps/management/manage.vue"
 import Redeploy from "@/views/apps/management/redeploy.vue"
 import AppsService from "@/services/AppsService"
@@ -780,6 +783,8 @@ const pageCount = computed(() =>
   Math.ceil(filteredApps.value.length / tableOptions.value.perPage),
 )
 
+const isMobile = ref(false)
+
 const defaultFields = [
   { key: "data-table-expand", title: "", sortable: false, class: "col-expand" },
   { key: "name", title: "Name", sortable: true, class: "col-name" },
@@ -790,7 +795,13 @@ const defaultFields = [
   { key: "actions", title: "", sortable: false, align: "end", class: "col-actions" },
 ]
 
-const mergedFields = computed(() => defaultFields)
+const mobileFields = [
+  { key: "data-table-expand", title: "", sortable: false, class: "col-expand" },
+  { key: "name", title: "Name", sortable: true, class: "col-name-mobile" },
+  { key: "actions", title: "", sortable: false, align: "end", class: "col-actions" },
+]
+
+const mergedFields = computed(() => isMobile.value ? mobileFields : defaultFields)
 
 function openAppManagement(name) {
   emit("openAppManagement", name)
@@ -1003,10 +1014,21 @@ function handleLoginSuccess() {
   // Trigger page refresh to reload data with new login status
 }
 
+function checkMobile() {
+  isMobile.value = window.innerWidth <= 960
+}
+
 onMounted(() => {
   if (props.showStatus) {
     appsGetListRunningApps()
   }
+
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkMobile)
 })
 </script>
 
@@ -1109,6 +1131,12 @@ onMounted(() => {
 .myapps-table .v-data-table__wrapper {
   overflow-x: auto;
 }
+
+@media (max-width: 960px) {
+  .myapps-table .v-data-table__wrapper {
+    overflow-x: hidden !important;
+  }
+}
 .myapps-table .col-expand {
   width: 35px;
   min-width: 35px;
@@ -1143,9 +1171,25 @@ onMounted(() => {
   overflow-x: auto; /* Add horizontal scroll if needed */
 }
 
+@media (max-width: 960px) {
+  .v-sheet {
+    overflow-x: hidden !important;
+  }
+}
+
 .v-data-table {
   min-width: 100%;
   max-width: 100%;
+}
+
+@media (max-width: 960px) {
+  .v-data-table {
+    overflow-x: hidden !important;
+  }
+
+  .v-data-table .v-table__wrapper {
+    overflow-x: hidden !important;
+  }
 }
 
 /* Optional: Control specific column sizes */
@@ -1198,6 +1242,7 @@ onMounted(() => {
   font-size: 16px !important;
   font-family: monospace;
   text-transform: none;
+  margin-bottom: 8px !important;
 }
 
 /* ACTIVE tab */
@@ -1215,6 +1260,214 @@ onMounted(() => {
 /* REMOVE BORDER CORRECTLY */
 .tabs-no-slider.v-tabs {
   border-block-end: none !important;
+}
+
+/* Mobile fixes for table content */
+@media (max-width: 960px) {
+  .window-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Constrain VTabs and VWindow */
+  .myapps-table .v-tabs {
+    max-width: 100% !important;
+    overflow-x: auto !important;
+  }
+
+  .myapps-table .v-window {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  .myapps-table .v-window-item {
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Prevent table from allowing horizontal scroll */
+  .table-sheet {
+    overflow: hidden !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .myapps-table-wrapper {
+    overflow: hidden !important;
+    max-width: 100% !important;
+  }
+
+  .myapps-table-wrapper .v-sheet {
+    overflow: hidden !important;
+    max-width: 100% !important;
+  }
+
+  .myapps-table {
+    overflow: hidden !important;
+    max-width: 100% !important;
+    width: 100% !important;
+  }
+
+  .myapps-table .v-table__wrapper {
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .myapps-table table {
+    table-layout: fixed !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-spacing: 0 !important;
+    border-collapse: collapse !important;
+  }
+
+  .myapps-table .v-data-table__wrapper {
+    overflow: hidden !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Use colgroup to absolutely force column widths */
+  .myapps-table colgroup {
+    display: table-column-group !important;
+  }
+
+  .myapps-table colgroup col:first-child {
+    width: 55px !important;
+    min-width: 55px !important;
+    max-width: 55px !important;
+  }
+
+  .myapps-table colgroup col:nth-child(2) {
+    width: calc(100% - 135px) !important;
+    min-width: calc(100% - 135px) !important;
+    max-width: calc(100% - 135px) !important;
+  }
+
+  .myapps-table colgroup col:nth-child(3) {
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+  }
+
+  /* Lock expand column at 55px - target all Vuetify expand column classes */
+  .myapps-table tbody > tr:not(.expanded-row) > td:first-child,
+  .myapps-table thead > tr > th:first-child,
+  .myapps-table tbody > tr > td.v-data-table__td--expanded-row,
+  .myapps-table thead > tr > th.v-data-table-column--no-padding,
+  .myapps-table .v-data-table__td--expanded-row,
+  .myapps-table .v-data-table-column--no-padding {
+    width: 55px !important;
+    min-width: 55px !important;
+    max-width: 55px !important;
+    padding: 0px 0px 0px 10px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Lock actions column */
+  .myapps-table tbody > tr:not(.expanded-row) > td:nth-child(3),
+  .myapps-table thead > tr > th:nth-child(3) {
+    width: 80px !important;
+    min-width: 80px !important;
+    max-width: 80px !important;
+    padding: 0px 8px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Lock name column */
+  .myapps-table tbody > tr:not(.expanded-row) > td:nth-child(2),
+  .myapps-table thead > tr > th:nth-child(2) {
+    width: calc(100% - 135px) !important;
+    min-width: calc(100% - 135px) !important;
+    max-width: calc(100% - 135px) !important;
+    padding: 0px !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  /* Force content inside second column to respect width */
+  .myapps-table tbody > tr:not(.expanded-row) > td:nth-child(2) > *,
+  .myapps-table tbody > tr:not(.expanded-row) > td:nth-child(2) .col-name {
+    max-width: 100% !important;
+    width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .myapps-table .col-name .usage-row {
+    flex-wrap: wrap !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Expanded row must match table width exactly */
+  .myapps-table .expanded-row {
+    display: table-row !important;
+  }
+
+  .myapps-table .expanded-row > td {
+    display: table-cell !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+    max-width: 100% !important;
+  }
+
+  /* Constrain expanded content wrapper - use max-width trick */
+  .myapps-table .expanded-content-wrapper {
+    display: block !important;
+    width: 0 !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    padding: 12px 16px !important;
+  }
+
+  /* Force all content inside wrapper to respect container width */
+  .myapps-table .expanded-content-wrapper > *:not(.locations-wrapper) {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Locations wrapper needs actual width for Leaflet to calculate properly */
+  .myapps-table .expanded-content-wrapper > .locations-wrapper {
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  /* Ensure ALL content respects width - aggressive approach - EXCEPT leaflet internals */
+  .myapps-table .expanded-row *:not(svg):not(path):not(circle):not(line):not(defs):not(filter):not(.leaflet-pane):not(.leaflet-pane *):not(.leaflet-tile):not(.leaflet-tile-pane):not(.leaflet-tile-container):not(.leaflet-map-pane):not(.leaflet-overlay-pane):not(.leaflet-shadow-pane):not(.leaflet-marker-pane) {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
+  }
+
+  /* Target specific elements that commonly overflow */
+  .myapps-table .expanded-row kbd,
+  .myapps-table .expanded-row .resource-kbd,
+  .myapps-table .expanded-row a,
+  .myapps-table .expanded-row pre,
+  .myapps-table .expanded-row code {
+    max-width: 100% !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    word-break: break-all !important;
+  }
+
+  .myapps-table td:not(.expanded-row td),
+  .myapps-table th {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
 }
 
 ::v-deep(.small-checkbox .v-label) {

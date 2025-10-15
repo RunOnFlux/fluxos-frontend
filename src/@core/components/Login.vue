@@ -65,12 +65,27 @@
                 class="pt-0 m-0"
               >
                 <div class="ssoLogin mt-0">
-                  <div v-if="showSsoLoggedIn">
-                    <VProgressCircular
-                      indeterminate
-                      color="primary"
-                    />
-                    <div>{{ t("login.finishingLogin") }}</div>
+                  <div v-if="showSsoLoggedIn" class="d-flex flex-column align-center gap-4">
+                    <div class="modern-spinner-container">
+                      <VProgressCircular
+                        indeterminate
+                        color="primary"
+                        size="56"
+                        width="2.5"
+                        class="modern-spinner-outer"
+                      />
+                      <VProgressCircular
+                        indeterminate
+                        color="primary"
+                        size="38"
+                        width="2.5"
+                        class="modern-spinner-inner"
+                      />
+                    </div>
+                    <div class="text-center">
+                      <div class="text-h6 font-weight-medium mb-2">{{ t("login.finishingLogin") }}</div>
+                      <div class="text-body-2 text-medium-emphasis">{{ t("login.pleaseWait") }}</div>
+                    </div>
                   </div>
                   <div v-if="showSsoVerify">
                     <VBtn
@@ -748,12 +763,12 @@ const handleSignedInUser = async user => {
 
       const response = await IDService.verifyLogin(authLogin)
 
-      infoMessage.value = response
       if (response.data.status === "success") {
         fluxStore.setPrivilege(response.data.data.privilage)
         fluxStore.setZelid(authLogin.zelid)
         localStorage.setItem('loginType', 'sso')
         localStorage.setItem("zelidauth", qs.stringify(authLogin))
+        showSsoLoggedIn.value = false
         emit('loginSuccess')
         showToast("success", response.data.data.message)
       } else {
@@ -945,6 +960,7 @@ const initWalletConnect = async () => {
       console.log('[Login] ✅ Signature received:', signature?.substring(0, 20) + '...')
     } catch (signError) {
       console.log('[Login] ❌ Signature error:', signError.message)
+
       // If session expired, disconnect and reconnect
       if (signError.message && signError.message.includes('Session expired')) {
         // Try to disconnect (may fail if already disconnected)
@@ -1012,6 +1028,7 @@ const initWalletConnect = async () => {
       localStorage.setItem("zelidauth", qs.stringify(walletConnectInfo))
       emit('loginSuccess')
       showToast("success", response.data.data.message)
+
       // Don't close WalletConnect - keep session active for future logins
       // closeWalletConnect()
     } else {
@@ -1182,18 +1199,26 @@ onUnmounted(() => {
   height: 90px;
   width: 90px;
   padding: 10px;
+  cursor: pointer;
 }
 .walletIcon img {
   -webkit-app-region: no-drag;
   transition: 0.1s;
+  cursor: pointer;
 }
 a img {
   transition: all 0.05s ease-in-out;
+  cursor: pointer;
 }
 
 a:hover img {
   filter: opacity(70%);
   transform: scale(1.1);
+}
+
+.google-icon,
+.apple-icon {
+  cursor: pointer;
 }
 
 /* Custom styles for FirebaseUI widget */
@@ -1261,5 +1286,42 @@ div.v-tabs-bar {
 .v-card-title,
 .v-avatar {
   text-transform: none !important;
+}
+
+.modern-spinner-container {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modern-spinner-outer {
+  position: absolute;
+  animation: spin-slow 2s linear infinite;
+}
+
+.modern-spinner-inner {
+  position: absolute;
+  animation: spin-fast 1s linear infinite reverse;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-fast {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>

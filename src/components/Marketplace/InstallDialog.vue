@@ -789,8 +789,15 @@
                   <div v-if="!signStepCompleted[1] && detectedSigningMethod" class="text-center mb-4">
                     <div class="detected-method-display">
                       <a class="wallet-link" :title="detectedSigningMethod">
+                        <!-- SSO - Use @ icon instead of image -->
+                        <div
+                          v-if="detectedSigningMethod === 'SSO'"
+                          class="sso-icon-wrapper"
+                        >
+                          <VIcon icon="mdi-at" size="40" color="white" />
+                        </div>
                         <img
-                          v-if="detectedSigningMethod.includes('ZelCore')"
+                          v-else-if="detectedSigningMethod.includes('ZelCore')"
                           :src="fluxIDLogo"
                           alt="Flux ID (ZelCore)"
                           class="walletIcon"
@@ -811,12 +818,6 @@
                           v-else-if="detectedSigningMethod === 'WalletConnect'"
                           :src="walletConnectLogo"
                           alt="WalletConnect"
-                          class="walletIcon"
-                        />
-                        <img
-                          v-else-if="detectedSigningMethod === 'SSO'"
-                          :src="fluxIDLogo"
-                          alt="FluxID SSO"
                           class="walletIcon"
                         />
                       </a>
@@ -877,8 +878,8 @@
                       </div>
                     </div>
 
-                    <!-- Cancel Button -->
-                    <div v-if="!signStepCompleted[0]" class="d-flex justify-center mt-5">
+                    <!-- Cancel Button (hidden for SSO since it's automatic) -->
+                    <div v-if="!signStepCompleted[0] && detectedSigningMethod !== 'SSO'" class="d-flex justify-center mt-5">
                       <VBtn
                         variant="outlined"
                         color="error"
@@ -906,8 +907,8 @@
             </div>
           </VWindowItem>
 
-          <!-- Step 5: Payment (Step 4 for SSO users) / WordPress Step 1 -->
-          <VWindowItem :value="isWordPress ? 1 : (detectedSigningMethod === 'SSO' ? 4 : 5)">
+          <!-- Step 5: Payment (both SSO and wallet) / WordPress Step 1 -->
+          <VWindowItem :value="isWordPress ? 1 : 5">
             <div class="step-container">
 
               <div class="payment-section">
@@ -1463,8 +1464,8 @@ const totalSteps = computed(() => {
     return 3
   }
 
-  // Regular apps: SSO has 6 steps, Wallet has 7 steps
-  return detectedSigningMethod.value === 'SSO' ? 6 : 7
+  // Regular apps: Both SSO and wallet now have 7 steps (SSO auto-signs on step 4)
+  return 7
 })
 const deploying = ref(false)
 const paymentProcessing = ref(false)
@@ -1602,6 +1603,8 @@ const detectedSigningMethod = computed(() => {
   const storedLoginType = localStorage.getItem('loginType')
   let detectedMethod = null
 
+  console.log('[InstallDialog] Detecting signing method, loginType:', storedLoginType)
+
   // If we have a stored login type, use it and determine extension vs app
   if (storedLoginType) {
     const loginType = storedLoginType.toLowerCase()
@@ -1619,10 +1622,12 @@ const detectedSigningMethod = computed(() => {
     }
   }
 
-  // Fallback: If no stored method, prefer SSO if user has auth
+  // Fallback: If no stored method, prefer SSO if user has auth and Firebase user exists
   if (!detectedMethod) {
     const hasAuth = localStorage.getItem('zelidauth')
-    if (hasAuth) {
+    const firebaseUser = getUser()
+    if (hasAuth && firebaseUser) {
+      console.log('[InstallDialog] No loginType found, but Firebase user exists - using SSO')
       detectedMethod = 'SSO'
     }
   }
@@ -1632,7 +1637,7 @@ const detectedSigningMethod = computed(() => {
     detectedMethod = availableWallets.value[0] || null
   }
 
-  console.log('Detected signing method:', detectedMethod)
+  console.log('[InstallDialog] Detected signing method:', detectedMethod)
 
   return detectedMethod
 })
@@ -2483,7 +2488,20 @@ watch([() => config.value.instances, () => config.value.cpu, () => config.value.
 
 // Refetch pricing when reaching payment step to ensure accuracy
 watch(() => currentStep.value, (newStep, oldStep) => {
-  const paymentStepIndex = detectedSigningMethod.value === 'SSO' ? 4 : 5
+  // Auto-trigger signing for WordPress with SSO when landing on signing step
+  if (isWordPress.value && newStep === 0 && detectedSigningMethod.value === 'SSO' && !signStepCompleted.value[0]) {
+    // Automatically start signing process for SSO users
+    signApplicationMessage()
+  }
+
+  // Regular apps: Auto-trigger signing for SSO when landing on signing step
+  if (!isWordPress.value && newStep === 4 && detectedSigningMethod.value === 'SSO' && !signStepCompleted.value[0]) {
+    // Automatically start signing process for SSO users
+    signApplicationMessage()
+  }
+
+  // For WordPress: payment is step 1, for regular apps: payment is step 5 (for both SSO and wallet)
+  const paymentStepIndex = isWordPress.value ? 1 : 5
   if (newStep === paymentStepIndex && oldStep !== paymentStepIndex) {
     fetchPricingFromAPI()
   }
@@ -2492,7 +2510,8 @@ watch(() => currentStep.value, (newStep, oldStep) => {
 const canProceed = computed(() => {
   // WordPress signing step (step 0)
   if (isWordPress.value && currentStep.value === 0) {
-    // Block until both signing and registry are completed
+    // Signing step - block until both signing and registry are completed (for both SSO and wallet)
+    // SSO will auto-trigger signing, wallet requires manual button click
     return signStepCompleted.value[0] && signStepCompleted.value[1]
   }
 
@@ -2529,19 +2548,15 @@ const canProceed = computed(() => {
     // Email step - always allow proceeding (email is optional)
     return true
   }
-  if (currentStep.value === 4 && detectedSigningMethod.value !== 'SSO') {
-    // Wallet signing step (ZelCore, MetaMask, WalletConnect, SSP) - both steps must be completed
+  if (currentStep.value === 4) {
+    // Signing step - block until both signing and registry are completed (for both SSO and wallet)
+    // SSO will auto-trigger signing, wallet requires manual button click
     return signStepCompleted.value[0] && signStepCompleted.value[1]
   }
-  if ((currentStep.value === 4 && detectedSigningMethod.value === 'SSO') || (currentStep.value === 5 && detectedSigningMethod.value !== 'SSO')) {
-    // Payment step - check payment method selected and payment confirmed
+  if (currentStep.value === 5) {
+    // Payment step (same for both SSO and wallet now)
     if (!paymentMethod.value) return false
 
-    // For regular apps: Payment step is 4 (SSO) or 5 (wallet)
-  }
-
-  // Regular apps payment step
-  if (!isWordPress.value && ((currentStep.value === 4 && detectedSigningMethod.value === 'SSO') || (currentStep.value === 5 && detectedSigningMethod.value !== 'SSO'))) {
     // Must have valid pricing from API
     if (apiPricing.value.flux <= 0 || apiPricing.value.usd <= 0) return false
 
@@ -2558,10 +2573,9 @@ const canDeploy = computed(() => {
 
 // Current step display info
 const currentStepIcon = computed(() => {
-  const stepIcons = detectedSigningMethod.value === 'SSO'
-    ? ['mdi-tune-variant', 'mdi-code-tags', 'mdi-earth', 'mdi-email-alert', 'mdi-credit-card-outline', 'mdi-rocket-launch-outline']
-    : ['mdi-tune-variant', 'mdi-code-tags', 'mdi-earth', 'mdi-email-alert', 'mdi-shield-key', 'mdi-credit-card-outline', 'mdi-rocket-launch-outline']
-  
+  // Same step icons for both SSO and wallet users
+  const stepIcons = ['mdi-tune-variant', 'mdi-code-tags', 'mdi-earth', 'mdi-email-alert', 'mdi-shield-key', 'mdi-credit-card-outline', 'mdi-rocket-launch-outline']
+
   return stepIcons[currentStep.value] || 'mdi-cog'
 })
 
@@ -2569,14 +2583,12 @@ const currentStepTitle = computed(() => {
   // WordPress has only 3 steps
   if (isWordPress.value) {
     const wpStepTitles = ['Signing', 'Payment', 'Deploy']
-    
+
     return wpStepTitles[currentStep.value] || 'Setup'
   }
 
-  // Regular apps
-  const stepTitles = detectedSigningMethod.value === 'SSO'
-    ? ['Configuration', 'Parameters', 'Location', 'Alerts', 'Payment', 'Deploy']
-    : ['Configuration', 'Parameters', 'Location', 'Alerts', 'Signing', 'Payment', 'Deploy']
+  // Regular apps - both SSO and wallet have same steps, SSO auto-completes signing
+  const stepTitles = ['Configuration', 'Parameters', 'Location', 'Alerts', 'Signing', 'Payment', 'Deploy']
 
   return stepTitles[currentStep.value] || 'Setup'
 })
@@ -2592,27 +2604,16 @@ const stepItems = computed(() => {
     ]
   }
 
-  // Regular apps
-  if (detectedSigningMethod.value === 'SSO') {
-    return [
-      { label: 'Config', icon: 'mdi-tune-variant' },
-      { label: 'Params', icon: 'mdi-code-tags' },
-      { label: 'Location', icon: 'mdi-earth' },
-      { label: 'Alerts', icon: 'mdi-email-alert' },
-      { label: 'Payment', icon: 'mdi-credit-card-outline' },
-      { label: 'Deploy', icon: 'mdi-rocket-launch-outline' },
-    ]
-  } else {
-    return [
-      { label: 'Config', icon: 'mdi-tune-variant' },
-      { label: 'Params', icon: 'mdi-code-tags' },
-      { label: 'Location', icon: 'mdi-earth' },
-      { label: 'Alerts', icon: 'mdi-email-alert' },
-      { label: 'Sign', icon: 'mdi-shield-key' },
-      { label: 'Payment', icon: 'mdi-wallet' },
-      { label: 'Deploy', icon: 'mdi-rocket-launch-outline' },
-    ]
-  }
+  // Regular apps - both SSO and wallet have same steps
+  return [
+    { label: 'Config', icon: 'mdi-tune-variant' },
+    { label: 'Params', icon: 'mdi-code-tags' },
+    { label: 'Location', icon: 'mdi-earth' },
+    { label: 'Alerts', icon: 'mdi-email-alert' },
+    { label: 'Sign', icon: 'mdi-shield-key' },
+    { label: 'Payment', icon: 'mdi-credit-card-outline' },
+    { label: 'Deploy', icon: 'mdi-rocket-launch-outline' },
+  ]
 })
 
 // Methods
@@ -2640,10 +2641,7 @@ const nextStep = () => {
       nextStepIndex = 2 // Skip to geolocation step
     }
 
-    // For non-wallet users (SSO), skip the signing step (step 4)
-    if (!isWalletUser.value && nextStepIndex === 4) {
-      nextStepIndex = 5 // Skip to payment step
-    }
+    // No longer skip signing step for SSO - show the step with auto-signing
 
     currentStep.value = nextStepIndex
   } else {
@@ -3497,6 +3495,7 @@ const signWithWalletConnect = async message => {
 
   if (walletConnectSigningInProgress) {
     console.warn('[InstallDialog] WalletConnect signing already in progress')
+    
     return Promise.reject(new Error('WalletConnect signing already in progress'))
   }
 
@@ -3546,11 +3545,13 @@ const signWithSSO = async message => {
       throw new Error('SSO authentication required. Please log in with Google or Apple.')
     }
 
-    // Get Firebase access token
-    const token = firebaseUser.accessToken
+    // Get Firebase ID token (not accessToken)
+    const token = await firebaseUser.getIdToken()
     if (!token) {
       throw new Error('Unable to get Firebase authentication token')
     }
+
+    console.log('✅ Firebase token obtained for SSO signing')
 
 
     // Call FluxCore signing service (same service as login but for app spec)
@@ -3569,6 +3570,7 @@ const signWithSSO = async message => {
       throw new Error(result.data?.message || 'Failed to sign application message')
     }
 
+    console.log('✅ SSO signature obtained')
 
     // Get zelid from zelidauth
     const zelidauth = localStorage.getItem('zelidauth')
@@ -3841,7 +3843,7 @@ const processFluxPayment = async () => {
       address: fluxPaymentAddress.value,
       amount: totalFluxPrice.value,
       message: paymentHash.value,
-      coin: 'flux'
+      coin: 'flux',
     })
 
     // Start monitoring for payment
@@ -4515,6 +4517,14 @@ watch(isOpen, newValue => {
       cancelPaymentMonitoring()
     }
     cancelRedirectCountdown()
+  } else {
+    // Dialog just opened - auto-trigger signing for WordPress SSO at step 0
+    nextTick(() => {
+      if (isWordPress.value && currentStep.value === 0 && detectedSigningMethod.value === 'SSO' && !signStepCompleted.value[0]) {
+        console.log('[InstallDialog] Auto-triggering WordPress SSO signing on dialog open')
+        signApplicationMessage()
+      }
+    })
   }
 })
 
@@ -5302,6 +5312,33 @@ watch(() => props.modelValue, newValue => {
   display: inline-block;
   cursor: default;
   pointer-events: none;
+}
+
+/* SSO Icon with Glow Animation */
+.sso-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
+  border-radius: 50%;
+  margin: 0 auto;
+  animation: ssoGlow 2s ease-in-out infinite;
+  position: relative;
+}
+
+@keyframes ssoGlow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(var(--v-theme-primary), 0.4),
+                0 0 40px rgba(var(--v-theme-primary), 0.2),
+                0 0 60px rgba(var(--v-theme-primary), 0.1);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(var(--v-theme-primary), 0.6),
+                0 0 60px rgba(var(--v-theme-primary), 0.4),
+                0 0 90px rgba(var(--v-theme-primary), 0.2);
+  }
 }
 
 /* Payment Method Logo Styling */

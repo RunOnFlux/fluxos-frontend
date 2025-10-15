@@ -269,6 +269,7 @@ export async function openWalletConnect() {
       unsubscribe = appKit.subscribeAccount(account => {
         if (account?.address && account?.isConnected && !isResolved) {
           isResolved = true
+
           // Clean up subscription
           if (typeof unsubscribe === 'function') {
             unsubscribe()
@@ -550,6 +551,7 @@ export function getConnectedAccount() {
     // AppKit is the source of truth for WalletConnect connections
     if (appKitAccount?.isConnected && appKitAccount?.address) {
       console.log('[WalletService] ✅ Using AppKit account')
+      
       return {
         address: appKitAccount.address,
         isConnected: true,
@@ -610,6 +612,7 @@ export async function disconnectWalletConnect() {
       await new Promise(r => setTimeout(r, 500))
     } catch (disconnectError) {
       console.warn('[WalletConnect] AppKit disconnect failed:', disconnectError.message)
+
       // Continue to clear cache anyway
     }
 

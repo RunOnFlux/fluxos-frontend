@@ -131,7 +131,7 @@ const errorMessage = ref('')
 const isDragging = ref(false)
 const fileInput = ref(null)
 
-watch(() => props.modelValue, (newValue) => {
+watch(() => props.modelValue, newValue => {
   if (newValue) {
     // Reset on open
     jsonInput.value = ''
@@ -140,15 +140,15 @@ watch(() => props.modelValue, (newValue) => {
   }
 })
 
-const handleDragOver = (e) => {
+const handleDragOver = e => {
   isDragging.value = true
 }
 
-const handleDragLeave = (e) => {
+const handleDragLeave = e => {
   isDragging.value = false
 }
 
-const handleDrop = async (e) => {
+const handleDrop = async e => {
   isDragging.value = false
   const files = e.dataTransfer.files
   if (files.length > 0) {
@@ -160,16 +160,17 @@ const triggerFileInput = () => {
   fileInput.value?.click()
 }
 
-const handleFileSelect = async (e) => {
+const handleFileSelect = async e => {
   const files = e.target.files
   if (files.length > 0) {
     await readFile(files[0])
   }
 }
 
-const readFile = async (file) => {
+const readFile = async file => {
   if (!file.name.endsWith('.json') && !file.name.endsWith('.txt')) {
     errorMessage.value = 'Please select a valid file'
+    
     return
   }
 
@@ -194,11 +195,13 @@ const handleImport = () => {
 
     if (!Array.isArray(parsed)) {
       errorMessage.value = 'Invalid JSON: Expected an array'
+      
       return
     }
 
     if (parsed.length === 0) {
       errorMessage.value = 'Array is empty'
+      
       return
     }
 
@@ -208,12 +211,14 @@ const handleImport = () => {
       for (const item of parsed) {
         if (typeof item !== 'string' || !item.includes('=')) {
           errorMessage.value = `Invalid format: "${item}" - Expected "KEY=value" format`
+          
           return
         }
         const [key, ...rest] = item.split('=')
         const value = rest.join('=')
         if (!key || !value) {
           errorMessage.value = `Invalid entry: "${item}" - Key and value are required`
+          
           return
         }
         validEntries.push({ key, value })
@@ -224,6 +229,7 @@ const handleImport = () => {
       const validCommands = parsed.filter(cmd => typeof cmd === 'string' && cmd.trim())
       if (validCommands.length === 0) {
         errorMessage.value = 'No valid commands found'
+        
         return
       }
       emit('import', validCommands)

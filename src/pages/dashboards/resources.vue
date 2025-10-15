@@ -6,8 +6,9 @@
         sm="12"
         md="6"
         lg="3"
+        style="overflow: visible !important;"
       >
-        <VCard>
+        <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
           <VOverlay
             v-model="fluxListLoading"
             contained
@@ -17,7 +18,7 @@
           >
             <VProgressCircular indeterminate />
           </VOverlay>
-          <VCardText class="mr-2">
+          <div class="d-flex align-center pa-4" style="position: absolute; top: 0; left: 0; z-index: 1;">
             <VAvatar
               size="48"
               color="success lighten-4"
@@ -27,16 +28,19 @@
                 mdi-memory
               </VIcon>
             </VAvatar>
-            <h2 class="mt-2 text-h5 d-inline-block ml-2">
-              Cores: {{ beautifyValue(totalCores, 0) }}
+            <h2 class="text-h5 ml-2">
+              vCores
             </h2>
-            <VueApexCharts
-              ref="chart1"
-              type="bar"
-              height="400"
-              :options="cpuData.chartOptions"
-              :series="cpuData.series"
-            />
+          </div>
+          <VCardText class="pa-4" style="overflow: visible !important; height: 100%;">
+            <div class="chart-container">
+              <Doughnut
+                :key="`cpu-${theme}`"
+                :data="cpuChartData"
+                :options="cpuChartOptions"
+                :plugins="[centerTextPlugin]"
+              />
+            </div>
           </VCardText>
         </VCard>
       </VCol>
@@ -45,8 +49,9 @@
         sm="12"
         md="6"
         lg="3"
+        style="overflow: visible !important;"
       >
-        <VCard>
+        <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
           <VOverlay
             v-model="fluxListLoading"
             contained
@@ -56,7 +61,7 @@
           >
             <VProgressCircular indeterminate />
           </VOverlay>
-          <VCardText class="mr-2">
+          <div class="d-flex align-center pa-4" style="position: absolute; top: 0; left: 0; z-index: 1;">
             <VAvatar
               size="48"
               color="success lighten-4"
@@ -66,16 +71,19 @@
                 mdi-database-outline
               </VIcon>
             </VAvatar>
-            <h2 class="mt-2 text-h5 d-inline-block ml-2">
-              RAM: {{ beautifyValue(totalRAM / 1024, 2) }} TB
+            <h2 class="text-h5 ml-2">
+              RAM
             </h2>
-            <VueApexCharts
-              ref="chart2"
-              type="bar"
-              height="400"
-              :options="ramData.chartOptions"
-              :series="ramData.series"
-            />
+          </div>
+          <VCardText class="pa-4" style="overflow: visible !important; height: 100%;">
+            <div class="chart-container">
+              <Doughnut
+                :key="`ram-${theme}`"
+                :data="ramChartData"
+                :options="ramChartOptions"
+                :plugins="[centerTextPlugin]"
+              />
+            </div>
           </VCardText>
         </VCard>
       </VCol>
@@ -84,8 +92,9 @@
         sm="12"
         md="6"
         lg="3"
+        style="overflow: visible !important;"
       >
-        <VCard>
+        <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
           <VOverlay
             v-model="fluxListLoading"
             contained
@@ -95,7 +104,7 @@
           >
             <VProgressCircular indeterminate />
           </VOverlay>
-          <VCardText class="mr-2">
+          <div class="d-flex align-center pa-4" style="position: absolute; top: 0; left: 0; z-index: 1;">
             <VAvatar
               size="48"
               color="success lighten-4"
@@ -105,16 +114,19 @@
                 tabler-server
               </VIcon>
             </VAvatar>
-            <h2 class="mt-2 text-h5 d-inline-block ml-2">
-              SSD: {{ beautifyValue(totalSSD / 1000000, 2) }} PB
+            <h2 class="text-h5 ml-2">
+              SSD
             </h2>
-            <VueApexCharts
-              ref="chart3"
-              type="bar"
-              height="400"
-              :options="ssdData.chartOptions"
-              :series="ssdData.series"
-            />
+          </div>
+          <VCardText class="pa-4" style="overflow: visible !important; height: 100%;">
+            <div class="chart-container">
+              <Doughnut
+                :key="`ssd-${theme}`"
+                :data="ssdChartData"
+                :options="ssdChartOptions"
+                :plugins="[centerTextPlugin]"
+              />
+            </div>
           </VCardText>
         </VCard>
       </VCol>
@@ -123,8 +135,9 @@
         sm="12"
         md="6"
         lg="3"
+        style="overflow: visible !important;"
       >
-        <VCard>
+        <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
           <VOverlay
             v-model="fluxListLoading"
             contained
@@ -134,7 +147,7 @@
           >
             <VProgressCircular indeterminate />
           </VOverlay>
-          <VCardText class="mr-2">
+          <div class="d-flex align-center pa-4" style="position: absolute; top: 0; left: 0; z-index: 1;">
             <VAvatar
               size="48"
               color="success lighten-4"
@@ -144,16 +157,19 @@
                 mdi-harddisk
               </VIcon>
             </VAvatar>
-            <h2 class="mt-2 text-h5 d-inline-block ml-2">
-              HDD: {{ beautifyValue(totalHDD / 1000, 2) }} TB
+            <h2 class="text-h5 ml-2">
+              HDD
             </h2>
-            <VueApexCharts
-              ref="chart4"
-              type="bar"
-              height="400"
-              :options="hddData.chartOptions"
-              :series="hddData.series"
-            />
+          </div>
+          <VCardText class="pa-4" style="overflow: visible !important; height: 100%;">
+            <div class="chart-container">
+              <Doughnut
+                :key="`hdd-${theme}`"
+                :data="hddChartData"
+                :options="hddChartOptions"
+                :plugins="[centerTextPlugin]"
+              />
+            </div>
           </VCardText>
         </VCard>
       </VCol>
@@ -301,14 +317,33 @@
 </template>
 
 <script setup>
-import { ref, nextTick, watch } from "vue"
+import { ref, nextTick, watch, computed, onMounted, onUnmounted } from "vue"
 import axios from "axios"
 import tierColors from "@/utils/colors"
 import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
+import { useDisplay, useTheme } from 'vuetify'
+import { Doughnut } from 'vue-chartjs'
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js'
+
+ChartJS.register(ArcElement, Tooltip, Legend)
 
 const configStore = useConfigStore()
 const { theme } = storeToRefs(configStore)
+const { mobile } = useDisplay()
+const isMobile = computed(() => mobile.value)
+const vuetifyTheme = useTheme()
+
+// Get surface and text colors based on theme
+const getSurfaceColor = () => {
+  // Use actual Vuetify surface color for dark theme, white for light
+  return theme.value === 'dark' ? vuetifyTheme.current.value.colors.surface : '#FFFFFF'
+}
+
+const getTextColor = () => {
+  // Use light text for dark theme, dark text for light theme
+  return theme.value === 'dark' ? '#E7E3FCDE' : '#4B465C'
+}
 
 const timeoptions = {
   year: "numeric",
@@ -339,64 +374,277 @@ const nimbusHDDStorageValue = ref(0)
 const stratusSSDStorageValue = ref(0)
 const stratusHDDStorageValue = ref(0)
 const fluxHistoryStats = ref([])
-const chart1 = ref(null)
-const chart2 = ref(null)
-const chart3 = ref(null)
-const chart4 = ref(null)
 const chart5 = ref(null)
 const chart6 = ref(null)
 const chart7 = ref(null)
 
-// Chart data
-const cpuData = ref({
-  series: [],
-  chartOptions: {
-    colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-    plotOptions: {
-      bar: {
-        columnWidth: "85%",
-        distributed: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      labels: {
-        categories: ["Cumulus", "Nimbus", "Stratus"],
-        style: {
-          colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#888",
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-        formatter: value => beautifyValue(value, 0),
-      },
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Cumulus", "Nimbus", "Stratus"],
-    tooltip: {
-      y: {
-        formatter: value => beautifyValue(value, 0),
-      },
-      theme: theme.value,
-    },
-  },
+// Hover state for center label
+const hoveredSegment = ref({
+  cpu: null,
+  ram: null,
+  ssd: null,
+  hdd: null
 })
 
+// Segment glow plugin for Chart.js - draws glow only on hovered segment
+const segmentGlowPlugin = {
+  id: 'segmentGlow',
+  afterDatasetsDraw(chart) {
+    const { ctx } = chart
+    if (!chart.config._config.data.datasets[0]._chartType) return
+
+    const chartType = chart.config._config.data.datasets[0]._chartType
+    const hoverIndex = hoveredSegment.value[chartType]
+
+    if (hoverIndex !== null && hoverIndex !== undefined) {
+      const meta = chart.getDatasetMeta(0)
+      const arc = meta.data[hoverIndex]
+
+      if (!arc) return
+
+      ctx.save()
+
+      // White glow for dark theme, dark glow for light theme
+      const glowColor = theme.value === 'dark' ? '#ffffff' : '#000000'
+
+      // Draw glow behind the hovered segment
+      ctx.shadowColor = glowColor
+      ctx.shadowBlur = 25
+      ctx.shadowOffsetX = 0
+      ctx.shadowOffsetY = 0
+
+      // Redraw only the hovered segment with glow
+      ctx.beginPath()
+      ctx.arc(arc.x, arc.y, arc.outerRadius, arc.startAngle, arc.endAngle)
+      ctx.arc(arc.x, arc.y, arc.innerRadius, arc.endAngle, arc.startAngle, true)
+      ctx.closePath()
+
+      ctx.fillStyle = chart.config._config.data.datasets[0].backgroundColor[hoverIndex]
+      ctx.fill()
+
+      ctx.restore()
+    }
+  }
+}
+
+// Center text plugin for Chart.js
+const centerTextPlugin = {
+  id: 'centerText',
+  beforeDraw(chart) {
+    const { ctx } = chart
+
+    // Get the actual center from the chart's dataset metadata
+    const meta = chart.getDatasetMeta(0)
+    if (!meta || !meta.data || meta.data.length === 0) return
+
+    const firstArc = meta.data[0]
+    const centerX = firstArc.x
+    const centerY = firstArc.y
+
+    ctx.save()
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+
+    // Get the chart type from metadata
+    const chartType = chart.config._config.data.datasets[0]._chartType
+    const hoverIndex = hoveredSegment.value[chartType]
+
+    if (hoverIndex !== null && hoverIndex !== undefined) {
+      // HOVER STATE: Show hovered segment data (tier name, value, percentage on 3 lines)
+      const value = chart.config._config.data.datasets[0].data[hoverIndex]
+      const total = chart.config._config.data.datasets[0].data.reduce((a, b) => a + b, 0)
+      const percent = ((value / total) * 100).toFixed(1)
+      const labels = chart.config._config.data.labels
+      const tierText = labels[hoverIndex]
+
+      let valueText = ''
+      if (chartType === 'cpu') {
+        valueText = beautifyValue(value, 0)
+      } else if (chartType === 'ram') {
+        valueText = `${beautifyValue(value / 1024, 2)} TB`
+      } else if (chartType === 'ssd') {
+        valueText = `${beautifyValue(value / 1000, 2)} TB`
+      } else if (chartType === 'hdd') {
+        valueText = `${beautifyValue(value / 1000, 2)} TB`
+      }
+      const percentText = `${percent}%`
+
+      // Draw tier name
+      ctx.font = `700 18px sans-serif`
+      ctx.fillStyle = getTextColor()
+      ctx.fillText(tierText, centerX, centerY - 25)
+
+      // Draw value
+      ctx.font = `700 20px sans-serif`
+      ctx.fillStyle = getTextColor()
+      ctx.fillText(valueText, centerX, centerY)
+
+      // Draw percentage
+      ctx.font = `600 14px sans-serif`
+      ctx.fillStyle = getTextColor()
+      ctx.fillText(percentText, centerX, centerY + 20)
+    } else {
+      // NORMAL STATE: Show total label and total value (2 lines)
+      let valueText = ''
+      let labelText = ''
+
+      if (chartType === 'cpu') {
+        valueText = beautifyValue(totalCores.value, 0)
+        labelText = 'Total vCores'
+      } else if (chartType === 'ram') {
+        valueText = `${beautifyValue(totalRAM.value / 1024, 2)} TB`
+        labelText = 'Total RAM'
+      } else if (chartType === 'ssd') {
+        valueText = `${beautifyValue(totalSSD.value / 1000000, 2)} PB`
+        labelText = 'Total SSD'
+      } else if (chartType === 'hdd') {
+        valueText = `${beautifyValue(totalHDD.value / 1000, 2)} TB`
+        labelText = 'Total HDD'
+      }
+
+      // Draw total label (smaller font, top)
+      ctx.font = `600 14px sans-serif`
+      ctx.fillStyle = getTextColor()
+      ctx.fillText(labelText, centerX, centerY - 10)
+
+      // Draw total value (larger font, bottom)
+      ctx.font = `700 22px sans-serif`
+      ctx.fillStyle = getTextColor()
+      ctx.fillText(valueText, centerX, centerY + 15)
+    }
+
+    ctx.restore()
+  }
+}
+
+// Create base chart options
+const createChartOptions = (chartType) => ({
+  responsive: true,
+  maintainAspectRatio: false,
+  cutout: '70%',
+  layout: {
+    padding: {
+      top: 25,
+      bottom: 25,
+      left: 25,
+      right: 25
+    }
+  },
+  plugins: {
+    legend: {
+      display: false
+    },
+    tooltip: {
+      enabled: false
+    },
+    segmentGlow: {},
+    centerText: {}
+  },
+  events: ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+  onHover: (event, activeElements, chart) => {
+    // Only update if mouse is actually over the chart canvas
+    if (!event || !event.native) {
+      if (hoveredSegment.value[chartType] !== null) {
+        hoveredSegment.value[chartType] = null
+        chart.update('none')
+      }
+      return
+    }
+
+    const newIndex = activeElements.length > 0 ? activeElements[0].index : null
+
+    // Clear all other charts' hover states when this one is hovered
+    if (newIndex !== null) {
+      Object.keys(hoveredSegment.value).forEach(key => {
+        if (key !== chartType && hoveredSegment.value[key] !== null) {
+          hoveredSegment.value[key] = null
+        }
+      })
+    }
+
+    if (hoveredSegment.value[chartType] !== newIndex) {
+      hoveredSegment.value[chartType] = newIndex
+      chart.update('none')
+    }
+    if (event.native && event.native.target) {
+      event.native.target.style.cursor = activeElements.length > 0 ? 'pointer' : 'default'
+    }
+  },
+  interaction: {
+    mode: 'nearest',
+    intersect: true
+  }
+})
+
+// CPU Chart Data
+const cpuChartData = computed(() => ({
+  labels: ['Cumulus', 'Nimbus', 'Stratus'],
+  datasets: [{
+    data: [cumulusCpuValue.value, nimbusCpuValue.value, stratusCpuValue.value],
+    backgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    hoverBackgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    borderColor: getSurfaceColor(),
+    borderWidth: 2,
+    hoverBorderWidth: 0,
+    hoverOffset: 0,
+    _chartType: 'cpu'
+  }]
+}))
+
+const cpuChartOptions = computed(() => createChartOptions('cpu'))
+
+// RAM Chart Data
+const ramChartData = computed(() => ({
+  labels: ['Cumulus', 'Nimbus', 'Stratus'],
+  datasets: [{
+    data: [cumulusRamValue.value, nimbusRamValue.value, stratusRamValue.value],
+    backgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    hoverBackgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    borderColor: getSurfaceColor(),
+    borderWidth: 2,
+    hoverBorderWidth: 0,
+    hoverOffset: 0,
+    _chartType: 'ram'
+  }]
+}))
+
+const ramChartOptions = computed(() => createChartOptions('ram'))
+
+// SSD Chart Data
+const ssdChartData = computed(() => ({
+  labels: ['Cumulus', 'Nimbus', 'Stratus'],
+  datasets: [{
+    data: [cumulusSSDStorageValue.value, nimbusSSDStorageValue.value, stratusSSDStorageValue.value],
+    backgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    hoverBackgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    borderColor: getSurfaceColor(),
+    borderWidth: 2,
+    hoverBorderWidth: 0,
+    hoverOffset: 0,
+    _chartType: 'ssd'
+  }]
+}))
+
+const ssdChartOptions = computed(() => createChartOptions('ssd'))
+
+// HDD Chart Data
+const hddChartData = computed(() => ({
+  labels: ['Cumulus', 'Nimbus', 'Stratus'],
+  datasets: [{
+    data: [cumulusHDDStorageValue.value, nimbusHDDStorageValue.value, stratusHDDStorageValue.value],
+    backgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    hoverBackgroundColor: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
+    borderColor: getSurfaceColor(),
+    borderWidth: 2,
+    hoverBorderWidth: 0,
+    hoverOffset: 0,
+    _chartType: 'hdd'
+  }]
+}))
+
+const hddChartOptions = computed(() => createChartOptions('hdd'))
+
+// History chart data (UNCHANGED - keeping ApexCharts)
 const cpuHistoryData = ref({
   series: [],
   chartOptions: {
@@ -462,55 +710,6 @@ const cpuHistoryData = ref({
       },
       theme: theme.value,
     },
-  },
-})
-
-const ramData = ref({
-  series: [],
-  chartOptions: {
-    colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-    plotOptions: {
-      bar: {
-        columnWidth: "85%",
-        distributed: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      labels: {
-        categories: ["Cumulus", "Nimbus", "Stratus"],
-        style: {
-          colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#888",
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-        formatter: value => `${beautifyValue(value / 1024, 0)}`,
-      },
-    },
-    tooltip: {
-      y: {
-        formatter: value => `${beautifyValue(value / 1024, 2)} TB`,
-      },
-      theme: theme.value,
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Cumulus", "Nimbus", "Stratus"],
   },
 })
 
@@ -583,55 +782,6 @@ const ramHistoryData = ref({
   },
 })
 
-const ssdData = ref({
-  series: [],
-  chartOptions: {
-    colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-    plotOptions: {
-      bar: {
-        columnWidth: "85%",
-        distributed: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      labels: {
-        categories: ["Cumulus", "Nimbus", "Stratus"],
-        style: {
-          colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#888",
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-        formatter: value => `${beautifyValue(value / 1000, 0)}`,
-      },
-    },
-    tooltip: {
-      y: {
-        formatter: value => `${beautifyValue(value / 1000, 2)} TB`,
-      },
-      theme: theme.value,
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Cumulus", "Nimbus", "Stratus"],
-  },
-})
-
 const ssdHistoryData = ref({
   series: [],
   chartOptions: {
@@ -700,58 +850,11 @@ const ssdHistoryData = ref({
   },
 })
 
-const hddData = ref({
-  series: [],
-  chartOptions: {
-    colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-    plotOptions: {
-      bar: {
-        columnWidth: "85%",
-        distributed: true,
-      },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      labels: {
-        categories: ["Cumulus", "Nimbus", "Stratus"],
-        style: {
-          colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-      },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "#888",
-          fontSize: "14px",
-          fontFamily: "Montserrat",
-        },
-        formatter: value => `${beautifyValue(value / 1000, 0)}`,
-      },
-    },
-    tooltip: {
-      y: {
-        formatter: value => `${beautifyValue(value / 1000, 2)} TB`,
-      },
-      theme: theme.value,
-    },
-    stroke: {
-      lineCap: "round",
-    },
-    labels: ["Cumulus", "Nimbus", "Stratus"],
-  },
-})
-
 // Methods
 const beautifyValue = (value, places = 2) => {
-  const fixedValue = value.toFixed(places)
+  if (value === null || value === undefined || isNaN(value)) return '0'
+  const numValue = typeof value === 'string' ? parseFloat(value) : value
+  const fixedValue = numValue.toFixed(places)
 
   return fixedValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,")
 }
@@ -867,50 +970,18 @@ const generateResources = async () => {
 
     totalCores.value =
       cumulusCpuValue.value + nimbusCpuValue.value + stratusCpuValue.value
-    cpuData.value.series = [
-      {
-        name: "CPU Cores",
-        data: [cumulusCpuValue.value, nimbusCpuValue.value, stratusCpuValue.value],
-      },
-    ]
 
     totalRAM.value = cumulusRamValue.value + nimbusRamValue.value + stratusRamValue.value
-    ramData.value.series = [
-      {
-        name: "RAM",
-        data: [cumulusRamValue.value, nimbusRamValue.value, stratusRamValue.value],
-      },
-    ]
 
     totalSSD.value =
       cumulusSSDStorageValue.value +
       nimbusSSDStorageValue.value +
       stratusSSDStorageValue.value
-    ssdData.value.series = [
-      {
-        name: "SSD",
-        data: [
-          cumulusSSDStorageValue.value,
-          nimbusSSDStorageValue.value,
-          stratusSSDStorageValue.value,
-        ],
-      },
-    ]
 
     totalHDD.value =
       cumulusHDDStorageValue.value +
       nimbusHDDStorageValue.value +
       stratusHDDStorageValue.value
-    hddData.value.series = [
-      {
-        name: "HDD",
-        data: [
-          cumulusHDDStorageValue.value,
-          nimbusHDDStorageValue.value,
-          stratusHDDStorageValue.value,
-        ],
-      },
-    ]
 
     fluxListLoading.value = false
   } catch (error) {
@@ -941,27 +1012,58 @@ const getHistoryStats = async () => {
   }
 }
 
-watch(theme, newTheme => {
-  [chart1, chart2, chart3, chart4, chart5, chart6, chart7].forEach(chartRef => {
-    const chart = chartRef.value && chartRef.value.chart
+// Watch theme changes for history charts only (doughnut charts are reactive via computed)
+watch(theme, (newTheme) => {
+  console.log('Theme watcher triggered, new theme:', newTheme)
 
-    if (chart) {
-      chart.updateOptions(
-        {
-          tooltip: {
-            theme: newTheme,
-          },
-        },
-        false,
-        false,
-      )
-    }
-  })
+  // Update history charts tooltips
+  if (cpuHistoryData.value.chartOptions) {
+    cpuHistoryData.value.chartOptions = { ...cpuHistoryData.value.chartOptions, tooltip: { ...cpuHistoryData.value.chartOptions.tooltip, theme: newTheme } }
+  }
+  if (ramHistoryData.value.chartOptions) {
+    ramHistoryData.value.chartOptions = { ...ramHistoryData.value.chartOptions, tooltip: { ...ramHistoryData.value.chartOptions.tooltip, theme: newTheme } }
+  }
+  if (ssdHistoryData.value.chartOptions) {
+    ssdHistoryData.value.chartOptions = { ...ssdHistoryData.value.chartOptions, tooltip: { ...ssdHistoryData.value.chartOptions.tooltip, theme: newTheme } }
+  }
+
+  console.log('History charts updated')
 })
 
+
+// Clear hover states function
+const clearHoverStates = () => {
+  hoveredSegment.value = {
+    cpu: null,
+    ram: null,
+    ssd: null,
+    hdd: null
+  }
+}
+
 onMounted(async () => {
+  // Register custom Chart.js plugins only once
+  if (!ChartJS.defaults.plugins.segmentGlow) {
+    ChartJS.register(segmentGlowPlugin)
+  }
+  if (!ChartJS.defaults.plugins.centerText) {
+    ChartJS.register(centerTextPlugin)
+  }
+
+  // Initialize hover states to null
+  clearHoverStates()
+
+  // Add resize event listener to clear hover states
+  window.addEventListener('resize', clearHoverStates)
+
   await generateResources()
   await getHistoryStats()
+})
+
+onUnmounted(() => {
+  // Clean up
+  clearHoverStates()
+  window.removeEventListener('resize', clearHoverStates)
 })
 </script>
 
@@ -969,6 +1071,25 @@ onMounted(async () => {
 .overlay {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
+}
+
+/* Chart container for doughnut charts */
+.chart-container {
+  position: relative;
+  overflow: visible !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.chart-container canvas {
+  overflow: visible !important;
+  filter: drop-shadow(0 0 0 transparent);
+  transform: translateZ(0);
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* Allow ApexCharts tooltip to overflow container */
@@ -980,11 +1101,18 @@ onMounted(async () => {
 
 /* Ensure chart containers don't clip tooltips */
 :deep(.v-card) {
-  overflow: unset !important;
+  overflow: visible !important;
+  clip-path: none !important;
 }
 
-:deep(.v-card__text) {
-  overflow: unset !important;
+:deep(.v-card-text) {
+  overflow: visible !important;
+  clip-path: none !important;
+}
+
+:deep(.v-col) {
+  overflow: visible !important;
+  clip-path: none !important;
 }
 
 /* Ensure the chart wrapper doesn't clip */
@@ -994,5 +1122,10 @@ onMounted(async () => {
 
 :deep(.apexcharts-canvas) {
   overflow: unset !important;
+}
+
+/* Chart.js doughnut charts */
+.chart-container canvas {
+  overflow: visible !important;
 }
 </style>

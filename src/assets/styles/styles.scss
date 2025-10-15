@@ -1,1 +1,6 @@
 // Write your overrides
+
+// ApexCharts tooltip marker vertical alignment for all charts
+.apexcharts-tooltip-marker {
+  margin-top: -6px !important;
+}

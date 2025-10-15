@@ -24,6 +24,8 @@
     },
     "administration": {
       "title": "Administration",
+      "systemInfo": "Flux Information",
+      "dockerEvents": "Docker Events",
       "manageFlux": "Manage Flux",
       "manageDaemon": "Manage Daemon",
       "manageBenchmark": "Manage Benchmark",

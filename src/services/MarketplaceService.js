@@ -213,16 +213,26 @@ class MarketplaceService {
 
   async getAppDetails(appId) {
     try {
-      const client = this.getMarketplaceClient()
-      const response = await client.get(`/api/v${this.apiVersion}/marketplace/app/${appId}`)
+      // No individual app endpoint exists - get from the apps list instead (like FluxCloud)
+      const allAppsResponse = await this.getAllAppsWithVisibility()
+      const allApps = allAppsResponse.data || []
 
-      if (response.data && response.data.status === 'success') {
-        return { data: response.data.data }
+      // Find app by name or UUID
+      const app = allApps.find(a =>
+        a.name === appId ||
+        a.uuid === appId ||
+        a.name?.toLowerCase() === appId?.toLowerCase()
+      )
+
+      if (!app) {
+        throw new Error('App not found')
       }
 
-      throw new Error('App not found')
+      return { data: app }
     } catch (error) {
-      if (error.response?.status !== 404) { console.error('Failed to fetch app details:', error) }
+      if (error.message !== 'App not found') {
+        console.error('Failed to fetch app details:', error)
+      }
       throw error
     }
   }

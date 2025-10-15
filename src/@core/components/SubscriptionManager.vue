@@ -70,6 +70,7 @@
         color="primary"
         class="ml-2"
         @click="tab = 99"
+        :disabled="tab === 99 || tab === 100"
       >
         <VIcon size="24" class="mr-1">mdi-check-decagram</VIcon>
         <span class="d-none d-sm-inline">Validate & Register</span>
@@ -549,6 +550,9 @@
                   label="Repository Tag"
                   prepend-inner-icon="mdi-docker"
                   outlined dense class="mb-3"
+                  :disabled="!props.newApp"
+                  :hint="!props.newApp ? 'Repository tag cannot be changed when updating an existing app' : ''"
+                  :persistent-hint="!props.newApp"
                 />
 
                 <!-- Repository Auth for Enterprise Apps (v7+) -->
@@ -1678,9 +1682,9 @@
                   <div>
                     <strong>WARNING:</strong> Test failed! Check logs below and fix your specifications before paying.
                   </div>
-                  <VBtn 
-                    size="small" 
-                    color="warning" 
+                  <VBtn
+                    size="small"
+                    color="warning"
                     variant="outlined"
                     @click="forceEnablePayment"
                   >
@@ -2579,6 +2583,7 @@ function handleSpecImport(spec) {
         ram: spec.ram || 100,
         hdd: spec.hdd || 1,
       }
+
       // Only add tiered if it exists in original spec
       if (spec.tiered !== undefined) component.tiered = spec.tiered
       props.appSpec.compose = [component]
@@ -4543,7 +4548,7 @@ async function propagateSignedMessage() {
   }
 
   isPropagating.value = true
-  
+
   try {
     const data = {
       type: updatetype.value,
@@ -4553,20 +4558,15 @@ async function propagateSignedMessage() {
       signature: signature.value,
     }
 
-    // Log the data being sent for debugging
-    console.log('Registration data:', data)
-    console.log('Signature present:', !!signature.value)
-    console.log('Timestamp:', timestamp.value)
-    
     const zelidauth = localStorage.getItem('zelidauth')
-    const response = props.newApp 
+    const response = props.newApp
       ? await AppsService.registerApp(zelidauth, data)
       : await AppsService.updateApp(zelidauth, data)
 
     if (response.data?.status === 'success') {
       registrationHash.value = response.data.data
       showToast('success', 'Application registered successfully! You can now test and pay for your app.')
-      
+
       // Fetch deployment information
       await getDeploymentInfo()
     } else {
@@ -4574,10 +4574,9 @@ async function propagateSignedMessage() {
     }
   } catch (error) {
     console.error('Registration error:', error)
-    console.error('Error response:', error.response?.data)
-    
+
     let errorMessage = 'Failed to register application'
-    
+
     if (error.response?.data?.data?.message) {
       errorMessage = error.response.data.data.message
     } else if (error.response?.data?.data) {
@@ -4585,7 +4584,7 @@ async function propagateSignedMessage() {
     } else if (error.message) {
       errorMessage = error.message
     }
-    
+
     showToast('error', errorMessage)
   } finally {
     isPropagating.value = false
@@ -5579,17 +5578,18 @@ async function signMethod() {
   padding: 6px;
   height: 54px;
 }
+/* Dark theme (default) */
 .spec-row {
   display: flex;
-  border: 1px solid #25293C; /* blue outline */
+  border: 1px solid #25293C;
   border-radius: 8px;
   overflow: hidden;
   height: 40px;
-  background-color: #0e1120; /* dark background */
+  background-color: #0e1120;
 }
 
 .label-cell {
-  background-color: #25293C; /* blue label background */
+  background-color: #25293C;
   color: white;
   padding: 0 16px;
   display: flex;
@@ -5602,8 +5602,24 @@ async function signMethod() {
 .value-cell {
   flex: 1;
   color: white;
-  background-color: #2F3349; /* same as outer */
+  background-color: #2F3349;
   font-size: 14px;
+}
+
+/* Light theme overrides */
+.v-theme--light .spec-row {
+  border: 1px solid #e0e0e0;
+  background-color: #f5f5f5;
+}
+
+.v-theme--light .label-cell {
+  background-color: #e3f2fd;
+  color: #1a1a1a;
+}
+
+.v-theme--light .value-cell {
+  color: #1a1a1a;
+  background-color: #ffffff;
 }
 
 .label-column {
@@ -5672,11 +5688,19 @@ async function signMethod() {
   color: #89d185;
 }
 
+/* Dark theme (default) */
 .review-header {
   border: 1px solid #ccc;
   border-radius: 8px;
   background-color: #1e1e2f;
   color: white;
+}
+
+/* Light theme overrides */
+.v-theme--light .review-header {
+  border: 1px solid #e0e0e0;
+  background-color: #e3f2fd;
+  color: #1a1a1a;
 }
 
 /* Set background and height for entire header row */

@@ -55,7 +55,7 @@
             Review and edit the specification before importing
           </VAlert>
           <div class="monaco-editor-wrapper">
-            <vue-monaco-editor
+            <VueMonacoEditor
               v-model:value="specJson"
               language="json"
               :options="editorOptions"
@@ -122,8 +122,6 @@ import yaml from 'js-yaml'
 import { VueMonacoEditor } from '@guolao/vue-monaco-editor'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 
-const theme = useTheme()
-
 const props = defineProps({
   modelValue: {
     type: Boolean,
@@ -132,6 +130,8 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue', 'import'])
+
+const theme = useTheme()
 
 const isOpen = ref(props.modelValue)
 const isDragging = ref(false)
@@ -166,13 +166,14 @@ const editorOptions = {
   lineNumbersMinChars: 3,
 }
 
-watch(() => props.modelValue, (newValue) => {
+watch(() => props.modelValue, newValue => {
   isOpen.value = newValue
 })
 
-watch(isOpen, (newValue) => {
+watch(isOpen, newValue => {
   if (!newValue) {
     emit('update:modelValue', false)
+
     // Reset state after dialog close animation completes (300ms delay)
     setTimeout(() => {
       loadedSpec.value = null
@@ -189,6 +190,7 @@ function triggerFileInput() {
 function closeDialog() {
   // Close immediately without resetting state first to prevent glitch
   isOpen.value = false
+
   // State will be reset by the watcher after dialog is closed
 }
 
@@ -223,6 +225,7 @@ async function handleFileSelect(event) {
   if (file) {
     await processFile(file)
   }
+
   // Reset input
   event.target.value = ''
 }
@@ -307,6 +310,7 @@ function convertDockerComposeToFluxOS(dockerCompose) {
     // Parse volumes (use first volume as containerData)
     if (service.volumes && Array.isArray(service.volumes) && service.volumes.length > 0) {
       const firstVolume = String(service.volumes[0])
+
       // Extract container path from volume mapping (e.g., "./data:/app/data" -> "/app/data")
       const volumeParts = firstVolume.split(':')
       component.containerData = volumeParts.length > 1 ? volumeParts[1] : volumeParts[0]

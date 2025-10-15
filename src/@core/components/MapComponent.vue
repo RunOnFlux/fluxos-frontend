@@ -65,6 +65,7 @@ const initialized = ref(false)
 
 let leafletMap = null
 let markerClusterGroup = null
+let resizeObserver = null
 
 const DefaultIcon = L.icon({
   iconUrl,
@@ -294,12 +295,16 @@ async function renderMarkers() {
 
 function applyTheme() {
   if (leafletMap) {
-    leafletMap.getContainer().classList.toggle("leaflet-dark", theme.value === "dark")
+    const isDark = theme.value === "dark"
+    console.log('Applying theme, isDark:', isDark, 'theme.value:', theme.value)
+    leafletMap.getContainer().classList.toggle("leaflet-dark", isDark)
   }
 }
 
 function initMap() {
   if (!mapContainer.value) return
+
+  console.log('Map container rect:', mapContainer.value.getBoundingClientRect())
 
   leafletMap = L.map(mapContainer.value, {
     center: [20, 0],
@@ -308,13 +313,28 @@ function initMap() {
     maxZoom: 18,
   })
 
+  console.log('Leaflet map created')
+
   const tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors",
     maxZoom: 18,
     detectRetina: true,
   })
 
+  tileLayer.on('tileloadstart', (e) => {
+    console.log('Tile load start:', e.coords)
+  })
+
+  tileLayer.on('tileload', (e) => {
+    console.log('Tile loaded:', e.coords)
+  })
+
+  tileLayer.on('tileerror', (e) => {
+    console.error('Tile error:', e)
+  })
+
   tileLayer.addTo(leafletMap)
+  console.log('Tile layer added')
 
   markerClusterGroup = new MarkerClusterGroup({
     chunkedLoading: true,
@@ -327,6 +347,7 @@ function initMap() {
   applyTheme()
 
   leafletMap.invalidateSize()
+  console.log('Map invalidated, map size:', leafletMap.getSize())
 }
 
 onMounted(async () => {
@@ -349,7 +370,30 @@ onMounted(async () => {
 
   setTimeout(() => {
     loading.value = false
+    // Invalidate after loader is hidden
+    nextTick(() => {
+      if (leafletMap) {
+        leafletMap.invalidateSize()
+      }
+    })
   }, 200)
+
+  // Modern solution: Use ResizeObserver to auto-detect container size changes
+  if (mapContainer.value) {
+    resizeObserver = new ResizeObserver(() => {
+      if (leafletMap) {
+        leafletMap.invalidateSize()
+      }
+    })
+    resizeObserver.observe(mapContainer.value)
+  }
+
+  // Additional delayed invalidation for safety
+  setTimeout(() => {
+    if (leafletMap) {
+      leafletMap.invalidateSize()
+    }
+  }, 500)
 
   initialized.value = true
 })
@@ -379,6 +423,10 @@ const tierDisplay = computed(() => {
 })
 
 onUnmounted(() => {
+  if (resizeObserver) {
+    resizeObserver.disconnect()
+    resizeObserver = null
+  }
   if (leafletMap) {
     leafletMap.remove()
     leafletMap = null
@@ -396,10 +444,13 @@ onUnmounted(() => {
   width: 100%;
   max-width: 100%;
   overflow: hidden;
+  box-sizing: border-box;
 }
 .v-map-wrapper > div {
   width: 100%;
   height: 450px;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .v-loader {
   position: absolute;
@@ -441,9 +492,14 @@ onUnmounted(() => {
 .leaflet-dark {
   filter: invert(90%) hue-rotate(180deg);
 }
-@media (max-width: 600px) {
+
+@media (max-width: 960px) {
   .v-map-wrapper > div {
     height: 300px;
+  }
+  .v-map-wrapper {
+    max-width: 100% !important;
+    overflow-x: hidden !important;
   }
 }
 .tier-label {

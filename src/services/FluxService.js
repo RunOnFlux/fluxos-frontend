@@ -216,6 +216,9 @@ export default {
   getStaticIpInfo() {
     return Api().get('/flux/staticip')
   },
+  getFluxInfo() {
+    return Api().get('/flux/info')
+  },
   restartFluxOS(zelidauthHeader) {
     const axiosConfig = {
       headers: {

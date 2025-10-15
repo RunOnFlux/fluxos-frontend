@@ -291,7 +291,10 @@ const versionChart = ref({
     legend: { show: true, position: "bottom" },
     stroke: { width: 0 },
     labels: [],
-    tooltip: { y: { formatter: value => beautifyValue(value, 0) } },
+    tooltip: {
+      followCursor: true,
+      y: { formatter: value => beautifyValue(value, 0) }
+    },
   },
   series: [],
 })
@@ -304,7 +307,10 @@ const nodeData = ref({
     legend: { show: false },
     stroke: { width: 0 },
     colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-    tooltip: { y: { formatter: value => beautifyValue(value, 0) } },
+    tooltip: {
+      followCursor: true,
+      y: { formatter: value => beautifyValue(value, 0) }
+    },
   },
   series: [],
 })
@@ -333,6 +339,7 @@ const nodeHistoryData = ref({
       labels: { show: false },
     },
     tooltip: {
+      followCursor: true,
       x: { formatter: value => new Date(value).toLocaleString("en-GB") },
       theme: theme.value,
     },
@@ -348,7 +355,10 @@ const lockedSupplyData = ref({
     legend: { show: false },
     stroke: { width: 0 },
     colors: [tierColors.cumulus, tierColors.nimbus, tierColors.stratus],
-    tooltip: { y: { formatter: value => beautifyValue(value, 0) } },
+    tooltip: {
+      followCursor: true,
+      y: { formatter: value => beautifyValue(value, 0) }
+    },
   },
   series: [],
 })
@@ -358,6 +368,7 @@ watch(theme, newTheme => {
     history.value.updateOptions(
       {
         tooltip: {
+          followCursor: true,
           theme: newTheme,
         },
       },
