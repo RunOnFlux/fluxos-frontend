@@ -763,5 +763,4 @@ async function processFile(file) {
 .close-title-btn:hover :deep(.v-icon) {
   color: #f44336 !important;
 }
-
 </style>

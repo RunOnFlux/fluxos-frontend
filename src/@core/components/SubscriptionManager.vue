@@ -3120,6 +3120,7 @@ function convertToLatestSpec() {
     if (spec.version >= LATEST_SPEC_VERSION) {
       showToast('info', 'Application is already using latest specification format')
       isConverting.value = false
+      
       return
     }
 
@@ -3139,15 +3140,18 @@ function convertToLatestSpec() {
   }
 }
 
-const renewalOptions = [
+// PON (proof of nodes) Fork configuration - block height where chain speed increases 4x
+const FORK_BLOCK_HEIGHT = 2020000
+
+const renewalOptions = ref([
   { value: 5000, label: '1 week' },
   { value: 11000, label: '2 weeks' },
   { value: 22000, label: '1 month' },
   { value: 66000, label: '3 months' },
   { value: 132000, label: '6 months' },
   { value: 264000, label: '1 year' },
-  
-]
+
+])
 
 const timeOptions = { shortDate: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
 
@@ -3284,7 +3288,7 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
 
     // Set up renewal settings
     const expire = newSpec.expire ?? 22000
-    const foundIndex = renewalOptions.findIndex(opt => opt.value === expire)
+    const foundIndex = renewalOptions.value.findIndex(opt => opt.value === expire)
     appDetails.value.renewalIndex = foundIndex !== -1 ? foundIndex : 2
     
     // Handle enterprise nodes if applicable
@@ -3394,12 +3398,12 @@ onMounted(async () => {
   // Initialize clipboard.js for copy buttons
   const clipboard = new ClipboardJS('.copy-btn')
 
-  clipboard.on('success', (e) => {
+  clipboard.on('success', e => {
     showToast('success', 'Copied to clipboard!')
     e.clearSelection()
   })
 
-  clipboard.on('error', (e) => {
+  clipboard.on('error', e => {
     showToast('error', 'Failed to copy to clipboard')
     console.error('Copy error:', e)
   })
@@ -3451,6 +3455,7 @@ const specsHaveChanged = computed(() => {
     return hasChanged
   } catch (error) {
     console.error('Error comparing specs:', error)
+    
     return true // If comparison fails, assume specs changed
   }
 })
@@ -3460,7 +3465,7 @@ const specsHaveChanged = computed(() => {
 // We store what was actually signed (appSpecFormated) and compare against it
 let signedSpecState = ref(null)
 
-watch(() => props.appSpec, (newSpec) => {
+watch(() => props.appSpec, newSpec => {
   if (!newSpec || props.newApp) return // Skip for new apps
   if (!registrationHash.value) return // No hash to clear
   if (!signedSpecState.value) return // No signed spec to compare against
@@ -3489,7 +3494,7 @@ watch(() => props.appSpec, (newSpec) => {
 }, { deep: true })
 
 // Store what was actually signed when signature is created
-watch(signature, (newSignature) => {
+watch(signature, newSignature => {
   if (newSignature && appSpecFormated.value) {
     try {
       // Store the FORMATTED spec that was actually signed
@@ -3563,7 +3568,7 @@ watch(renewalEnabled, val => {
 })
 
 // Watch renewalIndex changes separately to ensure it updates
-watch(() => appDetails.value.renewalIndex, (newIndex) => {
+watch(() => appDetails.value.renewalIndex, newIndex => {
   if (renewalEnabled.value || props.newApp) {
     const selectedExpire = renewalOptions[newIndex]?.value
     props.appSpec.expire = selectedExpire
@@ -3571,7 +3576,7 @@ watch(() => appDetails.value.renewalIndex, (newIndex) => {
 })
 
 // Watch signature - auto-register when signature is set
-watch(signature, async (newSignature) => {
+watch(signature, async newSignature => {
   if (newSignature && isSigning.value && !registrationHash.value) {
     isSigning.value = false
     await propagateSignedMessage()
@@ -3583,7 +3588,7 @@ watch(hasCalculatedPrice, (newValue, oldValue) => {
   console.log('💰 hasCalculatedPrice changed:', {
     oldValue,
     newValue,
-    appSpecPrice: appSpecPrice?.value
+    appSpecPrice: appSpecPrice?.value,
   })
 })
 
@@ -4353,6 +4358,7 @@ function validatePort(component, idx, type) {
 async function copyToClipboard(text) {
   if (!text) {
     showToast('warning', 'Nothing to copy')
+    
     return
   }
 
@@ -4391,7 +4397,7 @@ function addPortPair(index) {
     const nextExposed = ports.exposed + 1
     newPorts.value[index] = {
       exposed: nextExposed,
-      container: null
+      container: null,
     }
   } else {
     showToast("error",
@@ -4463,7 +4469,7 @@ watch(tab, (newTab, oldTab) => {
     oldTab,
     newTab,
     isEnteringTestPay: newTab === 100,
-    isLeavingTestPay: oldTab === 100 && newTab !== 100
+    isLeavingTestPay: oldTab === 100 && newTab !== 100,
   })
 
   // Log all payment-related states when entering Test & Pay tab
@@ -4479,12 +4485,13 @@ watch(tab, (newTab, oldTab) => {
       appSpecPrice: appSpecPrice?.value,
       paymentMonitoringInterval: paymentMonitoringInterval?.value,
       paymentMonitoringTimeout: paymentMonitoringTimeout?.value,
+
       // Payment card visibility conditions:
       testFinished: testFinished?.value,
       testError: testError?.value,
       renewalEnabled: renewalEnabled?.value,
       specsHaveChanged: specsHaveChanged?.value,
-      newApp: props?.newApp
+      newApp: props?.newApp,
     })
 
     // If there's a registrationHash, determine what to show based on app type and price
@@ -4499,16 +4506,19 @@ watch(tab, (newTab, oldTab) => {
 
         startPaymentMonitoring()
       }
+
       // For paid apps/updates with unchanged specs, skip test and show payment section
       else if (!props.newApp && !specsHaveChanged.value) {
         console.log('💰 PAID UPDATE (unchanged specs) - Skipping test, showing payment section')
         testFinished.value = true
         testError.value = false
       }
+
       // For new apps or updates with changed specs, don't force testFinished
       // Let the test section show so user can run the test
       else {
         console.log('💰 NEW APP or CHANGED SPECS - Test section should be visible')
+
         // Don't set testFinished - let user run the test
       }
     }
@@ -4517,7 +4527,7 @@ watch(tab, (newTab, oldTab) => {
   // If leaving the Test & Pay tab (100)
   if (oldTab === 100 && newTab !== 100) {
     console.log('🚪 LEAVING TEST & PAY - Clearing payment states', {
-      hadSuccessfulDeployment: paymentConfirmed.value
+      hadSuccessfulDeployment: paymentConfirmed.value,
     })
 
     // Check if deployment was successful BEFORE clearing payment states
@@ -4565,7 +4575,7 @@ onMounted(() => {
     deploymentAddress: deploymentAddress?.value,
     hasCalculatedPrice: hasCalculatedPrice?.value,
     appSpecPrice: appSpecPrice?.value,
-    newApp: props?.newApp
+    newApp: props?.newApp,
   })
 
   tab.value = 0
@@ -4578,7 +4588,7 @@ watch(() => props.resetTrigger, (newTrigger, oldTrigger) => {
   console.log('🔄 RESET TRIGGER FIRED', {
     newTrigger,
     oldTrigger,
-    willReset: oldTrigger && newTrigger && newTrigger !== oldTrigger
+    willReset: oldTrigger && newTrigger && newTrigger !== oldTrigger,
   })
 
   // Only reset if this is NOT the first time (oldTrigger exists)
@@ -4594,10 +4604,11 @@ watch(() => props.resetTrigger, (newTrigger, oldTrigger) => {
       signingFailed: signingFailed?.value,
       isPropagating: isPropagating?.value,
       hasCalculatedPrice: hasCalculatedPrice?.value,
-      appSpecPrice: appSpecPrice?.value
+      appSpecPrice: appSpecPrice?.value,
     })
 
     tab.value = 0
+
     // Disable renewal when revisiting subscription tab
     if (!props.newApp) {
       renewalEnabled.value = false
@@ -4609,7 +4620,7 @@ watch(() => props.resetTrigger, (newTrigger, oldTrigger) => {
       registrationHash: registrationHash?.value,
       paymentProcessing: paymentProcessing?.value,
       paymentConfirmed: paymentConfirmed?.value,
-      renewalEnabled: renewalEnabled?.value
+      renewalEnabled: renewalEnabled?.value,
     })
   }
 })
@@ -4826,7 +4837,7 @@ const expiryLabel = computed(() => {
   // For existing apps without renewal, use the original expire value
   let expire
   if (props.newApp || renewalEnabled.value) {
-    expire = renewalOptions[appDetails.value.renewalIndex]?.value ?? 22000
+    expire = renewalOptions.value[appDetails.value.renewalIndex]?.value ?? 22000
   } else {
     // Use original expire snapshot for existing apps when renewal is disabled
     expire = originalExpireSnapshot.value ?? props.appSpec?.expire ?? 22000
@@ -4834,7 +4845,9 @@ const expiryLabel = computed(() => {
 
   // For new apps OR renewal, just show the selected period duration
   if (props.newApp || renewalEnabled.value) {
-    const totalMinutes = expire * 2
+    // Block time: 2 minutes before fork, 30 seconds (0.5 minutes) after fork
+    const minutesPerBlock = blockHeight.value >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+    const totalMinutes = expire * minutesPerBlock
     const days = Math.floor(totalMinutes / 1440)
     const hours = Math.floor((totalMinutes % 1440) / 60)
     const minutes = totalMinutes % 60
@@ -4856,7 +4869,9 @@ const expiryLabel = computed(() => {
   const blocksToExpireLocal = height + expire - current
   if (blocksToExpireLocal < 1) return ''
 
-  const totalMinutes = blocksToExpireLocal * 2
+  // Block time: 2 minutes before fork (block 2020000), 30 seconds (0.5 minutes) after fork
+  const minutesPerBlock = current >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+  const totalMinutes = blocksToExpireLocal * minutesPerBlock
   const days = Math.floor(totalMinutes / 1440)
   const hours = Math.floor((totalMinutes % 1440) / 60)
   const minutes = totalMinutes % 60
@@ -4877,7 +4892,7 @@ watch(tab, async newVal => {
       hasAppSpecPrice: !!appSpecPrice.value,
       hasCalculatedPrice: hasCalculatedPrice.value,
       specsHaveChanged: specsHaveChanged.value,
-      isNewApp: props.newApp
+      isNewApp: props.newApp,
     })
 
     // If already registered, don't reset states - just show what we have
@@ -4888,7 +4903,7 @@ watch(tab, async newVal => {
         hasHash: !!registrationHash.value,
         specsHaveChanged: specsHaveChanged.value,
         testFinished: testFinished.value,
-        testError: testError.value
+        testError: testError.value,
       })
       isVeryfitying.value = false
 
@@ -4899,11 +4914,13 @@ watch(tab, async newVal => {
         testFinished.value = true
         testError.value = false
       }
+
       // For updates with unchanged specs, always set testFinished (skip testing)
       else if (!props.newApp && !specsHaveChanged.value) {
         testFinished.value = true
         testError.value = false
       }
+
       // Otherwise, preserve existing test states (including failures)
 
       // Auto-navigate to Test & Pay tab after 1 second
@@ -5156,7 +5173,7 @@ async function verifyAppSpec() {
       composePath: appSpecTemp.compose?.[0],
       flatPorts: appSpecTemp.ports,
       flatContainerPorts: appSpecTemp.containerPorts,
-      flatEnvParams: appSpecTemp.enviromentParameters
+      flatEnvParams: appSpecTemp.enviromentParameters,
     })
 
     // V3: Sync compose → flat fields and convert to V3 format
@@ -5167,7 +5184,7 @@ async function verifyAppSpec() {
         portsType: typeof appSpecTemp.compose[0].ports[0],
         containerPorts: appSpecTemp.compose[0].containerPorts,
         environmentParameters: appSpecTemp.compose[0].environmentParameters,
-        repotag: appSpecTemp.compose[0].repotag
+        repotag: appSpecTemp.compose[0].repotag,
       })
       console.log('[V3 Sync] BEFORE sync - flat fields:', {
         name: appSpecTemp.name,
@@ -5175,7 +5192,7 @@ async function verifyAppSpec() {
         portsType: appSpecTemp.ports ? typeof appSpecTemp.ports[0] : 'undefined',
         containerPorts: appSpecTemp.containerPorts,
         enviromentParameters: appSpecTemp.enviromentParameters,
-        repotag: appSpecTemp.repotag
+        repotag: appSpecTemp.repotag,
       })
 
       const component = appSpecTemp.compose[0]
@@ -5198,7 +5215,7 @@ async function verifyAppSpec() {
         portsFrom: portsBeforeConversion,
         portsTo: appSpecTemp.ports,
         containerPortsFrom: containerPortsBeforeConversion,
-        containerPortsTo: appSpecTemp.containerPorts
+        containerPortsTo: appSpecTemp.containerPorts,
       })
 
       // CRITICAL: Revert typo fix back to V3 format (enviromentParameters with typo)
@@ -5206,7 +5223,7 @@ async function verifyAppSpec() {
       console.log('[V3 Sync] Environment parameters sync:', {
         from: 'environmentParameters (no typo)',
         to: 'enviromentParameters (with typo)',
-        value: appSpecTemp.enviromentParameters
+        value: appSpecTemp.enviromentParameters,
       })
 
       // Sync array fields
@@ -5239,7 +5256,7 @@ async function verifyAppSpec() {
         enviromentParameters: appSpecTemp.enviromentParameters,
         tiered: appSpecTemp.tiered,
         hasCompose: !!appSpecTemp.compose,
-        has_isV3Original: !!appSpecTemp._isV3Original
+        has_isV3Original: !!appSpecTemp._isV3Original,
       })
       console.log('[V3 Sync] Complete V3 spec for validation:', JSON.stringify(appSpecTemp, null, 2))
     }
@@ -5278,7 +5295,7 @@ async function verifyAppSpec() {
       hasCompose: !!appSpecTemp.compose,
       composeLength: appSpecTemp.compose?.length,
       hasTiered: appSpecTemp.tiered !== undefined,
-      has_isV3Original: !!appSpecTemp._isV3Original
+      has_isV3Original: !!appSpecTemp._isV3Original,
     })
 
     // ========================================================================
@@ -5302,6 +5319,7 @@ async function verifyAppSpec() {
     const marketPlaceApp = marketPlaceApps.value.find(app => appName?.toLowerCase().startsWith(app.name.toLowerCase()))
     if (marketPlaceApp && marketPlaceApp.priceUSD) {
       console.log('Marketplace app with fixed price detected:', marketPlaceApp.name, 'Price:', marketPlaceApp.priceUSD)
+
       // Add the marketplace fixed price to the app spec
       appSpecTemp.priceUSD = marketPlaceApp.priceUSD
     }
@@ -5572,12 +5590,29 @@ async function priceForAppSpec() {
   }
 }
 
+function adjustRenewalOptionsForBlockHeight() {
+  // After block 2020000, the chain works 4x faster, so expire periods need to be multiplied by 4
+  if (blockHeight.value >= FORK_BLOCK_HEIGHT) {
+    renewalOptions.value = [
+      { value: 20000, label: '1 week' },
+      { value: 44000, label: '2 weeks' },
+      { value: 88000, label: '1 month' },
+      { value: 264000, label: '3 months' },
+      { value: 528000, label: '6 months' },
+      { value: 1056000, label: '1 year' },
+    ]
+  }
+}
+
 async function fetchBlockHeight() {
   try {
     const res = await props.executeLocalCommand('/daemon/getblockcount')
 
     if (res?.data?.status === 'success' && typeof res.data?.data === 'number') {
       blockHeight.value = res.data.data
+
+      // Adjust renewal options based on block height
+      adjustRenewalOptionsForBlockHeight()
 
       const expireBlocks = props.appSpec?.expire ?? 22000
 
@@ -5602,8 +5637,10 @@ async function fetchBlockHeight() {
           isExpiryValid.value = true
           console.log('New app - blocks to expire:', blocksToExpire.value, 'isExpiryValid:', isExpiryValid.value)
         } else {
-          // For existing apps, check if they have at least 5000 blocks (~1 week) remaining
-          isExpiryValid.value = blocksToExpire.value >= 5000
+          // For existing apps, check if they have at least 1 week remaining
+          // Use dynamic minExpire: 5000 blocks before fork, 20000 blocks after fork
+          const minExpire = blockHeight.value >= FORK_BLOCK_HEIGHT ? 20000 : 5000
+          isExpiryValid.value = blocksToExpire.value >= minExpire
         }
       } else {
         // For new apps, we still want to proceed even without height
@@ -5651,11 +5688,13 @@ async function dataSign() {
 // Cancel signing process
 function cancelSigning() {
   isSigning.value = false
+
   // Close websocket if open
   if (websocket.value) {
     websocket.value.close()
     websocket.value = null
   }
+
   // Disconnect wallet connect if connected
   if (signClient.value) {
     signClient.value = null
@@ -5716,6 +5755,7 @@ async function propagateSignedMessage() {
     }
 
     showToast('error', errorMessage)
+
     // Reset signature so user must sign again
     signature.value = ''
     signingFailed.value = true
@@ -6123,6 +6163,7 @@ async function initStripePay(hash = null, name = null, price = null, description
       } catch (error) {
         console.error('Stripe checkout error:', error)
       }
+      
       return
     }
 
@@ -6161,6 +6202,7 @@ async function initStripePay(hash = null, name = null, price = null, description
         showToast('error', `Stripe checkout failed: ${checkoutURL.data.message || checkoutURL.data.data || 'Unknown error'}`)
         popup.close() // Close the blank popup
         checkoutLoading.value = false
+        
         return
       }
 
@@ -6311,6 +6353,7 @@ async function initPaypalPay(hash = null, name = null, price = null, description
       } catch (error) {
         console.error('PayPal checkout error:', error)
       }
+      
       return
     }
 
@@ -6349,6 +6392,7 @@ async function initPaypalPay(hash = null, name = null, price = null, description
         showToast('error', `PayPal checkout failed: ${checkoutURL.data.message || checkoutURL.data.data || 'Unknown error'}`)
         popup.close() // Close the blank popup
         checkoutLoading.value = false
+        
         return
       }
 
@@ -6385,7 +6429,7 @@ async function initPaypalPay(hash = null, name = null, price = null, description
 const startPaymentMonitoring = async () => {
   console.log('🚀 START PAYMENT MONITORING', {
     registrationHash: registrationHash.value,
-    isFreeUpdate: appSpecPrice.value?.flux === 0
+    isFreeUpdate: appSpecPrice.value?.flux === 0,
   })
 
   // Clear any existing monitoring
@@ -6424,12 +6468,13 @@ const startPaymentMonitoring = async () => {
       'appDetails.value.name': appDetails.value.name,
       'props.appSpec?.name': props.appSpec?.name,
       isNewApp: props.newApp,
-      registrationHash: registrationHash.value
+      registrationHash: registrationHash.value,
     })
 
     try {
       if (!appName) {
         console.warn('⚠️ No app name available for monitoring')
+        
         return
       }
 
@@ -6442,7 +6487,7 @@ const startPaymentMonitoring = async () => {
 
           console.log('🔍 Checking new app deployment:', {
             appLocation: appLocation,
-            hasInstances: appLocation && appLocation.length > 0
+            hasInstances: appLocation && appLocation.length > 0,
           })
 
           // If app location exists and has running instances, deployment was successful!
@@ -6476,7 +6521,7 @@ const startPaymentMonitoring = async () => {
           console.log('🔍 Checking update deployment:', {
             currentHash: currentAppSpec?.hash,
             registeredHash: registrationHash.value,
-            hashesMatch: currentAppSpec?.hash === registrationHash.value
+            hashesMatch: currentAppSpec?.hash === registrationHash.value,
           })
 
           // Check if the current spec hash matches our registered hash
@@ -6574,17 +6619,20 @@ async function initZelcorePay() {
     const amount = appSpecPrice.value?.flux
     if (!amount || amount <= 0) {
       showToast('error', 'Invalid payment amount. Please validate your app specifications first.')
+      
       return
     }
 
     // Validate required fields
     if (!deploymentAddress.value) {
       showToast('error', 'Deployment address not available')
+      
       return
     }
 
     if (!registrationHash.value) {
       showToast('error', 'Registration hash not available')
+      
       return
     }
 
@@ -6614,17 +6662,20 @@ async function initSSPPay() {
     const amount = appSpecPrice.value?.flux
     if (!amount || amount <= 0) {
       showToast('error', 'Invalid payment amount. Please validate your app specifications first.')
+      
       return
     }
 
     // Validate required fields
     if (!deploymentAddress.value) {
       showToast('error', 'Deployment address not available')
+      
       return
     }
 
     if (!registrationHash.value) {
       showToast('error', 'Registration hash not available')
+      
       return
     }
 
@@ -6702,6 +6753,7 @@ async function initSignFluxSSO() {
       showToast('error', 'Not logged in as SSO')
       isSigning.value = false
       signingFailed.value = true
+      
       return
     }
 
@@ -6716,6 +6768,7 @@ async function initSignFluxSSO() {
       showToast('error', 'SSO signing failed')
       isSigning.value = false
       signingFailed.value = true
+      
       return
     }
 
@@ -6796,6 +6849,7 @@ async function initSignWalletConnect() {
       showToast('error', 'WalletConnect not connected. Please log into FluxOS first.')
       isSigning.value = false
       signingFailed.value = true
+      
       return
     }
 
@@ -6818,6 +6872,7 @@ async function initSignMetamask() {
       showToast('danger', 'Metamask not found')
       isSigning.value = false
       signingFailed.value = true
+      
       return
     }
 
@@ -8058,5 +8113,4 @@ async function signMethod() {
     margin-left: 0 !important;
   }
 }
-
 </style>

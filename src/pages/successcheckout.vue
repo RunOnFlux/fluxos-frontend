@@ -27,6 +27,7 @@ onMounted(() => {
       closeTimer.value--
       if (closeTimer.value <= 0) {
         clearInterval(interval)
+
         // Try to close the window
         window.close()
 

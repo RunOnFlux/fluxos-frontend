@@ -879,6 +879,7 @@ const loadPlanDetails = async () => {
         // Wait for FLUX amount to be calculated before pre-initializing payment
         if (!estimatedFluxAmount.value) {
           console.log('⏳ Waiting for FLUX amount calculation...')
+
           // Wait a moment for the FLUX price calculation to complete
           await new Promise(resolve => setTimeout(resolve, 500))
         }
@@ -944,11 +945,13 @@ const preInitializeManualPaymentData = async () => {
     if (!auth.zelid || !auth.signature) {
       console.log('⚠️ Cannot pre-initialize payment data - missing auth')
       console.log('Auth check:', { hasZelid: !!auth.zelid, hasSignature: !!auth.signature, hasLoginPhrase: !!auth.loginPhrase })
+      
       return
     }
 
     if (!estimatedFluxAmount.value) {
       console.log('⚠️ Cannot pre-initialize payment data - missing FLUX amount')
+      
       return
     }
 
@@ -979,6 +982,7 @@ const preInitializeManualPaymentData = async () => {
       for (let i = 0; i < length; i++) {
         result += characters[Math.floor(Math.random() * characters.length)]
       }
+      
       return result
     }
 
@@ -1104,6 +1108,7 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
       }
 
       initializingFluxPayment.value = false
+      
       return
     }
 
@@ -1600,6 +1605,7 @@ const cancelFluxPayment = () => {
   hideSnackbar()
 
   fluxPaymentProcessing.value = false
+
   // DON'T clear fluxPayment.value - keep manual payment data visible
   showAlert('Payment monitoring cancelled. You can still pay manually using the details above.', 'info')
 }

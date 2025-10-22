@@ -65,7 +65,7 @@ function redeployApp(appSpecs, isFromActive = false) {
   // Store in sessionStorage temporarily then navigate
   sessionStorage.setItem('redeploySpecs', JSON.stringify({
     appspecs: specs,
-    isRedeploy: true
+    isRedeploy: true,
   }))
 
   console.log('🚀 [REDEPLOY] Stored in sessionStorage, navigating to apps-register')

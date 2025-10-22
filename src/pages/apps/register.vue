@@ -179,6 +179,7 @@ watch(newAppSpec, spec => {
   if (!spec) {
     console.log('[Spec Adapter] No spec available')
     adaptedAppSpec.value = null
+    
     return
   }
 
