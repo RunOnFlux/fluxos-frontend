@@ -140,7 +140,7 @@
       kbd-variant="success"
     />
     <ListEntry
-      v-if="app.hash && app.hash.length === 64"
+      v-if="app.hash && app.hash.length === 64 && adjustedExpiryBlockHeight"
       title="Expires on Blockheight"
       :data="adjustedExpiryBlockHeight"
       title-icon="mdi-hourglass"
@@ -149,10 +149,10 @@
     />
     <ListEntry
       title="Expires in"
-      :data="getNewExpireLabel"
+      :data="expiresInLabel"
       title-icon="mdi-clock-outline"
       title-icon-scale="1.2"
-      :kbd-variant="isExpiringSoon(getNewExpireLabel) ? 'danger' : 'success'"
+      :kbd-variant="isExpiringSoon(expiresInLabel) ? 'danger' : 'success'"
     />
     <ListEntry
       title="Enterprise Nodes"
@@ -180,7 +180,11 @@ import ExplorerService from '@/services/ExplorerService'
 
 const props = defineProps({
   app: Object,
-  getNewExpireLabel: [String, Number, Function],
+  getNewExpireLabel: {
+    type: [String, Number, Function],
+    required: false,
+    default: null,
+  },
   activeAppsTab: {
     type: Boolean,
     default: false,
@@ -222,6 +226,51 @@ const adjustedExpiryBlockHeight = computed(() => {
   }
 
   return effectiveExpiry
+})
+
+// Calculate fork-aware expiry time label
+const expiresInLabel = computed(() => {
+  if (!adjustedExpiryBlockHeight.value || currentBlockHeight.value < 0) {
+    return 'Not available'
+  }
+
+  const blocksRemaining = adjustedExpiryBlockHeight.value - currentBlockHeight.value
+
+  if (blocksRemaining < 1) {
+    return 'Application Expired'
+  }
+
+  let totalMinutes = 0
+
+  // Before fork: 2 minutes per block
+  // After fork: 0.5 minutes per block (30 seconds)
+  if (currentBlockHeight.value < FORK_BLOCK_HEIGHT) {
+    // We're currently before the fork
+    if (adjustedExpiryBlockHeight.value <= FORK_BLOCK_HEIGHT) {
+      // Expiration is before fork - all blocks at 2 min/block
+      totalMinutes = blocksRemaining * 2
+    } else {
+      // Expiration is after fork - split calculation
+      const blocksUntilFork = FORK_BLOCK_HEIGHT - currentBlockHeight.value
+      const blocksAfterFork = adjustedExpiryBlockHeight.value - FORK_BLOCK_HEIGHT
+      totalMinutes = (blocksUntilFork * 2) + (blocksAfterFork * 0.5)
+    }
+  } else {
+    // We're currently after fork - all remaining blocks at 0.5 min/block
+    totalMinutes = blocksRemaining * 0.5
+  }
+
+  // Convert minutes to human-readable format
+  const days = Math.floor(totalMinutes / 1440)
+  const hours = Math.floor((totalMinutes % 1440) / 60)
+  const minutes = Math.floor(totalMinutes % 60)
+
+  const parts = []
+  if (days > 0) parts.push(`${days} day${days !== 1 ? 's' : ''}`)
+  if (hours > 0) parts.push(`${hours} hour${hours !== 1 ? 's' : ''}`)
+  if (minutes > 0 || parts.length === 0) parts.push(`${minutes} minute${minutes !== 1 ? 's' : ''}`)
+
+  return parts.slice(0, 3).join(', ')
 })
 
 // Fetch current block height on mount
