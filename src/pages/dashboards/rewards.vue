@@ -277,6 +277,21 @@ onMounted(() => {
   setInterval(() => getData(), 1000 * 60 * 10)
 })
 
+const getBlockHeight = async () => {
+  try {
+    const result = await ExplorerService.getScannedHeight()
+    if (result.data.status === "success") {
+      return result.data.data.generalScannedHeight
+    }
+    
+    return 0
+  } catch (error) {
+    console.error("Error fetching block height:", error)
+    
+    return 0
+  }
+}
+
 const getData = async () => {
   try {
     const result = await ExplorerService.getScannedHeight()
@@ -359,12 +374,24 @@ const generateEconomics = async fluxnodecounts => {
   let perNimbusNode = 4.6875
   let perStratusNode = 11.25
 
+  // Get block height first to determine which multipliers to use
+  const blockHeight = await getBlockHeight()
+
+  // PON Fork at block 2020000: reward multipliers and chain speed change
+  // Pre-fork multipliers: Cumulus 0.075, Nimbus 0.125, Stratus 0.3
+  // Post-fork multipliers: Cumulus 0.074, Nimbus 0.259, Stratus 0.666
+  const isPostFork = blockHeight >= 2020000
+
+  const cumulusMultiplier = isPostFork ? 0.074 : 0.075
+  const nimbusMultiplier = isPostFork ? 0.259 : 0.125
+  const stratusMultiplier = isPostFork ? 0.666 : 0.3
+
   try {
     const response = await DashboardService.blockReward()
     if (response.data.status !== "error") {
-      perCumulusNode = (response.data.data.miner * 0.075).toFixed(4)
-      perNimbusNode = (response.data.data.miner * 0.125).toFixed(4)
-      perStratusNode = (response.data.data.miner * 0.3).toFixed(4)
+      perCumulusNode = (response.data.data.miner * cumulusMultiplier).toFixed(4)
+      perNimbusNode = (response.data.data.miner * nimbusMultiplier).toFixed(4)
+      perStratusNode = (response.data.data.miner * stratusMultiplier).toFixed(4)
     } else {
       showError(response.data.data.message || response.data.data)
     }
@@ -376,7 +403,11 @@ const generateEconomics = async fluxnodecounts => {
   const stratuses = fluxnodecounts["stratus-enabled"]
   const nimbuses = fluxnodecounts["nimbus-enabled"]
   const cumuluses = fluxnodecounts["cumulus-enabled"]
-  const blocksPerWeek = 720 * 7
+
+  // PON Fork at block 2020000: chain speed increases 4x (2 min -> 30 sec blocks)
+  // Pre-fork: 720 blocks/day, Post-fork: 2880 blocks/day
+  const speedMultiplier = isPostFork ? 4 : 1
+  const blocksPerWeek = 720 * 7 * speedMultiplier
 
   cumulusWeek.value = ((perCumulusNode * blocksPerWeek) / cumuluses) * 2
   nimbusWeek.value = ((perNimbusNode * blocksPerWeek) / nimbuses) * 2
