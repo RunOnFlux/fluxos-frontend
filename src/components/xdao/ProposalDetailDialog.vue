@@ -438,7 +438,8 @@
       <VCardActions class="pa-4 pa-sm-6 pt-0">
         <VSpacer />
         <VBtn
-          variant="outlined"
+          color="error"
+          variant="flat"
           @click="dialogVisible = false"
         >
           {{ t('common.buttons.close') }}

@@ -40,7 +40,7 @@
               v-if="isLoggedIn"
               color="success"
               variant="elevated"
-              :size="$vuetify.display.xs ? 'small' : 'large'"
+              :size="$vuetify.display.xs ? 'small' : 'default'"
               class="px-3"
             >
               <VAvatar
@@ -58,7 +58,7 @@
               v-else
               color="primary"
               variant="flat"
-              :size="$vuetify.display.xs ? 'small' : 'large'"
+              :size="$vuetify.display.xs ? 'small' : 'default'"
               @click="openLoginBottomSheet"
               class="text-none"
             >

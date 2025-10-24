@@ -305,7 +305,6 @@
                         <VBtn
                           color="primary"
                           variant="flat"
-                          size="large"
                           @click="openLoginBottomSheet"
                         >
                           <VIcon size="22" class="mr-2">mdi-login-variant</VIcon>
@@ -313,7 +312,6 @@
                         </VBtn>
                         <VBtn
                           variant="flat"
-                          size="large"
                           href="https://runonflux.io"
                           target="_blank"
                           rel="noopener noreferrer"
