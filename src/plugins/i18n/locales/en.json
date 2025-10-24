@@ -2621,5 +2621,27 @@
         "item": "item"
       }
     }
+  },
+  "memoryMonitor": {
+    "title": "Memory Monitor",
+    "currentUsage": "Current Usage",
+    "statistics": "Statistics",
+    "breakdown": "Memory Breakdown",
+    "minimum": "Minimum",
+    "maximum": "Maximum",
+    "average": "Average",
+    "samples": "Samples",
+    "trend": "Trend",
+    "used": "used",
+    "limit": "limit",
+    "refresh": "Refresh",
+    "forceGC": "Force GC",
+    "clearHistory": "Clear History",
+    "notAvailable": "Performance Memory API not available in this browser.",
+    "notAvailableHint": "Available in Chrome/Edge with --enable-precise-memory-info flag",
+    "loading": "Loading memory data...",
+    "statusHigh": "Memory usage is very high!",
+    "statusWarning": "Memory usage is high",
+    "statusNormal": "Memory usage is normal"
   }
 }

@@ -11,6 +11,7 @@ import VueDevTools from 'vite-plugin-vue-devtools';
 import { ClientSideLayout } from 'vite-plugin-vue-layouts';
 import vuetify from 'vite-plugin-vuetify';
 import svgLoader from 'vite-svg-loader';
+import { visualizer } from 'rollup-plugin-visualizer';
 import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
@@ -79,6 +80,14 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       svgLoader(),
+      // Bundle analyzer - generates stats.html
+      visualizer({
+        filename: 'dist/stats.html',
+        open: false, // Set to true to auto-open in browser
+        gzipSize: true,
+        brotliSize: true,
+        template: 'treemap', // 'sunburst', 'treemap', 'network'
+      }),
     ],
     define: {
       'process.env': {},
@@ -121,15 +130,44 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
-      chunkSizeWarningLimit: 5000,
+      chunkSizeWarningLimit: 1800, // Warn about chunks larger than 1800KB
+      reportCompressedSize: true, // Report gzip sizes
       commonjsOptions: {
         include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
       },
       rollupOptions: {
         output: {
           manualChunks: {
-            vuetify: ['vuetify'],
-            apexcharts: ['vue3-apexcharts'],
+            // UI Framework
+            'vuetify': ['vuetify'],
+
+            // Charts & Visualization
+            'apexcharts': ['vue3-apexcharts'],
+
+            // Code Editor
+            'monaco': ['@guolao/vue-monaco-editor', 'monaco-editor'],
+
+            // Maps
+            'leaflet-core': ['leaflet', '@vue-leaflet/vue-leaflet'],
+            'leaflet-cluster': ['leaflet.markercluster'],
+
+            // Crypto - MetaMask
+            'crypto-metamask': ['@metamask/sdk', '@metamask/providers'],
+
+            // Crypto - WalletConnect
+            'crypto-walletconnect': [
+              '@reown/appkit',
+              '@reown/appkit-adapter-wagmi',
+              '@walletconnect/universal-provider',
+              '@walletconnect/ethereum-provider',
+              '@walletconnect/utils'
+            ],
+
+            // Crypto - Core Libraries
+            'crypto-core': ['viem', 'wagmi', '@tanstack/react-query'],
+
+            // Encryption
+            'pgp': ['openpgp'],
           },
         },
       },

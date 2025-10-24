@@ -5,6 +5,7 @@ import { themeConfig } from "@themeConfig"
 import Footer from "@/layouts/components/Footer.vue"
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue"
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
+import NavBarMemoryMonitor from "@/layouts/components/NavBarMemoryMonitor.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
 import NavBarI18n from "@core/components/I18n.vue"
 import { VerticalNavLayout } from "@layouts"
@@ -178,6 +179,7 @@ const handleLoginSuccess = () => {
           :languages="themeConfig.app.i18n.langConfig"
         />
         <NavbarThemeSwitcher />
+        <NavBarMemoryMonitor />
         <NavBarNotifications class="mr-3" />
         <UserProfile />
       </div>

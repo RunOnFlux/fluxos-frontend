@@ -307,13 +307,16 @@ const handleBackendURLChange = () => {
   nodeStatus()
 }
 
+let resizeHandler = null
+
 onMounted(() => {
   if (typeof window !== "undefined") {
     windowWidth.value = window.innerWidth
 
-    window.addEventListener("resize", () => {
+    resizeHandler = () => {
       windowWidth.value = window.innerWidth
-    })
+    }
+    window.addEventListener("resize", resizeHandler)
   }
 
   fetchFluxVersion()
@@ -322,6 +325,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  if (resizeHandler) {
+    window.removeEventListener("resize", resizeHandler)
+  }
   eventBus.off("backendURLChanged", handleBackendURLChange)
 })
 </script>

@@ -2620,5 +2620,27 @@
         "item": "element"
       }
     }
+  },
+  "memoryMonitor": {
+    "title": "Monitor Pamięci",
+    "currentUsage": "Aktualne Użycie",
+    "statistics": "Statystyki",
+    "breakdown": "Podział Pamięci",
+    "minimum": "Minimum",
+    "maximum": "Maksimum",
+    "average": "Średnia",
+    "samples": "Próbki",
+    "trend": "Trend",
+    "used": "użyte",
+    "limit": "limit",
+    "refresh": "Odśwież",
+    "forceGC": "Wymuś GC",
+    "clearHistory": "Wyczyść Historię",
+    "notAvailable": "Interfejs API pamięci wydajności nie jest dostępny w tej przeglądarce.",
+    "notAvailableHint": "Dostępne w Chrome/Edge z flagą --enable-precise-memory-info",
+    "loading": "Ładowanie danych pamięci...",
+    "statusHigh": "Użycie pamięci jest bardzo wysokie!",
+    "statusWarning": "Użycie pamięci jest wysokie",
+    "statusNormal": "Użycie pamięci jest normalne"
   }
 }

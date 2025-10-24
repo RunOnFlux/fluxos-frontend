@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --logLevel info",
     "build": "vite build",
+    "build:analyze": "vite build && start dist/stats.html",
     "preview": "vite preview --host 0.0.0.0 --port 3005",
     "lint": "eslint . --fix",
     "build:icons": "tsx src/plugins/iconify/build-icons.js",
@@ -137,6 +138,7 @@
     "patch-package": "^8.0.1",
     "postcss-html": "1.7.0",
     "postcss-scss": "4.0.9",
+    "rollup-plugin-visualizer": "^6.0.5",
     "sass": "1.76.0",
     "shiki": "1.24.2",
     "stylelint": "16.8.0",

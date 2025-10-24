@@ -10,6 +10,7 @@ declare global {
   const COOKIE_MAX_AGE_1_YEAR: typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']
   const EffectScope: typeof import('vue')['EffectScope']
   const LATEST_SPEC_VERSION: typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']
+  const MemoryMonitor: typeof import('./utils/memoryMonitor.js')['MemoryMonitor']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const alphaDashValidator: typeof import('./@core/utils/validators.js')['alphaDashValidator']
   const alphaValidator: typeof import('./@core/utils/validators.js')['alphaValidator']
@@ -120,6 +121,7 @@ declare global {
   const mapStores: typeof import('pinia')['mapStores']
   const mapWritableState: typeof import('pinia')['mapWritableState']
   const markRaw: typeof import('vue')['markRaw']
+  const memoryMonitor: typeof import('./utils/memoryMonitor.js')['default']
   const nextTick: typeof import('vue')['nextTick']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -429,6 +431,7 @@ declare module 'vue' {
     readonly COOKIE_MAX_AGE_1_YEAR: UnwrapRef<typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly LATEST_SPEC_VERSION: UnwrapRef<typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']>
+    readonly MemoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['MemoryMonitor']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly alphaDashValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaDashValidator']>
     readonly alphaValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaValidator']>
@@ -538,6 +541,7 @@ declare module 'vue' {
     readonly mapStores: UnwrapRef<typeof import('pinia')['mapStores']>
     readonly mapWritableState: UnwrapRef<typeof import('pinia')['mapWritableState']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
+    readonly memoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['default']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>

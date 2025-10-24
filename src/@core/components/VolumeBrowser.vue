@@ -1125,6 +1125,7 @@ async function download(name, isFolder = false, silent = false) {
       document.body.appendChild(link)
       link.click()
       link.remove()
+      window.URL.revokeObjectURL(url)
     }
   } catch (error) {
     console.error(error.message)

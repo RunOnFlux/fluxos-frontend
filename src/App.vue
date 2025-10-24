@@ -7,6 +7,7 @@ import { logoRef } from "@themeConfig"
 import { onMounted, watch } from "vue"
 import { useTheme } from "vuetify"
 import { useFluxStore } from '@/stores/flux'
+import memoryMonitor from '@/utils/memoryMonitor'
 
 const { global } = useTheme()
 
@@ -44,6 +45,14 @@ onMounted(() => {
   const fluxStore = useFluxStore()
 
   fluxStore.fetchFluxIDs()
+
+  // Start memory monitoring
+  memoryMonitor.start({
+    interval: 60000,
+    highThreshold: 0.75,
+    criticalThreshold: 0.9,
+    detailedLogging: true,
+  })
 })
 
 watch(
