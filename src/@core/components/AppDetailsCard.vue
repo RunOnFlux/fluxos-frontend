@@ -215,20 +215,28 @@ const snackbar = ref({
 
 // Calculate adjusted expiry blockheight accounting for PON Fork
 const adjustedExpiryBlockHeight = computed(() => {
-  if (!props.app?.height) return 0
-
-  const height = props.app.height
-  const expires = props.app.expire || 22000
-  let effectiveExpiry = height + expires
-
-  // If app was registered before the fork (block 2020000) and we're currently past the fork,
-  // adjust the expiry calculation since the blockchain moves 4x faster post-fork
-  if (height < FORK_BLOCK_HEIGHT && currentBlockHeight.value >= FORK_BLOCK_HEIGHT && effectiveExpiry > FORK_BLOCK_HEIGHT) {
-    const remainingBlocksAfterFork = effectiveExpiry - FORK_BLOCK_HEIGHT
-    effectiveExpiry = FORK_BLOCK_HEIGHT + (remainingBlocksAfterFork * 4)
+  if (!props.app?.height || !props.app?.hash || props.app.hash.length !== 64) {
+    return null
   }
 
-  return effectiveExpiry
+  const defaultExpire = 22000
+  const expireIn = props.app.expire || defaultExpire
+  const originalExpirationHeight = props.app.height + expireIn
+
+  // If app was registered before PON fork AND expiration extends past the fork,
+  // the blocks AFTER the fork will be 4x faster, so multiply those by 4
+  if (props.app.height < FORK_BLOCK_HEIGHT && originalExpirationHeight > FORK_BLOCK_HEIGHT) {
+    // Calculate blocks that were supposed to live after fork block
+    const blocksAfterFork = originalExpirationHeight - FORK_BLOCK_HEIGHT
+    // Multiply by 4 to account for 4x faster chain
+    const adjustedBlocksAfterFork = blocksAfterFork * 4
+    // New expiration = fork block + adjusted blocks
+    const adjustedExpiration = FORK_BLOCK_HEIGHT + adjustedBlocksAfterFork
+
+    return adjustedExpiration
+  }
+
+  return originalExpirationHeight
 })
 
 // Calculate fork-aware expiry time label
