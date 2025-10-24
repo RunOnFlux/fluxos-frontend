@@ -269,7 +269,7 @@
       "expiresOnBlockheight": "Wygasa na bloku",
       "expiresIn": "Wygasa za",
       "enterpriseNodes": "Węzły firmowe",
-      "notScoped": "Bez ograniczeń",
+      "notScoped": "Nie dotyczy",
       "staticIp": "Statyczne IP",
       "staticIpYes": "Tak, działa tylko na węzłach ze statycznym IP",
       "staticIpNo": "Nie, działa na wszystkich węzłach",

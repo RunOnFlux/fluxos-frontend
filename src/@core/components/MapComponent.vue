@@ -315,17 +315,17 @@ function initMap() {
     detectRetina: true,
   })
 
-  tileLayer.on('tileloadstart', e => {
-    console.log('Tile load start:', e.coords)
-  })
+  // tileLayer.on('tileloadstart', e => {
+  //   console.log('Tile load start:', e.coords)
+  // })
 
-  tileLayer.on('tileload', e => {
-    console.log('Tile loaded:', e.coords)
-  })
+  // tileLayer.on('tileload', e => {
+  //   console.log('Tile loaded:', e.coords)
+  // })
 
-  tileLayer.on('tileerror', e => {
-    console.error('Tile error:', e)
-  })
+  // tileLayer.on('tileerror', e => {
+  //   console.error('Tile error:', e)
+  // })
 
   tileLayer.addTo(leafletMap)
   console.log('Tile layer added')
