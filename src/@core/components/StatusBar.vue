@@ -267,6 +267,40 @@ const nodeStatus = async () => {
   }
 }
 
+const fetchFluxVersion = async () => {
+  try {
+    const response = await FluxService.getFluxVersion()
+    const version = response.data?.data
+
+    fluxVersion.value = version
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const getLatestFluxVersion = async () => {
+  try {
+    const response = await axios.get(
+      "https://raw.githubusercontent.com/runonflux/flux/master/package.json",
+    )
+
+    const latestVersion = response.data?.version
+
+    if (latestVersion && fluxVersion.value && latestVersion !== fluxVersion.value) {
+      isNewBackendVersion.value = true
+    } else {
+      isNewBackendVersion.value = false
+    }
+  } catch (error) {
+    console.error(error)
+  }
+}
+
+const handleBackendURLChange = () => {
+  fetchFluxVersion()
+  nodeStatus()
+}
+
 onMounted(() => {
   if (typeof window !== "undefined") {
     windowWidth.value = window.innerWidth
@@ -274,40 +308,6 @@ onMounted(() => {
     window.addEventListener("resize", () => {
       windowWidth.value = window.innerWidth
     })
-  }
-
-  const fetchFluxVersion = async () => {
-    try {
-      const response = await FluxService.getFluxVersion()
-      const version = response.data?.data
-
-      fluxVersion.value = version
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const getLatestFluxVersion = async () => {
-    try {
-      const response = await axios.get(
-        "https://raw.githubusercontent.com/runonflux/flux/master/package.json",
-      )
-
-      const latestVersion = response.data?.version
-
-      if (latestVersion && fluxVersion.value && latestVersion !== fluxVersion.value) {
-        isNewBackendVersion.value = true
-      } else {
-        isNewBackendVersion.value = false
-      }
-    } catch (error) {
-      console.error(error)
-    }
-  }
-
-  const handleBackendURLChange = () => {
-    fetchFluxVersion()
-    nodeStatus()
   }
 
   fetchFluxVersion()
