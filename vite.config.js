@@ -132,6 +132,7 @@ export default defineConfig(({ mode }) => {
     build: {
       chunkSizeWarningLimit: 1800, // Warn about chunks larger than 1800KB
       reportCompressedSize: true, // Report gzip sizes
+      minify: 'esbuild', // Use esbuild for fast builds
       commonjsOptions: {
         include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
       },
@@ -163,8 +164,8 @@ export default defineConfig(({ mode }) => {
               '@walletconnect/utils'
             ],
 
-            // Crypto - Core Libraries
-            'crypto-core': ['viem', 'wagmi', '@tanstack/react-query'],
+            // Crypto - Core Libraries (let wagmi/viem bundle naturally with their dependencies)
+            'crypto-query': ['@tanstack/react-query'],
 
             // Encryption
             'pgp': ['openpgp'],

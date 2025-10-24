@@ -220,7 +220,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import memoryMonitor from '@/utils/memoryMonitor'
 
@@ -292,18 +292,36 @@ const clearHistory = () => {
   refresh()
 }
 
-onMounted(() => {
-  memoryAvailable.value = performance.memory !== undefined
-
-  if (memoryAvailable.value) {
+// Start interval when dialog opens
+const startMonitoring = () => {
+  if (memoryAvailable.value && !updateInterval) {
     refresh()
     updateInterval = setInterval(refresh, 5000) // Update every 5 seconds
   }
+}
+
+// Stop interval when dialog closes
+const stopMonitoring = () => {
+  if (updateInterval) {
+    clearInterval(updateInterval)
+    updateInterval = null
+  }
+}
+
+// Watch dialog state to start/stop monitoring
+watch(dialog, (isOpen) => {
+  if (isOpen) {
+    startMonitoring()
+  } else {
+    stopMonitoring()
+  }
+})
+
+onMounted(() => {
+  memoryAvailable.value = performance.memory !== undefined
 })
 
 onBeforeUnmount(() => {
-  if (updateInterval) {
-    clearInterval(updateInterval)
-  }
+  stopMonitoring()
 })
 </script>

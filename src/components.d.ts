@@ -78,7 +78,6 @@ declare module 'vue' {
     Marketplace: typeof import('./components/Marketplace/index.vue')['default']
     MarketplaceAppCard: typeof import('./components/Marketplace/MarketplaceAppCard.vue')['default']
     MarketplaceAppList: typeof import('./components/Marketplace/MarketplaceAppList.vue')['default']
-    MemoryMonitorWidget: typeof import('./@core/components/MemoryMonitorWidget.vue')['default']
     MoreBtn: typeof import('./@core/components/MoreBtn.vue')['default']
     NewListedCard: typeof import('./components/Marketplace/NewListedCard.vue')['default']
     Notifications: typeof import('./@core/components/Notifications.vue')['default']
