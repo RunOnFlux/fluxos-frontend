@@ -2,14 +2,16 @@
   <VCard
     icon="mdi-server"
     class="rounded-xl elevation-4 mb-6 pa-2"
+    style="width: 100%;"
   >
     <div
-      class="d-flex align-center ml-2"
+      class="d-flex align-center justify-center px-2"
       :style="{
-        gap: windowWidth >= 600 ? '24px' : '14px',
+        gap: windowWidth >= 600 ? '48px' : '24px',
         whiteSpace: 'nowrap',
         fontSize: 'clamp(9.2px, 2vw, 14px)',
         overflow: 'visible',
+        width: '100%',
       }"
     >
       <!-- Backend -->

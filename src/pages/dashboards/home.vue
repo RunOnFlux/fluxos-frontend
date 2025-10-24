@@ -1,10 +1,8 @@
 <template>
-  <StatusBar />
   <BannerSlider />
 </template>
 
 <script setup>
-import StatusBar from "@core/components/StatusBar.vue"
 import BannerSlider from "@/components/BannerSlider.vue"
 import { useI18n } from "vue-i18n"
 
