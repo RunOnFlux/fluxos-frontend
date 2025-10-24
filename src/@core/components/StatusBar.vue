@@ -11,8 +11,8 @@
           icon="mdi-close"
           size="x-small"
           variant="text"
-          color="error"
-          class="position-absolute mr-3"
+          color="secondary"
+          class="position-absolute mr-3 close-btn-hover"
           style="top: 50%; right: 0; transform: translateY(-50%);"
           @click="toggleVisibility"
           v-bind="props"
@@ -64,7 +64,12 @@
             backendVersionError ? t("core.statusBar.backendError") : (isNewBackendVersion ? t("core.statusBar.updateAvailable") : t("core.statusBar.upToDate"))
           }}</span>
         </VTooltip>
-        <span>{{ t("core.statusBar.backend") }}: {{ backendVersionError ? t("core.statusBar.error") : fluxVersion }}</span>
+        <span>
+          {{ t("core.statusBar.backend") }}:
+          <span :class="backendVersionError ? 'text-error' : ''">
+            {{ backendVersionError ? t("core.statusBar.error") : fluxVersion }}
+          </span>
+        </span>
       </div>
 
       <!-- Frontend -->
@@ -320,3 +325,9 @@ onBeforeUnmount(() => {
   eventBus.off("backendURLChanged", handleBackendURLChange)
 })
 </script>
+
+<style scoped>
+.close-btn-hover:hover {
+  color: rgb(var(--v-theme-error)) !important;
+}
+</style>

@@ -1016,7 +1016,7 @@
       "hideStatusBar": "Ukryj pasek statusu",
       "showStatusBar": "Pokaż pasek statusu",
       "backendError": "Nie udało się pobrać wersji serwera",
-      "error": "Błąd"
+      "error": "Nieosiągalny"
     }
   },
   "components": {

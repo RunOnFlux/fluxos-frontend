@@ -184,6 +184,7 @@ onMounted(() => {
         <VBtn
           v-bind="activatorProps"
           variant="outlined"
+          color="grey"
           size="small"
         >
           <VIcon
@@ -217,13 +218,17 @@ onMounted(() => {
         </VBtn>
       </template>
 
-      <VList>
-        <VListItem @click="saveBackend('https://api.runonflux.io')">
+      <VList color="grey">
+        <VListItem
+          color="grey"
+          @click="saveBackend('https://api.runonflux.io')"
+        >
           <VListItemTitle>https://api.runonflux.io</VListItemTitle>
         </VListItem>
 
         <VListItem
           v-if="detectedURL"
+          color="grey"
           @click="saveBackend(detectedURL)"
         >
           <VListItemTitle>{{ detectedURL }}</VListItemTitle>
@@ -240,6 +245,7 @@ onMounted(() => {
             item-title="title"
             item-value="value"
             :label="t('core.backendSelector.customBackend')"
+            color="grey"
             hide-details
             persistent-placeholder
             density="compact"

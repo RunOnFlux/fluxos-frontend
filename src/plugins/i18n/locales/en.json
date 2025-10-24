@@ -1017,7 +1017,7 @@
       "hideStatusBar": "Hide status bar",
       "showStatusBar": "Show status bar",
       "backendError": "Failed to fetch backend version",
-      "error": "Error"
+      "error": "Unreachable"
     }
   },
   "components": {
