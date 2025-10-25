@@ -158,36 +158,13 @@
       </div>
     </div>
   </VCard>
-  <div
-    v-else
-    class="mb-6"
-    style="width: 100%; position: relative; height: 52px; display: flex; align-items: center;"
-  >
-    <VTooltip location="left">
-      <template #activator="{ props }">
-        <VBtn
-          icon
-          size="small"
-          variant="text"
-          color="secondary"
-          class="position-absolute"
-          style="top: 50%; right: -8px; transform: translateY(-50%);"
-          @click="toggleVisibility"
-          v-bind="props"
-        >
-          <VIcon>mdi-eye-outline</VIcon>
-        </VBtn>
-      </template>
-      <span>{{ t('core.statusBar.showStatusBar') }}</span>
-    </VTooltip>
-  </div>
 </template>
 
 <script setup>
 import DaemonService from "@/services/DaemonService"
 import FluxService from "@/services/FluxService"
 import { useFluxStore } from "@/stores/flux"
-import { onMounted, reactive, ref, watch, getCurrentInstance } from "vue"
+import { onMounted, onBeforeUnmount, reactive, ref, watch, getCurrentInstance } from "vue"
 import { useI18n } from "vue-i18n"
 import { eventBus } from "@/utils/eventBus"
 
@@ -208,14 +185,23 @@ const isHidden = ref(localStorage.getItem('statusBarHidden') === 'true')
 const toggleVisibility = () => {
   isHidden.value = !isHidden.value
   localStorage.setItem('statusBarHidden', isHidden.value.toString())
+
+  // Notify navbar toggle button with error status
+  const hasError = backendVersionError.value || getNodeStatusResponse.class === 'error'
+  window.dispatchEvent(new CustomEvent('statusbar-toggle', {
+    detail: {
+      hidden: isHidden.value,
+      hasError: hasError
+    }
+  }))
 }
 
-watch(
-  () => i18n.locale,
-  () => {
-    nodeStatus()
-  },
-)
+// Listen for toggle from navbar
+const handleStatusBarToggle = (event) => {
+  isHidden.value = event.detail.hidden
+}
+
+window.addEventListener('statusbar-toggle', handleStatusBarToggle)
 
 
 
@@ -269,6 +255,27 @@ const nodeStatus = async () => {
     getNodeStatusResponse.message = t("core.statusBar.disconnectedMessage")
   }
 }
+
+// Watch for i18n locale changes
+watch(
+  () => i18n.locale,
+  () => {
+    nodeStatus()
+  },
+)
+
+// Notify navbar when error status changes
+watch(
+  () => backendVersionError.value || getNodeStatusResponse.class === 'error',
+  (hasError) => {
+    window.dispatchEvent(new CustomEvent('statusbar-toggle', {
+      detail: {
+        hidden: isHidden.value,
+        hasError: hasError
+      }
+    }))
+  }
+)
 
 const fetchFluxVersion = async () => {
   try {
@@ -328,6 +335,7 @@ onBeforeUnmount(() => {
   if (resizeHandler) {
     window.removeEventListener("resize", resizeHandler)
   }
+  window.removeEventListener('statusbar-toggle', handleStatusBarToggle)
   eventBus.off("backendURLChanged", handleBackendURLChange)
 })
 </script>

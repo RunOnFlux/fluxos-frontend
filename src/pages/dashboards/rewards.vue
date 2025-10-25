@@ -117,7 +117,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted, nextTick, watch } from "vue"
+import { ref, reactive, onMounted, onBeforeUnmount, nextTick, watch } from "vue"
 import DashboardService from "@/services/DashboardService"
 import ExplorerService from "@/services/ExplorerService"
 import axios from "axios"
@@ -275,9 +275,17 @@ const calculateAllRewards = () => {
   })
 }
 
+let dataInterval = null
+
 onMounted(() => {
   getData()
-  setInterval(() => getData(), 1000 * 60 * 10)
+  dataInterval = setInterval(() => getData(), 1000 * 60 * 10)
+})
+
+onBeforeUnmount(() => {
+  if (dataInterval) {
+    clearInterval(dataInterval)
+  }
 })
 
 const getBlockHeight = async () => {

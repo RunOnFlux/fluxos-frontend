@@ -222,18 +222,23 @@ watchEffect(() => {
 })
 
 function connectTerminal(name) {
+  // console.log('🚀 connectTerminal called with name:', name)
+  // console.log('📦 App Spec version:', props.appSpec.version)
+  // console.log('📦 Selected App:', selectedApp.value)
+
   if (props.appSpec.version >= 4) {
     const found = props.appSpec.compose?.some(c => c.name === selectedApp.value)
+    // console.log('🔍 V4+ spec - Container found in compose:', found)
     if (!found) {
       showToast('danger', t('core.terminal.errors.selectContainer'))
-      
+
       return
     }
   }
 
   if (!selectedCmd.value || (selectedCmd.value === 'Custom' && !customValue.value)) {
     showToast('danger', selectedCmd.value === 'Custom' ? t('core.terminal.errors.enterCustomCommand') : t('core.terminal.errors.noCommandSelected'))
-    
+
     return
   }
 
@@ -325,7 +330,7 @@ function connectTerminal(name) {
   }
 
   isConnecting.value = true
-  
+
   const zelidauth = localStorage.getItem('zelidauth')
   const [host, port = 16127] = props.selectedIp.split(':')
 
@@ -333,7 +338,18 @@ function connectTerminal(name) {
     ? `http://${host}:${port}/terminal`
     : `https://${host.replace(/\./g, '-')}-${port}.node.api.runonflux.io/terminal`
 
+  // console.log('🔌 Terminal connecting to:', url)
+  // console.log('📋 Connection details:', {
+  //   host,
+  //   port,
+  //   ipAccess: ipAccess.value,
+  //   selectedIp: props.selectedIp,
+  //   appName: props.name
+  // })
+
   socket = io.connect(url)
+
+  // console.log('✅ Socket created, waiting for connection...')
 
   terminal = new Terminal({
     allowProposedApi: true,
@@ -405,35 +421,48 @@ function connectTerminal(name) {
   let consoleInit = 0
   let skipToast = 0
 
+  // console.log('📤 Emitting exec command:')
+  // console.log('  - Container name (param):', name)
+  // console.log('  - Container name (selectedApp):', selectedApp.value)
+  // console.log('  - Command:', cmd)
+  // console.log('  - Environment:', envInputValue.value)
+  // console.log('  - User:', user)
+  // console.log('  - zelidauth:', zelidauth ? '✅ Present' : '❌ Missing')
   socket.emit('exec', zelidauth, name, cmd, envInputValue.value, user)
 
   socket.on('error', err => {
+    console.error('❌ Socket error event:', err)
     showToast('danger', t('core.terminal.errors.connectionError', { error: err }))
     isConnecting.value = false
     disconnectTerminal()
   })
 
   socket.on('connect_error', err => {
+    console.error('❌ Socket connect_error event:', err.message, err)
     showToast('danger', t('core.terminal.errors.connectionErrorWithMessage', { message: err.message }))
     isConnecting.value = false
     disconnectTerminal()
   })
 
   socket.on('connect_timeout', () => {
+    console.error('⏱️ Socket connect_timeout event')
     showToast('danger', t('core.terminal.errors.connectionTimeout'))
     isConnecting.value = false
     disconnectTerminal()
   })
 
   socket.on('show', data => {
+    // console.log('📥 Socket show event, data length:', data?.length || 0)
     if (typeof data === 'string' && consoleInit === 0 && data.includes('OCI runtime exec')) {
       skipToast = 1
+      console.warn('⚠️ OCI runtime exec error detected, disconnecting')
       showToast('danger', t('core.terminal.errors.commandNotSupported', { cmd }))
       disconnectTerminal()
-      
+
       return
     }
     if (consoleInit === 0) {
+      // console.log('🎬 Console initialized, setting up terminal environment')
       consoleInit = 1
       if (!customValue.value) {
         socket.emit('cmd', 'export TERM=xterm\n')
@@ -460,23 +489,39 @@ function connectTerminal(name) {
     terminal.write(data)
   })
 
-  socket.on('disconnect', () => {
+  socket.on('disconnect', (reason) => {
+    console.warn('🔌 Socket disconnect event, reason:', reason)
     if (!skipToast) showToast('warning', t('core.terminal.warnings.disconnected'))
     disconnectTerminal()
   })
 
-  socket.on('end', disconnectTerminal)
+  socket.on('end', () => {
+    // console.log('🔚 Socket end event')
+    disconnectTerminal()
+  })
+
+  socket.on('connect', () => {
+    // console.log('✅ Socket connected successfully')
+  })
 }
 
 function disconnectTerminal() {
+  // console.log('🔌 Disconnecting terminal...')
   if (resizeHandler) window.removeEventListener('resize', resizeHandler)
-  if (socket) socket.disconnect()
-  if (terminal) terminal.dispose()
+  if (socket) {
+    // console.log('🔌 Closing socket connection')
+    socket.disconnect()
+  }
+  if (terminal) {
+    // console.log('🖥️ Disposing terminal')
+    terminal.dispose()
+  }
   socket = null
   terminal = null
   resizeHandler = null
   isVisible.value = false
   isConnecting.value = false
+  // console.log('✅ Terminal disconnected and cleaned up')
 }
 
 function showToast(type, message, icon = null) {
@@ -506,7 +551,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('resize', fitAddon.fit)
+  if (resizeHandler) {
+    window.removeEventListener('resize', resizeHandler)
+  }
   disconnectTerminal()
 })
 </script>

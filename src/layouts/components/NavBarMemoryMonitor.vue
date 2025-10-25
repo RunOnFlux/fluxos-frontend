@@ -1,19 +1,13 @@
 <template>
-  <VBtn
-    icon
-    variant="text"
-    color="default"
-    size="small"
-    @click="dialog = true"
-  >
+  <IconBtn @click="dialog = true">
     <VBadge
       :color="statusColor"
       dot
       :model-value="showBadge"
     >
-      <VIcon size="22">mdi-gauge</VIcon>
+      <VIcon icon="mdi-gauge" />
     </VBadge>
-  </VBtn>
+  </IconBtn>
 
   <VDialog
     v-model="dialog"

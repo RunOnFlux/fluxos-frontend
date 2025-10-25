@@ -1,7 +1,7 @@
 import { getDetectedBackendURL } from '@/utils/backend'
 import axios from 'axios'
 
- 
+
 const sourceCancelToken = axios.CancelToken.source()
 export { sourceCancelToken }
 

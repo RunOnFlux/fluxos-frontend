@@ -6,6 +6,7 @@ import Footer from "@/layouts/components/Footer.vue"
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue"
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
 import NavBarMemoryMonitor from "@/layouts/components/NavBarMemoryMonitor.vue"
+import NavBarStatusBarToggle from "@/layouts/components/NavBarStatusBarToggle.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
 import NavBarI18n from "@core/components/I18n.vue"
 import { VerticalNavLayout } from "@layouts"
@@ -42,13 +43,6 @@ const shouldHideLoginText = isHovered => {
   const result = isVerticalNavCollapsed.value &&
     !isHovered &&
     !isLessThanOverlayNavBreakpoint.value
-
-  console.log('Login button shouldHideLoginText:', {
-    isVerticalNavCollapsed: isVerticalNavCollapsed.value,
-    isHovered: isHovered,
-    isLessThanOverlayNavBreakpoint: isLessThanOverlayNavBreakpoint.value,
-    result: result,
-  })
 
   return result
 }
@@ -180,6 +174,7 @@ const handleLoginSuccess = () => {
         />
         <NavbarThemeSwitcher />
         <NavBarMemoryMonitor />
+        <NavBarStatusBarToggle />
         <NavBarNotifications class="mr-3" />
         <UserProfile />
       </div>
