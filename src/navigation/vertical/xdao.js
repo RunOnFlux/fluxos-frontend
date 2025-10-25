@@ -12,8 +12,8 @@ export default [
   },
   {
     title: 'menu.apiReference.title',
-    icon: { icon: 'mdi-text-box-multiple-outline' },
-    href: 'https://docs.runonflux.io/',
+    icon: { icon: 'mdi-help-circle-outline' },
+    href: 'https://docs.runonflux.com/flux/fluxcloud/introduction',
     target: '_blank',
   },
 ]
