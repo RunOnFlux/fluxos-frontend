@@ -415,9 +415,10 @@
                   <VListItem
                     v-for="helpItem in helpItems"
                     :key="helpItem.question"
-                    class="px-0"
+                    class="help-link-item"
+                    @click="openHelpDialog(helpItem)"
                   >
-                    <VListItemTitle class="text-primary cursor-pointer" @click="openHelpDialog(helpItem)">
+                    <VListItemTitle class="text-grey cursor-pointer font-weight-medium">
                       {{ helpItem.question }}
                     </VListItemTitle>
                   </VListItem>
@@ -513,20 +514,20 @@
         class="help-dialog"
       >
         <!-- Header with icon and close button -->
-        <VCardTitle class="d-flex align-center pa-6 pb-4">
+        <VCardTitle class="d-flex align-center pa-3 bg-primary text-white">
           <VAvatar
-            size="40"
-            color="primary"
-            variant="tonal"
-            class="me-3"
+            size="36"
+            color="rgba(255, 255, 255, 0.2)"
+            class="ms-3 me-2"
           >
-            <VIcon 
-              icon="tabler-help-circle" 
+            <VIcon
+              icon="tabler-help-circle"
               size="24"
+              color="white"
             />
           </VAvatar>
           <div class="flex-grow-1">
-            <div class="text-h5 font-weight-bold text-primary">
+            <div class="text-h5 font-weight-bold" style="color: white !important;">
               {{ helpDialog.item?.question }}
             </div>
           </div>
@@ -536,9 +537,10 @@
             size="small"
             @click="helpDialog.show = false"
           >
-            <VIcon 
-              icon="tabler-x" 
+            <VIcon
+              icon="tabler-x"
               size="20"
+              color="white"
             />
           </VBtn>
         </VCardTitle>
@@ -1310,5 +1312,30 @@ definePage({
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Help link hover effect - full width chip style */
+.help-link-item {
+  border-radius: 8px !important;
+  transition: background-color 0.2s ease;
+  min-height: 36px !important;
+  padding: 6px 12px !important;
+  margin: 0 !important;
+}
+
+.help-link-item .v-list-item__overlay {
+  border-radius: 8px !important;
+}
+
+.help-link-item .v-list-item__content {
+  padding: 0 !important;
+}
+
+.help-link-item:hover {
+  background-color: rgba(var(--v-theme-primary), 0.08) !important;
+}
+
+.help-link-item:hover .v-list-item__overlay {
+  opacity: 0 !important;
 }
 </style>
