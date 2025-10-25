@@ -3,7 +3,7 @@
     <div class="login-content">
       <!-- FluxCloud-style Logo -->
       <div class="logo-container">
-        <Logo :icon-only="true" :icon-size="96" />
+        <Logo icon-only :icon-size="96" />
       </div>
 
       <!-- Main Login Card -->

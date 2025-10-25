@@ -466,8 +466,8 @@
                       <template v-if="preset.flux === '...'">...</template>
                       <template v-else>
                         {{ typeof preset.flux === 'number'
-                            ? preset.flux.toFixed(2)
-                            : preset.flux
+                          ? preset.flux.toFixed(2)
+                          : preset.flux
                         }} FLUX
                       </template>
                     </div>

@@ -228,8 +228,10 @@ const adjustedExpiryBlockHeight = computed(() => {
   if (props.app.height < FORK_BLOCK_HEIGHT && originalExpirationHeight > FORK_BLOCK_HEIGHT) {
     // Calculate blocks that were supposed to live after fork block
     const blocksAfterFork = originalExpirationHeight - FORK_BLOCK_HEIGHT
+
     // Multiply by 4 to account for 4x faster chain
     const adjustedBlocksAfterFork = blocksAfterFork * 4
+
     // New expiration = fork block + adjusted blocks
     const adjustedExpiration = FORK_BLOCK_HEIGHT + adjustedBlocksAfterFork
 

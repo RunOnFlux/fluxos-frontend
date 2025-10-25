@@ -53,7 +53,7 @@ const fluxLogo = computed(() => theme.value === 'dark' ? fluxCloudLogoLight : fl
 // Customizer ref to open from navbar
 const customizerRef = ref(null)
 
-const openCustomizer = (event) => {
+const openCustomizer = event => {
   if (customizerRef.value && customizerRef.value.openNavDrawer) {
     customizerRef.value.openNavDrawer(event)
   }

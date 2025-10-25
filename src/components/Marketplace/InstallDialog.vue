@@ -1500,6 +1500,7 @@ const deployedAppName = computed(() => {
   if (deploymentTimestamp.value) {
     return `${props.app.name}${deploymentTimestamp.value}`
   }
+  
   return props.app.name
 })
 

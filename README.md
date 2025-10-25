@@ -6,7 +6,7 @@ Flux Gravity is available on domains, load balancing the entire Flux network:
 
 [Flux Home](https://home.runonflux.io)
 
-[API Documentation](https://docs.runonflux.io)
+[API Documentation](https://docs.runonflux.com)
 
 [Source Code Documentation](https://source.runonflux.io)
 
@@ -33,7 +33,7 @@ This is the **frontend-only** repository. For the backend API, see the main [Flu
 - **Axios** - HTTP client
 - **Firebase** - Authentication and real-time features
 - **Monaco Editor** - Code editor integration
-- **Web3 Integration** - MetaMask SDK, WalletConnect for blockchain interactions
+- **Web3 Integration** - MetaMask SDK, Reown AppKit (WalletConnect) for blockchain interactions
 
 ## Key Features
 
@@ -154,12 +154,11 @@ This project uses several tools to manage dependencies securely:
 Current security status:
 - ✅ All critical and high severity vulnerabilities patched
 - ✅ Moderate vulnerabilities (dompurify) fixed with automated scripts
-- ⚠️ Low severity vulnerabilities in deprecated @walletconnect packages (no fix available)
+- ✅ Migrated to Reown AppKit (WalletConnect successor)
 
 ### Patches Applied
 
 - `monaco-editor` - dompurify vulnerability fix
-- `vue3-perfect-scrollbar` - dependency patches
 
 Patches are automatically applied during `npm install`.
 
@@ -221,7 +220,7 @@ This application is open source and distributed under the **GNU AGPLv3** license
 ## Links
 
 - [Flux Website](https://runonflux.io)
-- [Flux Documentation](https://docs.runonflux.io)
+- [Flux Documentation](https://docs.runonflux.com)
 - [Flux Discord](https://discord.gg/runonflux)
 - [Flux GitHub](https://github.com/runonflux)
 - [Backend Repository](https://github.com/runonflux/flux)
@@ -231,7 +230,7 @@ This application is open source and distributed under the **GNU AGPLv3** license
 For support:
 - Join our [Discord](https://discord.gg/runonflux)
 - Open an issue on [GitHub](https://github.com/runonflux/fluxos-frontend/issues)
-- Visit [Flux Documentation](https://docs.runonflux.io)
+- Visit [Flux Documentation](https://docs.runonflux.com)
 
 ---
 

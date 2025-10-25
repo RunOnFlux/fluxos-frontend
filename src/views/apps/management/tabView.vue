@@ -445,7 +445,7 @@
                     :app="item"
                     :active-apps-tab="activeAppsTab"
                     :is-marketplace="isMarketplace"
-                    :show-general-section="true"
+                    show-general-section
                     :get-new-expire-label="labelForExpire(item.expire, item.height)"
                     class="mt-4"
                   />

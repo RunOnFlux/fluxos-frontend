@@ -27,6 +27,7 @@ class MemoryMonitor {
   start(options = {}) {
     if (this.isMonitoring) {
       console.warn('[MemoryMonitor] Already monitoring')
+      
       return
     }
 
@@ -34,6 +35,7 @@ class MemoryMonitor {
     if (!performance.memory) {
       console.warn('[MemoryMonitor] Performance Memory API not available in this browser')
       console.info('[MemoryMonitor] Available in Chrome/Edge with --enable-precise-memory-info flag')
+      
       return
     }
 
@@ -199,6 +201,7 @@ class MemoryMonitor {
     if (!performance.memory) return null
 
     const memory = performance.memory
+    
     return {
       timestamp: Date.now(),
       used: memory.usedJSHeapSize / 1048576,

@@ -228,6 +228,7 @@ function connectTerminal(name) {
 
   if (props.appSpec.version >= 4) {
     const found = props.appSpec.compose?.some(c => c.name === selectedApp.value)
+
     // console.log('🔍 V4+ spec - Container found in compose:', found)
     if (!found) {
       showToast('danger', t('core.terminal.errors.selectContainer'))
@@ -489,7 +490,7 @@ function connectTerminal(name) {
     terminal.write(data)
   })
 
-  socket.on('disconnect', (reason) => {
+  socket.on('disconnect', reason => {
     console.warn('🔌 Socket disconnect event, reason:', reason)
     if (!skipToast) showToast('warning', t('core.terminal.warnings.disconnected'))
     disconnectTerminal()
@@ -521,6 +522,7 @@ function disconnectTerminal() {
   resizeHandler = null
   isVisible.value = false
   isConnecting.value = false
+
   // console.log('✅ Terminal disconnected and cleaned up')
 }
 

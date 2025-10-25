@@ -67,7 +67,7 @@ const props = defineProps({
   alertType: {
     type: String,
     default: "info",
-    validator: (value) => ['info', 'warning', 'error', 'success'].includes(value),
+    validator: value => ['info', 'warning', 'error', 'success'].includes(value),
   },
 })
 

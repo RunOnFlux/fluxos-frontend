@@ -191,13 +191,13 @@ const toggleVisibility = () => {
   window.dispatchEvent(new CustomEvent('statusbar-toggle', {
     detail: {
       hidden: isHidden.value,
-      hasError: hasError
-    }
+      hasError: hasError,
+    },
   }))
 }
 
 // Listen for toggle from navbar
-const handleStatusBarToggle = (event) => {
+const handleStatusBarToggle = event => {
   isHidden.value = event.detail.hidden
 }
 
@@ -267,14 +267,14 @@ watch(
 // Notify navbar when error status changes
 watch(
   () => backendVersionError.value || getNodeStatusResponse.class === 'error',
-  (hasError) => {
+  hasError => {
     window.dispatchEvent(new CustomEvent('statusbar-toggle', {
       detail: {
         hidden: isHidden.value,
-        hasError: hasError
-      }
+        hasError: hasError,
+      },
     }))
-  }
+  },
 )
 
 const fetchFluxVersion = async () => {

@@ -177,6 +177,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/', 'dist/', '*.d.ts', 'vendor/', 'vite.config.js', 'eslint.config.js','*auto-imports.d.ts'],
+    ignores: ['node_modules/', 'dist/', '*.d.ts', 'vendor/', 'vite.config.js', 'eslint.config.js','*auto-imports.d.ts', '.backups/'],
   },
 ]

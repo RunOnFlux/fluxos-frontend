@@ -233,6 +233,7 @@ const statusColor = computed(() => {
   const ratio = memoryData.value.usageRatio
   if (ratio >= 0.9) return 'error'
   if (ratio >= 0.75) return 'warning'
+  
   return 'success'
 })
 
@@ -241,6 +242,7 @@ const alertType = computed(() => {
   const ratio = memoryData.value.usageRatio
   if (ratio >= 0.9) return 'error'
   if (ratio >= 0.75) return 'warning'
+  
   return 'success'
 })
 
@@ -249,11 +251,13 @@ const statusMessage = computed(() => {
   const ratio = memoryData.value.usageRatio
   if (ratio >= 0.9) return t('memoryMonitor.statusHigh')
   if (ratio >= 0.75) return t('memoryMonitor.statusWarning')
+  
   return t('memoryMonitor.statusNormal')
 })
 
 const showBadge = computed(() => {
   if (!memoryData.value) return false
+  
   return memoryData.value.usageRatio >= 0.75
 })
 
@@ -262,6 +266,7 @@ const alertIcon = computed(() => {
   const ratio = memoryData.value.usageRatio
   if (ratio >= 0.9) return 'mdi-alert-circle'
   if (ratio >= 0.75) return 'mdi-alert'
+  
   return 'mdi-check-circle'
 })
 
@@ -303,7 +308,7 @@ const stopMonitoring = () => {
 }
 
 // Watch dialog state to start/stop monitoring
-watch(dialog, (isOpen) => {
+watch(dialog, isOpen => {
   if (isOpen) {
     startMonitoring()
   } else {

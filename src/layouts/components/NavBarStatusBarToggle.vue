@@ -25,6 +25,7 @@ const badgeColor = computed(() => {
   if (hasError.value) {
     return 'error'
   }
+  
   return 'success'
 })
 
@@ -40,7 +41,7 @@ const toggleVisibility = () => {
 }
 
 // Listen for changes from StatusBar component
-const handleStatusBarToggle = (event) => {
+const handleStatusBarToggle = event => {
   isHidden.value = event.detail.hidden
   if (event.detail.hasError !== undefined) {
     hasError.value = event.detail.hasError

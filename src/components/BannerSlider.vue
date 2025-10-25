@@ -53,6 +53,7 @@ const puzzlePieces = computed(() => {
   if (width <= 768) return 36      // 6x6 for mobile/tablet portrait
   if (width <= 1024) return 49     // 7x7 for tablet landscape
   if (width <= 1440) return 64     // 8x8 for desktop
+  
   return 81                        // 9x9 for large/ultra-wide screens
 })
 
@@ -64,6 +65,7 @@ const gridSize = computed(() => {
   if (width <= 768) return 6
   if (width <= 1024) return 7
   if (width <= 1440) return 8
+  
   return 9
 })
 
