@@ -8,6 +8,7 @@ import Footer from "@/layouts/components/Footer.vue"
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue"
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
+import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
 import NavBarI18n from "@core/components/I18n.vue"
 import LoginModal from "@/@core/components/LoginModal.vue"
 import { HorizontalNavLayout } from "@layouts"
@@ -61,6 +62,7 @@ const handleLoginSuccess = () => {
 
       <VDivider vertical class="navbar-divider" />
       <BackendSelector />
+      <FluxAIToggler class="ml-2 mr-2" />
       <VSpacer />
 
       <IconBtn
@@ -80,7 +82,7 @@ const handleLoginSuccess = () => {
 
       <NavbarThemeSwitcher />
       <!-- <NavbarShortcuts /> -->
-      <NavBarNotifications class="mr-3" />
+      <NavBarNotifications v-show="privilege === 'admin' || privilege === 'fluxteam'" class="mr-3" />
       <UserProfile />
     </template>
 

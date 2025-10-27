@@ -1498,6 +1498,11 @@
         }
       }
     },
+    "fluxAIToggler": {
+      "askFluxAI": "Zapytaj FluxAI",
+      "tooltip": "Uzyskaj natychmiastowe odpowiedzi na pytania dotyczące produktów Flux, wdrażania i zarządzania aplikacjami",
+      "disclaimer": "Uzyskaj natychmiastowe odpowiedzi na pytania dotyczące produktów Flux, wdrażania i zarządzania aplikacjami. Zasilane przez AI wytrenowane na oficjalnej dokumentacji, białych księgach i zasobach wsparcia."
+    },
     "checkoutContent": {
       "loadingPlanDetails": "Ładowanie szczegółów planu...",
       "unableToLoadPlan": "Nie można załadować szczegółów planu",

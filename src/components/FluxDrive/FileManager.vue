@@ -149,10 +149,10 @@
             <div class="view-toggle-modern">
               <VBtn
                 :variant="viewType === 'list' ? 'flat' : 'text'"
-                :color="viewType === 'list' ? 'primary' : 'default'"
-                size="small"
-                height="32"
-                width="32"
+                :color="viewType === 'list' ? 'primary' : undefined"
+                size="x-small"
+                height="24"
+                width="24"
                 class="view-toggle-btn"
                 @click="viewType = 'list'"
               >
@@ -165,10 +165,10 @@
 
               <VBtn
                 :variant="viewType === 'grid' ? 'flat' : 'text'"
-                :color="viewType === 'grid' ? 'primary' : 'default'"
-                size="small"
-                height="32"
-                width="32"
+                :color="viewType === 'grid' ? 'primary' : undefined"
+                size="x-small"
+                height="24"
+                width="24"
                 class="view-toggle-btn"
                 @click="viewType = 'grid'"
               >
@@ -183,7 +183,7 @@
             <!-- Action Buttons - Disabled when subscription expired -->
             <VBtn
               color="primary"
-              variant="tonal"
+              variant="flat"
               size="small"
               height="32"
               prepend-icon="mdi-folder-plus"
@@ -4491,5 +4491,91 @@ const handleUpgradePlan = planId => {
 .context-menu-btn:focus,
 .context-menu-btn:active {
   opacity: 1 !important;
+}
+
+/* View toggle button theme-aware styling */
+.view-toggle-modern {
+  display: inline-flex !important;
+  gap: 8px !important;
+  padding: 4px 8px !important;
+  border-radius: 8px !important;
+  align-items: center !important;
+  height: 32px !important;
+}
+
+.v-theme--dark .view-toggle-modern {
+  background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.v-theme--light .view-toggle-modern {
+  background: rgba(0, 0, 0, 0.06) !important;
+}
+
+.view-toggle-btn {
+  min-height: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  width: 24px !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  flex-shrink: 0 !important;
+}
+
+.view-toggle-btn.v-btn--variant-flat,
+.view-toggle-btn.v-btn--variant-text {
+  min-height: 24px !important;
+  height: 24px !important;
+  min-width: 24px !important;
+  width: 24px !important;
+  padding: 0 !important;
+  align-self: center !important;
+  position: relative !important;
+  top: 0 !important;
+  transform: none !important;
+}
+
+.view-toggle-btn :deep(.v-btn__overlay),
+.view-toggle-btn :deep(.v-btn__underlay) {
+  border-radius: 6px !important;
+  top: 0 !important;
+  left: 0 !important;
+}
+
+.view-toggle-btn :deep(.v-btn__content) {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 24px !important;
+  width: 24px !important;
+  line-height: 24px !important;
+  position: relative !important;
+  top: 0 !important;
+}
+
+.view-toggle-btn :deep(.v-icon) {
+  margin: 0 !important;
+  line-height: 1 !important;
+  position: relative !important;
+  top: 0 !important;
+}
+
+.view-toggle-btn.v-btn--variant-text {
+  color: rgba(var(--v-theme-on-surface), 0.87) !important;
+}
+
+.v-theme--light .view-toggle-btn.v-btn--variant-text {
+  color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.v-theme--dark .view-toggle-btn.v-btn--variant-text {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.view-toggle-btn.v-btn--variant-text:hover {
+  background: rgba(var(--v-theme-on-surface), 0.08) !important;
 }
 </style>

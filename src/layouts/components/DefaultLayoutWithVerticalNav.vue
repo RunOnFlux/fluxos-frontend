@@ -8,6 +8,7 @@ import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
 import NavBarMemoryMonitor from "@/layouts/components/NavBarMemoryMonitor.vue"
 import NavBarStatusBarToggle from "@/layouts/components/NavBarStatusBarToggle.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
+import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
 import NavBarI18n from "@core/components/I18n.vue"
 import { VerticalNavLayout } from "@layouts"
 import { useSnackbar } from '@/composables/useSnackbar'
@@ -158,6 +159,7 @@ const handleLoginSuccess = () => {
         <div class="d-none d-sm-flex">
           <BackendSelector />
         </div>
+        <FluxAIToggler class="ml-2 mr-2" />
         <VSpacer />
         <IconBtn
           class="d-none d-lg-block"
@@ -174,8 +176,8 @@ const handleLoginSuccess = () => {
         />
         <NavbarThemeSwitcher />
         <NavBarMemoryMonitor />
-        <NavBarStatusBarToggle />
-        <NavBarNotifications class="mr-3" />
+        <NavBarStatusBarToggle :class="{ 'mr-3': privilege !== 'none' && privilege !== 'admin' && privilege !== 'fluxteam' }" />
+        <NavBarNotifications v-show="privilege === 'admin' || privilege === 'fluxteam'" class="mr-3" />
         <UserProfile />
       </div>
     </template>
