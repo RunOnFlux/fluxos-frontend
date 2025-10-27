@@ -870,8 +870,11 @@ function getServiceUsage(serviceName, spec) {
 function labelForExpire(expire, height) {
   if (!height) return t('pages.apps.table.applicationExpired')
   if (props.currentBlockHeight === -1) return t('pages.apps.table.cannotCalculateExpiration')
-  const expires = expire || 22000
+
+  // Fork-aware default: if app was registered after fork, use 88000; otherwise 22000
   const forkBlock = 2020000
+  const defaultExpire = height >= forkBlock ? 88000 : 22000
+  const expires = expire || defaultExpire
   let effectiveExpiry = height + expires
 
   // If app was registered before the fork (block 2020000) and we're currently past the fork,

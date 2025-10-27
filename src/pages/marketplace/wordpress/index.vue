@@ -881,7 +881,7 @@ const wordpressApp = computed(() => {
     instances: plan.instances || 3,
     geolocation: formData.value.deploymentLocation ? [`ac${formData.value.deploymentLocation}`] : [],
     tiered: false,
-    expire: 22000 * formData.value.paymentDuration, // Expire based on subscription months
+    expire: 88000 * formData.value.paymentDuration, // Expire based on subscription months (post-fork: 88000 blocks/month)
     contacts: formData.value.email ? [formData.value.email] : [],
     price: plan.usd || 0, // Monthly plan price in USD
     subscriptionMonths: formData.value.paymentDuration, // Add subscription months for InstallDialog
@@ -991,7 +991,7 @@ const updatePrice = async () => {
         tiered: false,
       }],
       instances: plan.instances,
-      expire: 22000,
+      expire: 88000, // Post-fork: 88000 blocks = 1 month
       contacts: [''],
       geolocation: formData.value.deploymentLocation ? [`ac${formData.value.deploymentLocation}`] : [''],
       nodes: [],

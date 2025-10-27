@@ -144,7 +144,7 @@ const newAppSpec = ref({
   enterprise: '', // Empty for public apps, encrypted content for private apps
   nodes: [], // Empty for public apps, node IPs for v7 private apps
   geolocation: [],
-  expire: 22000, // Default expiration
+  expire: 88000, // Default expiration (post-fork value)
   compose: [
     {
       name: '',

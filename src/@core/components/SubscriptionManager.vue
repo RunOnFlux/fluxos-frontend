@@ -3371,13 +3371,14 @@ function convertToLatestSpec() {
 // PON (proof of nodes) Fork configuration - block height where chain speed increases 4x
 const FORK_BLOCK_HEIGHT = 2020000
 
+// Renewal options (post-fork values, since fork already happened at block 2,020,000)
 const renewalOptions = ref([
-  { value: 5000, label: t('core.subscriptionManager.renewal1Week') },
-  { value: 11000, label: t('core.subscriptionManager.renewal2Weeks') },
-  { value: 22000, label: t('core.subscriptionManager.renewal1Month') },
-  { value: 66000, label: t('core.subscriptionManager.renewal3Months') },
-  { value: 132000, label: t('core.subscriptionManager.renewal6Months') },
-  { value: 264000, label: t('core.subscriptionManager.renewal1Year') },
+  { value: 20000, label: t('core.subscriptionManager.renewal1Week') },
+  { value: 44000, label: t('core.subscriptionManager.renewal2Weeks') },
+  { value: 88000, label: t('core.subscriptionManager.renewal1Month') },
+  { value: 264000, label: t('core.subscriptionManager.renewal3Months') },
+  { value: 528000, label: t('core.subscriptionManager.renewal6Months') },
+  { value: 1056000, label: t('core.subscriptionManager.renewal1Year') },
 
 ])
 
@@ -3529,7 +3530,9 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
     }
 
     // Set up renewal settings
-    const expire = newSpec.expire ?? 22000
+    // Fork-aware default: if app was registered after fork, use 88000; otherwise 22000
+    const defaultExpire = (newSpec.height && newSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
+    const expire = newSpec.expire ?? defaultExpire
     const foundIndex = renewalOptions.value.findIndex(opt => opt.value === expire)
     appDetails.value.renewalIndex = foundIndex !== -1 ? foundIndex : 2
     
@@ -3583,9 +3586,11 @@ onMounted(() => {
     })
   }
   
-  // Set default expire if not set
+  // Set default expire if not set (fork-aware)
   if (props.appSpec && props.appSpec.expire === undefined) {
-    props.appSpec.expire = 22000
+    // Use 88000 for apps registered after fork, otherwise 22000
+    const defaultExpire = (props.appSpec.height && props.appSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
+    props.appSpec.expire = defaultExpire
   }
 
   // Lock name only when updating existing app, not for new apps
@@ -3660,7 +3665,9 @@ const originalExpireSnapshot = ref(null)
 const originalAppSpecSnapshot = ref(null)
 
 onMounted(() => {
-  originalExpireSnapshot.value = props.appSpec?.expire ?? 22000
+  // Fork-aware default for original expire snapshot
+  const defaultExpire = (props.appSpec?.height && props.appSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
+  originalExpireSnapshot.value = props.appSpec?.expire ?? defaultExpire
 
   // Store original app spec for comparison (excluding expire field)
   if (!props.newApp && props.appSpec) {
@@ -5165,8 +5172,8 @@ const expiryLabel = computed(() => {
       // V6+: use selected renewal period
       renewalBlocks = renewalOptions.value[appDetails.value.renewalIndex]?.value ?? 0
     } else {
-      // < V6: fixed 1 month = 22000 blocks
-      renewalBlocks = 22000
+      // < V6: fixed 1 month = 88000 blocks (post-fork value)
+      renewalBlocks = 88000
     }
 
     // Convert blocks to human-readable time (fork-aware)
@@ -5188,14 +5195,16 @@ const expiryLabel = computed(() => {
   // For existing apps, use the original expire value (unless canceling or renewal enabled)
   let expire
   if (props.newApp) {
-    expire = renewalOptions.value[appDetails.value.renewalIndex]?.value ?? 22000
+    expire = renewalOptions.value[appDetails.value.renewalIndex]?.value ?? 88000
   } else {
     // For cancel mode or renewal enabled, use the actual expire, not the snapshot
     if (managementAction.value === 'cancel' || renewalEnabled.value) {
       expire = props.appSpec?.expire ?? 100
     } else {
       // Use original expire snapshot for existing apps when renewal is disabled
-      expire = originalExpireSnapshot.value ?? props.appSpec?.expire ?? 22000
+      // Fork-aware fallback: check app registration height
+      const defaultExpire = (props.appSpec?.height && props.appSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
+      expire = originalExpireSnapshot.value ?? props.appSpec?.expire ?? defaultExpire
     }
   }
 
@@ -5681,9 +5690,11 @@ async function verifyAppSpec() {
         console.log('Marketplace app with fixed price detected:', marketPlaceApp.name, 'Base Price (1 month):', marketPlaceApp.priceUSD)
 
         // Calculate the number of months based on expire blocks
-        // 22000 blocks = 1 month (base period)
-        const expireBlocks = appSpecTemp.expire || 22000
-        const monthMultiplier = expireBlocks / 22000
+        // Post-fork: 88000 blocks = 1 month (base period)
+        // Pre-fork: 22000 blocks = 1 month (base period)
+        const blocksPerMonth = 88000 // After fork, use post-fork baseline
+        const expireBlocks = appSpecTemp.expire || blocksPerMonth
+        const monthMultiplier = expireBlocks / blocksPerMonth
         const adjustedPrice = marketPlaceApp.priceUSD * monthMultiplier
 
         console.log('Expire blocks:', expireBlocks, 'Month multiplier:', monthMultiplier, 'Adjusted price:', adjustedPrice)
@@ -5922,9 +5933,10 @@ async function priceForAppSpec() {
     // Add marketplace fixed price if available, multiplied by renewal period
     if (marketPlaceApp && marketPlaceApp.priceUSD) {
       // Calculate the number of months based on expire blocks
-      // 22000 blocks = 1 month (base period)
-      const expireBlocks = appSpecForPrice.expire || 22000
-      const monthMultiplier = expireBlocks / 22000
+      // Post-fork: 88000 blocks = 1 month (base period)
+      const blocksPerMonth = 88000 // After fork, use post-fork baseline
+      const expireBlocks = appSpecForPrice.expire || blocksPerMonth
+      const monthMultiplier = expireBlocks / blocksPerMonth
       const adjustedPrice = marketPlaceApp.priceUSD * monthMultiplier
 
       console.log('Adding marketplace price - Base (1 month):', marketPlaceApp.priceUSD)
@@ -5992,7 +6004,9 @@ async function fetchBlockHeight() {
       // Adjust renewal options based on block height
       adjustRenewalOptionsForBlockHeight()
 
-      const expireBlocks = props.appSpec?.expire ?? 22000
+      // Fork-aware default expire
+      const defaultExpire = (props.appSpec?.height && props.appSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
+      const expireBlocks = props.appSpec?.expire ?? defaultExpire
 
       // For new apps or renewal, use current block height
       // For updates without renewal, use the app's original height
