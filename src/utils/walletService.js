@@ -298,7 +298,7 @@ export async function openWalletConnect() {
  */
 export async function signWithWalletConnect(message) {
   console.log('[WalletConnect] 🔐 Starting sign request...')
-  console.log('[WalletConnect] Message to sign:', message)
+  console.log('[WalletConnect] Message to sign:', message ? message.substring(0, 20) + '...' : 'empty')
 
   try {
     // Check if we have a valid session or need fresh connection

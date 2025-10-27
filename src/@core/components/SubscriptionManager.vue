@@ -6466,7 +6466,12 @@ async function initStripePay(hash = null, name = null, price = null, description
     }
     
     const auth = qs.parse(zelidauth)
-    console.log('Stripe - Parsed auth:', auth)
+    console.log('Stripe - Parsed auth:', {
+      hasZelid: !!auth.zelid,
+      zelid: auth.zelid ? auth.zelid.substring(0, 8) + '...' : 'none',
+      hasSignature: !!auth.signature,
+      hasLoginPhrase: !!auth.loginPhrase,
+    })
     
     if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
       showToast('error', 'Invalid authentication data - please login again')
@@ -6655,7 +6660,12 @@ async function initPaypalPay(hash = null, name = null, price = null, description
     }
     
     const auth = qs.parse(zelidauth)
-    console.log('PayPal - Parsed auth:', auth)
+    console.log('PayPal - Parsed auth:', {
+      hasZelid: !!auth.zelid,
+      zelid: auth.zelid ? auth.zelid.substring(0, 8) + '...' : 'none',
+      hasSignature: !!auth.signature,
+      hasLoginPhrase: !!auth.loginPhrase,
+    })
     
     if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
       showToast('error', 'Invalid authentication data - please login again')

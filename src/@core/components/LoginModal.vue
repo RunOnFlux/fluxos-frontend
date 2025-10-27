@@ -815,14 +815,14 @@ const initWalletConnect = async () => {
     console.log('[Login] Starting WalletConnect login flow...')
 
     await getZelIdLoginPhrase()
-    console.log('[Login] Login phrase obtained:', loginPhrase.value)
+    console.log('[Login] Login phrase obtained:', loginPhrase.value ? loginPhrase.value.substring(0, 20) + '...' : 'none')
 
     console.log('[Login] Opening WalletConnect...')
     const address = await openWalletConnect()
     console.log('[Login] Connected with address:', address)
     appKitAccount.value = { address }
 
-    console.log('[Login] Requesting signature for message:', loginPhrase.value)
+    console.log('[Login] Requesting signature for message:', loginPhrase.value ? loginPhrase.value.substring(0, 20) + '...' : 'none')
     try {
       var signature = await signWithWalletConnect(loginPhrase.value)
       console.log('[Login] Signature received:', signature?.substring(0, 20) + '...')

@@ -9,6 +9,26 @@ import { useI18n } from 'vue-i18n'
 const lastApiCall = ref(0)
 const API_RATE_LIMIT = 1000 // 1 second between API calls
 
+// Helper function to sanitize auth data for logging
+const sanitizeAuthData = (data) => {
+  if (!data || typeof data !== 'object') return data
+
+  const sanitized = { ...data }
+
+  // Hide sensitive fields
+  if (sanitized.zelid) {
+    sanitized.zelid = sanitized.zelid.substring(0, 8) + '...'
+  }
+  if (sanitized.signature) {
+    sanitized.signature = '***hidden***'
+  }
+  if (sanitized.loginPhrase) {
+    sanitized.loginPhrase = '***hidden***'
+  }
+
+  return sanitized
+}
+
 // Shared state across all composable instances
 const sharedState = {
   files: ref([]),
@@ -17,6 +37,8 @@ const sharedState = {
   loadingFiles: ref(false), // Track files loading state
   hasActiveSubscription: ref(false),
   subscriptionChecked: ref(false), // Track if we've checked subscription status
+  subscriptionPeriodEnd: ref(null), // Subscription expiration timestamp
+  paymentGateway: ref(''), // Payment gateway used for subscription ('fluxpay' or 'cryptocom')
   storageInfoFetched: ref(false), // Track if storage info has been fetched
   filesLoaded: ref(false), // Track if files have been loaded
   usedStorage: ref(0),
@@ -81,6 +103,7 @@ export function useFluxDrive() {
 
   // Use shared subscription status
   const hasActiveSubscription = sharedState.hasActiveSubscription
+  const subscriptionPeriodEnd = sharedState.subscriptionPeriodEnd
 
   // Current plan detection based on storage capacity
   const currentPlan = computed(() => {
@@ -110,19 +133,46 @@ export function useFluxDrive() {
       return 'upgrade' // Always show as upgrade option
     }
 
-    if (!hasActiveSubscription.value || !currentPlan.value) {
-      return 'signup' // No subscription
+    // Check if user is truly new (never had subscription)
+    const isNewUser = !hasActiveSubscription.value &&
+                      subscriptionPeriodEnd.value === null &&
+                      usedStorage.value === 0
+
+    // For new users, all plans are signup options
+    if (isNewUser) {
+      return 'signup'
     }
 
+    // Determine user's plan based on storage capacity (works for both active and expired)
     const currentStorageGB = Math.round(totalStorage.value / (1024 ** 3))
     const planStorageGB = getPlanStorageGB(planId)
 
-    if (planId === currentPlan.value) {
-      return 'current' // Same plan - show Renew
+    // Detect current plan from storage, even if subscription is expired
+    const detectedPlan = currentStorageGB <= 10 ? 'starter' :
+                         currentStorageGB <= 50 ? 'standard' :
+                         currentStorageGB <= 100 ? 'pro' : 'enterprise'
+
+    const userPlan = currentPlan.value || detectedPlan
+
+    if (planId === userPlan) {
+      // Same plan - but check if subscription is active or expired
+      if (hasActiveSubscription.value) {
+        return 'current' // Active subscription - show Current (no action needed)
+      } else {
+        return 'renew' // Expired subscription - show Renew button
+      }
     } else if (planStorageGB > currentStorageGB) {
       return 'upgrade' // Higher tier - show Upgrade
     } else {
-      return 'downgrade' // Lower tier - show Downgrade
+      // Lower tier - check if user's files fit in the smaller plan
+      const usedStorageGB = usedStorage.value / (1024 ** 3)
+
+      // If user has more files than the downgrade plan allows, it's blocked
+      if (usedStorageGB > planStorageGB) {
+        return 'downgrade-blocked' // Files exceed plan capacity
+      }
+
+      return 'downgrade' // Lower tier - can downgrade
     }
   }
 
@@ -237,8 +287,127 @@ export function useFluxDrive() {
 
       // Check if user has active subscription based on storage response
       if (result.active === true) {
-        console.log('✅ Active subscription detected')
+        console.log('✅ Active subscription detected (from /storage: active: true)')
+
+        // Declare readResult outside try block so it's accessible later
+        let readResult = null
+
+        // Even if storage says active, we need to check /read for cancellation errors
+        // because /storage still returns active: true after cancellation
+        // Use size: '0' to minimize data transfer and avoid rate limiting
+        try {
+          const readResponse = await fetch(`${bridgeURL}/api/v1/ipfs/read`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              zelid: authData.zelid || zelid,
+              signature: authData.signature || '',
+              loginPhrase: authData.loginPhrase,
+              page: '1',
+              size: '0', // Request 0 files to just check subscription status
+            }),
+          })
+
+          readResult = await readResponse.json()
+          console.log('🔍 IPFS read response for subscription verification:', readResult)
+
+          // Check if subscription is actually canceled/expired
+          const isSubscriptionInactive = readResult.error && (
+            readResult.error.indexOf("Subscription Expired") > -1 ||
+            readResult.error.indexOf("Subscription Canceled") > -1
+          )
+
+          if (isSubscriptionInactive) {
+            console.log('⚠️ Subscription canceled/expired detected in /read - overriding /storage result')
+            hasActiveSubscription.value = false
+
+            // Capture period_end from the response
+            if (readResult.period_end) {
+              subscriptionPeriodEnd.value = readResult.period_end
+              console.log('📅 Subscription period end captured:', readResult.period_end)
+            }
+
+            // IMPORTANT: Update storage capacity even when expired
+            // This ensures the UI shows the correct plan capacity for renewal
+            if (result.capacity !== undefined) {
+              totalStorage.value = result.capacity
+              console.log('📊 Storage capacity updated from expired subscription:', result.capacity)
+            } else if (result.capacityGB !== undefined) {
+              totalStorage.value = result.capacityGB * (1024 ** 3)
+              console.log('📊 Storage capacity updated from expired subscription:', result.capacityGB, 'GB')
+            }
+
+            // Try to get payment gateway from subscription API
+            try {
+              const subResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                  action: 'READ',
+                  action_type: 'current',
+                  zelid: authData.zelid || zelid,
+                  signature: authData.signature || '',
+                  loginPhrase: authData.loginPhrase,
+                }),
+              })
+              const subResult = await subResponse.json()
+              if (subResult && subResult.gateway) {
+                sharedState.paymentGateway.value = subResult.gateway
+                console.log('💳 Payment gateway captured from subscription API:', subResult.gateway)
+                // Also store in localStorage for persistence
+                localStorage.setItem('fluxdrive_gateway', subResult.gateway)
+              }
+            } catch (subError) {
+              console.warn('⚠️ Could not fetch subscription gateway:', subError)
+            }
+
+            subscriptionChecked.value = true
+
+            // Ensure minimum 1.5s delay for loader animation visibility
+            const elapsed = Date.now() - startTime
+            const minDelay = 1500
+            if (elapsed < minDelay) {
+              await new Promise(resolve => setTimeout(resolve, minDelay - elapsed))
+            }
+
+            return false
+          }
+        } catch (readError) {
+          console.warn('⚠️ Could not verify subscription with /read endpoint:', readError)
+          // Continue with storage result if read check fails
+        }
+
+        // If we get here, subscription is truly active
         hasActiveSubscription.value = true
+
+        // Capture payment gateway from API or localStorage
+        if (result.gateway) {
+          sharedState.paymentGateway.value = result.gateway
+          console.log('💳 Payment gateway captured from API:', result.gateway)
+        } else if (readResult && readResult.gateway) {
+          sharedState.paymentGateway.value = readResult.gateway
+          console.log('💳 Payment gateway captured from read API:', readResult.gateway)
+        } else {
+          // Fallback to localStorage (set by CheckoutContent after successful payment)
+          const storedGateway = localStorage.getItem('fluxdrive_gateway')
+          if (storedGateway) {
+            sharedState.paymentGateway.value = storedGateway
+            console.log('💳 Payment gateway retrieved from localStorage:', storedGateway)
+          }
+        }
+
+        // Capture subscription period end if available
+        if (result.period_end) {
+          subscriptionPeriodEnd.value = result.period_end
+          console.log('📅 Subscription period end:', result.period_end)
+        } else if (result.periodEnd) {
+          subscriptionPeriodEnd.value = result.periodEnd
+          console.log('📅 Subscription period end:', result.periodEnd)
+        }
 
         // Update storage info if available (from storage endpoint)
         if (result.capacity !== undefined) {
@@ -272,7 +441,7 @@ export function useFluxDrive() {
         }
 
         subscriptionChecked.value = true
-        
+
         return true
       } else if (result.error || result.warning) {
         const errorMsg = result.error || result.warning
@@ -571,7 +740,7 @@ export function useFluxDrive() {
         }
 
         console.log(`🔗 API Request to: ${bridgeURL}/api/v1/ipfs/read`)
-        console.log(`📋 Request params:`, requestParams)
+        console.log(`📋 Request params:`, sanitizeAuthData(requestParams))
 
         const response = await fetch(`${bridgeURL}/api/v1/ipfs/read`, {
           method: 'POST',
@@ -781,7 +950,7 @@ export function useFluxDrive() {
         plan_name: planName,
       }
 
-      console.log('🔄 Renewing subscription:', requestBody)
+      console.log('🔄 Renewing subscription:', sanitizeAuthData(requestBody))
 
       const response = await fetch(`${bridgeURL}/api/v1/subscriptions.php`, {
         method: 'POST',
@@ -834,7 +1003,7 @@ export function useFluxDrive() {
         plan_name: planName,
       }
 
-      console.log('🔄 Upgrading subscription:', requestBody)
+      console.log('🔄 Upgrading subscription:', sanitizeAuthData(requestBody))
 
       const response = await fetch(`${bridgeURL}/api/v1/subscriptions.php`, {
         method: 'POST',
@@ -866,6 +1035,48 @@ export function useFluxDrive() {
       return result
     } catch (error) {
       console.error('❌ Subscription upgrade failed:', error)
+      throw error
+    }
+  }
+
+  const cancelSubscription = async () => {
+    try {
+      const authData = localStorage.getItem('zelidauth')
+      const parsedAuth = authData ?
+        (authData.includes('zelid=') ?
+          Object.fromEntries(new URLSearchParams(authData)) :
+          JSON.parse(authData)) : {}
+
+      const requestBody = {
+        action: 'CANCEL',
+        zelid: parsedAuth.zelid || getZelid(),
+        signature: parsedAuth.signature || '',
+        loginPhrase: parsedAuth.loginPhrase,
+      }
+
+      console.log('🚫 Canceling subscription:', sanitizeAuthData(requestBody))
+
+      const response = await fetch(`${bridgeURL}/api/v1/subscriptions.php`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(requestBody),
+      })
+
+      const result = await response.json()
+      console.log('📋 Subscription cancel response:', result)
+
+      if (result.error) {
+        console.error('❌ API returned error:', result.error)
+        throw new Error(result.error)
+      }
+
+      // Clear payment gateway from state and localStorage
+      sharedState.paymentGateway.value = ''
+      localStorage.removeItem('fluxdrive_gateway')
+
+      return result
+    } catch (error) {
+      console.error('❌ Subscription cancellation failed:', error)
       throw error
     }
   }
@@ -1009,7 +1220,7 @@ export function useFluxDrive() {
 
       const requestBody = new URLSearchParams(requestParams)
 
-      console.log('📂 Request body:', Object.fromEntries(requestBody))
+      console.log('📂 Request body:', sanitizeAuthData(Object.fromEntries(requestBody)))
 
       let apiUrl = `${bridgeURL}/api/v1/ipfs/read`
 
@@ -1025,18 +1236,43 @@ export function useFluxDrive() {
 
       console.log('🔧 API Response from', apiUrl, ':', result)
 
-      if (result.error) {
+      // Check for subscription expiration/cancellation error
+      console.log('🔍 Checking subscription status - result.error:', result.error)
+      const isSubscriptionInactive = result.error && (
+        result.error.indexOf("Subscription Expired") > -1 ||
+        result.error.indexOf("Subscription Canceled") > -1
+      )
+      console.log('🔍 isSubscriptionInactive:', isSubscriptionInactive)
+
+      if (isSubscriptionInactive) {
+        console.log('⚠️ Subscription expired/canceled detected in API response - updating subscription status')
+        hasActiveSubscription.value = false
+        subscriptionChecked.value = true
+
+        // Capture period_end from the response
+        if (result.period_end) {
+          subscriptionPeriodEnd.value = result.period_end
+          console.log('📅 Subscription period end captured:', result.period_end)
+        } else if (result.periodEnd) {
+          subscriptionPeriodEnd.value = result.periodEnd
+          console.log('📅 Subscription period end captured:', result.periodEnd)
+        }
+
+        console.log('📊 Updated values - hasActiveSubscription:', hasActiveSubscription.value, 'subscriptionChecked:', subscriptionChecked.value, 'periodEnd:', subscriptionPeriodEnd.value)
+        // Don't return - continue to show files if they exist
+      } else if (result.error) {
         if (result.error.indexOf("No active subscription.") > -1) {
           resultMessage.value = `<div class="alert alert-danger">${result.error}</div>`
-          
+          hasActiveSubscription.value = false
+
           return
         } else if (result.error.indexOf("Session expired") > -1) {
           resultMessage.value = `<div class="alert alert-danger">${result.error}</div>`
-          
+
           return
         } else {
           resultMessage.value = `<div class="alert alert-danger">${result.error}</div>`
-          
+
           return
         }
       }
@@ -1257,6 +1493,12 @@ export function useFluxDrive() {
       if (files.value.length > 0) {
         sharedState.filesLoaded.value = true
       }
+      console.log('✅ loadFiles completed - Final state:', {
+        loading: loading.value,
+        hasActiveSubscription: hasActiveSubscription.value,
+        subscriptionChecked: subscriptionChecked.value,
+        filesCount: files.value.length,
+      })
     }
   }
 
@@ -1833,7 +2075,12 @@ export function useFluxDrive() {
 
       console.log('🔍 FormData contents:')
       for (let [key, value] of formData.entries()) {
-        console.log(`   ${key}:`, typeof value === 'string' ? value : value.constructor.name)
+        // Hide sensitive auth fields
+        if (key === 'zelid' || key === 'signature' || key === 'loginPhrase') {
+          console.log(`   ${key}:`, '***hidden***')
+        } else {
+          console.log(`   ${key}:`, typeof value === 'string' ? value : value.constructor.name)
+        }
       }
 
       const uploadPromise = new Promise((resolve, reject) => {
@@ -1916,7 +2163,7 @@ export function useFluxDrive() {
         folder: folderPath || 'root',
         currentFolder: currentFolder.value,
         currentFolderUuid: sharedState.currentFolderUuid.value,
-        zelid: authData.zelid,
+        zelid: authData.zelid ? authData.zelid.substring(0, 8) + '...' : 'none',
       })
 
       // Upload file using XMLHttpRequest for progress tracking
@@ -2194,7 +2441,11 @@ export function useFluxDrive() {
           id: f.id,
           type: f.type,
         })),
-        authData: { ...authData, signature: '[HIDDEN]', loginPhrase: '[HIDDEN]' },
+        authData: {
+          zelid: authData.zelid ? authData.zelid.substring(0, 8) + '...' : 'none',
+          signature: '[HIDDEN]',
+          loginPhrase: '[HIDDEN]',
+        },
       })
 
       if (!authData.zelid || !authData.loginPhrase || !authData.signature) {
@@ -2243,7 +2494,7 @@ export function useFluxDrive() {
         body: new URLSearchParams(apiParams),
       })
 
-      console.log('📡 Create folder API call params:', apiParams)
+      console.log('📡 Create folder API call params:', sanitizeAuthData(apiParams))
 
       console.log('📡 Create folder response status:', response.status)
       const responseText = await response.text()
@@ -2299,7 +2550,7 @@ export function useFluxDrive() {
           console.log('🔄 No UUID available, using path:', currentFolder.value)
         }
 
-        console.log('🔄 Alternative params:', alternativeParams)
+        console.log('🔄 Alternative params:', sanitizeAuthData(alternativeParams))
 
         const altResponse = await fetch(`${bridgeURL}/api/v1/ipfs/createfolder`, {
           method: 'POST',
@@ -2335,7 +2586,7 @@ export function useFluxDrive() {
             currentFolder: folderPathOptions.withSlash,  // Try with slash this time
           }
 
-          console.log('🔄 Third attempt params:', thirdParams)
+          console.log('🔄 Third attempt params:', sanitizeAuthData(thirdParams))
 
           try {
             const thirdResponse = await fetch(`${bridgeURL}/api/v1/ipfs/createfolder`, {
@@ -2649,11 +2900,66 @@ export function useFluxDrive() {
     // Otherwise, user sees pricing plans to select from
   }
 
+  // Computed property for formatted subscription end date
+  const formattedSubscriptionEndDate = computed(() => {
+    if (!subscriptionPeriodEnd.value) return null
+
+    const date = new Date(subscriptionPeriodEnd.value * 1000) // Convert Unix timestamp to milliseconds
+    const options = { year: 'numeric', month: 'long', day: 'numeric' }
+
+    return date.toLocaleDateString(undefined, options)
+  })
+
+  // Computed property for formatted subscription end date with time (24h format)
+  const formattedSubscriptionEndDateTime = computed(() => {
+    if (!subscriptionPeriodEnd.value) return null
+
+    const date = new Date(subscriptionPeriodEnd.value * 1000) // Convert Unix timestamp to milliseconds
+    const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' }
+    const timeOptions = { hour: '2-digit', minute: '2-digit', hour12: false }
+
+    return date.toLocaleDateString(undefined, dateOptions) + ', ' + date.toLocaleTimeString(undefined, timeOptions)
+  })
+
+  // Reset function to clear all FluxDrive state (called on logout)
+  const resetFluxDriveState = () => {
+    console.log('🧹 Resetting FluxDrive state...')
+
+    // Reset all shared state to initial values
+    sharedState.files.value = []
+    sharedState.loading.value = false
+    sharedState.loadingStorage.value = false
+    sharedState.loadingFiles.value = false
+    sharedState.hasActiveSubscription.value = false
+    sharedState.subscriptionChecked.value = false
+    sharedState.subscriptionPeriodEnd.value = null
+    sharedState.paymentGateway.value = ''
+    sharedState.storageInfoFetched.value = false
+    sharedState.filesLoaded.value = false
+    sharedState.usedStorage.value = 0
+    sharedState.totalStorage.value = 10737418240 // 10 GB default
+    sharedState.currentFolder.value = '/'
+    sharedState.currentFolderUuid.value = ''
+    sharedState.folderHierarchy.value = []
+    sharedState.breadcrumbs.value = [{ title: 'Home', path: '/' }]
+    sharedState.errorState.value = {
+      hasError: false,
+      message: '',
+      type: 'error',
+      timestamp: null,
+      persistent: false,
+    }
+
+    console.log('✅ FluxDrive state reset complete')
+  }
+
   return {
     // State
     isLoggedIn,
     hasActiveSubscription,
     subscriptionChecked,
+    subscriptionPeriodEnd,
+    paymentGateway: sharedState.paymentGateway,
     loading,
     currentFolder,
     breadcrumbs,
@@ -2682,6 +2988,8 @@ export function useFluxDrive() {
 
     // Computed
     storagePercentage,
+    formattedSubscriptionEndDate,
+    formattedSubscriptionEndDateTime,
 
     // Methods
     getAlertType,
@@ -2730,6 +3038,10 @@ export function useFluxDrive() {
     // Subscription management
     renewSubscription,
     upgradeSubscription,
+    cancelSubscription,
+
+    // State management
+    resetFluxDriveState,
 
     // Config
     ipfsHost,

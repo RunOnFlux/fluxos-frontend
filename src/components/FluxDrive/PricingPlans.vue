@@ -50,11 +50,11 @@
             :class="[
               plan.popular ? 'pricing-card--popular' : 'pricing-card--standard',
               getPlanStatus(plan.id) === 'current' ? 'pricing-card--current' : '',
-              getPlanStatus(plan.id) === 'downgrade' ? 'pricing-card--downgrade' : ''
+              getPlanStatus(plan.id) === 'downgrade' || getPlanStatus(plan.id) === 'downgrade-blocked' ? 'pricing-card--downgrade' : ''
             ]"
             color="surface"
             variant="elevated"
-            :disabled="getPlanStatus(plan.id) === 'downgrade'"
+            :disabled="(getPlanStatus(plan.id) === 'downgrade' && hasActiveSubscription) || getPlanStatus(plan.id) === 'downgrade-blocked'"
           >
 
             <VCardText class="text-center pa-8 d-flex flex-column flex-grow-1">
@@ -135,7 +135,33 @@
               </div>
 
               <!-- Plan actions -->
+              <!-- Show Cancel button for current plan (only for Crypto.com subscriptions) -->
               <VBtn
+                v-if="getPlanStatus(plan.id) === 'current' && paymentGateway === 'cryptocom'"
+                block
+                color="error"
+                variant="outlined"
+                size="small"
+                class="pricing-btn mt-auto"
+                @click="$emit('cancel-subscription')"
+              >
+                {{ t('pages.fluxDrive.cancel') }}
+              </VBtn>
+              <!-- Show disabled Current Plan button for FluxPay users -->
+              <VBtn
+                v-else-if="getPlanStatus(plan.id) === 'current'"
+                block
+                color="success"
+                variant="flat"
+                size="small"
+                class="pricing-btn mt-auto"
+                disabled
+              >
+                {{ t('components.fluxDrive.pricingPlans.current') }}
+              </VBtn>
+              <!-- Show regular button for non-current plans -->
+              <VBtn
+                v-else
                 block
                 :color="getButtonConfig(plan).color"
                 :variant="getButtonConfig(plan).variant"
@@ -162,7 +188,7 @@ import { useI18n } from 'vue-i18n'
 import { useFluxDrive } from '@/composables/useFluxDrive'
 
 // Define emit with proper signature
-const emit = defineEmits(['select-plan'])
+const emit = defineEmits(['select-plan', 'selectPlan', 'cancel-subscription'])
 
 // i18n
 const { t } = useI18n()
@@ -178,6 +204,7 @@ const {
   hasActiveSubscription,
   currentPlan,
   getPlanStatus,
+  paymentGateway,
 } = useFluxDrive()
 
 // Get button configuration based on plan status
@@ -210,10 +237,18 @@ const getButtonConfig = plan => {
   switch (status) {
   case 'current':
     return {
-      text: t('components.fluxDrive.pricingPlans.renew'),
+      text: t('components.fluxDrive.pricingPlans.current'),
       color: 'success',
       variant: 'flat',
-      disabled: false,
+      disabled: true,
+      action: 'current',
+    }
+  case 'renew':
+    return {
+      text: t('components.fluxDrive.pricingPlans.renew'),
+      color: 'error',
+      variant: 'flat',
+      disabled: hasActiveSubscription.value, // Only enabled when subscription expired
       action: 'renew',
     }
   case 'upgrade':
@@ -229,8 +264,16 @@ const getButtonConfig = plan => {
       text: t('components.fluxDrive.pricingPlans.downgrade'),
       color: 'warning',
       variant: 'flat',
-      disabled: true,
+      disabled: hasActiveSubscription.value, // Only enabled when subscription expired
       action: 'downgrade',
+    }
+  case 'downgrade-blocked':
+    return {
+      text: t('components.fluxDrive.pricingPlans.downgrade'),
+      color: 'grey',
+      variant: 'outlined',
+      disabled: true, // Always disabled - files exceed capacity
+      action: 'downgrade-blocked',
     }
   case 'signup':
   default:

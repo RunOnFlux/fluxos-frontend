@@ -8,20 +8,121 @@
           <VIcon icon="mdi-cloud-outline" size="28" color="primary" class="me-2" />
           <div>
             <h1 class="text-h5 font-weight-bold text-primary mb-0">{{ t('components.fluxDrive.fileManager.title') }}</h1>
-            <div class="text-caption text-medium-emphasis">{{ t('components.fluxDrive.fileManager.subtitle') }}</div>
+            <div class="text-caption text-medium-emphasis">
+              {{ t('components.fluxDrive.fileManager.subtitle') }}
+            </div>
           </div>
         </div>
         <VSpacer />
         <VBtn
+          v-if="hasActiveSubscription"
           color="success"
           variant="flat"
           size="small"
-          prepend-icon="mdi-rocket-launch"
+          prepend-icon="mdi-cog"
           @click="showUpgradeDialog = true"
         >
-          {{ t('components.fluxDrive.fileManager.upgradePlan') }}
+          {{ t('components.fluxDrive.fileManager.manageSubscription') }}
         </VBtn>
       </div>
+
+      <!-- Subscription Status Section - Only show when expired or expiring soon -->
+      <VCard
+        v-if="subscriptionChecked && !hasActiveSubscription"
+        :color="subscriptionDaysLeft <= 0 ? 'error' : 'warning'"
+        variant="tonal"
+        class="mb-4"
+      >
+        <VCardText class="d-flex align-center pa-3">
+          <VIcon
+            :icon="subscriptionDaysLeft <= 0 ? 'mdi-alert-circle' : subscriptionDaysLeft <= 7 ? 'mdi-clock-alert' : 'mdi-check-circle'"
+            size="32"
+            class="me-3"
+          />
+          <div class="flex-grow-1">
+            <div class="text-subtitle-2 font-weight-bold">
+              <template v-if="subscriptionDaysLeft < 0">
+                {{ t('components.fluxDrive.fileManager.subscriptionExpired') }}
+              </template>
+              <template v-else-if="subscriptionDaysLeft === 0">
+                {{ t('components.fluxDrive.fileManager.subscriptionExpiresToday') }}
+              </template>
+              <template v-else-if="subscriptionDaysLeft <= 7">
+                {{ t('components.fluxDrive.fileManager.subscriptionExpiringSoon') }}
+              </template>
+              <template v-else>
+                {{ t('components.fluxDrive.fileManager.subscriptionActive') }}
+              </template>
+            </div>
+            <div class="text-caption">
+              {{ subscriptionExpiryMessage }}
+            </div>
+            <div v-if="subscriptionDaysLeft <= 0" class="text-caption text-error mt-1">
+              {{ t('components.fluxDrive.fileManager.filesDeleteWarning') }}
+            </div>
+          </div>
+          <VBtn
+            v-if="subscriptionDaysLeft <= 0"
+            color="error"
+            variant="flat"
+            size="small"
+            @click="showUpgradeDialog = true"
+          >
+            {{ t('components.fluxDrive.fileManager.renewNow') }}
+          </VBtn>
+          <VBtn
+            v-else-if="subscriptionDaysLeft <= 7"
+            color="warning"
+            variant="flat"
+            size="small"
+            @click="showUpgradeDialog = true"
+          >
+            {{ t('components.fluxDrive.fileManager.extend') }}
+          </VBtn>
+        </VCardText>
+      </VCard>
+
+      <!-- Manage Subscription Card (only for Crypto.com subscriptions) -->
+      <VCard
+        v-if="subscriptionChecked && hasActiveSubscription && isCryptoComSubscription"
+        variant="outlined"
+        class="mb-4"
+      >
+        <VCardText class="pa-3">
+          <div class="text-subtitle-2 font-weight-bold mb-2">
+            <VIcon icon="mdi-information" size="20" class="me-1" />
+            {{ t('components.fluxDrive.fileManager.manageSubscriptionTitle') }}
+          </div>
+          <div class="text-caption mb-3">
+            {{ t('components.fluxDrive.fileManager.manageSubscriptionInfo') }}
+          </div>
+          <div class="d-flex gap-2 flex-wrap">
+            <!-- Cancel Subscription button -->
+            <VBtn
+              color="error"
+              variant="outlined"
+              size="small"
+              @click="showCancelDialog = true"
+            >
+              <VIcon icon="mdi-cancel" class="me-1" size="18" />
+              {{ t('components.fluxDrive.fileManager.cancelSubscription') }}
+            </VBtn>
+
+            <!-- Manage on Crypto.com button -->
+            <VBtn
+              color="primary"
+              variant="outlined"
+              size="small"
+              href="https://crypto.com/settings/subscriptions"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <VIcon icon="mdi-open-in-new" class="me-1" size="18" />
+              {{ t('components.fluxDrive.fileManager.manageCryptoCom') }}
+            </VBtn>
+          </div>
+        </VCardText>
+      </VCard>
 
       <!-- Actions Bar -->
       <VCard variant="outlined" class="pa-3">
@@ -37,6 +138,7 @@
               clearable
               hide-details
               :loading="searching"
+              :disabled="!hasActiveSubscription"
               @keyup.enter="searchFile"
             />
           </div>
@@ -78,19 +180,20 @@
               </VBtn>
             </div>
 
-            <!-- Action Buttons -->
+            <!-- Action Buttons - Disabled when subscription expired -->
             <VBtn
               color="primary"
               variant="tonal"
               size="small"
               height="32"
               prepend-icon="mdi-folder-plus"
+              :disabled="!hasActiveSubscription"
               @click="createFolder"
             >
               {{ t('components.fluxDrive.fileManager.newFolder') }}
             </VBtn>
 
-            <VMenu>
+            <VMenu :disabled="!hasActiveSubscription">
               <template #activator="{ props }">
                 <VBtn
                   color="primary"
@@ -98,6 +201,7 @@
                   height="32"
                   prepend-icon="mdi-upload"
                   append-icon="mdi-chevron-down"
+                  :disabled="!hasActiveSubscription"
                   v-bind="props"
                 >
                   {{ t('components.fluxDrive.fileManager.upload') }}
@@ -127,7 +231,7 @@
     </div>
 
     <!-- Main FluxDrive Interface -->
-    <VCard>
+    <VCard :disabled="!hasActiveSubscription">
       <VCardText class="pa-6">
         <!-- Hidden File Input -->
         <input
@@ -207,8 +311,8 @@
           </VChip>
         </div>
 
-        <!-- Recovery Mode Button -->
-        <VAlert
+        <!-- Recovery Mode Button - TEMPORARILY DISABLED -->
+        <!-- <VAlert
           v-if="usedStorage > 0 && currentFolder === '/' && files.length === 0 && allFiles.length === 0 && !loading && !searchQuery.trim() && !localMessage"
           type="warning"
           variant="tonal"
@@ -240,7 +344,7 @@
               {{ t('components.fluxDrive.fileManager.backToNormalMode') }}
             </VBtn>
           </div>
-        </VAlert>
+        </VAlert> -->
 
         <!-- Debug Info (temporary) -->
         <VAlert
@@ -1065,6 +1169,55 @@
       </VCard>
     </VDialog>
 
+    <!-- Cancel Subscription Confirmation Dialog -->
+    <VDialog
+      v-model="showCancelDialog"
+      max-width="500"
+      attach
+    >
+      <VCard>
+        <VCardTitle class="d-flex align-center px-4 py-3 bg-error text-white">
+          <VIcon icon="mdi-alert" class="me-3" size="28" style="color: rgba(255,255,255,0.9);" />
+          <h3 class="text-h6 text-white">{{ t('components.fluxDrive.fileManager.cancelSubscriptionTitle') }}</h3>
+        </VCardTitle>
+        <VCardText class="pa-6 pt-4">
+          <p class="text-body-1 mb-4">
+            {{ t('components.fluxDrive.fileManager.cancelSubscriptionMessage') }}
+          </p>
+          <VAlert
+            type="info"
+            variant="tonal"
+            density="compact"
+          >
+            <div class="text-caption">
+              {{ t('components.fluxDrive.fileManager.cancelSubscriptionNote') }}
+            </div>
+          </VAlert>
+        </VCardText>
+        <VCardActions class="pa-6 pt-0">
+          <VSpacer />
+          <VBtn
+            variant="flat"
+            color="primary"
+            size="default"
+            :disabled="cancelingSubscription"
+            @click="showCancelDialog = false"
+          >
+            {{ t('components.fluxDrive.fileManager.cancelSubscriptionCancel') }}
+          </VBtn>
+          <VBtn
+            variant="flat"
+            color="error"
+            size="default"
+            :loading="cancelingSubscription"
+            @click="handleCancelSubscription"
+          >
+            {{ t('components.fluxDrive.fileManager.cancelSubscriptionConfirm') }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+
     <!-- Upgrade Plan Dialog -->
     <VDialog
       v-model="showUpgradeDialog"
@@ -1073,9 +1226,9 @@
       attach
     >
       <VCard>
-        <VCardTitle class="d-flex align-center px-3 py-1 bg-primary text-white">
-          <VIcon icon="mdi-rocket-launch" class="me-2" style="color: rgba(255,255,255,0.9);" />
-          <h3 class="text-subtitle-1 text-white">{{ t('components.fluxDrive.fileManager.upgradeYourPlan') }}</h3>
+        <VCardTitle class="d-flex align-center px-4 py-2 bg-primary text-white">
+          <VIcon icon="mdi-rocket-launch" class="me-2" size="24" style="color: rgba(255,255,255,0.9);" />
+          <h3 class="text-h5 text-white">{{ t('components.fluxDrive.fileManager.manageSubscription') }}</h3>
           <VSpacer />
           <VBtn
             icon="mdi-close"
@@ -1086,7 +1239,9 @@
         </VCardTitle>
         <VCardText class="pa-6 pt-0">
           <!-- Show pricing plans component here -->
-          <PricingPlans @selectPlan="handleUpgradePlan"
+          <PricingPlans
+            @selectPlan="handleUpgradePlan"
+            @cancel-subscription="showCancelDialog = true; showUpgradeDialog = false"
           />
         </VCardText>
       </VCard>
@@ -1651,7 +1806,7 @@ import ClipboardJS from 'clipboard'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 
 // Define emit for FileManager
-const emit = defineEmits(['select-plan'])
+const emit = defineEmits(['select-plan', 'selectPlan'])
 
 // Initialize i18n
 const { t } = useI18n()
@@ -1664,6 +1819,10 @@ watch(viewType, newValue => {
   localStorage.setItem('fluxdrive-view-type', newValue)
   console.log('🔄 View type changed to:', newValue)
 })
+
+// Get payment gateway from API (via useFluxDrive composable)
+const { paymentGateway, cancelSubscription } = useFluxDrive()
+const isCryptoComSubscription = computed(() => paymentGateway.value === 'cryptocom')
 
 const showUpgradeDialog = ref(false)
 const downloading = ref(false)
@@ -1678,6 +1837,10 @@ const showRenameDialog = ref(false)
 const itemToRename = ref(null)
 
 const showVersionsDialog = ref(false)
+
+// Cancel subscription dialog state
+const showCancelDialog = ref(false)
+const cancelingSubscription = ref(false)
 const fileForVersions = ref(null)
 
 const showAddVersionDialog = ref(false)
@@ -2346,6 +2509,10 @@ const {
   currentFolder,
   breadcrumbs,
   hasActiveSubscription,
+  subscriptionChecked,
+  formattedSubscriptionEndDate,
+  formattedSubscriptionEndDateTime,
+  subscriptionPeriodEnd,
   isDragOver,
   uploading,
   uploadProgress,
@@ -2389,6 +2556,55 @@ const {
   clearError,
   uploadVersionToFluxCloud,
 } = useFluxDrive()
+
+// Calculate days left until subscription expires
+const subscriptionDaysLeft = computed(() => {
+  if (!subscriptionPeriodEnd.value) return 0
+
+  const now = Date.now()
+  const expiryTimestamp = subscriptionPeriodEnd.value * 1000
+
+  // If expiration time has already passed (even if today), consider it expired
+  if (now >= expiryTimestamp) {
+    return -1 // Expired
+  }
+
+  const expiryDate = new Date(expiryTimestamp)
+
+  // Set both dates to midnight to compare full days only
+  const todayMidnight = new Date(now)
+  todayMidnight.setHours(0, 0, 0, 0)
+
+  const expiryMidnight = new Date(expiryDate)
+  expiryMidnight.setHours(0, 0, 0, 0)
+
+  const timeDiff = expiryMidnight - todayMidnight
+  const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24))
+
+  return daysLeft
+})
+
+// Helper to get human-readable expiry message
+const subscriptionExpiryMessage = computed(() => {
+  // If no period_end, show generic message for canceled subscriptions
+  if (!subscriptionPeriodEnd.value) {
+    return 'Subscription inactive'
+  }
+
+  const days = subscriptionDaysLeft.value
+
+  if (days === 0) {
+    // When expires today, show date with TIME
+    return formattedSubscriptionEndDateTime.value
+  } else if (days < 0) {
+    // When expired, show date with TIME
+    return formattedSubscriptionEndDateTime.value
+  } else if (days === 1) {
+    return `1 day remaining • Expires ${formattedSubscriptionEndDateTime.value}`
+  } else {
+    return `${days} days remaining • Expires ${formattedSubscriptionEndDateTime.value}`
+  }
+})
 
 // Override fileHeaders with translated versions
 const fileHeaders = computed(() => [
@@ -3352,6 +3568,30 @@ const clearRenewalState = () => {
   renewalMessage.value = ''
 }
 
+// Handle subscription cancellation
+const handleCancelSubscription = async () => {
+  cancelingSubscription.value = true
+  try {
+    console.log('🚫 Canceling subscription...')
+    const result = await cancelSubscription()
+    console.log('✅ Subscription canceled:', result)
+
+    // Close dialog
+    showCancelDialog.value = false
+
+    // Refresh subscription status
+    await checkSubscriptionStatus()
+
+    // Show success message
+    alert(t('components.fluxDrive.fileManager.cancelSubscriptionSuccess'))
+  } catch (error) {
+    console.error('❌ Failed to cancel subscription:', error)
+    alert(t('components.fluxDrive.fileManager.cancelSubscriptionError') + ': ' + error.message)
+  } finally {
+    cancelingSubscription.value = false
+  }
+}
+
 // Expose methods to parent
 defineExpose({
   clearRenewalState,
@@ -3370,6 +3610,10 @@ const handleUpgradePlan = planId => {
     actionType = 'renew'
     isRenewing.value = true
     renewalMessage.value = 'Renewing your current plan'
+  } else if (planStatus === 'renew') {
+    actionType = 'renew'
+    isRenewing.value = true
+    renewalMessage.value = 'Renewing your expired subscription'
   } else if (planStatus === 'upgrade') {
     actionType = 'upgrade'
     isRenewing.value = true

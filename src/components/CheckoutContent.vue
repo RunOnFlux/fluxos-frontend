@@ -547,6 +547,26 @@ import { payWithSSP, payWithZelcore } from '@/utils/walletService'
 import { useTheme } from 'vuetify'
 import { useI18n } from 'vue-i18n'
 
+// Helper function to sanitize auth data for logging
+const sanitizeAuthData = (data) => {
+  if (!data || typeof data !== 'object') return data
+
+  const sanitized = { ...data }
+
+  // Hide sensitive fields
+  if (sanitized.zelid) {
+    sanitized.zelid = sanitized.zelid.substring(0, 8) + '...'
+  }
+  if (sanitized.signature) {
+    sanitized.signature = '***hidden***'
+  }
+  if (sanitized.loginPhrase) {
+    sanitized.loginPhrase = '***hidden***'
+  }
+
+  return sanitized
+}
+
 // Import payment images
 import FluxIDImg from '@images/FluxID.svg?url'
 import SSPLogoBlackImg from '@images/ssp-logo-black.svg?url'
@@ -719,7 +739,7 @@ const loadCurrentSubscription = async () => {
       loginPhrase: auth.loginPhrase,
     }
 
-    console.log('📋 Fetching current subscription:', payload)
+    console.log('📋 Fetching current subscription:', sanitizeAuthData(payload))
 
     const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
       method: 'POST',
@@ -736,6 +756,13 @@ const loadCurrentSubscription = async () => {
     if (result && !result.error) {
       currentSubscriptionData.value = result
       console.log('✅ Current subscription data loaded:', result)
+
+      // Capture payment gateway from current subscription
+      if (result.gateway) {
+        console.log('💳 Current subscription gateway:', result.gateway)
+        // Also store in localStorage for consistency
+        localStorage.setItem('fluxdrive_gateway', result.gateway)
+      }
     } else {
       console.log('⚠️ Could not load current subscription:', result.error || 'Unknown error')
     }
@@ -770,9 +797,11 @@ const loadPlanDetails = async () => {
 
     // Log auth details for debugging
     const authCheck = getAuthFromStorage()
-    console.log('Auth check - zelid:', authCheck.zelid)
-    console.log('Auth check - has signature:', !!authCheck.signature)
-    console.log('Auth check - loginPhrase:', authCheck.loginPhrase)
+    console.log('Auth check:', {
+      zelid: authCheck.zelid ? authCheck.zelid.substring(0, 8) + '...' : 'none',
+      hasSignature: !!authCheck.signature,
+      hasLoginPhrase: !!authCheck.loginPhrase,
+    })
 
     // For FluxDrive plans, we still need to call the API to get price_id
     // But we can use predefined display data
@@ -834,7 +863,7 @@ const loadPlanDetails = async () => {
     }
 
     console.log('Reading subscription details from API')
-    console.log('API payload being sent (READ):', apiPayload)
+    console.log('API payload being sent (READ):', sanitizeAuthData(apiPayload))
 
     let response = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
       method: 'POST',
@@ -1003,7 +1032,7 @@ const preInitializeManualPaymentData = async () => {
     // Add payment address
     paymentPayload.payment_addr = 't3NryfAQLGeFs9jEoeqsxmBN2QLRaRKFLUX'
 
-    console.log('🔄 Pre-initializing payment data for manual section:', paymentPayload)
+    console.log('🔄 Pre-initializing payment data for manual section:', sanitizeAuthData(paymentPayload))
 
     const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/fluxpay.php', {
       method: 'POST',
@@ -1170,12 +1199,12 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
     console.log('✅ Including payment_addr:', paymentPayload.payment_addr)
 
     console.log('=== PAYMENT PAYLOAD WITH SUB_ID ===')
-    console.log('Final payload:', paymentPayload)
+    console.log('Final payload:', sanitizeAuthData(paymentPayload))
 
     console.log('=== FLUXPAY PAYMENT INITIALIZATION ===')
     console.log('Plan ID:', props.planId)
     console.log('Selected plan data:', selectedPlan.value)
-    console.log('Payment payload:', paymentPayload)
+    console.log('Payment payload:', sanitizeAuthData(paymentPayload))
 
     // Log the exact URL-encoded body being sent
     const bodyParams = new URLSearchParams(paymentPayload)
@@ -1298,7 +1327,7 @@ const initializeCryptoComPayment = async () => {
     console.log('=== CRYPTO.COM PAYMENT INITIALIZATION ===')
     console.log('Plan ID:', props.planId)
     console.log('Selected plan data:', selectedPlan.value)
-    console.log('Payment payload:', paymentPayload)
+    console.log('Payment payload:', sanitizeAuthData(paymentPayload))
 
     const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/cryptocom.php', {
       method: 'POST',
@@ -1397,9 +1426,96 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
 
   // Store initial subscription state to detect new payments
   let initialSubscriptionState = null
+  let initialReadState = null
 
-  // For renewals, upgrades, and downgrades, capture initial subscription state for comparison
-  if (props.actionType === 'renew' || props.actionType === 'upgrade' || props.actionType === 'downgrade') {
+  // For renewals, capture initial /read state to detect error+period_end disappearing
+  if (props.actionType === 'renew') {
+    try {
+      const auth = getAuthFromStorage()
+      const initialPayload = {
+        zelid: auth.zelid || fluxStore.zelid,
+        signature: auth.signature,
+        loginPhrase: auth.loginPhrase,
+        page: '1',
+        size: '0', // Just check subscription status, don't load files to avoid rate limiting
+      }
+
+      console.log('📸 Capturing initial /read state for renewal monitoring...')
+
+      const initialReadResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(initialPayload),
+      })
+
+      const initialReadResult = await initialReadResponse.json()
+
+      // Check if subscription expired/canceled error exists (has BOTH error and period_end AND specific error message)
+      const hasSubscriptionExpired = !!(
+        initialReadResult.error &&
+        initialReadResult.period_end &&
+        (initialReadResult.error.indexOf("Subscription Expired") > -1 ||
+         initialReadResult.error.indexOf("Subscription Canceled") > -1)
+      )
+
+      initialReadState = {
+        hasError: !!initialReadResult.error,
+        hasPeriodEnd: !!initialReadResult.period_end,
+        hasSubscriptionExpired: hasSubscriptionExpired,
+        periodEnd: initialReadResult.period_end,
+      }
+
+      console.log('📸 Initial /read state captured:', {
+        hasError: initialReadState.hasError,
+        hasPeriodEnd: initialReadState.hasPeriodEnd,
+        hasSubscriptionExpired: initialReadState.hasSubscriptionExpired,
+        periodEnd: initialReadState.periodEnd,
+      })
+    } catch (error) {
+      console.warn('⚠️ Failed to capture initial /read state:', error)
+    }
+  }
+
+  // For new signups, capture initial storage state to detect actual activation (not returning user)
+  if (props.actionType === 'signup') {
+    try {
+      const auth = getAuthFromStorage()
+      const initialPayload = {
+        zelid: auth.zelid || fluxStore.zelid,
+        signature: auth.signature,
+        loginPhrase: auth.loginPhrase,
+      }
+
+      console.log('📸 Capturing initial storage state for signup monitoring...')
+
+      const initialResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(initialPayload),
+      })
+
+      const initialResult = await initialResponse.json()
+
+      if (initialResult.active !== undefined) {
+        initialSubscriptionState = {
+          wasActive: initialResult.active,
+          initialCapacity: initialResult.capacity,
+        }
+        console.log('📸 Initial signup state captured - Was Active:', initialResult.active, 'Capacity:', (initialResult.capacity_gb || Math.round(initialResult.capacity / 1024 / 1024 / 1024)) + 'GB')
+      } else {
+        console.warn('⚠️ Failed to get initial storage state:', initialResult.error || 'Unknown error')
+      }
+    } catch (error) {
+      console.warn('⚠️ Failed to capture initial signup state:', error)
+    }
+  }
+
+  // For upgrades and downgrades, capture initial storage state for comparison
+  if (props.actionType === 'upgrade' || props.actionType === 'downgrade') {
     try {
       const auth = getAuthFromStorage()
       const initialPayload = {
@@ -1459,7 +1575,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
           checkPayload.payment_addr = paymentAddr
         }
 
-        console.log('Checking Crypto.com payment status with payload:', checkPayload)
+        console.log('Checking Crypto.com payment status with payload:', sanitizeAuthData(checkPayload))
 
         const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/cryptocom.php', {
           method: 'POST',
@@ -1473,36 +1589,256 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
         console.log('Crypto.com payment status check result:', result)
 
         if (result.success && (result.status === 'completed' || result.payment_status === 'completed' || result.payment_status === 'active')) {
-          clearInterval(paymentMonitoringInterval)
-          clearTimeout(paymentMonitoringTimeout)
-          paymentMonitoringInterval = null
-          paymentMonitoringTimeout = null
-          cryptoPaymentProcessing.value = false
-          showSnackbar(t('components.checkoutContent.paymentConfirmedSubscriptionActive'), 'success', 8000)
-          emit('success')
+          // Payment confirmed via Crypto.com - now verify based on action type
+          let verificationPassed = false
+          let successMessage = ''
+
+          if (props.actionType === 'renew') {
+            // For renewals, verify error disappeared
+            console.log('✅ Crypto.com payment completed - verifying renewal...')
+            try {
+              const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                  zelid: auth.zelid || fluxStore.zelid,
+                  signature: auth.signature,
+                  loginPhrase: auth.loginPhrase,
+                  page: '1',
+                  size: '0',
+                }),
+              })
+
+              const readResult = await readResponse.json()
+              const hasSubscriptionExpiredNow = !!(readResult.error && readResult.period_end && (
+                readResult.error.indexOf("Subscription Expired") > -1 ||
+                readResult.error.indexOf("Subscription Canceled") > -1
+              ))
+
+              if (!hasSubscriptionExpiredNow) {
+                console.log('✅ Renewal verified - no subscription error')
+                verificationPassed = true
+                successMessage = t('components.checkoutContent.paymentConfirmedRenewed')
+              } else {
+                console.log('⏳ Payment completed but subscription still has error - will retry verification')
+              }
+            } catch (error) {
+              console.warn('⚠️ Could not verify renewal, assuming payment success:', error)
+              verificationPassed = true
+              successMessage = t('components.checkoutContent.paymentConfirmedRenewed')
+            }
+          } else if (props.actionType === 'upgrade' || props.actionType === 'downgrade') {
+            // For upgrades/downgrades, verify capacity changed
+            console.log(`✅ Crypto.com payment completed - verifying ${props.actionType}...`)
+            try {
+              const storageResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                  zelid: auth.zelid || fluxStore.zelid,
+                  signature: auth.signature,
+                  loginPhrase: auth.loginPhrase,
+                }),
+              })
+
+              const storageResult = await storageResponse.json()
+              const expectedCapacity = props.planId === 'pro' ? 107374182400 :
+                props.planId === 'standard' ? 53687091200 :
+                  props.planId === 'starter' ? 10737418240 : 53687091200
+
+              if (initialSubscriptionState && storageResult.capacity === expectedCapacity) {
+                console.log(`✅ ${props.actionType} verified - capacity changed to expected value`)
+                verificationPassed = true
+                successMessage = props.actionType === 'upgrade'
+                  ? t('components.checkoutContent.paymentConfirmedUpgraded')
+                  : t('components.checkoutContent.paymentConfirmedDowngraded')
+              } else {
+                console.log(`⏳ Payment completed but capacity not yet updated - will retry verification`)
+              }
+            } catch (error) {
+              console.warn(`⚠️ Could not verify ${props.actionType}, assuming payment success:`, error)
+              verificationPassed = true
+              successMessage = props.actionType === 'upgrade'
+                ? t('components.checkoutContent.paymentConfirmedUpgraded')
+                : t('components.checkoutContent.paymentConfirmedDowngraded')
+            }
+          } else {
+            // For new signups, verify subscription is active and no errors
+            console.log('✅ Crypto.com payment completed - verifying signup...')
+            try {
+              const storageResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                  zelid: auth.zelid || fluxStore.zelid,
+                  signature: auth.signature,
+                  loginPhrase: auth.loginPhrase,
+                }),
+              })
+
+              const storageResult = await storageResponse.json()
+
+              if (storageResult.active === true) {
+                // Also verify with /read if was already active before
+                if (initialSubscriptionState && initialSubscriptionState.wasActive === true) {
+                  const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: new URLSearchParams({
+                      zelid: auth.zelid || fluxStore.zelid,
+                      signature: auth.signature,
+                      loginPhrase: auth.loginPhrase,
+                      page: '1',
+                      size: '0',
+                    }),
+                  })
+
+                  const readResult = await readResponse.json()
+                  const hasSubscriptionError = readResult.error && (
+                    readResult.error.indexOf("Subscription Expired") > -1 ||
+                    readResult.error.indexOf("Subscription Canceled") > -1
+                  )
+
+                  if (!hasSubscriptionError) {
+                    console.log('✅ Signup verified - active with no errors')
+                    verificationPassed = true
+                    successMessage = t('components.checkoutContent.paymentConfirmedSubscriptionActive')
+                  } else {
+                    console.log('⏳ Payment completed but subscription still has error - will retry verification')
+                  }
+                } else {
+                  console.log('✅ Signup verified - subscription active')
+                  verificationPassed = true
+                  successMessage = t('components.checkoutContent.paymentConfirmedSubscriptionActive')
+                }
+              } else {
+                console.log('⏳ Payment completed but subscription not yet active - will retry verification')
+              }
+            } catch (error) {
+              console.warn('⚠️ Could not verify signup, assuming payment success:', error)
+              verificationPassed = true
+              successMessage = t('components.checkoutContent.paymentConfirmedSubscriptionActive')
+            }
+          }
+
+          if (verificationPassed) {
+            clearInterval(paymentMonitoringInterval)
+            clearTimeout(paymentMonitoringTimeout)
+            paymentMonitoringInterval = null
+            paymentMonitoringTimeout = null
+            cryptoPaymentProcessing.value = false
+
+            // Store payment gateway in localStorage for subscription management
+            localStorage.setItem('fluxdrive_gateway', props.gateway)
+            console.log('💾 Stored payment gateway:', props.gateway)
+
+            showSnackbar(successMessage, 'success', 8000)
+            emit('success')
+          }
+          // If verification failed, continue monitoring
         } else if (result.error) {
           console.warn('Payment check error:', result.error)
         }
       } else if (subId) {
-        // For FluxPay payments - check subscription status via storage endpoint
-
-        const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams({
-            zelid: auth.zelid || fluxStore.zelid,
-            signature: auth.signature,
-            loginPhrase: auth.loginPhrase,
-          }),
-        })
-
-        const result = await response.json()
+        // For FluxPay payments - check subscription status based on action type
 
         // Check subscription status based on action type
-        if (props.actionType === 'upgrade' || props.actionType === 'downgrade' || props.actionType === 'renew') {
-          // For upgrades, downgrades and renewals, check if capacity changed
+        if (props.actionType === 'renew') {
+          // For renewals, check /read endpoint for error+period_end disappearing
+          try {
+            const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+              },
+              body: new URLSearchParams({
+                zelid: auth.zelid || fluxStore.zelid,
+                signature: auth.signature,
+                loginPhrase: auth.loginPhrase,
+                page: '1',
+                size: '0', // Just check subscription status, don't load files to avoid rate limiting
+              }),
+            })
+
+            if (!readResponse.ok) {
+              console.warn('⚠️ /read endpoint returned error status:', readResponse.status)
+              console.log('⏳ Waiting for renewal - API returned error status, will retry...')
+
+              return // Continue monitoring, will retry in next interval
+            }
+
+            const readResult = await readResponse.json()
+
+            // Check if subscription expired error exists (has BOTH error and period_end)
+            const hasSubscriptionExpiredNow = !!(readResult.error && readResult.period_end)
+
+            // Check for other types of errors (not subscription expiration)
+            const hasOtherError = readResult.error && !readResult.period_end
+
+            if (hasOtherError) {
+              // Different error (session expired, auth error, etc.) - not subscription expiration
+              console.warn('⚠️ /read endpoint returned different error:', readResult.error)
+              console.log('⏳ Waiting for renewal - non-subscription error detected, will retry...')
+
+              return // Continue monitoring, will retry in next interval
+            }
+
+            if (initialReadState && initialReadState.hasSubscriptionExpired && !hasSubscriptionExpiredNow) {
+              // Success: Had subscription expired error before, now it's gone (renewed)
+              console.log('✅ Renewal confirmed - subscription expired error with period_end disappeared!')
+              console.log('Previous state: error =', initialReadState.hasError, ', period_end =', initialReadState.periodEnd)
+              console.log('Current state: error =', !!readResult.error, ', period_end =', readResult.period_end || 'none')
+
+              clearInterval(paymentMonitoringInterval)
+              clearTimeout(paymentMonitoringTimeout)
+              paymentMonitoringInterval = null
+              paymentMonitoringTimeout = null
+              fluxPaymentProcessing.value = false
+
+              // Store payment gateway in localStorage for subscription management
+              localStorage.setItem('fluxdrive_gateway', props.gateway)
+              console.log('💾 Stored payment gateway:', props.gateway)
+
+              showSnackbar(t('components.checkoutContent.paymentConfirmedRenewed'), 'success', 8000)
+              emit('success')
+            } else if (hasSubscriptionExpiredNow) {
+              // Still expired: Still has error with period_end
+              console.log('⏳ Waiting for renewal to process - still has subscription expired error with period_end:', readResult.period_end)
+            } else if (!initialReadState) {
+              console.log('⏳ Waiting for renewal - no initial state captured')
+            } else {
+              console.log('⏳ Waiting for renewal - checking read endpoint state...')
+            }
+          } catch (error) {
+            // Network error, timeout, or JSON parse error
+            console.warn('⚠️ Failed to check /read endpoint for renewal:', error.message)
+            console.log('⏳ Waiting for renewal - network/timeout error, will retry...')
+            // Continue monitoring, will retry in next interval
+          }
+        } else if (props.actionType === 'upgrade' || props.actionType === 'downgrade') {
+          // For upgrades and downgrades, check /storage endpoint for capacity change
+          const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              zelid: auth.zelid || fluxStore.zelid,
+              signature: auth.signature,
+              loginPhrase: auth.loginPhrase,
+            }),
+          })
+
+          const result = await response.json()
+
           if (initialSubscriptionState && result.active === true) {
             const capacityChanged = result.capacity !== initialSubscriptionState.capacity
             const expectedCapacity = props.planId === 'pro' ? 107374182400 :
@@ -1510,8 +1846,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
                 props.planId === 'starter' ? 10737418240 : 53687091200 // 100GB for pro, 50GB for standard, 10GB for starter
 
             if (capacityChanged && result.capacity === expectedCapacity) {
-              const actionText = props.actionType === 'upgrade' ? 'Upgrade' :
-                props.actionType === 'downgrade' ? 'Downgrade' : 'Renewal'
+              const actionText = props.actionType === 'upgrade' ? 'Upgrade' : 'Downgrade'
 
               console.log(`✅ ${actionText} confirmed - storage capacity changed!`)
               console.log('Previous capacity:', (initialSubscriptionState.capacity_gb || Math.round(initialSubscriptionState.capacity / 1024 / 1024 / 1024)) + 'GB')
@@ -1523,13 +1858,13 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
               paymentMonitoringTimeout = null
               fluxPaymentProcessing.value = false
 
-              const message = props.actionType === 'renew'
-                ? t('components.checkoutContent.paymentConfirmedRenewed')
-                : props.actionType === 'upgrade'
-                  ? t('components.checkoutContent.paymentConfirmedUpgraded')
-                  : props.actionType === 'downgrade'
-                    ? t('components.checkoutContent.paymentConfirmedDowngraded')
-                    : t('components.checkoutContent.paymentConfirmedSubscriptionActive')
+              // Store payment gateway in localStorage for subscription management
+              localStorage.setItem('fluxdrive_gateway', props.gateway)
+              console.log('💾 Stored payment gateway:', props.gateway)
+
+              const message = props.actionType === 'upgrade'
+                ? t('components.checkoutContent.paymentConfirmedUpgraded')
+                : t('components.checkoutContent.paymentConfirmedDowngraded')
 
               showSnackbar(message, 'success', 8000)
               emit('success')
@@ -1541,15 +1876,73 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             console.log('⏳ Waiting for subscription data...')
           }
         } else {
-          // For new subscriptions, check if active
+          // For new subscriptions, check /storage if active AND verify with /read
+          const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: new URLSearchParams({
+              zelid: auth.zelid || fluxStore.zelid,
+              signature: auth.signature,
+              loginPhrase: auth.loginPhrase,
+            }),
+          })
+
+          const result = await response.json()
+
           if (result.active === true) {
-            console.log('✅ New subscription is now active - payment completed!')
+            // If we have initial state and was already active, need to verify this is NEW activation
+            if (initialSubscriptionState && initialSubscriptionState.wasActive === true) {
+              // Was already active before payment - verify /read shows no errors (actual new subscription)
+              try {
+                const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: new URLSearchParams({
+                    zelid: auth.zelid || fluxStore.zelid,
+                    signature: auth.signature,
+                    loginPhrase: auth.loginPhrase,
+                    page: '1',
+                    size: '0', // Just check status
+                  }),
+                })
+
+                const readResult = await readResponse.json()
+
+                const hasSubscriptionError = readResult.error && (
+                  readResult.error.indexOf("Subscription Expired") > -1 ||
+                  readResult.error.indexOf("Subscription Canceled") > -1
+                )
+
+                if (hasSubscriptionError) {
+                  // Still has subscription error - payment not processed yet
+                  console.log('⏳ Subscription still inactive (has error) - continuing to monitor...')
+
+                  return
+                }
+
+                // No error - subscription is truly active now
+                console.log('✅ New subscription is now active (verified via /read) - payment completed!')
+              } catch (readError) {
+                console.warn('⚠️ Could not verify with /read, assuming storage result is correct')
+              }
+            } else {
+              // Was not active before, now is - definitely new subscription
+              console.log('✅ New subscription is now active - payment completed!')
+            }
 
             clearInterval(paymentMonitoringInterval)
             clearTimeout(paymentMonitoringTimeout)
             paymentMonitoringInterval = null
             paymentMonitoringTimeout = null
             fluxPaymentProcessing.value = false
+
+            // Store payment gateway in localStorage for subscription management
+            localStorage.setItem('fluxdrive_gateway', props.gateway)
+            console.log('💾 Stored payment gateway:', props.gateway)
 
             showSnackbar(t('components.checkoutContent.paymentConfirmedSubscriptionActive'), 'success', 8000)
             emit('success')

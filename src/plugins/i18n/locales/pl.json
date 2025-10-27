@@ -1648,7 +1648,27 @@
         "createFolder": "Utwórz Folder",
         "loadingFileContent": "Ładowanie zawartości pliku...",
         "selectFileToUpload": "Wybierz plik do przesłania jako nową wersję",
-        "versionComment": "Komentarz wersji (opcjonalny)"
+        "versionComment": "Komentarz wersji (opcjonalny)",
+        "filesDeleteWarning": "Twoje pliki zostaną wkrótce usunięte, jeśli nie odnowisz subskrypcji",
+        "subscriptionExpired": "Subskrypcja Wygasła",
+        "subscriptionExpiresToday": "Subskrypcja Wygasa Dzisiaj",
+        "subscriptionExpiringSoon": "Subskrypcja Wygasa Wkrótce",
+        "subscriptionActive": "Subskrypcja Aktywna",
+        "renewNow": "Odnów Teraz",
+        "extend": "Przedłuż",
+        "manageSubscription": "Zarządzaj Subskrypcją",
+        "manageSubscriptionTitle": "Zarządzaj Swoją Subskrypcją",
+        "manageSubscriptionInfo": "Zarządzaj lub anuluj swoją subskrypcję poniżej.",
+        "cryptoComManageInfo": "Twoja subskrypcja jest zarządzana przez Crypto.com. Możesz anulować lub zaktualizować metodę płatności na ich platformie.",
+        "manageCryptoCom": "Zarządzaj na Crypto.com",
+        "cancelSubscription": "Anuluj Subskrypcję",
+        "cancelSubscriptionTitle": "Anuluj Swoją Subskrypcję",
+        "cancelSubscriptionMessage": "Czy na pewno chcesz anulować subskrypcję? Twój dostęp pozostanie aktywny do końca bieżącego okresu rozliczeniowego.",
+        "cancelSubscriptionNote": "Możesz ponownie zasubskrybować w dowolnym momencie po anulowaniu.",
+        "cancelSubscriptionConfirm": "Tak, Anuluj Subskrypcję",
+        "cancelSubscriptionCancel": "Zachowaj Subskrypcję",
+        "cancelSubscriptionSuccess": "Subskrypcja anulowana pomyślnie. Twój dostęp pozostanie do końca bieżącego okresu rozliczeniowego.",
+        "cancelSubscriptionError": "Nie udało się anulować subskrypcji"
       },
       "storageInfo": {
         "title": "Wykorzystanie Przestrzeni",
@@ -1688,6 +1708,7 @@
         "storage": "Pamięci masowej",
         "contactUs": "Skontaktuj się",
         "signIn": "Zaloguj się",
+        "current": "Aktualny",
         "renew": "Odnów",
         "upgrade": "Aktualizuj",
         "downgrade": "Obniż plan",
@@ -2335,7 +2356,8 @@
       "downgrade": "Degradacja",
       "renewalSuccess": "Subskrypcja odnowiona pomyślnie!",
       "renewalFailed": "Odnowienie nie powiodło się: ",
-      "upgradeFailed": "Aktualizacja nie powiodła się: "
+      "upgradeFailed": "Aktualizacja nie powiodła się: ",
+      "cancel": "Anuluj"
     },
     "marketplace": {
       "loading": "Ładowanie sklepu...",

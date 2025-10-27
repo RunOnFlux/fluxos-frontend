@@ -945,7 +945,7 @@ const initWalletConnect = async () => {
 
     // Get login phrase first
     await getZelIdLoginPhrase()
-    console.log('[Login] ✅ Login phrase obtained:', loginPhrase.value)
+    console.log('[Login] ✅ Login phrase obtained:', loginPhrase.value ? loginPhrase.value.substring(0, 20) + '...' : 'none')
 
     // Open WalletConnect and wait for connection
     console.log('[Login] 🔗 Opening WalletConnect...')

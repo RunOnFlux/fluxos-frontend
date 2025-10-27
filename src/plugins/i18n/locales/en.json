@@ -1649,7 +1649,27 @@
         "createFolder": "Create Folder",
         "loadingFileContent": "Loading file content...",
         "selectFileToUpload": "Select file to upload as new version",
-        "versionComment": "Version Comment (optional)"
+        "versionComment": "Version Comment (optional)",
+        "filesDeleteWarning": "Your files will be deleted soon if you don't renew",
+        "subscriptionExpired": "Subscription Expired",
+        "subscriptionExpiresToday": "Subscription Expires Today",
+        "subscriptionExpiringSoon": "Subscription Expiring Soon",
+        "subscriptionActive": "Subscription Active",
+        "renewNow": "Renew Now",
+        "extend": "Extend",
+        "manageSubscription": "Manage Subscription",
+        "manageSubscriptionTitle": "Manage Your Subscription",
+        "manageSubscriptionInfo": "Manage or cancel your subscription below.",
+        "cryptoComManageInfo": "Your subscription is managed through Crypto.com. You can cancel or update your payment method on their platform.",
+        "manageCryptoCom": "Manage on Crypto.com",
+        "cancelSubscription": "Cancel Subscription",
+        "cancelSubscriptionTitle": "Cancel Your Subscription",
+        "cancelSubscriptionMessage": "Are you sure you want to cancel your subscription? Your access will remain active until the end of your current billing period.",
+        "cancelSubscriptionNote": "You can resubscribe at any time after cancellation.",
+        "cancelSubscriptionConfirm": "Yes, Cancel Subscription",
+        "cancelSubscriptionCancel": "Keep Subscription",
+        "cancelSubscriptionSuccess": "Subscription canceled successfully. Your access will remain until the end of your current billing period.",
+        "cancelSubscriptionError": "Failed to cancel subscription"
       },
       "storageInfo": {
         "title": "Storage Usage",
@@ -1689,6 +1709,7 @@
         "storage": "Storage",
         "contactUs": "Contact Us",
         "signIn": "Login",
+        "current": "Current",
         "renew": "Renew",
         "upgrade": "Upgrade",
         "downgrade": "Downgrade",
@@ -2336,7 +2357,8 @@
       "downgrade": "Downgrade",
       "renewalSuccess": "Subscription renewed successfully!",
       "renewalFailed": "Renewal failed: ",
-      "upgradeFailed": "Upgrade failed: "
+      "upgradeFailed": "Upgrade failed: ",
+      "cancel": "Cancel"
     },
     "marketplace": {
       "loading": "Loading Marketplace...",

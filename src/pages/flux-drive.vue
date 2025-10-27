@@ -1,12 +1,5 @@
 <template>
   <div>
-    <!-- Debug info (remove after debugging) -->
-    <div v-if="$route.query.debug" class="ma-4 pa-4 bg-grey-lighten-4 rounded">
-      <div>🔍 Debug Info:</div>
-      <div>isLoggedIn: {{ isLoggedIn }}</div>
-      <div>hasActiveSubscription: {{ hasActiveSubscription }}</div>
-    </div>
-
     <!-- Loading state while checking subscription -->
     <LoadingSpinner
       v-if="!subscriptionChecked"
@@ -15,13 +8,13 @@
       :title="t('pages.fluxDrive.loading')"
     />
 
-    <!-- Show pricing plans for non-subscribers -->
+    <!-- Show pricing plans only for users who have never had a subscription -->
     <PricingPlans
-      v-else-if="!hasActiveSubscription"
+      v-else-if="!hasOrHadSubscription"
       @selectPlan="(planId, actionType) => handlePlanSelection(planId, actionType)"
     />
 
-    <!-- Show actual FluxDrive interface for subscribers -->
+    <!-- Show actual FluxDrive interface for subscribers or users with subscription history -->
     <div v-else>
       <FileManager
         ref="fileManagerRef"
@@ -90,6 +83,7 @@ const {
   isLoggedIn,
   hasActiveSubscription,
   subscriptionChecked,
+  subscriptionPeriodEnd,
   openLoginBottomSheet,
   loadFiles,
   selectPlan,
@@ -99,6 +93,8 @@ const {
   getPlanStatus,
   renewSubscription,
   upgradeSubscription,
+  usedStorage,
+  resetFluxDriveState,
 } = useFluxDrive()
 
 // Import flux store to refresh user data after login
@@ -106,6 +102,18 @@ import { useFluxStore } from '@/stores/flux'
 import { computed } from 'vue'
 
 const fluxStore = useFluxStore()
+
+// Check if user has existing files (based on storage usage)
+const hasExistingFiles = computed(() => {
+  return usedStorage.value > 0
+})
+
+// Check if user has or had a subscription (including expired)
+const hasOrHadSubscription = computed(() => {
+  return hasActiveSubscription.value ||
+         hasExistingFiles.value ||
+         subscriptionPeriodEnd.value !== null
+})
 
 // Checkout dialog state
 const showCheckout = ref(false)
@@ -118,7 +126,7 @@ const checkoutTitle = computed(() => {
   if (actionType === 'renew') return t('pages.fluxDrive.renewal')
   if (actionType === 'upgrade') return t('pages.fluxDrive.upgrade')
   if (actionType === 'downgrade') return t('pages.fluxDrive.downgrade')
-  
+
   return t('pages.fluxDrive.checkout')
 })
 
@@ -406,6 +414,15 @@ watch(hasActiveSubscription, (newValue, oldValue) => {
     console.log('❌ Subscription became inactive - should show pricing plans')
   }
 }, { immediate: true })
+
+// Watch privilege changes to handle logout
+watch(() => fluxStore.privilege, (newPrivilege, oldPrivilege) => {
+  console.log('🔄 Privilege changed:', { oldPrivilege, newPrivilege })
+  if (newPrivilege === 'none' && oldPrivilege !== 'none') {
+    console.log('🚪 User logged out - clearing FluxDrive state')
+    resetFluxDriveState()
+  }
+})
 
 // Lifecycle
 onMounted(async () => {

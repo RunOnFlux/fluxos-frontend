@@ -340,20 +340,27 @@ const loadSubscriptionData = async () => {
 
     // Parse zelidauth using qs.parse (same as other FluxOS components)
     const auth = qs.parse(zelidauth)
-    console.log('LoadSubscriptionData - Parsed auth:', auth)
+    console.log('LoadSubscriptionData - Parsed auth:', {
+      hasZelid: !!auth.zelid,
+      zelid: auth.zelid ? auth.zelid.substring(0, 8) + '...' : 'none',
+      hasSignature: !!auth.signature,
+      hasLoginPhrase: !!auth.loginPhrase,
+    })
 
     if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
-      console.error('LoadSubscriptionData - Missing auth fields:', auth)
+      console.error('LoadSubscriptionData - Missing auth fields')
       showAlert('Invalid authentication data format')
-      
+
       return
     }
 
     const signature = auth.signature
     const loginPhrase = auth.loginPhrase
 
-    console.log('LoadSubscriptionData - Using signature:', signature)
-    console.log('LoadSubscriptionData - Using loginPhrase:', loginPhrase)
+    console.log('LoadSubscriptionData - Auth fields present:', {
+      hasSignature: !!signature,
+      hasLoginPhrase: !!loginPhrase,
+    })
 
     const response = await fetch(`https://${bridgeURL}/api/v1/subscriptions.php`, {
       method: 'POST',
@@ -633,7 +640,7 @@ onMounted(async () => {
 
     // If we have auth but fluxStore.zelid is not set, set it
     if (auth.zelid && !fluxStore.zelid) {
-      console.log('Restoring zelid from localStorage:', auth.zelid)
+      console.log('Restoring zelid from localStorage:', auth.zelid.substring(0, 8) + '...')
       fluxStore.setZelid(auth.zelid)
 
       // Also set privilege if it's 'none' (user was logged in before)
