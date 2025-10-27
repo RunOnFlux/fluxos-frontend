@@ -1,5 +1,6 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
+import { onBeforeUnmount } from 'vue'
 
 const { t } = useI18n()
 
@@ -38,6 +39,14 @@ const resolveHandle = () => {
     showProgress.value = false
   }, 300)
 }
+
+// Cleanup on unmount to prevent memory leaks
+onBeforeUnmount(() => {
+  if (interval.value) {
+    clearInterval(interval.value)
+    interval.value = null
+  }
+})
 
 defineExpose({
   fallbackHandle,

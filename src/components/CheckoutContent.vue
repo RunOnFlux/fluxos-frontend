@@ -1967,7 +1967,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
     }
   }, 120000) // Check every 2 minutes (Flux blockchain block time)
 
-  // Stop monitoring after 10 minutes
+  // Stop monitoring after 20 minutes
   paymentMonitoringTimeout = setTimeout(() => {
     clearInterval(paymentMonitoringInterval)
     paymentMonitoringInterval = null
@@ -1980,7 +1980,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
       fluxPaymentProcessing.value = false
       showAlert(t('components.checkoutContent.fluxPayTimeoutCheckManually'), 'warning')
     }
-  }, 600000)
+  }, 1200000)
 }
 
 const cancelFluxPayment = () => {
@@ -2415,6 +2415,17 @@ onMounted(() => {
 
 // Cleanup on unmount
 onUnmounted(() => {
+  // Clear payment monitoring intervals to prevent memory leaks
+  if (paymentMonitoringInterval) {
+    clearInterval(paymentMonitoringInterval)
+    paymentMonitoringInterval = null
+  }
+  if (paymentMonitoringTimeout) {
+    clearTimeout(paymentMonitoringTimeout)
+    paymentMonitoringTimeout = null
+  }
+
+  // Cleanup clipboard instance
   if (clipboard) {
     clipboard.destroy()
     clipboard = null

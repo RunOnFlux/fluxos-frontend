@@ -1796,7 +1796,7 @@
 </template>
 
 <script setup>
-import { computed, ref, watch, onMounted, nextTick } from 'vue'
+import { computed, ref, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useFluxDrive } from '@/composables/useFluxDrive'
 import PricingPlans from '@/components/FluxDrive/PricingPlans.vue'
@@ -1870,6 +1870,9 @@ const totalFilesToUpload = ref(0)
 const currentFileName = ref('')
 const currentFileSize = ref(0)
 const localUploadProgress = ref(0)
+
+// Track active intervals for cleanup on unmount
+const activeIntervals = ref([])
 
 // High z-index toast system for messages above dialogs
 const showToast = ref(false)
@@ -2071,10 +2074,18 @@ const uploadVersion = async () => {
       localUploadProgress.value = uploadProgress.value
     }, 100)
 
+    // Track interval for cleanup on unmount
+    activeIntervals.value.push(progressInterval)
+
     try {
       await uploadVersionToFluxCloud(existingFileHash, fileForAddVersion.value.name, selectedVersionFile.value, comment)
     } finally {
       clearInterval(progressInterval)
+      // Remove from tracking array
+      const index = activeIntervals.value.indexOf(progressInterval)
+      if (index > -1) {
+        activeIntervals.value.splice(index, 1)
+      }
     }
 
     showAddVersionDialog.value = false
@@ -2555,6 +2566,9 @@ const {
   setError,
   clearError,
   uploadVersionToFluxCloud,
+
+  // Active XHR tracking for cleanup
+  activeXHRs,
 } = useFluxDrive()
 
 // Calculate days left until subscription expires
@@ -3555,6 +3569,30 @@ onMounted(() => {
     console.log('📂 Files are already being loaded, skipping loadFiles call')
   } else if (hasActiveSubscription.value && files.value.length > 0) {
     console.log('📂 Files already loaded, skipping loadFiles call')
+  }
+})
+
+// Cleanup on unmount to prevent memory leaks
+onBeforeUnmount(() => {
+  console.log('📂 FileManager unmounting, cleaning up intervals and XHR requests')
+
+  // Clear any active intervals (e.g., upload progress polling)
+  activeIntervals.value.forEach(interval => {
+    clearInterval(interval)
+  })
+  activeIntervals.value = []
+
+  // Abort any active XHR uploads to prevent memory leaks
+  if (activeXHRs?.value?.length > 0) {
+    console.log(`📂 Aborting ${activeXHRs.value.length} active upload(s)`)
+    activeXHRs.value.forEach(xhr => {
+      try {
+        xhr.abort()
+      } catch (e) {
+        // Ignore errors from aborting already completed requests
+      }
+    })
+    activeXHRs.value = []
   }
 })
 

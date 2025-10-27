@@ -56,6 +56,9 @@ const sharedState = {
     timestamp: null,
     persistent: false, // If true, error won't auto-clear
   }),
+
+  // Track active XHR requests for cleanup
+  activeXHRs: ref([]),
 }
 
 export function useFluxDrive() {
@@ -1894,6 +1897,16 @@ export function useFluxDrive() {
       const uploadPromise = new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest()
 
+        // Track XHR for cleanup on component unmount
+        sharedState.activeXHRs.value.push(xhr)
+
+        const cleanup = () => {
+          const index = sharedState.activeXHRs.value.indexOf(xhr)
+          if (index > -1) {
+            sharedState.activeXHRs.value.splice(index, 1)
+          }
+        }
+
         xhr.upload.onprogress = e => {
           if (e.lengthComputable) {
             uploadProgress.value = Math.round((e.loaded / e.total) * 100)
@@ -1901,6 +1914,7 @@ export function useFluxDrive() {
         }
 
         xhr.onload = () => {
+          cleanup()
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
               const result = JSON.parse(xhr.responseText)
@@ -1913,7 +1927,11 @@ export function useFluxDrive() {
           }
         }
 
-        xhr.onerror = () => reject(new Error('Upload failed'))
+        xhr.onerror = () => {
+          cleanup()
+          reject(new Error('Upload failed'))
+        }
+
         xhr.open('POST', `${bridgeURL}/api/v1/ipfs/write`) // Use bridgeURL like FluxCloud
         xhr.send(formData)
       })
@@ -1944,6 +1962,16 @@ export function useFluxDrive() {
       const uploadPromise = new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest()
 
+        // Track XHR for cleanup on component unmount
+        sharedState.activeXHRs.value.push(xhr)
+
+        const cleanup = () => {
+          const index = sharedState.activeXHRs.value.indexOf(xhr)
+          if (index > -1) {
+            sharedState.activeXHRs.value.splice(index, 1)
+          }
+        }
+
         xhr.upload.onprogress = e => {
           if (e.lengthComputable) {
             uploadProgress.value = Math.round((e.loaded / e.total) * 100)
@@ -1951,6 +1979,7 @@ export function useFluxDrive() {
         }
 
         xhr.onload = () => {
+          cleanup()
           if (xhr.status >= 200 && xhr.status < 300) {
             try {
               const result = JSON.parse(xhr.responseText)
@@ -1963,7 +1992,11 @@ export function useFluxDrive() {
           }
         }
 
-        xhr.onerror = () => reject(new Error('Upload failed'))
+        xhr.onerror = () => {
+          cleanup()
+          reject(new Error('Upload failed'))
+        }
+
         xhr.open('POST', `${bridgeURL}/api/v1/ipfs/write`)
         xhr.send(formData)
       })
@@ -2960,6 +2993,7 @@ export function useFluxDrive() {
     subscriptionChecked,
     subscriptionPeriodEnd,
     paymentGateway: sharedState.paymentGateway,
+    activeXHRs: sharedState.activeXHRs,
     loading,
     currentFolder,
     breadcrumbs,

@@ -18,6 +18,7 @@ const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
 const closeTimer = ref(10)
 const cannotClose = ref(false)
 const isPopup = ref(false)
+const closeInterval = ref(null)
 
 onMounted(() => {
   // Check if this window was opened as a popup
@@ -25,10 +26,11 @@ onMounted(() => {
 
   // Only start countdown if it's a popup
   if (isPopup.value) {
-    const interval = setInterval(() => {
+    closeInterval.value = setInterval(() => {
       closeTimer.value--
       if (closeTimer.value <= 0) {
-        clearInterval(interval)
+        clearInterval(closeInterval.value)
+        closeInterval.value = null
 
         // Try to close the window
         window.close()
@@ -41,6 +43,14 @@ onMounted(() => {
         }, 100)
       }
     }, 1000)
+  }
+})
+
+// Cleanup on unmount to prevent memory leaks
+onBeforeUnmount(() => {
+  if (closeInterval.value) {
+    clearInterval(closeInterval.value)
+    closeInterval.value = null
   }
 })
 </script>
