@@ -219,7 +219,8 @@ const adjustedExpiryBlockHeight = computed(() => {
     return null
   }
 
-  const defaultExpire = 22000
+  // Default expiration depends on registration height (fork-aware)
+  const defaultExpire = props.app.height >= FORK_BLOCK_HEIGHT ? 88000 : 22000
   const expireIn = props.app.expire || defaultExpire
   const originalExpirationHeight = props.app.height + expireIn
 

@@ -1536,6 +1536,9 @@ const redirectCountdown = ref(3)
 const redirectCountdownInterval = ref(null)
 const imageError = ref(false)
 
+// PON Fork support - use 88,000 blocks after fork (block 2,020,000 already happened)
+const defaultExpireBlocks = 88000
+
 const canStartSigning = computed(() => !signingProgress.value.signing && !signingProgress.value.registering)
 
 const signingProgressPercent = computed(() => {
@@ -2177,7 +2180,7 @@ const fetchPricingFromAPI = async () => {
       owner: props.app.owner || 'marketplace',
       compose: appSpecCompose,
       instances: config.value.instances,
-      expire: 22000 * config.value.subscriptionMonths,
+      expire: defaultExpireBlocks * config.value.subscriptionMonths,
       contacts: props.app.contacts || [],
       geolocation: isWordPress.value ? (props.app.geolocation || []) : (getGeolocationCodes() || []),
       nodes: props.app.nodes || [],
@@ -3200,7 +3203,7 @@ const generateDeploymentMessage = async () => {
     instances: config.value.instances,
     contacts: contacts, // Already contains storage reference for both WordPress and regular apps
     geolocation: isWordPress.value ? (props.app.geolocation || []) : getGeolocationCodes(),
-    expire: 22000 * config.value.subscriptionMonths,
+    expire: defaultExpireBlocks * config.value.subscriptionMonths,
     nodes: props.app.nodes || [],
     staticip: props.app.staticip || false,
     enterprise: '', // v8 enterprise support - will be populated if isAutoEnterprise is true
