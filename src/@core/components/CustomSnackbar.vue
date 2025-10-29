@@ -6,10 +6,12 @@
     variant="flat"
     timeout="4000"
   >
-    <VIcon left>
-      {{ icon }}
-    </VIcon>
-    {{ snackbar.text }}
+    <div class="d-flex align-center">
+      <VIcon class="mr-1">
+        {{ icon }}
+      </VIcon>
+      <span>{{ snackbar.text }}</span>
+    </div>
     <template #action="{ attrs }">
       <VBtn
         text

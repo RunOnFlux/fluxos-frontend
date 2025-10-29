@@ -1711,10 +1711,12 @@ async function getInstalledApplicationSpecifics(silent = false) {
       callResponse.value.data   = spec
       appSpecification.value    = spec
       InstalledLoading.value = false
+      
       return // Exit successfully
 
     } catch (error) {
       lastError = error.message || 'Connection error'
+
       // Restore original IP on error
       selectedIp.value = currentIp
       continue
@@ -1723,9 +1725,11 @@ async function getInstalledApplicationSpecifics(silent = false) {
 
   // If we get here, all backends failed
   console.error(`All ${attemptCount} backends failed. Last error: ${lastError}`)
+
   // Don't show snackbar - the persistent error UI will be shown instead
   InstalledApiError.value = true
   InstalledLoading.value = false
+  
   return
 }
 

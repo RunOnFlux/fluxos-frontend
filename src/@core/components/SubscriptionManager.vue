@@ -3635,6 +3635,7 @@ async function fetchCurrentBlockHeight() {
     const res = await props.executeLocalCommand('/daemon/getblockcount')
     if (res?.data?.status === 'success' && typeof res.data?.data === 'number') {
       currentBlockHeight.value = res.data.data
+      
       return
     }
   } catch (error) {
@@ -3646,6 +3647,7 @@ async function fetchCurrentBlockHeight() {
     const explorerResult = await ExplorerService.getScannedHeight()
     if (explorerResult.data.status === "success") {
       currentBlockHeight.value = explorerResult.data.data.generalScannedHeight
+      
       return
     }
   } catch (error) {

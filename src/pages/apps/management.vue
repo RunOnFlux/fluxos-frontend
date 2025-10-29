@@ -198,6 +198,7 @@ async function decryptIfEnterprise(spec, idx = 0) {
       // If app not found, return null so it can be filtered out
       if (encryptedRes.data.data?.message === 'Application not found') {
         console.warn(`${tag} Application not found - will be filtered from list`)
+        
         return null
       }
 
@@ -241,6 +242,7 @@ async function decryptIfEnterprise(spec, idx = 0) {
 // --- 🟦 Decrypt Array Helper (for active/expired) ---
 async function decryptEnterpriseApps(appArray) {
   const results = await Promise.all(appArray.map(decryptIfEnterprise))
+
   // Filter out null results (apps that were not found)
   return results.filter(spec => spec !== null)
 }

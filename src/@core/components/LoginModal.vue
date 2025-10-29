@@ -48,17 +48,6 @@
           v-else-if="showSsoVerify"
           class="processing-state"
         >
-          <VBtn
-            color="error"
-            variant="flat"
-            class="mb-4"
-            @click="cancelVerification"
-          >
-            <VIcon start>
-              mdi-close-circle
-            </VIcon>
-            {{ t("core.login.cancelVerification") }}
-          </VBtn>
           <VProgressCircular
             indeterminate
             color="primary"
@@ -68,9 +57,19 @@
           <div class="text-body-2">
             {{ t("core.login.finishingVerification") }}
           </div>
-          <div class="text-body-2 text-medium-emphasis">
+          <div class="text-body-2 text-medium-emphasis mb-4">
             <i>{{ t("core.login.checkEmail") }}</i>
           </div>
+          <VBtn
+            color="error"
+            variant="flat"
+            @click="cancelVerification"
+          >
+            <VIcon start>
+              mdi-close-circle
+            </VIcon>
+            {{ t("core.login.cancelVerification") }}
+          </VBtn>
         </div>
 
         <!-- Main Login UI -->
@@ -614,7 +613,8 @@ const handleSignedInUser = async user => {
       await getZelIdLoginPhrase()
       await nextTick()
 
-      const token = user.auth.currentUser.accessToken
+      // Use getIdToken() instead of accessing accessToken directly
+      const token = await user.getIdToken()
 
       const headers = {
         "Content-Type": "application/json",
@@ -652,6 +652,7 @@ const handleSignedInUser = async user => {
       }
     } else {
       await user.sendEmailVerification()
+      modalShow.value = false
       showSsoVerify.value = true
       ssoVerification.value = true
       await nextTick()
@@ -694,6 +695,7 @@ const resetLoginUI = async () => {
   emailForm.value.email = ""
   emailForm.value.password = ""
   ssoVerification.value = false
+  modalShow.value = false
   resetModal()
   await nextTick()
 }
@@ -708,13 +710,43 @@ const emailLogin = async () => {
     showEmailLoginProcessing.value = true
     await nextTick()
 
-    const checkUser = await loginWithEmail(emailForm.value)
+    const checkUser = await loginWithEmail({
+      email: emailForm.value.email.trim(),
+      password: emailForm.value.password,
+    })
+
+    if (!checkUser) {
+      throw new Error(t("core.login.loginFailed"))
+    }
 
     handleSignInSuccessWithAuthResult(checkUser)
   } catch (error) {
     showEmailLoginProcessing.value = false
     await nextTick()
-    showToast("error", t("core.login.loginFailed"))
+
+    // Provide specific error messages based on Firebase error codes
+    let errorMessage = "core.login.loginFailed"
+
+    const errorCode = error.code
+    const errorMsg = error.message
+
+    if (errorCode === 'auth/invalid-credential' || errorMsg === 'INVALID_LOGIN_CREDENTIALS') {
+      errorMessage = "core.login.invalidCredential"
+    } else if (errorCode === 'auth/user-not-found' || errorMsg === 'EMAIL_NOT_FOUND') {
+      errorMessage = "core.login.userNotFound"
+    } else if (errorCode === 'auth/wrong-password' || errorMsg === 'INVALID_PASSWORD') {
+      errorMessage = "core.login.wrongPassword"
+    } else if (errorCode === 'auth/invalid-email' || errorMsg === 'INVALID_EMAIL') {
+      errorMessage = "core.login.emailInvalid"
+    } else if (errorCode === 'auth/user-disabled') {
+      errorMessage = "core.login.userDisabled"
+    } else if (errorCode === 'auth/too-many-requests' || errorMsg === 'TOO_MANY_ATTEMPTS_TRY_LATER') {
+      errorMessage = "core.login.tooManyRequests"
+    } else if (errorCode === 'auth/network-request-failed') {
+      errorMessage = "core.login.networkError"
+    }
+
+    showToast("error", t(errorMessage))
   }
 }
 
@@ -739,15 +771,43 @@ const handleSubmit = async () => {
 
   try {
     const createUser = await createEmailSSO({
-      email: createSSOForm.value.email,
+      email: createSSOForm.value.email.trim(),
       password: createSSOForm.value.pw1,
     })
 
+    if (!createUser) {
+      throw new Error(t("core.login.accountCreationFailed"))
+    }
+
     handleSignInSuccessWithAuthResult(createUser)
-    modalShow.value = false
   } catch (error) {
-    resetLoginUI()
-    showToast("error", t("core.login.accountCreationFailed"))
+    // Don't call resetLoginUI() here - keep the dialog open so user can fix and try again
+    // Only clear the password fields for security
+    createSSOForm.value.pw1 = ""
+    createSSOForm.value.pw2 = ""
+
+    // Provide specific error messages based on Firebase error codes
+    let errorMessage = "core.login.accountCreationFailed"
+
+    // Check both error.code and error.message for Firebase errors
+    const errorCode = error.code
+    const errorMsg = error.message
+
+    if (errorCode === 'auth/email-already-in-use' || errorMsg === 'EMAIL_EXISTS') {
+      errorMessage = "core.login.emailAlreadyInUse"
+    } else if (errorCode === 'auth/weak-password' || errorMsg === 'WEAK_PASSWORD') {
+      errorMessage = "core.login.weakPassword"
+    } else if (errorCode === 'auth/invalid-email' || errorMsg === 'INVALID_EMAIL') {
+      errorMessage = "core.login.emailInvalid"
+    } else if (errorCode === 'auth/operation-not-allowed' || errorMsg === 'OPERATION_NOT_ALLOWED') {
+      errorMessage = "core.login.operationNotAllowed"
+    } else if (errorCode === 'auth/network-request-failed') {
+      errorMessage = "core.login.networkError"
+    } else if (errorCode === 'auth/too-many-requests' || errorMsg === 'TOO_MANY_ATTEMPTS_TRY_LATER') {
+      errorMessage = "core.login.tooManyRequests"
+    }
+
+    showToast("error", t(errorMessage))
   }
 }
 

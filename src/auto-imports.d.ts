@@ -81,6 +81,7 @@ declare global {
   const getDetectedBackendURL: typeof import('./utils/backend.js')['getDetectedBackendURL']
   const getEnterprisePGPKeys: typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']
   const getMetaMaskSDK: typeof import('./utils/walletService.js')['getMetaMaskSDK']
+  const getRedirectResult: typeof import('./utils/firebase.js')['getRedirectResult']
   const getSpecFromPermanentMessages: typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']
   const getUser: typeof import('./utils/firebase.js')['getUser']
   const h: typeof import('vue')['h']

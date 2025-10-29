@@ -24,22 +24,18 @@ export function getUser() {
 }
 
 export async function createEmailSSO(login) {
-  try {
-    const { email, password } = login
-    
-    return await auth.createUserWithEmailAndPassword(email, password)
-  } catch (error) {
-    return null
-  }
+  const { email, password } = login
+
+  // Let the error propagate to the caller so they can handle specific error codes
+  return await auth.createUserWithEmailAndPassword(email, password)
 }
 
 export async function loginWithEmail(login) {
   const { email, password } = login
-  try {
-    return await auth.signInWithEmailAndPassword(email, password)
-  } catch (error) {
-    return null
-  }
+
+  // Let the error propagate to the caller so they can handle specific error codes
+
+  return await auth.signInWithEmailAndPassword(email, password)
 }
 
 export async function loginWithGoogle() {

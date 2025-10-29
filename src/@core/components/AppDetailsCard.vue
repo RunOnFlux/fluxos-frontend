@@ -283,6 +283,7 @@ onMounted(async () => {
     const daemonResult = await DaemonService.getBlockCount()
     if (daemonResult?.data?.status === 'success' && typeof daemonResult.data?.data === 'number') {
       currentBlockHeight.value = daemonResult.data.data
+      
       return
     }
   } catch (error) {
@@ -455,6 +456,7 @@ function getExpiryColorVariant(label) {
 // Legacy function for backwards compatibility
 function isExpiringSoon(label) {
   const variant = getExpiryColorVariant(label)
+  
   return variant === 'danger'
 }
 </script>
