@@ -194,7 +194,13 @@ async function decryptIfEnterprise(spec, idx = 0) {
     }
     if (encryptedRes.data.status !== 'success') {
       console.warn(`${tag} ⚠️ encrypted fetch bad status`, encryptedRes.data)
-      
+
+      // If app not found, return null so it can be filtered out
+      if (encryptedRes.data.data?.message === 'Application not found') {
+        console.warn(`${tag} Application not found - will be filtered from list`)
+        return null
+      }
+
       return spec
     }
 
@@ -234,7 +240,9 @@ async function decryptIfEnterprise(spec, idx = 0) {
 
 // --- 🟦 Decrypt Array Helper (for active/expired) ---
 async function decryptEnterpriseApps(appArray) {
-  return Promise.all(appArray.map(decryptIfEnterprise))
+  const results = await Promise.all(appArray.map(decryptIfEnterprise))
+  // Filter out null results (apps that were not found)
+  return results.filter(spec => spec !== null)
 }
 
 async function getDaemonBlockCount() {

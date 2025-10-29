@@ -806,6 +806,34 @@
             />
           </div>
           <VAlert
+            v-if="InstalledApiError"
+            color="error"
+            density="comfortable"
+            class="pa-3"
+          >
+            <template #default>
+              <div class="d-flex align-center justify-start w-100">
+                <VIcon
+                  icon="mdi-alert-circle"
+                  class="mr-2"
+                  size="34"
+                />
+                <div class="flex-grow-1">
+                  <div class="font-weight-bold mb-1">Unable to Load Installed App Specification</div>
+                  <div class="text-body-2">The app specification is empty or invalid. This may indicate the app is not properly installed.</div>
+                </div>
+                <VBtn
+                  icon="mdi-refresh"
+                  color="white"
+                  variant="text"
+                  :loading="InstalledLoading"
+                  @click="getInstalledAppSpecification()"
+                  class="ml-2"
+                />
+              </div>
+            </template>
+          </VAlert>
+          <VAlert
             v-if="apiError"
             color="error"
             density="comfortable"
@@ -1596,62 +1624,109 @@ async function getInstalledApplicationSpecifics(silent = false) {
   InstalledLoading.value = true
   InstalledApiError.value = false
 
-  try {
-    const response = await executeLocalCommand(
-      `/apps/installedapps/${appName.value}`,
-      null,
-      null,
-      true,
-    )
+  // Try up to 5 backends before giving up (don't query 100 nodes!)
+  const availableInstances = instances.value.data || []
+  const currentIp = selectedIp.value
 
-    if (!response) {
-      InstalledApiError.value = true
-      
-      return
-    }
+  // Build list of IPs to try: current IP first, then up to 4 others
+  const MAX_BACKENDS_TO_TRY = 5
+  const otherIps = availableInstances.map(i => i.ip).filter(ip => ip && ip !== currentIp)
+  const ipsToTry = [currentIp, ...otherIps.slice(0, MAX_BACKENDS_TO_TRY - 1)]
 
-    const { status, data: appSpecs } = response.data
-    if (status !== 'success' || !appSpecs?.length) {
-      if (!silent) showToast('danger', 'Unable to get installed app spec')
-      InstalledApiError.value = true
-      
-      return
-    }
+  let lastError = null
+  let attemptCount = 0
 
-    let spec = { ...appSpecs[0] } // clone so we can mutate safely
+  for (const tryIp of ipsToTry) {
+    if (!tryIp) continue
+    attemptCount++
+    console.log(`Attempting to fetch app spec from backend ${attemptCount}/${ipsToTry.length}: ${tryIp}`)
 
-    const isEnterprise = spec.version >= 8 && spec.enterprise && spec.enterprise !== ''
+    try {
+      // Temporarily switch to this IP
+      const originalIp = selectedIp.value
+      selectedIp.value = tryIp
 
-    // same comparison as original
-    const sameEnterpriseSpec =
-      isEnterprise && spec.enterprise === callBResponse.value.data?.enterprise
+      const response = await executeLocalCommand(
+        `/apps/installedapps/${appName.value}`,
+        null,
+        null,
+        true,
+        true, // suppressErrorAlert
+      )
 
-    if (isEnterprise && sameEnterpriseSpec) {
-      // reuse already-decrypted global spec
-      spec.contacts = callBResponse.value.data.contacts
-      spec.compose  = callBResponse.value.data.compose
-    } else if (isEnterprise && !sameEnterpriseSpec) {
-      // decrypt locally
-      const decrypted = await getDecryptedEnterpriseFields({ local: true })
-      if (!decrypted) {
-        if (!silent) showToast('danger', 'Unable to get decrypted app spec')
-        InstalledApiError.value = true
-        
-        return
+      // Restore original IP
+      selectedIp.value = originalIp
+
+      if (!response) {
+        lastError = 'No response from backend'
+        console.log(`Backend ${tryIp} failed: No response`)
+        continue
       }
-      spec.contacts = decrypted.contacts
-      spec.compose  = decrypted.compose
-    }
 
-    // final assignment (mirrors original)
-    callResponse.value.status = status
-    callResponse.value.data   = spec
-    appSpecification.value    = spec
-  } catch (error) {
-    InstalledApiError.value = true
-  } finally {
-    InstalledLoading.value = false
+      const { status, data: appSpecs } = response.data
+      if (status !== 'success' || !appSpecs?.length) {
+        lastError = 'Unable to get installed app spec'
+        console.log(`Backend ${tryIp} failed: ${lastError}`)
+        continue
+      }
+
+      let spec = { ...appSpecs[0] } // clone so we can mutate safely
+
+      // Validate spec is not empty
+      if (!spec || !spec.name || spec.version === undefined) {
+        lastError = 'Installed app specification is empty or invalid'
+        console.log(`Backend ${tryIp} failed: ${lastError}`)
+        continue
+      }
+
+      // SUCCESS! We got a valid spec from this backend
+      console.log(`Successfully fetched app spec from ${tryIp}`)
+
+      // Continue with the rest of the function...
+      const isEnterprise = spec.version >= 8 && spec.enterprise && spec.enterprise !== ''
+
+      // same comparison as original
+      const sameEnterpriseSpec =
+        isEnterprise && spec.enterprise === callBResponse.value.data?.enterprise
+
+      if (isEnterprise && sameEnterpriseSpec) {
+        // reuse already-decrypted global spec
+        spec.contacts = callBResponse.value.data.contacts
+        spec.compose  = callBResponse.value.data.compose
+      } else if (isEnterprise && !sameEnterpriseSpec) {
+        // decrypt locally
+        const decrypted = await getDecryptedEnterpriseFields({ local: true })
+        if (!decrypted) {
+          if (!silent) showToast('danger', 'Unable to get decrypted app spec')
+          InstalledApiError.value = true
+
+          return
+        }
+        spec.contacts = decrypted.contacts
+        spec.compose  = decrypted.compose
+      }
+
+      // final assignment (mirrors original)
+      callResponse.value.status = status
+      callResponse.value.data   = spec
+      appSpecification.value    = spec
+      InstalledLoading.value = false
+      return // Exit successfully
+
+    } catch (error) {
+      lastError = error.message || 'Connection error'
+      // Restore original IP on error
+      selectedIp.value = currentIp
+      continue
+    }
   }
+
+  // If we get here, all backends failed
+  console.error(`All ${attemptCount} backends failed. Last error: ${lastError}`)
+  // Don't show snackbar - the persistent error UI will be shown instead
+  InstalledApiError.value = true
+  InstalledLoading.value = false
+  return
 }
 
 async function getDecryptedEnterpriseFields(options = {}) {

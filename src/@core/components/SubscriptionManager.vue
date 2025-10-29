@@ -2965,6 +2965,7 @@ import { getUser } from '@/utils/firebase'
 import { getDetectedBackendURL } from "@/utils/backend"
 import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
+import ExplorerService from '@/services/ExplorerService'
 import { storeToRefs } from "pinia"
 import { useFluxStore } from "@/stores/flux"
 import { useTheme, useDisplay } from 'vuetify'
@@ -3371,14 +3372,18 @@ function convertToLatestSpec() {
 // PON (proof of nodes) Fork configuration - block height where chain speed increases 4x
 const FORK_BLOCK_HEIGHT = 2020000
 
-// Renewal options (post-fork values, since fork already happened at block 2,020,000)
+// Base period: 1 month = 88000 blocks (post-fork, 30-second blocks)
+// All renewal options are calculated as multipliers of this base
+const BLOCKS_PER_MONTH = 88000
+
+// Renewal options (post-fork values, calculated from BLOCKS_PER_MONTH)
 const renewalOptions = ref([
-  { value: 20000, label: t('core.subscriptionManager.renewal1Week') },
-  { value: 44000, label: t('core.subscriptionManager.renewal2Weeks') },
-  { value: 88000, label: t('core.subscriptionManager.renewal1Month') },
-  { value: 264000, label: t('core.subscriptionManager.renewal3Months') },
-  { value: 528000, label: t('core.subscriptionManager.renewal6Months') },
-  { value: 1056000, label: t('core.subscriptionManager.renewal1Year') },
+  { value: Math.round(BLOCKS_PER_MONTH * (1/4)), label: t('core.subscriptionManager.renewal1Week') },     // ~1 week (22,000 blocks)
+  { value: Math.round(BLOCKS_PER_MONTH * (1/2)), label: t('core.subscriptionManager.renewal2Weeks') },    // ~2 weeks (44,000 blocks)
+  { value: BLOCKS_PER_MONTH, label: t('core.subscriptionManager.renewal1Month') },                         // 1 month (88,000 blocks)
+  { value: BLOCKS_PER_MONTH * 3, label: t('core.subscriptionManager.renewal3Months') },                    // 3 months (264,000 blocks)
+  { value: BLOCKS_PER_MONTH * 6, label: t('core.subscriptionManager.renewal6Months') },                    // 6 months (528,000 blocks)
+  { value: BLOCKS_PER_MONTH * 12, label: t('core.subscriptionManager.renewal1Year') },                     // 1 year (1,056,000 blocks)
 
 ])
 
@@ -3626,15 +3631,28 @@ async function getMultiplier() {
 
 async function fetchCurrentBlockHeight() {
   try {
+    // Try daemon first (more accurate, real-time)
     const res = await props.executeLocalCommand('/daemon/getblockcount')
     if (res?.data?.status === 'success' && typeof res.data?.data === 'number') {
       currentBlockHeight.value = res.data.data
-    } else {
-      currentBlockHeight.value = null
+      return
     }
-  } catch {
-    currentBlockHeight.value = null
+  } catch (error) {
+    console.log("Daemon block height not available, falling back to explorer:", error)
   }
+
+  try {
+    // Fallback to explorer
+    const explorerResult = await ExplorerService.getScannedHeight()
+    if (explorerResult.data.status === "success") {
+      currentBlockHeight.value = explorerResult.data.data.generalScannedHeight
+      return
+    }
+  } catch (error) {
+    console.error("Error fetching block height from both sources:", error)
+  }
+
+  currentBlockHeight.value = null
 }
 
 
@@ -3658,7 +3676,12 @@ onMounted(async () => {
 
 
 // --- Running-till timestamps ----------------------------------------
-const blockTimeMs = 2 * 60 * 1000 // 2 minutes per block
+// Helper function to get fork-aware block time in milliseconds
+function getBlockTimeMs(blockHeight) {
+  // Post-fork (block >= 2,020,000): 30 seconds per block
+  // Pre-fork (block < 2,020,000): 2 minutes per block
+  return blockHeight >= FORK_BLOCK_HEIGHT ? 0.5 * 60 * 1000 : 2 * 60 * 1000
+}
 
 // 1️⃣  Clone once (on mount) – never overwritten
 const originalExpireSnapshot = ref(null)
@@ -3766,18 +3789,59 @@ const originalExpireBlocks = computed(() => {
   return props.appSpec.height + originalExpireSnapshot.value - currentBlockHeight.value
 })
 
-// 3️⃣  timestamps shown in the UI
+// 3️⃣  timestamps shown in the UI (fork-aware calculation)
 const appRunningTill = computed(() => {
-  const blockTimeMs = 2 * 60 * 1000
   const now = Date.now()
-  const current = originalExpireBlocks.value ?? 0
-  const chosen = (renewalEnabled.value || managementAction.value === 'renewal')
+  const currentBlocksRemaining = originalExpireBlocks.value ?? 0
+  const chosenRenewalBlocks = (renewalEnabled.value || managementAction.value === 'renewal')
     ? renewalOptions.value[appDetails.value.renewalIndex]?.value ?? 0
     : 0
 
+  // Helper: Calculate milliseconds from blocks remaining (fork-aware with split calculation)
+  // This handles apps registered before fork but expiring after fork
+  function blocksToMs(blocksRemaining, isCurrentExpiry = false) {
+    if (!currentBlockHeight.value || blocksRemaining <= 0) {
+      // Fallback: assume post-fork if we don't have current height
+      return blocksRemaining * getBlockTimeMs(FORK_BLOCK_HEIGHT)
+    }
+
+    let totalMinutes = 0
+
+    if (isCurrentExpiry && typeof props.appSpec?.height === 'number' && originalExpireSnapshot.value) {
+      // For current expiry, we know the exact expiry block height
+      const expiryBlockHeight = props.appSpec.height + originalExpireSnapshot.value
+
+      // Split calculation based on fork transition
+      if (currentBlockHeight.value < FORK_BLOCK_HEIGHT) {
+        // We're currently before the fork
+        if (expiryBlockHeight <= FORK_BLOCK_HEIGHT) {
+          // Expiration is before fork - all blocks at 2 min/block
+          totalMinutes = blocksRemaining * 2
+        } else {
+          // Expiration is after fork - split calculation
+          const blocksUntilFork = FORK_BLOCK_HEIGHT - currentBlockHeight.value
+          const blocksAfterFork = expiryBlockHeight - FORK_BLOCK_HEIGHT
+          totalMinutes = (blocksUntilFork * 2) + (blocksAfterFork * 0.5)
+        }
+      } else {
+        // We're currently after fork - all remaining blocks at 0.5 min/block
+        totalMinutes = blocksRemaining * 0.5
+      }
+    } else {
+      // For renewals (future blocks), assume they're all post-fork since we're already past fork
+      if (currentBlockHeight.value >= FORK_BLOCK_HEIGHT) {
+        totalMinutes = blocksRemaining * 0.5 // Post-fork: 30 seconds per block
+      } else {
+        totalMinutes = blocksRemaining * 2 // Pre-fork: 2 minutes per block
+      }
+    }
+
+    return totalMinutes * 60 * 1000 // Convert minutes to milliseconds
+  }
+
   return {
-    current: current * blockTimeMs + now,
-    new: chosen * blockTimeMs + now,
+    current: blocksToMs(currentBlocksRemaining, true) + now,  // true = use split calculation for current expiry
+    new: blocksToMs(chosenRenewalBlocks, false) + now,        // false = simple calculation for future renewal
   }
 })
 
@@ -3815,12 +3879,12 @@ const timeRemainingColor = computed(() => {
 
   const days = Math.floor(diffMs / (24 * 60 * 60 * 1000))
 
-  if (days <= 3) {
-    return 'error' // Red - 3 days or less
-  } else if (days <= 7) {
-    return 'warning' // Orange - 7 days or less
+  if (days < 3) {
+    return 'error' // Red - Less than 3 days
+  } else if (days <= 4) {
+    return 'warning' // Orange - 3 to 4 days
   } else {
-    return 'success' // Green - More than 7 days
+    return 'success' // Green - More than 4 days
   }
 })
 

@@ -36,6 +36,7 @@ const hideTitleAndBadge = configStore.isVerticalNavMini()
         :is="layoutConfig.app.iconRenderer || 'div'"
         v-bind="item.icon || layoutConfig.verticalNav.defaultNavItemIconProps"
         class="nav-item-icon"
+        :class="item.iconClass"
       />
       <TransitionGroup name="transition-slide-x">
         <!-- 👉 Title -->

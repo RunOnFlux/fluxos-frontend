@@ -152,7 +152,7 @@
       :data="expiresInLabel"
       title-icon="mdi-clock-outline"
       title-icon-scale="1.2"
-      :kbd-variant="isExpiringSoon(expiresInLabel) ? 'danger' : 'success'"
+      :kbd-variant="getExpiryColorVariant(expiresInLabel)"
     />
     <ListEntry
       :title="t('core.appDetailsCard.enterpriseNodes')"
@@ -178,6 +178,7 @@ import { ref, computed, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import geolocations from "@/utils/geolocation"
 import ExplorerService from '@/services/ExplorerService'
+import DaemonService from '@/services/DaemonService'
 
 const props = defineProps({
   app: Object,
@@ -204,7 +205,7 @@ const { t } = useI18n()
 
 // PON Fork configuration - block height where chain speed increases 4x
 const FORK_BLOCK_HEIGHT = 2020000
-const currentBlockHeight = ref(-1)
+const currentBlockHeight = ref(null)
 
 const snackbar = ref({
   show: false,
@@ -224,27 +225,15 @@ const adjustedExpiryBlockHeight = computed(() => {
   const expireIn = props.app.expire || defaultExpire
   const originalExpirationHeight = props.app.height + expireIn
 
-  // If app was registered before PON fork AND expiration extends past the fork,
-  // the blocks AFTER the fork will be 4x faster, so multiply those by 4
-  if (props.app.height < FORK_BLOCK_HEIGHT && originalExpirationHeight > FORK_BLOCK_HEIGHT) {
-    // Calculate blocks that were supposed to live after fork block
-    const blocksAfterFork = originalExpirationHeight - FORK_BLOCK_HEIGHT
-
-    // Multiply by 4 to account for 4x faster chain
-    const adjustedBlocksAfterFork = blocksAfterFork * 4
-
-    // New expiration = fork block + adjusted blocks
-    const adjustedExpiration = FORK_BLOCK_HEIGHT + adjustedBlocksAfterFork
-
-    return adjustedExpiration
-  }
-
+  // The blockchain stores the expiry block height directly
+  // No adjustment needed - the backend already calculated fork-aware expiry
+  // We just need to display the time remaining correctly (done in expiresInLabel below)
   return originalExpirationHeight
 })
 
 // Calculate fork-aware expiry time label
 const expiresInLabel = computed(() => {
-  if (!adjustedExpiryBlockHeight.value || currentBlockHeight.value < 0) {
+  if (!adjustedExpiryBlockHeight.value || currentBlockHeight.value === null || currentBlockHeight.value < 0) {
     return t('core.appDetailsCard.notAvailable')
   }
 
@@ -287,16 +276,28 @@ const expiresInLabel = computed(() => {
   return parts.slice(0, 3).join(', ')
 })
 
-// Fetch current block height on mount
+// Fetch current block height on mount (daemon first, explorer failover)
 onMounted(async () => {
   try {
-    const result = await ExplorerService.getScannedHeight()
-    if (result.data.status === "success") {
-      currentBlockHeight.value = result.data.data.generalScannedHeight
+    // Try daemon first (more accurate, real-time)
+    const daemonResult = await DaemonService.getBlockCount()
+    if (daemonResult?.data?.status === 'success' && typeof daemonResult.data?.data === 'number') {
+      currentBlockHeight.value = daemonResult.data.data
+      return
     }
   } catch (error) {
-    console.error("Error fetching block height:", error)
-    currentBlockHeight.value = -1
+    console.log("Daemon block height not available, falling back to explorer:", error)
+  }
+
+  try {
+    // Fallback to explorer
+    const explorerResult = await ExplorerService.getScannedHeight()
+    if (explorerResult.data.status === "success") {
+      currentBlockHeight.value = explorerResult.data.data.generalScannedHeight
+    }
+  } catch (error) {
+    console.error("Error fetching block height from both sources:", error)
+    currentBlockHeight.value = null
   }
 })
 
@@ -422,11 +423,12 @@ function contactIcon(value) {
     : "mdi-email-lock"
 }
 
-function isExpiringSoon(label) {
+// Get color variant for expiry time (matching SubscriptionManager.vue logic)
+function getExpiryColorVariant(label) {
   const timeParts =
     typeof label === "string" ? label.match(/\d+\s*(day|hour|minute)/gi) : null
 
-  if (!timeParts) return false
+  if (!timeParts) return 'secondary'
 
   const totalMinutes = timeParts.reduce((sum, part) => {
     const [num, unit] = part.match(/\d+|\D+/g).map(s => s.trim())
@@ -438,7 +440,22 @@ function isExpiringSoon(label) {
     return sum
   }, 0)
 
-  return totalMinutes < 2880
+  const days = totalMinutes / 1440
+
+  // Color logic:
+  if (days < 3) {
+    return 'danger' // Red - Less than 3 days
+  } else if (days <= 4) {
+    return 'warning' // Orange - 3 to 4 days
+  } else {
+    return 'success' // Green - More than 4 days
+  }
+}
+
+// Legacy function for backwards compatibility
+function isExpiringSoon(label) {
+  const variant = getExpiryColorVariant(label)
+  return variant === 'danger'
 }
 </script>
 

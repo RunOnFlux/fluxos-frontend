@@ -123,6 +123,7 @@ watch(configStore.isVerticalNavMini(isVerticalNavHovered), val => {
     v-if="canViewNavMenuGroup(item)"
     class="nav-group"
     :class="[
+      item.itemClass,
       {
         active: isGroupActive,
         open: isGroupOpen,
@@ -138,6 +139,7 @@ watch(configStore.isVerticalNavMini(isVerticalNavHovered), val => {
         :is="layoutConfig.app.iconRenderer || 'div'"
         v-bind="item.icon || layoutConfig.verticalNav.defaultNavItemIconProps"
         class="nav-item-icon"
+        :class="item.iconClass"
       />
 
       <Component

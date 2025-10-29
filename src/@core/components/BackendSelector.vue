@@ -172,7 +172,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bookmark-wrapper d-flex align-center flex-grow-1 d-none d-md-flex">
+  <div class="bookmark-wrapper d-flex align-center d-none d-md-flex">
     <VMenu
       v-model:open="dropdownOpen"
       offset-y

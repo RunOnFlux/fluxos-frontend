@@ -875,21 +875,30 @@ function labelForExpire(expire, height) {
   const forkBlock = 2020000
   const defaultExpire = height >= forkBlock ? 88000 : 22000
   const expires = expire || defaultExpire
-  let effectiveExpiry = height + expires
+  const effectiveExpiry = height + expires
 
-  // If app was registered before the fork (block 2020000) and we're currently past the fork,
-  // adjust the expiry calculation since the blockchain moves 4x faster post-fork
-  if (height < forkBlock && props.currentBlockHeight >= forkBlock && effectiveExpiry > forkBlock) {
-    const remainingBlocksAfterFork = effectiveExpiry - forkBlock
-    effectiveExpiry = forkBlock + (remainingBlocksAfterFork * 4)
-  }
-
+  // Expiry block height is always: registration + expire blocks (no adjustment)
   const blocksToExpire = effectiveExpiry - props.currentBlockHeight
   if (blocksToExpire < 1) return t('pages.apps.table.applicationExpired')
 
-  // Block time: 2 minutes before fork (block 2020000), 30 seconds (0.5 minutes) after fork
-  const minutesPerBlock = props.currentBlockHeight >= forkBlock ? 0.5 : 2
-  const minutes = blocksToExpire * minutesPerBlock
+  // Fork-aware time calculation: account for blocks before/after fork
+  let minutes = 0
+
+  if (props.currentBlockHeight < forkBlock) {
+    // Currently before fork
+    if (effectiveExpiry <= forkBlock) {
+      // Expiry also before fork - simple calculation
+      minutes = blocksToExpire * 2
+    } else {
+      // Expiry after fork - split calculation
+      const blocksUntilFork = forkBlock - props.currentBlockHeight
+      const blocksAfterFork = effectiveExpiry - forkBlock
+      minutes = (blocksUntilFork * 2) + (blocksAfterFork * 0.5)
+    }
+  } else {
+    // Currently after fork - all remaining blocks at post-fork speed
+    minutes = blocksToExpire * 0.5
+  }
   const units = { day: 1440, hour: 60, minute: 1 }
   const result = []
   let value = minutes

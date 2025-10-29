@@ -7,6 +7,8 @@ import BackendSelector from "@/@core/components/BackendSelector.vue"
 import Footer from "@/layouts/components/Footer.vue"
 import NavBarNotifications from "@/layouts/components/NavBarNotifications.vue"
 import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
+import NavBarMemoryMonitor from "@/layouts/components/NavBarMemoryMonitor.vue"
+import NavBarStatusBarToggle from "@/layouts/components/NavBarStatusBarToggle.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
 import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
 import NavBarI18n from "@core/components/I18n.vue"
@@ -62,7 +64,8 @@ const handleLoginSuccess = () => {
 
       <VDivider vertical class="navbar-divider" />
       <BackendSelector />
-      <FluxAIToggler class="ml-2 mr-2" />
+      <FluxAIToggler class="ml-2" />
+
       <VSpacer />
 
       <IconBtn
@@ -81,6 +84,8 @@ const handleLoginSuccess = () => {
       />
 
       <NavbarThemeSwitcher />
+      <NavBarMemoryMonitor />
+      <NavBarStatusBarToggle :class="{ 'mr-3': privilege !== 'none' && privilege !== 'admin' && privilege !== 'fluxteam' }" />
       <!-- <NavbarShortcuts /> -->
       <NavBarNotifications v-show="privilege === 'admin' || privilege === 'fluxteam'" class="mr-3" />
       <UserProfile />

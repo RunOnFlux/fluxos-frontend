@@ -83,12 +83,15 @@ watch(() => route.path, () => {
     class="nav-group"
     tag="li"
     content-container-tag="ul"
-    :class="[{
-      'active': isGroupActive,
-      'children-at-end': childrenAtEnd,
-      'sub-item': isSubItem,
-      'disabled': item.disable,
-    }]"
+    :class="[
+      item.itemClass,
+      {
+        'active': isGroupActive,
+        'children-at-end': childrenAtEnd,
+        'sub-item': isSubItem,
+        'disabled': item.disable,
+      }
+    ]"
     :popper-inline-end="childrenAtEnd"
     @mouseenter="handleMenuOpen"
   >
@@ -96,6 +99,7 @@ watch(() => route.path, () => {
       <Component
         :is="layoutConfig.app.iconRenderer || 'div'"
         class="nav-item-icon"
+        :class="item.iconClass"
         v-bind="item.icon || layoutConfig.verticalNav.defaultNavItemIconProps"
       />
       <Component

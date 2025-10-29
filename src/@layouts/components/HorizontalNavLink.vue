@@ -41,6 +41,7 @@ const props = defineProps({
       <Component
         :is="layoutConfig.app.iconRenderer || 'div'"
         class="nav-item-icon"
+        :class="item.iconClass"
         v-bind="item.icon || layoutConfig.verticalNav.defaultNavItemIconProps"
       />
       <Component

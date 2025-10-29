@@ -7,6 +7,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>FluxCloud</title>
   <link rel="stylesheet" type="text/css" href="/loader.css" />
+  <style>
+    /* Hide reCAPTCHA error message that appears before v-overlay-container */
+    .v-overlay-container ~ div:not([id]):not([class]) {
+      display: none !important;
+    }
+    /* Alternative: hide the preceding sibling of v-overlay-container without id/class */
+    body > div:not([id]):not([class]) + .v-overlay-container {
+      & ~ div:not([id]):not([class]),
+      + div:not([id]):not([class]) {
+        display: none !important;
+      }
+    }
+    /* Target the div that contains reCAPTCHA text specifically */
+    body > div:not([id]):not([class]):has(div:only-child) {
+      display: none !important;
+    }
+  </style>
 </head>
 
 <body>
