@@ -2168,7 +2168,7 @@
               <div class="d-flex align-center justify-start w-100">
                 <VIcon icon="mdi-alert-decagram" class="mr-3" size="28" />
                 <div class="flex-grow-1">
-                  Test failed. Check logs and retry or switch backend.
+                  {{ t('core.subscriptionManager.testFailedCheckLogsRetry') }}
                 </div>
                 <VBtn
                   icon="mdi-refresh"
@@ -3142,7 +3142,7 @@ const currentAppIsMarketplace = computed(() => {
 
   if (!appName || !marketPlaceApps.value.length) {
     console.log('Not marketplace - no app name or no marketplace data')
-    
+
     return false
   }
 
@@ -3157,13 +3157,35 @@ const currentAppIsMarketplace = computed(() => {
     if (matches) {
       console.log('Marketplace app matched:', app.name)
     }
-    
+
     return matches
   })
 
   console.log('Is marketplace app:', isMarketplace)
-  
+
   return isMarketplace
+})
+
+// Computed property for price multiplier display (like Flux Home UI)
+// Shows combined multiplier: marketplace multiplier × general multiplier
+const priceMultiplier = computed(() => {
+  const appName = props.appSpec?.name || appDetails.value.name
+
+  if (!appName || !marketPlaceApps.value.length) {
+    return generalMultiplier.value  // Return general multiplier only
+  }
+
+  const marketPlaceApp = marketPlaceApps.value.find(
+    app => appName.toLowerCase().startsWith(app.name.toLowerCase())
+  )
+
+  if (marketPlaceApp && marketPlaceApp.multiplier > 1) {
+    // Return combined multiplier for marketplace apps
+    return marketPlaceApp.multiplier * generalMultiplier.value
+  }
+
+  // For non-marketplace apps or marketplace apps with multiplier = 1
+  return generalMultiplier.value
 })
 
 // Priority/Enterprise Nodes
@@ -5336,19 +5358,42 @@ const expiryLabel = computed(() => {
     : height + expire - current
   if (blocksToExpireLocal < 1) return ''
 
-  // Block time: 2 minutes before fork (block 2020000), 30 seconds (0.5 minutes) after fork
-  const minutesPerBlock = current >= FORK_BLOCK_HEIGHT ? 0.5 : 2
-  const totalMinutes = blocksToExpireLocal * minutesPerBlock
+  // Fork-aware calculation: Apps registered before fork need split calculation
+  let totalMinutes = 0
+
+  if (height < FORK_BLOCK_HEIGHT && current >= FORK_BLOCK_HEIGHT) {
+    // App registered before fork, currently after fork
+    // Need to calculate: intended duration - elapsed time
+
+    // Calculate intended subscription duration based on registration time
+    const blockTimeAtRegistration = 2 // Pre-fork: 2 minutes per block
+    const subscriptionDurationMinutes = expire * blockTimeAtRegistration
+
+    // Calculate elapsed time from registration to now
+    const blocksBeforeFork = FORK_BLOCK_HEIGHT - height
+    const blocksAfterFork = current - FORK_BLOCK_HEIGHT
+    const elapsedMinutes = (blocksBeforeFork * 2) + (blocksAfterFork * 0.5)
+
+    // Remaining time
+    totalMinutes = subscriptionDurationMinutes - elapsedMinutes
+  } else {
+    // Simple case: both registration and current are on same side of fork
+    const minutesPerBlock = current >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+    totalMinutes = blocksToExpireLocal * minutesPerBlock
+  }
+
+  if (totalMinutes < 0) return ''
+
   const days = Math.floor(totalMinutes / 1440)
   const hours = Math.floor((totalMinutes % 1440) / 60)
-  const minutes = totalMinutes % 60
+  const minutes = Math.floor(totalMinutes % 60)
 
   const parts = []
   if (days > 0) parts.push(`${days} day${days > 1 ? 's' : ''}`)
   if (hours > 0) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`)
-  parts.push(`${minutes} minute${minutes !== 1 ? 's' : ''}`)
+  if (minutes > 0) parts.push(`${minutes} minute${minutes !== 1 ? 's' : ''}`)
 
-  return parts.join(', ')
+  return parts.length > 0 ? parts.join(', ') : '0 minutes'
 })
 
 // Auto-trigger logic when switching to tab 99
@@ -5468,6 +5513,51 @@ watch(tab, async newVal => {
   }
 })
 
+// Auto-run test when entering Test & Pay tab (tab 100)
+watch(tab, async (newVal, oldVal) => {
+  if (newVal === 100 && oldVal !== 100) {
+    console.log('📋 ENTERING TEST & PAY TAB', {
+      hasRegistrationHash: !!registrationHash.value,
+      testFinished: testFinished.value,
+      testError: testError.value,
+      testRunning: testRunning.value,
+      specsHaveChanged: specsHaveChanged.value,
+      isNewApp: props.newApp,
+      appSpecPrice: appSpecPrice.value?.flux,
+    })
+
+    // Auto-run test ONLY if test section is visible (same conditions as v-if in template)
+    // Test section shows when: !testFinished && specsHaveChanged && (newApp || paid update) && !paymentProcessing && !paymentConfirmed
+    const testSectionVisible =
+      !testFinished.value &&
+      specsHaveChanged.value &&
+      (props.newApp || appSpecPrice.value?.flux !== 0) &&
+      !paymentProcessing.value &&
+      !paymentConfirmed.value
+
+    const shouldAutoTest =
+      testSectionVisible &&
+      registrationHash.value &&
+      !testRunning.value
+
+    if (shouldAutoTest) {
+      console.log('🚀 AUTO-TRIGGERING TEST INSTALLATION')
+
+      // Small delay to ensure UI is ready
+      await nextTick()
+      setTimeout(() => {
+        testAppInstall()
+      }, 500)
+    } else {
+      console.log('⏭️ Skipping auto-test:', {
+        reason: !testSectionVisible ? 'Test section not visible (test not required)' :
+                !registrationHash.value ? 'No registration hash' :
+                testRunning.value ? 'Test already running' :
+                'Unknown'
+      })
+    }
+  }
+})
 
 async function uploadEnvToFluxStorage(componentIndex) {
   try {
@@ -5781,27 +5871,31 @@ async function verifyAppSpec() {
       console.log(`[V${appSpecTemp.version}] Recalculated expire for free update:`, blocksToExpire.value)
     }
 
-    // Check if this is a marketplace app with fixed priceUSD (for new apps, renewals, and updates with renewal)
-    if (props.newApp || managementAction.value === 'renewal' || renewalEnabled.value) {
-      const appName = appSpecTemp.name
-      const marketPlaceApp = marketPlaceApps.value.find(app => appName?.toLowerCase().startsWith(app.name.toLowerCase()))
-      if (marketPlaceApp && marketPlaceApp.priceUSD) {
-        console.log('Marketplace app with fixed price detected:', marketPlaceApp.name, 'Base Price (1 month):', marketPlaceApp.priceUSD)
+    // Check if this is a marketplace app (for tracking/display purposes only)
+    // Like Flux Home UI: marketplace info used ONLY for UI, NOT for pricing
+    const appName = appSpecTemp.name
+    const marketPlaceApp = marketPlaceApps.value.find(app => appName?.toLowerCase().startsWith(app.name.toLowerCase()))
 
-        // Calculate the number of months based on expire blocks
-        // Post-fork: 88000 blocks = 1 month (base period)
-        // Pre-fork: 22000 blocks = 1 month (base period)
-        const blocksPerMonth = 88000 // After fork, use post-fork baseline
-        const expireBlocks = appSpecTemp.expire || blocksPerMonth
-        const monthMultiplier = expireBlocks / blocksPerMonth
-        const adjustedPrice = marketPlaceApp.priceUSD * monthMultiplier
-
-        console.log('Expire blocks:', expireBlocks, 'Month multiplier:', monthMultiplier, 'Adjusted price:', adjustedPrice)
-
-        // Add the adjusted marketplace price to the app spec
-        appSpecTemp.priceUSD = adjustedPrice
+    if (marketPlaceApp) {
+      console.log('Marketplace app detected:', marketPlaceApp.name)
+      if (marketPlaceApp.multiplier > 1) {
+        console.log('Marketplace multiplier:', marketPlaceApp.multiplier, '× General:', generalMultiplier.value, '= Combined:', marketPlaceApp.multiplier * generalMultiplier.value)
       }
+      // NOTE: Like Flux Home UI, we do NOT set priceUSD in the spec
+      // Backend will calculate pricing and apply multipliers automatically
     }
+
+    // IMPORTANT: Do NOT set priceUSD in spec - let backend handle all pricing
+    // Backend will automatically apply:
+    // 1. Resource-based pricing (CPU, RAM, SSD)
+    // 2. Time multiplier (subscription duration)
+    // 3. Marketplace multiplier (if marketPlaceApp.multiplier > 1)
+    // 4. General multiplier (e.g., 10)
+    // 5. Hardware discounts
+    // 6. Upgrade credits (for updates)
+
+    // Remove any existing priceUSD to ensure backend calculation
+    delete appSpecTemp.priceUSD
     if (appSpecTemp.version >= 8) {
       console.log('Version 8+ app - checking enterprise mode')
       console.log('UI isPrivateApp state:', isPrivateApp.value)
@@ -6023,29 +6117,26 @@ async function priceForAppSpec() {
     if (marketPlaceApp) {
       console.log('Marketplace app details:', marketPlaceApp)
       console.log('Marketplace multiplier:', marketPlaceApp.multiplier)
-      console.log('Marketplace fixed priceUSD:', marketPlaceApp.priceUSD)
+      if (marketPlaceApp.multiplier > 1) {
+        console.log('Combined multiplier (marketplace × general):', marketPlaceApp.multiplier * generalMultiplier.value)
+      }
+      console.log('Note: Backend will apply multipliers automatically')
     }
 
     // Clone the app spec for price calculation
     const appSpecForPrice = JSON.parse(JSON.stringify(appSpecFormated.value))
 
-    // Add marketplace fixed price if available, multiplied by renewal period
-    if (marketPlaceApp && marketPlaceApp.priceUSD) {
-      // Calculate the number of months based on expire blocks
-      // Post-fork: 88000 blocks = 1 month (base period)
-      const blocksPerMonth = 88000 // After fork, use post-fork baseline
-      const expireBlocks = appSpecForPrice.expire || blocksPerMonth
-      const monthMultiplier = expireBlocks / blocksPerMonth
-      const adjustedPrice = marketPlaceApp.priceUSD * monthMultiplier
+    // IMPORTANT: Like Flux Home UI, do NOT set priceUSD in spec
+    // Let backend handle ALL pricing calculations including:
+    // - Resource-based pricing
+    // - Time multiplier
+    // - Marketplace multiplier (backend applies if marketPlaceApp.multiplier > 1)
+    // - General multiplier (backend applies always)
+    // - Hardware discounts
+    // - Upgrade credits
+    delete appSpecForPrice.priceUSD
 
-      console.log('Adding marketplace price - Base (1 month):', marketPlaceApp.priceUSD)
-      console.log('Expire blocks:', expireBlocks, 'Month multiplier:', monthMultiplier)
-      console.log('Adjusted marketplace price:', adjustedPrice)
-
-      appSpecForPrice.priceUSD = adjustedPrice
-    }
-
-    console.log('App spec being sent:', appSpecForPrice)
+    console.log('App spec being sent to backend (NO priceUSD - backend will calculate):', appSpecForPrice)
 
     const response = await props.executeLocalCommand(
       '/apps/calculatefiatandfluxprice',
@@ -6129,11 +6220,42 @@ async function fetchBlockHeight() {
           console.log('New app - blocks to expire:', blocksToExpire.value, 'isExpiryValid:', isExpiryValid.value)
         } else {
           // For existing apps doing update without renewal, check if they have at least 1 week remaining
-          // Use dynamic minExpire: 5000 blocks before fork, 20000 blocks after fork (4x faster blockchain)
           // If renewal is enabled or in cancel mode, skip this check
           if (!renewalEnabled.value && managementAction.value !== 'renewal' && managementAction.value !== 'cancel') {
-            const minExpire = blockHeight.value >= FORK_BLOCK_HEIGHT ? 20000 : 5000
-            isExpiryValid.value = blocksToExpire.value >= minExpire
+            // Fork-aware validation: Calculate remaining time in minutes, then check against 1 week
+            let remainingMinutes = 0
+
+            if (height < FORK_BLOCK_HEIGHT && blockHeight.value >= FORK_BLOCK_HEIGHT) {
+              // Pre-fork app, currently post-fork: Use split calculation
+              const blockTimeAtRegistration = 2 // Pre-fork: 2 minutes per block
+              const subscriptionDurationMinutes = expireBlocks * blockTimeAtRegistration
+
+              // Calculate elapsed time from registration to now
+              const blocksBeforeFork = FORK_BLOCK_HEIGHT - height
+              const blocksAfterFork = blockHeight.value - FORK_BLOCK_HEIGHT
+              const elapsedMinutes = (blocksBeforeFork * 2) + (blocksAfterFork * 0.5)
+
+              // Remaining time in minutes
+              remainingMinutes = subscriptionDurationMinutes - elapsedMinutes
+            } else {
+              // Simple case: both registration and current are on same side of fork
+              const minutesPerBlock = blockHeight.value >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+              remainingMinutes = blocksToExpire.value * minutesPerBlock
+            }
+
+            // 1 week = 7 days = 10,080 minutes
+            const minMinutes = 7 * 24 * 60 // 10,080 minutes = 1 week
+            isExpiryValid.value = remainingMinutes >= minMinutes
+
+            console.log('Expiry validation:', {
+              height,
+              blockHeight: blockHeight.value,
+              expireBlocks,
+              blocksToExpire: blocksToExpire.value,
+              remainingMinutes,
+              minMinutes,
+              isExpiryValid: isExpiryValid.value,
+            })
           } else {
             // Renewal or cancel - always valid
             isExpiryValid.value = true
@@ -6302,12 +6424,12 @@ async function testAppInstall() {
   // Now expand logs for new test
   logsExpanded.value = true
 
-  showToast('info', 'Starting application test installation...')
+  showToast('info', t('core.subscriptionManager.testStarting'))
 
   // Add initial status message
   testOutput.value.push({
     status: 'info',
-    message: 'Initializing test installation...',
+    message: t('core.subscriptionManager.testInitializing'),
     timestamp: new Date().toISOString(),
     step: 'init',
   })
@@ -6316,9 +6438,9 @@ async function testAppInstall() {
     const zelidauth = localStorage.getItem('zelidauth')
 
     // Simulate streaming by breaking the test into phases
-    await streamTestPhase('Preparing test environment...', 'info', 500)
-    await streamTestPhase('Connecting to Flux network...', 'info', 800)
-    await streamTestPhase('Validating Docker image...', 'info', 1000)
+    await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
+    await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
+    await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
 
     // Use registrationHash for testing - this is the message hash from registration/update
     // The backend test API accepts either app name (for existing apps, requires owner auth)
@@ -6338,22 +6460,22 @@ async function testAppInstall() {
 
     const response = await axios.get(url, axiosConfig)
 
-    await streamTestPhase('Processing test results...', 'info', 300)
+    await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
     // Check the response status first
     console.log('Test response:', response.data)
-    
+
     if (response.data?.status === 'error') {
       await streamTestPhase(`Test failed: ${response.data.data?.message || response.data.data || 'Unknown error'}`, 'error', 200)
       testError.value = true
-      showToast('error', 'Test installation failed')
-      
+      showToast('error', t('core.subscriptionManager.testInstallationFailed'))
+
       return
     }
-    
+
     // Process the actual test results
     if (response.data?.status === 'success' && response.data?.data) {
-      await streamTestPhase('Analyzing installation results...', 'info', 400)
+      await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
       
       const rawData = response.data.data
       let parsedResults = []
@@ -6375,7 +6497,7 @@ async function testAppInstall() {
       // Stream the parsed results
       for (const result of parsedResults) {
         await streamTestPhase(
-          result.message || 'Processing step completed',
+          result.message || t('core.subscriptionManager.testStepCompleted'),
           result.status || 'info',
           200,
           result,
@@ -6407,38 +6529,38 @@ async function testAppInstall() {
       )
       
       if (hasErrors) {
-        await streamTestPhase('Test completed with errors', 'error', 300)
+        await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
         testError.value = true
-        showToast('error', 'Test failed - check installation logs')
+        showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
       } else if (hasWarnings) {
-        await streamTestPhase('Test completed with warnings', 'warning', 300)
+        await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
         testError.value = false
         logsExpanded.value = false
-        showToast('warning', 'Test completed with warnings - review logs but payment is available')
+        showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
       } else {
-        await streamTestPhase('Test installation successful!', 'success', 300)
+        await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
         testError.value = false
         logsExpanded.value = false
-        showToast('success', 'Test passed! Application is ready for deployment.')
+        showToast('success', t('core.subscriptionManager.testPassedReady'))
       }
     } else {
       // Handle other success cases
-      await streamTestPhase('Test installation completed successfully', 'success', 300)
+      await streamTestPhase(t('core.subscriptionManager.testInstallationCompletedSuccessfully'), 'success', 300)
       testError.value = false
       logsExpanded.value = false
-      showToast('success', 'Test completed! Application is ready for deployment.')
+      showToast('success', t('core.subscriptionManager.testCompletedReady'))
     }
     
   } catch (error) {
     await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 200)
     testError.value = true
-    showToast('error', 'Test installation failed')
+    showToast('error', t('core.subscriptionManager.testInstallationFailed'))
     console.error('Test error:', error)
   } finally {
     testRunning.value = false
     testFinished.value = true
-    
-    await streamTestPhase('Test process completed', 'info', 200)
+
+    await streamTestPhase(t('core.subscriptionManager.testProcessCompleted'), 'info', 200)
     
     console.log('Test completed:', {
       testFinished: testFinished.value,
@@ -6674,7 +6796,7 @@ async function initStripePay(hash = null, name = null, price = null, description
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Loading Stripe Checkout...</title>
+          <title>${t('core.subscriptionManager.loadingStripeCheckout')}</title>
           <style>
             body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
             .loader-container { text-align: center; color: white; }
@@ -6687,8 +6809,8 @@ async function initStripePay(hash = null, name = null, price = null, description
         <body>
           <div class="loader-container">
             <div class="spinner"></div>
-            <h2>Redirecting to Stripe...</h2>
-            <p>Please wait while we prepare your checkout session</p>
+            <h2>${t('core.subscriptionManager.redirectingToStripe')}</h2>
+            <p>${t('core.subscriptionManager.pleaseWaitCheckout')}</p>
           </div>
         </body>
       </html>
@@ -6869,7 +6991,7 @@ async function initPaypalPay(hash = null, name = null, price = null, description
       <!DOCTYPE html>
       <html>
         <head>
-          <title>Loading PayPal Checkout...</title>
+          <title>${t('core.subscriptionManager.loadingPayPalCheckout')}</title>
           <style>
             body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #0070ba 0%, #1546a0 100%); }
             .loader-container { text-align: center; color: white; }
@@ -6882,8 +7004,8 @@ async function initPaypalPay(hash = null, name = null, price = null, description
         <body>
           <div class="loader-container">
             <div class="spinner"></div>
-            <h2>Redirecting to PayPal...</h2>
-            <p>Please wait while we prepare your checkout session</p>
+            <h2>${t('core.subscriptionManager.redirectingToPayPal')}</h2>
+            <p>${t('core.subscriptionManager.pleaseWaitCheckout')}</p>
           </div>
         </body>
       </html>
