@@ -875,40 +875,49 @@ function labelForExpire(expire, height) {
   const forkBlock = 2020000
   const defaultExpire = height >= forkBlock ? 88000 : 22000
   const expires = expire || defaultExpire
-  const effectiveExpiry = height + expires
 
-  // Expiry block height is always: registration + expire blocks (no adjustment)
-  const blocksToExpire = effectiveExpiry - props.currentBlockHeight
-  if (blocksToExpire < 1) return t('pages.apps.table.applicationExpired')
+  // Calculate the intended subscription duration in minutes based on registration time
+  // The subscription duration is based on the block time at registration
+  const blockTimeAtRegistration = height < forkBlock ? 2 : 0.5
+  const subscriptionDurationMinutes = expires * blockTimeAtRegistration
 
-  // Fork-aware time calculation: account for blocks before/after fork
-  let minutes = 0
-
-  if (props.currentBlockHeight < forkBlock) {
-    // Currently before fork
-    if (effectiveExpiry <= forkBlock) {
-      // Expiry also before fork - simple calculation
-      minutes = blocksToExpire * 2
+  // Calculate how much time has elapsed from registration to now
+  let elapsedMinutes = 0
+  if (height < forkBlock) {
+    if (props.currentBlockHeight <= forkBlock) {
+      // Both registration and current are before fork
+      const blocksPassed = props.currentBlockHeight - height
+      elapsedMinutes = blocksPassed * 2
     } else {
-      // Expiry after fork - split calculation
-      const blocksUntilFork = forkBlock - props.currentBlockHeight
-      const blocksAfterFork = effectiveExpiry - forkBlock
-      minutes = (blocksUntilFork * 2) + (blocksAfterFork * 0.5)
+      // Registration before fork, current after fork
+      const blocksBeforeFork = forkBlock - height
+      const blocksAfterFork = props.currentBlockHeight - forkBlock
+      elapsedMinutes = (blocksBeforeFork * 2) + (blocksAfterFork * 0.5)
     }
   } else {
-    // Currently after fork - all remaining blocks at post-fork speed
-    minutes = blocksToExpire * 0.5
-  }
-  const units = { day: 1440, hour: 60, minute: 1 }
-  const result = []
-  let value = minutes
-  for (const unit in units) {
-    const p = Math.floor(value / units[unit])
-    if (p > 0) result.push(`${p} ${unit}${p > 1 ? "s" : ""}`)
-    value %= units[unit]
+    // Registration after fork
+    const blocksPassed = props.currentBlockHeight - height
+    elapsedMinutes = blocksPassed * 0.5
   }
 
-  return result.slice(0, 3).join(", ")
+  // Calculate remaining time
+  const remainingMinutes = subscriptionDurationMinutes - elapsedMinutes
+
+  if (remainingMinutes <= 0) {
+    return t('pages.apps.table.applicationExpired')
+  }
+
+  // Format time with explicit order
+  const days = Math.floor(remainingMinutes / 1440)
+  const hours = Math.floor((remainingMinutes % 1440) / 60)
+  const mins = Math.floor(remainingMinutes % 60)
+
+  const result = []
+  if (days > 0) result.push(`${days} day${days !== 1 ? 's' : ''}`)
+  if (hours > 0) result.push(`${hours} hour${hours !== 1 ? 's' : ''}`)
+  if (mins > 0 || result.length === 0) result.push(`${mins} minute${mins !== 1 ? 's' : ''}`)
+
+  return result.slice(0, 3).join(', ')
 }
 
 function normalizeComponents(data) {

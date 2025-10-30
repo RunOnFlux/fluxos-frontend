@@ -265,7 +265,7 @@
               <VChip color="success" variant="tonal" label style="font-size: 14px;">
                 <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
                 <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.current + 30 * 24 * 60 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                <strong>{{ new Date(Date.now() + 88000 * 0.5 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
               </VChip>
             </div>
           </div>
@@ -3373,10 +3373,10 @@ function convertToLatestSpec() {
 const FORK_BLOCK_HEIGHT = 2020000
 
 // Base period: 1 month = 88000 blocks (post-fork, 30-second blocks)
-// All renewal options are calculated as multipliers of this base
+// All renewal options use post-fork values since renewals happen NOW (post-fork)
 const BLOCKS_PER_MONTH = 88000
 
-// Renewal options (post-fork values, calculated from BLOCKS_PER_MONTH)
+// Renewal options (always post-fork values since we're renewing NOW)
 const renewalOptions = ref([
   { value: Math.round(BLOCKS_PER_MONTH * (1/4)), label: t('core.subscriptionManager.renewal1Week') },     // ~1 week (22,000 blocks)
   { value: Math.round(BLOCKS_PER_MONTH * (1/2)), label: t('core.subscriptionManager.renewal2Weeks') },    // ~2 weeks (44,000 blocks)
@@ -3384,7 +3384,6 @@ const renewalOptions = ref([
   { value: BLOCKS_PER_MONTH * 3, label: t('core.subscriptionManager.renewal3Months') },                    // 3 months (264,000 blocks)
   { value: BLOCKS_PER_MONTH * 6, label: t('core.subscriptionManager.renewal6Months') },                    // 6 months (528,000 blocks)
   { value: BLOCKS_PER_MONTH * 12, label: t('core.subscriptionManager.renewal1Year') },                     // 1 year (1,056,000 blocks)
-
 ])
 
 const timeOptions = { shortDate: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
@@ -3537,7 +3536,16 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
     // Set up renewal settings
     // Fork-aware default: if app was registered after fork, use 88000; otherwise 22000
     const defaultExpire = (newSpec.height && newSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
-    const expire = newSpec.expire ?? defaultExpire
+    let expire = newSpec.expire ?? defaultExpire
+
+    // Convert pre-fork expire values to post-fork equivalent for renewalIndex matching
+    // Pre-fork: 22,000 blocks = 1 month (at 2 min/block)
+    // Post-fork: 88,000 blocks = 1 month (at 0.5 min/block)
+    // Renewals always use post-fork values, so convert for display purposes
+    if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
+      expire = expire * 4  // Convert pre-fork to post-fork equivalent
+    }
+
     const foundIndex = renewalOptions.value.findIndex(opt => opt.value === expire)
     appDetails.value.renewalIndex = foundIndex !== -1 ? foundIndex : 2
     
@@ -3792,6 +3800,7 @@ const originalExpireBlocks = computed(() => {
 })
 
 // 3️⃣  timestamps shown in the UI (fork-aware calculation)
+// Renewal is calculated from NOW, not from current expiry
 const appRunningTill = computed(() => {
   const now = Date.now()
   const currentBlocksRemaining = originalExpireBlocks.value ?? 0
@@ -3810,25 +3819,34 @@ const appRunningTill = computed(() => {
     let totalMinutes = 0
 
     if (isCurrentExpiry && typeof props.appSpec?.height === 'number' && originalExpireSnapshot.value) {
-      // For current expiry, we know the exact expiry block height
-      const expiryBlockHeight = props.appSpec.height + originalExpireSnapshot.value
+      // For current expiry, calculate based on subscription duration from registration
+      // This accounts for apps registered before fork that should maintain their intended duration
 
-      // Split calculation based on fork transition
-      if (currentBlockHeight.value < FORK_BLOCK_HEIGHT) {
-        // We're currently before the fork
-        if (expiryBlockHeight <= FORK_BLOCK_HEIGHT) {
-          // Expiration is before fork - all blocks at 2 min/block
-          totalMinutes = blocksRemaining * 2
+      // Calculate intended subscription duration based on registration time
+      const blockTimeAtRegistration = props.appSpec.height < FORK_BLOCK_HEIGHT ? 2 : 0.5
+      const subscriptionDurationMinutes = originalExpireSnapshot.value * blockTimeAtRegistration
+
+      // Calculate elapsed time from registration to now
+      let elapsedMinutes = 0
+      if (props.appSpec.height < FORK_BLOCK_HEIGHT) {
+        if (currentBlockHeight.value <= FORK_BLOCK_HEIGHT) {
+          // Both registration and current are before fork
+          const blocksPassed = currentBlockHeight.value - props.appSpec.height
+          elapsedMinutes = blocksPassed * 2
         } else {
-          // Expiration is after fork - split calculation
-          const blocksUntilFork = FORK_BLOCK_HEIGHT - currentBlockHeight.value
-          const blocksAfterFork = expiryBlockHeight - FORK_BLOCK_HEIGHT
-          totalMinutes = (blocksUntilFork * 2) + (blocksAfterFork * 0.5)
+          // Registration before fork, current after fork
+          const blocksBeforeFork = FORK_BLOCK_HEIGHT - props.appSpec.height
+          const blocksAfterFork = currentBlockHeight.value - FORK_BLOCK_HEIGHT
+          elapsedMinutes = (blocksBeforeFork * 2) + (blocksAfterFork * 0.5)
         }
       } else {
-        // We're currently after fork - all remaining blocks at 0.5 min/block
-        totalMinutes = blocksRemaining * 0.5
+        // Registration after fork
+        const blocksPassed = currentBlockHeight.value - props.appSpec.height
+        elapsedMinutes = blocksPassed * 0.5
       }
+
+      // Remaining time
+      totalMinutes = subscriptionDurationMinutes - elapsedMinutes
     } else {
       // For renewals (future blocks), assume they're all post-fork since we're already past fork
       if (currentBlockHeight.value >= FORK_BLOCK_HEIGHT) {
@@ -3841,9 +3859,24 @@ const appRunningTill = computed(() => {
     return totalMinutes * 60 * 1000 // Convert minutes to milliseconds
   }
 
+  const currentExpiry = blocksToMs(currentBlocksRemaining, true) + now
+  const renewalTime = blocksToMs(chosenRenewalBlocks, false)
+  const newExpiry = now + renewalTime
+
+  console.log('Renewal calculation:', {
+    now: new Date(now).toLocaleString(),
+    currentExpiry: new Date(currentExpiry).toLocaleString(),
+    renewalIndex: appDetails.value.renewalIndex,
+    renewalOptions: renewalOptions.value,
+    chosenRenewalBlocks,
+    renewalTimeMs: renewalTime,
+    renewalTimeDays: renewalTime / (24 * 60 * 60 * 1000),
+    newExpiry: new Date(newExpiry).toLocaleString()
+  })
+
   return {
-    current: blocksToMs(currentBlocksRemaining, true) + now,  // true = use split calculation for current expiry
-    new: blocksToMs(chosenRenewalBlocks, false) + now,        // false = simple calculation for future renewal
+    current: currentExpiry,  // Current expiry time
+    new: newExpiry,  // Renewal extends from day of renewal (NOW)
   }
 })
 

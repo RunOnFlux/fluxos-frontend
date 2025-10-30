@@ -214,7 +214,10 @@ const snackbar = ref({
   timeout: 3000,
 })
 
-// Calculate adjusted expiry blockheight accounting for PON Fork
+// Calculate expiry block height (only for display in "Expires on Blockheight" field)
+// Hash check ensures we only show this for properly registered blockchain apps
+// For pre-fork apps that expire after fork, we need to adjust the block number
+// to account for the fork transition from 2 min/block to 0.5 min/block
 const adjustedExpiryBlockHeight = computed(() => {
   if (!props.app?.height || !props.app?.hash || props.app.hash.length !== 64) {
     return null
@@ -223,50 +226,80 @@ const adjustedExpiryBlockHeight = computed(() => {
   // Default expiration depends on registration height (fork-aware)
   const defaultExpire = props.app.height >= FORK_BLOCK_HEIGHT ? 88000 : 22000
   const expireIn = props.app.expire || defaultExpire
-  const originalExpirationHeight = props.app.height + expireIn
 
-  // The blockchain stores the expiry block height directly
-  // No adjustment needed - the backend already calculated fork-aware expiry
-  // We just need to display the time remaining correctly (done in expiresInLabel below)
-  return originalExpirationHeight
+  // Calculate naive expiry (registration + expire blocks)
+  const naiveExpiry = props.app.height + expireIn
+
+  // If app was registered before fork and naive expiry is after fork,
+  // we need to adjust to maintain the intended duration
+  if (props.app.height < FORK_BLOCK_HEIGHT && naiveExpiry > FORK_BLOCK_HEIGHT) {
+    // Calculate intended subscription duration based on registration time
+    const blockTimeAtRegistration = 2 // Pre-fork: 2 min/block
+    const subscriptionDurationMinutes = expireIn * blockTimeAtRegistration
+
+    // Calculate pre-fork time consumed
+    const preForkBlocks = FORK_BLOCK_HEIGHT - props.app.height
+    const preForkMinutes = preForkBlocks * 2
+
+    // Calculate remaining time that needs to be in post-fork blocks
+    const remainingMinutes = subscriptionDurationMinutes - preForkMinutes
+
+    // Convert remaining minutes to post-fork blocks
+    const postForkBlocks = remainingMinutes / 0.5
+
+    // Actual expiry block accounting for fork transition
+    return FORK_BLOCK_HEIGHT + postForkBlocks
+  }
+
+  // For post-fork apps or pre-fork apps expiring before fork, use naive calculation
+  return naiveExpiry
 })
 
 // Calculate fork-aware expiry time label
 const expiresInLabel = computed(() => {
-  if (!adjustedExpiryBlockHeight.value || currentBlockHeight.value === null || currentBlockHeight.value < 0) {
+  if (!props.app?.height || currentBlockHeight.value === null || currentBlockHeight.value < 0) {
     return t('core.appDetailsCard.notAvailable')
   }
 
-  const blocksRemaining = adjustedExpiryBlockHeight.value - currentBlockHeight.value
+  // Default expiration depends on registration height (fork-aware)
+  const defaultExpire = props.app.height >= FORK_BLOCK_HEIGHT ? 88000 : 22000
+  const expires = props.app.expire || defaultExpire
 
-  if (blocksRemaining < 1) {
+  // Calculate the intended subscription duration in minutes based on registration time
+  // The subscription duration is based on the block time at registration
+  const blockTimeAtRegistration = props.app.height < FORK_BLOCK_HEIGHT ? 2 : 0.5
+  const subscriptionDurationMinutes = expires * blockTimeAtRegistration
+
+  // Calculate how much time has elapsed from registration to now
+  let elapsedMinutes = 0
+  if (props.app.height < FORK_BLOCK_HEIGHT) {
+    if (currentBlockHeight.value <= FORK_BLOCK_HEIGHT) {
+      // Both registration and current are before fork
+      const blocksPassed = currentBlockHeight.value - props.app.height
+      elapsedMinutes = blocksPassed * 2
+    } else {
+      // Registration before fork, current after fork
+      const blocksBeforeFork = FORK_BLOCK_HEIGHT - props.app.height
+      const blocksAfterFork = currentBlockHeight.value - FORK_BLOCK_HEIGHT
+      elapsedMinutes = (blocksBeforeFork * 2) + (blocksAfterFork * 0.5)
+    }
+  } else {
+    // Registration after fork
+    const blocksPassed = currentBlockHeight.value - props.app.height
+    elapsedMinutes = blocksPassed * 0.5
+  }
+
+  // Calculate remaining time
+  const remainingMinutes = subscriptionDurationMinutes - elapsedMinutes
+
+  if (remainingMinutes <= 0) {
     return t('core.appDetailsCard.applicationExpired')
   }
 
-  let totalMinutes = 0
-
-  // Before fork: 2 minutes per block
-  // After fork: 0.5 minutes per block (30 seconds)
-  if (currentBlockHeight.value < FORK_BLOCK_HEIGHT) {
-    // We're currently before the fork
-    if (adjustedExpiryBlockHeight.value <= FORK_BLOCK_HEIGHT) {
-      // Expiration is before fork - all blocks at 2 min/block
-      totalMinutes = blocksRemaining * 2
-    } else {
-      // Expiration is after fork - split calculation
-      const blocksUntilFork = FORK_BLOCK_HEIGHT - currentBlockHeight.value
-      const blocksAfterFork = adjustedExpiryBlockHeight.value - FORK_BLOCK_HEIGHT
-      totalMinutes = (blocksUntilFork * 2) + (blocksAfterFork * 0.5)
-    }
-  } else {
-    // We're currently after fork - all remaining blocks at 0.5 min/block
-    totalMinutes = blocksRemaining * 0.5
-  }
-
   // Convert minutes to human-readable format
-  const days = Math.floor(totalMinutes / 1440)
-  const hours = Math.floor((totalMinutes % 1440) / 60)
-  const minutes = Math.floor(totalMinutes % 60)
+  const days = Math.floor(remainingMinutes / 1440)
+  const hours = Math.floor((remainingMinutes % 1440) / 60)
+  const minutes = Math.floor(remainingMinutes % 60)
 
   const parts = []
   if (days > 0) parts.push(`${days} day${days !== 1 ? 's' : ''}`)
