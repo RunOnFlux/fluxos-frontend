@@ -2940,6 +2940,15 @@
       </VCardActions>
     </VCard>
   </VDialog>
+
+  <!-- Manual Signing Dialog -->
+  <ManualSignDialog
+    v-model="showManualSignDialog"
+    :message="manualSignMessage"
+    @submit="submitManualSignature"
+    @cancel="cancelManualSign"
+    @copy="showToast('success', t('core.subscriptionManager.copiedToClipboard'))"
+  />
 </template>
 
 <script setup>
@@ -2967,6 +2976,7 @@ import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
 import ExplorerService from '@/services/ExplorerService'
 import { storeToRefs } from "pinia"
+import ManualSignDialog from '@/@core/components/ManualSignDialog.vue'
 import { useFluxStore } from "@/stores/flux"
 import { useTheme, useDisplay } from 'vuetify'
 import ImportJsonDialog from '@/components/dialogs/ImportJsonDialog.vue'
@@ -3016,6 +3026,7 @@ const websocket = ref(null)
 const loginType  = ref(localStorage.getItem('loginType'))
 const isSigning = ref(false) // Track if signing is in progress
 const signingFailed = ref(false) // Track if signing failed
+const clipboardInstance = ref(null) // ClipboardJS instance for proper cleanup
 const tab = ref(0)
 const renewalEnabled = ref(false)
 const managementAction = ref('renewal') // Management action: 'renewal', 'update', 'cancel'
@@ -3671,14 +3682,14 @@ onMounted(async () => {
   await fetchCurrentBlockHeight()
 
   // Initialize clipboard.js for copy buttons
-  const clipboard = new ClipboardJS('.copy-btn')
+  clipboardInstance.value = new ClipboardJS('.copy-btn')
 
-  clipboard.on('success', e => {
+  clipboardInstance.value.on('success', e => {
     showToast('success', t('common.messages.copiedToClipboard'))
     e.clearSelection()
   })
 
-  clipboard.on('error', e => {
+  clipboardInstance.value.on('error', e => {
     showToast('error', t('common.messages.failedToCopy'))
     console.error('Copy error:', e)
   })
@@ -4867,6 +4878,12 @@ function isValidPort(value) {
 // Clean up global event listener on component unmount
 onUnmounted(() => {
   document.removeEventListener('click', handleOutsideClick)
+
+  // Clean up ClipboardJS instance to prevent memory leaks
+  if (clipboardInstance.value) {
+    clipboardInstance.value.destroy()
+    clipboardInstance.value = null
+  }
 
   // Clean up payment monitoring intervals
   if (paymentMonitoringInterval.value) {
@@ -7518,6 +7535,55 @@ async function initSignSSP() {
   }
 }
 
+// === Manual signing ===
+const showManualSignDialog = ref(false)
+const manualSignMessage = ref('')
+
+async function initSignManual() {
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (!zelidauth) {
+      showToast('error', t('core.subscriptionManager.noLoginCredentials'))
+      isSigning.value = false
+      signingFailed.value = true
+      return
+    }
+
+    // Parse zelidauth (URL-encoded format: zelid=...&signature=...&loginPhrase=...)
+    const authData = zelidauth.includes('zelid=')
+      ? Object.fromEntries(new URLSearchParams(zelidauth))
+      : JSON.parse(zelidauth)
+
+    // Message to sign = dataToSign ONLY (no loginPhrase for app signing)
+    // loginPhrase is only used for login verification, not app deployment signing
+    manualSignMessage.value = dataToSign.value
+    showManualSignDialog.value = true
+  } catch (err) {
+    showToast('error', t('core.subscriptionManager.failedToPrepareManualSigning', { error: err.message }))
+    isSigning.value = false
+    signingFailed.value = true
+  }
+}
+
+function submitManualSignature(sig) {
+  if (!sig || !sig.trim()) {
+    showToast('error', t('core.subscriptionManager.pleaseEnterSignature'))
+    return
+  }
+  signature.value = sig.trim()
+  showManualSignDialog.value = false
+  manualSignMessage.value = ''
+  // Don't set isSigning to false here - let the signature watcher handle it
+  // The watcher will detect the signature change and automatically call propagateSignedMessage()
+}
+
+function cancelManualSign() {
+  showManualSignDialog.value = false
+  manualSignMessage.value = ''
+  isSigning.value = false
+  signingFailed.value = true
+}
+
 // === SWITCH ===
 async function signMethod() {
   switch (loginType.value) {
@@ -7535,6 +7601,9 @@ async function signMethod() {
     break
   case 'ssp':
     await initSignSSP()
+    break
+  case 'manual':
+    await initSignManual()
     break
   default:
     showToast('error', `Unknown loginType: ${loginType}`)

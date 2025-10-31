@@ -330,9 +330,31 @@
               <VTextField
                 v-model="loginForm.loginPhrase"
                 :label="t('core.login.message')"
-                :placeholder="t('core.login.insertMessage')"
+                :placeholder="t('core.login.clickToGetMessage')"
+                readonly
                 class="mb-3"
-              />
+              >
+                <template #append-inner>
+                  <VBtn
+                    icon="mdi-refresh"
+                    size="x-small"
+                    variant="text"
+                    color="grey"
+                    @click="getZelIdLoginPhrase"
+                    :title="t('core.login.getNewLoginPhrase')"
+                  />
+                  <VBtn
+                    v-if="loginForm.loginPhrase"
+                    ref="copyLoginPhraseBtn"
+                    icon="mdi-content-copy"
+                    size="x-small"
+                    variant="text"
+                    color="grey"
+                    @click="copyLoginPhrase"
+                    :title="t('core.login.copyLoginPhrase')"
+                  />
+                </template>
+              </VTextField>
               <VTextField
                 v-model="loginForm.zelid"
                 :label="t('core.login.address')"
@@ -478,6 +500,7 @@ import { computed, nextTick, onMounted, onUnmounted, ref, watch } from "vue"
 import { useI18n } from "vue-i18n"
 import { eventBus } from "@/utils/eventBus"
 import CustomSnackbar from "@core/components/CustomSnackbar.vue"
+import ClipboardJS from 'clipboard'
 
 // Props
 const props = defineProps({
@@ -513,6 +536,8 @@ const modalShow = ref(false)
 const ssoVerification = ref(false)
 const loginPhrase = ref("")
 const websocket = ref(null)
+const copyLoginPhraseBtn = ref(null)
+let clipboardInstance = null
 
 const toast = ref({ show: false, text: "", variant: "success" })
 
@@ -530,6 +555,10 @@ const currentView = ref('methods') // 'methods', 'email', 'wallet', 'manual'
 
 const showView = view => {
   currentView.value = view
+  // Auto-fetch loginPhrase when showing manual login
+  if (view === 'manual') {
+    getZelIdLoginPhrase()
+  }
 }
 
 const goBack = () => {
@@ -594,6 +623,7 @@ const login = () => {
         fluxStore.setPrivilege(response.data.data.privilage)
         fluxStore.setZelid(zelidauth.zelid)
         localStorage.setItem("zelidauth", qs.stringify(zelidauth))
+        localStorage.setItem("loginType", "manual")
         emit('loginSuccess')
         showToast("success", response.data.data.message)
       } else {
@@ -839,6 +869,41 @@ const getEmergencyLoginPhrase = () => {
     .catch(error => showToast("error", error))
 }
 
+const copyLoginPhrase = () => {
+  if (!loginForm.value.loginPhrase) {
+    showToast("error", t("core.login.noLoginPhraseToDownload"))
+    return
+  }
+  // ClipboardJS will handle the actual copy via initClipboard()
+}
+
+const initClipboard = () => {
+  nextTick(() => {
+    // Clean up existing clipboard instance and its event listeners
+    if (clipboardInstance) {
+      clipboardInstance.destroy()
+      clipboardInstance = null
+    }
+
+    const el = copyLoginPhraseBtn.value?.$el
+    if (!el) return
+
+    // Create new clipboard instance
+    clipboardInstance = new ClipboardJS(el, {
+      text: () => loginForm.value.loginPhrase
+    })
+
+    clipboardInstance.on('success', () => {
+      showToast('success', t('core.login.copiedToClipboard'))
+    })
+
+    clipboardInstance.on('error', (e) => {
+      console.error('ClipboardJS failed:', e)
+      showToast('error', t('common.messages.failedToCopy'))
+    })
+  })
+}
+
 const initiateLoginWS = async () => {
   await getZelIdLoginPhrase()
   initZelcore()
@@ -1063,12 +1128,20 @@ watch(emailLoginFormRef, _ => {
   emailLoginFormRef.value?.reset()
 })
 
+watch(() => loginForm.value.loginPhrase, () => {
+  initClipboard()
+})
+
 onMounted(async () => {
   eventBus.on("backendURLChanged", handleBackendChange)
   getZelIdLoginPhrase()
+  initClipboard()
 })
 
 onUnmounted(() => {
+  if (clipboardInstance) {
+    clipboardInstance.destroy()
+  }
   if (websocket.value) websocket.value.close()
   eventBus.off("backendURLChanged", handleBackendChange)
 })
