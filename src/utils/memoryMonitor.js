@@ -146,10 +146,7 @@ class MemoryMonitor {
     // Alert if memory increased by more than 20% over the period
     if (increasePercent > 20) {
       console.warn(
-        '📈 [MemoryMonitor] Potential memory leak detected: %.1f%% increase (%.2f MB → %.2f MB)',
-        increasePercent,
-        olderAvg,
-        recentAvg,
+        `📈 [MemoryMonitor] Potential memory leak detected: ${increasePercent.toFixed(1)}% increase (${olderAvg.toFixed(2)} MB → ${recentAvg.toFixed(2)} MB)`,
       )
       this.notifyListeners('leak-detected', {
         increase,

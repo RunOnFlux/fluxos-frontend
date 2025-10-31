@@ -836,6 +836,13 @@
                           alt="WalletConnect"
                           class="walletIcon"
                         />
+                        <!-- Manual - Use pen/signature icon -->
+                        <div
+                          v-else-if="detectedSigningMethod === 'Manual'"
+                          class="sso-icon-wrapper"
+                        >
+                          <VIcon icon="mdi-draw-pen" size="40" color="white" />
+                        </div>
                       </a>
                     </div>
                   </div>
@@ -1391,6 +1398,15 @@
       </VCardActions>
     </VCard>
   </VDialog>
+
+  <!-- Manual Signing Dialog -->
+  <ManualSignDialog
+    v-model="manualSignDialogVisible"
+    :message="manualSignDialogMessage"
+    @submit="handleManualSignSubmit"
+    @cancel="handleManualSignCancel"
+    @copy="showSnackbar(t('common.messages.copiedToClipboard'), 'success', 3000, 'mdi-clipboard-check')"
+  />
 </template>
 
 <script setup>
@@ -1414,6 +1430,7 @@ import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, 
 import { payWithZelcore, payWithSSP, isSSPAvailable, isZelcoreAvailable, isBrowserMetaMaskAvailable, getConnectedAccount, hasWalletConnectSession, signWithWalletConnect as walletServiceSignWithWalletConnect, watchWalletAccount, signWithSSP as walletServiceSignWithSSP, signWithZelcore as walletServiceSignWithZelcore } from '@/utils/walletService'
 import axios from 'axios'
 import qs from 'query-string'
+import ManualSignDialog from '@/@core/components/ManualSignDialog.vue'
 
 // Import wallet logos
 import metamaskLogo from '@images/metamask.svg?url'
@@ -1536,6 +1553,12 @@ const redirectCountdown = ref(3)
 const redirectCountdownInterval = ref(null)
 const imageError = ref(false)
 
+// Manual signing dialog state
+const manualSignDialogVisible = ref(false)
+const manualSignDialogMessage = ref('')
+let manualSignDialogResolve = null
+let manualSignDialogReject = null
+
 // PON Fork support - use 88,000 blocks after fork (block 2,020,000 already happened)
 const defaultExpireBlocks = 88000
 
@@ -1643,6 +1666,11 @@ const availableWallets = computed(() => {
     wallets.push('SSO')
   }
 
+  // Add Manual if loginType is manual and user has auth
+  if (storedLoginType === 'manual' && localStorage.getItem('zelidauth')) {
+    wallets.push('Manual')
+  }
+
   return wallets
 })
 
@@ -1670,6 +1698,8 @@ const detectedSigningMethod = computed(() => {
       detectedMethod = 'WalletConnect'
     } else if (loginType === 'sso') {
       detectedMethod = 'SSO'
+    } else if (loginType === 'manual') {
+      detectedMethod = 'Manual'
     }
   }
 
@@ -2912,8 +2942,13 @@ const signApplicationMessage = async () => {
     case 'SSO':
       await signWithSSO(deploymentMessage)
       break
+    case 'Manual':
+      await signWithManual(deploymentMessage)
+      break
     default:
-      throw new Error('No compatible wallet found. Please install Zelcore, SSP, MetaMask, or ensure you\'re logged in via SSO.')
+      console.error('[InstallDialog] Unknown signing method:', signingMethod)
+      console.error('[InstallDialog] loginType from localStorage:', localStorage.getItem('loginType'))
+      throw new Error(`No compatible signing method found: "${signingMethod}". ${t('components.marketplace.installDialog.noCompatibleWallets')}`)
     }
 
     // Check if signing was cancelled during the process
@@ -3637,6 +3672,62 @@ const signWithSSO = async message => {
   } catch (error) {
     console.error('SSO Signing failed:', error)
     throw new Error('SSO signing failed: ' + (error.response?.data?.message || error.message))
+  }
+}
+
+const signWithManual = async message => {
+  return new Promise((resolve, reject) => {
+    try {
+      const zelidauth = localStorage.getItem('zelidauth')
+      if (!zelidauth) {
+        reject(new Error('No login credentials found'))
+        return
+      }
+
+      // Parse zelidauth to get zelid
+      const authData = zelidauth.includes('zelid=')
+        ? Object.fromEntries(new URLSearchParams(zelidauth))
+        : JSON.parse(zelidauth)
+
+      const zelid = authData.zelid
+
+      // Message to sign = message ONLY (no loginPhrase for app signing)
+      // loginPhrase is only used for login verification, not app deployment signing
+      manualSignDialogMessage.value = message
+      manualSignDialogVisible.value = true
+
+      // Set up handlers for dialog
+      manualSignDialogResolve = (signature) => {
+        deploymentSignature.value = {
+          signature,
+          address: zelid,
+          method: 'Manual',
+        }
+        resolve()
+      }
+
+      manualSignDialogReject = reject
+    } catch (error) {
+      console.error('Manual signing setup failed:', error)
+      reject(new Error('Manual signing setup failed: ' + error.message))
+    }
+  })
+}
+
+// Manual sign dialog handlers
+function handleManualSignSubmit(signature) {
+  if (manualSignDialogResolve) {
+    manualSignDialogResolve(signature)
+    manualSignDialogResolve = null
+    manualSignDialogReject = null
+  }
+}
+
+function handleManualSignCancel() {
+  if (manualSignDialogReject) {
+    manualSignDialogReject(new Error(t('components.marketplace.installDialog.manualSigningCancelled')))
+    manualSignDialogResolve = null
+    manualSignDialogReject = null
   }
 }
 

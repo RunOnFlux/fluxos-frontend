@@ -74,6 +74,7 @@ declare module 'vue' {
     Logo: typeof import('./@core/components/Logo.vue')['default']
     LogViewer: typeof import('./@core/components/LogViewer.vue')['default']
     MaintenanceCard: typeof import('./components/Marketplace/MaintenanceCard.vue')['default']
+    ManualSignDialog: typeof import('./@core/components/ManualSignDialog.vue')['default']
     MapComponent: typeof import('./@core/components/MapComponent.vue')['default']
     Marketplace: typeof import('./components/Marketplace/index.vue')['default']
     MarketplaceAppCard: typeof import('./components/Marketplace/MarketplaceAppCard.vue')['default']
