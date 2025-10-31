@@ -6113,18 +6113,7 @@ async function priceForAppSpec() {
 
     // Clone the app spec for price calculation
     const appSpecForPrice = JSON.parse(JSON.stringify(appSpecFormated.value))
-
-    // IMPORTANT: Like Flux Home UI, do NOT set priceUSD in spec
-    // Let backend handle ALL pricing calculations including:
-    // - Resource-based pricing
-    // - Time multiplier
-    // - Marketplace multiplier (backend applies if marketPlaceApp.multiplier > 1)
-    // - General multiplier (backend applies always)
-    // - Hardware discounts
-    // - Upgrade credits
     delete appSpecForPrice.priceUSD
-
-    console.log('App spec being sent to backend (NO priceUSD - backend will calculate):', appSpecForPrice)
 
     const response = await props.executeLocalCommand(
       '/apps/calculatefiatandfluxprice',
