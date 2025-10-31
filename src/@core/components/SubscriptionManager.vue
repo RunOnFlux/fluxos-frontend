@@ -3166,28 +3166,6 @@ const currentAppIsMarketplace = computed(() => {
   return isMarketplace
 })
 
-// Computed property for price multiplier display (like Flux Home UI)
-// Shows combined multiplier: marketplace multiplier × general multiplier
-const priceMultiplier = computed(() => {
-  const appName = props.appSpec?.name || appDetails.value.name
-
-  if (!appName || !marketPlaceApps.value.length) {
-    return generalMultiplier.value  // Return general multiplier only
-  }
-
-  const marketPlaceApp = marketPlaceApps.value.find(
-    app => appName.toLowerCase().startsWith(app.name.toLowerCase()),
-  )
-
-  if (marketPlaceApp && marketPlaceApp.multiplier > 1) {
-    // Return combined multiplier for marketplace apps
-    return marketPlaceApp.multiplier * generalMultiplier.value
-  }
-
-  // For non-marketplace apps or marketplace apps with multiplier = 1
-  return generalMultiplier.value
-})
-
 // Priority/Enterprise Nodes
 const selectedNodes = ref([])
 const showNodeSelectionDialog = ref(false)
@@ -5718,6 +5696,34 @@ async function verifyAppSpec() {
   appSpecFormated.value = null
   try {
     const appSpecTemp = JSON.parse(JSON.stringify(props.appSpec))
+
+    // ========================================================================
+    // MARKETPLACE APP REPOTAG CHECK (only for new app registration)
+    // ========================================================================
+    if (props.newApp && marketPlaceApps.value.length > 0 && appSpecTemp.compose) {
+      // Check if any component uses a marketplace-restricted repotag
+      for (const component of appSpecTemp.compose) {
+        if (component.repotag) {
+          const repotagLower = component.repotag.toLowerCase()
+
+          // Check against all marketplace apps
+          for (const marketApp of marketPlaceApps.value) {
+            if (marketApp.compose && Array.isArray(marketApp.compose)) {
+              for (const marketComponent of marketApp.compose) {
+                if (marketComponent.repotag) {
+                  const marketRepotagLower = marketComponent.repotag.toLowerCase()
+
+                  // Check if repotag matches
+                  if (repotagLower === marketRepotagLower || repotagLower.includes(marketRepotagLower.split(':')[0])) {
+                    throw new Error(t('core.subscriptionManager.marketplaceAppRestricted', { repotag: component.repotag }))
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 
     // ========================================================================
     // VERSION-SPECIFIC STRUCTURE CLEANUP AND SYNC

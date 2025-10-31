@@ -970,6 +970,7 @@
       "invalidOrDuplicatePort": "Invalid or duplicate port values.",
       "duplicateKey": "Duplicate key \"{key}\"",
       "keyAndValueRequired": "Key and value are required.",
+      "marketplaceAppRestricted": "\"{repotag}\" must be purchased from marketplace.",
       "noEnvToUpload": "No environment variables to upload",
       "envAlreadyInStorage": "Environment parameters are already in Flux Storage",
       "noCmdsToUpload": "No commands to upload",

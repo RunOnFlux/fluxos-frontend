@@ -969,6 +969,7 @@
       "invalidOrDuplicatePort": "Nieprawidłowe lub zduplikowane wartości portów.",
       "duplicateKey": "Zduplikowany klucz \"{key}\"",
       "keyAndValueRequired": "Klucz i wartość są wymagane.",
+      "marketplaceAppRestricted": "\"{repotag}\" musi zostać zakupiony ze sklepu.",
       "noEnvToUpload": "Brak zmiennych środowiskowych do przesłania",
       "envAlreadyInStorage": "Parametry środowiskowe są już w Flux Storage",
       "noCmdsToUpload": "Brak poleceń do przesłania",
