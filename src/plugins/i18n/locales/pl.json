@@ -2966,6 +2966,69 @@
         "maintenanceSubtitle": "Obecnie występują problemy techniczne z marketplace WordPress. Nasz zespół pracuje nad jak najszybszym rozwiązaniem tego problemu.",
         "maintenanceDescription": "Proszę sprawdzić później lub skontaktować się z wsparciem, jeśli potrzebujesz natychmiastowej pomocy.",
         "pageTitle": "Hosting WordPress na Flux",
+        "landing": {
+          "title": "Hosting WordPress na FluxCloud",
+          "subtitle": "Wdrażaj potężne, skalowalne strony WordPress w zdecentralizowanej sieci FluxCloud z automatycznymi kopiami zapasowymi, certyfikatami SSL i globalnym CDN.",
+          "description": {
+            "title": "Dlaczego warto wybrać WordPress na FluxCloud?",
+            "content": "Hostuj swoją stronę WordPress na zdecentralizowanej infrastrukturze, która łączy wydajność, bezpieczeństwo i niezawodność. Nasz zarządzany hosting WordPress obejmuje automatyczne aktualizacje, cotygodniowe kopie zapasowe i bezpieczeństwo na poziomie korporacyjnym - wszystko zasilane przez sieć FluxCloud.",
+            "highlights": {
+              "security": "Bezpieczeństwo na poziomie korporacyjnym z automatycznymi aktualizacjami",
+              "performance": "Wysokowydajne dyski SSD i zoptymalizowane serwery",
+              "updates": "Automatyczne aktualizacje rdzenia WordPress i wtyczek",
+              "decentralized": "Zdecentralizowany hosting na wielu węzłach globalnych"
+            }
+          },
+          "plans": {
+            "title": "Wybierz swój plan WordPress",
+            "subtitle": "Wybierz idealny plan dla potrzeb Twojej witryny. Wszystkie plany obejmują bazę danych MySQL, certyfikaty SSL i pełną funkcjonalność WordPress.",
+            "recommended": "Polecane",
+            "buyNow": "Kup teraz",
+            "perMonth": "/mies.",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "storage": "Przestrzeń",
+            "instances": "Węzły"
+          },
+          "features": {
+            "title": "Wszystko czego potrzebujesz dla WordPress",
+            "items": {
+              "quickDeploy": {
+                "title": "Szybkie wdrożenie",
+                "description": "Uruchom swoją stronę WordPress w kilka minut dzięki naszemu systemowi wdrażania jednym kliknięciem."
+              },
+              "mysql": {
+                "title": "Baza danych MySQL",
+                "description": "W pełni zarządzana baza danych MySQL 8.3 z automatycznymi kopiami zapasowymi i optymalizacją."
+              },
+              "ssl": {
+                "title": "Darmowe certyfikaty SSL",
+                "description": "Automatyczne przydzielanie i odnawianie certyfikatów SSL dla bezpiecznych połączeń HTTPS."
+              },
+              "scalable": {
+                "title": "Skalowalne zasoby",
+                "description": "Łatwo uaktualnij swój plan wraz z rozwojem witryny, aby obsłużyć zwiększony ruch."
+              },
+              "backup": {
+                "title": "Automatyczne kopie zapasowe",
+                "description": "Cotygodniowe automatyczne kopie zapasowe z łatwą funkcją przywracania, aby chronić Twoje dane."
+              },
+              "pricing": {
+                "title": "Przejrzyste ceny",
+                "description": "Bez ukrytych opłat. Płacisz tylko za to, co używasz, z elastycznym rozliczeniem miesięcznym."
+              }
+            }
+          },
+          "serverNetwork": {
+            "title": "Globalna sieć serwerów",
+            "subtitle": "Twoja witryna WordPress jest hostowana w zdecentralizowanej sieci FluxCloud, rozproszonej na tysiącach węzłów na całym świecie dla maksymalnej niezawodności i wydajności.",
+            "noData": "Brak dostępnych danych serwera",
+            "activeServers": "Aktywne serwery",
+            "countries": "Kraje",
+            "global": "Globalny",
+            "coverage": "Zasięg"
+          }
+        },
         "form": {
           "dappName": "Nazwa Dapp WordPress",
           "dappNameTooltip": "Nazwa wyświetlana dla Twojej strony WordPress. Unikalna nazwa aplikacji Flux zostanie wygenerowana automatycznie.",

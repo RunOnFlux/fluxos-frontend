@@ -42,6 +42,7 @@ declare module 'vue-router/auto-routes' {
     'marketplace-games': RouteRecordInfo<'marketplace-games', '/marketplace/games', Record<never, never>, Record<never, never>>,
     'marketplace-games-name': RouteRecordInfo<'marketplace-games-name', '/marketplace/games/:name', { name: ParamValue<true> }, { name: ParamValue<false> }>,
     'marketplace-wordpress': RouteRecordInfo<'marketplace-wordpress', '/marketplace/wordpress', Record<never, never>, Record<never, never>>,
+    'marketplace-wordpress-configure': RouteRecordInfo<'marketplace-wordpress-configure', '/marketplace/wordpress/configure', Record<never, never>, Record<never, never>>,
     'successcheckout': RouteRecordInfo<'successcheckout', '/successcheckout', Record<never, never>, Record<never, never>>,
     'unauthorized': RouteRecordInfo<'unauthorized', '/unauthorized', Record<never, never>, Record<never, never>>,
     'xdao-app': RouteRecordInfo<'xdao-app', '/xdao-app', Record<never, never>, Record<never, never>>,

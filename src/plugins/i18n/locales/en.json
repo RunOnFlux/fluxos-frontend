@@ -3059,7 +3059,70 @@
         "maintenanceTitle": "WordPress Marketplace\nUnder Maintenance",
         "maintenanceSubtitle": "We're currently experiencing technical difficulties with the WordPress marketplace. Our team is working to resolve this issue as quickly as possible.",
         "maintenanceDescription": "Please check back later or contact support if you need immediate assistance.",
-        "pageTitle": "WordPress Hosting on Flux",
+        "pageTitle": "WordPress Hosting on FluxCloud",
+        "landing": {
+          "title": "WordPress Hosting on FluxCloud",
+          "subtitle": "Deploy powerful, scalable WordPress websites on the decentralized FluxCloud network with automatic backups, SSL certificates, and global CDN.",
+          "description": {
+            "title": "Why Choose WordPress on FluxCloud?",
+            "content": "Host your WordPress website on a decentralized infrastructure that combines performance, security, and reliability. Our managed WordPress hosting includes automatic updates, weekly backups, and enterprise-grade security - all powered by the FluxCloud network.",
+            "highlights": {
+              "security": "Enterprise-grade security with automatic updates",
+              "performance": "High-performance SSD storage and optimized servers",
+              "updates": "Automatic WordPress core and plugin updates",
+              "decentralized": "Decentralized hosting across multiple global nodes"
+            }
+          },
+          "plans": {
+            "title": "Choose Your WordPress Plan",
+            "subtitle": "Select the perfect plan for your website's needs. All plans include MySQL database, SSL certificates, and full WordPress functionality.",
+            "recommended": "Recommended",
+            "buyNow": "Buy Now",
+            "perMonth": "/mo",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "storage": "Storage",
+            "instances": "Nodes"
+          },
+          "features": {
+            "title": "Everything You Need for WordPress",
+            "items": {
+              "quickDeploy": {
+                "title": "Quick Deployment",
+                "description": "Get your WordPress site up and running in minutes with our one-click deployment system."
+              },
+              "mysql": {
+                "title": "MySQL Database",
+                "description": "Fully managed MySQL 8.3 database with automatic backups and optimization."
+              },
+              "ssl": {
+                "title": "Free SSL Certificates",
+                "description": "Automatic SSL certificate provisioning and renewal for secure HTTPS connections."
+              },
+              "scalable": {
+                "title": "Scalable Resources",
+                "description": "Easily upgrade your plan as your website grows to handle increased traffic."
+              },
+              "backup": {
+                "title": "Automatic Backups",
+                "description": "Weekly automated backups with easy restore functionality to protect your data."
+              },
+              "pricing": {
+                "title": "Transparent Pricing",
+                "description": "No hidden fees. Pay only for what you use with flexible monthly billing."
+              }
+            }
+          },
+          "serverNetwork": {
+            "title": "Global Server Network",
+            "subtitle": "Your WordPress site is hosted on the FluxCloud decentralized network, distributed across thousands of nodes worldwide for maximum reliability and performance.",
+            "noData": "No server data available",
+            "activeServers": "Active Servers",
+            "countries": "Countries",
+            "global": "Global",
+            "coverage": "Coverage"
+          }
+        },
         "form": {
           "dappName": "WordPress Dapp Name",
           "dappNameTooltip": "Display name for your WordPress site. A unique Flux app name will be generated automatically.",

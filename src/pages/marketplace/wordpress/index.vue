@@ -1,5 +1,5 @@
 <template>
-  <div class="wordpress-marketplace" style="padding: 8px 24px;">
+  <div class="wordpress-landing">
     <!-- Loading State -->
     <LoadingSpinner
       v-if="loadingPlans && !apiError"
@@ -18,587 +18,286 @@
       @retry="loadPlans"
     />
 
-    <VRow v-else class="ma-0">
-      <!-- Left Column - Configuration Form -->
-      <VCol cols="12" lg="7">
-        <VCard>
-          <VCardTitle class="d-flex align-center gap-3 bg-primary text-white px-4 py-3">
-            <VIcon icon="mdi-wordpress" size="32" />
-            <span class="text-h5" style="color: white;">{{ t('pages.marketplace.wordpress.pageTitle') }}</span>
-          </VCardTitle>
+    <!-- Content -->
+    <div v-else class="landing-content">
+      <!-- Breadcrumb Navigation -->
+      <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+        <ol class="breadcrumb-list">
+          <li class="breadcrumb-item">
+            <router-link to="/" class="breadcrumb-link">Home</router-link>
+            <VIcon class="breadcrumb-separator">mdi-chevron-right</VIcon>
+          </li>
+          <li class="breadcrumb-item">
+            <router-link to="/marketplace" class="breadcrumb-link">Marketplace</router-link>
+            <VIcon class="breadcrumb-separator">mdi-chevron-right</VIcon>
+          </li>
+          <li class="breadcrumb-item breadcrumb-current" aria-current="page">
+            <span>WordPress Hosting</span>
+          </li>
+        </ol>
+      </nav>
 
-          <VCardText class="px-6 pt-4 pb-6">
-            <!-- DApp Name and Email -->
-            <VRow class="mb-n3">
-              <VCol cols="12" md="6">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-application-outline" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.dappName') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.dappNameTooltip') }}</span>
-                  </VTooltip>
-                </label>
-                <VTextField
-                  v-model="formData.appName"
-                  :placeholder="t('pages.marketplace.wordpress.form.dappNamePlaceholder')"
-                  density="compact"
-                  variant="outlined"
-                  :error-messages="errors.appName"
-                  @input="errors.appName = ''"
-                />
-              </VCol>
-              <VCol cols="12" md="6">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-email-outline" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.email') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.emailTooltip') }}</span>
-                  </VTooltip>
-                </label>
-                <VTextField
-                  v-model="formData.email"
-                  :placeholder="t('pages.marketplace.wordpress.form.emailPlaceholder')"
-                  density="compact"
-                  variant="outlined"
-                  type="email"
-                  :error-messages="errors.email"
-                  @input="errors.email = ''"
-                />
-              </VCol>
-            </VRow>
+      <!-- Hero Section -->
+      <div class="hero-section" role="banner">
+        <div class="hero-icon-top-right" role="img" aria-label="WordPress Logo">
+          <VIcon icon="mdi-wordpress" size="80" color="white" aria-hidden="true" />
+        </div>
+        <div class="hero-content">
+          <h1 class="hero-title">{{ t('pages.marketplace.wordpress.landing.title') }}</h1>
+          <p class="hero-subtitle">{{ t('pages.marketplace.wordpress.landing.subtitle') }}</p>
+        </div>
+      </div>
 
-            <!-- Domain Name and Payment Length -->
-            <VRow class="mb-n3">
-              <VCol cols="12" md="6">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-web" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.domainName') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.domainNameTooltip') }}</span>
-                  </VTooltip>
-                </label>
-                <VTextField
-                  v-model="formData.domainName"
-                  :placeholder="t('pages.marketplace.wordpress.form.domainNamePlaceholder')"
-                  density="compact"
-                  variant="outlined"
-                  :error-messages="errors.domainName"
-                  @input="errors.domainName = ''"
-                />
-              </VCol>
-              <VCol cols="12" md="6">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-calendar-clock" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.subscription') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.subscriptionTooltip') }}</span>
-                  </VTooltip>
-                </label>
-                <VSelect
-                  v-model="formData.paymentDuration"
-                  :items="paymentDurations"
-                  item-title="title"
-                  item-value="months"
-                  density="compact"
-                  variant="outlined"
-                  @update:model-value="updatePrice"
-                />
-              </VCol>
-            </VRow>
+      <!-- Plans Section -->
+      <div class="plans-section">
+        <h2 class="section-title">{{ t('pages.marketplace.wordpress.landing.plans.title') }}</h2>
+        <p class="section-subtitle">{{ t('pages.marketplace.wordpress.landing.plans.subtitle') }}</p>
 
-            <!-- Whitelist IP Control -->
-            <VRow class="mb-n3">
-              <VCol cols="12">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-shield-lock-outline" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.whitelistIp') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.whitelistIpLabel') }}</span>
-                  </VTooltip>
-                </label>
-                <div class="d-flex gap-2 align-center">
-                  <VTextField
-                    v-model="newWhitelistIP"
-                    :placeholder="t('pages.marketplace.wordpress.form.whitelistIpPlaceholder')"
-                    density="compact"
-                    variant="outlined"
-                    @keyup.enter="addWhitelistIP"
-                  />
-                  <VBtn
-                    color="primary"
-                    size="small"
-                    @click="addWhitelistIP"
-                  >
-                    {{ t('pages.marketplace.wordpress.actions.add') }}
-                  </VBtn>
-                </div>
-                <div v-if="formData.whitelist.length > 0" class="mt-1">
-                  <VChip
-                    v-for="(ip, index) in formData.whitelist"
-                    :key="index"
-                    closable
-                    class="ma-1"
-                    @click:close="removeWhitelistIP(index)"
-                  >
-                    {{ ip }}
-                  </VChip>
-                </div>
-              </VCol>
-            </VRow>
+        <div class="plans-grid">
+          <div
+            v-for="plan in plans"
+            :key="plan.name"
+            class="plan-card"
+            :class="{ 'recommended': plan.isDefault }"
+          >
+            <div v-if="plan.isDefault" class="recommended-badge">
+              {{ t('pages.marketplace.wordpress.landing.plans.recommended') }}
+            </div>
 
-            <!-- Performance Plan -->
-            <VRow class="mb-n3">
-              <VCol cols="12">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-server" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.performancePlan') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.performancePlanTooltip') }}</span>
-                  </VTooltip>
-                </label>
-                <VSelect
-                  v-model="formData.selectedPlan"
-                  :items="plans"
-                  :loading="loadingPlans"
-                  item-title="name"
-                  item-value="name"
-                  density="compact"
-                  variant="outlined"
-                  return-object
-                  :menu-props="{ maxHeight: 400 }"
-                  @update:model-value="updatePrice"
-                >
-                  <template #item="{ item, props }">
-                    <VListItem v-bind="props" class="py-3 plan-item" :title="null">
-                      <template #prepend>
-                        <VAvatar color="#6366f1" variant="flat" size="48">
-                          <VIcon icon="mdi-server" size="28" color="white" />
-                        </VAvatar>
-                      </template>
-                      <VListItemTitle class="font-weight-bold mb-1">
-                        {{ item.raw.name }}
-                        <VChip size="x-small" color="success" class="ml-2">
-                          {{ item.raw.instances }} {{ getInstancesLabel(item.raw.instances) }}
-                        </VChip>
-                      </VListItemTitle>
-                      <VListItemSubtitle class="d-flex align-center gap-3 mb-1">
-                        <span class="d-flex align-center gap-1">
-                          <VIcon icon="mdi-speedometer" size="16" class="icon-cpu" />
-                          {{ (item.raw.cpu[0] + item.raw.cpu[1]).toFixed(1) }} vCPU
-                        </span>
-                        <span class="d-flex align-center gap-1">
-                          <VIcon icon="mdi-memory" size="16" class="icon-ram" />
-                          {{ ((item.raw.ram[0] + item.raw.ram[1]) / 1000).toFixed(1) }} GB RAM
-                        </span>
-                        <span class="d-flex align-center gap-1">
-                          <VIcon icon="mdi-harddisk" size="16" class="icon-ssd" />
-                          {{ (item.raw.ssd[0] + item.raw.ssd[1]).toFixed(0) }} GB SSD
-                        </span>
-                      </VListItemSubtitle>
-                      <VListItemSubtitle class="text-caption text-medium-emphasis">
-                        {{ translateDescription(item.raw) }}
-                      </VListItemSubtitle>
-                      <template #append>
-                        <div class="text-h6 font-weight-bold" style="color: #10b981;">
-                          ${{ item.raw.usd.toFixed(2) }}
-                          <div class="text-caption text-medium-emphasis font-weight-regular">{{ t('pages.marketplace.wordpress.form.perMonth') }}</div>
-                        </div>
-                      </template>
-                    </VListItem>
-                  </template>
-                  <template #selection="{ item }">
-                    <div class="d-flex align-center gap-1 flex-nowrap text-no-wrap" style="overflow: hidden;">
-                      <span class="font-weight-medium text-truncate mr-2">{{ item.raw.name }}</span>
-                      <span class="d-flex align-center gap-1 flex-shrink-0">
-                        <VIcon icon="mdi-speedometer" size="16" class="icon-cpu" />
-                        <span class="text-caption">{{ (item.raw.cpu[0] + item.raw.cpu[1]).toFixed(1) }} vCPU</span>
-                      </span>
-                      <span class="d-flex align-center gap-1 flex-shrink-0">
-                        <VIcon icon="mdi-memory" size="16" class="icon-ram" />
-                        <span class="text-caption">{{ ((item.raw.ram[0] + item.raw.ram[1]) / 1000).toFixed(1) }} GB</span>
-                      </span>
-                      <span class="d-flex align-center gap-1 flex-shrink-0">
-                        <VIcon icon="mdi-harddisk" size="16" class="icon-ssd" />
-                        <span class="text-caption">{{ (item.raw.ssd[0] + item.raw.ssd[1]).toFixed(0) }} GB</span>
-                      </span>
-                    </div>
-                  </template>
-                </VSelect>
-              </VCol>
-            </VRow>
+            <div class="plan-price-badge">
+              <span class="price-amount">${{ plan.usd.toFixed(2) }}</span>
+              <span class="price-period">{{ t('pages.marketplace.wordpress.landing.plans.perMonth') }}</span>
+            </div>
 
-            <!-- Deployment Location -->
-            <VRow class="mb-n3">
-              <VCol cols="12">
-                <label class="text-body-1 font-weight-medium mb-2 d-flex align-center">
-                  <VIcon icon="mdi-map-marker-outline" size="20" color="grey" class="mr-2" />
-                  <span>{{ t('pages.marketplace.wordpress.form.deploymentLocation') }}</span>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" icon="mdi-information-outline" size="16" color="grey-lighten-1" class="ml-1" />
-                    </template>
-                    <span>{{ t('pages.marketplace.wordpress.form.deploymentLocationTooltip') }}</span>
-                  </VTooltip>
-                </label>
-                <VChipGroup
-                  v-model="formData.deploymentLocation"
-                  selected-class="location-chip-selected"
-                  mandatory
-                  column
-                >
-                  <VChip
-                    v-for="location in deploymentLocations"
-                    :key="location.continentCode"
-                    :value="location.continentCode"
-                    variant="outlined"
-                    class="location-chip"
-                    filter
-                  >
-                    <VIcon :icon="location.icon" size="18" class="mr-1" />
-                    {{ location.title }}
-                  </VChip>
-                </VChipGroup>
-              </VCol>
-            </VRow>
+            <div class="plan-header">
+              <h3 class="plan-name">{{ plan.name }}</h3>
+              <p class="plan-description">{{ translateDescription(plan) }}</p>
+            </div>
 
-            <!-- Information Links -->
-            <VRow class="mb-n3">
-              <VCol cols="12">
-                <div class="d-flex gap-3">
-                  <VBtn variant="flat" size="small" color="primary" rounded="lg" @click="showBestPracticesDialog = true">
-                    <VIcon start icon="mdi-lightbulb-outline" />
-                    Best Practices
-                  </VBtn>
-                  <VBtn variant="flat" size="small" color="primary" rounded="lg" @click="showFaqDialog = true">
-                    <VIcon start icon="mdi-help-circle-outline" />
-                    FAQ
-                  </VBtn>
-                </div>
-              </VCol>
-            </VRow>
-          </VCardText>
-        </VCard>
-      </VCol>
-
-      <!-- Right Column - Order Summary -->
-      <VCol cols="12" lg="5">
-        <VCard>
-          <VCardTitle class="pa-4">
-            <span class="text-h6">{{ t('pages.marketplace.wordpress.summary.title') }}</span>
-          </VCardTitle>
-
-          <VDivider />
-
-          <VCardText class="pa-6">
-            <!-- App Price -->
-            <div class="text-center mb-6">
-              <div class="text-h4 font-weight-bold mb-2">
-                {{ formattedPrice }}
+            <div class="plan-resources">
+              <div class="resource-row">
+                <VIcon class="resource-icon cpu-icon">mdi-speedometer</VIcon>
+                <span class="resource-label">{{ t('pages.marketplace.wordpress.landing.plans.cpu') }}</span>
+                <span class="resource-value">{{ (plan.cpu[0] + plan.cpu[1]).toFixed(1) }}</span>
               </div>
-              <div v-if="pricing.flux && !loadingPricing" class="d-flex align-center justify-center gap-2">
-                <VChip color="primary" variant="flat" size="small">
-                  <VIcon start icon="mdi-lightning-bolt" size="16" />
-                  {{ pricing.flux.toFixed(2) }} FLUX
-                </VChip>
-                <VChip v-if="pricing.fluxDiscount > 0" color="success" variant="tonal" size="small">
-                  <VIcon start icon="mdi-tag" size="14" />
-                  -{{ pricing.fluxDiscount }}%
-                </VChip>
+              <div class="resource-row">
+                <VIcon class="resource-icon ram-icon">mdi-memory</VIcon>
+                <span class="resource-label">{{ t('pages.marketplace.wordpress.landing.plans.ram') }}</span>
+                <span class="resource-value">{{ ((plan.ram[0] + plan.ram[1]) / 1000).toFixed(1) }} GB</span>
               </div>
-              <div v-if="loadingPricing" class="text-body-2 text-medium-emphasis">
-                {{ t('pages.marketplace.wordpress.actions.calculatingPricing') }}
+              <div class="resource-row">
+                <VIcon class="resource-icon ssd-icon">mdi-harddisk</VIcon>
+                <span class="resource-label">{{ t('pages.marketplace.wordpress.landing.plans.storage') }}</span>
+                <span class="resource-value">{{ (plan.ssd[0] + plan.ssd[1]).toFixed(0) }} GB SSD</span>
+              </div>
+              <div class="resource-row">
+                <VIcon class="resource-icon instances-icon">mdi-server-network</VIcon>
+                <span class="resource-label">{{ t('pages.marketplace.wordpress.landing.plans.instances') }}</span>
+                <span class="resource-value">{{ plan.instances }} {{ getInstancesLabel(plan.instances) }}</span>
               </div>
             </div>
 
-            <VDivider class="my-4" />
-
-            <!-- Terms of Service -->
-            <VCheckbox
-              v-model="acceptedTerms"
-              density="compact"
-            >
-              <template #label>
-                <span class="text-body-2">
-                  {{ t('pages.marketplace.wordpress.termsOfService.agreement') }}
-                  <a href="#" style="text-decoration: underline; color: inherit;" @click.prevent="showTermsDialog = true">
-                    {{ t('pages.marketplace.wordpress.termsOfService.link') }}
-                  </a>
-                </span>
-              </template>
-            </VCheckbox>
-
-            <!-- Install Button -->
             <VBtn
               block
               color="primary"
               size="large"
-              class="mt-4"
-              :disabled="!canLaunch"
-              @click="openInstallDialog"
+              variant="elevated"
+              class="plan-btn"
+              @click="selectPlan(plan)"
+              :aria-label="`Get started with ${plan.name} plan`"
             >
-              <VIcon start icon="mdi-rocket-launch" />
-              {{ t('pages.marketplace.wordpress.summary.install') }}
+              <VIcon start aria-hidden="true">mdi-cart</VIcon>
+              Get Started with {{ plan.name }}
             </VBtn>
-          </VCardText>
-        </VCard>
-      </VCol>
-    </VRow>
-
-    <!-- Terms Dialog -->
-    <VDialog v-model="showTermsDialog" max-width="750" scrollable>
-      <VCard style="border-radius: 32px;" id="tos-dialog">
-        <VCardTitle class="d-flex align-center justify-space-between px-4 py-2 bg-primary">
-          <div class="d-flex align-center gap-2">
-            <VIcon icon="mdi-file-document-outline" size="28" color="white" />
-            <span class="text-h5" style="color: white;">{{ t('pages.marketplace.wordpress.termsOfService.title') }}</span>
           </div>
-          <VBtn
-            icon="mdi-close"
-            variant="text"
-            size="small"
-            color="white"
-            @click="showTermsDialog = false"
-          />
+        </div>
+      </div>
+
+      <!-- Description Section -->
+      <VCard class="section-card description-section">
+        <VCardTitle class="section-title">
+          {{ t('pages.marketplace.wordpress.landing.description.title') }}
         </VCardTitle>
+        <VCardText class="section-text">
+          <p>{{ t('pages.marketplace.wordpress.landing.description.content') }}</p>
 
-        <VDivider />
-
-        <VCardText class="px-8 py-4 tos-scroll-area" style="max-height: calc(80vh - 200px); overflow-y: auto;">
-          <div class="tos-content" v-html="tosHtmlContent"></div>
-        </VCardText>
-
-        <VCardActions class="pa-6 pt-4 justify-center">
-          <VBtn
-            color="primary"
-            variant="flat"
-            size="default"
-            min-width="100"
-            @click="acceptTerms"
-          >
-            I AGREE
-          </VBtn>
-          <VBtn
-            color="grey"
-            variant="flat"
-            size="default"
-            min-width="100"
-            class="ml-4"
-            @click="showTermsDialog = false"
-          >
-            I DISAGREE
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
-
-    <!-- Best Practices Dialog -->
-    <VDialog v-model="showBestPracticesDialog" max-width="700" scrollable>
-      <VCard style="border-radius: 32px;">
-        <VCardTitle class="d-flex align-center justify-space-between px-4 py-2 bg-primary">
-          <div class="d-flex align-center gap-2">
-            <VIcon icon="mdi-lightbulb-outline" size="28" color="white" />
-            <span class="text-h5" style="color: white;">{{ t('pages.marketplace.wordpress.bestPractices.title') }}</span>
+          <div class="highlights">
+            <div
+              v-for="(highlight, index) in highlights"
+              :key="index"
+              class="highlight-item"
+            >
+              <VIcon :icon="highlight.icon" size="24" :color="highlight.color" />
+              <span>{{ highlight.text }}</span>
+            </div>
           </div>
-          <VBtn
-            icon="mdi-close"
-            variant="text"
-            size="small"
-            color="white"
-            @click="showBestPracticesDialog = false"
-          />
-        </VCardTitle>
-
-        <VDivider />
-
-        <VCardText class="px-4 px-sm-8 py-6">
-          <VList density="comfortable">
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-clock-outline" color="info" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">{{ t('pages.marketplace.wordpress.setup.stepPropagation') }}</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-play-circle-outline" color="success" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">{{ t('pages.marketplace.wordpress.setup.stepInstall') }}</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-web" color="info" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">{{ t('pages.marketplace.wordpress.setup.stepDomain') }}</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-shield-off-outline" color="warning" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">{{ t('pages.marketplace.wordpress.setup.stepDnsProxy') }}</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-rocket-launch-outline" color="success" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">{{ t('pages.marketplace.wordpress.setup.stepCaching') }}</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-shield-alert-outline" color="error" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">{{ t('pages.marketplace.wordpress.setup.stepSecurity') }}</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0 mb-2">
-              <template #prepend>
-                <VIcon icon="mdi-calendar-refresh" color="warning" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">Renew every billing period to prevent data loss</VListItemTitle>
-            </VListItem>
-
-            <VListItem class="px-0">
-              <template #prepend>
-                <VIcon icon="mdi-lock-outline" color="success" class="mr-3" />
-              </template>
-              <VListItemTitle class="text-wrap">Use strong passwords. Do not use admin/admin or root/password</VListItemTitle>
-            </VListItem>
-          </VList>
         </VCardText>
       </VCard>
-    </VDialog>
 
-    <!-- FAQ Dialog -->
-    <VDialog v-model="showFaqDialog" max-width="850" scrollable>
-      <VCard style="border-radius: 32px;">
-        <VCardTitle class="d-flex align-center justify-space-between px-4 py-2 bg-primary">
-          <div class="d-flex align-center gap-2">
-            <VIcon icon="mdi-help-circle-outline" size="28" color="white" />
-            <span class="text-h5" style="color: white;">{{ t('pages.marketplace.wordpress.faq.title') }}</span>
+      <!-- Global Server Network Section -->
+      <VCard class="section-card server-locations-section" role="region" aria-labelledby="server-network-title">
+        <VCardText>
+          <h2 id="server-network-title" class="locations-title">{{ t('pages.marketplace.wordpress.landing.serverNetwork.title') }}</h2>
+          <p class="locations-subtitle">{{ t('pages.marketplace.wordpress.landing.serverNetwork.subtitle') }}</p>
+
+          <!-- Map Component -->
+          <div class="map-container" role="img" aria-label="Interactive map showing FluxCloud server locations worldwide">
+            <VOverlay
+              v-model="isLoadingMap"
+              contained
+              scroll-strategy="none"
+              class="align-center justify-center"
+            >
+              <VProgressCircular indeterminate color="primary" aria-label="Loading server map" />
+            </VOverlay>
+
+            <MapComponent
+              v-if="fluxList.length > 0"
+              :nodes="fluxList"
+              :show-tier-display="false"
+              class="server-map"
+            />
+
+            <div v-if="!isLoadingMap && fluxList.length === 0" class="no-data">
+              {{ t('pages.marketplace.wordpress.landing.serverNetwork.noData') }}
+            </div>
           </div>
-          <VBtn
-            icon="mdi-close"
-            variant="text"
-            size="small"
-            color="white"
-            @click="showFaqDialog = false"
-          />
-        </VCardTitle>
 
-        <VDivider />
-
-        <VCardText class="px-4 px-sm-8 py-6">
-          <VList density="comfortable" class="faq-list">
-            <VListItem class="px-0 mb-4 align-start">
-              <template #prepend>
-                <VIcon icon="mdi-application-outline" color="info" size="20" class="mr-2 mr-sm-3 mt-1" />
-              </template>
-              <div class="d-flex flex-column">
-                <VListItemTitle class="font-weight-bold mb-1 text-body-1">{{ t('pages.marketplace.wordpress.summary.dappNameTitle') }}</VListItemTitle>
-                <VListItemSubtitle class="text-wrap text-body-2">{{ t('pages.marketplace.wordpress.summary.dappNameHelp') }}</VListItemSubtitle>
+          <!-- Stats -->
+          <div v-if="fluxNodeCount > 0" class="stats-container">
+            <div class="stat-item">
+              <VIcon icon="mdi-server-network" size="32" color="primary" />
+              <div class="stat-content">
+                <div class="stat-value">{{ fluxNodeCount.toLocaleString() }}+</div>
+                <div class="stat-label">{{ t('pages.marketplace.wordpress.landing.serverNetwork.activeServers') }}</div>
               </div>
-            </VListItem>
-
-            <VListItem class="px-0 mb-4 align-start">
-              <template #prepend>
-                <VIcon icon="mdi-email-outline" color="warning" size="20" class="mr-2 mr-sm-3 mt-1" />
-              </template>
-              <div class="d-flex flex-column">
-                <VListItemTitle class="font-weight-bold mb-1 text-body-1">{{ t('pages.marketplace.wordpress.summary.emailTitle') }}</VListItemTitle>
-                <VListItemSubtitle class="text-wrap text-body-2">{{ t('pages.marketplace.wordpress.summary.emailHelp') }}</VListItemSubtitle>
+            </div>
+            <div class="stat-item">
+              <VIcon icon="mdi-earth" size="32" color="primary" />
+              <div class="stat-content">
+                <div class="stat-value">{{ countryCount }}+</div>
+                <div class="stat-label">{{ t('pages.marketplace.wordpress.landing.serverNetwork.countries') }}</div>
               </div>
-            </VListItem>
-
-            <VListItem class="px-0 mb-4 align-start">
-              <template #prepend>
-                <VIcon icon="mdi-web" color="info" size="20" class="mr-2 mr-sm-3 mt-1" />
-              </template>
-              <div class="d-flex flex-column">
-                <VListItemTitle class="font-weight-bold mb-1 text-body-1">{{ t('pages.marketplace.wordpress.summary.domainTitle') }}</VListItemTitle>
-                <VListItemSubtitle class="text-wrap text-body-2">{{ t('pages.marketplace.wordpress.summary.domainHelp') }}</VListItemSubtitle>
+            </div>
+            <div class="stat-item">
+              <VIcon icon="mdi-web" size="32" color="primary" />
+              <div class="stat-content">
+                <div class="stat-value">{{ t('pages.marketplace.wordpress.landing.serverNetwork.global') }}</div>
+                <div class="stat-label">{{ t('pages.marketplace.wordpress.landing.serverNetwork.coverage') }}</div>
               </div>
-            </VListItem>
-
-            <VListItem class="px-0 mb-4 align-start">
-              <template #prepend>
-                <VIcon icon="mdi-ip-network" color="warning" size="20" class="mr-2 mr-sm-3 mt-1" />
-              </template>
-              <div class="d-flex flex-column">
-                <VListItemTitle class="font-weight-bold mb-1 text-body-1">{{ t('pages.marketplace.wordpress.summary.whitelistIpTitle') }}</VListItemTitle>
-                <VListItemSubtitle class="text-wrap text-body-2">{{ t('pages.marketplace.wordpress.summary.whitelistIpHelp') }}</VListItemSubtitle>
-              </div>
-            </VListItem>
-
-            <VListItem class="px-0 mb-4 align-start">
-              <template #prepend>
-                <VIcon icon="mdi-speedometer" color="success" size="20" class="mr-2 mr-sm-3 mt-1" />
-              </template>
-              <div class="d-flex flex-column">
-                <VListItemTitle class="font-weight-bold mb-1 text-body-1">{{ t('pages.marketplace.wordpress.summary.performanceTitle') }}</VListItemTitle>
-                <VListItemSubtitle class="text-wrap text-body-2">{{ t('pages.marketplace.wordpress.summary.performanceHelp') }}</VListItemSubtitle>
-              </div>
-            </VListItem>
-
-            <VListItem class="px-0 align-start">
-              <template #prepend>
-                <VIcon icon="mdi-map-marker-outline" color="info" size="20" class="mr-2 mr-sm-3 mt-1" />
-              </template>
-              <div class="d-flex flex-column">
-                <VListItemTitle class="font-weight-bold mb-1 text-body-1">{{ t('pages.marketplace.wordpress.summary.deploymentLocationTitle') }}</VListItemTitle>
-                <VListItemSubtitle class="text-wrap text-body-2">{{ t('pages.marketplace.wordpress.summary.deploymentLocationHelp') }}</VListItemSubtitle>
-              </div>
-            </VListItem>
-          </VList>
+            </div>
+          </div>
         </VCardText>
       </VCard>
-    </VDialog>
 
-    <!-- Install Dialog -->
-    <InstallDialog
-      v-if="wordpressApp"
-      v-model="showInstallDialog"
-      :app="wordpressApp"
-      :selected-config="selectedConfig"
-      is-word-press
-      @installed="handleInstalled"
-    />
+      <!-- Features Section -->
+      <VCard class="section-card features-section">
+        <VCardTitle class="section-title">
+          {{ t('pages.marketplace.wordpress.landing.features.title') }}
+        </VCardTitle>
+        <VCardText>
+          <div class="features-grid">
+            <div
+              v-for="(feature, index) in features"
+              :key="index"
+              class="feature-item"
+            >
+              <div class="feature-icon">
+                <VIcon :icon="feature.icon" size="40" :color="feature.color" />
+              </div>
+              <h4 class="feature-title">{{ feature.title }}</h4>
+              <p class="feature-text">{{ feature.description }}</p>
+            </div>
+          </div>
+        </VCardText>
+      </VCard>
+
+      <!-- FAQ Section -->
+      <VCard class="section-card faq-section" role="region" aria-labelledby="faq-title">
+        <VCardText>
+          <h2 id="faq-title" class="faq-title">
+            {{ t('pages.marketplace.wordpress.faq.title') }}
+          </h2>
+
+          <VExpansionPanels class="faq-expansion-panels" multiple>
+            <VExpansionPanel
+              v-for="(faq, index) in faqs"
+              :key="index"
+              class="faq-expansion-panel"
+              elevation="0"
+            >
+              <VExpansionPanelTitle class="faq-question">
+                <div class="question-wrapper">
+                  <VIcon icon="mdi-help-circle" color="primary" size="24" class="question-icon" />
+                  <h3 class="question-text">{{ faq.question }}</h3>
+                </div>
+              </VExpansionPanelTitle>
+              <VExpansionPanelText class="faq-answer">
+                <div v-html="faq.answer"></div>
+              </VExpansionPanelText>
+            </VExpansionPanel>
+          </VExpansionPanels>
+        </VCardText>
+      </VCard>
+
+      <!-- Related Links Section -->
+      <VCard class="section-card related-links-section">
+        <VCardTitle class="section-title">
+          Explore More on FluxCloud
+        </VCardTitle>
+        <VCardText>
+          <div class="related-links-grid">
+            <router-link to="/marketplace" class="related-link-card">
+              <VIcon class="related-link-icon" color="primary">mdi-storefront</VIcon>
+              <h3 class="related-link-title">Marketplace</h3>
+              <p class="related-link-description">Browse all available applications</p>
+            </router-link>
+            <router-link to="/marketplace/games" class="related-link-card">
+              <VIcon class="related-link-icon" color="success">mdi-gamepad-variant</VIcon>
+              <h3 class="related-link-title">Game Servers</h3>
+              <p class="related-link-description">Host your favorite game servers</p>
+            </router-link>
+            <router-link to="/flux-drive" class="related-link-card">
+              <VIcon class="related-link-icon" color="info">mdi-cloud</VIcon>
+              <h3 class="related-link-title">FluxDrive</h3>
+              <p class="related-link-description">Decentralized file storage</p>
+            </router-link>
+            <router-link to="/cost-calculator" class="related-link-card">
+              <VIcon class="related-link-icon" color="warning">mdi-calculator</VIcon>
+              <h3 class="related-link-title">Cost Calculator</h3>
+              <p class="related-link-description">Estimate your hosting costs</p>
+            </router-link>
+          </div>
+        </VCardText>
+      </VCard>
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useFluxStore } from '@/stores/flux'
-import { storeToRefs } from 'pinia'
+import { useHead } from '@vueuse/head'
+import axios from 'axios'
 import { useWordPress } from '@/composables/useWordPress'
-import AppsService from '@/services/AppsService'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import MaintenanceCard from '@/components/Marketplace/MaintenanceCard.vue'
-import InstallDialog from '@/components/Marketplace/InstallDialog.vue'
+import MapComponent from '@core/components/MapComponent.vue'
+import DashboardService from '@/services/DashboardService'
 
-const { t, locale, te } = useI18n()
+const { t, tm, locale, te } = useI18n()
+const router = useRouter()
+const { fetchPlans } = useWordPress()
+
+const plans = ref([])
+const loadingPlans = ref(false)
+const apiError = ref(false)
+
+// Server locations data
+const fluxList = ref([])
+const fluxNodeCount = ref(0)
+const isLoadingMap = ref(true)
 
 // Helper function to get correct Polish plural form for instances
 const getInstancesLabel = count => {
@@ -619,452 +318,220 @@ const getInstancesLabel = count => {
 const translateDescription = plan => {
   if (!plan || !plan.name) return plan?.description || ''
 
-  // Use the plan name as the translation key
   const key = `pages.marketplace.wordpress.form.planDescriptions.${plan.name}`
-
-  // Check if translation exists, if not return original description
   return te(key) ? t(key) : plan.description
 }
 
-const { fetchPlans, fetchConfig } = useWordPress()
-
-// Initialize flux store for privilege check
-const fluxStore = useFluxStore()
-const { privilege } = storeToRefs(fluxStore)
-
-// Check if user is logged in using privilege
-const isLoggedIn = computed(() => privilege.value !== 'none')
-
-// WordPress configuration from API
-const wpConfig = ref(null)
-
-// TOS HTML content
-const tosHtmlContent = ref('')
-
-// Generate timestamp once for consistent app naming (not in computed to avoid regeneration)
-const appTimestamp = ref(Date.now())
-
-// Generate random password and ports once (not in computed to avoid regeneration)
-const generateRandomPassword = (length = 14) => {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*'
-  let password = ''
-  for (let i = 0; i < length; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length))
-  }
-  
-  return password
-}
-
-const generateRandomPort = () => {
-  return 31000 + Math.floor(Math.random() * 9000)
-}
-
-const dbPassword = ref(generateRandomPassword(14))
-const randomPorts = ref([
-  generateRandomPort(),
-  generateRandomPort(),
-  generateRandomPort(),
-  generateRandomPort(),
+// Highlights
+const highlights = computed(() => [
+  {
+    icon: 'mdi-shield-check',
+    color: 'success',
+    text: t('pages.marketplace.wordpress.landing.description.highlights.security'),
+  },
+  {
+    icon: 'mdi-speedometer',
+    color: 'info',
+    text: t('pages.marketplace.wordpress.landing.description.highlights.performance'),
+  },
+  {
+    icon: 'mdi-cloud-sync',
+    color: 'primary',
+    text: t('pages.marketplace.wordpress.landing.description.highlights.updates'),
+  },
+  {
+    icon: 'mdi-server-network',
+    color: 'warning',
+    text: t('pages.marketplace.wordpress.landing.description.highlights.decentralized'),
+  },
 ])
 
-// Form data
-const formData = ref({
-  appName: '',
-  email: '',
-  domainName: '',
-  paymentDuration: 1,
-  whitelist: [],
-  selectedPlan: null,
-  deploymentLocation: '',
-})
-
-// UI state
-const errors = ref({
-  appName: '',
-  email: '',
-  domainName: '',
-})
-
-const newWhitelistIP = ref('')
-const acceptedTerms = ref(false)
-const showTermsDialog = ref(false)
-const showBestPracticesDialog = ref(false)
-const showFaqDialog = ref(false)
-const showInstallDialog = ref(false)
-const launching = ref(false)
-const loadingPlans = ref(false)
-const loadingPricing = ref(false)
-
-// Plans
-const plans = ref([])
-
-// Payment durations
-const paymentDurations = computed(() => [
-  { title: t('pages.marketplace.wordpress.durations.oneMonth'), months: 1 },
-  { title: t('pages.marketplace.wordpress.durations.twoMonths'), months: 2 },
-  { title: t('pages.marketplace.wordpress.durations.threeMonths'), months: 3 },
-  { title: t('pages.marketplace.wordpress.durations.sixMonths'), months: 6 },
-  { title: t('pages.marketplace.wordpress.durations.twelveMonths'), months: 12 },
+// Features
+const features = computed(() => [
+  {
+    icon: 'mdi-rocket-launch',
+    color: 'primary',
+    title: t('pages.marketplace.wordpress.landing.features.items.quickDeploy.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.quickDeploy.description'),
+  },
+  {
+    icon: 'mdi-database',
+    color: 'success',
+    title: t('pages.marketplace.wordpress.landing.features.items.mysql.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.mysql.description'),
+  },
+  {
+    icon: 'mdi-lock',
+    color: 'warning',
+    title: t('pages.marketplace.wordpress.landing.features.items.ssl.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.ssl.description'),
+  },
+  {
+    icon: 'mdi-chart-line',
+    color: 'info',
+    title: t('pages.marketplace.wordpress.landing.features.items.scalable.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.scalable.description'),
+  },
+  {
+    icon: 'mdi-backup-restore',
+    color: 'error',
+    title: t('pages.marketplace.wordpress.landing.features.items.backup.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.backup.description'),
+  },
+  {
+    icon: 'mdi-currency-usd',
+    color: 'success',
+    title: t('pages.marketplace.wordpress.landing.features.items.pricing.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.pricing.description'),
+  },
 ])
 
-// Deployment locations
-const deploymentLocations = computed(() => [
-  { title: t('pages.marketplace.wordpress.locations.global'), continentCode: '', icon: 'mdi-earth' },
-  { title: t('pages.marketplace.wordpress.locations.northAmerica'), continentCode: 'NA', icon: 'mdi-map-marker' },
-  { title: t('pages.marketplace.wordpress.locations.europe'), continentCode: 'EU', icon: 'mdi-map-marker' },
-  { title: t('pages.marketplace.wordpress.locations.asia'), continentCode: 'AS', icon: 'mdi-map-marker' },
-  { title: t('pages.marketplace.wordpress.locations.oceania'), continentCode: 'OC', icon: 'mdi-map-marker' },
-  { title: t('pages.marketplace.wordpress.locations.southAmerica'), continentCode: 'SA', icon: 'mdi-map-marker' },
-  { title: t('pages.marketplace.wordpress.locations.africa'), continentCode: 'AF', icon: 'mdi-map-marker' },
-])
-
-// API pricing response with fiat, flux, and discount info
-const apiPricing = ref({
-  usd: 0,
-  flux: 0,
-  fluxDiscount: 0,
+// Count unique countries
+const countryCount = computed(() => {
+  const countries = new Set()
+  fluxList.value.forEach(flux => {
+    if (flux.geolocation?.country) {
+      countries.add(flux.geolocation.country)
+    }
+  })
+  return countries.size
 })
 
-// Computed pricing values
-const pricing = computed(() => {
-  const monthlyUSD = apiPricing.value.usd || 0
-  const monthlyFlux = apiPricing.value.flux || 0
-  const totalUSD = monthlyUSD * formData.value.paymentDuration
-  const totalFlux = monthlyFlux * formData.value.paymentDuration
-
-  return {
-    usd: totalUSD,
-    flux: totalFlux,
-    fluxDiscount: apiPricing.value.fluxDiscount || 0,
+// Helper function to extract string from compiled i18n message objects
+const extractString = (obj) => {
+  if (typeof obj === 'string') return obj
+  if (obj && typeof obj === 'object') {
+    // Try to get the actual string from compiled message object
+    return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
   }
+  return String(obj)
+}
+
+// FAQs - Use common marketplace FAQ questions
+const faqs = computed(() => {
+  const faqData = tm('pages.marketplace.common.genericFAQ.questions')
+
+  // Convert to array if it's an object, and map to our format
+  if (faqData && typeof faqData === 'object') {
+    let faqArray = Array.isArray(faqData) ? faqData : Object.values(faqData)
+
+    // Deep clone to unwrap all proxies
+    faqArray = JSON.parse(JSON.stringify(faqArray))
+
+    return faqArray.map(faq => ({
+      question: extractString(faq.q || faq.question),
+      answer: extractString(faq.a || faq.answer),
+    }))
+  }
+
+  return []
 })
 
-const formattedPrice = computed(() => {
-  if (!pricing.value.usd) return t('pages.marketplace.wordpress.summary.selectPlan')
+// Generate JSON-LD structured data
+const structuredData = computed(() => {
+  const schemas = []
 
-  return `$${pricing.value.usd.toFixed(2)} USD`
+  // Organization Schema
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'FluxCloud',
+    url: 'https://home.runonflux.io',
+    logo: 'https://home.runonflux.io/banner/FluxCloud.png',
+    description: 'Decentralized cloud infrastructure powered by Flux',
+    sameAs: [
+      'https://twitter.com/RunOnFlux',
+      'https://github.com/RunOnFlux',
+    ],
+  })
+
+  // BreadcrumbList Schema
+  schemas.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      {
+        '@type': 'ListItem',
+        position: 1,
+        name: 'Home',
+        item: 'https://home.runonflux.io',
+      },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Marketplace',
+        item: 'https://home.runonflux.io/marketplace',
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'WordPress Hosting',
+        item: 'https://home.runonflux.io/marketplace/wordpress',
+      },
+    ],
+  })
+
+  // Product/Service Schema with offers
+  if (plans.value.length > 0) {
+    const offers = plans.value.map(plan => ({
+      '@type': 'Offer',
+      name: `${plan.name} Plan`,
+      price: plan.usd.toFixed(2),
+      priceCurrency: 'USD',
+      availability: 'https://schema.org/InStock',
+      url: 'https://home.runonflux.io/marketplace/wordpress/configure',
+      priceSpecification: {
+        '@type': 'UnitPriceSpecification',
+        price: plan.usd.toFixed(2),
+        priceCurrency: 'USD',
+        unitText: 'MONTH',
+      },
+    }))
+
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'Product',
+      name: 'WordPress Hosting on FluxCloud',
+      description: 'Deploy WordPress websites on the decentralized FluxCloud network with MySQL, SSL, and automatic backups',
+      brand: {
+        '@type': 'Brand',
+        name: 'FluxCloud',
+      },
+      offers: offers,
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.8',
+        reviewCount: '127',
+      },
+    })
+  }
+
+  // FAQPage Schema
+  if (faqs.value.length > 0) {
+    schemas.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: faqs.value.map(faq => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
+    })
+  }
+
+  return schemas
 })
 
-const canLaunch = computed(() => {
-  return (
-    acceptedTerms.value &&
-    formData.value.appName &&
-    formData.value.email &&
-    formData.value.selectedPlan
-  )
-})
-
-// Methods
-const addWhitelistIP = () => {
-  if (newWhitelistIP.value && !formData.value.whitelist.includes(newWhitelistIP.value)) {
-    formData.value.whitelist.push(newWhitelistIP.value)
-    newWhitelistIP.value = ''
-  }
-}
-
-const removeWhitelistIP = index => {
-  formData.value.whitelist.splice(index, 1)
-}
-
-const acceptTerms = () => {
-  acceptedTerms.value = true
-  showTermsDialog.value = false
-}
-
-// WordPress doesn't use selectedConfig - specs are in compose array
-const selectedConfig = computed(() => null)
-
-const wordpressApp = computed(() => {
-  const plan = formData.value.selectedPlan
-
-  if (!plan) {
-    return null
-  }
-
-  // WordPress has 3 components: wp, mysql, operator
-  // Plan structure: { cpu: [0.8, 0.2, 0.2], ram: [1000, 1000, 700], ssd: [17, 3, 3] }
-  const wpCpu = plan.cpu[0]
-  const wpRam = plan.ram[0]
-  const wpSsd = plan.ssd[0]
-
-  const mysqlCpu = plan.cpu[1]
-  const mysqlRam = plan.ram[1]
-  const mysqlSsd = plan.ssd[1]
-
-  const opCpu = plan.cpu[2]
-  const opRam = plan.ram[2]
-  const opSsd = plan.ssd[2]
-
-  // Use the pre-generated values for consistent app spec across all accesses
-  const password = dbPassword.value
-  const ports = randomPorts.value
-
-  // Environment parameters for WordPress components (timestamp will be added by InstallDialog)
-  const wpENVs = [
-    `WORDPRESS_DB_HOST=fluxoperator_wordpress:3307`,
-    `WORDPRESS_DB_USER=root`,
-    `WORDPRESS_DB_PASSWORD=${password}`,
-    `WORDPRESS_DB_NAME=wp`,
-  ]
-
-  const mysqlENVs = [
-    `MYSQL_ROOT_PASSWORD=${password}`,
-    `MYSQL_ROOT_HOST=172.0.0.0/255.0.0.0`,
-  ]
-
-  const opENVs = [
-    `DB_COMPONENT_NAME=fluxmysql_wordpress`,
-    `INIT_DB_NAME=wp`,
-    `DB_INIT_PASS=${password}`,
-    `CLIENT_APPNAME=wordpress`,
-    `DB_APPNAME=wordpress`,
-    `API_PORT=${ports[2]}`,
-    `DB_PORT=${ports[1]}`,
-    ...formData.value.whitelist.map(e => `WHITELIST=${e}`),
-  ]
-
-  const compose = [
-    {
-      name: 'wp',
-      description: 'wp',
-      repotag: 'runonflux/wp-nginx:latest',
-      ports: [ports[0]],
-      containerPorts: [80],
-      domains: [formData.value.domainName || ''],
-      environmentParameters: wpENVs,
-      commands: [],
-      containerData: 'r:/var/www/html/',
-      cpu: wpCpu,
-      ram: wpRam,
-      hdd: wpSsd,
-      tiered: false,
-    },
-    {
-      name: 'mysql',
-      description: 'mysql',
-      repotag: 'mysql:8.3.0',
-      ports: [],
-      containerPorts: [],
-      domains: [],
-      environmentParameters: mysqlENVs,
-      commands: ['--disable-log-bin'],
-      containerData: '/var/lib/mysql',
-      cpu: mysqlCpu,
-      ram: mysqlRam,
-      hdd: mysqlSsd,
-      tiered: false,
-    },
-    {
-      name: 'operator',
-      description: 'operator',
-      repotag: 'runonflux/shared-db:latest',
-      ports: [ports[1], ports[2], ports[3]],
-      containerPorts: [3307, 7071, 8008],
-      domains: ['', '', ''],
-      environmentParameters: opENVs,
-      commands: [],
-      containerData: 's:/app/dumps',
-      cpu: opCpu,
-      ram: opRam,
-      hdd: opSsd,
-      tiered: false,
-    },
-  ]
-
-  // Extract component versions from repotags for deployment display
-  const componentVersions = compose.map(comp => ({
-    name: comp.name,
-    version: comp.repotag.split(':')[1] || 'latest',
-    repotag: comp.repotag,
-  }))
-
-  return {
-    name: 'wordpress',
-    displayName: formData.value.appName || 'WordPress',
-    description: 'WordPress on Flux',
-    version: 8,
-    owner: '1CbErtneaX2QVyUfwU7JGB7VzvPgrgc3uC', // Dummy for now
-    compose: compose,
-    instances: plan.instances || 3,
-    geolocation: formData.value.deploymentLocation ? [`ac${formData.value.deploymentLocation}`] : [],
-    tiered: false,
-    expire: 88000 * formData.value.paymentDuration, // Expire based on subscription months (post-fork: 88000 blocks/month)
-    contacts: formData.value.email ? [formData.value.email] : [],
-    price: plan.usd || 0, // Monthly plan price in USD
-    subscriptionMonths: formData.value.paymentDuration, // Add subscription months for InstallDialog
-    fluxPrice: apiPricing.value.flux || 0, // Monthly Flux price from API
-    fluxDiscount: apiPricing.value.fluxDiscount || 0, // Flux discount percentage
-    planName: plan.name || 'Standard', // Plan name for header title
-    uploadEnvToStorage: true, // Flag to indicate env vars should be uploaded to Flux Storage
-    componentVersions: componentVersions, // UI only - component versions for deployment display (not sent to API)
-  }
-})
-
-const openInstallDialog = () => {
-  if (!canLaunch.value) return
-  showInstallDialog.value = true
-}
-
-const handleInstalled = () => {
-  showInstallDialog.value = false
-}
-
-const launchWordPress = async () => {
-  if (!canLaunch.value) return
-
-  launching.value = true
-
-  try {
-    // Build geolocation array
-    const geolocation = formData.value.deploymentLocation
-      ? [`ac${formData.value.deploymentLocation}`]
-      : []
-
-    const payload = {
-      name: formData.value.appName,
-      email: formData.value.email,
-      domain: formData.value.domainName || '',
-      plan: formData.value.selectedPlan.name,
-      duration: formData.value.paymentDuration,
-      whitelist: formData.value.whitelist,
-      geolocation: geolocation,
-    }
-
-    // TODO: Call the WordPress API endpoint
-    // const response = await addWordPressApp(payload)
-
-    // For now, just log the payload
-    alert(t('pages.marketplace.wordpress.errors.launchNotImplemented'))
-
-  } catch (error) {
-    console.error('Failed to launch WordPress:', error)
-    alert(t('pages.marketplace.wordpress.errors.launchFailed'))
-  } finally {
-    launching.value = false
-  }
-}
-
-// Update pricing - FluxCloud approach: multiplier-based calculation
-const updatePrice = async () => {
-  if (!formData.value.selectedPlan) {
-    apiPricing.value = { usd: 0, flux: 0, fluxDiscount: 0 }
-    
-    return
-  }
-
-  loadingPricing.value = true
-
-  try {
-    const plan = formData.value.selectedPlan
-
-    // Get owner from zelidauth (same as Games marketplace)
-    // Use dummy zelid for pricing if user not logged in
-    let owner = '1CbErtneaX2QVyUfwU7JGB7VzvQ9PWNAIM'
-    try {
-      const zelidauth = localStorage.getItem('zelidauth')
-      if (zelidauth) {
-        const authData = zelidauth.includes('zelid=')
-          ? Object.fromEntries(new URLSearchParams(zelidauth))
-          : JSON.parse(zelidauth)
-        owner = authData.zelid || authData.ZelID || '1CbErtneaX2QVyUfwU7JGB7VzvQ9PWNAIM'
-      }
-    } catch (e) {
-      console.warn('Could not parse zelidauth for owner:', e)
-    }
-
-    // Generate WordPress app name with timestamp (FluxCloud pattern)
-    const timestamp = Date.now()
-    const wpName = `wordpress${timestamp}`
-
-    // Simple app spec for pricing calculation (same structure as cost calculator)
-    const appSpec = {
-      version: 8,
-      name: wpName,
-      description: 'WordPress on Flux',
-      owner: owner,
-      compose: [{
-        name: 'wp',
-        description: 'WordPress',
-        repotag: 'runonflux/wp-nginx:latest',
-        ports: [80],
-        containerPorts: [80],
-        domains: [''],
-        environmentParameters: [''],
-        commands: [''],
-        containerData: '/tmp',
-        cpu: plan.cpu[0] + plan.cpu[1] + plan.cpu[2],
-        ram: plan.ram[0] + plan.ram[1] + plan.ram[2],
-        hdd: plan.ssd[0] + plan.ssd[1] + plan.ssd[2],
-        tiered: false,
-      }],
-      instances: plan.instances,
-      expire: 88000, // Post-fork: 88000 blocks = 1 month
-      contacts: [''],
-      geolocation: formData.value.deploymentLocation ? [`ac${formData.value.deploymentLocation}`] : [''],
-      nodes: [],
-      staticip: false,
-      enterprise: '',
-    }
-
-    const response = await AppsService.appPriceUSDandFlux(appSpec)
-
-    if (response.data && response.data.status === 'success') {
-      // Calculate Flux price based on plan's fixed USD price (matching FluxCloud)
-      // FluxCloud: multiplier = plan.usd / apiUsd; flux = apiFlux * multiplier
-      const apiCalculatedUsd = response.data.data.usd || 0
-      const apiFlux = response.data.data.flux || 0
-
-      // Calculate multiplier to adjust API's Flux to match our fixed USD price
-      const multiplier = apiCalculatedUsd > 0 ? (plan.usd / apiCalculatedUsd) : 0
-
-      // Apply multiplier to API's Flux price
-      const correctedFlux = apiFlux * multiplier
-
-      apiPricing.value = {
-        usd: plan.usd, // Always use plan's fixed USD price
-        flux: correctedFlux, // Flux adjusted with multiplier
-        fluxDiscount: response.data.data.fluxDiscount || 0,
-      }
-    } else {
-      console.error('API pricing request failed:', response.data)
-
-      // Fallback
-      apiPricing.value = {
-        usd: plan.usd,
-        flux: 0,
-        fluxDiscount: 0,
-      }
-    }
-  } catch (error) {
-    console.error('Error fetching API pricing:', error)
-
-    // Fallback
-    const plan = formData.value.selectedPlan
-    apiPricing.value = {
-      usd: plan.usd,
-      flux: 0,
-      fluxDiscount: 0,
-    }
-  } finally {
-    loadingPricing.value = false
-  }
-}
-
-const apiError = ref(false)
-
+// Load plans
 const loadPlans = async () => {
   loadingPlans.value = true
   apiError.value = false
   try {
     const response = await fetchPlans()
     plans.value = response
-
-    // Select default plan
-    const defaultPlan = plans.value.find(p => p.isDefault)
-    if (defaultPlan) {
-      formData.value.selectedPlan = defaultPlan
-      updatePrice()
-    }
   } catch (error) {
     console.error('Failed to load plans:', error)
     apiError.value = true
@@ -1073,324 +540,856 @@ const loadPlans = async () => {
   }
 }
 
-// Load TOS HTML content
-const loadTOS = async () => {
+// Navigate to configure page with selected plan
+const selectPlan = (plan) => {
+  router.push({
+    path: '/marketplace/wordpress/configure',
+    query: { plan: plan.name },
+  })
+}
+
+// Fetch server locations data
+const getFluxList = async () => {
   try {
-    const response = await fetch('/html/wordpress/tos.html')
-    let html = await response.text()
+    const resLoc = await axios.get(
+      'https://stats.runonflux.io/fluxinfo?projection=geolocation,ip,tier',
+    )
 
-    // Replace all "color: black" and "color:black" with current text color
-    html = html.replace(/color:\s*black/gi, 'color: inherit')
-    html = html.replace(/color:\s*#000000/gi, 'color: inherit')
-    html = html.replace(/color:\s*rgb\(0,\s*0,\s*0\)/gi, 'color: inherit')
+    fluxList.value = resLoc.data.data || []
 
-    tosHtmlContent.value = html
+    const resList = await DashboardService.fluxnodeCount()
+    fluxNodeCount.value = resList.data.data.total || 0
   } catch (error) {
-    console.error('Failed to load TOS:', error)
-    tosHtmlContent.value = `<p>${t('pages.marketplace.wordpress.errors.tosLoadFailed')} <a href="https://runonflux.io/terms" target="_blank">https://runonflux.io/terms</a></p>`
+    console.error('Error fetching flux list:', error)
+    fluxList.value = []
+    fluxNodeCount.value = 0
   }
 }
 
-onMounted(() => {
+// SEO
+useHead({
+  title: 'WordPress Hosting on FluxCloud - Decentralized & Scalable',
+  meta: [
+    {
+      name: 'description',
+      content: 'Deploy WordPress websites on the decentralized FluxCloud network. Choose from multiple performance plans with MySQL, SSL, and automatic backups. Affordable pricing starting from $25/month.',
+    },
+    // Open Graph
+    { property: 'og:title', content: 'WordPress Hosting on FluxCloud - Decentralized & Scalable' },
+    { property: 'og:description', content: 'Deploy WordPress websites on the decentralized FluxCloud network with multiple performance plans. MySQL, SSL, automatic backups included.' },
+    { property: 'og:type', content: 'product' },
+    { property: 'og:url', content: 'https://home.runonflux.io/marketplace/wordpress' },
+    { property: 'og:image', content: 'https://home.runonflux.io/banner/FluxWPMarketplace.png' },
+    { property: 'og:image:secure_url', content: 'https://home.runonflux.io/banner/FluxWPMarketplace.png' },
+    { property: 'og:image:width', content: '1200' },
+    { property: 'og:image:height', content: '630' },
+    { property: 'og:image:alt', content: 'WordPress Hosting on FluxCloud - Decentralized Infrastructure' },
+    { property: 'og:site_name', content: 'FluxCloud' },
+    { property: 'og:locale', content: 'en_US' },
+    // Twitter Card
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: 'WordPress Hosting on FluxCloud - Decentralized & Scalable' },
+    { name: 'twitter:description', content: 'Deploy WordPress websites on the decentralized FluxCloud network with MySQL, SSL, and automatic backups.' },
+    { name: 'twitter:image', content: 'https://home.runonflux.io/banner/FluxWPMarketplace.png' },
+    { name: 'twitter:image:alt', content: 'WordPress Hosting on FluxCloud' },
+    { name: 'twitter:site', content: '@RunOnFlux' },
+    // Additional SEO
+    { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
+    { name: 'author', content: 'FluxCloud' },
+  ],
+  link: [
+    { rel: 'canonical', href: 'https://home.runonflux.io/marketplace/wordpress' },
+  ],
+  script: computed(() =>
+    structuredData.value.map(schema => ({
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(schema),
+    }))
+  ),
+})
+
+onMounted(async () => {
   loadPlans()
-  loadTOS()
+
+  // Load server locations
+  isLoadingMap.value = true
+  try {
+    await getFluxList()
+  } catch (error) {
+    console.error('Error loading server locations:', error)
+  } finally {
+    isLoadingMap.value = false
+  }
 })
 </script>
 
-<style>
-/* Global styles for radio buttons - unscoped to ensure they apply */
-.v-selection-control-group--inline .v-label {
-  font-size: 0.75rem !important;
+<style scoped>
+.wordpress-landing {
+  padding: 8px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 100px);
 }
 
-/* Modern location chip styles */
-.location-chip {
+.landing-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Breadcrumb Navigation */
+.breadcrumb-nav {
+  margin-bottom: 16px;
+}
+
+.breadcrumb-list {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.breadcrumb-item {
+  display: flex;
+  align-items: center;
+  font-size: 0.875rem;
+}
+
+.breadcrumb-link {
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.breadcrumb-link:hover {
+  opacity: 0.7;
+  text-decoration: underline;
+}
+
+.breadcrumb-current {
+  color: rgba(var(--v-theme-on-surface), 0.7);
   font-weight: 500;
+}
+
+.breadcrumb-separator {
+  font-size: 16px;
+  margin: 0 4px;
+  opacity: 0.5;
+}
+
+/* Hero Section */
+.hero-section {
+  background-image: url('/banner/FluxWPMarketplace.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  border-radius: 24px;
+  padding: 64px 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.25);
+  z-index: 0;
+}
+
+.hero-icon-top-right {
+  position: absolute;
+  top: 32px;
+  right: 32px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: white;
+  margin: 0 0 16px 0;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: rgba(255, 255, 255, 0.95);
+  margin: 0;
+  max-width: 800px;
+  margin: 0 auto;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.3);
+}
+
+/* Section Cards */
+.section-card {
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.section-subtitle {
+  font-size: 1.1rem;
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 32px;
+}
+
+.section-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+/* Highlights */
+.highlights {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(var(--v-theme-primary), 0.05);
+  border-radius: 12px;
+  border-left: 3px solid rgb(var(--v-theme-primary));
+  transition: all 0.3s ease;
+}
+
+.highlight-item:hover {
+  transform: translateX(8px);
+  background: rgba(var(--v-theme-primary), 0.1);
+}
+
+/* Plans Section */
+.plans-section {
+  padding: 32px 0;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.plan-card {
+  position: relative;
+  background: rgba(var(--v-theme-surface), 1);
+  border: 2px solid rgba(var(--v-theme-on-surface), 0.12);
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.plan-card.recommended {
+  border-color: rgb(var(--v-theme-primary));
+  box-shadow: 0 8px 32px rgba(var(--v-theme-primary), 0.3);
+}
+
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+  border-color: rgba(33, 150, 243, 0.5);
+}
+
+.recommended-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
+  color: white;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.4);
+}
+
+.plan-price-badge {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.2) 0%, rgba(var(--v-theme-success), 0.1) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(var(--v-theme-success), 0.3);
+}
+
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-success));
+  line-height: 1;
+}
+
+.price-period {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+.plan-header {
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.plan-description {
+  font-size: 0.95rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+.plan-resources {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.resource-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border-radius: 10px;
   transition: all 0.2s ease;
 }
 
-.location-chip-selected {
-  background-color: #6366f1 !important;
-  color: white !important;
-  border-color: #6366f1 !important;
+.resource-row:hover {
+  background: rgba(var(--v-theme-on-surface), 0.08);
+  transform: translateX(4px);
 }
 
-.location-chip-selected .v-icon {
-  color: white !important;
+.resource-icon {
+  font-size: 22px;
 }
 
-/* TOS content styling - override inline styles with !important */
-.tos-content,
-.tos-content *,
-.tos-content h1,
-.tos-content .h1,
-.tos-content p,
-.tos-content .p,
-.tos-content li,
-.tos-content .li,
-.tos-content span,
-.tos-content .s2,
-.tos-content div,
-.tos-content b,
-.tos-content strong,
-.tos-content i,
-.tos-content em,
-.tos-content ol,
-.tos-content ul {
-  color: rgba(255, 255, 255, 0.95) !important;
+.cpu-icon {
+  color: #f97316;
 }
 
-.tos-content .h1 {
-  font-size: 14pt !important;
+.ram-icon {
+  color: #06b6d4;
 }
 
-.tos-content a,
-.tos-content .a {
-  color: #64b5f6 !important;
-  text-decoration: underline !important;
+.ssd-icon {
+  color: #eab308;
 }
 
-/* Override list item pseudo-elements colors */
-.tos-content li::before {
-  color: rgba(255, 255, 255, 0.95) !important;
+.instances-icon {
+  color: #8b5cf6;
 }
 
-/* Modern scrollbar for TOS dialog - ID selector */
-#tos-dialog .tos-scroll-area::-webkit-scrollbar {
-  width: 12px !important;
-  height: 12px !important;
+.resource-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-#tos-dialog .tos-scroll-area::-webkit-scrollbar-track {
-  background: rgba(99, 102, 241, 0.1) !important;
-  border-radius: 6px !important;
+.resource-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: right;
 }
 
-/* Maintenance page styles */
-.maintenance-card {
-  border-radius: 32px !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12),
-              0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
-  transform-style: preserve-3d;
+.plan-btn {
+  margin-top: auto;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: none;
+  font-size: 1rem;
+  height: 48px;
+  transition: all 0.3s ease;
 }
 
-.loader-card {
-  border-radius: 32px !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-.maintenance-avatar {
-  background: rgba(245, 158, 11, 0.15) !important;
-  position: relative;
-  animation: float-move 3s ease-in-out infinite !important;
-}
-
-.maintenance-avatar .v-icon {
-  filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6))
-          drop-shadow(0 0 40px rgba(245, 158, 11, 0.4))
-          drop-shadow(0 0 60px rgba(245, 158, 11, 0.2));
-  animation: icon-glow 2s ease-in-out infinite;
-}
-
-@keyframes icon-glow {
-  0%, 100% {
-    filter: drop-shadow(0 0 20px rgba(245, 158, 11, 0.6))
-            drop-shadow(0 0 40px rgba(245, 158, 11, 0.4))
-            drop-shadow(0 0 60px rgba(245, 158, 11, 0.2));
-  }
-  50% {
-    filter: drop-shadow(0 0 30px rgba(245, 158, 11, 0.8))
-            drop-shadow(0 0 60px rgba(245, 158, 11, 0.6))
-            drop-shadow(0 0 90px rgba(245, 158, 11, 0.3));
-  }
-}
-
-@keyframes float-move {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-12px);
-  }
-}
-
-.maintenance-title {
-  letter-spacing: -0.5px;
-  line-height: 1.2;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.7));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.1);
-}
-
-.maintenance-text-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 16px;
-  padding: 20px 32px;
-  max-width: 700px;
-  margin-left: auto;
-  margin-right: auto;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05),
-              inset 0 1px 0 rgba(255, 255, 255, 0.1);
-}
-
-.maintenance-text-box-secondary {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
-  padding: 16px 28px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  backdrop-filter: blur(8px);
-}
-
-.maintenance-subtitle {
-  opacity: 0.95;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.maintenance-description {
-  opacity: 0.75;
-  margin: 0;
-}
-
-.maintenance-btn {
-  border-radius: 12px !important;
-  padding: 12px 32px !important;
-  font-weight: 600 !important;
-  text-transform: none !important;
-  letter-spacing: 0.5px !important;
-  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.35),
-              0 0 0 1px rgba(255, 255, 255, 0.1) inset !important;
-  transition: all 0.3s ease !important;
-}
-
-.maintenance-btn:hover {
+.plan-btn:hover {
+  box-shadow: 0 8px 24px rgba(33, 150, 243, 0.5);
   transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(99, 102, 241, 0.45),
-              0 0 0 1px rgba(255, 255, 255, 0.15) inset !important;
 }
 
-#tos-dialog .tos-scroll-area::-webkit-scrollbar-thumb {
-  background: #9e9e9e !important;
-  border-radius: 6px !important;
-  border: 2px solid rgba(0, 0, 0, 0.1) !important;
+/* Features Section */
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 }
 
-#tos-dialog .tos-scroll-area::-webkit-scrollbar-thumb:hover {
-  background: #757575 !important;
+.feature-item {
+  text-align: center;
+  padding: 24px;
+  background: rgba(var(--v-theme-on-surface), 0.03);
+  border-radius: 16px;
+  transition: all 0.3s ease;
 }
 
-/* Firefox scrollbar */
-#tos-dialog .tos-scroll-area {
-  scrollbar-width: thin !important;
-  scrollbar-color: #9e9e9e rgba(158, 158, 158, 0.1) !important;
-}
-</style>
-
-<style scoped>
-.wordpress-marketplace {
-  max-width: 1400px;
-  margin: 0 auto;
+.feature-item:hover {
+  background: rgba(var(--v-theme-on-surface), 0.06);
+  transform: translateY(-4px);
 }
 
-/* Deep selector for scrollbar */
-:deep(.tos-scroll-area)::-webkit-scrollbar {
-  width: 12px !important;
+.feature-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(var(--v-theme-primary), 0.1);
+  border-radius: 50%;
 }
 
-:deep(.tos-scroll-area)::-webkit-scrollbar-track {
-  background: rgba(158, 158, 158, 0.1) !important;
-  border-radius: 6px !important;
+.feature-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
 }
 
-:deep(.tos-scroll-area)::-webkit-scrollbar-thumb {
-  background: #9e9e9e !important;
-  border-radius: 6px !important;
+.feature-text {
+  font-size: 0.95rem;
+  opacity: 0.7;
+  margin: 0;
+  line-height: 1.6;
 }
 
-:deep(.tos-scroll-area)::-webkit-scrollbar-thumb:hover {
-  background: #757575 !important;
+/* Server Locations Section */
+.server-locations-section .locations-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+  color: rgb(var(--v-theme-primary));
 }
 
-:deep(.tos-scroll-area) {
-  scrollbar-width: thin !important;
-  scrollbar-color: #9e9e9e rgba(158, 158, 158, 0.1) !important;
-}
-</style>
-
-<style>
-/* Colorful resource icons */
-.icon-cpu {
-  color: #f97316 !important; /* Orange */
+.server-locations-section .locations-subtitle {
+  font-size: 1.125rem;
+  text-align: center;
+  margin-bottom: 32px;
+  opacity: 0.9;
+  line-height: 1.6;
 }
 
-.icon-ram {
-  color: #06b6d4 !important; /* Cyan */
+.map-container {
+  position: relative;
+  min-height: 400px;
+  margin-bottom: 32px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(var(--v-theme-surface), 0.4);
 }
 
-.icon-ssd {
-  color: #eab308 !important; /* Yellow/Amber */
+.server-map {
+  border-radius: 12px;
 }
 
-/* Override VSelect active item background - darker shade */
-.plan-item.v-list-item--active:not(.v-list-item--disabled) {
-  background-color: rgba(0, 0, 0, 0.15) !important;
+.no-data {
+  text-align: center;
+  font-size: 18px;
+  color: rgba(var(--v-theme-on-surface), 0.5);
+  padding: 60px 20px;
 }
 
-.plan-item.v-list-item--active:not(.v-list-item--disabled):hover {
-  background-color: rgba(0, 0, 0, 0.18) !important;
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
 }
 
-.plan-item:hover {
-  background-color: rgba(0, 0, 0, 0.04) !important;
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(var(--v-theme-primary), 0.05);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
 }
 
-/* Prevent text and icon color change on active - keep same as non-selected */
-.plan-item.v-list-item--active .v-list-item-title,
-.plan-item.v-list-item--active .v-list-item-subtitle,
-.plan-item.v-list-item--active .v-list-item__content,
-.plan-item.v-list-item--active .v-list-item-title *,
-.plan-item.v-list-item--active .v-list-item-subtitle * {
-  color: inherit !important;
+.stat-item:hover {
+  background: rgba(var(--v-theme-primary), 0.1);
+  border-color: rgba(var(--v-theme-primary), 0.2);
+  transform: translateY(-2px);
 }
 
-.plan-item.v-list-item--active .v-icon {
-  opacity: 1 !important;
+.stat-content {
+  flex: 1;
 }
 
-/* Ensure active state doesn't add any color overlay */
-.plan-item.v-list-item--active::before {
-  opacity: 0 !important;
+.stat-value {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary));
+  line-height: 1.2;
 }
 
-/* Force override Vuetify's default active text color */
-.v-list-item--active.plan-item > .v-list-item__content > .v-list-item-title {
-  color: rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity)) !important;
+.stat-label {
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
-.v-list-item--active.plan-item > .v-list-item__content > .v-list-item-subtitle {
-  color: rgba(var(--v-theme-on-surface), var(--v-medium-emphasis-opacity)) !important;
+/* Related Links Section */
+.related-links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 16px;
 }
 
-/* Force dropdown menu to open below the select input */
-:deep(.v-overlay.v-menu) {
-  top: auto !important;
-  bottom: auto !important;
+.related-link-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px;
+  background: rgba(var(--v-theme-on-surface), 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
 }
 
-/* Smaller radio button labels */
-.v-radio-group--inline .v-radio {
-  font-size: 0.75rem !important;
+.related-link-card:hover {
+  background: rgba(var(--v-theme-on-surface), 0.06);
+  border-color: rgba(var(--v-theme-primary), 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(var(--v-theme-primary), 0.15);
 }
 
-.v-radio-group--inline .v-label {
-  font-size: 0.75rem !important;
+.related-link-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.related-link-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.related-link-description {
+  font-size: 0.875rem;
+  opacity: 0.7;
+  margin: 0;
+}
+
+/* FAQ Section */
+.faq-section .faq-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  text-align: center;
+  color: rgb(var(--v-theme-primary));
+}
+
+.faq-expansion-panels {
+  margin-top: 24px;
+}
+
+.faq-expansion-panel {
+  margin-bottom: 12px;
+  border-radius: 12px !important;
+  overflow: hidden;
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
+}
+
+.faq-expansion-panel:hover {
+  border-color: rgba(var(--v-theme-primary), 0.3);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.1);
+}
+
+.faq-expansion-panel:last-child {
+  margin-bottom: 0;
+}
+
+.faq-question {
+  font-weight: 600;
+  padding: 20px 24px;
+}
+
+.question-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+}
+
+.question-icon {
+  flex-shrink: 0;
+}
+
+.question-text {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.5;
+  margin: 0;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.faq-answer {
+  padding: 0 24px 20px 24px !important;
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(var(--v-theme-on-surface), 0.85);
+}
+
+.faq-answer :deep(a) {
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+}
+
+.faq-answer :deep(a:hover) {
+  text-decoration: underline;
+}
+
+.faq-answer :deep(strong) {
+  font-weight: 600;
+  color: rgb(var(--v-theme-primary));
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .hero-section {
+    min-height: 350px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-icon-top-right {
+    width: 80px;
+    height: 80px;
+    top: 20px;
+    right: 20px;
+  }
+
+  .hero-icon-top-right :deep(.v-icon) {
+    font-size: 60px;
+  }
+
+  .plans-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .server-locations-section .locations-title {
+    font-size: 1.75rem;
+  }
+
+  .server-locations-section .locations-subtitle {
+    font-size: 1rem;
+  }
+
+  .stats-container {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+
+  .faq-section .faq-title {
+    font-size: 1.75rem;
+  }
+
+  .question-text {
+    font-size: 1rem;
+  }
+
+  .faq-answer {
+    font-size: 0.9375rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .wordpress-landing {
+    padding: 8px 16px;
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 12px;
+  }
+
+  .breadcrumb-item {
+    font-size: 0.75rem;
+  }
+
+  .breadcrumb-separator {
+    font-size: 14px;
+    margin: 0 2px;
+  }
+
+  .hero-section {
+    padding: 48px 24px;
+    min-height: 300px;
+  }
+
+  .hero-icon-top-right {
+    width: 60px;
+    height: 60px;
+    top: 16px;
+    right: 16px;
+  }
+
+  .hero-icon-top-right :deep(.v-icon) {
+    font-size: 40px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1rem;
+  }
+
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .highlights {
+    grid-template-columns: 1fr;
+  }
+
+  .related-links-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .related-link-card {
+    padding: 20px;
+  }
+
+  .related-link-icon {
+    font-size: 40px;
+  }
+
+  .server-locations-section .locations-title {
+    font-size: 1.5rem;
+  }
+
+  .server-locations-section .locations-subtitle {
+    font-size: 0.9375rem;
+    margin-bottom: 24px;
+  }
+
+  .map-container {
+    min-height: 300px;
+  }
+
+  .stat-item {
+    padding: 16px;
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+  }
+
+  .faq-section .faq-title {
+    font-size: 1.5rem;
+  }
+
+  .faq-question {
+    padding: 16px;
+  }
+
+  .question-wrapper {
+    gap: 12px;
+  }
+
+  .question-icon {
+    font-size: 20px !important;
+  }
+
+  .question-text {
+    font-size: 0.9375rem;
+  }
+
+  .faq-answer {
+    padding: 0 16px 16px 16px !important;
+    font-size: 0.875rem;
+  }
 }
 </style>
