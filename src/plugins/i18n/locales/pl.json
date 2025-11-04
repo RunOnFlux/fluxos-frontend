@@ -1160,7 +1160,8 @@
         "installNow": "Instaluj Teraz",
         "perMonth": "/mc",
         "core": "Rdzeń",
-        "cores": "Rdzenie"
+        "cores": "Rdzenie",
+        "mostPopular": "Najpopularniejsze"
       },
       "appsGrid": {
         "title": "Aplikacje Flux",
@@ -2982,7 +2983,7 @@
           "plans": {
             "title": "Wybierz swój plan WordPress",
             "subtitle": "Wybierz idealny plan dla potrzeb Twojej witryny. Wszystkie plany obejmują bazę danych MySQL, certyfikaty SSL i pełną funkcjonalność WordPress.",
-            "recommended": "Polecane",
+            "recommended": "Najpopularniejsze",
             "buyNow": "Kup teraz",
             "perMonth": "/mies.",
             "cpu": "CPU",

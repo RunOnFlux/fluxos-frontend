@@ -1,6 +1,11 @@
 <template>
   <div class="config-card-wrapper">
     <div class="config-card" :style="cardStyle">
+      <!-- Most Popular Badge -->
+      <div v-if="config.isPopular" class="most-popular-badge">
+        {{ labels.mostPopular }}
+      </div>
+
       <div class="config-price-badge">
         <span class="price-amount">${{ config.price.toFixed(2) }}</span><span class="price-period">{{ labels.perMonth }}</span>
       </div>
@@ -10,7 +15,7 @@
 
       <div class="config-resources">
         <div v-if="resources.cpu" class="resource-row">
-          <VIcon class="resource-icon cpu-icon">mdi-cpu-64-bit</VIcon>
+          <VIcon class="resource-icon cpu-icon">mdi-speedometer</VIcon>
           <span class="resource-label">{{ labels.cpu }}</span>
           <span class="resource-value">{{ Number(resources.cpu.toFixed(2)) }} {{ resources.cpu > 1 ? labels.cores : labels.core }}</span>
         </div>
@@ -89,16 +94,36 @@ const labels = computed(() => ({
   perMonth: t('components.marketplace.appConfigCard.perMonth'),
   core: t('components.marketplace.appConfigCard.core'),
   cores: t('components.marketplace.appConfigCard.cores'),
+  mostPopular: t('components.marketplace.appConfigCard.mostPopular'),
 }))
 </script>
 
 <style scoped>
 .config-card-wrapper {
   height: 100%;
+  position: relative;
+}
+
+.most-popular-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
+  color: white;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.4);
+  z-index: 10;
+  white-space: nowrap;
 }
 
 .config-card {
-  height: 380px;
+  height: 420px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -126,27 +151,21 @@ const labels = computed(() => ({
 }
 
 .config-price-badge {
-  position: absolute;
-  top: 0;
-  right: 0;
   display: flex;
   flex-direction: row;
   align-items: baseline;
-  gap: 3px;
-  padding: 8px 12px;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
   background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.2) 0%, rgba(var(--v-theme-success), 0.1) 100%);
-  border-radius: 0 16px 0 16px;
-  border-left: 1px solid rgba(var(--v-theme-success), 0.3);
-  border-bottom: 1px solid rgba(var(--v-theme-success), 0.3);
-  backdrop-filter: blur(10px);
-  z-index: 2;
+  border-radius: 16px;
+  border: 1px solid rgba(var(--v-theme-success), 0.3);
   transition: all 0.3s ease;
 }
 
 .card-header {
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
-  padding-top: 24px; /* Space to clear price badge */
   text-align: center;
 }
 
@@ -161,17 +180,16 @@ const labels = computed(() => ({
 }
 
 .price-amount {
-  font-size: 1.1rem;
+  font-size: 2.5rem;
   font-weight: 700;
   color: rgb(var(--v-theme-success));
   line-height: 1;
 }
 
 .price-period {
-  font-size: 0.6rem;
+  font-size: 1rem;
   font-weight: 500;
   opacity: 0.7;
-  color: rgb(var(--v-theme-on-surface));
 }
 
 .config-resources {
@@ -204,15 +222,15 @@ const labels = computed(() => ({
 }
 
 .cpu-icon {
-  color: #42A5F5;
+  color: #f97316;
 }
 
 .ram-icon {
-  color: #66BB6A;
+  color: #06b6d4;
 }
 
 .hdd-icon {
-  color: #FFA726;
+  color: #eab308;
 }
 
 .resource-label {
@@ -280,5 +298,47 @@ const labels = computed(() => ({
 .install-btn:active {
   transform: translateY(0);
   box-shadow: 0 4px 12px rgba(33, 150, 243, 0.4);
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .config-card {
+    height: 400px;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
+
+  .price-period {
+    font-size: 0.875rem;
+  }
+
+  .config-price-badge {
+    padding: 14px;
+  }
+}
+
+@media (max-width: 600px) {
+  .config-card {
+    height: 380px;
+  }
+
+  .price-amount {
+    font-size: 1.75rem;
+  }
+
+  .price-period {
+    font-size: 0.8rem;
+  }
+
+  .config-price-badge {
+    padding: 12px;
+    gap: 4px;
+  }
+
+  .config-name {
+    font-size: 1.1rem;
+  }
 }
 </style>

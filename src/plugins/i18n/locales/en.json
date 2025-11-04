@@ -1161,7 +1161,8 @@
         "installNow": "Buy Now",
         "perMonth": "/mo",
         "core": "Core",
-        "cores": "Cores"
+        "cores": "Cores",
+        "mostPopular": "Most Popular"
       },
       "appsGrid": {
         "title": "Flux Applications",
@@ -3076,7 +3077,7 @@
           "plans": {
             "title": "Choose Your WordPress Plan",
             "subtitle": "Select the perfect plan for your website's needs. All plans include MySQL database, SSL certificates, and full WordPress functionality.",
-            "recommended": "Recommended",
+            "recommended": "Most Popular",
             "buyNow": "Buy Now",
             "perMonth": "/mo",
             "cpu": "CPU",

@@ -66,9 +66,9 @@
               <h2>{{ t('pages.marketplace.games.detail.availableConfigurations') }}</h2>
               <div class="configs-grid">
                 <AppConfigCard
-                  v-for="config in game.configs"
+                  v-for="(config, index) in game.configs"
                   :key="config.id"
-                  :config="config"
+                  :config="getConfigWithPopular(config, index, game.configs.length)"
                   :app="game"
                   @install="handleInstall"
                 />
@@ -431,6 +431,20 @@ const handleInstall = ({ app, config }) => {
 const handleDeployed = () => {
   // Handle successful deployment
   console.log('Game deployed successfully')
+}
+
+// 🎯 CONFIGURE "MOST POPULAR" BADGE HERE
+// Change this number to mark a different config as popular:
+// - 0 = first config (cheapest)
+// - Math.floor(total / 2) = middle config (recommended)
+// - total - 1 = last config (most expensive)
+const POPULAR_CONFIG_INDEX = (total) => Math.floor(total / 2) // Middle option
+
+const getConfigWithPopular = (config, index, totalConfigs) => {
+  return {
+    ...config,
+    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs)
+  }
 }
 
 // Watch for route changes to reload game details

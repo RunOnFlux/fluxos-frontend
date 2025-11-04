@@ -171,18 +171,18 @@ export function useGameUtils() {
       'minecraft': {
         2: 4,   // Vanilla, minimal world
         4: 8,   // Small plugins/mods
-        6: 16,   // Medium modpacks
-        8: 32,   // Large modpacks or active server
-        12: 64,  // Heavy modpacks, large playerbase
-        16: 150,  // Maximum performance setup
+        8: 16,   // Medium modpacks
+        16: 32,   // Large modpacks or active server
+        31: 64,  // Heavy modpacks, large playerbase
+        47: 150,  // Maximum performance setup
       },
       'minecraftserver': { // Alias for Minecraft
         2: 4,
         4: 8,
-        6: 16,
-        8: 32,
-        12: 64,
-        16: 150,
+        8: 16,
+        16: 32,
+        31: 64,
+        47: 150,
       },
       // Factorio - 5 configuration options
       // RAM scales with factory complexity more than player count

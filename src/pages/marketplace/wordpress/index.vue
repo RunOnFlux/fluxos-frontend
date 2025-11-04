@@ -78,7 +78,7 @@
               <div class="resource-row">
                 <VIcon class="resource-icon cpu-icon">mdi-speedometer</VIcon>
                 <span class="resource-label">{{ t('pages.marketplace.wordpress.landing.plans.cpu') }}</span>
-                <span class="resource-value">{{ (plan.cpu[0] + plan.cpu[1]).toFixed(1) }}</span>
+                <span class="resource-value">{{ (plan.cpu[0] + plan.cpu[1]).toFixed(1) }} Cores</span>
               </div>
               <div class="resource-row">
                 <VIcon class="resource-icon ram-icon">mdi-memory</VIcon>
