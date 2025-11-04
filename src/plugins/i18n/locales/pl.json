@@ -2297,8 +2297,10 @@
       }
     },
     "costCalculator": {
-      "title": "Kalkulator Kosztów",
-      "subtitle": "Oblicz koszty wdrożenia dla swoich aplikacji Flux",
+      "title": "Kalkulator Kosztów Hostingu Aplikacji",
+      "subtitle": "Przystępny hosting zdecentralizowany od $0.99/miesiąc - Oblicz dokładne koszty",
+      "description": "Wdrażaj swoje aplikacje w zdecentralizowanej sieci chmurowej Flux z przejrzystymi cenami pay-as-you-go. Wybierz zasoby obliczeniowe (CPU, RAM, pamięć), określ liczbę instancji i uzyskaj natychmiastową wycenę. Bez ukrytych opłat, bez uzależnienia od dostawcy. Idealne dla kontenerów Docker, aplikacji webowych, API, baz danych i mikroserwisów. Od zaledwie $0.99/miesiąc dla podstawowych konfiguracji.",
+      "learnMore": "Dowiedz się więcej o hostingu Flux",
       "configuration": "Konfiguracja",
       "instancesQuestion": "Ile instancji będziesz uruchamiać?",
       "instancesHint": "(min 3 / maks 100) 1 Instancja = 1 Węzeł",

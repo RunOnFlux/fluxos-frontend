@@ -2306,8 +2306,10 @@
       }
     },
     "costCalculator": {
-      "title": "Cost Calculator",
-      "subtitle": "Calculate deployment costs for your Flux applications",
+      "title": "App Hosting Cost Calculator",
+      "subtitle": "Affordable decentralized hosting starting at $0.99/month - Calculate your exact costs",
+      "description": "Deploy your applications on the Flux decentralized cloud network with transparent, pay-as-you-go pricing. Choose your compute resources (CPU, RAM, storage), select the number of instances, and get instant pricing. No hidden fees, no vendor lock-in. Perfect for Docker containers, web apps, APIs, databases, and microservices. Starting at just $0.99/month for basic configurations.",
+      "learnMore": "Learn More About Flux Hosting",
       "configuration": "Configuration",
       "instancesQuestion": "How many instances will you be running?",
       "instancesHint": "(min 3 / max 100) 1 Instance = 1 Node",

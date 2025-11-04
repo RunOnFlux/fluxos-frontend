@@ -1,22 +1,20 @@
 <template>
   <div class="cost-calculator-page">
     <!-- Page Header -->
-    <VCard 
-      class="mb-6"
-      variant="tonal"
-      color="primary"
-      elevation="2"
+    <VCard
+      flat
+      class="mb-6 cost-calculator-intro-card"
     >
       <VCardText class="pa-6 pa-sm-8">
-        <div class="d-flex align-center flex-column flex-sm-row text-center text-sm-start">
+        <div class="d-flex align-center flex-column flex-sm-row text-center text-sm-start mb-3">
           <VAvatar
             size="72"
             color="primary"
             variant="tonal"
             class="mb-4 mb-sm-0 me-sm-4"
           >
-            <VIcon 
-              icon="tabler-calculator" 
+            <VIcon
+              icon="tabler-calculator"
               size="40"
             />
           </VAvatar>
@@ -24,11 +22,29 @@
             <h1 class="text-h4 text-sm-h3 font-weight-bold mb-2">
               {{ t('pages.costCalculator.title') }}
             </h1>
-            <p class="text-body-1 text-sm-h6 text-medium-emphasis mb-0">
+            <p class="text-body-1 text-medium-emphasis mb-0">
               {{ t('pages.costCalculator.subtitle') }}
             </p>
           </div>
         </div>
+        <p class="text-body-1 mb-3" style="max-width: 900px;">
+          {{ t('pages.costCalculator.description') }}
+        </p>
+        <a
+          href="https://runonflux.com"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="learn-more-link"
+        >
+          <VBtn
+            color="primary"
+            variant="tonal"
+            prepend-icon="mdi-open-in-new"
+            size="small"
+          >
+            {{ t('pages.costCalculator.learnMore') }}
+          </VBtn>
+        </a>
       </VCardText>
     </VCard>
 
@@ -595,12 +611,150 @@
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useHead } from '@vueuse/head'
 import Api from '@/services/ApiClient'
 import axios from 'axios'
 import { encryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'
 import AppsService from '@/services/AppsService'
 
 const { t } = useI18n()
+
+// SEO meta tags and structured data
+const pageUrl = 'https://home.runonflux.io/cost-calculator'
+const title = 'App Hosting Cost Calculator - Starting at $0.99/month | Flux Network'
+const description = 'Calculate exact costs for hosting your applications on Flux decentralized cloud. Transparent pricing starting at $0.99/month. Deploy Docker containers, web apps, APIs, databases, and microservices with pay-as-you-go pricing. No hidden fees, no vendor lock-in.'
+const imageUrl = 'https://home.runonflux.io/banner/FluxHostingBanner.png'
+
+// WebApplication structured data
+const webApplicationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'WebApplication',
+  'name': 'Flux App Hosting Cost Calculator',
+  'applicationCategory': 'BusinessApplication',
+  'operatingSystem': 'Web',
+  'offers': {
+    '@type': 'AggregateOffer',
+    'priceCurrency': 'USD',
+    'lowPrice': '0.99',
+    'highPrice': '500',
+    'priceSpecification': {
+      '@type': 'UnitPriceSpecification',
+      'price': '0.99',
+      'priceCurrency': 'USD',
+      'unitText': 'MONTH',
+    },
+  },
+  'description': 'Calculate hosting costs for deploying applications on Flux decentralized cloud network. Transparent pay-as-you-go pricing for Docker containers, web apps, and microservices.',
+  'url': pageUrl,
+  'image': imageUrl,
+  'provider': {
+    '@type': 'Organization',
+    'name': 'Flux Network',
+    'url': 'https://runonflux.com',
+  },
+  'featureList': [
+    'Instant cost calculation',
+    'Transparent pricing from $0.99/month',
+    'Pay-as-you-go model',
+    'No hidden fees',
+    'Decentralized hosting',
+    'Docker container support',
+    'Custom resource allocation (CPU, RAM, Storage)',
+    'Multi-instance deployment',
+  ],
+}
+
+// Service structured data
+const serviceStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  'serviceType': 'Cloud Application Hosting',
+  'provider': {
+    '@type': 'Organization',
+    'name': 'Flux Network',
+    'url': 'https://runonflux.com',
+  },
+  'areaServed': 'Worldwide',
+  'description': 'Decentralized cloud hosting for applications starting at $0.99/month with transparent pricing',
+  'offers': {
+    '@type': 'Offer',
+    'price': '0.99',
+    'priceCurrency': 'USD',
+  },
+}
+
+// Organization structured data
+const organizationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  'name': 'Flux Network',
+  'url': 'https://home.runonflux.io',
+  'logo': 'https://home.runonflux.io/logo.png',
+  'description': 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
+  'sameAs': [
+    'https://twitter.com/RunOnFlux',
+    'https://github.com/RunOnFlux',
+  ],
+}
+
+// Breadcrumb structured data
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    {
+      '@type': 'ListItem',
+      'position': 1,
+      'name': 'Home',
+      'item': 'https://home.runonflux.io',
+    },
+    {
+      '@type': 'ListItem',
+      'position': 2,
+      'name': 'Cost Calculator',
+      'item': pageUrl,
+    },
+  ],
+}
+
+useHead({
+  title,
+  meta: [
+    {
+      name: 'description',
+      content: description,
+    },
+    {
+      name: 'keywords',
+      content: 'app hosting cost calculator, cloud hosting pricing, docker hosting cost, decentralized hosting, affordable cloud hosting, pay-as-you-go hosting, web app hosting, API hosting, microservices hosting, container hosting, cheap cloud hosting, $0.99 hosting, transparent pricing, no hidden fees, Flux network',
+    },
+    // Open Graph
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:image', content: imageUrl },
+    { property: 'og:url', content: pageUrl },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'Flux Network' },
+    // Twitter Card
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: imageUrl },
+    { name: 'twitter:site', content: '@RunOnFlux' },
+    // Additional SEO
+    { name: 'robots', content: 'index, follow' },
+    { name: 'author', content: 'Flux Network' },
+  ],
+  link: [
+    { rel: 'canonical', href: pageUrl },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify([webApplicationStructuredData, serviceStructuredData, organizationStructuredData, breadcrumbStructuredData]),
+    },
+  ],
+})
 
 // Reactive form data
 const formData = reactive({
@@ -1179,6 +1333,22 @@ definePage({
 </script>
 
 <style scoped>
+.cost-calculator-intro-card {
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.05) 0%, rgba(var(--v-theme-success), 0.05) 100%);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
+}
+
+.cost-calculator-intro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(var(--v-theme-primary), 0.1);
+}
+
+.learn-more-link {
+  text-decoration: none;
+}
+
 /* Hide number input spinners */
 .no-spinners :deep(input[type="number"]::-webkit-inner-spin-button),
 .no-spinners :deep(input[type="number"]::-webkit-outer-spin-button) {
