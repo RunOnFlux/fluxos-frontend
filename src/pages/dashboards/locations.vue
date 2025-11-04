@@ -3,6 +3,33 @@
     class="map"
     :class="{ 'dark-theme': theme.value === 'dark' }"
   >
+    <!-- Introduction Section -->
+    <VRow class="mb-6">
+      <VCol cols="12">
+        <VCard flat class="locations-intro-card">
+          <VCardText>
+            <div class="d-flex align-center mb-3">
+              <VAvatar
+                size="48"
+                color="primary"
+                variant="tonal"
+                class="mr-3"
+              >
+                <VIcon size="28">mdi-earth</VIcon>
+              </VAvatar>
+              <div>
+                <h2 class="text-h4 mb-1">{{ t('pages.dashboard.locations.intro.title') }}</h2>
+                <p class="text-body-2 mb-0 text-medium-emphasis">{{ t('pages.dashboard.locations.intro.subtitle') }}</p>
+              </div>
+            </div>
+            <p class="text-body-1 mb-0">
+              {{ t('pages.dashboard.locations.intro.description') }}
+            </p>
+          </VCardText>
+        </VCard>
+      </VCol>
+    </VRow>
+
     <MapComponent
       v-if="fluxList.length > 0"
       :nodes="fluxList"
@@ -334,6 +361,18 @@ watch(
 </script>
 
 <style lang="scss">
+.locations-intro-card {
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.05) 0%, rgba(var(--v-theme-success), 0.05) 100%);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
+}
+
+.locations-intro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(var(--v-theme-primary), 0.1);
+}
+
 .map {
   .apexcharts-legend {
     display: block !important;

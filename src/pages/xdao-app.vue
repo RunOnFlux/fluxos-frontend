@@ -25,9 +25,27 @@
               <h1 class="text-h4 text-sm-h3 font-weight-bold mb-2">
                 {{ t('pages.xdao.title') }}
               </h1>
-              <p class="text-body-1 text-sm-h6 text-medium-emphasis mb-0">
+              <p class="text-body-2 text-medium-emphasis mb-2">
                 {{ t('pages.xdao.subtitle') }}
               </p>
+              <p class="text-body-2 text-medium-emphasis mb-3" style="max-width: 800px;">
+                {{ t('pages.xdao.description') }}
+              </p>
+              <a
+                href="https://runonflux.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="learn-more-link"
+              >
+                <VBtn
+                  color="primary"
+                  variant="tonal"
+                  prepend-icon="mdi-open-in-new"
+                  size="small"
+                >
+                  {{ t('pages.xdao.learnMore') }}
+                </VBtn>
+              </a>
             </div>
           </div>
 
@@ -452,7 +470,7 @@ const proposals = ref([])
 const loading = ref(true)
 const error = ref(null)
 const searchQuery = ref('')
-const activeFilter = ref('all')
+const activeFilter = ref('open')
 const sortBy = ref('latest')
 const showAddProposal = ref(false)
 const showProposalDetail = ref(false)
@@ -468,8 +486,6 @@ const userZelid = computed(() => zelid.value)
 // Proposal filters with counts
 const proposalFilters = computed(() => {
   const getCount = filterValue => {
-    if (filterValue === 'all') return proposals.value.length
-
     return proposals.value.filter(proposal => {
       if (filterValue === 'open') return proposal.status === 'Open'
       if (filterValue === 'passed') return proposal.status === 'Passed'
@@ -486,11 +502,10 @@ const proposalFilters = computed(() => {
   }
 
   return [
-    { title: t('pages.xdao.allProposals'), icon: 'mdi-clipboard-outline', value: 'all', count: getCount('all') },
     { title: t('pages.xdao.open'), icon: 'mdi-clock-outline', value: 'open', count: getCount('open') },
     { title: t('pages.xdao.passed'), icon: 'mdi-check-circle-outline', value: 'passed', count: getCount('passed') },
-    { title: t('pages.xdao.unpaid'), icon: 'mdi-currency-usd-off', value: 'unpaid', count: getCount('unpaid') },
     { title: t('pages.xdao.rejected'), icon: 'mdi-close-circle-outline', value: 'rejected', count: getCount('rejected') },
+    { title: t('pages.xdao.unpaid'), icon: 'mdi-currency-usd-off', value: 'unpaid', count: getCount('unpaid') },
   ]
 })
 
@@ -507,31 +522,29 @@ const filteredProposals = computed(() => {
   let filtered = proposals.value
 
   // Apply filter
-  if (activeFilter.value !== 'all') {
-    filtered = filtered.filter(proposal => {
-      console.log('Filtering proposal:', proposal.topic, 'Status:', proposal.status, 'Filter:', activeFilter.value)
-      
-      if (activeFilter.value === 'open') {
-        return proposal.status === 'Open'
-      }
-      if (activeFilter.value === 'passed') {
-        return proposal.status === 'Passed'
-      }
-      if (activeFilter.value === 'unpaid') {
-        // Check for unpaid variations (excluding rejected ones)
-        return proposal.status === 'Unpaid' || 
-               (proposal.status.includes('Unpaid') && !proposal.status.includes('Rejected') && !proposal.status.includes('Not Enough Votes'))
-      }
-      if (activeFilter.value === 'rejected') {
-        // Check for all rejected variations (including "Rejected Unpaid")
-        return (proposal.status.includes('Rejected') || proposal.status === 'Rejected')
-      }
-      
-      return false
-    })
-    
-    console.log('Filtered results for', activeFilter.value, ':', filtered.length, 'proposals')
-  }
+  filtered = filtered.filter(proposal => {
+    console.log('Filtering proposal:', proposal.topic, 'Status:', proposal.status, 'Filter:', activeFilter.value)
+
+    if (activeFilter.value === 'open') {
+      return proposal.status === 'Open'
+    }
+    if (activeFilter.value === 'passed') {
+      return proposal.status === 'Passed'
+    }
+    if (activeFilter.value === 'unpaid') {
+      // Check for unpaid variations (excluding rejected ones)
+      return proposal.status === 'Unpaid' ||
+             (proposal.status.includes('Unpaid') && !proposal.status.includes('Rejected') && !proposal.status.includes('Not Enough Votes'))
+    }
+    if (activeFilter.value === 'rejected') {
+      // Check for all rejected variations (including "Rejected Unpaid")
+      return (proposal.status.includes('Rejected') || proposal.status === 'Rejected')
+    }
+
+    return false
+  })
+
+  console.log('Filtered results for', activeFilter.value, ':', filtered.length, 'proposals')
 
   // Apply search
   if (searchQuery.value) {
@@ -716,10 +729,6 @@ const formatDate = timestamp => {
 }
 
 const getEmptyStateTitle = () => {
-  if (activeFilter.value === 'all') {
-    return t('pages.xdao.noProposalsFound')
-  }
-
   const filterLabels = {
     'open': t('pages.xdao.noOpenProposals'),
     'passed': t('pages.xdao.noPassedProposals'),
@@ -731,10 +740,6 @@ const getEmptyStateTitle = () => {
 }
 
 const getEmptyStateMessage = () => {
-  if (activeFilter.value === 'all') {
-    return t('pages.xdao.noProposalsSubmitted')
-  }
-
   const messages = {
     'open': t('pages.xdao.noOpenProposalsMessage'),
     'passed': t('pages.xdao.noPassedProposalsMessage'),
@@ -828,6 +833,10 @@ definePage({
 </script>
 
 <style scoped>
+.learn-more-link {
+  text-decoration: none;
+}
+
 .xdao-app {
   padding: 16px;
   overflow-x: hidden;

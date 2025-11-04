@@ -2381,6 +2381,18 @@
     },
     "dashboard": {
       "overview": {
+        "intro": {
+          "title": "Witamy w ekosystemie Flux",
+          "blockchain": {
+            "title": "Blockchain Flux",
+            "description": "Flux działa na własnym autorskim blockchainie, obsługującym zarządzanie, tokenomikę i zapewniającym interoperacyjność z innymi blockchainami poprzez równoległe aktywa. Natywna kryptowaluta FLUX napędza cały ekosystem, umożliwiając zdecentralizowaną infrastrukturę i integrację DeFi."
+          },
+          "cloud": {
+            "title": "Sieć FluxCloud",
+            "description": "FluxCloud to zdecentralizowana platforma przetwarzania w chmurze zasilana przez ponad {nodes} globalnie rozproszonych węzłów FluxNodes. Zapewnia infrastrukturę gotową na Web3 do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń AI/ML—oferując zdecentralizowaną alternatywę dla tradycyjnych dostawców chmury, takich jak AWS czy Google Cloud."
+          },
+          "learnMore": "Dowiedz się więcej"
+        },
         "totalNodes": "Łącznie węzłów",
         "nodeHistory": "Historia węzłów",
         "lockedSupply": "Zablokowane",
@@ -2397,6 +2409,11 @@
         "errorFetchingHistoryStats": "Nie można pobrać statystyk historycznych"
       },
       "locations": {
+        "intro": {
+          "title": "Globalna sieć FluxCloud",
+          "subtitle": "Prawdziwie zdecentralizowana infrastruktura",
+          "description": "FluxCloud obsługuje największą na świecie zdecentralizowaną sieć infrastruktury chmurowej, z węzłami FluxNodes rozproszonymi na wszystkich kontynentach i setkami dostawców hostingu. Ta różnorodność geograficzna zapewnia właścicielom aplikacji niezrównane korzyści: niskie opóźnienia dzięki przetwarzaniu brzegowemu, wysoką redundancję i tolerancję błędów, odporność na censurę oraz prawdziwą decentralizację. Twoje aplikacje działają na prawdziwym, niezależnie obsługiwanym sprzęcie—nie w scentralizowanych centrach danych."
+        },
         "geographicTitle": "Lokalizacje geograficzne ({count})",
         "providersTitle": "Dostawcy ({count})",
         "noGeographicData": "Brak dostępnych danych geograficznych.",
@@ -2420,6 +2437,14 @@
         }
       },
       "resources": {
+        "intro": {
+          "title": "Zasoby sieci FluxCloud",
+          "subtitle": "Pojemność infrastruktury w czasie rzeczywistym",
+          "description": "To są całkowite zasoby obliczeniowe dostępne obecnie w całej sieci FluxCloud. Nasza zdecentralizowana infrastruktura jest zasilana przez tysiące węzłów FluxNodes na całym świecie, zapewniając skalowalną pojemność CPU, RAM i pamięci masowej do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń bez polegania na tradycyjnych dostawcach chmury."
+        },
+        "summary": {
+          "title": "Całkowita pojemność sieci"
+        },
         "vCores": "vCores",
         "ram": "RAM",
         "ssd": "SSD",
@@ -2438,6 +2463,12 @@
         "close": "Zamknij"
       },
       "rewards": {
+        "intro": {
+          "title": "Nagrody dla operatorów FluxNode",
+          "subtitle": "Zarabiaj FLUX za zasilanie sieci",
+          "description": "Operatorzy FluxNode stanowią fundament sieci FluxCloud, zapewniając niezbędną infrastrukturę obliczeniową, która zasila zdecentralizowane aplikacje na całym świecie. W nagrodę za swój wkład operatorzy otrzymują kryptowalutę FLUX bezpośrednio z blockchainu. Nagrody te są dystrybuowane automatycznie na podstawie poziomu węzła i wydajności, tworząc zrównoważony model zachęt do utrzymywania niezawodnej, wysokiej jakości infrastruktury.",
+          "learnMore": "Dowiedz się więcej o FluxNodes"
+        },
         "cumulusTotalRewards": "Całkowite Nagrody Cumulus",
         "nimbusTotalRewards": "Całkowite Nagrody Nimbus",
         "stratusTotalRewards": "Całkowite Nagrody Stratus",
@@ -3147,7 +3178,9 @@
     },
     "xdao": {
       "title": "Flux XDAO",
-      "subtitle": "Zdecentralizowane zarządzanie ekosystemem Flux",
+      "subtitle": "Platforma zdecentralizowanego zarządzania kierowana przez społeczność, gdzie operatorzy FluxNode głosują na ulepszenia sieci, zmiany protokołu i alokacje skarbca",
+      "description": "Flux XDAO (Extended Decentralized Autonomous Organization) umożliwia społeczności kształtowanie przyszłości ekosystemu Flux poprzez zarządzanie on-chain. Operatorzy FluxNode mogą składać propozycje, dyskutować o inicjatywach i głosować nad kluczowymi decyzjami dotyczącymi rozwoju sieci, alokacji funduszy i aktualizacji protokołu. Każdy głos jest zapisywany na blockchainie, zapewniając przejrzystość i niezmienność.",
+      "learnMore": "Dowiedz się więcej o XDAO",
       "loggedIn": "Zalogowany",
       "login": "Zaloguj",
       "loginToVote": "Zaloguj się, aby głosować",

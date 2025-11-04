@@ -1,5 +1,47 @@
 <template>
   <div>
+    <!-- Introduction Section -->
+    <VRow class="mb-6">
+      <VCol cols="12">
+        <VCard flat class="rewards-intro-card">
+          <VCardText>
+            <div class="d-flex align-center mb-3">
+              <VAvatar
+                size="48"
+                color="primary"
+                variant="tonal"
+                class="mr-3"
+              >
+                <VIcon size="28">mdi-cash-multiple</VIcon>
+              </VAvatar>
+              <div>
+                <h2 class="text-h4 mb-1">{{ t('pages.dashboard.rewards.intro.title') }}</h2>
+                <p class="text-body-2 mb-0 text-medium-emphasis">{{ t('pages.dashboard.rewards.intro.subtitle') }}</p>
+              </div>
+            </div>
+            <p class="text-body-1 mb-3">
+              {{ t('pages.dashboard.rewards.intro.description') }}
+            </p>
+            <a
+              href="https://runonflux.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="learn-more-link"
+            >
+              <VBtn
+                color="primary"
+                variant="tonal"
+                prepend-icon="mdi-open-in-new"
+                size="small"
+              >
+                {{ t('pages.dashboard.rewards.intro.learnMore') }}
+              </VBtn>
+            </a>
+          </VCardText>
+        </VCard>
+      </VCol>
+    </VRow>
+
     <VRow>
       <VCol
         v-for="(card, index) in rewardCards"
@@ -427,6 +469,22 @@ const generateEconomics = async fluxnodecounts => {
 </script>
 
 <style scoped>
+.rewards-intro-card {
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.05) 0%, rgba(var(--v-theme-success), 0.05) 100%);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
+}
+
+.rewards-intro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(var(--v-theme-primary), 0.1);
+}
+
+.learn-more-link {
+  text-decoration: none;
+}
+
 .v-card {
   margin-bottom: 1rem;
 }

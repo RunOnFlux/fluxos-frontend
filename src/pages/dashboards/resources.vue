@@ -1,11 +1,38 @@
 <template>
   <div>
+    <!-- Introduction Section -->
+    <VRow class="mb-6">
+      <VCol cols="12">
+        <VCard flat class="resources-intro-card">
+          <VCardText>
+            <div class="d-flex align-center mb-3">
+              <VAvatar
+                size="48"
+                color="primary"
+                variant="tonal"
+                class="mr-3"
+              >
+                <VIcon size="28">mdi-server-network</VIcon>
+              </VAvatar>
+              <div>
+                <h2 class="text-h4 mb-1">{{ t('pages.dashboard.resources.intro.title') }}</h2>
+                <p class="text-body-2 mb-0 text-medium-emphasis">{{ t('pages.dashboard.resources.intro.subtitle') }}</p>
+              </div>
+            </div>
+            <p class="text-body-1 mb-0">
+              {{ t('pages.dashboard.resources.intro.description') }}
+            </p>
+          </VCardText>
+        </VCard>
+      </VCol>
+    </VRow>
+
     <VRow v-if="hasValidData">
       <VCol
         cols="12"
         sm="12"
         md="6"
-        lg="3"
+        lg="4"
         style="overflow: visible !important;"
       >
         <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
@@ -48,7 +75,7 @@
         cols="12"
         sm="12"
         md="6"
-        lg="3"
+        lg="4"
         style="overflow: visible !important;"
       >
         <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
@@ -91,7 +118,7 @@
         cols="12"
         sm="12"
         md="6"
-        lg="3"
+        lg="4"
         style="overflow: visible !important;"
       >
         <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
@@ -130,50 +157,8 @@
           </VCardText>
         </VCard>
       </VCol>
-      <VCol
-        cols="12"
-        sm="12"
-        md="6"
-        lg="3"
-        style="overflow: visible !important;"
-      >
-        <VCard style="overflow: visible !important; clip-path: none !important; height: 300px; position: relative;">
-          <VOverlay
-            v-model="fluxListLoading"
-            contained
-            persistent
-            scroll-strategy="none"
-            class="align-center justify-center overlay"
-          >
-            <VProgressCircular indeterminate />
-          </VOverlay>
-          <div class="d-flex align-center pa-4" style="position: absolute; top: 0; left: 0; z-index: 1;">
-            <VAvatar
-              size="48"
-              color="success lighten-4"
-              variant="tonal"
-            >
-              <VIcon size="24">
-                mdi-harddisk
-              </VIcon>
-            </VAvatar>
-            <h2 class="text-h5 ml-2">
-              {{ t('pages.dashboard.resources.hdd') }}
-            </h2>
-          </div>
-          <VCardText class="pa-4" style="overflow: visible !important; height: 100%;">
-            <div class="chart-container">
-              <Doughnut
-                :key="`hdd-${theme}`"
-                :data="hddChartData"
-                :options="hddChartOptions"
-                :plugins="[centerTextPlugin]"
-              />
-            </div>
-          </VCardText>
-        </VCard>
-      </VCol>
     </VRow>
+
     <VRow>
       <VCol
         cols="12"
@@ -362,10 +347,66 @@ const historyStatsLoading = ref(true)
 const showError = ref(false)
 const hasValidData = ref(true)
 const fluxList = ref([])
-const totalCores = ref(0)
-const totalRAM = ref(0)
-const totalSSD = ref(0)
-const totalHDD = ref(0)
+// Computed totals from most recent history entry
+const totalCores = computed(() => {
+  if (!fluxHistoryStats.value || Object.keys(fluxHistoryStats.value).length === 0) {
+    return 0
+  }
+
+  const timePoints = Object.keys(fluxHistoryStats.value).map(Number)
+  const mostRecentTime = Math.max(...timePoints)
+  const stats = fluxHistoryStats.value[mostRecentTime]
+
+  // CPU values per tier (using halved values as current standard)
+  const cumulusCpu = 4
+  const nimbusCpu = 8
+  const stratusCpu = 16
+
+  return (stats.cumulus * cumulusCpu) + (stats.nimbus * nimbusCpu) + (stats.stratus * stratusCpu)
+})
+
+const totalRAM = computed(() => {
+  if (!fluxHistoryStats.value || Object.keys(fluxHistoryStats.value).length === 0) {
+    return 0
+  }
+
+  const timePoints = Object.keys(fluxHistoryStats.value).map(Number)
+  const mostRecentTime = Math.max(...timePoints)
+  const stats = fluxHistoryStats.value[mostRecentTime]
+
+  // RAM values per tier in GB (using halved values as current standard)
+  const cumulusRam = 8   // 8 GB
+  const nimbusRam = 32   // 32 GB
+  const stratusRam = 64  // 64 GB
+
+  return (stats.cumulus * cumulusRam) + (stats.nimbus * nimbusRam) + (stats.stratus * stratusRam)
+})
+
+const totalSSD = computed(() => {
+  if (!fluxHistoryStats.value || Object.keys(fluxHistoryStats.value).length === 0) {
+    return 0
+  }
+
+  const timePoints = Object.keys(fluxHistoryStats.value).map(Number)
+  const mostRecentTime = Math.max(...timePoints)
+  const stats = fluxHistoryStats.value[mostRecentTime]
+
+  // SSD values per tier in GB (using halved values as current standard)
+  const cumulusSsd = 220
+  const nimbusSsd = 440
+  const stratusSsd = 880
+
+  return (stats.cumulus * cumulusSsd) + (stats.nimbus * nimbusSsd) + (stats.stratus * stratusSsd)
+})
+
+const totalHDD = computed(() => {
+  if (!fluxHistoryStats.value || Object.keys(fluxHistoryStats.value).length === 0) {
+    return 0
+  }
+
+  // HDD storage calculation - returning 0 as SSD is the primary storage type now
+  return 0
+})
 const cumulusCpuValue = ref(0)
 const nimbusCpuValue = ref(0)
 const stratusCpuValue = ref(0)
@@ -1021,21 +1062,6 @@ const generateResources = async () => {
       }
     })
 
-    totalCores.value =
-      cumulusCpuValue.value + nimbusCpuValue.value + stratusCpuValue.value
-
-    totalRAM.value = cumulusRamValue.value + nimbusRamValue.value + stratusRamValue.value
-
-    totalSSD.value =
-      cumulusSSDStorageValue.value +
-      nimbusSSDStorageValue.value +
-      stratusSSDStorageValue.value
-
-    totalHDD.value =
-      cumulusHDDStorageValue.value +
-      nimbusHDDStorageValue.value +
-      stratusHDDStorageValue.value
-
     fluxListLoading.value = false
   } catch (error) {
     console.error(error)
@@ -1136,6 +1162,61 @@ onUnmounted(() => {
 </script>
 
 <style scoped>
+.resources-intro-card {
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.05) 0%, rgba(var(--v-theme-success), 0.05) 100%);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
+}
+
+.resources-intro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(var(--v-theme-primary), 0.1);
+}
+
+.summary-card {
+  border-radius: 16px;
+  background: rgba(var(--v-theme-surface), 1);
+  border: 1px solid rgba(var(--v-theme-primary), 0.15);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.resource-summary-item {
+  text-align: center;
+  padding: 20px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-surface), 0.5) 0%, rgba(var(--v-theme-primary), 0.03) 100%);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.resource-summary-item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(var(--v-theme-primary), 0.12);
+  background: linear-gradient(135deg, rgba(var(--v-theme-surface), 0.6) 0%, rgba(var(--v-theme-primary), 0.06) 100%);
+}
+
+.resource-summary-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary));
+  margin-bottom: 8px;
+  line-height: 1.2;
+}
+
+.resource-summary-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(var(--v-theme-on-surface));
+  opacity: 0.7;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .overlay {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
