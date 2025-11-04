@@ -8,7 +8,11 @@ export default {
     return Api().get(`/explorer/transactions/${address}`)
   },
   getScannedHeight() {
-    return Api().get('/explorer/scannedheight')
+    return Api().get('/explorer/scannedheight', {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    })
   },
   reindexExplorer(zelidauthHeader) {
     return Api().get('/explorer/reindex/false', {

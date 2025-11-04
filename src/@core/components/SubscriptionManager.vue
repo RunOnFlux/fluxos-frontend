@@ -3804,10 +3804,42 @@ watch(signature, newSignature => {
 })
 
 // 2️⃣  current remaining blocks based on the *original* value
+// FORK-AWARE: Calculate adjusted expiry block height accounting for fork transition
 const originalExpireBlocks = computed(() => {
   if (!currentBlockHeight.value || typeof props.appSpec?.height !== 'number') return null
+  if (!originalExpireSnapshot.value) return null
 
-  return props.appSpec.height + originalExpireSnapshot.value - currentBlockHeight.value
+  const registrationHeight = props.appSpec.height
+  const expireIn = originalExpireSnapshot.value
+
+  // Calculate naive expiry (registration + expire blocks)
+  const naiveExpiry = registrationHeight + expireIn
+
+  let adjustedExpiryBlock = naiveExpiry
+
+  // If app was registered before fork and naive expiry is after fork,
+  // we need to adjust to maintain the intended duration
+  if (registrationHeight < FORK_BLOCK_HEIGHT && naiveExpiry > FORK_BLOCK_HEIGHT) {
+    // Calculate intended subscription duration based on registration time
+    const blockTimeAtRegistration = 2 // Pre-fork: 2 min/block
+    const subscriptionDurationMinutes = expireIn * blockTimeAtRegistration
+
+    // Calculate pre-fork time consumed
+    const preForkBlocks = FORK_BLOCK_HEIGHT - registrationHeight
+    const preForkMinutes = preForkBlocks * 2
+
+    // Calculate remaining time that needs to be in post-fork blocks
+    const remainingMinutes = subscriptionDurationMinutes - preForkMinutes
+
+    // Convert remaining minutes to post-fork blocks
+    const postForkBlocks = remainingMinutes / 0.5
+
+    // Actual expiry block accounting for fork transition
+    adjustedExpiryBlock = FORK_BLOCK_HEIGHT + postForkBlocks
+  }
+
+  // Return remaining blocks: adjusted expiry - current block
+  return adjustedExpiryBlock - currentBlockHeight.value
 })
 
 // 3️⃣  timestamps shown in the UI (fork-aware calculation)

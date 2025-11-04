@@ -141,10 +141,22 @@ export default {
     return Api().get(`/apps/permanentmessages?owner=${owner}`)
   },
   getInstalledAppSpecifics(name) {
-    return Api().get(`/apps/installedapps/${name}`)
+    const axiosConfig = {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    }
+
+    return Api().get(`/apps/installedapps/${name}`, axiosConfig)
   },
   getAppSpecifics(name) {
-    return Api().get(`/apps/appspecifications/${name}`)
+    const axiosConfig = {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    }
+
+    return Api().get(`/apps/appspecifications/${name}`, axiosConfig)
   },
   getAppEncryptedSpecifics(name, zelidauthHeader, data) {
     const axiosConfig = {

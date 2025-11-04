@@ -1476,6 +1476,7 @@ const callAPI = async (endpoint, method = 'GET', data = null) => {
     url: `${baseURL}${endpoint}`,
     headers: {
       'zelidauth': zelidauth,
+      'x-apicache-bypass': true,
     },
   }
 
