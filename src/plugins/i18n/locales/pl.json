@@ -117,7 +117,7 @@
       "storage": "Pamięć masowa",
       "disk": "Dysk",
       "hdd": "HDD",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "bandwidth": "Przepustowość",
       "cores": "Rdzenie",
       "threads": "Wątki"
@@ -303,7 +303,7 @@
       "hardwareResources": "Zasoby sprzętowe",
       "cpu": "CPU",
       "ram": "RAM",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "vCore": "vCore",
       "vCores": "vCores",
       "ramValue": "{value} MB",
@@ -825,7 +825,7 @@
       "vCore": "vCore",
       "ram": "RAM",
       "mb": "MB",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "gb": "GB",
       "searchNodes": "Szukaj węzłów",
       "searchNodesPlaceholder": "IP, adres, poziom...",
@@ -2349,7 +2349,7 @@
       "nodes": "Węzły",
       "cpu": "CPU",
       "ram": "RAM",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "cost": "Koszt",
       "select": "Wybierz",
       "estimatedRate": "*Szacowane 1 Flux = ${rate} USD",
@@ -2457,14 +2457,14 @@
         },
         "vCores": "vCores",
         "ram": "RAM",
-        "ssd": "SSD",
+        "ssd": "SSD/NVMe",
         "hdd": "HDD",
         "cpuHistory": "Historia CPU",
         "ramHistory": "Historia RAM",
         "storageHistory": "Historia pamięci",
         "totalVCores": "Łącznie vCores",
         "totalRam": "Łączny RAM",
-        "totalSsd": "Łączny SSD",
+        "totalSsd": "Łączny SSD/NVMe",
         "totalHdd": "Łączny HDD",
         "tierCumulus": "Cumulus",
         "tierNimbus": "Nimbus",
@@ -3022,7 +3022,7 @@
               },
               {
                 "q": "Ile kosztuje hosting Enshrouded?",
-                "a": "Począwszy od <strong>[[minPrice]]/miesiąc</strong> i skaluje się w zależności od pojemności graczy (do 16 graczy). Wszystkie plany obejmują ochronę przed DDoS, automatyczne kopie zapasowe i wysokowydajną pamięć SSD."
+                "a": "Począwszy od <strong>[[minPrice]]/miesiąc</strong> i skaluje się w zależności od pojemności graczy (do 16 graczy). Wszystkie plany obejmują ochronę przed DDoS, automatyczne kopie zapasowe i wysokowydajną pamięć SSD/NVMe."
               },
               {
                 "q": "Czy mogę dostosować ustawienia serwera?",
@@ -3058,7 +3058,7 @@
             "content": "Hostuj swoją stronę WordPress na zdecentralizowanej infrastrukturze, która łączy wydajność, bezpieczeństwo i niezawodność. Nasz zarządzany hosting WordPress obejmuje automatyczne aktualizacje, cotygodniowe kopie zapasowe i bezpieczeństwo na poziomie korporacyjnym - wszystko zasilane przez sieć FluxCloud.",
             "highlights": {
               "security": "Bezpieczeństwo na poziomie korporacyjnym z automatycznymi aktualizacjami",
-              "performance": "Wysokowydajne dyski SSD i zoptymalizowane serwery",
+              "performance": "Wysokowydajne dyski SSD/NVMe i zoptymalizowane serwery",
               "updates": "Automatyczne aktualizacje rdzenia WordPress i wtyczek",
               "decentralized": "Zdecentralizowany hosting na wielu węzłach globalnych"
             }
@@ -3129,7 +3129,7 @@
           "whitelistIpLabel": "Whitelist IP dla kopii zapasowej/przywracania (opcjonalne)",
           "whitelistIpPlaceholder": "Wpisz adres IP",
           "performancePlan": "Plan wydajności",
-          "performancePlanTooltip": "Wybierz zasoby serwera (CPU, RAM, SSD) dla Twojej strony WordPress",
+          "performancePlanTooltip": "Wybierz zasoby serwera (CPU, RAM, SSD/NVMe) dla Twojej strony WordPress",
           "deploymentLocation": "Lokalizacja wdrożenia",
           "deploymentLocationTooltip": "Wybierz region geograficzny do wdrożenia strony WordPress. Wybierz Globalny dla automatycznego wyboru.",
           "instances": "instancji",

@@ -117,7 +117,7 @@
       "storage": "Storage",
       "disk": "Disk",
       "hdd": "HDD",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "bandwidth": "Bandwidth",
       "cores": "Cores",
       "threads": "Threads"
@@ -303,7 +303,7 @@
       "hardwareResources": "Hardware Resources",
       "cpu": "CPU",
       "ram": "RAM",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "vCore": "vCore",
       "vCores": "vCores",
       "ramValue": "{value} MB",
@@ -825,7 +825,7 @@
       "vCore": "vCore",
       "ram": "RAM",
       "mb": "MB",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "gb": "GB",
       "searchNodes": "Search nodes",
       "searchNodesPlaceholder": "IP, address, tier...",
@@ -2396,7 +2396,7 @@
             "title": "Enterprise-Grade Features",
             "performance": {
               "title": "High Performance",
-              "description": "SSD storage, high-speed networking, and optimized routing ensure your apps run fast everywhere."
+              "description": "SSD/NVMe storage, high-speed networking, and optimized routing ensure your apps run fast everywhere."
             },
             "security": {
               "title": "Secure by Design",
@@ -2512,7 +2512,7 @@
       "nodes": "Nodes",
       "cpu": "CPU",
       "ram": "RAM",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "cost": "Cost",
       "select": "Select",
       "estimatedRate": "*Estimated 1 Flux = ${rate} USD",
@@ -2620,7 +2620,7 @@
         },
         "vCores": "vCores",
         "ram": "RAM",
-        "ssd": "SSD",
+        "ssd": "SSD/NVMe",
         "hdd": "HDD",
         "cpuHistory": "CPU History",
         "ramHistory": "RAM History",
