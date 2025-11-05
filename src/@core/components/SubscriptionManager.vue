@@ -3546,20 +3546,52 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
     }
 
     // Set up renewal settings
-    // Fork-aware default: if app was registered after fork, use 88000; otherwise 22000
-    const defaultExpire = (newSpec.height && newSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
-    let expire = newSpec.expire ?? defaultExpire
+    // Find the correct renewalIndex based on original expire value with fork-aware conversion
+    let expireForMatching
 
-    // Convert pre-fork expire values to post-fork equivalent for renewalIndex matching
-    // Pre-fork: 22,000 blocks = 1 month (at 2 min/block)
-    // Post-fork: 88,000 blocks = 1 month (at 0.5 min/block)
-    // Renewals always use post-fork values, so convert for display purposes
-    if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
-      expire = expire * 4  // Convert pre-fork to post-fork equivalent
+    if (newSpec.version < 6) {
+      // Spec < 6: Always use 88000 (fixed 1 month)
+      expireForMatching = 88000
+    } else {
+      // Spec >= 6: Use original expire value from API
+      const defaultExpire = 88000
+      const originalExpire = newSpec.expire ?? defaultExpire
+      expireForMatching = originalExpire
+
+      // Fork-aware conversion for renewalIndex matching:
+      // Apps registered before fork have expire in pre-fork blocks
+      // Convert to post-fork equivalent to match renewal options
+      if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
+        expireForMatching = Math.round(originalExpire * 4)
+        console.log('Fork-aware conversion for renewalIndex: original', originalExpire, '× 4 =', expireForMatching)
+      }
     }
 
-    const foundIndex = renewalOptions.value.findIndex(opt => opt.value === expire)
-    appDetails.value.renewalIndex = foundIndex !== -1 ? foundIndex : 2
+    console.log('Setting renewalIndex - expire for matching:', expireForMatching, 'original expire:', newSpec.expire, 'spec version:', newSpec.version, 'height:', newSpec.height)
+
+    // Find exact match in renewal options
+    let foundIndex = renewalOptions.value.findIndex(opt => opt.value === expireForMatching)
+
+    // If no exact match, find closest renewal option
+    if (foundIndex === -1) {
+      let closestIndex = 2  // Default to 1 month (88000)
+      let closestDiff = Math.abs(renewalOptions.value[2].value - expireForMatching)
+
+      renewalOptions.value.forEach((opt, idx) => {
+        const diff = Math.abs(opt.value - expireForMatching)
+        if (diff < closestDiff) {
+          closestDiff = diff
+          closestIndex = idx
+        }
+      })
+
+      foundIndex = closestIndex
+      console.log('No exact match - closest option at index:', foundIndex, 'value:', renewalOptions.value[foundIndex].value, 'diff:', Math.abs(renewalOptions.value[foundIndex].value - expireForMatching))
+    } else {
+      console.log('Found exact match at index:', foundIndex, 'value:', renewalOptions.value[foundIndex].value)
+    }
+
+    appDetails.value.renewalIndex = foundIndex
     
     // Handle enterprise nodes if applicable
     if (newSpec.nodes && Array.isArray(newSpec.nodes) && newSpec.nodes.length > 0) {
