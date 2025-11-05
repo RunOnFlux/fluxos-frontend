@@ -82,7 +82,7 @@ const fluxNodeCount = ref(0)
 const isLoading = ref(true)
 
 // Helper function to check if a string is an i18n key
-const isI18nKey = (str) => {
+const isI18nKey = str => {
   return str && typeof str === 'string' && str.startsWith('i18n:')
 }
 
@@ -92,6 +92,7 @@ const titleText = computed(() => {
 
   if (isI18nKey(props.panel.title)) {
     const key = props.panel.title.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.title
   }
 
@@ -104,6 +105,7 @@ const subtitleText = computed(() => {
 
   if (isI18nKey(props.panel.subtitle)) {
     const key = props.panel.subtitle.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.subtitle
   }
 
@@ -118,6 +120,7 @@ const countryCount = computed(() => {
       countries.add(flux.geolocation.country)
     }
   })
+  
   return countries.size
 })
 

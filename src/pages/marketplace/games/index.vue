@@ -74,7 +74,7 @@ const fluxPlayLogo = computed(() => {
 })
 
 // SEO meta tags and structured data
-watch(games, (loadedGames) => {
+watch(games, loadedGames => {
   if (!loadedGames || loadedGames.length === 0) return
 
   const pageUrl = 'https://home.runonflux.io/marketplace/games'
@@ -140,6 +140,7 @@ watch(games, (loadedGames) => {
         name: 'keywords',
         content: 'game server hosting, minecraft hosting, palworld hosting, factorio hosting, satisfactory hosting, enshrouded hosting, decentralized hosting, flux network, dedicated game servers, affordable hosting',
       },
+
       // Open Graph
       { property: 'og:title', content: title },
       { property: 'og:description', content: description },
@@ -147,11 +148,13 @@ watch(games, (loadedGames) => {
       { property: 'og:url', content: pageUrl },
       { property: 'og:type', content: 'website' },
       { property: 'og:site_name', content: 'FluxPlay' },
+
       // Twitter Card
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: title },
       { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: imageUrl },
+
       // Additional SEO
       { name: 'robots', content: 'index, follow' },
       { name: 'author', content: 'Flux Network' },

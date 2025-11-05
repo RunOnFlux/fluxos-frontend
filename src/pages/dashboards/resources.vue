@@ -347,6 +347,7 @@ const historyStatsLoading = ref(true)
 const showError = ref(false)
 const hasValidData = ref(true)
 const fluxList = ref([])
+
 // Computed totals from most recent history entry
 const totalCores = computed(() => {
   if (!fluxHistoryStats.value || Object.keys(fluxHistoryStats.value).length === 0) {

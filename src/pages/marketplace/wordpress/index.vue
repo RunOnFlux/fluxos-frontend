@@ -24,11 +24,11 @@
       <nav class="breadcrumb-nav" aria-label="Breadcrumb">
         <ol class="breadcrumb-list">
           <li class="breadcrumb-item">
-            <router-link to="/" class="breadcrumb-link">Home</router-link>
+            <RouterLink to="/" class="breadcrumb-link">Home</RouterLink>
             <VIcon class="breadcrumb-separator">mdi-chevron-right</VIcon>
           </li>
           <li class="breadcrumb-item">
-            <router-link to="/marketplace" class="breadcrumb-link">Marketplace</router-link>
+            <RouterLink to="/marketplace" class="breadcrumb-link">Marketplace</RouterLink>
             <VIcon class="breadcrumb-separator">mdi-chevron-right</VIcon>
           </li>
           <li class="breadcrumb-item breadcrumb-current" aria-current="page">
@@ -247,26 +247,26 @@
         </VCardTitle>
         <VCardText>
           <div class="related-links-grid">
-            <router-link to="/marketplace" class="related-link-card">
+            <RouterLink to="/marketplace" class="related-link-card">
               <VIcon class="related-link-icon" color="primary">mdi-storefront</VIcon>
               <h3 class="related-link-title">Marketplace</h3>
               <p class="related-link-description">Browse all available applications</p>
-            </router-link>
-            <router-link to="/marketplace/games" class="related-link-card">
+            </RouterLink>
+            <RouterLink to="/marketplace/games" class="related-link-card">
               <VIcon class="related-link-icon" color="success">mdi-gamepad-variant</VIcon>
               <h3 class="related-link-title">Game Servers</h3>
               <p class="related-link-description">Host your favorite game servers</p>
-            </router-link>
-            <router-link to="/flux-drive" class="related-link-card">
+            </RouterLink>
+            <RouterLink to="/flux-drive" class="related-link-card">
               <VIcon class="related-link-icon" color="info">mdi-cloud</VIcon>
               <h3 class="related-link-title">FluxDrive</h3>
               <p class="related-link-description">Decentralized file storage</p>
-            </router-link>
-            <router-link to="/cost-calculator" class="related-link-card">
+            </RouterLink>
+            <RouterLink to="/cost-calculator" class="related-link-card">
               <VIcon class="related-link-icon" color="warning">mdi-calculator</VIcon>
               <h3 class="related-link-title">Cost Calculator</h3>
               <p class="related-link-description">Estimate your hosting costs</p>
-            </router-link>
+            </RouterLink>
           </div>
         </VCardText>
       </VCard>
@@ -319,6 +319,7 @@ const translateDescription = plan => {
   if (!plan || !plan.name) return plan?.description || ''
 
   const key = `pages.marketplace.wordpress.form.planDescriptions.${plan.name}`
+  
   return te(key) ? t(key) : plan.description
 }
 
@@ -394,16 +395,18 @@ const countryCount = computed(() => {
       countries.add(flux.geolocation.country)
     }
   })
+  
   return countries.size
 })
 
 // Helper function to extract string from compiled i18n message objects
-const extractString = (obj) => {
+const extractString = obj => {
   if (typeof obj === 'string') return obj
   if (obj && typeof obj === 'object') {
     // Try to get the actual string from compiled message object
     return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
   }
+  
   return String(obj)
 }
 
@@ -541,7 +544,7 @@ const loadPlans = async () => {
 }
 
 // Navigate to configure page with selected plan
-const selectPlan = (plan) => {
+const selectPlan = plan => {
   router.push({
     path: '/marketplace/wordpress/configure',
     query: { plan: plan.name },
@@ -574,6 +577,7 @@ useHead({
       name: 'description',
       content: 'Deploy WordPress websites on the decentralized FluxCloud network. Choose from multiple performance plans with MySQL, SSL, and automatic backups. Affordable pricing starting from $25/month.',
     },
+
     // Open Graph
     { property: 'og:title', content: 'WordPress Hosting on FluxCloud - Decentralized & Scalable' },
     { property: 'og:description', content: 'Deploy WordPress websites on the decentralized FluxCloud network with multiple performance plans. MySQL, SSL, automatic backups included.' },
@@ -586,6 +590,7 @@ useHead({
     { property: 'og:image:alt', content: 'WordPress Hosting on FluxCloud - Decentralized Infrastructure' },
     { property: 'og:site_name', content: 'FluxCloud' },
     { property: 'og:locale', content: 'en_US' },
+
     // Twitter Card
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: 'WordPress Hosting on FluxCloud - Decentralized & Scalable' },
@@ -593,6 +598,7 @@ useHead({
     { name: 'twitter:image', content: 'https://home.runonflux.io/banner/FluxWPMarketplace.png' },
     { name: 'twitter:image:alt', content: 'WordPress Hosting on FluxCloud' },
     { name: 'twitter:site', content: '@RunOnFlux' },
+
     // Additional SEO
     { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
     { name: 'author', content: 'FluxCloud' },
@@ -604,7 +610,7 @@ useHead({
     structuredData.value.map(schema => ({
       type: 'application/ld+json',
       innerHTML: JSON.stringify(schema),
-    }))
+    })),
   ),
 })
 

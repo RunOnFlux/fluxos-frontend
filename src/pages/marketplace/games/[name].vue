@@ -134,6 +134,7 @@ const gameIcon = computed(() => parseLandingImage(game.value?.icon))
 // Get minimum price for meta description
 const minPrice = computed(() => {
   if (!game.value) return '0'
+  
   return getMinimumPrice(game.value)
 })
 
@@ -153,7 +154,7 @@ const orderedPanels = computed(() => {
 })
 
 // Dynamic SEO meta tags and structured data
-watch(game, (newGame) => {
+watch(game, newGame => {
   if (!newGame) return
 
   const gameName = newGame.displayName || newGame.name
@@ -257,6 +258,7 @@ watch(game, (newGame) => {
         name: 'keywords',
         content: `${gameName} hosting, ${gameName} server, game server hosting, decentralized hosting, flux network, affordable game hosting`,
       },
+
       // Open Graph
       { property: 'og:title', content: `${gameName} Server Hosting - FluxPlay` },
       { property: 'og:description', content: description.substring(0, 160) },
@@ -264,11 +266,13 @@ watch(game, (newGame) => {
       { property: 'og:url', content: pageUrl },
       { property: 'og:type', content: 'product' },
       { property: 'og:site_name', content: 'FluxPlay' },
+
       // Twitter Card
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: `${gameName} Server Hosting - FluxPlay` },
       { name: 'twitter:description', content: description.substring(0, 160) },
       { name: 'twitter:image', content: imageUrl },
+
       // Additional SEO
       { name: 'robots', content: 'index, follow' },
       { name: 'author', content: 'Flux Network' },
@@ -349,7 +353,7 @@ const loadGameDetails = async () => {
       'minecraft': 'minecraft',
       'factorio': 'factorio',
       'satisfactory': 'satisfactory',
-      'enshrouded': 'enshrouded'
+      'enshrouded': 'enshrouded',
     }
 
     const i18nKey = gameI18nMap[gameNameLower]
@@ -409,7 +413,7 @@ const loadGameDetails = async () => {
         {
           type: 'RelatedGames',
           enabled: true,
-        }
+        },
       ]
     }
 
@@ -438,12 +442,12 @@ const handleDeployed = () => {
 // - 0 = first config (cheapest)
 // - Math.floor(total / 2) = middle config (recommended)
 // - total - 1 = last config (most expensive)
-const POPULAR_CONFIG_INDEX = (total) => Math.floor(total / 2) // Middle option
+const POPULAR_CONFIG_INDEX = total => Math.floor(total / 2) // Middle option
 
 const getConfigWithPopular = (config, index, totalConfigs) => {
   return {
     ...config,
-    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs)
+    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs),
   }
 }
 

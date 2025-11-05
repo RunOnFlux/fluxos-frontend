@@ -63,29 +63,29 @@ const relatedGames = computed(() => {
     .filter(game =>
       game.visible &&
       game.enabled &&
-      game.name.toLowerCase() !== props.app.name.toLowerCase()
+      game.name.toLowerCase() !== props.app.name.toLowerCase(),
     )
     .slice(0, 4) // Show max 4 related games
 })
 
-const getGameIcon = (game) => {
+const getGameIcon = game => {
   return parseLandingImage(game.icon)
 }
 
-const getGameDescription = (game) => {
+const getGameDescription = game => {
   const descriptions = {
     'palworld': 'Monster-catching survival adventure',
     'minecraftserver': 'Creative building & survival',
     'minecraft': 'Creative building & survival',
     'factorio': 'Factory automation & logistics',
     'satisfactory': '3D factory building',
-    'enshrouded': 'Survival action RPG'
+    'enshrouded': 'Survival action RPG',
   }
 
   return descriptions[game.name.toLowerCase()] || game.description || 'Host your game server'
 }
 
-const getMinPrice = (game) => {
+const getMinPrice = game => {
   return getMinimumPrice(game)
 }
 

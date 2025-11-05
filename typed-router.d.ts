@@ -28,6 +28,7 @@ declare module 'vue-router/auto-routes' {
     'apps-manage-app-name': RouteRecordInfo<'apps-manage-app-name', '/apps/manage/:appName', { appName: ParamValue<true> }, { appName: ParamValue<false> }>,
     'apps-management': RouteRecordInfo<'apps-management', '/apps/management', Record<never, never>, Record<never, never>>,
     'apps-register': RouteRecordInfo<'apps-register', '/apps/register', Record<never, never>, Record<never, never>>,
+    'apps-register-configure': RouteRecordInfo<'apps-register-configure', '/apps/register/configure', Record<never, never>, Record<never, never>>,
     'checkout-gateway-plan': RouteRecordInfo<'checkout-gateway-plan', '/checkout/:gateway/:plan', { gateway: ParamValue<true>, plan: ParamValue<true> }, { gateway: ParamValue<false>, plan: ParamValue<false> }>,
     'cost-calculator': RouteRecordInfo<'cost-calculator', '/cost-calculator', Record<never, never>, Record<never, never>>,
     'dashboards-home': RouteRecordInfo<'dashboards-home', '/dashboards/home', Record<never, never>, Record<never, never>>,

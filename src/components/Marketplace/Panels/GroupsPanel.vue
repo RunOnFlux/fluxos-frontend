@@ -100,12 +100,12 @@ const panelStyle = computed(() => {
 // - 0 = first config (cheapest)
 // - Math.floor(total / 2) = middle config (recommended)
 // - total - 1 = last config (most expensive)
-const POPULAR_CONFIG_INDEX = (total) => Math.floor(total / 2) // Middle option
+const POPULAR_CONFIG_INDEX = total => Math.floor(total / 2) // Middle option
 
 const getConfigWithPopular = (config, index, totalConfigs) => {
   return {
     ...config,
-    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs)
+    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs),
   }
 }
 

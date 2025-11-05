@@ -73,6 +73,7 @@ const resources = computed(() => getConfigResources(props.config))
 const displayName = computed(() => {
   // Use player-based naming for gaming apps
   const gameName = props.app.name || props.app.displayName || ''
+  
   return getPlayerBasedConfigName(gameName, props.config)
 })
 

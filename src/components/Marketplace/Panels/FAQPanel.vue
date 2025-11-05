@@ -60,7 +60,7 @@ const minimumPrice = computed(() => {
 })
 
 // Helper function to check if a string is an i18n key
-const isI18nKey = (str) => {
+const isI18nKey = str => {
   return str && typeof str === 'string' && str.startsWith('i18n:')
 }
 
@@ -70,6 +70,7 @@ const titleText = computed(() => {
 
   if (isI18nKey(props.panel.title)) {
     const key = props.panel.title.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.title
   }
 
@@ -82,6 +83,7 @@ const subtitleText = computed(() => {
 
   if (isI18nKey(props.panel.subtitle)) {
     const key = props.panel.subtitle.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.subtitle
   }
 
@@ -128,20 +130,22 @@ const questionsList = computed(() => {
 
       // Extract actual string values from compiled i18n message objects
       questionsArray = questionsArray.map(faq => {
-        const extractString = (obj) => {
+        const extractString = obj => {
           if (typeof obj === 'string') return obj
           if (obj && typeof obj === 'object') {
             // Try to get the actual string from compiled message object
             return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
           }
+          
           return String(obj)
         }
 
         // Replace price placeholder with actual minimum price
         // Use $$ to escape the dollar sign in the replacement string
-        const replacePricePlaceholder = (text) => {
+        const replacePricePlaceholder = text => {
           if (!text) return text
           const price = minimumPrice.value || '0.00'
+          
           return text.replace(/\[\[minPrice\]\]/g, `$$${price}`)
         }
 
@@ -149,7 +153,7 @@ const questionsList = computed(() => {
           q: extractString(faq.q),
           a: replacePricePlaceholder(extractString(faq.a)),
           question: extractString(faq.q),
-          answer: replacePricePlaceholder(extractString(faq.a))
+          answer: replacePricePlaceholder(extractString(faq.a)),
         }
       })
 
@@ -162,7 +166,7 @@ const questionsList = computed(() => {
   return props.panel.questions
 })
 
-const sanitizeAnswer = (answer) => {
+const sanitizeAnswer = answer => {
   return DOMPurify.sanitize(answer, {
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'code'],
     ALLOWED_ATTR: ['href', 'target', 'rel'],

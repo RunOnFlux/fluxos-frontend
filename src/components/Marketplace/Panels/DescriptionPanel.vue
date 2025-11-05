@@ -69,7 +69,7 @@ const minimumPrice = computed(() => {
 })
 
 // Helper function to check if a string is an i18n key
-const isI18nKey = (str) => {
+const isI18nKey = str => {
   return str && typeof str === 'string' && str.startsWith('i18n:')
 }
 
@@ -79,6 +79,7 @@ const titleText = computed(() => {
 
   if (isI18nKey(props.panel.title)) {
     const key = props.panel.title.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.title
   }
 
@@ -100,6 +101,7 @@ const contentText = computed(() => {
   // Replace price placeholder with actual minimum price
   // Use $$ to escape the dollar sign in the replacement string
   const price = minimumPrice.value || '0.00'
+  
   return content.replace(/\[\[minPrice\]\]/g, `$$${price}`)
 })
 
@@ -154,13 +156,16 @@ const highlightsList = computed(() => {
             // Try to get the actual string from compiled message object
             return item.body?.static || item.loc?.source || item.static || String(item)
           }
+          
           return String(item)
         })
 
         return highlightsArray
       }
+      
       return []
     }
+    
     return []
   }
 
@@ -169,13 +174,14 @@ const highlightsList = computed(() => {
 
 const sanitizedContent = computed(() => {
   if (!contentText.value) return ''
+  
   return DOMPurify.sanitize(contentText.value, {
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'h3', 'h4', 'a'],
     ALLOWED_ATTR: ['href', 'target', 'rel'],
   })
 })
 
-const sanitizeHtml = (html) => {
+const sanitizeHtml = html => {
   return DOMPurify.sanitize(html, {
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a'],
     ALLOWED_ATTR: ['href', 'target', 'rel'],

@@ -2303,6 +2303,160 @@
           "status": "Status",
           "description": "Description"
         }
+      },
+      "register": {
+        "landing": {
+          "title": "Deploy Your App on FluxCloud",
+          "subtitle": "Experience the power of truly decentralized cloud computing. Deploy Docker containers, web apps, APIs, and microservices on our global network of 13,000+ nodes across 62+ countries.",
+          "getStarted": "Start Deploying",
+          "documentation": "View Documentation",
+          "appTypes": {
+            "title": "What Can You Deploy?",
+            "subtitle": "FluxCloud supports any Dockerized application. From simple web apps to complex multi-container deployments.",
+            "web": {
+              "title": "Web Applications",
+              "description": "Deploy full-stack web applications with frontend and backend services. Perfect for React, Vue, Angular, Next.js, and more."
+            },
+            "api": {
+              "title": "APIs & Microservices",
+              "description": "Build and deploy RESTful APIs, GraphQL endpoints, and microservices architectures with ease."
+            },
+            "database": {
+              "title": "Databases",
+              "description": "Host PostgreSQL, MongoDB, MySQL, and other database services with persistent storage."
+            },
+            "blockchain": {
+              "title": "Blockchain Nodes",
+              "description": "Run blockchain nodes, validators, and DeFi applications on our decentralized infrastructure."
+            },
+            "custom": {
+              "title": "Custom Applications",
+              "description": "Deploy any Docker container. Machine learning models, data processing pipelines, or custom business apps."
+            },
+            "docker": {
+              "title": "Docker Compose",
+              "description": "Multi-container applications with Docker Compose support. Complex stacks made simple."
+            }
+          },
+          "benefits": {
+            "title": "Why Choose FluxCloud?",
+            "decentralized": {
+              "title": "Truly Decentralized",
+              "description": "No single point of failure. Your apps run across thousands of independently operated nodes worldwide."
+            },
+            "affordable": {
+              "title": "70% More Affordable",
+              "description": "Save significantly compared to AWS, Google Cloud, or Azure. No hidden fees, transparent pricing."
+            },
+            "global": {
+              "title": "Global Distribution",
+              "description": "Deploy across 62+ countries with automatic geo-routing for optimal performance everywhere."
+            },
+            "censorship": {
+              "title": "Censorship Resistant",
+              "description": "Built on Web3 principles. Your applications remain accessible and cannot be taken down by any single entity."
+            },
+            "scalable": {
+              "title": "Instantly Scalable",
+              "description": "Scale from 3 to 100+ instances instantly. Pay only for what you use with flexible resource allocation."
+            },
+            "noVendor": {
+              "title": "No Vendor Lock-in",
+              "description": "Standard Docker containers mean you can migrate anytime. Full control over your applications and data."
+            }
+          },
+          "pricing": {
+            "title": "Transparent & Affordable Pricing",
+            "subtitle": "See how FluxCloud compares to traditional cloud providers. Same resources, fraction of the cost.",
+            "provider": "Provider",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "storage": "Storage",
+            "pricePerMonth": "Price/Month",
+            "note": "Prices are approximate and based on publicly available pricing for similar configurations. FluxCloud offers up to 70% savings compared to traditional cloud providers."
+          },
+          "serverNetwork": {
+            "title": "Global Server Network",
+            "subtitle": "Your applications deployed across a worldwide decentralized infrastructure with nodes on every continent.",
+            "activeServers": "Active Servers",
+            "countries": "Countries",
+            "global": "Global",
+            "coverage": "Coverage",
+            "noData": "Server map data is currently unavailable"
+          },
+          "features": {
+            "title": "Enterprise-Grade Features",
+            "performance": {
+              "title": "High Performance",
+              "description": "SSD storage, high-speed networking, and optimized routing ensure your apps run fast everywhere."
+            },
+            "security": {
+              "title": "Secure by Design",
+              "description": "Built-in DDoS protection, encrypted data transfer, and isolated container environments."
+            },
+            "redundancy": {
+              "title": "Automatic Redundancy",
+              "description": "Multiple instances across different nodes ensure 99.9% uptime with automatic failover."
+            },
+            "monitoring": {
+              "title": "Real-time Monitoring",
+              "description": "Track CPU, RAM, storage, and network usage in real-time. Detailed logs and metrics included."
+            },
+            "updates": {
+              "title": "Zero-Downtime Updates",
+              "description": "Update your applications without interruption using our rolling deployment strategy."
+            },
+            "support": {
+              "title": "24/7 Support",
+              "description": "Community Discord, documentation, and ticketing system available around the clock."
+            }
+          },
+          "faq": {
+            "title": "Frequently Asked Questions",
+            "questions": {
+              "whatIsFlux": {
+                "question": "What is FluxCloud?",
+                "answer": "FluxCloud is a decentralized cloud computing platform powered by Web3 technology. Unlike traditional cloud providers that rely on centralized data centers, FluxCloud distributes your applications across 13,000+ independently operated nodes in 62+ countries. This provides better redundancy, censorship resistance, and significantly lower costs."
+              },
+              "howToDeploy": {
+                "question": "How do I deploy an application?",
+                "answer": "Deploying on FluxCloud is simple:<br>1. Click \"Start Deploying\" to access the configuration page<br>2. Specify your Docker image and configuration<br>3. Choose your resources (CPU, RAM, storage)<br>4. Select number of instances and deployment locations<br>5. Deploy and your app will be live in minutes<br><br>We support Docker images from any registry including Docker Hub, GitHub Container Registry, and private registries."
+              },
+              "pricing": {
+                "question": "How much does it cost?",
+                "answer": "FluxCloud offers transparent, pay-as-you-go pricing starting at just $0.99/month for basic configurations. Pricing depends on:<br>- CPU cores allocated<br>- RAM amount<br>- Storage size<br>- Number of instances<br>- Port requirements<br><br>Use our <a href=\"/cost-calculator\" target=\"_blank\">Cost Calculator</a> to estimate exact pricing for your needs. No hidden fees, no surprise charges."
+              },
+              "support": {
+                "question": "What kind of support is available?",
+                "answer": "We offer multiple support channels:<br>- <strong>Documentation</strong>: Comprehensive guides at <a href=\"https://docs.runonflux.io\" target=\"_blank\">docs.runonflux.io</a><br>- <strong>Discord Community</strong>: Active 24/7 community support<br>- <strong>Email Support</strong>: Direct assistance from our team<br>- <strong>Ticketing System</strong>: Track issues at <a href=\"https://support.runonflux.io\" target=\"_blank\">support.runonflux.io</a><br>- <strong>AI Assistant</strong>: Built-in AI helper for quick questions"
+              },
+              "requirements": {
+                "question": "What are the requirements to deploy?",
+                "answer": "To deploy applications on FluxCloud you need:<br>- <strong>A Flux ID</strong>: Create one for free using any Flux-compatible wallet<br>- <strong>Docker Image</strong>: Your application packaged as a Docker container<br>- <strong>FLUX tokens or USD</strong>: To pay for hosting (we accept credit cards via Stripe and PayPal)<br>- <strong>Minimum 3 instances</strong>: For decentralization and redundancy<br><br>Minimum resources per instance: 0.1 CPU cores, 100MB RAM, 1GB storage"
+              },
+              "security": {
+                "question": "How secure is FluxCloud?",
+                "answer": "FluxCloud implements multiple security layers:<br>- <strong>Container Isolation</strong>: Each app runs in its own isolated Docker container<br>- <strong>Encrypted Transfer</strong>: All data in transit is encrypted<br>- <strong>DDoS Protection</strong>: Built-in protection against attacks<br>- <strong>Regular Audits</strong>: Code and infrastructure regularly audited<br>- <strong>Decentralized</strong>: No single point of failure<br>- <strong>Private Options</strong>: Enterprise mode for enhanced privacy<br><br>You maintain full control over your application code and data."
+              }
+            }
+          },
+          "cta": {
+            "title": "Ready to Deploy?",
+            "subtitle": "Join thousands of developers already building on FluxCloud. Start deploying your applications today.",
+            "button": "Configure Your Deployment"
+          },
+          "relatedLinks": {
+            "title": "Explore More",
+            "marketplace": "Marketplace",
+            "marketplaceDesc": "Browse pre-configured applications",
+            "wordpress": "WordPress Hosting",
+            "wordpressDesc": "Deploy WordPress sites on FluxCloud",
+            "gaming": "Game Servers",
+            "gamingDesc": "Host your favorite game servers",
+            "calculator": "Cost Calculator",
+            "calculatorDesc": "Estimate your hosting costs"
+          }
+        }
       }
     },
     "costCalculator": {

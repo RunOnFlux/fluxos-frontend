@@ -728,6 +728,7 @@ useHead({
       name: 'keywords',
       content: 'app hosting cost calculator, cloud hosting pricing, docker hosting cost, decentralized hosting, affordable cloud hosting, pay-as-you-go hosting, web app hosting, API hosting, microservices hosting, container hosting, cheap cloud hosting, $0.99 hosting, transparent pricing, no hidden fees, Flux network',
     },
+
     // Open Graph
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
@@ -735,12 +736,14 @@ useHead({
     { property: 'og:url', content: pageUrl },
     { property: 'og:type', content: 'website' },
     { property: 'og:site_name', content: 'Flux Network' },
+
     // Twitter Card
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: imageUrl },
     { name: 'twitter:site', content: '@RunOnFlux' },
+
     // Additional SEO
     { name: 'robots', content: 'index, follow' },
     { name: 'author', content: 'Flux Network' },

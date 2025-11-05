@@ -27,6 +27,7 @@ export function useGameUtils() {
     }
 
     const price = game.price || 0
+    
     return (typeof price === 'number' && isFinite(price) ? price : 0).toFixed(2)
   }
 
@@ -165,6 +166,7 @@ export function useGameUtils() {
         7: 8,   // Small server (4-8 players)
         10: 16,  // Medium server (8-10 players)
       },
+
       // Minecraft - 6 configuration options
       // Scales with mods/plugins and world complexity
       // Source: Minecraft Wiki, hosting providers
@@ -184,6 +186,7 @@ export function useGameUtils() {
         31: 64,
         47: 150,
       },
+
       // Factorio - 5 configuration options
       // RAM scales with factory complexity more than player count
       // Source: Factorio Forums, community benchmarks
@@ -194,6 +197,7 @@ export function useGameUtils() {
         8: 32,   // Very large factory (20-32 players)
         12: 50,  // Massive factory with many players
       },
+
       // Satisfactory - 4 configuration options
       // Official max: 4 players, unofficial supports more
       // Source: Coffee Stain Studios, community servers
@@ -203,6 +207,7 @@ export function useGameUtils() {
         12: 8,   // Unofficial support with medium factory
         16: 12,  // Unofficial support with large factory
       },
+
       // Enshrouded - 4 configuration options
       // Base: 4.4GB, ~100MB per player, 6GB total for 16 players
       // Source: Official FAQ, community benchmarks

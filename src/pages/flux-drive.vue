@@ -205,6 +205,7 @@ useHead({
       name: 'keywords',
       content: 'decentralized storage, IPFS storage, cloud storage, blockchain storage, distributed storage, encrypted storage, Flux network, censorship resistant storage, Web3 storage, decentralized cloud, permanent storage, IPFS, FluxDrive',
     },
+
     // Open Graph
     { property: 'og:title', content: title },
     { property: 'og:description', content: description },
@@ -212,12 +213,14 @@ useHead({
     { property: 'og:url', content: pageUrl },
     { property: 'og:type', content: 'website' },
     { property: 'og:site_name', content: 'Flux Network' },
+
     // Twitter Card
     { name: 'twitter:card', content: 'summary_large_image' },
     { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
     { name: 'twitter:image', content: imageUrl },
     { name: 'twitter:site', content: '@RunOnFlux' },
+
     // Additional SEO
     { name: 'robots', content: 'index, follow' },
     { name: 'author', content: 'Flux Network' },

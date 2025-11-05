@@ -42,7 +42,7 @@ const i18n = useI18n()
 const { t, te } = i18n
 
 // Helper function to check if a string is an i18n key
-const isI18nKey = (str) => {
+const isI18nKey = str => {
   return str && typeof str === 'string' && str.startsWith('i18n:')
 }
 
@@ -52,6 +52,7 @@ const titleText = computed(() => {
 
   if (isI18nKey(props.panel.title)) {
     const key = props.panel.title.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.title
   }
 
@@ -64,6 +65,7 @@ const subtitleText = computed(() => {
 
   if (isI18nKey(props.panel.subtitle)) {
     const key = props.panel.subtitle.replace('i18n:', '')
+    
     return te(key) ? t(key) : props.panel.subtitle
   }
 
@@ -106,18 +108,19 @@ const benefitsList = computed(() => {
 
       // Extract actual string values from compiled i18n message objects
       benefitsArray = benefitsArray.map(benefit => {
-        const extractString = (obj) => {
+        const extractString = obj => {
           if (typeof obj === 'string') return obj
           if (obj && typeof obj === 'object') {
             return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
           }
+          
           return String(obj)
         }
 
         return {
           icon: extractString(benefit.icon),
           title: extractString(benefit.title),
-          description: extractString(benefit.description)
+          description: extractString(benefit.description),
         }
       })
 

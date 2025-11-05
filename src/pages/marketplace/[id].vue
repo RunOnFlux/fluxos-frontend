@@ -503,6 +503,7 @@ const countryCount = computed(() => {
       countries.add(flux.geolocation.country)
     }
   })
+  
   return countries.size
 })
 
@@ -539,23 +540,25 @@ const whyFluxBenefits = computed(() => {
       benefitsArray = JSON.parse(JSON.stringify(benefitsArray))
     } catch (e) {
       console.error('Error parsing benefits:', e)
+      
       return []
     }
 
     // Extract actual string values from compiled i18n message objects
     benefitsArray = benefitsArray.map(benefit => {
-      const extractString = (obj) => {
+      const extractString = obj => {
         if (typeof obj === 'string') return obj
         if (obj && typeof obj === 'object') {
           return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
         }
+        
         return String(obj)
       }
 
       return {
         icon: extractString(benefit.icon),
         title: extractString(benefit.title),
-        description: extractString(benefit.description)
+        description: extractString(benefit.description),
       }
     })
 
@@ -621,17 +624,18 @@ const genericFAQs = computed(() => {
 
     // Extract actual string values from compiled i18n message objects
     questionsArray = questionsArray.map(faq => {
-      const extractString = (obj) => {
+      const extractString = obj => {
         if (typeof obj === 'string') return obj
         if (obj && typeof obj === 'object') {
           return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
         }
+        
         return String(obj)
       }
 
       return {
         q: extractString(faq.q),
-        a: extractString(faq.a)
+        a: extractString(faq.a),
       }
     })
   }
@@ -648,7 +652,7 @@ const handleImageError = image => {
   failedImages.value.add(image)
 }
 
-const sanitizeAnswer = (answer) => {
+const sanitizeAnswer = answer => {
   return DOMPurify.sanitize(answer, {
     ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'code'],
     ALLOWED_ATTR: ['href', 'target', 'rel'],
@@ -845,7 +849,7 @@ const loadAppDetails = async () => {
 watch(() => route.params.id, loadAppDetails, { immediate: true })
 
 // Dynamic SEO meta tags and structured data
-watch(app, (newApp) => {
+watch(app, newApp => {
   if (!newApp) return
 
   const appTitle = `${newApp.displayName || newApp.name} - Flux Cloud Marketplace`
