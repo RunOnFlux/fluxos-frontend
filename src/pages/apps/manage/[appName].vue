@@ -792,7 +792,7 @@
           </div>
 
           <div v-else-if="appSpecificationGlobal && tab.value === '10'">
-            <SubscriptionManager :app-spec="appSpecForSubscription" :new-app="false" :execute-local-command="executeLocalCommand" :reset-trigger="subscriptionResetTrigger" @spec-converted="handleSpecConverted" />
+            <SubscriptionManager :app-spec="appSpecForSubscription" :new-app="false" :execute-local-command="executeLocalCommand" :reset-trigger="subscriptionResetTrigger" :instance-ready="!!selectedIp" @spec-converted="handleSpecConverted" />
           </div>
 
           
