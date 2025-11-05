@@ -1945,10 +1945,10 @@
                     <template v-if="props.newApp">
                       <!-- For new apps, show subscription period -->
                       <template v-if="blockHeight">
-                        {{ t('core.subscriptionManager.subscription') }} {{ expiryLabel }}
+                        {{ expiryLabel }}
                       </template>
                       <template v-else>
-                        {{ t('core.subscriptionManager.subscription') }} {{ expiryLabel }}
+                        {{ expiryLabel }}
                       </template>
                     </template>
                     <template v-else-if="blockHeight && props.appSpec?.height">
