@@ -440,7 +440,7 @@
         "connectionError": "Błąd połączenia: {error}",
         "connectionErrorWithMessage": "Błąd połączenia: {message}",
         "connectionTimeout": "Przekroczono limit czasu połączenia",
-        "commandNotSupported": "Polecenie {cmd} nie jest obsługivane przez ten kontener",
+        "commandNotSupported": "Polecenie {cmd} nie jest obsługiwane przez ten kontener",
         "clipboardInaccessible": "Brak dostępu do schowka. Spróbuj ponownie.",
         "clipboardError": "Błąd podczas kopiowania do schowka"
       },
