@@ -856,9 +856,7 @@ const calculateCost = async (retryCount = 0) => {
 
   try {
     // Post-fork: 88000 blocks = 1 month (30 days)
-    const expire = formData.expire <= 30
-      ? Math.round((formData.expire * 720) / 1000) * 1000
-      : (formData.expire / 30) * 88000
+    const expire = Math.round(((formData.expire / 30) * 88000) / 1000) * 1000
 
     let enterpriseValue = formData.enterprise
 
@@ -1091,20 +1089,18 @@ const calculatePresetPrices = async () => {
       }
 
       // Post-fork: 88000 blocks = 1 month (30 days)
-      const expire = tempFormData.expire <= 30
-        ? Math.round((tempFormData.expire * 720) / 1000) * 1000
-        : (tempFormData.expire / 30) * 88000
+      const expire = Math.round(((tempFormData.expire / 30) * 88000) / 1000) * 1000
 
-      // Generate compose array for this preset (use standard port 80)
+      // Generate compose array for this preset (use default port 3000 to match post-selection)
       const composeData = [{
         name: "componentName1",
-        description: "componentDesc1", 
+        description: "componentDesc1",
         repotag: "runonflux/jetpack2:latest",
-        ports: [80], // Standard HTTP port - no enterprise fee
+        ports: [3000], // Default port to match post-selection behavior
         domains: [""],
         environmentParameters: [""],
         commands: [""],
-        containerPorts: [80],
+        containerPorts: [3000],
         containerData: "/tmp",
         cpu: tempFormData.cpu.toString(),
         ram: tempFormData.memory.toString(),

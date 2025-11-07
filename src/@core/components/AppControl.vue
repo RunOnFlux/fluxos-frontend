@@ -1042,7 +1042,7 @@
             <VBtn
               size="small"
               variant="text"
-              color="primary"
+              color="grey"
               @click="showLogs = !showLogs"
             >
               <VIcon
@@ -1361,7 +1361,7 @@
             <VBtn
               size="small"
               variant="text"
-              color="primary"
+              color="grey"
               @click="showLogs = !showLogs"
             >
               <VIcon
@@ -2021,7 +2021,7 @@ const taskColor = computed(() => {
     return 'warning'
   }
 
-  return 'primary'
+  return 'grey'
 })
 
 async function sendRequestsSequentially({

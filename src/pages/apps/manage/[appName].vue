@@ -1244,6 +1244,9 @@ watch(currentTab, async (newVal, oldVal) => {
 
 watch(selectedContainerMonitoring, async newValue => {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     if (newValue) {
       buttonStats.value = false
       if (!enableHistoryStatistics.value) {
@@ -1262,6 +1265,9 @@ watch(selectedContainerMonitoring, async newValue => {
 
 watch(refreshRateMonitoring, () => {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     if (!enableHistoryStatistics.value) {
       if (timerStats.value) stopPollingStats()
       startPollingStats()
@@ -1285,6 +1291,12 @@ watch(status, () => {
 
 //Tab Control
 watch(currentTab, async newVal => {
+  // Check authorization and potentially trigger logout
+  await getZelidAuthority()
+
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   try {
     if (newVal === '1') {
       appSpecification.value = null
@@ -1300,7 +1312,11 @@ watch(currentTab, async newVal => {
       processes.value = []
       await nextTick()
       initCharts()
-      setTimeout(() => {
+      setTimeout(async () => {
+        // Check authorization again before starting polling
+        await getZelidAuthority()
+        if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
         try {
           startPollingStats()
         } catch (err) {
@@ -1566,8 +1582,18 @@ async function getInstancesForDropDown() {
 }
 
 async function refreshInfo() {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   isDisabled.value = true
   await new Promise(resolve => setTimeout(resolve, 3000))
+
+  // Check again after delay
+  if (!globalZelidAuthorized.value || logoutTrigger.value) {
+    isDisabled.value = false
+    return
+  }
+
   await getInstancesForDropDown()
   await getApplicationManagementAndStatus(false)
   isDisabled.value = false
@@ -1923,6 +1949,9 @@ async function getGlobalApplicationSpecifics(silent = false) {
 }
 
 async function appsGetListAllApps() {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   const response = await executeLocalCommand("/apps/listallapps", null, null, true)
 
   getAllAppsResponse.value.status = response?.data?.status
@@ -1934,6 +1963,9 @@ async function appsGetListAllApps() {
 
 async function getDaemonBlockCount() {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     const response = await DaemonService.getBlockCount()
     if (response.data.status === "success") {
       currentBlockHeight.value = response.data.data
@@ -1950,6 +1982,9 @@ async function getDaemonBlockCount() {
 
 //Docker Information Section
 const getApplicationData = async (mode = "inspect") => {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   const isInspect = mode === "inspect"
 
   const callData = []
@@ -2168,6 +2203,12 @@ function processStatsData(statsData, timeStamp = null) {
 
 async function fetchStats() {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) {
+      stopPollingStats()
+      return
+    }
+
     if (!appSpecification.value) return
 
     if (appSpecification.value?.version >= 4 && !selectedContainerMonitoring.value) {
@@ -2384,6 +2425,9 @@ function formatDataSize(bytes, options = { base: 10, round: 1 }) {
 
 async function fetchProcesses(appname, continer, ip) {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     const response = await executeLocalCommand(`/apps/apptop/${appname}`)
     if (response.data.status === "error") {
       showToast("danger", response.data.data.message || response.data.data)
@@ -2863,9 +2907,18 @@ function initCharts() {
 function startPollingStats(action = false) {
   console.log(`⏱ startPollingStats...`)
 
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   stopPollingStats()
 
   timerStats.value = setInterval(async () => {
+    // Check authorization in each interval iteration
+    if (!globalZelidAuthorized.value || logoutTrigger.value) {
+      stopPollingStats()
+      return
+    }
+
     if (pollingInProgress) return
     pollingInProgress = true
     await fetchStats()
