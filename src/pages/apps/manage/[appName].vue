@@ -1591,6 +1591,7 @@ async function refreshInfo() {
   // Check again after delay
   if (!globalZelidAuthorized.value || logoutTrigger.value) {
     isDisabled.value = false
+    
     return
   }
 
@@ -2206,6 +2207,7 @@ async function fetchStats() {
     // Skip if logout is in progress or not authorized
     if (!globalZelidAuthorized.value || logoutTrigger.value) {
       stopPollingStats()
+      
       return
     }
 
@@ -2916,6 +2918,7 @@ function startPollingStats(action = false) {
     // Check authorization in each interval iteration
     if (!globalZelidAuthorized.value || logoutTrigger.value) {
       stopPollingStats()
+      
       return
     }
 
