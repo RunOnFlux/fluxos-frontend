@@ -1,6 +1,7 @@
 import IDService from '@/services/IDService'
 import AppsService from '@/services/AppsService'
 import { useFluxStore } from "@/stores/flux"
+import { clearStickyBackendDNS } from '@/utils/stickyBackend'
 import qs from 'qs'
 
 export const setupGuards = router => {
@@ -22,15 +23,18 @@ export const setupGuards = router => {
 
         if (privilege === 'none') {
           localStorage.removeItem('zelidauth')
+          clearStickyBackendDNS() // Clear sticky backend on invalid session
         }
       } catch (error) {
         console.log('API error:', error)
         fluxStore.setPrivilege('none')
         localStorage.removeItem('zelidauth')
+        clearStickyBackendDNS() // Clear sticky backend on API error
       }
     } else {
       fluxStore.setPrivilege('none')
       localStorage.removeItem('zelidauth')
+      clearStickyBackendDNS() // Clear sticky backend on invalid auth format
     }
 
     // ✅ Global privilege-based restriction

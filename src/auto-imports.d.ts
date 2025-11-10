@@ -23,6 +23,7 @@ declare global {
   const base64ToUint8Array: typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']
   const betweenValidator: typeof import('./@core/utils/validators.js')['betweenValidator']
   const checkWebCryptoAvailability: typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']
+  const clearStickyBackendDNS: typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']
   const closeWalletConnect: typeof import('./utils/walletService.js')['closeWalletConnect']
   const colors: typeof import('./utils/colors.js')['default']
   const computed: typeof import('vue')['computed']
@@ -67,6 +68,7 @@ declare global {
   const encryptMessage: typeof import('./utils/enterpriseCrypto.js')['encryptMessage']
   const eventBus: typeof import('./utils/eventBus.js')['eventBus']
   const extendRef: typeof import('@vueuse/core')['extendRef']
+  const extractNodeIPFromResponse: typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']
   const fiatGateways: typeof import('./utils/fiatGateways.js')['default']
   const firebase: typeof import('./utils/firebase.js')['firebase']
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
@@ -83,6 +85,7 @@ declare global {
   const getMetaMaskSDK: typeof import('./utils/walletService.js')['getMetaMaskSDK']
   const getRedirectResult: typeof import('./utils/firebase.js')['getRedirectResult']
   const getSpecFromPermanentMessages: typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']
+  const getStickyBackendDNS: typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']
   const getUser: typeof import('./utils/firebase.js')['getUser']
   const h: typeof import('vue')['h']
   const hasWalletConnectSession: typeof import('./utils/walletService.js')['hasWalletConnectSession']
@@ -92,6 +95,8 @@ declare global {
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const integerValidator: typeof import('./@core/utils/validators.js')['integerValidator']
+  const ipToDNSFormat: typeof import('./utils/stickyBackend.js')['ipToDNSFormat']
+  const isAuthenticated: typeof import('./utils/stickyBackend.js')['isAuthenticated']
   const isBrowserMetaMaskAvailable: typeof import('./utils/walletService.js')['isBrowserMetaMaskAvailable']
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isEmpty: typeof import('./@core/utils/helpers.js')['isEmpty']
@@ -103,6 +108,7 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
+  const isRoundRobinBackend: typeof import('./utils/stickyBackend.js')['isRoundRobinBackend']
   const isSSPAvailable: typeof import('./utils/walletService.js')['isSSPAvailable']
   const isToday: typeof import('./@core/utils/helpers.js')['isToday']
   const isWebCryptoAvailable: typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']
@@ -178,6 +184,7 @@ declare global {
   const sanitizeHtml: typeof import('./utils/sanitizeHtml.js')['default']
   const setActivePinia: typeof import('pinia')['setActivePinia']
   const setMapStoreSuffix: typeof import('pinia')['setMapStoreSuffix']
+  const setStickyBackendDNS: typeof import('./utils/stickyBackend.js')['setStickyBackendDNS']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -445,6 +452,7 @@ declare module 'vue' {
     readonly base64ToUint8Array: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']>
     readonly betweenValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['betweenValidator']>
     readonly checkWebCryptoAvailability: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']>
+    readonly clearStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']>
     readonly closeWalletConnect: UnwrapRef<typeof import('./utils/walletService.js')['closeWalletConnect']>
     readonly colors: UnwrapRef<typeof import('./utils/colors.js')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -489,6 +497,7 @@ declare module 'vue' {
     readonly encryptMessage: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptMessage']>
     readonly eventBus: UnwrapRef<typeof import('./utils/eventBus.js')['eventBus']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
+    readonly extractNodeIPFromResponse: UnwrapRef<typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']>
     readonly fiatGateways: UnwrapRef<typeof import('./utils/fiatGateways.js')['default']>
     readonly firebase: UnwrapRef<typeof import('./utils/firebase.js')['firebase']>
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
@@ -504,6 +513,7 @@ declare module 'vue' {
     readonly getEnterprisePGPKeys: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']>
     readonly getMetaMaskSDK: UnwrapRef<typeof import('./utils/walletService.js')['getMetaMaskSDK']>
     readonly getSpecFromPermanentMessages: UnwrapRef<typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']>
+    readonly getStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']>
     readonly getUser: UnwrapRef<typeof import('./utils/firebase.js')['getUser']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hasWalletConnectSession: UnwrapRef<typeof import('./utils/walletService.js')['hasWalletConnectSession']>
@@ -513,6 +523,8 @@ declare module 'vue' {
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly integerValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['integerValidator']>
+    readonly ipToDNSFormat: UnwrapRef<typeof import('./utils/stickyBackend.js')['ipToDNSFormat']>
+    readonly isAuthenticated: UnwrapRef<typeof import('./utils/stickyBackend.js')['isAuthenticated']>
     readonly isBrowserMetaMaskAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isBrowserMetaMaskAvailable']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
     readonly isEmpty: UnwrapRef<typeof import('./@core/utils/helpers.js')['isEmpty']>
@@ -523,6 +535,7 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
+    readonly isRoundRobinBackend: UnwrapRef<typeof import('./utils/stickyBackend.js')['isRoundRobinBackend']>
     readonly isSSPAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isSSPAvailable']>
     readonly isToday: UnwrapRef<typeof import('./@core/utils/helpers.js')['isToday']>
     readonly isWebCryptoAvailable: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']>
@@ -598,6 +611,7 @@ declare module 'vue' {
     readonly sanitizeHtml: UnwrapRef<typeof import('./utils/sanitizeHtml.js')['default']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
+    readonly setStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['setStickyBackendDNS']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>

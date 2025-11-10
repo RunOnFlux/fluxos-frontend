@@ -68,6 +68,7 @@ declare module 'vue' {
     ListEntry: typeof import('./@core/components/ListEntry.vue')['default']
     LoadingSpinner: typeof import('./components/Marketplace/LoadingSpinner.vue')['default']
     Locations: typeof import('./@core/components/Locations.vue')['default']
+    Login: typeof import('./@core/components/Login.vue')['default']
     LoginDialog: typeof import('./components/shared/LoginDialog.vue')['default']
     LoginModal: typeof import('./@core/components/LoginModal.vue')['default']
     Logo: typeof import('./@core/components/Logo.vue')['default']
@@ -106,5 +107,6 @@ declare module 'vue' {
     VersionsDialog: typeof import('./components/FluxDrive/VersionsDialog.vue')['default']
     VolumeBrowser: typeof import('./@core/components/VolumeBrowser.vue')['default']
     VolumePathBuilder: typeof import('./@core/components/VolumePathBuilder.vue')['default']
+    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }

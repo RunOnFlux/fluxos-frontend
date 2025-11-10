@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue"
 import { useI18n } from 'vue-i18n'
 import { eventBus } from "@/utils/eventBus"
+import { clearStickyBackendDNS } from "@/utils/stickyBackend"
 
 const { t } = useI18n()
 
@@ -81,6 +82,7 @@ const saveBackend = input => {
 
   backendUrl.value = normalizedUrl
   localStorage.setItem(STORAGE_KEY, normalizedUrl)
+  clearStickyBackendDNS() // Clear sticky backend on manual selection
   eventBus.emit("backendURLChanged", normalizedUrl)
 
   const isPredefined = ["https://api.runonflux.io", normalizeUrl(detectedURL.value)].includes(normalizedUrl)
