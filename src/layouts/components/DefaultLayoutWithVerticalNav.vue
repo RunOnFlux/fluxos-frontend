@@ -291,7 +291,7 @@ const handleLoginSuccess = () => {
 .navbar-content {
   gap: 0.5rem;
   flex-wrap: nowrap;
-  overflow: hidden;
+  overflow: visible; /* Allow hover effects to show beyond container */
 }
 
 /* Adjust spacing on different breakpoints */
