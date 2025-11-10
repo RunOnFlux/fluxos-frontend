@@ -8,18 +8,6 @@ export default [
         icon: { icon: 'mdi-account-cog-outline', size: 20 },
         to: 'apps-management',
       },
-      {
-        title: 'menu.application.globalApps',  // Key for title without translation
-        icon: { icon: 'tabler-world-search', size: 20 },
-        to: 'apps-global',
-        privilege: ['fluxteam'],
-      },
-      {
-        title: 'menu.application.localApps',  // Key for title without translation
-        icon: { icon: 'mdi-folder-search-outline', size: 20 },
-        to: 'apps-local',
-        privilege: ['admin', 'fluxteam'],
-      },
     ],
   },
   {
