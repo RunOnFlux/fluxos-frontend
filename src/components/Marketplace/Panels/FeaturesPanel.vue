@@ -12,7 +12,7 @@
             class="feature-item"
           >
             <div class="feature-icon-wrapper">
-              <VIcon :icon="feature.icon || 'mdi-star'" size="40" color="primary" />
+              <VIcon :icon="feature.icon || 'mdi-star'" size="40" :color="feature.color || 'primary'" />
             </div>
             <h3 class="feature-title">{{ feature.title }}</h3>
             <p class="feature-description">{{ feature.description }}</p>
@@ -121,6 +121,7 @@ const featuresList = computed(() => {
           icon: extractString(feature.icon),
           title: extractString(feature.title),
           description: extractString(feature.description),
+          color: extractString(feature.color),
         }
       })
 

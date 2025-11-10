@@ -319,21 +319,6 @@
         </div>
       </div>
 
-      <!-- Money-Back Guarantee Section -->
-      <div class="info-section guarantee-section">
-        <VCard elevation="2" class="guarantee-card">
-          <VCardText class="text-center pa-8">
-            <div class="guarantee-icon mb-4">
-              <VIcon icon="mdi-shield-check" size="64" color="success" />
-            </div>
-            <h2 class="text-h4 mb-3 font-weight-bold">{{ t('common.guarantee.title') }}</h2>
-            <p class="text-h6 text-medium-emphasis mb-0">
-              {{ t('common.guarantee.description') }}
-            </p>
-          </VCardText>
-        </VCard>
-      </div>
-
       <!-- Trustpilot Reviews Section -->
       <div class="info-section trustpilot-section">
         <VCard elevation="2" class="trustpilot-card">

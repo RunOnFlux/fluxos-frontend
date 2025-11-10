@@ -2573,6 +2573,10 @@
         "fast": {
           "title": "Szybkie i Niezawodne",
           "description": "Korzystaj z globalnej wydajności podobnej do CDN z plikami dystrybuowanymi na najbliższych dostępnych węzłach."
+        },
+        "guarantee": {
+          "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+          "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
         }
       },
       "benefits": {
@@ -2669,7 +2673,7 @@
                 "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Przystępne Ceny",
                 "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
               },
@@ -2679,9 +2683,14 @@
                 "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Czasu Działania",
                 "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
               }
             ]
           },
@@ -2758,7 +2767,7 @@
                 "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Przystępne Ceny",
                 "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
               },
@@ -2768,9 +2777,14 @@
                 "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Czasu Działania",
                 "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
               }
             ]
           },
@@ -2847,7 +2861,7 @@
                 "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Przystępne Ceny",
                 "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
               },
@@ -2857,9 +2871,14 @@
                 "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Czasu Działania",
                 "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
               }
             ]
           },
@@ -2936,7 +2955,7 @@
                 "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Przystępne Ceny",
                 "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
               },
@@ -2946,9 +2965,14 @@
                 "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Czasu Działania",
                 "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
               }
             ]
           },
@@ -3025,7 +3049,7 @@
                 "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Przystępne Ceny",
                 "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
               },
@@ -3035,9 +3059,14 @@
                 "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Czasu Działania",
                 "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
               }
             ]
           },
@@ -3105,7 +3134,8 @@
             "cpu": "CPU",
             "ram": "RAM",
             "storage": "Przestrzeń",
-            "instances": "Węzły"
+            "instances": "Węzły",
+            "getStarted": "Rozpocznij"
           },
           "features": {
             "title": "Wszystko czego potrzebujesz dla WordPress",
@@ -3133,6 +3163,10 @@
               "pricing": {
                 "title": "Przejrzyste ceny",
                 "description": "Bez ukrytych opłat. Płacisz tylko za to, co używasz, z elastycznym rozliczeniem miesięcznym."
+              },
+              "guarantee": {
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
               }
             }
           },
@@ -3258,6 +3292,84 @@
           "agreement": "Przeczytałem i akceptuję",
           "link": "Regulamin",
           "loadError": "Nie udało się załadować Regulaminu. Odwiedź <a href=\"https://runonflux.io/terms\" target=\"_blank\">https://runonflux.io/terms</a>"
+        }
+      },
+      "common": {
+        "whyFlux": {
+          "title": "Dlaczego Hostować na Flux Cloud",
+          "subtitle": "Doświadcz mocy zdecentralizowanej infrastruktury chmurowej zbudowanej na technologii Web3",
+          "benefits": [
+            {
+              "icon": "mdi-web",
+              "title": "Globalna Sieć",
+              "description": "Wdrażaj w 62+ krajach dzięki naszej światowej zdecentralizowanej infrastrukturze dla niskich opóźnień wszędzie."
+            },
+            {
+              "icon": "mdi-flash",
+              "title": "Błyskawiczne Wdrożenie",
+              "description": "Uruchom swoje aplikacje w minuty dzięki naszemu automatycznemu systemowi wdrażania."
+            },
+            {
+              "icon": "mdi-currency-usd-off",
+              "title": "Opłacalne",
+              "description": "Oszczędź do 70% w porównaniu z tradycyjnymi dostawcami chmury dzięki przejrzystym, konkurencyjnym cenom."
+            },
+            {
+              "icon": "mdi-server-network",
+              "title": "99.9% Czasu Działania",
+              "description": "Rozproszona architektura sieciowa zapewnia maksymalną dostępność i redundancję."
+            },
+            {
+              "icon": "mdi-chart-line",
+              "title": "Łatwe Skalowanie",
+              "description": "Skaluj zasoby w górę lub w dół natychmiast, aby dopasować się do zapotrzebowania bez przestojów."
+            },
+            {
+              "icon": "mdi-lock-open",
+              "title": "Bez Uzależnienia od Dostawcy",
+              "description": "Pełna przenośność danych i otwarte standardy oznaczają, że nigdy nie jesteś uzależniony od jednego dostawcy."
+            },
+            {
+              "icon": "mdi-account-heart",
+              "title": "Wsparcie 24/7",
+              "description": "Zespół ekspertów dostępny przez całą dobę, aby pomóc w każdej sprawie lub pytaniu."
+            },
+            {
+              "icon": "mdi-cash-refund",
+              "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+              "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+            }
+          ]
+        },
+        "genericFAQ": {
+          "title": "Często Zadawane Pytania",
+          "subtitle": "Wszystko, co musisz wiedzieć o hostingu na Flux Cloud",
+          "questions": [
+            {
+              "q": "Czym jest Flux Cloud?",
+              "a": "Flux Cloud to <strong>zdecentralizowana sieć chmurowa Web3</strong> zasilana przez ponad <strong>2600 FluxNodes</strong> działających w <strong>62+ krajach</strong>. W przeciwieństwie do tradycyjnych dostawców chmury, Twoje aplikacje działają na naprawdę zdecentralizowanej infrastrukturze z wbudowaną redundancją, brakiem pojedynczego punktu awarii oraz globalnym przyspieszeniem brzegowym. To połączenie bezpieczeństwa, wydajności i niezawodności—bez uzależnienia od dostawcy."
+            },
+            {
+              "q": "Jak rozpocząć wdrażanie na Flux Cloud?",
+              "a": "Wdrażanie na Flux Cloud jest proste: <strong>wybierz aplikację</strong> z marketplace lub podaj własne specyfikacje Docker, <strong>wybierz konfigurację zasobów</strong> (CPU, RAM, dysk), i <strong>wdróż jednym kliknięciem</strong>. Twoja aplikacja jest automatycznie dystrybuowana na globalną sieć FluxNode z wbudowanymi kopiami zapasowymi, certyfikatami SSL i monitorowaniem uptime. Żadnej konfiguracji serwera ani wiedzy DevOps nie jest wymagane."
+            },
+            {
+              "q": "Czy mogę przenieść istniejące aplikacje Docker na Flux Cloud?",
+              "a": "Tak! Jeśli Twoja aplikacja działa w Docker, może działać na Flux Cloud. Wystarczy <strong>podać obraz Docker, zmienne środowiskowe i porty</strong>—nie musisz przepisywać kodu. Flux obsługuje zarówno <strong>aplikacje bezstanowe, jak i stanowe</strong> z trwałą pamięcią. W przypadku <strong>aplikacji wielokontenerowych</strong>, Flux obsługuje Docker Compose, umożliwiając wdrażanie całych stosów (np. aplikacja + baza danych) jako pojedynczej jednostki."
+            },
+            {
+              "q": "Jak działa ceny i rozliczenia?",
+              "a": "Płacisz tylko za zasoby, których używasz—<strong>bez ukrytych opłat lub nieoczekiwanych kosztów</strong>. Ceny są określane przez <strong>zasoby CPU, RAM i dysku</strong>, z opcjami miesięcznej lub rocznej subskrypcji. Oferujemy <strong>30-dniową gwarancję zwrotu pieniędzy</strong>, więc możesz wypróbować hosting bez ryzyka. Możesz skalować w górę lub w dół w dowolnym momencie, a Twoje rozliczenia dostosowują się proporcjonalnie."
+            },
+            {
+              "q": "Jaką otrzymuję gwarancję uptime?",
+              "a": "Flux Cloud oferuje <strong>gwarancję uptime 99.9%</strong> wspieraną przez naszą zdecentralizowaną sieć. Jeśli pojedynczy FluxNode ulegnie awarii, ruch jest automatycznie kierowany do zdrowych węzłów—<strong>bez przestojów</strong>. Ta redundancja w połączeniu z monitorowaniem w czasie rzeczywistym zapewnia, że Twoje aplikacje pozostają dostępne, nawet podczas awarii sprzętu lub ataków DDoS."
+            },
+            {
+              "q": "Czy otrzymuję wsparcie techniczne?",
+              "a": "Tak! Nasz zespół wsparcia jest dostępny <strong>24/7</strong> za pomocą czatu na żywo, e-maila i Discord. Niezależnie od tego, czy masz pytania dotyczące wdrażania, rozwiązywania problemów czy optymalizacji wydajności, jesteśmy tutaj, aby pomóc. Oferujemy również <strong>szczegółową dokumentację, poradniki oraz społeczność deweloperów</strong> do samoobsługi."
+            }
+          ]
         }
       }
     },

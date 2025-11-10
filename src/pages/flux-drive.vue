@@ -50,7 +50,7 @@
               class="feature-item"
             >
               <div class="feature-icon-wrapper">
-                <VIcon :icon="feature.icon" size="32" :color="feature.color" />
+                <VIcon :icon="feature.icon" size="40" :color="feature.color" />
               </div>
               <h3 class="feature-title">{{ feature.title }}</h3>
               <p class="feature-description">{{ feature.description }}</p>
@@ -75,19 +75,6 @@
               <span>{{ benefit.text }}</span>
             </div>
           </div>
-        </VCardText>
-      </VCard>
-
-      <!-- Money-Back Guarantee Section -->
-      <VCard class="section-card guarantee-section ma-4">
-        <VCardText class="text-center pa-8">
-          <div class="guarantee-icon mb-4">
-            <VIcon icon="mdi-shield-check" size="64" color="success" />
-          </div>
-          <h2 class="text-h4 mb-3 font-weight-bold">{{ t('common.guarantee.title') }}</h2>
-          <p class="text-h6 text-medium-emphasis mb-0">
-            {{ t('common.guarantee.description') }}
-          </p>
         </VCardText>
       </VCard>
 
@@ -448,6 +435,12 @@ const features = [
     color: 'error',
     title: t('pages.fluxDrive.features.fast.title'),
     description: t('pages.fluxDrive.features.fast.description'),
+  },
+  {
+    icon: 'mdi-cash-refund',
+    color: 'success',
+    title: t('pages.fluxDrive.features.guarantee.title'),
+    description: t('pages.fluxDrive.features.guarantee.description'),
   },
 ]
 

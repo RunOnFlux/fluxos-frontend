@@ -25,6 +25,7 @@ export default defineConfig(({ mode }) => {
             .replace(/([a-z\d])([A-Z])/g, '$1-$2')
             .toLowerCase();
         },
+        importMode: 'sync',
       }),
       vue({
         template: {

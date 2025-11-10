@@ -131,19 +131,6 @@
         </VCardText>
       </VCard>
 
-      <!-- Money-Back Guarantee Section -->
-      <VCard class="section-card guarantee-section">
-        <VCardText class="text-center pa-8">
-          <div class="guarantee-icon mb-4">
-            <VIcon icon="mdi-shield-check" size="64" color="success" />
-          </div>
-          <h2 class="text-h4 mb-3 font-weight-bold">{{ t('common.guarantee.title') }}</h2>
-          <p class="text-h6 text-medium-emphasis mb-0">
-            {{ t('common.guarantee.description') }}
-          </p>
-        </VCardText>
-      </VCard>
-
       <!-- Trustpilot Reviews Section -->
       <VCard class="section-card trustpilot-section">
         <VCardText class="pa-8">
@@ -447,7 +434,7 @@ const benefits = computed(() => [
     description: t('pages.apps.register.landing.benefits.affordable.description'),
   },
   {
-    icon: 'mdi-earth',
+    icon: 'mdi-web',
     color: 'info',
     title: t('pages.apps.register.landing.benefits.global.title'),
     description: t('pages.apps.register.landing.benefits.global.description'),
@@ -469,6 +456,12 @@ const benefits = computed(() => [
     color: 'error',
     title: t('pages.apps.register.landing.benefits.noVendor.title'),
     description: t('pages.apps.register.landing.benefits.noVendor.description'),
+  },
+  {
+    icon: 'mdi-cash-refund',
+    color: 'success',
+    title: t('pages.apps.register.landing.benefits.guarantee.title'),
+    description: t('pages.apps.register.landing.benefits.guarantee.description'),
   },
 ])
 

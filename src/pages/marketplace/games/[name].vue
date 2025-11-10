@@ -89,19 +89,6 @@
         </VCard>
       </div>
 
-      <!-- Money-Back Guarantee Section -->
-      <VCard v-if="game" class="guarantee-section ma-4" elevation="2">
-        <VCardText class="text-center pa-8">
-          <div class="guarantee-icon mb-4">
-            <VIcon icon="mdi-shield-check" size="64" color="success" />
-          </div>
-          <h2 class="text-h4 mb-3 font-weight-bold">{{ t('common.guarantee.title') }}</h2>
-          <p class="text-h6 text-medium-emphasis mb-0">
-            {{ t('common.guarantee.description') }}
-          </p>
-        </VCardText>
-      </VCard>
-
       <!-- Trustpilot Reviews Section -->
       <VCard v-if="game" class="trustpilot-section ma-4" elevation="2">
         <VCardText class="pa-8">

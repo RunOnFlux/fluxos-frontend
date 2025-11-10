@@ -107,7 +107,7 @@
               :aria-label="`Get started with ${plan.name} plan`"
             >
               <VIcon start aria-hidden="true">mdi-cart</VIcon>
-              Get Started with {{ plan.name }}
+              {{ t('pages.marketplace.wordpress.landing.plans.getStarted') }}
             </VBtn>
           </div>
         </div>
@@ -131,19 +131,6 @@
               <span>{{ highlight.text }}</span>
             </div>
           </div>
-        </VCardText>
-      </VCard>
-
-      <!-- Money-Back Guarantee Section -->
-      <VCard class="section-card guarantee-section">
-        <VCardText class="text-center pa-8">
-          <div class="guarantee-icon mb-4">
-            <VIcon icon="mdi-shield-check" size="64" color="success" />
-          </div>
-          <h2 class="text-h4 mb-3 font-weight-bold">{{ t('common.guarantee.title') }}</h2>
-          <p class="text-h6 text-medium-emphasis mb-0">
-            {{ t('common.guarantee.description') }}
-          </p>
         </VCardText>
       </VCard>
 
@@ -411,7 +398,7 @@ const highlights = computed(() => [
 // Features
 const features = computed(() => [
   {
-    icon: 'mdi-rocket-launch',
+    icon: 'mdi-flash',
     color: 'primary',
     title: t('pages.marketplace.wordpress.landing.features.items.quickDeploy.title'),
     description: t('pages.marketplace.wordpress.landing.features.items.quickDeploy.description'),
@@ -441,10 +428,16 @@ const features = computed(() => [
     description: t('pages.marketplace.wordpress.landing.features.items.backup.description'),
   },
   {
-    icon: 'mdi-currency-usd',
+    icon: 'mdi-currency-usd-off',
     color: 'success',
     title: t('pages.marketplace.wordpress.landing.features.items.pricing.title'),
     description: t('pages.marketplace.wordpress.landing.features.items.pricing.description'),
+  },
+  {
+    icon: 'mdi-cash-refund',
+    color: 'success',
+    title: t('pages.marketplace.wordpress.landing.features.items.guarantee.title'),
+    description: t('pages.marketplace.wordpress.landing.features.items.guarantee.description'),
   },
 ])
 
@@ -885,6 +878,8 @@ onMounted(async () => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 24px;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
 }
 
 .plan-card {
@@ -897,6 +892,7 @@ onMounted(async () => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  height: 100%;
 }
 
 .plan-card.recommended {
@@ -955,6 +951,10 @@ onMounted(async () => {
   text-align: center;
   padding-bottom: 16px;
   border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .plan-name {
@@ -967,6 +967,10 @@ onMounted(async () => {
   font-size: 0.95rem;
   opacity: 0.7;
   margin: 0;
+  min-height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .plan-resources {
@@ -1032,7 +1036,10 @@ onMounted(async () => {
   letter-spacing: 0.5px;
   text-transform: none;
   font-size: 1rem;
+  min-height: 48px;
+  max-height: 48px;
   height: 48px;
+  flex-shrink: 0;
   transition: all 0.3s ease;
 }
 

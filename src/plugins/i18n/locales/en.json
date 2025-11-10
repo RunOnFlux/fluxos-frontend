@@ -2404,6 +2404,10 @@
             "noVendor": {
               "title": "No Vendor Lock-in",
               "description": "Standard Docker containers mean you can migrate anytime. Full control over your applications and data."
+            },
+            "guarantee": {
+              "title": "30-Day Money-Back Guarantee",
+              "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
             }
           },
           "pricing": {
@@ -2736,6 +2740,10 @@
         "fast": {
           "title": "Fast & Reliable",
           "description": "Benefit from global CDN-like performance with files distributed across the nearest available nodes."
+        },
+        "guarantee": {
+          "title": "30-Day Money-Back Guarantee",
+          "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
         }
       },
       "benefits": {
@@ -2803,7 +2811,7 @@
               "description": "Distributed network architecture ensures maximum availability and redundancy."
             },
             {
-              "icon": "mdi-chart-line-variant",
+              "icon": "mdi-chart-line",
               "title": "Easy Scaling",
               "description": "Scale your resources up or down instantly to match demand without downtime."
             },
@@ -2816,6 +2824,11 @@
               "icon": "mdi-account-heart",
               "title": "24/7 Support",
               "description": "Expert support team available around the clock to help with any issues or questions."
+            },
+            {
+              "icon": "mdi-cash-refund",
+              "title": "30-Day Money-Back Guarantee",
+              "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
             }
           ]
         },
@@ -2917,7 +2930,7 @@
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Affordable Pricing",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
@@ -2927,9 +2940,14 @@
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Uptime",
                 "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Day Money-Back Guarantee",
+                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
           },
@@ -3006,7 +3024,7 @@
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Affordable Pricing",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
@@ -3016,9 +3034,14 @@
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Uptime",
                 "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Day Money-Back Guarantee",
+                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
           },
@@ -3095,7 +3118,7 @@
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Affordable Pricing",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
@@ -3105,9 +3128,14 @@
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Uptime",
                 "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Day Money-Back Guarantee",
+                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
           },
@@ -3184,7 +3212,7 @@
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Affordable Pricing",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
@@ -3194,9 +3222,14 @@
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Uptime",
                 "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Day Money-Back Guarantee",
+                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
           },
@@ -3273,7 +3306,7 @@
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
-                "icon": "mdi-currency-usd",
+                "icon": "mdi-currency-usd-off",
                 "title": "Affordable Pricing",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
@@ -3283,9 +3316,14 @@
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
-                "icon": "mdi-clock-check",
+                "icon": "mdi-server-network",
                 "title": "99.9% Uptime",
                 "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Day Money-Back Guarantee",
+                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
           },
@@ -3353,7 +3391,8 @@
             "cpu": "CPU",
             "ram": "RAM",
             "storage": "Storage",
-            "instances": "Nodes"
+            "instances": "Nodes",
+            "getStarted": "Get Started"
           },
           "features": {
             "title": "Everything You Need for WordPress",
@@ -3381,6 +3420,10 @@
               "pricing": {
                 "title": "Transparent Pricing",
                 "description": "No hidden fees. Pay only for what you use with flexible monthly billing."
+              },
+              "guarantee": {
+                "title": "30-Day Money-Back Guarantee",
+                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             }
           },
