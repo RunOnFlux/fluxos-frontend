@@ -123,7 +123,7 @@ const initializePuzzle = () => {
     for (let col = 0; col < gridSize; col++) {
       puzzlePieces.value.push({
         row,
-        col
+        col,
       })
     }
   }
@@ -145,17 +145,17 @@ const getPuzzlePieceStyle = (piece, index) => {
     backgroundSize: `${gridSize * 100}% ${gridSize * 100}%`,
     backgroundPosition: `${xPercent}% ${yPercent}%`,
     backgroundRepeat: 'no-repeat',
-    filter: 'brightness(0.9)'
+    filter: 'brightness(0.9)',
   }
 }
 
 // Get description based on service key
-const getDescription = (banner) => {
+const getDescription = banner => {
   return t(`landingServices.services.${banner.key}.description`)
 }
 
 // Get icon based on service key
-const getIcon = (banner) => {
+const getIcon = banner => {
   const icons = {
     fluxCloud: 'mdi-cloud',
     fluxAI: 'mdi-brain',
@@ -164,11 +164,12 @@ const getIcon = (banner) => {
     fluxMarketplace: 'mdi-store',
     wordPressOnFlux: 'mdi-wordpress',
   }
+  
   return icons[banner.key] || 'mdi-application'
 }
 
 // Get chip label based on service key
-const getChipLabel = (banner) => {
+const getChipLabel = banner => {
   return t(`landingServices.services.${banner.key}.category`)
 }
 
@@ -176,12 +177,12 @@ const rotateBanners = () => {
   currentIndex.value = (currentIndex.value + 1) % allBanners.value.length
 }
 
-const goToSlide = (index) => {
+const goToSlide = index => {
   currentIndex.value = index
   resetAutoRotation()
 }
 
-const exploreBanner = (banner) => {
+const exploreBanner = banner => {
   // Map each service to its correct route or external page (verified from project structure)
   const routes = {
     fluxCloud: '/apps/register',
