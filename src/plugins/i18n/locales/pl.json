@@ -190,6 +190,7 @@
     },
     "application": {
       "title": "Aplikacje",
+      "myApplications": "Moje Aplikacje",
       "management": "Zarządzanie",
       "globalApps": "Aplikacje Globalne",
       "localApps": "Aplikacje Lokalne",

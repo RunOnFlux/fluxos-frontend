@@ -1,14 +1,8 @@
 export default [
   {
-    title: 'menu.application.title',  // Key for title without translation
+    title: 'menu.application.myApplications',
     icon: { icon: 'mdi-apps' },
-    children: [
-      {
-        title: 'menu.application.management',  // Key for title without translation
-        icon: { icon: 'mdi-account-cog-outline', size: 20 },
-        to: 'apps-management',
-      },
-    ],
+    to: 'apps-management',
   },
   {
     title: 'menu.application.registerNewApp',  // Key for title without translation
