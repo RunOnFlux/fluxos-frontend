@@ -1331,6 +1331,16 @@ onMounted(async () => {
   color: rgb(var(--v-theme-primary));
 }
 
+.faq-answer :deep(ul),
+.faq-answer :deep(ol) {
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+
+.faq-answer :deep(li) {
+  margin-bottom: 8px;
+}
+
 .faq-answer :deep(a) {
   color: rgb(var(--v-theme-primary));
   text-decoration: none;
@@ -1338,6 +1348,14 @@ onMounted(async () => {
 
 .faq-answer :deep(a:hover) {
   text-decoration: underline;
+}
+
+.faq-answer :deep(code) {
+  background: rgba(var(--v-theme-primary), 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
 }
 
 /* Responsive */

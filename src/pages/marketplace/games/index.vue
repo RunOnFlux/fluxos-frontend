@@ -748,20 +748,36 @@ onMounted(async () => {
 
 /* FAQ Section */
 .faq-expansion-panels {
-  background: transparent;
+  margin-top: 24px;
 }
 
 .faq-expansion-panel {
-  margin-bottom: 8px;
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+  margin-bottom: 12px;
   border-radius: 12px !important;
   overflow: hidden;
+  background: rgba(var(--v-theme-surface), 0.8) !important;
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+  transition: all 0.3s ease;
+}
+
+.faq-expansion-panel:hover {
+  border-color: rgba(var(--v-theme-primary), 0.3);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.1);
+}
+
+.faq-expansion-panel:last-child {
+  margin-bottom: 0;
+}
+
+.faq-question {
+  font-weight: 600;
+  padding: 20px 24px;
 }
 
 .question-wrapper {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -770,24 +786,58 @@ onMounted(async () => {
 }
 
 .question-text {
-  font-size: 1.1rem;
+  font-size: 1.0625rem;
   font-weight: 600;
+  line-height: 1.5;
   margin: 0;
+  color: rgb(var(--v-theme-on-surface));
 }
 
 .faq-answer {
+  padding: 0 24px 20px 24px !important;
   font-size: 1rem;
   line-height: 1.7;
-  opacity: 0.9;
+  color: rgba(var(--v-theme-on-surface), 0.85);
 }
 
 .faq-answer :deep(p) {
   margin-bottom: 12px;
 }
 
+.faq-answer :deep(p:last-child) {
+  margin-bottom: 0;
+}
+
 .faq-answer :deep(strong) {
   font-weight: 600;
   color: rgb(var(--v-theme-primary));
+}
+
+.faq-answer :deep(ul),
+.faq-answer :deep(ol) {
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+
+.faq-answer :deep(li) {
+  margin-bottom: 8px;
+}
+
+.faq-answer :deep(a) {
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+}
+
+.faq-answer :deep(a:hover) {
+  text-decoration: underline;
+}
+
+.faq-answer :deep(code) {
+  background: rgba(var(--v-theme-primary), 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
 }
 
 /* Trustpilot Section */

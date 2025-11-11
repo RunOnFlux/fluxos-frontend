@@ -2565,9 +2565,27 @@ onMounted(async () => {
   color: rgba(var(--v-theme-on-surface), 0.85);
 }
 
+.faq-answer :deep(p) {
+  margin-bottom: 12px;
+}
+
+.faq-answer :deep(p:last-child) {
+  margin-bottom: 0;
+}
+
 .faq-answer :deep(strong) {
   font-weight: 600;
   color: rgb(var(--v-theme-primary));
+}
+
+.faq-answer :deep(ul),
+.faq-answer :deep(ol) {
+  margin-left: 24px;
+  margin-bottom: 12px;
+}
+
+.faq-answer :deep(li) {
+  margin-bottom: 8px;
 }
 
 .faq-answer :deep(a) {
@@ -2577,6 +2595,14 @@ onMounted(async () => {
 
 .faq-answer :deep(a:hover) {
   text-decoration: underline;
+}
+
+.faq-answer :deep(code) {
+  background: rgba(var(--v-theme-primary), 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-family: 'Courier New', monospace;
+  font-size: 0.9em;
 }
 
 .benefits-avatar,
