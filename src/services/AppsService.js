@@ -107,8 +107,17 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-    
+
     return Api().post('/apps/appupdate', JSON.stringify(data), axiosConfig)
+  },
+  testAppInstall(zelidauthHeader, hash) {
+    const axiosConfig = {
+      headers: {
+        zelidauth: zelidauthHeader,
+      },
+    }
+
+    return Api().get(`/apps/testappinstall/${hash}`, axiosConfig)
   },
   checkCommunication() {
     return Api().get('/flux/checkcommunication')

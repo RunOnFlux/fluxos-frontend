@@ -17,22 +17,28 @@ export { sourceCancelToken }
 /**
  * APIs that should BYPASS sticky backend and use round-robin load balancing
  *
+ * This list matches the backend's roundrobinEndpointsAcl configuration.
  * Add URL patterns here to exclude specific endpoints from sticky session logic.
  * This is useful for:
  * - Read-only verification endpoints that don't require session state
  * - Public APIs that should distribute load across all backend nodes
  * - Price calculation endpoints (stateless operations)
- * - Health check endpoints
+ * - App registration/update/test endpoints (zelidauth-based authentication)
+ * - Location endpoints
  *
- * Examples:
- * - '/apps/verifyappregistrationspecifications' - App registration verification
- * - '/apps/verifyappupdatespecifications' - App update verification
- * - '/apps/calculatefiatandfluxprice' - Price calculation
+ * Backend reference: roundrobinEndpointsAcl in flux backend
+ *
+ * Note: '/apps/temporarymessages' is in backend ACL but not currently used in frontend
  */
 const STICKY_BACKEND_EXCLUSIONS = [
+  '/apps/calculatefiatandfluxprice',
   '/apps/verifyappregistrationspecifications',
   '/apps/verifyappupdatespecifications',
-  '/apps/calculatefiatandfluxprice',
+  '/apps/appregister',
+  '/apps/appupdate',
+  '/apps/temporarymessages',  // Not currently used in frontend, matches backend ACL
+  '/apps/location',
+  '/apps/testappinstall',
 ]
 
 /**

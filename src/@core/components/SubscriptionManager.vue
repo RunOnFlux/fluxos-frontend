@@ -6928,18 +6928,11 @@ async function testAppInstall() {
     // or message hash (for temporary messages, anyone can test)
     console.log('Testing with hash:', registrationHash.value, 'isNewApp:', props.newApp)
 
-    // Use api.runonflux.io which automatically routes to available nodes
-    const url = `https://api.runonflux.io/apps/testappinstall/${registrationHash.value}`
+    // Use AppsService for testing (not direct axios)
+    // This ensures proper load balancing and sticky backend exclusion
+    console.log('Testing on Flux network via AppsService')
 
-    const axiosConfig = {
-      headers: {
-        zelidauth,
-      },
-    }
-
-    console.log('Testing on Flux network via api.runonflux.io')
-
-    const response = await axios.get(url, axiosConfig)
+    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
 
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
