@@ -6523,17 +6523,12 @@ async function verifyAppSpec() {
       }
     }
     
-    // Use appropriate endpoint based on whether it's a new app or update
-    const verifyEndpoint = props.newApp 
-      ? '/apps/verifyappregistrationspecifications'
-      : '/apps/verifyappupdatespecifications'
-    
-    const response = await props.executeLocalCommand(
-      verifyEndpoint,
-      JSON.stringify(appSpecTemp),
-      null,
-      true,
-    )
+    // Use AppsService for verification (not executeLocalCommand)
+    // This ensures proper load balancing and sticky backend exclusion
+    console.log('[verifyAppSpec] Using AppsService for verification:', props.newApp ? 'registration' : 'update')
+    const response = props.newApp
+      ? await AppsService.appRegistrationVerificaiton(appSpecTemp)
+      : await AppsService.appUpdateVerification(appSpecTemp)
 
     if (response.data?.status !== 'success') {
       console.error('Validation failed. Full response:', response.data)
@@ -6612,12 +6607,8 @@ async function priceForAppSpec() {
     const appSpecForPrice = cloneDeep(appSpecFormated.value)
     delete appSpecForPrice.priceUSD
 
-    const response = await props.executeLocalCommand(
-      '/apps/calculatefiatandfluxprice',
-      JSON.stringify(appSpecForPrice),
-      null,
-      true,
-    )
+    // Use AppsService for price calculation (not executeLocalCommand)
+    const response = await AppsService.appPriceUSDandFlux(appSpecForPrice)
 
     console.log('Price calculation response:', response.data)
 
@@ -6875,8 +6866,9 @@ async function propagateSignedMessage() {
 // Get deployment information for payment
 async function getDeploymentInfo() {
   try {
-    const response = await props.executeLocalCommand('/apps/deploymentinformation')
-    
+    // Use AppsService for global deployment info (not executeLocalCommand)
+    const response = await AppsService.appsDeploymentInformation()
+
     if (response.data?.status === 'success') {
       deploymentAddress.value = response.data.data.address
     }
@@ -6936,18 +6928,11 @@ async function testAppInstall() {
     // or message hash (for temporary messages, anyone can test)
     console.log('Testing with hash:', registrationHash.value, 'isNewApp:', props.newApp)
 
-    // Use api.runonflux.io which automatically routes to available nodes
-    const url = `https://api.runonflux.io/apps/testappinstall/${registrationHash.value}`
+    // Use AppsService for testing (not direct axios)
+    // This ensures proper load balancing and sticky backend exclusion
+    console.log('Testing on Flux network via AppsService')
 
-    const axiosConfig = {
-      headers: {
-        zelidauth,
-      },
-    }
-
-    console.log('Testing on Flux network via api.runonflux.io')
-
-    const response = await axios.get(url, axiosConfig)
+    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
 
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
