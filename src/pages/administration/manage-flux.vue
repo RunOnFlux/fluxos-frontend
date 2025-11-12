@@ -402,7 +402,7 @@
                     v-model:value="fluxLogs"
                     language="plaintext"
                     :theme="editorTheme"
-                    :options="{ readOnly: true, automaticLayout: true, minimap: { enabled: false }, scrollBeyondLastLine: false, wordWrap: 'on', fontSize: 12, find: { addExtraSpaceOnTop: false, autoFindInSelection: 'never', seedSearchStringFromSelection: 'never' } }"
+                    :options="{ readOnly: true, automaticLayout: true, minimap: { enabled: false }, scrollBeyondLastLine: false, wordWrap: 'on', fontSize: 12, disableMonospaceOptimizations: true, fontLigatures: false, find: { addExtraSpaceOnTop: false, autoFindInSelection: 'never', seedSearchStringFromSelection: 'never' } }"
                   />
                 </div>
               </VCardText>
@@ -443,7 +443,7 @@
                     v-model:value="daemonLogs"
                     language="plaintext"
                     :theme="editorTheme"
-                    :options="{ readOnly: true, automaticLayout: true, minimap: { enabled: false }, scrollBeyondLastLine: false, wordWrap: 'on', fontSize: 12, find: { addExtraSpaceOnTop: false, autoFindInSelection: 'never', seedSearchStringFromSelection: 'never' } }"
+                    :options="{ readOnly: true, automaticLayout: true, minimap: { enabled: false }, scrollBeyondLastLine: false, wordWrap: 'on', fontSize: 12, disableMonospaceOptimizations: true, fontLigatures: false, find: { addExtraSpaceOnTop: false, autoFindInSelection: 'never', seedSearchStringFromSelection: 'never' } }"
                   />
                 </div>
               </VCardText>
