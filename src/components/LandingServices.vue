@@ -150,7 +150,6 @@ const exploreBanner = banner => {
     }
   }
 }
-
 </script>
 
 <style scoped>

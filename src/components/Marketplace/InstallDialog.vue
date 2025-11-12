@@ -2381,7 +2381,7 @@ const monthlyPrice = computed(() => {
     configPrice,
     currentInstances,
     pricePerInstance,
-    totalPrice
+    totalPrice,
   })
 
   return totalPrice

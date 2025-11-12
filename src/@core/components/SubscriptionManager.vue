@@ -4063,7 +4063,7 @@ watch(() => props.appSpec, newSpec => {
         testableFieldsChanged,
         message: testableFieldsChanged
           ? 'Testable fields changed (repo/tag/env/commands/ports/etc) - clearing test results'
-          : 'Only non-testable fields changed (resources/scaling/DNS) - preserving test results (re-sign still required)'
+          : 'Only non-testable fields changed (resources/scaling/DNS) - preserving test results (re-sign still required)',
       })
 
       // Cancel any pending auto-navigation to payment tab

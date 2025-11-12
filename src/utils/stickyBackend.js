@@ -76,6 +76,7 @@ export function extractNodeIPFromResponse(response) {
       if (match) {
         // Need to get port - try from baseURL or responseURL, default to 16127
         const port = extractPortFromURL(response.config?.baseURL || response.request?.responseURL) || '16127'
+        
         return `${ip}:${port}`
       }
     }
@@ -94,6 +95,7 @@ export function extractNodeIPFromResponse(response) {
     if (dnsMatch) {
       const ip = `${dnsMatch[1]}.${dnsMatch[2]}.${dnsMatch[3]}.${dnsMatch[4]}`
       const port = dnsMatch[5]
+      
       return `${ip}:${port}`
     }
   }
@@ -127,6 +129,7 @@ function extractPortFromURL(url) {
  */
 export function isRoundRobinBackend(url) {
   if (!url) return false
+  
   return url === 'https://api.runonflux.io' || url === 'http://api.runonflux.io'
 }
 
@@ -139,6 +142,7 @@ export function getStickyBackendDNS() {
     return sessionStorage.getItem('stickyBackendDNS')
   } catch (error) {
     console.error('Error reading stickyBackendDNS from sessionStorage:', error)
+    
     return null
   }
 }
@@ -180,9 +184,11 @@ export function clearStickyBackendDNS() {
 export function isAuthenticated() {
   try {
     const zelidauth = localStorage.getItem('zelidauth')
+    
     return zelidauth !== null && zelidauth !== ''
   } catch (error) {
     console.error('Error checking authentication:', error)
+    
     return false
   }
 }

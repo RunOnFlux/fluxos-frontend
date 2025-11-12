@@ -59,6 +59,7 @@ export default function Api() {
           console.warn('[ApiClient] Could not extract node IP from loginphrase response')
         }
       }
+      
       return response
     },
     error => {
@@ -74,6 +75,7 @@ export default function Api() {
           // Prevent infinite retry loop
           if (error.config.__isRetryAfterSticky) {
             console.error('[ApiClient] Retry after unstick also failed')
+            
             return Promise.reject(error)
           }
 
@@ -83,9 +85,11 @@ export default function Api() {
           error.config.__isRetryAfterSticky = true
 
           console.log('[ApiClient] Retrying request with backend:', roundRobinURL)
+          
           return axios.request(error.config)
         }
       }
+      
       return Promise.reject(error)
     },
   )
