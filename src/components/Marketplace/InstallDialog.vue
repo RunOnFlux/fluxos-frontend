@@ -2079,10 +2079,11 @@ const isValueLocked = valueName => {
 }
 
 // Computed properties for locked states
+// Marketplace apps: lock hardware (CPU/RAM/HDD) but allow instances changes
 const isInstancesLocked = computed(() => !!props.selectedConfig || isValueLocked('instances'))
-const isCpuLocked = computed(() => !!props.selectedConfig || isValueLocked('cpu'))
-const isRamLocked = computed(() => !!props.selectedConfig || isValueLocked('ram'))
-const isStorageLocked = computed(() => !!props.selectedConfig || isValueLocked('storage'))
+const isCpuLocked = computed(() => true) // Always lock CPU for marketplace apps
+const isRamLocked = computed(() => true) // Always lock RAM for marketplace apps
+const isStorageLocked = computed(() => true) // Always lock storage for marketplace apps
 
 // Initialize config values when app prop is available (only if no selectedConfig)
 watch(() => props.app, newApp => {
@@ -2228,21 +2229,12 @@ const fetchPricingFromAPI = async () => {
       // Calculate the ratio/multiplier from API (how much FLUX per 1 USD)
       const fluxPerUsd = apiCalculatedUsd > 0 ? (apiFlux / apiCalculatedUsd) : 0
 
-      // Determine the correct USD price to use:
-      // 1. For games with selectedConfig, use the config's price
-      // 2. For WordPress or regular apps, use the app's price
-      let appUsdPrice = props.app.price || 0
-      if (props.selectedConfig && props.selectedConfig.price) {
-        appUsdPrice = props.selectedConfig.price
-      }
-
-      // Calculate FLUX price using the API's ratio and the app's USD price
-      const calculatedFlux = appUsdPrice * fluxPerUsd
-
+      // Store the FLUX ratio for later use
       apiPricing.value = {
-        usd: appUsdPrice,
-        flux: calculatedFlux,
+        usd: apiCalculatedUsd, // Store backend calculated price for reference
+        flux: apiFlux, // Store backend calculated flux
         fluxDiscount: response.data.data.fluxDiscount || 0,
+        fluxPerUsd: fluxPerUsd, // Store the ratio for calculating FLUX from USD
       }
     } else {
       console.error('API pricing request failed:', response.data)
@@ -2276,10 +2268,12 @@ const fetchDeploymentInfo = async () => {
 }
 
 const estimatedFluxPrice = computed(() => {
-  // Use the FLUX price from the pricing API, multiply by months
-  if (apiPricing.value.flux > 0) {
+  // Calculate FLUX using the ratio and the computed monthlyPrice (with instance multiplier)
+  if (apiPricing.value.fluxPerUsd > 0) {
+    const usdPrice = monthlyPrice.value || 0
+    const fluxPrice = usdPrice * apiPricing.value.fluxPerUsd
     const months = config.value.subscriptionMonths || 1
-    const totalFlux = apiPricing.value.flux * months
+    const totalFlux = fluxPrice * months
 
     return totalFlux.toFixed(2)
   }
@@ -2365,13 +2359,32 @@ const calculateMarketplacePrice = computed(() => {
 
 // Monthly price (USD - no discounts for fiat payments)
 const monthlyPrice = computed(() => {
-  // If a specific config is selected (for games), use its price
+  // Games: use fixed config price
   if (props.selectedConfig && props.selectedConfig.price) {
     return props.selectedConfig.price
   }
 
-  // Otherwise use the app's API price directly (all apps have pricing from API)
-  return props.app.price || 0
+  // WordPress: use fixed price (no instance multiplier)
+  if (isWordPress.value) {
+    return props.app.price || 0
+  }
+
+  // Marketplace apps only: config price is for default instances (3)
+  // Calculate price per instance, then multiply by current instances
+  const configPrice = props.app.price || 0
+  const defaultInstances = 3
+  const currentInstances = config.value.instances || 3
+  const pricePerInstance = configPrice / defaultInstances
+  const totalPrice = Number((pricePerInstance * currentInstances).toFixed(2))
+
+  console.log('💰 Price calculation:', {
+    configPrice,
+    currentInstances,
+    pricePerInstance,
+    totalPrice
+  })
+
+  return totalPrice
 })
 
 // USD pricing - NO DISCOUNTS for fiat payments
@@ -2386,17 +2399,9 @@ const estimatedCost = computed(() => {
   return baseMonthlyPrice.toFixed(2)
 })
 
-// Total USD cost for the entire subscription period (from API with subscription discounts applied)
+// Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // Use API-returned USD price if available, multiply by months
-  if (apiPricing.value.usd > 0) {
-    const months = config.value.subscriptionMonths || 1
-    const total = apiPricing.value.usd * months
-    
-    return `$${total.toFixed(2)}`
-  }
-
-  // Fallback: calculate manually (no subscription discount in fallback)
+  // Use computed monthlyPrice which includes instance multiplier
   const monthly = parseFloat(estimatedCost.value) || 0
   const months = config.value.subscriptionMonths || 1
   const total = monthly * months
@@ -2407,7 +2412,7 @@ const totalCost = computed(() => {
 
   // Ensure we always return a properly formatted price string
   const formattedTotal = total.toFixed(2)
-  
+
   return `$${formattedTotal}`
 })
 

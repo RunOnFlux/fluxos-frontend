@@ -189,23 +189,98 @@
     </VCard>
   </div>
 
-  <VTabs
-    v-model="currentTab"
-    show-arrows
-    class="v-tabs-pill"
-    style="margin-top: 1px; margin-bottom: 1px"
+  <!-- Loading state during initial mount -->
+  <LoadingSpinner
+    v-if="isInitialLoading"
+    icon="mdi-hexagon-multiple"
+    :icon-size="68"
+    :rotate-icon="true"
+    :title="t('pages.apps.manage.messages.loadingTitle')"
+    :message="t('pages.apps.manage.messages.loadingMessage')"
+  />
+
+  <!-- No instances available error -->
+  <VCard
+    v-else-if="!selectedIp"
+    class="mt-4 mb-1"
   >
-    <VTab
-      v-for="tab in tabs"
-      :key="tab.value"
-      :value="tab.value"
-    >
-      {{ tab.label }}
-    </VTab>
-  </VTabs>
-  <VCard>
     <VCardText>
-      <VWindow v-model="currentTab">
+      <VAlert
+        color="error"
+        prominent
+        class="mb-0"
+      >
+        <template #default>
+          <!-- Mobile layout: icon left, text right, button bottom right -->
+          <div class="d-flex d-sm-none flex-column w-100">
+            <div class="d-flex align-start w-100">
+              <VIcon size="40" class="mr-3 flex-shrink-0">mdi-server-off</VIcon>
+              <div class="flex-grow-1">
+                <div class="font-weight-bold mb-1 text-h6 text-white">{{ t('pages.apps.manage.messages.noInstancesAvailableTitle') }}</div>
+                <div class="text-body-2 text-white">
+                  {{ t('pages.apps.manage.messages.noInstancesAvailableMessage') }}
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-end mt-3">
+              <VBtn
+                color="white"
+                variant="text"
+                size="large"
+                :loading="isDisabled"
+                @click="refreshInfo()"
+              >
+                <VIcon class="mr-2">mdi-refresh</VIcon>
+                {{ t('pages.apps.manage.messages.retry') }}
+              </VBtn>
+            </div>
+          </div>
+
+          <!-- Desktop layout: icon left, text center, button right -->
+          <div class="d-none d-sm-flex align-center w-100">
+            <VIcon class="mr-3" size="40">mdi-server-off</VIcon>
+            <div class="flex-grow-1">
+              <div class="font-weight-bold mb-1 text-h6 text-white">{{ t('pages.apps.manage.messages.noInstancesAvailableTitle') }}</div>
+              <div class="text-body-2 text-white">
+                {{ t('pages.apps.manage.messages.noInstancesAvailableMessage') }}
+              </div>
+            </div>
+            <VBtn
+              color="white"
+              variant="text"
+              size="large"
+              :loading="isDisabled"
+              @click="refreshInfo()"
+              class="ml-4"
+            >
+              <VIcon class="mr-2">mdi-refresh</VIcon>
+              {{ t('pages.apps.manage.messages.retry') }}
+            </VBtn>
+          </div>
+        </template>
+      </VAlert>
+    </VCardText>
+  </VCard>
+
+  <!-- Tabs and content - only shown after loading complete AND instances available -->
+  <template v-else>
+    <VTabs
+      v-model="currentTab"
+      show-arrows
+      class="v-tabs-pill"
+      style="margin-top: 1px; margin-bottom: 1px"
+    >
+      <VTab
+        v-for="tab in tabs"
+        :key="tab.value"
+        :value="tab.value"
+      >
+        {{ tab.label }}
+      </VTab>
+    </VTabs>
+    <VCard>
+      <VCardText>
+        <VWindow v-model="currentTab">
         <VWindowItem
           v-for="tab in tabs"
           :key="tab.value"
@@ -862,7 +937,7 @@
             </template>
           </VAlert>
           <VAlert
-            v-if="apiError"
+            v-if="apiError && !InstalledApiError"
             color="error"
             density="comfortable"
             class="pa-3"
@@ -891,6 +966,8 @@
       </VWindow>
     </VCardText>
   </VCard>
+  </template>
+
   <VSnackbar
     v-model="snackbar"
     :color="snackbarColor"
@@ -920,6 +997,7 @@ import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
 import { useI18n } from 'vue-i18n'
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
+import LoadingSpinner from "@/components/Marketplace/LoadingSpinner.vue"
 import {
   Chart, LineController, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Title, Filler,
 } from 'chart.js'
@@ -954,6 +1032,7 @@ const appName = ref(useRoute().params.appName)
 const selectedIp = ref('')
 const masterIP = ref(null)
 const isDisabled = ref(false)
+const isInitialLoading = ref(true)
 const masterSlaveApp = ref(false)
 const ipAccess = ref(false)
 const ipAddress = ref("")
@@ -1302,8 +1381,11 @@ watch(currentTab, async newVal => {
   try {
     if (newVal === '1') {
       appSpecification.value = null
-      await getInstalledApplicationSpecifics()
-      await getGlobalApplicationSpecifics()
+      // Only fetch if selectedIp is set (skip during initial mount)
+      if (selectedIp.value) {
+        await getInstalledApplicationSpecifics()
+        await getGlobalApplicationSpecifics()
+      }
     } else if (newVal === '2') {
       inspectResult.value = []
       await getApplicationData()
@@ -1440,7 +1522,7 @@ async function executeLocalCommand(
     }
     
     apiError.value = false
-    getZelidAuthority()
+    await getZelidAuthority()
 
     // If logout is in progress or not authorized, silently return without error
     if (!globalZelidAuthorized.value || logoutTrigger.value) return
@@ -1511,14 +1593,20 @@ async function getInstancesForDropDown() {
     return
   }
 
-  // Only clear selectedIp if we successfully got new data
+  // Store previous IP to check if still valid
   const previousIp = selectedIp.value
-  selectedIp.value = ''
-
-  masterIP.value = null
   instances.value.data = response.data.data
+  const previousIpStillValid = previousIp && instances.value.data.some(inst => inst.ip === previousIp)
 
+  console.log('[getInstancesForDropDown] previousIp:', previousIp)
+  console.log('[getInstancesForDropDown] instances count:', instances.value.data.length)
+  console.log('[getInstancesForDropDown] previousIpStillValid:', previousIpStillValid)
+  console.log('[getInstancesForDropDown] masterSlaveApp:', masterSlaveApp.value)
+
+  // Handle master/slave apps - always detect and set master IP
   if (masterSlaveApp.value) {
+    masterIP.value = null
+
     const url = `https://${appName.value}.app.runonflux.io/fluxstatistics?scope=${appName.value}apprunonfluxio;json;norefresh`
     let errorFdm = false
 
@@ -1558,30 +1646,21 @@ async function getInstancesForDropDown() {
 
     if (!masterIP.value) masterIP.value = t('pages.apps.manage.messages.definingNewPrimary')
     if (!selectedIp.value) selectedIp.value = instances.value.data[0]?.ip
-  } else if (!selectedIp.value) {
-    selectedIp.value = instances.value.data[0]?.ip
+    console.log('[getInstancesForDropDown] Master/slave - selectedIp set to:', selectedIp.value)
   }
-
-  // IP access logic
-  if (ipAccess.value) {
-    const withoutProtocol = ipAddress.value.replace("http://", "")
-
-    const desiredIP =
-      config.apiPort === 16127 ? withoutProtocol : `${withoutProtocol}:${config.apiPort}`
-
-    const match = instances.value.data.find(instance => instance.ip === desiredIP)
-    if (match) selectedIp.value = desiredIP
-  } else {
-    const regex = /https:\/\/(\d+-\d+-\d+-\d+)-(\d+)/
-    const match = ipAddress.value.match(regex)
-    if (match) {
-      const ip = match[1].replace(/-/g, ".")
-      const desiredIP = config.apiPort === 16127 ? ip : `${ip}:${config.apiPort}`
-      const match = instances.value.data.find(instance => instance.ip === desiredIP)
-      if (match) selectedIp.value = desiredIP
+  // Handle regular apps - preserve selection if still valid
+  else {
+    // If no previous selection OR previous IP is no longer available, set to first instance
+    if (!previousIp || !previousIpStillValid) {
+      selectedIp.value = instances.value.data[0]?.ip
+      console.log('[getInstancesForDropDown] Regular app - selectedIp set to:', selectedIp.value)
+    } else {
+      console.log('[getInstancesForDropDown] Regular app - preserving selectedIp:', selectedIp.value)
     }
+    // else: keep the existing selectedIp.value (preserve user selection)
   }
 
+  console.log('[getInstancesForDropDown] FINAL selectedIp.value:', selectedIp.value)
   instances.value.totalRows = instances.value.data.length
 }
 
@@ -1723,6 +1802,8 @@ async function getInstalledApplicationSpecifics(silent = false) {
   // Skip if logout is in progress or not authorized
   if (!globalZelidAuthorized.value || logoutTrigger.value) return
 
+  console.log('[getInstalledApplicationSpecifics] START - selectedIp.value:', selectedIp.value)
+
   appSpecification.value = null
   await delay(1000)
   InstalledLoading.value = true
@@ -1731,6 +1812,9 @@ async function getInstalledApplicationSpecifics(silent = false) {
   // Try up to 5 backends before giving up (don't query 100 nodes!)
   const availableInstances = instances.value.data || []
   const currentIp = selectedIp.value
+
+  console.log('[getInstalledApplicationSpecifics] currentIp:', currentIp)
+  console.log('[getInstalledApplicationSpecifics] availableInstances:', availableInstances.length)
 
   // Build list of IPs to try: current IP first, then up to 4 others
   const MAX_BACKENDS_TO_TRY = 5
@@ -3004,24 +3088,31 @@ function clearCharts() {
 }
 
 onMounted(async () => {
-  const stored = localStorage.getItem('zelidauth')
-  if (stored) zelidauthOwner.value = stored
-  eventBus.on("updateAppStatus", appsGetListAllApps)
-  eventBus.on("updateInstanceList", refreshInfo)
+  try {
+    const stored = localStorage.getItem('zelidauth')
+    if (stored) zelidauthOwner.value = stored
+    eventBus.on("updateAppStatus", appsGetListAllApps)
+    eventBus.on("updateInstanceList", refreshInfo)
 
-  const { hostname } = window.location
-  const regex = /[A-Z]/gi
-  if (hostname.match(regex)) {
-    ipAccess.value = false
-  } else {
-    ipAccess.value = true
+    const { hostname } = window.location
+    const regex = /[A-Z]/gi
+    if (hostname.match(regex)) {
+      ipAccess.value = false
+    } else {
+      ipAccess.value = true
+    }
+    await getZelidAuthority()
+    await getDaemonBlockCount()
+    await getGlobalApplicationSpecifics()
+    await getInstancesForDropDown()
+    await getInstalledApplicationSpecifics()
+    await getApplicationManagementAndStatus()
+  } catch (error) {
+    console.error('Error during initial mount:', error)
+  } finally {
+    // Always stop loading, even if there were errors
+    isInitialLoading.value = false
   }
-  await getZelidAuthority()
-  await getDaemonBlockCount()
-  await getGlobalApplicationSpecifics()
-  await getInstancesForDropDown()
-  await getInstalledApplicationSpecifics()
-  await getApplicationManagementAndStatus()
 })
 
 onUnmounted(() => {

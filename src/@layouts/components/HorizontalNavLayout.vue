@@ -45,7 +45,9 @@ const configStore = useLayoutConfigStore()
     </div>
 
     <main class="layout-page-content">
-      <slot />
+      <div class="page-content-container">
+        <slot />
+      </div>
     </main>
 
     <!-- 👉 Footer -->

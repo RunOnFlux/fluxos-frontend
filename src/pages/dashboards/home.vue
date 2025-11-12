@@ -5,6 +5,7 @@
 <script setup>
 import LandingServices from "@/components/LandingServices.vue"
 import { useI18n } from "vue-i18n"
+import { computed } from "vue"
 
 const { t } = useI18n()
 

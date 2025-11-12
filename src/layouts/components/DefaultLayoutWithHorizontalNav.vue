@@ -68,6 +68,18 @@ const handleLoginSuccess = () => {
 
       <VSpacer />
 
+      <!-- Login button in navbar -->
+      <VBtn
+        v-if="privilege === 'none'"
+        color="primary"
+        size="small"
+        class="mr-2"
+        @click="openLoginBottomSheet"
+      >
+        <VIcon icon="mdi-login" size="20" class="mr-2" />
+        {{ t('common.buttons.login') }}
+      </VBtn>
+
       <IconBtn
         class="d-none d-lg-block"
         @click="openCustomizer"
@@ -91,19 +103,6 @@ const handleLoginSuccess = () => {
       <UserProfile />
     </template>
 
-    <!-- Login button in horizontal nav menu -->
-    <template #after-horizontal-nav-items>
-      <li v-if="privilege === 'none'" class="horizontal-nav-login-item">
-        <VBtn
-          color="primary"
-          size="small"
-          @click="openLoginBottomSheet"
-        >
-          <VIcon icon="mdi-login" size="20" class="mr-2" />
-          {{ t('common.buttons.login') }}
-        </VBtn>
-      </li>
-    </template>
 
     <!-- 👉 Pages -->
     <slot />

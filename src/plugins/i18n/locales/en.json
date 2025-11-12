@@ -978,6 +978,7 @@
       "enablePaymentAnyway": "Enable Payment Anyway",
       "testCompleted": "Test Completed",
       "testInstallation": "Test Installation",
+      "testAndPay": "Test & Pay",
       "manageApplication": "Manage Application",
       "saveSelection": "Save Selection",
       "copyAddress": "Copy Address",
@@ -1026,6 +1027,7 @@
       "installationProgress": "Installation Progress",
       "testWarnings": "Test Warnings:",
       "testWarningsMessage": "Your app test completed with some warnings. Please review the installation logs above. You can still proceed with payment, but consider addressing these warnings for optimal performance.",
+      "payment": "Payment",
       "registrationSuccessful": "Registration Successful!",
       "appReadyForDeployment": "Your app is ready for deployment",
       "paymentWindow": "Payment window:",
@@ -2249,7 +2251,12 @@
           "cannotCalculateExpiration": "Not possible to calculate expiration",
           "failedToCheck": "Failed to Check",
           "definingNewPrimary": "Defining New Primary In Progress",
-          "sessionExpired": "Session expired, logging out..."
+          "sessionExpired": "Session expired, logging out...",
+          "noInstancesAvailableTitle": "No Instances Available",
+          "noInstancesAvailableMessage": "This application has no running instances. The app may be deploying, redeploying, not yet deployed, or all instances are offline.",
+          "retry": "Retry",
+          "loadingTitle": "Loading...",
+          "loadingMessage": "Retrieving application information..."
         },
         "placeholders": {
           "searchProcesses": "Search processes..."

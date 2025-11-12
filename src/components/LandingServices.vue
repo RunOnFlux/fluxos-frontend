@@ -1,32 +1,5 @@
 <template>
   <div class="landing-page">
-    <!-- Hero Section with Auto-Rotating Banners -->
-    <section class="hero-section">
-      <div class="hero-content">
-        <div class="hero-banner">
-          <div class="puzzle-container">
-            <div
-              v-for="(piece, index) in puzzlePieces"
-              :key="`${currentIndex}-${index}`"
-              class="puzzle-piece"
-              :style="getPuzzlePieceStyle(piece, index)"
-            ></div>
-          </div>
-        </div>
-
-        <!-- Progress Indicators -->
-        <div class="banner-indicators">
-          <span
-            v-for="(banner, index) in allBanners"
-            :key="index"
-            class="indicator"
-            :class="{ active: index === currentIndex }"
-            @click="goToSlide(index)"
-          ></span>
-        </div>
-      </div>
-    </section>
-
     <!-- Features Grid Section -->
     <section class="features-section">
       <div class="container">
@@ -36,6 +9,7 @@
             v-for="(banner, index) in allBanners"
             :key="index"
             class="feature-card"
+            :class="{ 'card-visible': showCards }"
             :style="{ animationDelay: `${index * 0.1}s` }"
           >
             <div class="feature-image-wrapper">
@@ -85,14 +59,38 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const { t } = useI18n()
 
-// All available banners
+const showCards = ref(false)
+
+onMounted(() => {
+  // Check if the initial loader is still present
+  const loader = document.getElementById('loading-bg')
+
+  if (loader) {
+    // Initial page load - loader is present
+    // Wait for the loader to start fading out (2000ms from app-ready event)
+    // Then trigger animation slightly before loader fade
+    setTimeout(() => {
+      showCards.value = true
+    }, 1800)
+  } else {
+    // Navigation - loader already removed
+    // Trigger animation immediately with small delay
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        showCards.value = true
+      }, 150)
+    })
+  }
+})
+
+// All available services
 const allBanners = computed(() => [
   { file: 'FluxCloud.png', key: 'fluxCloud' },
   { file: 'FluxAI.png', key: 'fluxAI' },
@@ -105,49 +103,6 @@ const allBanners = computed(() => [
   key: item.key,
   name: t(`landingServices.services.${item.key}.name`),
 })))
-
-const currentIndex = ref(0)
-let rotationInterval = null
-
-// Current banner for hero section
-const currentBanner = computed(() => allBanners.value[currentIndex.value])
-
-// Puzzle grid configuration
-const gridSize = 4 // 4x4 grid = 16 pieces
-const puzzlePieces = ref([])
-
-// Initialize puzzle pieces
-const initializePuzzle = () => {
-  puzzlePieces.value = []
-  for (let row = 0; row < gridSize; row++) {
-    for (let col = 0; col < gridSize; col++) {
-      puzzlePieces.value.push({
-        row,
-        col,
-      })
-    }
-  }
-}
-
-// Get style for each puzzle piece
-const getPuzzlePieceStyle = (piece, index) => {
-  const delay = index * 0.03 // Staggered animation
-
-  // Calculate exact background position for this piece
-  const xPercent = piece.col === 0 ? 0 : (piece.col / (gridSize - 1)) * 100
-  const yPercent = piece.row === 0 ? 0 : (piece.row / (gridSize - 1)) * 100
-
-  return {
-    gridRow: piece.row + 1,
-    gridColumn: piece.col + 1,
-    animationDelay: `${delay}s`,
-    backgroundImage: `url(${currentBanner.value.image})`,
-    backgroundSize: `${gridSize * 100}% ${gridSize * 100}%`,
-    backgroundPosition: `${xPercent}% ${yPercent}%`,
-    backgroundRepeat: 'no-repeat',
-    filter: 'brightness(0.9)',
-  }
-}
 
 // Get description based on service key
 const getDescription = banner => {
@@ -173,15 +128,6 @@ const getChipLabel = banner => {
   return t(`landingServices.services.${banner.key}.category`)
 }
 
-const rotateBanners = () => {
-  currentIndex.value = (currentIndex.value + 1) % allBanners.value.length
-}
-
-const goToSlide = index => {
-  currentIndex.value = index
-  resetAutoRotation()
-}
-
 const exploreBanner = banner => {
   // Map each service to its correct route or external page (verified from project structure)
   const routes = {
@@ -205,29 +151,6 @@ const exploreBanner = banner => {
   }
 }
 
-const startAutoRotation = () => {
-  rotationInterval = setInterval(() => {
-    rotateBanners()
-  }, 6000) // Rotate every 6 seconds
-}
-
-const resetAutoRotation = () => {
-  if (rotationInterval) {
-    clearInterval(rotationInterval)
-  }
-  startAutoRotation()
-}
-
-onMounted(() => {
-  initializePuzzle()
-  startAutoRotation()
-})
-
-onUnmounted(() => {
-  if (rotationInterval) {
-    clearInterval(rotationInterval)
-  }
-})
 </script>
 
 <style scoped>
@@ -238,100 +161,6 @@ onUnmounted(() => {
   margin-top: -0.5rem;
 }
 
-/* Hero Section */
-.hero-section {
-  position: relative;
-  width: 100%;
-  min-height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  padding: 0;
-}
-
-.hero-content {
-  position: relative;
-  width: 100%;
-  max-width: 1600px;
-  height: auto;
-  background: transparent;
-}
-
-.hero-banner {
-  position: relative;
-  width: 100%;
-  height: auto;
-  display: block;
-  border-radius: clamp(16px, 3vw, 32px);
-  overflow: hidden;
-  background: transparent;
-}
-
-.puzzle-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  gap: 0;
-  outline: 1px solid transparent;
-}
-
-.puzzle-piece {
-  position: relative;
-  overflow: hidden;
-  opacity: 0;
-  transform: scale(0.95);
-  animation: puzzleFadeIn 0.6s ease-out forwards;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  transform-style: preserve-3d;
-  -webkit-transform-style: preserve-3d;
-  will-change: transform, opacity;
-  margin: -0.5px;
-}
-
-@keyframes puzzleFadeIn {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-
-/* Banner Indicators */
-.banner-indicators {
-  position: absolute;
-  bottom: clamp(1rem, 3vh, 1.5rem);
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  gap: 1rem;
-  z-index: 10;
-}
-
-.indicator {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  border: 2px solid transparent;
-}
-
-.indicator:hover {
-  background: rgba(255, 255, 255, 0.6);
-  transform: scale(1.2);
-}
-
-.indicator.active {
-  background: white;
-  width: 40px;
-  border-radius: 6px;
-}
-
 /* Features Section */
 .features-section {
   padding: 1.5rem 2rem 1rem 2rem;
@@ -339,8 +168,9 @@ onUnmounted(() => {
 }
 
 .container {
-  max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
+  padding: 0 2rem;
 }
 
 .section-title {
@@ -376,11 +206,15 @@ onUnmounted(() => {
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   transition: all 0.4s ease;
-  animation: fadeInUp 0.6s ease-out forwards;
   border: 2px solid rgba(128, 128, 128, 0.3);
   display: flex;
   flex-direction: column;
-  transform: translateY(0) scale(1);
+  transform: scale(0.95);
+  opacity: 0;
+}
+
+.feature-card.card-visible {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
 .feature-card:hover {
@@ -514,11 +348,11 @@ onUnmounted(() => {
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: scale(0.95);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: scale(1);
   }
 }
 

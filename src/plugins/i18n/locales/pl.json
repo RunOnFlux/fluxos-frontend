@@ -2245,7 +2245,12 @@
           "cannotCalculateExpiration": "Nie można obliczyć wygaśnięcia",
           "failedToCheck": "Nie udało się sprawdzić",
           "definingNewPrimary": "Definiowanie nowego serwera głównego w toku",
-          "sessionExpired": "Sesja wygasła, wylogowywanie..."
+          "sessionExpired": "Sesja wygasła, wylogowywanie...",
+          "noInstancesAvailableTitle": "Brak dostępnych instancji",
+          "noInstancesAvailableMessage": "Ta aplikacja nie ma uruchomionych instancji. Aplikacja może być w trakcie wdrażania, ponownego wdrażania, nie została jeszcze wdrożona lub wszystkie instancje są offline.",
+          "retry": "Ponów",
+          "loadingTitle": "Ładowanie...",
+          "loadingMessage": "Pobieranie informacji o aplikacji..."
         },
         "placeholders": {
           "searchProcesses": "Szukaj procesów..."
