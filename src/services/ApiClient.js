@@ -15,6 +15,38 @@ const sourceCancelToken = axios.CancelToken.source()
 export { sourceCancelToken }
 
 /**
+ * APIs that should BYPASS sticky backend and use round-robin load balancing
+ *
+ * Add URL patterns here to exclude specific endpoints from sticky session logic.
+ * This is useful for:
+ * - Read-only verification endpoints that don't require session state
+ * - Public APIs that should distribute load across all backend nodes
+ * - Price calculation endpoints (stateless operations)
+ * - Health check endpoints
+ *
+ * Examples:
+ * - '/apps/verifyappregistrationspecifications' - App registration verification
+ * - '/apps/verifyappupdatespecifications' - App update verification
+ * - '/apps/calculatefiatandfluxprice' - Price calculation
+ */
+const STICKY_BACKEND_EXCLUSIONS = [
+  '/apps/verifyappregistrationspecifications',
+  '/apps/verifyappupdatespecifications',
+  '/apps/calculatefiatandfluxprice',
+]
+
+/**
+ * Check if a URL should bypass sticky backend logic
+ * @param {string} url - The request URL to check
+ * @returns {boolean} - True if URL should bypass sticky backend
+ */
+function shouldBypassStickyBackend(url) {
+  if (!url) return false
+  
+  return STICKY_BACKEND_EXCLUSIONS.some(pattern => url.includes(pattern))
+}
+
+/**
  * Creates an axios instance with sticky backend support
  *
  * Sticky Backend Strategy:
@@ -22,6 +54,7 @@ export { sourceCancelToken }
  *   all requests are routed to the same backend node that generated the loginPhrase
  * - This prevents authentication failures caused by loginPhrase being stored on a specific node
  * - Sticky backend is stored in sessionStorage (per-tab, survives refresh)
+ * - Some APIs can be excluded from sticky backend via STICKY_BACKEND_EXCLUSIONS
  *
  * See: STICKY_BACKEND_IMPLEMENTATION_PLAN.md
  */
@@ -40,6 +73,26 @@ export default function Api() {
   const instance = axios.create({
     baseURL,
   })
+
+  // Request interceptor: Override baseURL for excluded APIs
+  instance.interceptors.request.use(
+    config => {
+      // If this URL should bypass sticky backend, use round-robin DNS
+      if (shouldBypassStickyBackend(config.url)) {
+        const roundRobinURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+
+        // Only override if we're currently using a sticky backend (IP-based DNS)
+        // and the original backend is round-robin
+        if (getStickyBackendDNS() && isRoundRobinBackend(roundRobinURL)) {
+          config.baseURL = roundRobinURL
+          console.log('[ApiClient] Bypassing sticky backend for:', config.url, '- Using round-robin:', roundRobinURL)
+        }
+      }
+
+      return config
+    },
+    error => Promise.reject(error),
+  )
 
   // Response interceptor: Capture node IP from loginphrase response
   instance.interceptors.response.use(
