@@ -1587,11 +1587,9 @@ async function getInstancesForDropDown() {
 
   const response = await AppsService.getAppLocation(appName.value)
 
-  selectedIp.value = ''
-
   if (response.data.status === "error") {
     // showToast("danger", response.data.data.message || response.data.data)
-
+    // Don't clear selectedIp on error - keep existing selection
     return
   }
 
@@ -1723,6 +1721,7 @@ async function logout() {
   // Now clear auth data
   localStorage.removeItem("zelidauth")
   localStorage.removeItem("loginType")
+  clearStickyBackendDNS() // Clear sticky backend on auto logout
   fluxStore.setPrivilege("none")
   fluxStore.setZelid("")
 
@@ -1830,9 +1829,11 @@ async function getInstalledApplicationSpecifics(silent = false) {
     attemptCount++
     console.log(`Attempting to fetch app spec from backend ${attemptCount}/${ipsToTry.length}: ${tryIp}`)
 
+    // Store original IP before trying (needed for error restoration)
+    const originalIp = selectedIp.value
+
     try {
       // Temporarily switch to this IP
-      const originalIp = selectedIp.value
       selectedIp.value = tryIp
 
       const response = await executeLocalCommand(
@@ -1900,14 +1901,17 @@ async function getInstalledApplicationSpecifics(silent = false) {
       callResponse.value.data   = spec
       appSpecification.value    = spec
       InstalledLoading.value = false
-      
+
+      // Restore original IP on success
+      selectedIp.value = originalIp
+
       return // Exit successfully
 
     } catch (error) {
       lastError = error.message || 'Connection error'
 
       // Restore original IP on error
-      selectedIp.value = currentIp
+      selectedIp.value = originalIp
       continue
     }
   }

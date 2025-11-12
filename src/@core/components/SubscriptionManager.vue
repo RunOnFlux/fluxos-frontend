@@ -6006,13 +6006,21 @@ async function verifyAppSpec() {
     // MARKETPLACE APP REPOTAG CHECK (only for new app registration)
     // ========================================================================
     if (props.newApp && marketPlaceApps.value.length > 0 && appSpecTemp.compose) {
-      // Check if any component uses a marketplace-restricted repotag
+      // List of blocked marketplace app names
+      const blockedMarketplaceApps = ['PresearchNode', 'PresearchNodeLegacy']
+
+      // Check if any component uses a blocked marketplace app repotag
       for (const component of appSpecTemp.compose) {
         if (component.repotag) {
           const repotagLower = component.repotag.toLowerCase()
 
-          // Check against all marketplace apps
+          // Check only against blocked marketplace apps
           for (const marketApp of marketPlaceApps.value) {
+            // Only check if this marketplace app is in the blocked list
+            if (!blockedMarketplaceApps.includes(marketApp.name)) {
+              continue
+            }
+
             if (marketApp.compose && Array.isArray(marketApp.compose)) {
               for (const marketComponent of marketApp.compose) {
                 if (marketComponent.repotag) {
