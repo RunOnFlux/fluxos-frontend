@@ -20,11 +20,18 @@ window.Buffer = Buffer
 
 // Handle chunk load failures (stale cache after deployment)
 window.addEventListener('error', event => {
+  // Only handle errors for our own app scripts/styles, not third-party scripts
+  const isOwnScript = event.target?.tagName === 'SCRIPT' &&
+    (event.target?.src?.includes(window.location.origin) || !event.target?.src)
+  const isOwnStylesheet = event.target?.tagName === 'LINK' &&
+    event.target?.rel === 'stylesheet' &&
+    (event.target?.href?.includes(window.location.origin) || !event.target?.href)
+
   const isChunkLoadError =
     event.message?.includes('Failed to fetch dynamically imported module') ||
     event.message?.includes('Importing a module script failed') ||
-    (event.target?.tagName === 'LINK' && event.target?.rel === 'stylesheet') ||
-    (event.target?.tagName === 'SCRIPT')
+    isOwnStylesheet ||
+    isOwnScript
 
   if (isChunkLoadError) {
     const hasReloaded = sessionStorage.getItem('chunk-reload-attempted')
