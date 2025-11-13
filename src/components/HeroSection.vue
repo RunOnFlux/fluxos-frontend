@@ -45,6 +45,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useOptimizedImage } from '@/composables/useOptimizedImage'
 
 const props = defineProps({
   // Background
@@ -171,13 +172,17 @@ const resolveI18nValue = value => {
 const resolvedTitle = computed(() => resolveI18nValue(props.title))
 const resolvedSubtitle = computed(() => resolveI18nValue(props.subtitle))
 
+// Use optimized image (WebP with PNG fallback)
+const { url: optimizedBackgroundUrl } = useOptimizedImage(props.backgroundImage)
+
 const heroStyle = computed(() => {
   const style = {
     minHeight: props.minHeight,
   }
 
-  if (props.backgroundImage) {
-    style.backgroundImage = `url('${props.backgroundImage}')`
+  const imageUrl = optimizedBackgroundUrl.value || props.backgroundImage
+  if (imageUrl) {
+    style.backgroundImage = `url('${imageUrl}')`
     style.backgroundSize = props.backgroundSize
     style.backgroundPosition = props.backgroundPosition
     style.backgroundRepeat = 'no-repeat'
