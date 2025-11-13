@@ -7,9 +7,9 @@
     class="d-flex align-center"
   >
     <VIcon
-      start
       icon="mdi-chat-processing"
       size="20"
+      :class="{ 'me-1': $vuetify.display.lgAndUp }"
     />
     <span class="d-none d-lg-inline">{{ t('components.fluxAIToggler.askFluxAI') }}</span>
     <VTooltip activator="parent" location="bottom">
@@ -28,5 +28,13 @@ const { t } = useI18n()
 #flux-ai-button {
   text-transform: none;
   letter-spacing: normal;
+}
+
+/* Make button fit icon only on smaller screens */
+@media (max-width: 1279px) {
+  #flux-ai-button {
+    min-width: auto !important;
+    padding: 0 8px !important;
+  }
 }
 </style>

@@ -55,7 +55,11 @@ export default {
     })
   },
   getBlockCount() {
-    return Api().get('/daemon/getBlockCount')
+    return Api().get('/daemon/getBlockCount', {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    })
   },
   getBlockchainInfo() {
     return Api().get('/daemon/getblockchaininfo')

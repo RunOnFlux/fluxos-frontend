@@ -10,12 +10,32 @@ body {
 }
 
 .layout-page-content {
-  @include mixins.boxed-content(true);
-
   flex-grow: 1;
 
   // TODO: Use grid gutter variable here
   padding-block: 1.5rem;
+}
+
+.page-content-container {
+  @include mixins.boxed-content(true);
+}
+
+// Debug: Explicitly define boxed mode styles to ensure they apply
+.layout-content-width-boxed {
+  .page-content-container {
+    max-inline-size: variables.$layout-boxed-content-width;
+    margin-inline: auto;
+  }
+
+  .navbar-content-container {
+    max-inline-size: variables.$layout-boxed-content-width;
+    margin-inline: auto;
+  }
+
+  .footer-content-container {
+    max-inline-size: variables.$layout-boxed-content-width;
+    margin-inline: auto;
+  }
 }
 
 .layout-footer {

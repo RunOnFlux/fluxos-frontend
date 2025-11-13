@@ -444,6 +444,7 @@
                   <AppDetailsCard
                     :app="item"
                     :active-apps-tab="activeAppsTab"
+                    :expired-apps-tab="!activeAppsTab"
                     :is-marketplace="isMarketplace"
                     show-general-section
                     :get-new-expire-label="labelForExpire(item.expire, item.height)"

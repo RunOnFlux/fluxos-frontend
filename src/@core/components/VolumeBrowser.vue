@@ -417,7 +417,19 @@
         </VCardTitle>
         <VCardText class="pa-4">
           <div class="editor-container">
+            <div
+              v-if="!editorMountReady"
+              class="d-flex align-center justify-center"
+              style="height: 100%;"
+            >
+              <VProgressCircular
+                indeterminate
+                color="primary"
+                size="48"
+              />
+            </div>
             <VueMonacoEditor
+              v-if="editorMountReady"
               ref="monacoEditor"
               :value="editContent"
               :theme="theme === 'dark' ? 'vs-dark' : 'vs'"
@@ -544,6 +556,7 @@ const contentLoaded = ref(false)
 const restoreRemoteFile = ref('')
 const monacoEditor = ref(null)
 const editDialogVisible = ref(false)
+const editorMountReady = ref(false)
 const editorInstance = shallowRef(null)
 const editorModel = shallowRef(null)
 const { t } = useI18n()
@@ -761,8 +774,33 @@ const editorOptions = ref({
   automaticLayout: true,
   formatOnType: true,
   formatOnPaste: true,
-  fontFamily: 'Consolas, "Courier New", monospace',
+  fontFamily: '"Courier New", Courier, monospace',
   fontSize: 14,
+  fontWeight: 'normal',
+  letterSpacing: 0,
+  lineHeight: 19,
+  wordWrap: 'off',
+  wordWrapColumn: 0,
+  wrappingStrategy: 'simple',
+  stopRenderingLineAfter: -1,
+  scrollBeyondLastColumn: 50,
+  scrollBeyondLastLine: true,
+  smoothScrolling: false,
+  disableMonospaceOptimizations: true, // Critical: disable optimizations that can cause measurement issues
+  scrollbar: {
+    horizontal: 'visible',
+    vertical: 'visible',
+    horizontalScrollbarSize: 10,
+    verticalScrollbarSize: 10,
+    useShadows: false,
+    handleMouseWheel: true,
+  },
+  minimap: {
+    enabled: false,
+  },
+  renderWhitespace: 'none',
+  renderControlCharacters: false,
+  fontLigatures: false,
 })
 
 function showToast(type, message, icon = null) {
@@ -1226,10 +1264,14 @@ async function openEditDialog(fileName, size) {
       const detectedLang = detectLanguage(shortSample)
       const monacoLang = mapDetectedLanguage(detectedLang, fileName)
 
-      console.log('Language set:', monacoLang)
       editorLanguage.value = monacoLang
       editDialogVisible.value = true
       contentLoaded.value = true
+
+      // Delay Monaco mount until dialog has fully animated
+      setTimeout(() => {
+        editorMountReady.value = true
+      }, 300)
     })
     .catch(err => {
       progressVisable.value = false
@@ -1245,6 +1287,7 @@ async function openEditDialog(fileName, size) {
 function closeEditor() {
   // Immediately hide the dialog to avoid render freeze
   editDialogVisible.value = false
+  editorMountReady.value = false
 
   // Use $nextTick to allow the dialog to unmount before disposing Monaco
   nextTick(() => {
@@ -1302,6 +1345,9 @@ async function saveContent() {
     console.log('[SAVE] Uploading...')
     await upload(fileToUpload, true)
     showToast('success', t('core.volumeBrowser.fileUpdated'))
+
+    // Refresh the folder list to show updated file
+    await refreshFolder()
   } catch (error) {
     console.error('[SAVE] Upload failed:', error)
     showToast('danger', t('core.volumeBrowser.errorSavingFile', { error: error.message }))
@@ -1325,19 +1371,16 @@ function handleMount(editor) {
 
   const container = editor.getDomNode()?.parentElement
 
+  // Ensure proper layout
   setTimeout(() => {
-    if (monacoReady.value && container) {
+    if (container) {
       editor.layout({ width: container.offsetWidth, height: container.offsetHeight })
-      editor.updateOptions({})
-      console.log('Mount Layout:', editor.getLayoutInfo())
     }
-  }, 200)
 
-  document.fonts.ready.then(() => {
     if (window.monaco?.editor) {
       window.monaco.editor.remeasureFonts()
     }
-  })
+  }, 100)
 
   editor.onDidChangeModelContent(onEditorInput)
 }
@@ -1446,7 +1489,6 @@ loader.init().then(() => {
 
 <style scoped>
 .editor-container {
-  overflow: hidden;
   height: 70vh;
   width: 100%;
   position: relative;
@@ -1477,21 +1519,31 @@ loader.init().then(() => {
   display: inline-block;
 }
 
-::v-deep(.progress-glow svg) {
-  filter: drop-shadow(0 0 6px currentColor); /* or whatever color you want */
-  overflow: visible;
+.progress-glow {
+  border-radius: 50% !important;
+  overflow: visible !important;
 }
+
+:deep(.progress-glow .v-progress-circular__overlay) {
+  filter: drop-shadow(0 0 2px currentColor) !important;
+}
+
+:deep(.progress-glow svg) {
+  overflow: visible !important;
+  border-radius: 50%;
+}
+
 .progress-text {
   font-size: 12px;
    font-family: 'Fira Code', monospace; /* or any preferred font */
    letter-spacing: 0.3px;
 }
 
-::v-deep(.v-data-table thead) {
+:deep(.v-data-table thead) {
   background-color: rgb(var(--v-theme-background)) !important;
 }
 
-::v-deep(.v-data-table thead th) {
+:deep(.v-data-table thead th) {
   background-color: rgb(var(--v-theme-background)) !important;
   color: #b6b4b4 !important;
   font-weight: 600;

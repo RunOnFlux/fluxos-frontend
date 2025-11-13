@@ -264,6 +264,8 @@ const editorOptions = {
   contextmenu: true,
   readOnly: false,
   domReadOnly: false,
+  disableMonospaceOptimizations: true,
+  fontLigatures: false,
 }
 
 watch(() => props.modelValue, newValue => {

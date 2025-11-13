@@ -192,7 +192,7 @@
         <div v-else class="pa-3">
           <!-- For V6+: Show period slider -->
           <div v-if="versionFlags.supportsExpire" class="px-3">
-            <div class="d-flex flex-column gap-2 mb-3">
+            <div class="d-flex flex-column gap-2 mt-2">
               <VChip color="default" variant="tonal" label style="font-size: 14px;">
                 <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
                 <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
@@ -204,7 +204,7 @@
                 <strong>{{ timeRemaining }}</strong>
               </VChip>
             </div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 mt-2">
               <VChip color="info" variant="tonal" label style="font-size: 14px;">
                 <VIcon size="22" class="mr-2">mdi-update</VIcon>
                 <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
@@ -244,7 +244,7 @@
 
           <!-- For < V6: Fixed 1 month renewal -->
           <div v-else class="px-3">
-            <div class="d-flex flex-column gap-2 mb-3">
+            <div class="d-flex flex-column gap-2 mt-2">
               <VChip color="default" variant="tonal" label style="font-size: 14px;">
                 <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
                 <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
@@ -256,7 +256,7 @@
                 <strong>{{ timeRemaining }}</strong>
               </VChip>
             </div>
-            <div class="d-flex flex-column gap-2">
+            <div class="d-flex flex-column gap-2 mt-2">
               <VChip color="info" variant="tonal" label style="font-size: 14px;">
                 <VIcon size="22" class="mr-2">mdi-update</VIcon>
                 <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
@@ -303,7 +303,7 @@
           </li>
           <li class="d-flex align-start mb-3">
             <VIcon size="20" class="mr-2 mt-1" color="warning">mdi-clock-alert</VIcon>
-            <span>{{ t('core.subscriptionManager.afterCancellationExpire') }} <b>{{ new Date(Date.now() + 100 * 2 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
+            <span>{{ t('core.subscriptionManager.afterCancellationExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
           </li>
           <li class="d-flex align-start mb-4">
             <VIcon size="20" class="mr-2 mt-1" color="error">mdi-alert-circle</VIcon>
@@ -1945,10 +1945,10 @@
                     <template v-if="props.newApp">
                       <!-- For new apps, show subscription period -->
                       <template v-if="blockHeight">
-                        {{ t('core.subscriptionManager.subscription') }} {{ expiryLabel }}
+                        {{ expiryLabel }}
                       </template>
                       <template v-else>
-                        {{ t('core.subscriptionManager.subscription') }} {{ expiryLabel }}
+                        {{ expiryLabel }}
                       </template>
                     </template>
                     <template v-else-if="blockHeight && props.appSpec?.height">
@@ -2042,8 +2042,8 @@
       
       <!-- Test & Pay Tab -->
       <VWindowItem :value="100">
-        <div 
-          class="pa-4" 
+        <div
+          class="pa-4"
           :style="{
             backgroundColor: theme.global.name.value === 'dark' ? 'rgba(76, 175, 80, 0.05)' : 'rgba(76, 175, 80, 0.03)',
             borderRadius: '8px',
@@ -2051,7 +2051,7 @@
           }"
         >
           <!-- Test Installation Section -->
-          <VCard class="mb-4" v-if="!testFinished && specsHaveChanged && (props.newApp || appSpecPrice?.flux !== 0) && !paymentProcessing && !paymentConfirmed">
+          <VCard class="mb-4" v-if="shouldShowTestSection">
             <VCardTitle class="bg-primary text-white">
               <VIcon class="mr-2">mdi-test-tube</VIcon>
               {{ t('core.subscriptionManager.testApplicationInstallation') }}
@@ -2186,7 +2186,7 @@
           </VAlert>
 
           <!-- Payment Section -->
-          <div v-if="(testFinished && !testError) || (!props.newApp && renewalEnabled && !specsHaveChanged) || (!props.newApp && registrationHash && appSpecPrice?.flux === 0) || paymentProcessing || paymentConfirmed">
+          <div v-if="(testFinished && !testError) || (!props.newApp && registrationHash && !testableFieldsHaveChanged) || (!props.newApp && registrationHash && appSpecPrice?.flux === 0) || paymentProcessing || paymentConfirmed">
             <!-- Warning Alert if test had warnings -->
             <VAlert 
               v-if="hasTestWarnings" 
@@ -2208,9 +2208,9 @@
                       borderBottom: theme.global.name.value === 'dark' ? '2px solid rgba(76, 175, 80, 0.3)' : '2px solid rgba(76, 175, 80, 0.4)'
                     }"
                   >
-                    <VIcon 
-                      class="mr-3" 
-                      size="24" 
+                    <VIcon
+                      class="mr-3"
+                      size="24"
                       :style="{
                         color: theme.global.name.value === 'dark' ? 'rgba(165, 214, 167, 1)' : 'rgba(27, 94, 32, 1)'
                       }"
@@ -2228,6 +2228,16 @@
                         }"
                       >{{ t('core.subscriptionManager.appReadyForDeployment') }}</div>
                     </div>
+                    <VSpacer />
+                    <VBtn
+                      v-if="!props.newApp && (managementAction === 'renewal' || managementAction === 'update' || managementAction === 'cancel')"
+                      icon
+                      variant="text"
+                      color="default"
+                      @click="tab = 0"
+                    >
+                      <VIcon>mdi-arrow-left-circle</VIcon>
+                    </VBtn>
                   </VCardTitle>
                   <VCardText class="px-4 pt-4 pb-2">
                     <VList class="bg-transparent payment-info-list">
@@ -2952,9 +2962,10 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, nextTick } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
+import { cloneDeep } from 'lodash-es'
 
 const props = defineProps({
   appSpec: Object,
@@ -2962,6 +2973,7 @@ const props = defineProps({
   executeLocalCommand: Function,
   resetTrigger: Number, // Timestamp to trigger internal tab reset when subscription tab becomes active
   isRedeploy: Boolean, // Flag to indicate if this is a redeploy operation
+  instanceReady: Boolean, // Flag to indicate if instance/location is loaded (for existing apps)
 })
 
 // Define emits
@@ -3416,6 +3428,87 @@ const testRunning = ref(false)
 const testOutput = ref([])
 const showTestLogs = ref(false)
 const deploymentAddress = ref(null)
+
+/**
+ * AUTO-NAVIGATION TIMER - Safe timer management pattern
+ *
+ * This timer auto-navigates user to Test & Pay tab after registration or validation.
+ *
+ * IMPORTANT: Always clear existing timer before setting new one to prevent race conditions:
+ *
+ * WRONG (creates orphaned timers):
+ *   autoNavigateTimer = setTimeout(...)
+ *
+ * CORRECT (safe pattern):
+ *   if (autoNavigateTimer) {
+ *     clearTimeout(autoNavigateTimer)
+ *   }
+ *   autoNavigateTimer = setTimeout(...)
+ *
+ * CLEANUP LOCATIONS:
+ * 1. onUnmounted hook (line ~5290) - Prevents memory leaks
+ * 2. Spec change watcher (line ~3990) - Cancels navigation if user changes spec
+ * 3. Before setting new timer (line ~5730, ~6760) - Prevents race conditions
+ *
+ * RACE CONDITION EXAMPLE:
+ * Without cleanup before set:
+ *   t=0s:  Timer A set → navigate after 1000ms
+ *   t=0.5s: Timer B set → navigate after 1000ms (Timer A still running!)
+ *   t=1.0s: Timer A fires → navigate (unexpected!)
+ *   t=1.5s: Timer B fires → navigate (redundant!)
+ *
+ * With cleanup before set:
+ *   t=0s:  Timer A set → navigate after 1000ms
+ *   t=0.5s: Timer A cleared
+ *   t=0.5s: Timer B set → navigate after 1000ms
+ *   t=1.5s: Timer B fires → navigate (correct!)
+ */
+let autoNavigateTimer = null
+
+/**
+ * NON_TESTABLE_FIELDS - Fields that don't require re-testing when changed
+ *
+ * These fields affect resource allocation, scaling, billing, and deployment configuration,
+ * but do NOT affect whether the application will successfully deploy and run.
+ *
+ * The test installation validates:
+ * - Docker image availability (repo, repotag)
+ * - Container composition (compose array with env vars, commands, ports, volumes)
+ * - Runtime configuration (enviromentParameters, containerPorts, containerData)
+ *
+ * Changes to NON_TESTABLE fields preserve test results because:
+ * - Resource changes (cpu, ram, hdd) don't affect if Docker image works
+ * - Scaling changes (instances) don't affect individual container functionality
+ * - DNS changes (domains) are just routing config, not app functionality
+ * - Deployment preferences (geolocation, staticip, nodes) are infrastructure, not code
+ * - Billing changes (expire, tiered) don't affect technical implementation
+ *
+ * IMPORTANT: When adding new fields to appSpec, consider:
+ * - Does this field affect whether the Docker container will start successfully?
+ * - Does this field affect the application's runtime behavior?
+ * - If YES to either: DO NOT add to this list
+ * - If NO to both: Safe to add to this list
+ *
+ * Examples:
+ * - Adding port mapping → TESTABLE (affects container startup)
+ * - Changing CPU from 1 to 2 → NON-TESTABLE (just resource allocation)
+ * - Changing environment variable → TESTABLE (affects app behavior)
+ * - Adding domain → NON-TESTABLE (just DNS routing)
+ */
+const NON_TESTABLE_FIELDS = [
+  'expire',      // Billing: expiration blocks
+  'instances',   // Scaling: number of instances
+  'cpu',         // Resources: CPU cores
+  'ram',         // Resources: RAM allocation
+  'hdd',         // Resources: storage allocation
+  'tiered',      // Billing: tiered pricing flag
+  'domains',     // DNS: custom domain records
+  'geolocation', // Deployment: geographic restrictions
+  'staticip',    // Deployment: static IP flag
+  'enterprise',  // Deployment: enterprise tier flag
+  'nodes',       // Deployment: preferred node list
+]
+
 const applicationPrice = ref(null)
 const applicationPriceFluxDiscount = ref(0)
 const stripeEnabled = ref(true)
@@ -3545,20 +3638,52 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
     }
 
     // Set up renewal settings
-    // Fork-aware default: if app was registered after fork, use 88000; otherwise 22000
-    const defaultExpire = (newSpec.height && newSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
-    let expire = newSpec.expire ?? defaultExpire
+    // Find the correct renewalIndex based on original expire value with fork-aware conversion
+    let expireForMatching
 
-    // Convert pre-fork expire values to post-fork equivalent for renewalIndex matching
-    // Pre-fork: 22,000 blocks = 1 month (at 2 min/block)
-    // Post-fork: 88,000 blocks = 1 month (at 0.5 min/block)
-    // Renewals always use post-fork values, so convert for display purposes
-    if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
-      expire = expire * 4  // Convert pre-fork to post-fork equivalent
+    if (newSpec.version < 6) {
+      // Spec < 6: Always use 88000 (fixed 1 month)
+      expireForMatching = 88000
+    } else {
+      // Spec >= 6: Use original expire value from API
+      const defaultExpire = 88000
+      const originalExpire = newSpec.expire ?? defaultExpire
+      expireForMatching = originalExpire
+
+      // Fork-aware conversion for renewalIndex matching:
+      // Apps registered before fork have expire in pre-fork blocks
+      // Convert to post-fork equivalent to match renewal options
+      if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
+        expireForMatching = Math.round(originalExpire * 4)
+        console.log('Fork-aware conversion for renewalIndex: original', originalExpire, '× 4 =', expireForMatching)
+      }
     }
 
-    const foundIndex = renewalOptions.value.findIndex(opt => opt.value === expire)
-    appDetails.value.renewalIndex = foundIndex !== -1 ? foundIndex : 2
+    console.log('Setting renewalIndex - expire for matching:', expireForMatching, 'original expire:', newSpec.expire, 'spec version:', newSpec.version, 'height:', newSpec.height)
+
+    // Find exact match in renewal options
+    let foundIndex = renewalOptions.value.findIndex(opt => opt.value === expireForMatching)
+
+    // If no exact match, find closest renewal option
+    if (foundIndex === -1) {
+      let closestIndex = 2  // Default to 1 month (88000)
+      let closestDiff = Math.abs(renewalOptions.value[2].value - expireForMatching)
+
+      renewalOptions.value.forEach((opt, idx) => {
+        const diff = Math.abs(opt.value - expireForMatching)
+        if (diff < closestDiff) {
+          closestDiff = diff
+          closestIndex = idx
+        }
+      })
+
+      foundIndex = closestIndex
+      console.log('No exact match - closest option at index:', foundIndex, 'value:', renewalOptions.value[foundIndex].value, 'diff:', Math.abs(renewalOptions.value[foundIndex].value - expireForMatching))
+    } else {
+      console.log('Found exact match at index:', foundIndex, 'value:', renewalOptions.value[foundIndex].value)
+    }
+
+    appDetails.value.renewalIndex = foundIndex
     
     // Handle enterprise nodes if applicable
     if (newSpec.nodes && Array.isArray(newSpec.nodes) && newSpec.nodes.length > 0) {
@@ -3649,24 +3774,26 @@ async function getMultiplier() {
 }
 
 async function fetchCurrentBlockHeight() {
-  try {
-    // Try daemon first (more accurate, real-time)
-    const res = await props.executeLocalCommand('/daemon/getblockcount')
-    if (res?.data?.status === 'success' && typeof res.data?.data === 'number') {
-      currentBlockHeight.value = res.data.data
-      
-      return
+  // Try daemon first (more accurate, real-time) - but only if instance is ready
+  if (props.executeLocalCommand && !props.newApp && props.appSpec?.name && props.instanceReady) {
+    try {
+      const res = await props.executeLocalCommand('/daemon/getblockcount')
+      if (res?.data?.status === 'success' && typeof res.data?.data === 'number') {
+        currentBlockHeight.value = res.data.data
+
+        return
+      }
+    } catch (error) {
+      console.log("Daemon block height not available, falling back to explorer:", error)
     }
-  } catch (error) {
-    console.log("Daemon block height not available, falling back to explorer:", error)
   }
 
   try {
-    // Fallback to explorer
+    // Fallback to explorer (always works, doesn't require instance)
     const explorerResult = await ExplorerService.getScannedHeight()
     if (explorerResult.data.status === "success") {
       currentBlockHeight.value = explorerResult.data.data.generalScannedHeight
-      
+
       return
     }
   } catch (error) {
@@ -3704,9 +3831,59 @@ function getBlockTimeMs(blockHeight) {
   return blockHeight >= FORK_BLOCK_HEIGHT ? 0.5 * 60 * 1000 : 2 * 60 * 1000
 }
 
-// 1️⃣  Clone once (on mount) – never overwritten
+/**
+ * SNAPSHOT SYSTEM - Tracking spec changes for test preservation
+ *
+ * This system uses three snapshots to intelligently determine when re-testing is required:
+ *
+ * 1️⃣ originalExpireSnapshot (number)
+ *    - Captured: On component mount for existing apps
+ *    - Purpose: Track if user changed expiration (billing change, not functionality)
+ *    - Never overwritten during session
+ *
+ * 2️⃣ originalAppSpecSnapshot (object)
+ *    - Captured: On component mount for existing apps
+ *    - Purpose: Detect if user made ANY changes to the spec (for updates/renewals)
+ *    - Used by: specsHaveChanged computed
+ *    - Excludes: Only 'expire' field (billing-only change)
+ *    - Updated: After successful deployment (becomes new baseline)
+ *    - Never overwritten during editing session
+ *
+ * 3️⃣ testedSpecSnapshot (object)
+ *    - Captured: After successful test completion for NEW apps only
+ *    - Purpose: Allow users to change NON_TESTABLE fields without re-testing
+ *    - Used by: testableFieldsHaveChanged computed (for new apps)
+ *    - Excludes: ALL NON_TESTABLE_FIELDS (cpu, ram, hdd, instances, expire, etc.)
+ *    - Safety: Only saved if test SUCCEEDED (!testError.value)
+ *    - Use case: User tests app → passes → user increases CPU → no retest needed
+ *
+ * IMPORTANT BEHAVIORS:
+ *
+ * For NEW apps:
+ * - Before test: testableFieldsHaveChanged = true (forces test)
+ * - After test success: testedSpecSnapshot saved
+ * - User changes CPU/RAM: testableFieldsHaveChanged = false (no retest)
+ * - User changes repo/tag: testableFieldsHaveChanged = true (retest required)
+ * - Test failed: testedSpecSnapshot NOT saved (any change requires retest)
+ *
+ * For EXISTING apps (updates/renewals):
+ * - Uses originalAppSpecSnapshot as baseline
+ * - User changes CPU/RAM: testableFieldsHaveChanged = false (no retest)
+ * - User changes env vars: testableFieldsHaveChanged = true (retest required)
+ * - specsHaveChanged checks if ANY field changed (for showing update UI)
+ *
+ * WHY THREE SNAPSHOTS?
+ * - originalExpireSnapshot: Simple number comparison for billing changes
+ * - originalAppSpecSnapshot: Full spec baseline for detecting ANY changes
+ * - testedSpecSnapshot: Filtered spec (testable fields only) for smart retest logic
+ *
+ * PERFORMANCE NOTE:
+ * All snapshots use cloneDeep (lodash-es) instead of JSON.parse/stringify
+ * for 2-3x better performance and proper edge case handling.
+ */
 const originalExpireSnapshot = ref(null)
 const originalAppSpecSnapshot = ref(null)
+const testedSpecSnapshot = ref(null)
 
 onMounted(() => {
   // Fork-aware default for original expire snapshot
@@ -3714,8 +3891,9 @@ onMounted(() => {
   originalExpireSnapshot.value = props.appSpec?.expire ?? defaultExpire
 
   // Store original app spec for comparison (excluding expire field)
+  // Using cloneDeep for better performance
   if (!props.newApp && props.appSpec) {
-    const specCopy = JSON.parse(JSON.stringify(props.appSpec))
+    const specCopy = cloneDeep(props.appSpec)
     delete specCopy.expire
     originalAppSpecSnapshot.value = specCopy
   }
@@ -3734,7 +3912,7 @@ const specsHaveChanged = computed(() => {
 
   // Compare current spec (without expire) to original snapshot
   try {
-    const currentSpecCopy = JSON.parse(JSON.stringify(props.appSpec))
+    const currentSpecCopy = cloneDeep(props.appSpec)
     delete currentSpecCopy.expire
 
     const hasChanged = JSON.stringify(currentSpecCopy) !== JSON.stringify(originalAppSpecSnapshot.value)
@@ -3748,9 +3926,85 @@ const specsHaveChanged = computed(() => {
     return hasChanged
   } catch (error) {
     console.error('Error comparing specs:', error)
-    
+
     return true // If comparison fails, assume specs changed
   }
+})
+
+// Computed to check if TESTABLE fields have changed
+// Testable fields are those that affect whether the app will work:
+// - repo, repotag (Docker image)
+// - compose spec: enviromentParameters, commands, containerPorts, containerData (runtime config)
+// Non-testable fields are defined in NON_TESTABLE_FIELDS constant
+const testableFieldsHaveChanged = computed(() => {
+  if (!props.appSpec) return true // No spec means we need to test
+
+  // For new apps, use testedSpecSnapshot if test was completed
+  // For existing apps, use originalAppSpecSnapshot
+  const snapshotToCompare = props.newApp ? testedSpecSnapshot.value : originalAppSpecSnapshot.value
+
+  if (!snapshotToCompare) return true // No snapshot means we need to test
+
+  // Compare current spec (without non-testable fields) to snapshot
+  try {
+    const currentSpecCopy = cloneDeep(props.appSpec)
+    NON_TESTABLE_FIELDS.forEach(field => delete currentSpecCopy[field])
+
+    const snapshotCopy = cloneDeep(snapshotToCompare)
+    NON_TESTABLE_FIELDS.forEach(field => delete snapshotCopy[field])
+
+    const hasChanged = JSON.stringify(currentSpecCopy) !== JSON.stringify(snapshotCopy)
+
+    console.log('🧪 Testable fields check:', {
+      hasChanged,
+      isNewApp: props.newApp,
+      usingTestedSnapshot: props.newApp && !!testedSpecSnapshot.value,
+      excludedFields: NON_TESTABLE_FIELDS,
+      currentInstances: props.appSpec?.instances,
+      currentCpu: props.appSpec?.cpu,
+      currentRam: props.appSpec?.ram,
+      currentHdd: props.appSpec?.hdd,
+    })
+
+    if (hasChanged) {
+      console.log('🔍 Testable fields DIFF:', {
+        current: currentSpecCopy,
+        snapshot: snapshotCopy,
+      })
+    }
+
+    return hasChanged
+  } catch (error) {
+    console.error('Error comparing testable fields:', error)
+
+    return true // If comparison fails, assume specs changed
+  }
+})
+
+// Computed to check if test section should show (with logging)
+const shouldShowTestSection = computed(() => {
+  const result = !testFinished.value &&
+                 testableFieldsHaveChanged.value &&
+                 (props.newApp || appSpecPrice.value?.flux !== 0) &&
+                 !paymentProcessing.value &&
+                 !paymentConfirmed.value &&
+                 (props.newApp || managementAction.value !== 'cancel') &&
+                 (props.newApp || managementAction.value !== 'renewal')
+
+  console.log('🧪 Test Section Visibility Check:', {
+    shouldShow: result,
+    testFinished: testFinished.value,
+    specsHaveChanged: specsHaveChanged.value,
+    testableFieldsHaveChanged: testableFieldsHaveChanged.value,
+    isNewApp: props.newApp,
+    fluxPrice: appSpecPrice.value?.flux,
+    paymentProcessing: paymentProcessing.value,
+    paymentConfirmed: paymentConfirmed.value,
+    managementAction: managementAction.value,
+    renewalEnabled: renewalEnabled.value,
+  })
+
+  return result
 })
 
 // Watch for spec changes and clear registration if user modifies specs after signing
@@ -3759,13 +4013,12 @@ const specsHaveChanged = computed(() => {
 let signedSpecState = ref(null)
 
 watch(() => props.appSpec, newSpec => {
-  if (!newSpec || props.newApp) return // Skip for new apps
-  if (!registrationHash.value) return // No hash to clear
+  if (!newSpec) return
   if (!signedSpecState.value) return // No signed spec to compare against
 
   // If user changes props.appSpec after signing, the old signature is invalid
   try {
-    const currentSpecCopy = JSON.parse(JSON.stringify(newSpec))
+    const currentSpecCopy = cloneDeep(newSpec)
     delete currentSpecCopy.expire
 
     const currentStr = JSON.stringify(currentSpecCopy)
@@ -3773,13 +4026,66 @@ watch(() => props.appSpec, newSpec => {
 
     // Compare current spec to what was actually signed (appSpecFormated at time of signing)
     if (currentStr !== signedStr) {
-      console.log('⚠️ Spec changed after signing - clearing registration hash')
+      console.log('⚠️ Spec changed after signing - analyzing changes')
 
+      // Check if only non-testable fields changed (doesn't require re-test)
+      // Test validates Docker image/compose spec, not resource allocations
+      const currentSpecForTest = cloneDeep(currentSpecCopy)
+
+      // For new apps, compare against testedSpecSnapshot (what was tested)
+      // For existing apps, compare against signedSpecState (what was signed)
+      const baselineSpec = props.newApp && testedSpecSnapshot.value
+        ? testedSpecSnapshot.value
+        : signedSpecState.value
+
+      const signedSpecForTest = cloneDeep(baselineSpec)
+
+      // Remove non-testable fields from both specs for comparison
+      NON_TESTABLE_FIELDS.forEach(field => {
+        delete currentSpecForTest[field]
+        delete signedSpecForTest[field]
+      })
+
+      const testableFieldsChanged = JSON.stringify(currentSpecForTest) !== JSON.stringify(signedSpecForTest)
+
+      console.log('🔍 Spec watcher comparison:', {
+        isNewApp: props.newApp,
+        hasTestedSnapshot: !!testedSpecSnapshot.value,
+        usingTestedSnapshot: props.newApp && !!testedSpecSnapshot.value,
+        excludedFields: NON_TESTABLE_FIELDS,
+        currentInstances: newSpec.instances,
+        currentCpu: newSpec.cpu,
+        currentRam: newSpec.ram,
+        baselineInstances: baselineSpec.instances,
+      })
+
+      console.log('📊 Change analysis:', {
+        testableFieldsChanged,
+        message: testableFieldsChanged
+          ? 'Testable fields changed (repo/tag/env/commands/ports/etc) - clearing test results'
+          : 'Only non-testable fields changed (resources/scaling/DNS) - preserving test results (re-sign still required)',
+      })
+
+      // Cancel any pending auto-navigation to payment tab
+      if (autoNavigateTimer) {
+        clearTimeout(autoNavigateTimer)
+        autoNavigateTimer = null
+        console.log('🛑 Cancelled auto-navigation to payment tab due to spec change')
+      }
+
+      // Always clear signature and hash (user must re-sign ANY change)
       registrationHash.value = null
       signature.value = null
-      testFinished.value = false
-      testError.value = false
       signedSpecState.value = null
+
+      // Only clear test results if testable fields changed (not just instances)
+      if (testableFieldsChanged) {
+        testFinished.value = false
+        testError.value = false
+        console.log('🧹 Cleared test results - testable fields changed')
+      } else {
+        console.log('✅ Preserved test results - only instances changed')
+      }
     }
   } catch (error) {
     console.error('Error checking spec changes:', error)
@@ -3791,7 +4097,7 @@ watch(signature, newSignature => {
   if (newSignature && appSpecFormated.value) {
     try {
       // Store the FORMATTED spec that was actually signed
-      const signedCopy = JSON.parse(JSON.stringify(appSpecFormated.value))
+      const signedCopy = cloneDeep(appSpecFormated.value)
       delete signedCopy.expire
       signedSpecState.value = signedCopy
       console.log('📸 Stored signed spec state (appSpecFormated):', signedCopy)
@@ -3804,10 +4110,42 @@ watch(signature, newSignature => {
 })
 
 // 2️⃣  current remaining blocks based on the *original* value
+// FORK-AWARE: Calculate adjusted expiry block height accounting for fork transition
 const originalExpireBlocks = computed(() => {
   if (!currentBlockHeight.value || typeof props.appSpec?.height !== 'number') return null
+  if (!originalExpireSnapshot.value) return null
 
-  return props.appSpec.height + originalExpireSnapshot.value - currentBlockHeight.value
+  const registrationHeight = props.appSpec.height
+  const expireIn = originalExpireSnapshot.value
+
+  // Calculate naive expiry (registration + expire blocks)
+  const naiveExpiry = registrationHeight + expireIn
+
+  let adjustedExpiryBlock = naiveExpiry
+
+  // If app was registered before fork and naive expiry is after fork,
+  // we need to adjust to maintain the intended duration
+  if (registrationHeight < FORK_BLOCK_HEIGHT && naiveExpiry > FORK_BLOCK_HEIGHT) {
+    // Calculate intended subscription duration based on registration time
+    const blockTimeAtRegistration = 2 // Pre-fork: 2 min/block
+    const subscriptionDurationMinutes = expireIn * blockTimeAtRegistration
+
+    // Calculate pre-fork time consumed
+    const preForkBlocks = FORK_BLOCK_HEIGHT - registrationHeight
+    const preForkMinutes = preForkBlocks * 2
+
+    // Calculate remaining time that needs to be in post-fork blocks
+    const remainingMinutes = subscriptionDurationMinutes - preForkMinutes
+
+    // Convert remaining minutes to post-fork blocks
+    const postForkBlocks = remainingMinutes / 0.5
+
+    // Actual expiry block accounting for fork transition
+    adjustedExpiryBlock = FORK_BLOCK_HEIGHT + postForkBlocks
+  }
+
+  // Return remaining blocks: adjusted expiry - current block
+  return adjustedExpiryBlock - currentBlockHeight.value
 })
 
 // 3️⃣  timestamps shown in the UI (fork-aware calculation)
@@ -4001,12 +4339,10 @@ watch(managementAction, (newValue, oldValue) => {
 
     // Determine the correct expire value for the new mode
     if (newValue === 'renewal') {
-      // Switching TO renewal mode: apply selected renewal period
-      const selectedExpire = renewalOptions.value[appDetails.value.renewalIndex]?.value
-      if (selectedExpire) {
-        props.appSpec.expire = selectedExpire
-        console.log('Applied renewal period:', selectedExpire)
-      }
+      // Switching TO renewal mode: apply selected renewal period (with fallback to 88000)
+      const selectedExpire = renewalOptions.value[appDetails.value.renewalIndex]?.value || 88000
+      props.appSpec.expire = selectedExpire
+      console.log('Applied renewal period:', selectedExpire)
     } else if (newValue === 'update') {
       // Switching TO update mode: check if renewal is enabled
       if (renewalEnabled.value) {
@@ -5030,6 +5366,15 @@ onMounted(() => {
   console.log('✅ Tab reset to 0 on mount')
 })
 
+// Cleanup auto-navigation timer on unmount to prevent memory leaks
+onUnmounted(() => {
+  if (autoNavigateTimer) {
+    clearTimeout(autoNavigateTimer)
+    autoNavigateTimer = null
+    console.log('🧹 Cleaned up auto-navigation timer on unmount')
+  }
+})
+
 // Watch resetTrigger - reset to first tab and disable renewal whenever it changes (skip initial value)
 watch(() => props.resetTrigger, (newTrigger, oldTrigger) => {
   console.log('🔄 RESET TRIGGER FIRED', {
@@ -5313,8 +5658,11 @@ const expiryLabel = computed(() => {
   if (props.newApp) {
     expire = renewalOptions.value[appDetails.value.renewalIndex]?.value ?? 88000
   } else {
-    // For cancel mode or renewal enabled, use the actual expire, not the snapshot
-    if (managementAction.value === 'cancel' || renewalEnabled.value) {
+    // Spec < 6 ALWAYS uses fixed 88000 blocks (1 month) regardless of mode
+    if (!versionFlags.value.supportsExpire && managementAction.value !== 'cancel') {
+      expire = 88000
+    } else if (managementAction.value === 'cancel' || renewalEnabled.value) {
+      // For cancel mode or renewal enabled, use the actual expire, not the snapshot
       expire = props.appSpec?.expire ?? 100
     } else {
       // Use original expire snapshot for existing apps when renewal is disabled
@@ -5324,8 +5672,24 @@ const expiryLabel = computed(() => {
     }
   }
 
-  // For new apps or renewal enabled, just show the selected period duration
-  if (props.newApp || renewalEnabled.value) {
+  // For new apps, renewal enabled, cancel mode, or spec < 6 (which always uses fixed 88000 blocks)
+  if (props.newApp || renewalEnabled.value || managementAction.value === 'cancel' || !versionFlags.value.supportsExpire) {
+    // If blockHeight not loaded yet, default to post-fork rate
+    if (!blockHeight.value) {
+      // Default: assume post-fork, use 88000 blocks at 0.5 min/block
+      const totalMinutes = 88000 * 0.5
+      const days = Math.floor(totalMinutes / 1440)
+      const hours = Math.floor((totalMinutes % 1440) / 60)
+      const minutes = totalMinutes % 60
+
+      const parts = []
+      if (days > 0) parts.push(`${days} day${days > 1 ? 's' : ''}`)
+      if (hours > 0) parts.push(`${hours} hour${hours > 1 ? 's' : ''}`)
+      if (minutes > 0) parts.push(`${minutes} minute${minutes !== 1 ? 's' : ''}`)
+
+      return parts.join(', ')
+    }
+
     // Block time: 2 minutes before fork, 30 seconds (0.5 minutes) after fork
     const minutesPerBlock = blockHeight.value >= FORK_BLOCK_HEIGHT ? 0.5 : 2
     const totalMinutes = expire * minutesPerBlock
@@ -5348,15 +5712,30 @@ const expiryLabel = computed(() => {
   if (!current || !height) return ''
 
   // For cancel mode, expire is absolute (100 blocks from now), not relative to registration height
-  const blocksToExpireLocal = managementAction.value === 'cancel'
-    ? expire
-    : height + expire - current
+  // For UPDATE mode spec v6+ without renewal: use fork-aware blocksToExpire if available
+  let blocksToExpireLocal
+  if (managementAction.value === 'cancel') {
+    blocksToExpireLocal = expire
+  } else if (managementAction.value === 'update' && !renewalEnabled.value && versionFlags.value.supportsExpire && blocksToExpire.value !== null) {
+    // Use the fork-aware blocksToExpire calculated in fetchBlockHeight
+    blocksToExpireLocal = blocksToExpire.value
+  } else {
+    // Naive calculation for other cases
+    blocksToExpireLocal = height + expire - current
+  }
+
   if (blocksToExpireLocal < 1) return ''
 
   // Fork-aware calculation: Apps registered before fork need split calculation
   let totalMinutes = 0
 
-  if (height < FORK_BLOCK_HEIGHT && current >= FORK_BLOCK_HEIGHT) {
+  // If we're using pre-calculated fork-aware blocksToExpire (UPDATE mode v6+ without renewal)
+  // then blocksToExpireLocal is already in post-fork blocks, so just convert directly
+  if (managementAction.value === 'update' && !renewalEnabled.value && versionFlags.value.supportsExpire && blocksToExpire.value !== null) {
+    // blocksToExpireLocal is already fork-aware remaining blocks at current rate
+    const minutesPerBlock = current >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+    totalMinutes = blocksToExpireLocal * minutesPerBlock
+  } else if (height < FORK_BLOCK_HEIGHT && current >= FORK_BLOCK_HEIGHT) {
     // App registered before fork, currently after fork
     // Need to calculate: intended duration - elapsed time
 
@@ -5431,10 +5810,15 @@ watch(tab, async newVal => {
       // Otherwise, preserve existing test states (including failures)
 
       // Auto-navigate to Test & Pay tab after 1 second
-      setTimeout(() => {
+      // Clear any existing timer first to prevent race conditions
+      if (autoNavigateTimer) {
+        clearTimeout(autoNavigateTimer)
+      }
+      autoNavigateTimer = setTimeout(() => {
         if (tab.value === 99) { // Only navigate if still on tab 99
           tab.value = 100
         }
+        autoNavigateTimer = null
       }, 1000)
 
       return
@@ -5442,6 +5826,22 @@ watch(tab, async newVal => {
 
     // Spinner on
     isVeryfitying.value = true
+
+    console.log('🔍 Tab 99 BEFORE preserve logic:', {
+      testFinishedBefore: testFinished.value,
+      testableFieldsHaveChanged: testableFieldsHaveChanged.value,
+      testedSpecSnapshot: !!testedSpecSnapshot.value,
+      isNewApp: props.newApp,
+    })
+
+    // Preserve test results if only instances changed (testable fields unchanged)
+    const preserveTestResults = testFinished.value && !testableFieldsHaveChanged.value
+
+    console.log('🔍 Preserve calculation:', {
+      testFinished: testFinished.value,
+      testableFieldsHaveChanged: testableFieldsHaveChanged.value,
+      result: preserveTestResults,
+    })
 
     // Reset all public state
     // Only clear signature/hash if they don't exist
@@ -5456,9 +5856,21 @@ watch(tab, async newVal => {
     blocksToExpire.value = null
     isPropagating.value = false
     testError.value = false
-    testFinished.value = false
+    testFinished.value = preserveTestResults ? true : false
     testRunning.value = false
-    testOutput.value = []
+    if (!preserveTestResults) {
+      testOutput.value = []
+    }
+
+    console.log('🔍 Tab 99 AFTER preserve logic:', {
+      testFinishedAfter: testFinished.value,
+      preserveTestResults,
+    })
+
+    console.log('🔄 Tab 99 validation:', {
+      preserveTestResults,
+      testableFieldsHaveChanged: testableFieldsHaveChanged.value,
+    })
 
     hasValidatedSpec.value = false
     hasCheckedExpiry.value = false
@@ -5468,6 +5880,43 @@ watch(tab, async newVal => {
     let validated = false
     let checkedExpiry = false
     let calculatedPrice = false
+
+    // FIX: Ensure expire is set correctly before validation
+    console.log('🔄 Tab 99 - Before expire fix:', {
+      managementAction: managementAction.value,
+      renewalEnabled: renewalEnabled.value,
+      currentExpire: props.appSpec?.expire,
+      supportsExpire: versionFlags.value.supportsExpire,
+      newApp: props.newApp,
+    })
+
+    if (!props.newApp) {
+      if (managementAction.value === 'renewal') {
+        // RENEWAL mode: use selected renewal period
+        const selectedExpire = renewalOptions.value[appDetails.value.renewalIndex]?.value || 88000
+        props.appSpec.expire = selectedExpire
+        console.log('🔄 Tab 99 - Set expire for renewal mode:', selectedExpire)
+      } else if (managementAction.value === 'update') {
+        // UPDATE mode
+        if (renewalEnabled.value) {
+          // Renewal enabled: use selected renewal period
+          const selectedExpire = renewalOptions.value[appDetails.value.renewalIndex]?.value || 88000
+          props.appSpec.expire = selectedExpire
+          console.log('🔄 Tab 99 - Set expire for update with renewal:', selectedExpire)
+        } else {
+          // Renewal disabled: For v6+, check and fix negative expire
+          console.log('🔄 Tab 99 - Update without renewal, checking expire:', props.appSpec.expire)
+          if (versionFlags.value.supportsExpire && props.appSpec.expire < 0) {
+            props.appSpec.expire = 88000
+            console.log('🔄 Tab 99 - Fixed negative expire for update without renewal:', 88000)
+          } else {
+            console.log('🔄 Tab 99 - Keeping current expire (not negative or not v6+):', props.appSpec.expire)
+          }
+        }
+      }
+    }
+
+    console.log('🔄 Tab 99 - After expire fix:', props.appSpec?.expire)
 
     await fetchBlockHeight()
     checkedExpiry = true
@@ -5517,21 +5966,15 @@ watch(tab, async (newVal, oldVal) => {
       testError: testError.value,
       testRunning: testRunning.value,
       specsHaveChanged: specsHaveChanged.value,
+      testableFieldsHaveChanged: testableFieldsHaveChanged.value,
+      shouldShowTestSection: shouldShowTestSection.value,
       isNewApp: props.newApp,
       appSpecPrice: appSpecPrice.value?.flux,
     })
 
-    // Auto-run test ONLY if test section is visible (same conditions as v-if in template)
-    // Test section shows when: !testFinished && specsHaveChanged && (newApp || paid update) && !paymentProcessing && !paymentConfirmed
-    const testSectionVisible =
-      !testFinished.value &&
-      specsHaveChanged.value &&
-      (props.newApp || appSpecPrice.value?.flux !== 0) &&
-      !paymentProcessing.value &&
-      !paymentConfirmed.value
-
+    // Auto-run test ONLY if test section is visible (use shouldShowTestSection computed)
     const shouldAutoTest =
-      testSectionVisible &&
+      shouldShowTestSection.value &&
       registrationHash.value &&
       !testRunning.value
 
@@ -5545,7 +5988,7 @@ watch(tab, async (newVal, oldVal) => {
       }, 500)
     } else {
       console.log('⏭️ Skipping auto-test:', {
-        reason: !testSectionVisible ? 'Test section not visible (test not required)' :
+        reason: !shouldShowTestSection.value ? 'Test section not visible (test not required)' :
           !registrationHash.value ? 'No registration hash' :
             testRunning.value ? 'Test already running' :
               'Unknown',
@@ -5712,19 +6155,27 @@ async function uploadContactsToFluxStorage() {
 async function verifyAppSpec() {
   appSpecFormated.value = null
   try {
-    const appSpecTemp = JSON.parse(JSON.stringify(props.appSpec))
+    const appSpecTemp = cloneDeep(props.appSpec)
 
     // ========================================================================
     // MARKETPLACE APP REPOTAG CHECK (only for new app registration)
     // ========================================================================
     if (props.newApp && marketPlaceApps.value.length > 0 && appSpecTemp.compose) {
-      // Check if any component uses a marketplace-restricted repotag
+      // List of blocked marketplace app names
+      const blockedMarketplaceApps = ['PresearchNode', 'PresearchNodeLegacy']
+
+      // Check if any component uses a blocked marketplace app repotag
       for (const component of appSpecTemp.compose) {
         if (component.repotag) {
           const repotagLower = component.repotag.toLowerCase()
 
-          // Check against all marketplace apps
+          // Check only against blocked marketplace apps
           for (const marketApp of marketPlaceApps.value) {
+            // Only check if this marketplace app is in the blocked list
+            if (!blockedMarketplaceApps.includes(marketApp.name)) {
+              continue
+            }
+
             if (marketApp.compose && Array.isArray(marketApp.compose)) {
               for (const marketComponent of marketApp.compose) {
                 if (marketComponent.repotag) {
@@ -5888,10 +6339,18 @@ async function verifyAppSpec() {
       if (!appSpecTemp.geolocation) appSpecTemp.geolocation = []
     }
 
-    // Recalculate expire for free updates (only for V6+ specs that support expire, but not for cancel)
-    if (blocksToExpire.value !== 'null' && !renewalEnabled.value && appSpecTemp.version >= 6 && managementAction.value !== 'cancel'){
-      appSpecTemp.expire = blocksToExpire.value
-      console.log(`[V${appSpecTemp.version}] Recalculated expire for free update:`, blocksToExpire.value)
+    // For UPDATE without renewal: Send fork-aware remaining blocks
+    // This represents the time remaining on the current subscription
+    // Backend should recognize this as maintaining current expiry (not extending)
+    if (blocksToExpire.value !== null && !renewalEnabled.value && appSpecTemp.version >= 6 && managementAction.value === 'update'){
+      // Only set expire to blocksToExpire if it's positive (valid remaining blocks)
+      if (blocksToExpire.value > 0) {
+        appSpecTemp.expire = blocksToExpire.value
+        console.log(`[V${appSpecTemp.version}] UPDATE without renewal - sending fork-aware remaining blocks:`, blocksToExpire.value)
+      } else {
+        // If expired/negative, keep original positive value
+        console.log(`[V${appSpecTemp.version}] App expired - keeping original expire:`, appSpecTemp.expire)
+      }
     }
 
     // Check if this is a marketplace app (for tracking/display purposes only)
@@ -5907,6 +6366,21 @@ async function verifyAppSpec() {
     }
 
     delete appSpecTemp.priceUSD
+
+    // Ensure all compose components have repoauth field for v7+ apps
+    if (appSpecTemp.version >= 7 && appSpecTemp.compose && Array.isArray(appSpecTemp.compose)) {
+      appSpecTemp.compose.forEach(component => {
+        if (!component.hasOwnProperty('repoauth')) {
+          component.repoauth = ''
+        }
+
+        // Also ensure secrets field for v7
+        if (appSpecTemp.version === 7 && !component.hasOwnProperty('secrets')) {
+          component.secrets = ''
+        }
+      })
+    }
+
     if (appSpecTemp.version >= 8) {
       console.log('Version 8+ app - checking enterprise mode')
       console.log('UI isPrivateApp state:', isPrivateApp.value)
@@ -6049,17 +6523,12 @@ async function verifyAppSpec() {
       }
     }
     
-    // Use appropriate endpoint based on whether it's a new app or update
-    const verifyEndpoint = props.newApp 
-      ? '/apps/verifyappregistrationspecifications'
-      : '/apps/verifyappupdatespecifications'
-    
-    const response = await props.executeLocalCommand(
-      verifyEndpoint,
-      JSON.stringify(appSpecTemp),
-      null,
-      true,
-    )
+    // Use AppsService for verification (not executeLocalCommand)
+    // This ensures proper load balancing and sticky backend exclusion
+    console.log('[verifyAppSpec] Using AppsService for verification:', props.newApp ? 'registration' : 'update')
+    const response = props.newApp
+      ? await AppsService.appRegistrationVerificaiton(appSpecTemp)
+      : await AppsService.appUpdateVerification(appSpecTemp)
 
     if (response.data?.status !== 'success') {
       console.error('Validation failed. Full response:', response.data)
@@ -6135,15 +6604,11 @@ async function priceForAppSpec() {
     }
 
     // Clone the app spec for price calculation
-    const appSpecForPrice = JSON.parse(JSON.stringify(appSpecFormated.value))
+    const appSpecForPrice = cloneDeep(appSpecFormated.value)
     delete appSpecForPrice.priceUSD
 
-    const response = await props.executeLocalCommand(
-      '/apps/calculatefiatandfluxprice',
-      JSON.stringify(appSpecForPrice),
-      null,
-      true,
-    )
+    // Use AppsService for price calculation (not executeLocalCommand)
+    const response = await AppsService.appPriceUSDandFlux(appSpecForPrice)
 
     console.log('Price calculation response:', response.data)
 
@@ -6246,6 +6711,16 @@ async function fetchBlockHeight() {
             // 1 week = 7 days = 10,080 minutes
             const minMinutes = 7 * 24 * 60 // 10,080 minutes = 1 week
             isExpiryValid.value = remainingMinutes >= minMinutes
+
+            // FIX: Update blocksToExpire with fork-aware remaining blocks (for spec v6+ free updates)
+            // Convert remainingMinutes back to blocks at current (post-fork) rate
+            if (blockHeight.value >= FORK_BLOCK_HEIGHT && remainingMinutes > 0) {
+              blocksToExpire.value = Math.floor(remainingMinutes / 0.5) // Post-fork: 0.5 min/block
+            } else if (remainingMinutes > 0) {
+              blocksToExpire.value = Math.floor(remainingMinutes / 2) // Pre-fork: 2 min/block
+            }
+
+            // If remainingMinutes <= 0, keep negative blocksToExpire (will be caught by validation)
 
             console.log('Expiry validation:', {
               height,
@@ -6354,8 +6829,13 @@ async function propagateSignedMessage() {
 
       // Auto-navigate to Test & Pay tab after 2 seconds
       // The tab watcher will handle auto-starting monitoring for free updates
-      setTimeout(() => {
+      // Clear any existing timer first to prevent race conditions
+      if (autoNavigateTimer) {
+        clearTimeout(autoNavigateTimer)
+      }
+      autoNavigateTimer = setTimeout(() => {
         tab.value = 100
+        autoNavigateTimer = null
       }, 2000)
     } else {
       throw new Error(response.data?.data?.message || response.data?.data || 'Registration failed')
@@ -6386,8 +6866,9 @@ async function propagateSignedMessage() {
 // Get deployment information for payment
 async function getDeploymentInfo() {
   try {
-    const response = await props.executeLocalCommand('/apps/deploymentinformation')
-    
+    // Use AppsService for global deployment info (not executeLocalCommand)
+    const response = await AppsService.appsDeploymentInformation()
+
     if (response.data?.status === 'success') {
       deploymentAddress.value = response.data.data.address
     }
@@ -6447,18 +6928,11 @@ async function testAppInstall() {
     // or message hash (for temporary messages, anyone can test)
     console.log('Testing with hash:', registrationHash.value, 'isNewApp:', props.newApp)
 
-    // Use api.runonflux.io which automatically routes to available nodes
-    const url = `https://api.runonflux.io/apps/testappinstall/${registrationHash.value}`
+    // Use AppsService for testing (not direct axios)
+    // This ensures proper load balancing and sticky backend exclusion
+    console.log('Testing on Flux network via AppsService')
 
-    const axiosConfig = {
-      headers: {
-        zelidauth,
-      },
-    }
-
-    console.log('Testing on Flux network via api.runonflux.io')
-
-    const response = await axios.get(url, axiosConfig)
+    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
 
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
@@ -6560,8 +7034,40 @@ async function testAppInstall() {
     testRunning.value = false
     testFinished.value = true
 
+    /**
+     * CRITICAL: Save tested spec snapshot for new apps ONLY if test succeeded (!testError.value)
+     *
+     * WHY THIS CHECK IS IMPORTANT:
+     * Without the !testError.value check, this edge case breaks:
+     * 1. User tests app with invalid repo → test FAILS (testError = true)
+     * 2. Snapshot saved anyway (broken config!)
+     * 3. User changes CPU from 1 to 2 (non-testable change)
+     * 4. testableFieldsHaveChanged returns FALSE (correct - CPU doesn't need retest)
+     * 5. Payment section shows WITHOUT requiring retest
+     * 6. User tries to deploy BROKEN config that never passed testing
+     *
+     * With the check:
+     * 1. User tests app with invalid repo → test FAILS
+     * 2. Snapshot NOT saved (testedSpecSnapshot.value remains null)
+     * 3. User changes CPU from 1 to 2
+     * 4. testableFieldsHaveChanged returns TRUE (no snapshot = needs test)
+     * 5. Test section forces user to retest
+     * 6. Prevents deployment of broken config
+     *
+     * This ensures we only preserve snapshots of SUCCESSFULLY tested configurations.
+     * Using cloneDeep (lodash-es) for 2-3x better performance vs JSON.parse/stringify.
+     */
+    if (props.newApp && props.appSpec && !testError.value) {
+      const specCopy = cloneDeep(props.appSpec)
+      NON_TESTABLE_FIELDS.forEach(field => delete specCopy[field])
+      testedSpecSnapshot.value = specCopy
+      console.log('📸 Saved tested spec snapshot for new app (test succeeded, excluding non-testable fields:', NON_TESTABLE_FIELDS, ')')
+    } else if (props.newApp && testError.value) {
+      console.log('⚠️ Test failed - NOT saving snapshot (user must retest on any change)')
+    }
+
     await streamTestPhase(t('core.subscriptionManager.testProcessCompleted'), 'info', 200)
-    
+
     console.log('Test completed:', {
       testFinished: testFinished.value,
       testError: testError.value,
@@ -7167,8 +7673,9 @@ const startPaymentMonitoring = async () => {
             paymentCompleted.value = true
 
             // Update the original spec snapshot to the deployed spec (so future changes can be detected)
+            // Using cloneDeep for better performance
             if (props.appSpec) {
-              const specCopy = JSON.parse(JSON.stringify(props.appSpec))
+              const specCopy = cloneDeep(props.appSpec)
               delete specCopy.expire
               originalAppSpecSnapshot.value = specCopy
               console.log('📸 Updated originalAppSpecSnapshot after successful deployment')

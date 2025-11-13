@@ -1091,7 +1091,7 @@ const initSSP = async () => {
     if (response.data.status === "success") {
       fluxStore.setPrivilege(response.data.data.privilage)
       fluxStore.setZelid(sspLogin.zelid)
-      localStorage.setItem("logintype", 'ssp')
+      localStorage.setItem("loginType", 'ssp')
       localStorage.setItem("zelidauth", qs.stringify(sspLogin))
       emit('loginSuccess')
       showToast("success", response.data.data.message)

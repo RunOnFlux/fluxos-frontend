@@ -65,6 +65,7 @@
       kbd-variant="secondary"
     />
     <ListEntry
+      v-if="!expiredAppsTab"
       :title="t('core.appDetailsCard.hash')"
       :data="app.hash"
       title-icon="mdi-pound-box"
@@ -133,6 +134,7 @@
       kbd-variant="success"
     />
     <ListEntry
+      v-if="!expiredAppsTab"
       :title="t('core.appDetailsCard.registeredOnBlockheight')"
       :data="app.height"
       title-icon="mdi-calendar-check"
@@ -148,6 +150,7 @@
       kbd-variant="success"
     />
     <ListEntry
+      v-if="!expiredAppsTab"
       :title="t('core.appDetailsCard.expiresIn')"
       :data="expiresInLabel"
       title-icon="mdi-clock-outline"
@@ -188,6 +191,10 @@ const props = defineProps({
     default: null,
   },
   activeAppsTab: {
+    type: Boolean,
+    default: false,
+  },
+  expiredAppsTab: {
     type: Boolean,
     default: false,
   },

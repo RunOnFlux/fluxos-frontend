@@ -3,7 +3,7 @@
     <div class="modern-loader">
       <div class="loader-ring"></div>
       <VAvatar :size="80" color="primary" variant="flat" class="icon-avatar">
-        <VIcon :icon="icon" :size="iconSize" />
+        <VIcon :icon="icon" :size="iconSize" :class="{ 'rotate-icon': rotateIcon }" />
       </VAvatar>
     </div>
     <h2 v-if="title" :class="titleClass">
@@ -27,6 +27,10 @@ const props = defineProps({
   iconSize: {
     type: [Number, String],
     default: 64,
+  },
+  rotateIcon: {
+    type: Boolean,
+    default: false,
   },
   title: {
     type: String,
@@ -95,6 +99,16 @@ const props = defineProps({
   100% { transform: rotate(360deg); }
 }
 
+/* Icon rotation */
+:deep(.rotate-icon) {
+  animation: spin-reverse 2s linear infinite;
+}
+
+@keyframes spin-reverse {
+  0% { transform: rotate(360deg); }
+  100% { transform: rotate(0deg); }
+}
+
 /* Text gradient effect - similar to games section */
 .loading-container h2 {
   background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
@@ -112,9 +126,14 @@ const props = defineProps({
 }
 
 .loading-container p {
-  opacity: 0.85;
-  font-size: 1.125rem;
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.25rem;
   text-align: center;
+  margin-top: -10px;
+  opacity: 0.9;
 }
 
 @keyframes pulse {

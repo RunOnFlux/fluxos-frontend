@@ -1757,10 +1757,18 @@
             :options="{
               automaticLayout: true,
               fontSize: 14,
+              fontFamily: 'Courier New, Courier, monospace',
+              lineHeight: 19,
               minimap: { enabled: true },
               scrollBeyondLastLine: false,
               wordWrap: 'on',
               tabSize: 2,
+              disableMonospaceOptimizations: true,
+              fontLigatures: false,
+              scrollbar: {
+                horizontal: 'visible',
+                vertical: 'visible',
+              },
             }"
             style="height: 100%;"
             @mount="editorMounted = true"

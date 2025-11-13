@@ -145,10 +145,10 @@ const handleLoginSuccess = () => {
 <template>
   <VerticalNavLayout :nav-items="navItems">
     <template #navbar="{ toggleVerticalOverlayNavActive }">
-      <div class="d-flex h-100 align-center">
+      <div class="d-flex h-100 align-center navbar-content">
         <IconBtn
           id="vertical-nav-toggle-btn"
-          class="ms-n3 d-lg-none mr-1"
+          class="ms-n3 d-lg-none"
           @click="toggleVerticalOverlayNavActive(true)"
         >
           <VIcon
@@ -156,10 +156,8 @@ const handleLoginSuccess = () => {
             icon="tabler-menu-2"
           />
         </IconBtn>
-        <div class="d-none d-sm-flex">
-          <BackendSelector />
-        </div>
-        <FluxAIToggler class="ml-2 mr-2" />
+        <BackendSelector />
+        <FluxAIToggler class="d-none d-sm-flex" />
         <VSpacer />
         <IconBtn
           class="d-none d-lg-block"
@@ -287,6 +285,26 @@ const handleLoginSuccess = () => {
 .v-text-field,
 .v-autocomplete {
   text-transform: none;
+}
+
+/* Navbar responsive layout */
+.navbar-content {
+  gap: 0.5rem;
+  flex-wrap: nowrap;
+  overflow: visible; /* Allow hover effects to show beyond container */
+}
+
+/* Adjust spacing on different breakpoints */
+@media (min-width: 600px) and (max-width: 959px) {
+  .navbar-content {
+    gap: 0.25rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  .navbar-content {
+    gap: 0.75rem;
+  }
 }
 
 /* Vertical Nav Login Button */

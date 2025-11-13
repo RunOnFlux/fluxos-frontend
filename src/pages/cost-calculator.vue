@@ -1042,9 +1042,7 @@ const calculateCost = async (retryCount = 0) => {
 
   try {
     // Post-fork: 88000 blocks = 1 month (30 days)
-    const expire = formData.expire <= 30
-      ? Math.round((formData.expire * 720) / 1000) * 1000
-      : (formData.expire / 30) * 88000
+    const expire = Math.round(((formData.expire / 30) * 88000) / 1000) * 1000
 
     let enterpriseValue = formData.enterprise
 
@@ -1110,12 +1108,24 @@ const calculateCost = async (retryCount = 0) => {
         console.log('Enterprise encryption completed, encrypted length:', enterpriseValue.length)
       } catch (encryptError) {
         console.error('Enterprise encryption failed:', encryptError)
-        throw new Error(`Enterprise encryption failed: ${encryptError.message}`)
+
+        // If the error is about Arcane OS requirement, gracefully disable enterprise mode for cost calculation
+        if (encryptError.message?.includes('Arcane OS') || encryptError.message?.includes('public key')) {
+          console.warn('Enterprise mode disabled for cost calculation - requires Arcane OS node')
+          showToast('warning', t('pages.costCalculator.messages.enterpriseCalculationWarning'))
+          formData.enterprise = ''
+          enterpriseValue = ''
+
+          // Continue with standard pricing instead of throwing error
+        } else {
+          throw new Error(`Enterprise encryption failed: ${encryptError.message}`)
+        }
       }
     }
 
     // For version 8+, when enterprise is enabled, compose and contacts are encrypted and moved to enterprise field
-    const isEnterpriseEnabled = formData.enterprise === 'enterprise'
+    // Re-check enterprise status after potential error handling above
+    const isEnterpriseEnabled = enterpriseValue && formData.enterprise === 'enterprise'
     const composeData = isEnterpriseEnabled ? [] : generateComposeArray()
     const contactsData = isEnterpriseEnabled ? [] : [""]
 
@@ -1277,20 +1287,18 @@ const calculatePresetPrices = async () => {
       }
 
       // Post-fork: 88000 blocks = 1 month (30 days)
-      const expire = tempFormData.expire <= 30
-        ? Math.round((tempFormData.expire * 720) / 1000) * 1000
-        : (tempFormData.expire / 30) * 88000
+      const expire = Math.round(((tempFormData.expire / 30) * 88000) / 1000) * 1000
 
-      // Generate compose array for this preset (use standard port 80)
+      // Generate compose array for this preset (use default port 3000 to match post-selection)
       const composeData = [{
         name: "componentName1",
-        description: "componentDesc1", 
+        description: "componentDesc1",
         repotag: "runonflux/jetpack2:latest",
-        ports: [80], // Standard HTTP port - no enterprise fee
+        ports: [3000], // Default port to match post-selection behavior
         domains: [""],
         environmentParameters: [""],
         commands: [""],
-        containerPorts: [80],
+        containerPorts: [3000],
         containerData: "/tmp",
         cpu: tempFormData.cpu.toString(),
         ram: tempFormData.memory.toString(),

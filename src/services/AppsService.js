@@ -107,8 +107,17 @@ export default {
         zelidauth: zelidauthHeader,
       },
     }
-    
+
     return Api().post('/apps/appupdate', JSON.stringify(data), axiosConfig)
+  },
+  testAppInstall(zelidauthHeader, hash) {
+    const axiosConfig = {
+      headers: {
+        zelidauth: zelidauthHeader,
+      },
+    }
+
+    return Api().get(`/apps/testappinstall/${hash}`, axiosConfig)
   },
   checkCommunication() {
     return Api().get('/flux/checkcommunication')
@@ -141,10 +150,22 @@ export default {
     return Api().get(`/apps/permanentmessages?owner=${owner}`)
   },
   getInstalledAppSpecifics(name) {
-    return Api().get(`/apps/installedapps/${name}`)
+    const axiosConfig = {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    }
+
+    return Api().get(`/apps/installedapps/${name}`, axiosConfig)
   },
   getAppSpecifics(name) {
-    return Api().get(`/apps/appspecifications/${name}`)
+    const axiosConfig = {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    }
+
+    return Api().get(`/apps/appspecifications/${name}`, axiosConfig)
   },
   getAppEncryptedSpecifics(name, zelidauthHeader, data) {
     const axiosConfig = {

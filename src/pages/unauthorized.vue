@@ -1,11 +1,13 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 import miscMaskDark from '@images/pages/misc-mask-dark.png'
 import miscMaskLight from '@images/pages/misc-mask-light.png'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
 import { useSEONoIndex } from '@/composables/useSEO'
 
 const { t } = useI18n()
+const router = useRouter()
 
 definePage({
   alias: '/pages/misc/not-authorized',
@@ -19,6 +21,9 @@ const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
 
 // Prevent indexing of unauthorized access page
 useSEONoIndex()
+function goHome() {
+  router.push('/')
+}
 </script>
 
 <template>
@@ -31,7 +36,8 @@ useSEONoIndex()
 
     <VBtn
       class="mb-11"
-      to="/"
+      style="z-index: 9999; position: relative; pointer-events: auto;"
+      @click="goHome"
     >
       {{ t('pages.unauthorized.backToHome') }}
     </VBtn>
@@ -45,7 +51,7 @@ useSEONoIndex()
       :max-height="$vuetify.display.smAndDown ? 350 : 500"
       class="mx-auto"
       />
-      </div> 
+      </div>
     -->
 
     <img

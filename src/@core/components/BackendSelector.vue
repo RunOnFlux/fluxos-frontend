@@ -2,6 +2,7 @@
 import { computed, onMounted, ref } from "vue"
 import { useI18n } from 'vue-i18n'
 import { eventBus } from "@/utils/eventBus"
+import { clearStickyBackendDNS } from "@/utils/stickyBackend"
 
 const { t } = useI18n()
 
@@ -81,6 +82,7 @@ const saveBackend = input => {
 
   backendUrl.value = normalizedUrl
   localStorage.setItem(STORAGE_KEY, normalizedUrl)
+  clearStickyBackendDNS() // Clear sticky backend on manual selection
   eventBus.emit("backendURLChanged", normalizedUrl)
 
   const isPredefined = ["https://api.runonflux.io", normalizeUrl(detectedURL.value)].includes(normalizedUrl)
@@ -172,7 +174,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="bookmark-wrapper d-flex align-center d-none d-md-flex">
+  <div class="bookmark-wrapper d-flex align-center">
     <VMenu
       v-model:open="dropdownOpen"
       offset-y
@@ -181,11 +183,30 @@ onMounted(() => {
       open-on-focus
     >
       <template #activator="{ props: activatorProps }">
+        <!-- Icon only on small screens -->
         <VBtn
           v-bind="activatorProps"
           variant="outlined"
           color="grey"
           size="small"
+          class="d-flex d-md-none backend-icon-btn"
+        >
+          <VIcon
+            icon="mdi-server-network"
+            size="20"
+          />
+          <VTooltip activator="parent" location="bottom">
+            {{ backendUrl }}
+          </VTooltip>
+        </VBtn>
+
+        <!-- Full button with text on medium+ screens -->
+        <VBtn
+          v-bind="activatorProps"
+          variant="outlined"
+          color="grey"
+          size="small"
+          class="d-none d-md-flex"
         >
           <VIcon
             icon="mdi-server-network"
@@ -273,5 +294,10 @@ onMounted(() => {
 .v-text-field,
 .v-autocomplete {
   text-transform: none;
+}
+
+.backend-icon-btn {
+  min-width: auto !important;
+  padding: 0 8px !important;
 }
 </style>

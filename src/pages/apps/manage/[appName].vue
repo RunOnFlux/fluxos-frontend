@@ -38,15 +38,18 @@
         <VSelect
           v-if="selectedIp"
           v-model="selectedIp"
-          :items="instances.data.map((i) => i.ip)"
+          v-model:menu="ipMenuOpen"
+          :items="filteredIPs"
           variant="outlined"
           density="compact"
           hide-details
           class="flex-grow-1"
           style="min-width: 0"
+          :menu-props="{ maxHeight: 300, scrollToSelectedItem: false }"
           @update:model-value="async (value) => {
             try {
               selectedIp = value
+              ipSearchQuery = ''
               await getInstalledApplicationSpecifics()
               if (currentTab === '4') {
                 initCharts()
@@ -64,6 +67,30 @@
               size="20"
               class="mr-1"
             />
+          </template>
+          <template #item="{ item, props }">
+            <VListItem
+              v-bind="props"
+              :title="item.value"
+              color="success"
+            />
+          </template>
+          <template #prepend-item>
+            <div class="pa-2">
+              <VTextField
+                v-model="ipSearchQuery"
+                density="compact"
+                variant="outlined"
+                placeholder="Search IP..."
+                hide-details
+                clearable
+                @click:clear="() => ipSearchQuery = ''"
+                @keydown.stop
+                @click.stop
+                @mousedown.stop
+              />
+            </div>
+            <VDivider class="mt-2" />
           </template>
         </VSelect>
 
@@ -162,707 +189,785 @@
     </VCard>
   </div>
 
-  <VTabs
-    v-model="currentTab"
-    show-arrows
-    class="v-tabs-pill"
-    style="margin-top: 1px; margin-bottom: 1px"
+  <!-- Loading state during initial mount -->
+  <LoadingSpinner
+    v-if="isInitialLoading"
+    icon="mdi-hexagon-multiple"
+    :icon-size="68"
+    rotate-icon
+    :title="t('pages.apps.manage.messages.loadingTitle')"
+    :message="t('pages.apps.manage.messages.loadingMessage')"
+  />
+
+  <!-- No instances available error -->
+  <VCard
+    v-else-if="!selectedIp"
+    class="mt-4 mb-1"
   >
-    <VTab
-      v-for="tab in tabs"
-      :key="tab.value"
-      :value="tab.value"
-    >
-      {{ tab.label }}
-    </VTab>
-  </VTabs>
-  <VCard>
     <VCardText>
-      <VWindow v-model="currentTab">
-        <VWindowItem
-          v-for="tab in tabs"
-          :key="tab.value"
-          :value="tab.value"
-        >
-          <div
-            v-if="appSpecification && tab.value === '1'"
-            class="pa-0"
-          >
-            <SmartChip
-              v-model="status"
-              icon="mdi-cube-outline"
-              :text-on="t('pages.apps.manage.specification.local')"
-              :text-off="t('pages.apps.manage.specification.global')"
-              icon-after-true="mdi-wifi"
-              icon-after-false="mdi-wifi-off"
-              color="info"
-              variant="tonal"
-              rounded="md"
-              :icon-state="isSynced"
-            />
-            <AppDetailsCard
-              :app="appSpecification"
-              :get-new-expire-label="labelForExpire(appSpecification.expire, appSpecification.height)"
-              class="mt-2 px-4"
-            />
-            <div>
-              <div class="d-flex align-center justify-start my-3">
-                <VChip
-                  color="info"
-                  variant="tonal"
-                  class="composition-chip w-100"
-                >
-                  <VIcon
-                    size="22"
-                    class="ml-1"
-                  >
-                    mdi-hexagon-multiple
-                  </VIcon>
-                  <span
-                    class="ml-1"
-                    style="font-size: 18px"
-                  >{{ t('pages.apps.manage.composition') }}</span>
-                </VChip>
+      <VAlert
+        color="error"
+        prominent
+        class="mb-0"
+      >
+        <template #default>
+          <!-- Mobile layout: icon left, text right, button bottom right -->
+          <div class="d-flex d-sm-none flex-column w-100">
+            <div class="d-flex align-start w-100">
+              <VIcon size="40" class="mr-3 flex-shrink-0">mdi-server-off</VIcon>
+              <div class="flex-grow-1">
+                <div class="font-weight-bold mb-1 text-h6 text-white">{{ t('pages.apps.manage.messages.noInstancesAvailableTitle') }}</div>
+                <div class="text-body-2 text-white">
+                  {{ t('pages.apps.manage.messages.noInstancesAvailableMessage') }}
+                </div>
               </div>
-
-              <VTabs
-                v-model="activeTabLocalIndexSpec"
-                align-tabs="start"
-                background-color="transparent"
-                color="primary"
-                hide-slider
-                density="comfortable"
-                class="v-tabs-pill"
+            </div>
+            <div class="d-flex justify-end mt-3">
+              <VBtn
+                color="white"
+                variant="text"
+                size="large"
+                :loading="isDisabled"
+                @click="refreshInfo()"
               >
-                <VTab
-                  v-for="(component, index) in normalizeComponents(appSpecification)"
-                  :key="index"
-                  :value="index"
-                  class="v-tabs-pill text-no-transform"
-                >
-                  <VIcon
-                    size="18"
-                    class="mr-1"
-                  >
-                    mdi-cube
-                  </VIcon>
-                  {{ component.name }}
-                </VTab>
-              </VTabs>
-
-              <VWindow
-                v-model="activeTabLocalIndexSpec"
-                class="pa-4"
-                :touch="false"
-              >
-                <VWindowItem
-                  v-for="(component, index) in normalizeComponents(appSpecification)"
-                  :key="index"
-                  :value="index"
-                >
-                  <VSlideYTransition mode="out-in">
-                    <div>
-                      <ComponentDetails
-                        :component="component"
-                        :app-name="appSpecification.name || ''"
-                        :index="index"
-                      />
-                    </div>
-                  </VSlideYTransition>
-                </VWindowItem>
-              </VWindow>
+                <VIcon class="mr-2">mdi-refresh</VIcon>
+                {{ t('pages.apps.manage.messages.retry') }}
+              </VBtn>
             </div>
           </div>
 
-          <div v-else-if="appSpecification && tab.value === '2'">
-            <JsonViewer
-              v-if="inspectResult.length > 0"
-              :data="inspectResult"
-              :title="t('pages.apps.manage.titles.inspectDetails')"
-            />
-            <VProgressLinear
-              v-else-if="!apiError && inspectResult.length === 0"
-              indeterminate
-              color="primary"
-            />
-            <VAlert
-              v-if="apiError"
-              color="error"
-              icon="$error"
-              :text="alertMessageText"
-            />
-          </div>
-
-          <div v-else-if="appSpecification && tab.value === '3'">
-            <JsonViewer
-              v-if="changesResult.length > 0"
-              :data="changesResult"
-              :title="t('pages.apps.manage.titles.fileChanges')"
-              icon="mdi-file-arrow-left-right-outline"
-              :message="t('pages.apps.manage.messages.fileChangesDescription')"
-            />
-            <VProgressLinear
-              v-else-if="!apiError && changesResult.length === 0"
-              indeterminate
-              color="primary"
-            />
-            <VAlert
-              v-if="apiError"
-              color="error"
-              icon="$error"
-              :text="alertMessageText"
-            />
-          </div>
-
-          <div v-else-if="appSpecification && tab.value === '4'">
-            <!-- Header -->
-            <VRow class="mb-2">
-              <VCol
-                cols="12"
-                class="d-flex align-center"
-              >
-                <div class="d-flex align-center justify-space-between mb-2 w-100 border-frame">
-                  <div class="d-flex align-center">
-                    <VAvatar
-                      size="35"
-                      color="success"
-                      variant="tonal"
-                      rounded="sm"
-                      class="mr-2 ml-1"
-                    >
-                      <VIcon size="28">
-                        mdi-chart-bar
-                      </VIcon>
-                    </VAvatar>
-                    <span class="text-h5">{{ overviewTitle }}</span>
-                  </div>
-
-                  <div>
-                    <VSwitch
-                      v-model="enableHistoryStatistics"
-                      class="mr-1"
-                      :label="t('pages.apps.manage.labels.historyStatistics')"
-                      inset
-                      @change="enableHistoryStatisticsChange"
-                    />
-                  </div>
-                </div>
-              </VCol>
-            </VRow>
-            <VAlert
-              v-if="apiError"
-              color="error"
-              icon="$error"
-              :text="alertMessageText"
-              class="mb-8"
-            />
-            <!-- Controls -->
-            <VRow
-              class="d-flex align-center mb-4 flex-nowrap"
-              no-gutters
+          <!-- Desktop layout: icon left, text center, button right -->
+          <div class="d-none d-sm-flex align-center w-100">
+            <VIcon class="mr-3" size="40">mdi-server-off</VIcon>
+            <div class="flex-grow-1">
+              <div class="font-weight-bold mb-1 text-h6 text-white">{{ t('pages.apps.manage.messages.noInstancesAvailableTitle') }}</div>
+              <div class="text-body-2 text-white">
+                {{ t('pages.apps.manage.messages.noInstancesAvailableMessage') }}
+              </div>
+            </div>
+            <VBtn
+              color="white"
+              variant="text"
+              size="large"
+              :loading="isDisabled"
+              @click="refreshInfo()"
+              class="ml-4"
             >
-              <!-- Left Component Selector -->
-              <VCol
-                class="d-flex align-center gap-2 flex-nowrap"
-                style="width: 100%;"
+              <VIcon class="mr-2">mdi-refresh</VIcon>
+              {{ t('pages.apps.manage.messages.retry') }}
+            </VBtn>
+          </div>
+        </template>
+      </VAlert>
+    </VCardText>
+  </VCard>
+
+  <!-- Tabs and content - only shown after loading complete AND instances available -->
+  <template v-else>
+    <VTabs
+      v-model="currentTab"
+      show-arrows
+      class="v-tabs-pill"
+      style="margin-top: 1px; margin-bottom: 1px"
+    >
+      <VTab
+        v-for="tab in tabs"
+        :key="tab.value"
+        :value="tab.value"
+      >
+        {{ tab.label }}
+      </VTab>
+    </VTabs>
+    <VCard>
+      <VCardText>
+        <VWindow v-model="currentTab">
+          <VWindowItem
+            v-for="tab in tabs"
+            :key="tab.value"
+            :value="tab.value"
+          >
+            <div
+              v-if="appSpecification && tab.value === '1'"
+              class="pa-0"
+            >
+              <SmartChip
+                v-model="status"
+                icon="mdi-cube-outline"
+                :text-on="t('pages.apps.manage.specification.local')"
+                :text-off="t('pages.apps.manage.specification.global')"
+                icon-after-true="mdi-wifi"
+                icon-after-false="mdi-wifi-off"
+                color="info"
+                variant="tonal"
+                rounded="md"
+                :icon-state="isSynced"
+              />
+              <AppDetailsCard
+                :app="appSpecification"
+                :get-new-expire-label="labelForExpire(appSpecification.expire, appSpecification.height)"
+                class="mt-2 px-4"
+              />
+              <div>
+                <div class="d-flex align-center justify-start my-3">
+                  <VChip
+                    color="info"
+                    variant="tonal"
+                    class="composition-chip w-100"
+                  >
+                    <VIcon
+                      size="22"
+                      class="ml-1"
+                    >
+                      mdi-hexagon-multiple
+                    </VIcon>
+                    <span
+                      class="ml-1"
+                      style="font-size: 18px"
+                    >{{ t('pages.apps.manage.composition') }}</span>
+                  </VChip>
+                </div>
+
+                <VTabs
+                  v-model="activeTabLocalIndexSpec"
+                  align-tabs="start"
+                  background-color="transparent"
+                  color="primary"
+                  hide-slider
+                  density="comfortable"
+                  class="v-tabs-pill"
+                >
+                  <VTab
+                    v-for="(component, index) in normalizeComponents(appSpecification)"
+                    :key="index"
+                    :value="index"
+                    class="v-tabs-pill text-no-transform"
+                  >
+                    <VIcon
+                      size="18"
+                      class="mr-1"
+                    >
+                      mdi-cube
+                    </VIcon>
+                    {{ component.name }}
+                  </VTab>
+                </VTabs>
+
+                <VWindow
+                  v-model="activeTabLocalIndexSpec"
+                  class="pa-4"
+                  :touch="false"
+                >
+                  <VWindowItem
+                    v-for="(component, index) in normalizeComponents(appSpecification)"
+                    :key="index"
+                    :value="index"
+                  >
+                    <VSlideYTransition mode="out-in">
+                      <div>
+                        <ComponentDetails
+                          :component="component"
+                          :app-name="appSpecification.name || ''"
+                          :index="index"
+                        />
+                      </div>
+                    </VSlideYTransition>
+                  </VWindowItem>
+                </VWindow>
+              </div>
+            </div>
+
+            <div v-else-if="appSpecification && tab.value === '2'">
+              <JsonViewer
+                v-if="inspectResult.length > 0"
+                :data="inspectResult"
+                :title="t('pages.apps.manage.titles.inspectDetails')"
+              />
+              <VProgressLinear
+                v-else-if="!apiError && inspectResult.length === 0"
+                indeterminate
+                color="primary"
+              />
+              <VAlert
+                v-if="apiError"
+                color="error"
+                icon="$error"
+                :text="alertMessageText"
+              />
+            </div>
+
+            <div v-else-if="appSpecification && tab.value === '3'">
+              <JsonViewer
+                v-if="changesResult.length > 0"
+                :data="changesResult"
+                :title="t('pages.apps.manage.titles.fileChanges')"
+                icon="mdi-file-arrow-left-right-outline"
+                :message="t('pages.apps.manage.messages.fileChangesDescription')"
+              />
+              <VProgressLinear
+                v-else-if="!apiError && changesResult.length === 0"
+                indeterminate
+                color="primary"
+              />
+              <VAlert
+                v-if="apiError"
+                color="error"
+                icon="$error"
+                :text="alertMessageText"
+              />
+            </div>
+
+            <div v-else-if="appSpecification && tab.value === '4'">
+              <!-- Header -->
+              <VRow class="mb-2">
+                <VCol
+                  cols="12"
+                  class="d-flex align-center"
+                >
+                  <div class="d-flex align-center justify-space-between mb-2 w-100 border-frame">
+                    <div class="d-flex align-center">
+                      <VAvatar
+                        size="35"
+                        color="success"
+                        variant="tonal"
+                        rounded="sm"
+                        class="mr-2 ml-1"
+                      >
+                        <VIcon size="28">
+                          mdi-chart-bar
+                        </VIcon>
+                      </VAvatar>
+                      <span class="text-h5">{{ overviewTitle }}</span>
+                    </div>
+
+                    <div>
+                      <VSwitch
+                        v-model="enableHistoryStatistics"
+                        class="mr-1"
+                        :label="t('pages.apps.manage.labels.historyStatistics')"
+                        inset
+                        @change="enableHistoryStatisticsChange"
+                      />
+                    </div>
+                  </div>
+                </VCol>
+              </VRow>
+              <VAlert
+                v-if="apiError"
+                color="error"
+                icon="$error"
+                :text="alertMessageText"
+                class="mb-8"
+              />
+              <!-- Controls -->
+              <VRow
+                class="d-flex align-center mb-4 flex-nowrap"
+                no-gutters
               >
-                <template v-if="appSpecification">
-                  <VSelect
-                    v-model="selectedContainerMonitoring"
-                    :items="appSpecification.compose?.map((c) => c.name)"
-                    :label="selectedContainerMonitoring ? t('pages.apps.manage.labels.component') : t('pages.apps.manage.labels.selectComponent')"
+                <!-- Left Component Selector -->
+                <VCol
+                  class="d-flex align-center gap-2 flex-nowrap"
+                  style="width: 100%;"
+                >
+                  <template v-if="appSpecification">
+                    <VSelect
+                      v-model="selectedContainerMonitoring"
+                      :items="appSpecification.compose?.map((c) => c.name)"
+                      :label="selectedContainerMonitoring ? t('pages.apps.manage.labels.component') : t('pages.apps.manage.labels.selectComponent')"
+                      density="comfortable"
+                      style="max-width: 320px;"
+                      :disabled="isComposeSingle"
+                      class="centered-select"
+                    >
+                      <template #prepend-inner>
+                        <VIcon
+                          icon="mdi-docker"
+                          size="20"
+                        />
+                      </template>
+                    </VSelect>
+                  </template>
+                  <VBtn
+                    v-if="enableHistoryStatistics"
+                    icon
+                    color="success"
                     density="comfortable"
-                    style="max-width: 320px;"
-                    :disabled="isComposeSingle"
-                    class="centered-select"
+                    variant="tonal"
+                    @click="fetchStats"
+                  >
+                    <VIcon size="24">
+                      mdi-refresh
+                    </VIcon>
+                  </VBtn>
+
+                  <VBtn
+                    v-if="!enableHistoryStatistics && buttonStats === true"
+                    icon
+                    color="success"
+                    density="comfortable"
+                    variant="tonal"
+                    @click="startPollingStats(true)"
+                  >
+                    <VIcon size="24">
+                      mdi-refresh
+                    </VIcon>
+                  </VBtn>
+                </VCol>
+
+                <!-- Right Controls -->
+                <VCol class="d-flex flex-wrap align-center justify-end gap-4">
+                  <!-- Points Selector -->
+                  <VSelect
+                    v-if="!enableHistoryStatistics"
+                    v-model="selectedPoints"
+                    :items="pointsOptions"
+                    :label="t('pages.apps.manage.labels.points')"
+                    density="comfortable"
+                    style="max-width: 110px;"
                   >
                     <template #prepend-inner>
                       <VIcon
-                        icon="mdi-docker"
-                        size="20"
+                        icon="mdi-file-chart"
+                        size="16"
                       />
                     </template>
                   </VSelect>
-                </template>
-                <VBtn
-                  v-if="enableHistoryStatistics"
-                  icon
-                  color="success"
-                  density="comfortable"
-                  variant="tonal"
-                  @click="fetchStats"
-                >
-                  <VIcon size="24">
-                    mdi-refresh
-                  </VIcon>
-                </VBtn>
 
-                <VBtn
-                  v-if="!enableHistoryStatistics && buttonStats === true"
-                  icon
-                  color="success"
-                  density="comfortable"
-                  variant="tonal"
-                  @click="startPollingStats(true)"
-                >
-                  <VIcon size="24">
-                    mdi-refresh
-                  </VIcon>
-                </VBtn>
-              </VCol>
-
-              <!-- Right Controls -->
-              <VCol class="d-flex flex-wrap align-center justify-end gap-4">
-                <!-- Points Selector -->
-                <VSelect
-                  v-if="!enableHistoryStatistics"
-                  v-model="selectedPoints"
-                  :items="pointsOptions"
-                  :label="t('pages.apps.manage.labels.points')"
-                  density="comfortable"
-                  style="max-width: 110px;"
-                >
-                  <template #prepend-inner>
-                    <VIcon
-                      icon="mdi-file-chart"
-                      size="16"
-                    />
-                  </template>
-                </VSelect>
-
-                <!-- Refresh Rate Selector -->
-                <VSelect
-                  v-if="!enableHistoryStatistics"
-                  v-model="refreshRateMonitoring"
-                  :items="refreshOptions"
-                  :label="t('pages.apps.manage.labels.refreshRate')"
-                  density="comfortable"
-                  style="max-width: 110px;"
-                >
-                  <template #prepend-inner>
-                    <VIcon
-                      icon="mdi-clock-time-eight-outline"
-                      size="16"
-                    />
-                  </template>
-                </VSelect>
-
-                <!-- Time Range Selector -->
-                <VSelect
-                  v-if="enableHistoryStatistics"
-                  v-model="selectedTimeRange"
-                  :items="timeOptions"
-                  :label="t('pages.apps.manage.labels.timeRange')"
-                  density="comfortable"
-                  style="max-width: 140px;"
-                  @update:model-value="fetchStats"
-                />
-              </VCol>
-            </VRow>
-            <!-- Charts Grid -->
-            <VRow dense>
-              <VCol
-                cols="12"
-                md="6"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="26"
-                    >
-                      mdi-chart-line
-                    </VIcon>
-                    <span class="text-h6">CPU usage</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      Displays CPU usage over time. Helps identify high load periods and
-                      performance bottlenecks.
-                    </VTooltip>
-                  </div>
-                  <canvas id="cpuChart" />
-                </VCard>
-              </VCol>
-              <VCol
-                cols="12"
-                md="6"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="26"
-                    >
-                      mdi-chart-line
-                    </VIcon>
-                    <span class="text-h6">Memory usage</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      Displays memory usage over time. Helps identify memory leaks and
-                      optimize performance.
-                    </VTooltip>
-                  </div>
-                  <canvas id="memoryChart" />
-                </VCard>
-              </VCol>
-              <VCol
-                cols="12"
-                md="6"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="26"
-                    >
-                      mdi-chart-line
-                    </VIcon>
-                    <span class="text-h6">Network usage (aggregate)</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      TX = Transmit, RX = Receive. Useful for spotting bottlenecks and
-                      measuring bandwidth.
-                    </VTooltip>
-                  </div>
-                  <canvas id="networkChart" />
-                </VCard>
-              </VCol>
-
-              <VCol
-                cols="12"
-                md="6"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="26"
-                    >
-                      mdi-chart-line
-                    </VIcon>
-                    <span class="text-h6">I/O usage (aggregate)</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      Displays read/write disk activity. Useful for detecting performance
-                      bottlenecks.
-                    </VTooltip>
-                  </div>
-                  <canvas id="ioChart" />
-                </VCard>
-              </VCol>
-
-              <VCol
-                cols="12"
-                md="6"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="25"
-                    >
-                      mdi-chart-line
-                    </VIcon>
-                    <span class="text-h6">Persistent Storage</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      Tracks storage that persists across container restarts. Prevents
-                      disk overuse.
-                    </VTooltip>
-                  </div>
-                  <canvas id="diskPersistentChart" />
-                </VCard>
-              </VCol>
-
-              <VCol
-                cols="12"
-                md="6"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="26"
-                    >
-                      mdi-chart-line
-                    </VIcon>
-                    <span class="text-h6">Root Filesystem (rootfs)</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      Temporary container storage. Monitoring rootfs helps avoid space
-                      issues.
-                    </VTooltip>
-                  </div>
-                  <canvas id="diskFileSystemChart" />
-                </VCard>
-              </VCol>
-
-              <VCol
-                v-if="!enableHistoryStatistics"
-                cols="12"
-                class="pa-2"
-              >
-                <VCard class="pa-3 mb-2">
-                  <div class="d-flex align-center mb-2">
-                    <VIcon
-                      class="mr-2"
-                      size="26"
-                    >
-                      mdi-format-list-bulleted
-                    </VIcon>
-                    <span class="text-h6">Processes</span>
-                    <VTooltip bottom>
-                      <template #activator="{ props }">
-                        <VIcon
-                          size="18"
-                          class="ml-2"
-                          v-bind="props"
-                        >
-                          mdi-information
-                        </VIcon>
-                      </template>
-                      List of running processes in container.
-                    </VTooltip>
-                  </div>
-                  <VTextField
-                    v-model="search"
-                    :placeholder="t('pages.apps.manage.placeholders.searchProcesses')"
-                    class="mb-2"
+                  <!-- Refresh Rate Selector -->
+                  <VSelect
+                    v-if="!enableHistoryStatistics"
+                    v-model="refreshRateMonitoring"
+                    :items="refreshOptions"
+                    :label="t('pages.apps.manage.labels.refreshRate')"
+                    density="comfortable"
+                    style="max-width: 110px;"
                   >
-                    <template #append-inner>
-                      <VIcon size="20">
-                        tabler-search
-                      </VIcon>
+                    <template #prepend-inner>
+                      <VIcon
+                        icon="mdi-clock-time-eight-outline"
+                        size="16"
+                      />
                     </template>
-                  </VTextField>
-                  <VSheet
-                    border
-                    rounded
-                    class="mt-4"
-                    style="max-height: none; overflow: visible"
-                  >
-                    <VDataTable
-                      :items="paginatedProcesses"
-                      :headers="titles"
-                      dense
-                      class="table-monitoring"
-                      :items-per-page="perPage"
-                      hide-default-footer
-                      :no-data-text="t('pages.apps.manage.messages.noRecordsAvailable')"
-                    />
-                  </VSheet>
-                  <VRow class="align-center justify-space-between mt-2">
-                    <VCol cols="auto">
-                      <VPagination
-                        v-if="filteredProcesses.length"
-                        v-model="currentPage"
-                        :length="Math.ceil(filteredProcesses.length / perPage)"
-                        total-visible="5"
-                        size="small"
-                        @input="scrollToPagination"
-                      />
-                    </VCol>
-                    <VCol
-                      cols="auto"
-                      class="d-flex align-center"
+                  </VSelect>
+
+                  <!-- Time Range Selector -->
+                  <VSelect
+                    v-if="enableHistoryStatistics"
+                    v-model="selectedTimeRange"
+                    :items="timeOptions"
+                    :label="t('pages.apps.manage.labels.timeRange')"
+                    density="comfortable"
+                    style="max-width: 140px;"
+                    @update:model-value="fetchStats"
+                  />
+                </VCol>
+              </VRow>
+              <!-- Charts Grid -->
+              <VRow dense>
+                <VCol
+                  cols="12"
+                  md="6"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="26"
+                      >
+                        mdi-chart-line
+                      </VIcon>
+                      <span class="text-h6">CPU usage</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        Displays CPU usage over time. Helps identify high load periods and
+                        performance bottlenecks.
+                      </VTooltip>
+                    </div>
+                    <canvas id="cpuChart" />
+                  </VCard>
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="6"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="26"
+                      >
+                        mdi-chart-line
+                      </VIcon>
+                      <span class="text-h6">Memory usage</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        Displays memory usage over time. Helps identify memory leaks and
+                        optimize performance.
+                      </VTooltip>
+                    </div>
+                    <canvas id="memoryChart" />
+                  </VCard>
+                </VCol>
+                <VCol
+                  cols="12"
+                  md="6"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="26"
+                      >
+                        mdi-chart-line
+                      </VIcon>
+                      <span class="text-h6">Network usage (aggregate)</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        TX = Transmit, RX = Receive. Useful for spotting bottlenecks and
+                        measuring bandwidth.
+                      </VTooltip>
+                    </div>
+                    <canvas id="networkChart" />
+                  </VCard>
+                </VCol>
+
+                <VCol
+                  cols="12"
+                  md="6"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="26"
+                      >
+                        mdi-chart-line
+                      </VIcon>
+                      <span class="text-h6">I/O usage (aggregate)</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        Displays read/write disk activity. Useful for detecting performance
+                        bottlenecks.
+                      </VTooltip>
+                    </div>
+                    <canvas id="ioChart" />
+                  </VCard>
+                </VCol>
+
+                <VCol
+                  cols="12"
+                  md="6"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="25"
+                      >
+                        mdi-chart-line
+                      </VIcon>
+                      <span class="text-h6">Persistent Storage</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        Tracks storage that persists across container restarts. Prevents
+                        disk overuse.
+                      </VTooltip>
+                    </div>
+                    <canvas id="diskPersistentChart" />
+                  </VCard>
+                </VCol>
+
+                <VCol
+                  cols="12"
+                  md="6"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="26"
+                      >
+                        mdi-chart-line
+                      </VIcon>
+                      <span class="text-h6">Root Filesystem (rootfs)</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        Temporary container storage. Monitoring rootfs helps avoid space
+                        issues.
+                      </VTooltip>
+                    </div>
+                    <canvas id="diskFileSystemChart" />
+                  </VCard>
+                </VCol>
+
+                <VCol
+                  v-if="!enableHistoryStatistics"
+                  cols="12"
+                  class="pa-2"
+                >
+                  <VCard class="pa-3 mb-2">
+                    <div class="d-flex align-center mb-2">
+                      <VIcon
+                        class="mr-2"
+                        size="26"
+                      >
+                        mdi-format-list-bulleted
+                      </VIcon>
+                      <span class="text-h6">Processes</span>
+                      <VTooltip bottom>
+                        <template #activator="{ props }">
+                          <VIcon
+                            size="18"
+                            class="ml-2"
+                            v-bind="props"
+                          >
+                            mdi-information
+                          </VIcon>
+                        </template>
+                        List of running processes in container.
+                      </VTooltip>
+                    </div>
+                    <VTextField
+                      v-model="search"
+                      :placeholder="t('pages.apps.manage.placeholders.searchProcesses')"
+                      class="mb-2"
                     >
-                      <span class="mr-2">{{ t('pages.apps.manage.labels.itemsPerPage') }}:</span>
-                      <VSelect
-                        v-model="perPage"
-                        :items="perPageOptions"
-                        density="compact"
-                        hide-details
-                        style="max-width: 100px"
-                        @change="scrollToPagination"
+                      <template #append-inner>
+                        <VIcon size="20">
+                          tabler-search
+                        </VIcon>
+                      </template>
+                    </VTextField>
+                    <VSheet
+                      border
+                      rounded
+                      class="mt-4"
+                      style="max-height: none; overflow: visible"
+                    >
+                      <VDataTable
+                        :items="paginatedProcesses"
+                        :headers="titles"
+                        dense
+                        class="table-monitoring"
+                        :items-per-page="perPage"
+                        hide-default-footer
+                        :no-data-text="t('pages.apps.manage.messages.noRecordsAvailable')"
                       />
-                    </VCol>
-                  </VRow>
-                </VCard>
-              </VCol>
-            </VRow>
-          </div>
+                    </VSheet>
+                    <VRow class="align-center justify-space-between mt-2">
+                      <VCol cols="auto">
+                        <VPagination
+                          v-if="filteredProcesses.length"
+                          v-model="currentPage"
+                          :length="Math.ceil(filteredProcesses.length / perPage)"
+                          total-visible="5"
+                          size="small"
+                          @input="scrollToPagination"
+                        />
+                      </VCol>
+                      <VCol
+                        cols="auto"
+                        class="d-flex align-center"
+                      >
+                        <span class="mr-2">{{ t('pages.apps.manage.labels.itemsPerPage') }}:</span>
+                        <VSelect
+                          v-model="perPage"
+                          :items="perPageOptions"
+                          density="compact"
+                          hide-details
+                          style="max-width: 100px"
+                          @change="scrollToPagination"
+                        />
+                      </VCol>
+                    </VRow>
+                  </VCard>
+                </VCol>
+              </VRow>
+            </div>
 
-          <div v-else-if="appSpecification && tab.value === '5'">
-            <LogViewer
-              :app-specification="appSpecification"
-              :execute-local-command="executeLocalCommand"
-            />
-          </div>
+            <div v-else-if="appSpecification && tab.value === '5'">
+              <LogViewer
+                :app-specification="appSpecification"
+                :execute-local-command="executeLocalCommand"
+              />
+            </div>
 
-          <div v-else-if="appSpecification && tab.value === '6'">
-            <Terminal
-              :app-spec="appSpecification"
-              :selected-ip="selectedIp"
-            />
-            <VolumeBrowser
-              :app-spec="appSpecification"
-              :is-compose-single="isComposeSingle"
-              :execute-local-command="executeLocalCommand"
-              :ip-access="ipAccess"
-              :selected-ip="selectedIp"
-            />
-          </div>
+            <div v-else-if="appSpecification && tab.value === '6'">
+              <Terminal
+                :app-spec="appSpecification"
+                :selected-ip="selectedIp"
+                :logout="logout"
+              />
+              <VolumeBrowser
+                :app-spec="appSpecification"
+                :is-compose-single="isComposeSingle"
+                :execute-local-command="executeLocalCommand"
+                :ip-access="ipAccess"
+                :selected-ip="selectedIp"
+              />
+            </div>
 
-          <div v-else-if="appSpecification && tab.value === '7'">
-            <AppControl 
-              :app-spec="appSpecification"
-              :execute-local-command="executeLocalCommand"
-              :instances="instances.data.map((i) => i.ip)"
-              :current-instance-ip="selectedIp"
-              :ip-access="ipAccess"
-              :is-compose-single="isComposeSingle"
-              :logout="logout"
-            />
-          </div>
+            <div v-else-if="appSpecification && tab.value === '7'">
+              <AppControl 
+                :app-spec="appSpecification"
+                :execute-local-command="executeLocalCommand"
+                :instances="instances.data.map((i) => i.ip)"
+                :current-instance-ip="selectedIp"
+                :ip-access="ipAccess"
+                :is-compose-single="isComposeSingle"
+                :logout="logout"
+              />
+            </div>
 
-          <div v-else-if="appSpecification?.compose && tab.value === '8' && privilege !== 'fluxteam'">
-            <BackupAndRestore
-              :key="currentTab" 
-              :app-spec="appSpecification"
-              :execute-local-command="executeLocalCommand"
-              :ip-access="ipAccess"
-              :is-compose-single="isComposeSingle"
-              :current-instance-ip="selectedIp" 
-            />
-          </div>
+            <div v-else-if="appSpecification?.compose && tab.value === '8' && privilege !== 'fluxteam'">
+              <BackupAndRestore
+                :key="currentTab" 
+                :app-spec="appSpecification"
+                :execute-local-command="executeLocalCommand"
+                :ip-access="ipAccess"
+                :is-compose-single="isComposeSingle"
+                :current-instance-ip="selectedIp" 
+              />
+            </div>
 
-          <div v-else-if="appSpecification && tab.value === '9'">
-            <RunningInstances
-              :key="runningInstancesKey" 
-              :master-slave-app="masterSlaveApp"
-              :master-ip="masterIP"
-              :instances="instances"
-              :app-specs="appSpecification"
-              :selected-node="selectedIp"
-            />
-          </div>
+            <div v-else-if="appSpecification && tab.value === '9'">
+              <RunningInstances
+                :key="runningInstancesKey" 
+                :master-slave-app="masterSlaveApp"
+                :master-ip="masterIP"
+                :instances="instances"
+                :app-specs="appSpecification"
+                :selected-node="selectedIp"
+              />
+            </div>
 
-          <div v-else-if="appSpecificationGlobal && tab.value === '10'">
-            <SubscriptionManager :app-spec="appSpecForSubscription" :new-app="false" :execute-local-command="executeLocalCommand" :reset-trigger="subscriptionResetTrigger" @spec-converted="handleSpecConverted" />
-          </div>
+            <div v-else-if="appSpecificationGlobal && tab.value === '10'">
+              <SubscriptionManager :app-spec="appSpecForSubscription" :new-app="false" :execute-local-command="executeLocalCommand" :reset-trigger="subscriptionResetTrigger" :instance-ready="!!selectedIp" @spec-converted="handleSpecConverted" />
+            </div>
 
           
           
 
 
-          <div v-else-if="InstalledLoading">
-            <VProgressLinear
-              indeterminate
-              color="primary"
-            />
-          </div>
-          <VAlert
-            v-if="InstalledApiError"
-            color="error"
-            density="comfortable"
-            class="pa-3"
-          >
-            <template #default>
-              <div class="d-flex align-center justify-start w-100">
-                <VIcon
-                  icon="mdi-alert-circle"
-                  class="mr-2"
-                  size="34"
-                />
-                <div class="flex-grow-1">
-                  <div class="font-weight-bold mb-1">Unable to Load Installed App Specification</div>
-                  <div class="text-body-2">The app specification is empty or invalid. This may indicate the app is not properly installed.</div>
+            <div v-else-if="InstalledLoading">
+              <VProgressLinear
+                indeterminate
+                color="primary"
+              />
+            </div>
+            <VAlert
+              v-if="InstalledApiError"
+              color="error"
+              density="comfortable"
+              class="pa-3"
+            >
+              <template #default>
+                <div class="d-flex align-center justify-start w-100">
+                  <VIcon
+                    icon="mdi-alert-circle"
+                    class="mr-2"
+                    size="34"
+                  />
+                  <div class="flex-grow-1">
+                    <div class="font-weight-bold mb-1">Unable to Load Installed App Specification</div>
+                    <div class="text-body-2">The app specification is empty or invalid. This may indicate the app is not properly installed.</div>
+                  </div>
+                  <VBtn
+                    icon="mdi-refresh"
+                    color="white"
+                    variant="text"
+                    :loading="InstalledLoading"
+                    @click="getInstalledAppSpecification()"
+                    class="ml-2"
+                  />
                 </div>
-                <VBtn
-                  icon="mdi-refresh"
-                  color="white"
-                  variant="text"
-                  :loading="InstalledLoading"
-                  @click="getInstalledAppSpecification()"
-                  class="ml-2"
-                />
-              </div>
-            </template>
-          </VAlert>
-          <VAlert
-            v-if="apiError"
-            color="error"
-            density="comfortable"
-            class="pa-3"
-          >
-            <template #default>
-              <div class="d-flex align-center justify-start w-100">
-                <VIcon
-                  icon="mdi-alert-decagram"
-                  class="mr-2"
-                  size="34"
-                />
-                <div class="flex-grow-1">{{ alertMessageText }}</div>
-                <VBtn
-                  icon="mdi-refresh"
-                  color="white"
-                  variant="text"
-                  :class="{ 'v-icon--disabled': isDisabled }"
-                  :loading="isDisabled"
-                  @click="!isDisabled && refreshInfo()"
-                  class="ml-2"
-                />
-              </div>
-            </template>
-          </VAlert>
-        </VWindowItem>
-      </VWindow>
-    </VCardText>
-  </VCard>
+              </template>
+            </VAlert>
+            <VAlert
+              v-if="apiError && !InstalledApiError"
+              color="error"
+              density="comfortable"
+              class="pa-3"
+            >
+              <template #default>
+                <div class="d-flex align-center justify-start w-100">
+                  <VIcon
+                    icon="mdi-alert-decagram"
+                    class="mr-2"
+                    size="34"
+                  />
+                  <div class="flex-grow-1">{{ alertMessageText }}</div>
+                  <VBtn
+                    icon="mdi-refresh"
+                    color="white"
+                    variant="text"
+                    :class="{ 'v-icon--disabled': isDisabled }"
+                    :loading="isDisabled"
+                    @click="!isDisabled && refreshInfo()"
+                    class="ml-2"
+                  />
+                </div>
+              </template>
+            </VAlert>
+          </VWindowItem>
+        </VWindow>
+      </VCardText>
+    </VCard>
+  </template>
+
   <VSnackbar
     v-model="snackbar"
     :color="snackbarColor"
@@ -876,7 +981,7 @@
 
 
 <script setup>
-import { ref, computed, watch } from "vue"
+import { ref, computed, watch, nextTick } from "vue"
 import { useRouter, useRoute } from "vue-router"
 import { eventBus } from "@/utils/eventBus"
 import axios from "axios"
@@ -891,6 +996,8 @@ import DaemonService from "@/services/DaemonService"
 import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
 import { useI18n } from 'vue-i18n'
+import { clearStickyBackendDNS } from "@/utils/stickyBackend"
+import LoadingSpinner from "@/components/Marketplace/LoadingSpinner.vue"
 import {
   Chart, LineController, LineElement, CategoryScale, LinearScale, PointElement, Tooltip, Legend, Title, Filler,
 } from 'chart.js'
@@ -925,6 +1032,7 @@ const appName = ref(useRoute().params.appName)
 const selectedIp = ref('')
 const masterIP = ref(null)
 const isDisabled = ref(false)
+const isInitialLoading = ref(true)
 const masterSlaveApp = ref(false)
 const ipAccess = ref(false)
 const ipAddress = ref("")
@@ -1128,6 +1236,31 @@ const instances = ref({
   data: [],
 })
 
+const ipSearchQuery = ref('')
+const ipMenuOpen = ref(false)
+
+const filteredIPs = computed(() => {
+  if (!ipSearchQuery.value) {
+    return instances.value.data.map(i => i.ip)
+  }
+  
+  return instances.value.data
+    .map(i => i.ip)
+    .filter(ip => ip.toLowerCase().includes(ipSearchQuery.value.toLowerCase()))
+})
+
+watch(ipMenuOpen, isOpen => {
+  if (isOpen) {
+    nextTick(() => {
+      setTimeout(() => {
+        const menuContent = document.querySelector('.v-overlay--active .v-list')
+        if (menuContent) {
+          menuContent.scrollTop = 0
+        }
+      }, 50)
+    })
+  }
+})
 
 // Chart references
 const diskPersistentChart = shallowRef(null)
@@ -1192,6 +1325,9 @@ watch(currentTab, async (newVal, oldVal) => {
 
 watch(selectedContainerMonitoring, async newValue => {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     if (newValue) {
       buttonStats.value = false
       if (!enableHistoryStatistics.value) {
@@ -1210,6 +1346,9 @@ watch(selectedContainerMonitoring, async newValue => {
 
 watch(refreshRateMonitoring, () => {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     if (!enableHistoryStatistics.value) {
       if (timerStats.value) stopPollingStats()
       startPollingStats()
@@ -1233,11 +1372,21 @@ watch(status, () => {
 
 //Tab Control
 watch(currentTab, async newVal => {
+  // Check authorization and potentially trigger logout
+  await getZelidAuthority()
+
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   try {
     if (newVal === '1') {
       appSpecification.value = null
-      await getInstalledApplicationSpecifics()
-      await getGlobalApplicationSpecifics()
+
+      // Only fetch if selectedIp is set (skip during initial mount)
+      if (selectedIp.value) {
+        await getInstalledApplicationSpecifics()
+        await getGlobalApplicationSpecifics()
+      }
     } else if (newVal === '2') {
       inspectResult.value = []
       await getApplicationData()
@@ -1248,7 +1397,11 @@ watch(currentTab, async newVal => {
       processes.value = []
       await nextTick()
       initCharts()
-      setTimeout(() => {
+      setTimeout(async () => {
+        // Check authorization again before starting polling
+        await getZelidAuthority()
+        if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
         try {
           startPollingStats()
         } catch (err) {
@@ -1370,8 +1523,10 @@ async function executeLocalCommand(
     }
     
     apiError.value = false
-    getZelidAuthority()
-    if (!globalZelidAuthorized.value) return
+    await getZelidAuthority()
+
+    // If logout is in progress or not authorized, silently return without error
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
 
     const [host, port = 16127] = selectedIp.value?.split(":") || []
 
@@ -1428,20 +1583,31 @@ function goBack() {
 
 //Instance Switch 
 async function getInstancesForDropDown() {
-  const response = await AppsService.getAppLocation(appName.value)
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
 
-  selectedIp.value = ''
+  const response = await AppsService.getAppLocation(appName.value)
 
   if (response.data.status === "error") {
     // showToast("danger", response.data.data.message || response.data.data)
-
+    // Don't clear selectedIp on error - keep existing selection
     return
   }
 
-  masterIP.value = null
+  // Store previous IP to check if still valid
+  const previousIp = selectedIp.value
   instances.value.data = response.data.data
+  const previousIpStillValid = previousIp && instances.value.data.some(inst => inst.ip === previousIp)
 
+  console.log('[getInstancesForDropDown] previousIp:', previousIp)
+  console.log('[getInstancesForDropDown] instances count:', instances.value.data.length)
+  console.log('[getInstancesForDropDown] previousIpStillValid:', previousIpStillValid)
+  console.log('[getInstancesForDropDown] masterSlaveApp:', masterSlaveApp.value)
+
+  // Handle master/slave apps - always detect and set master IP
   if (masterSlaveApp.value) {
+    masterIP.value = null
+
     const url = `https://${appName.value}.app.runonflux.io/fluxstatistics?scope=${appName.value}apprunonfluxio;json;norefresh`
     let errorFdm = false
 
@@ -1481,36 +1647,40 @@ async function getInstancesForDropDown() {
 
     if (!masterIP.value) masterIP.value = t('pages.apps.manage.messages.definingNewPrimary')
     if (!selectedIp.value) selectedIp.value = instances.value.data[0]?.ip
-  } else if (!selectedIp.value) {
-    selectedIp.value = instances.value.data[0]?.ip
+    console.log('[getInstancesForDropDown] Master/slave - selectedIp set to:', selectedIp.value)
   }
 
-  // IP access logic
-  if (ipAccess.value) {
-    const withoutProtocol = ipAddress.value.replace("http://", "")
-
-    const desiredIP =
-      config.apiPort === 16127 ? withoutProtocol : `${withoutProtocol}:${config.apiPort}`
-
-    const match = instances.value.data.find(instance => instance.ip === desiredIP)
-    if (match) selectedIp.value = desiredIP
-  } else {
-    const regex = /https:\/\/(\d+-\d+-\d+-\d+)-(\d+)/
-    const match = ipAddress.value.match(regex)
-    if (match) {
-      const ip = match[1].replace(/-/g, ".")
-      const desiredIP = config.apiPort === 16127 ? ip : `${ip}:${config.apiPort}`
-      const match = instances.value.data.find(instance => instance.ip === desiredIP)
-      if (match) selectedIp.value = desiredIP
+  // Handle regular apps - preserve selection if still valid
+  else {
+    // If no previous selection OR previous IP is no longer available, set to first instance
+    if (!previousIp || !previousIpStillValid) {
+      selectedIp.value = instances.value.data[0]?.ip
+      console.log('[getInstancesForDropDown] Regular app - selectedIp set to:', selectedIp.value)
+    } else {
+      console.log('[getInstancesForDropDown] Regular app - preserving selectedIp:', selectedIp.value)
     }
+
+    // else: keep the existing selectedIp.value (preserve user selection)
   }
 
+  console.log('[getInstancesForDropDown] FINAL selectedIp.value:', selectedIp.value)
   instances.value.totalRows = instances.value.data.length
 }
 
 async function refreshInfo() {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   isDisabled.value = true
   await new Promise(resolve => setTimeout(resolve, 3000))
+
+  // Check again after delay
+  if (!globalZelidAuthorized.value || logoutTrigger.value) {
+    isDisabled.value = false
+    
+    return
+  }
+
   await getInstancesForDropDown()
   await getApplicationManagementAndStatus(false)
   isDisabled.value = false
@@ -1539,26 +1709,39 @@ async function logout() {
   if (logoutTrigger.value) return
   logoutTrigger.value = true
 
+  // Mark as unauthorized immediately to prevent new API calls
+  globalZelidAuthorized.value = false
+
   const zelidauth = localStorage.getItem("zelidauth")
 
+  // Show logout message FIRST before clearing auth
+  console.log("Session expired, logging out...")
+  showToast("warning", t('pages.apps.manage.messages.sessionExpired'))
+
+  // Small delay to allow toast to show and prevent race with ongoing API calls
+  await delay(300)
+
+  // Now clear auth data
   localStorage.removeItem("zelidauth")
   localStorage.removeItem("loginType")
+  clearStickyBackendDNS() // Clear sticky backend on auto logout
   fluxStore.setPrivilege("none")
   fluxStore.setZelid("")
 
   try {
     await IDService.logoutCurrentSession(zelidauth)
   } catch (e) {
-    console.log(e)
-  }
+    console.error("Logout API error (suppressed):", e)
 
-  console.log("Session expired, logging out...")
-  showToast("warning", t('pages.apps.manage.messages.sessionExpired'))
+    // Don't show error to user during auto-logout
+  }
 
   try {
     await firebase.auth().signOut()
   } catch (error) {
-    console.log(error)
+    console.error("Firebase logout error (suppressed):", error)
+
+    // Don't show error to user during auto-logout
   }
 
   if (route.path === "/") {
@@ -1619,6 +1802,11 @@ async function getApplicationManagementAndStatus(skip = false) {
 // async version – drop into <script setup>
 // ------------------------------------------
 async function getInstalledApplicationSpecifics(silent = false) {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
+  console.log('[getInstalledApplicationSpecifics] START - selectedIp.value:', selectedIp.value)
+
   appSpecification.value = null
   await delay(1000)
   InstalledLoading.value = true
@@ -1627,6 +1815,9 @@ async function getInstalledApplicationSpecifics(silent = false) {
   // Try up to 5 backends before giving up (don't query 100 nodes!)
   const availableInstances = instances.value.data || []
   const currentIp = selectedIp.value
+
+  console.log('[getInstalledApplicationSpecifics] currentIp:', currentIp)
+  console.log('[getInstalledApplicationSpecifics] availableInstances:', availableInstances.length)
 
   // Build list of IPs to try: current IP first, then up to 4 others
   const MAX_BACKENDS_TO_TRY = 5
@@ -1641,9 +1832,11 @@ async function getInstalledApplicationSpecifics(silent = false) {
     attemptCount++
     console.log(`Attempting to fetch app spec from backend ${attemptCount}/${ipsToTry.length}: ${tryIp}`)
 
+    // Store original IP before trying (needed for error restoration)
+    const originalIp = selectedIp.value
+
     try {
       // Temporarily switch to this IP
-      const originalIp = selectedIp.value
       selectedIp.value = tryIp
 
       const response = await executeLocalCommand(
@@ -1711,14 +1904,17 @@ async function getInstalledApplicationSpecifics(silent = false) {
       callResponse.value.data   = spec
       appSpecification.value    = spec
       InstalledLoading.value = false
-      
+
+      // Restore original IP on success
+      selectedIp.value = originalIp
+
       return // Exit successfully
 
     } catch (error) {
       lastError = error.message || 'Connection error'
 
       // Restore original IP on error
-      selectedIp.value = currentIp
+      selectedIp.value = originalIp
       continue
     }
   }
@@ -1734,6 +1930,9 @@ async function getInstalledApplicationSpecifics(silent = false) {
 }
 
 async function getDecryptedEnterpriseFields(options = {}) {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return null
+
   const local = options.local ?? false
 
   /* 1. original owner */
@@ -1817,6 +2016,9 @@ async function getDecryptedEnterpriseFields(options = {}) {
 
 
 async function getGlobalApplicationSpecifics(silent = false) {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   const response = await AppsService.getAppSpecifics(appName.value)
 
   if (!response) return
@@ -1845,6 +2047,9 @@ async function getGlobalApplicationSpecifics(silent = false) {
 }
 
 async function appsGetListAllApps() {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   const response = await executeLocalCommand("/apps/listallapps", null, null, true)
 
   getAllAppsResponse.value.status = response?.data?.status
@@ -1856,6 +2061,9 @@ async function appsGetListAllApps() {
 
 async function getDaemonBlockCount() {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     const response = await DaemonService.getBlockCount()
     if (response.data.status === "success") {
       currentBlockHeight.value = response.data.data
@@ -1872,6 +2080,9 @@ async function getDaemonBlockCount() {
 
 //Docker Information Section
 const getApplicationData = async (mode = "inspect") => {
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   const isInspect = mode === "inspect"
 
   const callData = []
@@ -2090,6 +2301,13 @@ function processStatsData(statsData, timeStamp = null) {
 
 async function fetchStats() {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) {
+      stopPollingStats()
+      
+      return
+    }
+
     if (!appSpecification.value) return
 
     if (appSpecification.value?.version >= 4 && !selectedContainerMonitoring.value) {
@@ -2306,6 +2524,9 @@ function formatDataSize(bytes, options = { base: 10, round: 1 }) {
 
 async function fetchProcesses(appname, continer, ip) {
   try {
+    // Skip if logout is in progress or not authorized
+    if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
     const response = await executeLocalCommand(`/apps/apptop/${appname}`)
     if (response.data.status === "error") {
       showToast("danger", response.data.data.message || response.data.data)
@@ -2785,9 +3006,19 @@ function initCharts() {
 function startPollingStats(action = false) {
   console.log(`⏱ startPollingStats...`)
 
+  // Skip if logout is in progress or not authorized
+  if (!globalZelidAuthorized.value || logoutTrigger.value) return
+
   stopPollingStats()
 
   timerStats.value = setInterval(async () => {
+    // Check authorization in each interval iteration
+    if (!globalZelidAuthorized.value || logoutTrigger.value) {
+      stopPollingStats()
+      
+      return
+    }
+
     if (pollingInProgress) return
     pollingInProgress = true
     await fetchStats()
@@ -2860,24 +3091,31 @@ function clearCharts() {
 }
 
 onMounted(async () => {
-  const stored = localStorage.getItem('zelidauth')
-  if (stored) zelidauthOwner.value = stored
-  eventBus.on("updateAppStatus", appsGetListAllApps)
-  eventBus.on("updateInstanceList", refreshInfo)
+  try {
+    const stored = localStorage.getItem('zelidauth')
+    if (stored) zelidauthOwner.value = stored
+    eventBus.on("updateAppStatus", appsGetListAllApps)
+    eventBus.on("updateInstanceList", refreshInfo)
 
-  const { hostname } = window.location
-  const regex = /[A-Z]/gi
-  if (hostname.match(regex)) {
-    ipAccess.value = false
-  } else {
-    ipAccess.value = true
+    const { hostname } = window.location
+    const regex = /[A-Z]/gi
+    if (hostname.match(regex)) {
+      ipAccess.value = false
+    } else {
+      ipAccess.value = true
+    }
+    await getZelidAuthority()
+    await getDaemonBlockCount()
+    await getGlobalApplicationSpecifics()
+    await getInstancesForDropDown()
+    await getInstalledApplicationSpecifics()
+    await getApplicationManagementAndStatus()
+  } catch (error) {
+    console.error('Error during initial mount:', error)
+  } finally {
+    // Always stop loading, even if there were errors
+    isInitialLoading.value = false
   }
-  await getZelidAuthority()
-  await getDaemonBlockCount()
-  await getGlobalApplicationSpecifics()
-  await getInstancesForDropDown()
-  await getInstalledApplicationSpecifics()
-  await getApplicationManagementAndStatus()
 })
 
 onUnmounted(() => {

@@ -31,6 +31,12 @@
  *   Root: version, name, description, owner, contacts, geolocation, expire, nodes, staticip, enterprise, instances, compose
  *   Component: name, description, repotag, ports, containerPorts, environmentParameters, commands, containerData, domains, repoauth, cpu, ram, hdd
  *
+ * FORK-AWARE DEFAULTS:
+ *   - Fork block height: 2,020,000 (chain became 4x faster after this block)
+ *   - Pre-fork default expire: 22,000 blocks (~1 month at 2 min/block)
+ *   - Post-fork default expire: 88,000 blocks (~1 month at 0.5 min/block)
+ *   - All conversions use fork-aware defaults based on app registration height
+ *
  * NOTE: When a new version is released (V9, V10, etc.), update:
  * 1. LATEST_SPEC_VERSION constant below
  * 2. Add new convertVxToLatest function for the new version
@@ -46,6 +52,18 @@ const FALLBACK_API_URL = 'https://api.runonflux.io'
 
 // Current latest version - UPDATE THIS when new versions are released
 export const LATEST_SPEC_VERSION = 8
+
+// Fork block height - chain became 4x faster after this block
+const FORK_BLOCK_HEIGHT = 2020000
+
+/**
+ * Get fork-aware default expire value based on registration height
+ * @param {number} height - Block height when app was registered
+ * @returns {number} Default expire value (22000 pre-fork, 88000 post-fork)
+ */
+function getDefaultExpire(height) {
+  return height >= FORK_BLOCK_HEIGHT ? 88000 : 22000
+}
 
 /**
  * Convert V1 spec to latest version
@@ -71,7 +89,7 @@ function convertV1ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: [],
-    expire: 22000,
+    expire: getDefaultExpire(appSpec.height),
     geolocation: [],
     instances: 3,
     nodes: [],
@@ -109,7 +127,7 @@ function convertV2ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: [],
-    expire: 22000,
+    expire: getDefaultExpire(appSpec.height),
     geolocation: [],
     instances: 3,
     nodes: [],
@@ -147,7 +165,7 @@ function convertV3ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: [],
-    expire: 22000,
+    expire: getDefaultExpire(appSpec.height),
     geolocation: [],
     instances: appSpec.instances || 3,
     nodes: [],
@@ -185,7 +203,7 @@ function convertV4ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: [],
-    expire: 22000,
+    expire: getDefaultExpire(appSpec.height),
     geolocation: [],
     instances: appSpec.instances || 3,
     nodes: [],
@@ -222,7 +240,7 @@ function convertV5ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: appSpec.contacts || [],
-    expire: 22000,
+    expire: getDefaultExpire(appSpec.height),
     geolocation: appSpec.geolocation || [],
     instances: appSpec.instances || 3,
     nodes: [],
@@ -259,7 +277,7 @@ function convertV6ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: appSpec.contacts || [],
-    expire: appSpec.expire || 22000,
+    expire: appSpec.expire || getDefaultExpire(appSpec.height),
     geolocation: appSpec.geolocation || [],
     instances: appSpec.instances || 3,
     nodes: [],
@@ -296,7 +314,7 @@ function convertV7ToLatest(appSpec) {
     name: appSpec.name,
     description: appSpec.description,
     contacts: appSpec.contacts || [],
-    expire: appSpec.expire || 22000,
+    expire: appSpec.expire || getDefaultExpire(appSpec.height),
     geolocation: appSpec.geolocation || [],
     instances: appSpec.instances || 3,
     nodes: [], // V7 nodes are not migrated (used for different purpose)
