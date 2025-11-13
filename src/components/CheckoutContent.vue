@@ -546,6 +546,8 @@ import qs from 'qs'
 import { payWithSSP, payWithZelcore } from '@/utils/walletService'
 import { useTheme } from 'vuetify'
 import { useI18n } from 'vue-i18n'
+import PaymentService from '@/services/PaymentService'
+import { getDetectedBackendURL } from '@/utils/backend'
 
 // Props
 const props = defineProps({
@@ -1120,11 +1122,26 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
         // Use Zelcore wallet
         console.log('Opening Zelcore wallet for payment')
         try {
+          // Generate payment request ID for callback
+          let callbackUrl = null
+          try {
+            const paymentResponse = await PaymentService.paymentRequest()
+            if (paymentResponse.data.status === 'success') {
+              const paymentId = paymentResponse.data.data.paymentId
+              const backendURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+              callbackUrl = `${backendURL}/payment/verifypayment?paymentid=${paymentId}`
+              console.log('Generated payment callback:', callbackUrl)
+            }
+          } catch (err) {
+            console.warn('Failed to generate payment callback, proceeding without:', err)
+          }
+
           await payWithZelcore({
             address: fluxPayment.value.paymentAddr,
             amount: amount,
             message: message,
             coin: 'flux',
+            callback: callbackUrl,
           })
 
           // Set payment processing state and start monitoring
@@ -1271,11 +1288,26 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
         // Use Zelcore wallet
         console.log('Opening Zelcore wallet for payment')
         try {
+          // Generate payment request ID for callback
+          let callbackUrl = null
+          try {
+            const paymentResponse = await PaymentService.paymentRequest()
+            if (paymentResponse.data.status === 'success') {
+              const paymentId = paymentResponse.data.data.paymentId
+              const backendURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+              callbackUrl = `${backendURL}/payment/verifypayment?paymentid=${paymentId}`
+              console.log('Generated payment callback:', callbackUrl)
+            }
+          } catch (err) {
+            console.warn('Failed to generate payment callback, proceeding without:', err)
+          }
+
           await payWithZelcore({
             address: paymentPayload.payment_addr,
             amount: amount,
             message: message,
             coin: 'flux',
+            callback: callbackUrl,
           })
 
           // Set payment processing state and start monitoring

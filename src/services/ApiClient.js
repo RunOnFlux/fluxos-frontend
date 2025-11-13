@@ -100,11 +100,14 @@ export default function Api() {
     error => Promise.reject(error),
   )
 
-  // Response interceptor: Capture node IP from loginphrase response
+  // Response interceptor: Capture node IP from loginphrase and paymentrequest responses
   instance.interceptors.response.use(
     response => {
-      // Check if this is a loginphrase response AND we're using round-robin backend
-      if (response.config.url && response.config.url.includes('/id/loginphrase') && isRoundRobinBackend(baseURL)) {
+      // Check if this is a loginphrase or paymentrequest response AND we're using round-robin backend
+      const isLoginPhrase = response.config.url && response.config.url.includes('/id/loginphrase')
+      const isPaymentRequest = response.config.url && response.config.url.includes('/payment/paymentrequest')
+
+      if ((isLoginPhrase || isPaymentRequest) && isRoundRobinBackend(baseURL)) {
         const nodeIP = extractNodeIPFromResponse(response)
         if (nodeIP) {
           const dnsFormat = ipToDNSFormat(nodeIP)
@@ -115,10 +118,10 @@ export default function Api() {
             console.warn('[ApiClient] Could not convert node IP to DNS format:', nodeIP)
           }
         } else {
-          console.warn('[ApiClient] Could not extract node IP from loginphrase response')
+          console.warn('[ApiClient] Could not extract node IP from response')
         }
       }
-      
+
       return response
     },
     error => {

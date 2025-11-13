@@ -1049,11 +1049,18 @@ export async function signWithZelcore(message, zelid, callbackUrl = null, icon =
  * @param {number} params.amount - Amount to pay
  * @param {string} params.message - Payment message/memo
  * @param {string} [params.coin='zelcash'] - Coin type
+ * @param {string} [params.callback] - Optional callback URL for payment confirmation
  * @returns {Promise<void>} Opens Zelcore payment protocol
  */
-export async function payWithZelcore({ address, amount, message, coin = 'zelcash' }) {
+export async function payWithZelcore({ address, amount, message, coin = 'zelcash', callback }) {
   try {
-    const protocol = `zel:?action=pay&coin=${coin}&address=${address}&amount=${amount}&message=${message}`
+    let protocol = `zel:?action=pay&coin=${coin}&address=${address}&amount=${amount}&message=${message}`
+
+    // Add callback parameter if provided
+    if (callback) {
+      protocol += `&callback=${encodeURIComponent(callback)}`
+      console.log('[Zelcore Payment] Callback URL added:', callback)
+    }
 
     // Try using window.zelcore.protocol if available (extension)
     if (window.zelcore && typeof window.zelcore.protocol === 'function') {

@@ -84,7 +84,7 @@ export default {
       loginPhrase,
     }
 
-    
+
     return Api().post('/id/checkprivilege', qs.stringify(data))
   },
 }
