@@ -120,29 +120,29 @@
     "trustpilot": {
       "title": "Zaufali nam tysiące osób",
       "ratingLabel": "Doskonały",
-      "rating": "4.4 na 5",
-      "reviews": "Na podstawie 10 recenzji",
+      "rating": "4.5 na 5",
+      "reviews": "Na podstawie 16 recenzji",
       "basedOn": "Na podstawie {count} recenzji",
-      "reviewsCount": "10",
-      "score": "4.4",
+      "reviewsCount": "16",
+      "score": "4.5",
       "outOf": "na 5",
       "verifiedCustomer": "Zweryfikowany klient",
       "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
       "viewAllReviews": "Zobacz wszystkie recenzje na Trustpilot",
       "sampleReviews": {
         "review1": {
-          "text": "Udało mi się stosunkowo łatwo wdrożyć moją aplikację na tej platformie.",
-          "author": "Christopher Taylor",
+          "text": "Byłem zaskoczony jak tani jest hosting w Runonflux. Jak dotąd bez problemów.",
+          "author": "Tuukka Tinkala",
           "rating": "5"
         },
         "review2": {
-          "text": "Najlepsza wartość jaką znalazłem, nigdy nie padła i super szybko się ładuje.",
-          "author": "Alex Francis Biancheri",
+          "text": "Czas pracy bez awarii jest niewiarygodny, a redundancja wbudowana. Ceny nie do pobicia w porównaniu do gigantów.",
+          "author": "ST",
           "rating": "5"
         },
         "review3": {
-          "text": "Niskie opóźnienia i imponująca wydajność w bardzo przystępnej cenie.",
-          "author": "Valter Nuno Da Silva",
+          "text": "Płynne wdrożenie naszych aplikacji w chmurze Flux. Bardzo łatwe w użyciu, bezproblemowe. Nie wymaga KYC",
+          "author": "Cyber fly",
           "rating": "5"
         }
       }

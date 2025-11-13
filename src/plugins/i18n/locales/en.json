@@ -120,29 +120,29 @@
     "trustpilot": {
       "title": "Trusted by Thousands",
       "ratingLabel": "Excellent",
-      "rating": "4.4 out of 5",
-      "reviews": "Based on 10 reviews",
+      "rating": "4.5 out of 5",
+      "reviews": "Based on 16 reviews",
       "basedOn": "Based on {count} reviews",
-      "reviewsCount": "10",
-      "score": "4.4",
+      "reviewsCount": "16",
+      "score": "4.5",
       "outOf": "out of 5",
       "verifiedCustomer": "Verified Customer",
       "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
       "viewAllReviews": "View all reviews on Trustpilot",
       "sampleReviews": {
         "review1": {
-          "text": "I was able to deploy my app relatively easy on this platform.",
-          "author": "Christopher Taylor",
+          "text": "I was surprised how cheap hosting on Runonflux was. No issues so far.",
+          "author": "Tuukka Tinkala",
           "rating": "5"
         },
         "review2": {
-          "text": "Best value I found, it never went down and super fast in loading.",
-          "author": "Alex Francis Biancheri",
+          "text": "Uptime is incredible and redundancy is built in. Prices can't be beat when compared to the hyperscalers.",
+          "author": "ST",
           "rating": "5"
         },
         "review3": {
-          "text": "Low latency and impressive performance with a very affordable price.",
-          "author": "Valter Nuno Da Silva",
+          "text": "Seamlessly deployed our apps in flux cloud. Very easy to use, hassle free. No kyc needed",
+          "author": "Cyber fly",
           "rating": "5"
         }
       }
