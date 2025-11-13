@@ -20,8 +20,8 @@
             </div>
             <div class="trustpilot-rating-text">
               <span v-if="showRatingLabel" class="rating-label">{{ t('common.trustpilot.ratingLabel') }}</span>
-              <span class="rating-score">{{ t('common.trustpilot.rating') }}</span>
-              <span v-if="showReviewsText" class="rating-reviews">{{ t('common.trustpilot.reviews') }}</span>
+              <span class="rating-score">{{ displayRatingText }}</span>
+              <span v-if="showReviewsText" class="rating-reviews">{{ displayReviewsText }}</span>
             </div>
           </div>
         </a>
@@ -30,11 +30,11 @@
       <!-- Sample Reviews (optional) -->
       <div v-if="showReviews" class="trustpilot-reviews">
         <VRow>
-          <VCol v-for="(review, key) in ['review1', 'review2', 'review3']" :key="key" cols="12" md="4">
+          <VCol v-for="(review, index) in displayReviews" :key="index" cols="12" md="4">
             <VCard variant="outlined" class="review-card pa-4">
               <div class="review-stars mb-2">
                 <VIcon
-                  v-for="i in parseInt(t(`common.trustpilot.sampleReviews.${review}.rating`))"
+                  v-for="i in review.rating"
                   :key="i"
                   icon="mdi-star"
                   size="20"
@@ -42,11 +42,11 @@
                 />
               </div>
               <p class="review-text text-body-2 mb-3">
-                "{{ t(`common.trustpilot.sampleReviews.${review}.text`) }}"
+                "{{ review.text }}"
               </p>
               <div class="review-author text-caption text-medium-emphasis">
                 <VIcon icon="mdi-check-circle" size="14" color="success" class="mr-1" />
-                {{ t(`common.trustpilot.sampleReviews.${review}.author`) }}
+                {{ review.author }}
               </div>
               <div class="text-caption text-medium-emphasis">
                 {{ t('common.trustpilot.verifiedCustomer') }}
@@ -77,6 +77,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useTrustpilot } from '@/composables/useTrustpilot'
 
 const props = defineProps({
   // Show sample reviews section
@@ -89,10 +90,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
-  // Star display configuration
+  // Star display configuration (if null, uses live data)
   stars: {
     type: Number,
-    default: 4.5, // 4.5 = 4 full stars + 1 half star
+    default: null, // null = use live data, otherwise use prop value
   },
   // Star size
   starSize: {
@@ -114,12 +115,72 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  // Use live TrustPilot data (fetched in background)
+  useLiveData: {
+    type: Boolean,
+    default: true,
+  },
 })
 
 const { t } = useI18n()
 
-const fullStars = computed(() => Math.floor(props.stars))
-const hasHalfStar = computed(() => props.stars % 1 !== 0)
+// Initialize TrustPilot composable (fetches data in background)
+const {
+  rating,
+  reviewCount,
+  ratingText,
+  reviewsText,
+  sampleReviews,
+  isUsingLiveData,
+} = useTrustpilot()
+
+// Use live data if enabled, otherwise use props/i18n
+const displayRating = computed(() => {
+  if (props.useLiveData && props.stars === null) {
+    return rating.value
+  }
+  return props.stars !== null ? props.stars : parseFloat(t('common.trustpilot.score'))
+})
+
+const displayRatingText = computed(() => {
+  if (props.useLiveData) {
+    return ratingText.value
+  }
+  return t('common.trustpilot.rating')
+})
+
+const displayReviewsText = computed(() => {
+  if (props.useLiveData) {
+    return reviewsText.value
+  }
+  return t('common.trustpilot.reviews')
+})
+
+const displayReviews = computed(() => {
+  if (props.useLiveData) {
+    return sampleReviews.value
+  }
+  return [
+    {
+      text: t('common.trustpilot.sampleReviews.review1.text'),
+      author: t('common.trustpilot.sampleReviews.review1.author'),
+      rating: parseInt(t('common.trustpilot.sampleReviews.review1.rating')),
+    },
+    {
+      text: t('common.trustpilot.sampleReviews.review2.text'),
+      author: t('common.trustpilot.sampleReviews.review2.author'),
+      rating: parseInt(t('common.trustpilot.sampleReviews.review2.rating')),
+    },
+    {
+      text: t('common.trustpilot.sampleReviews.review3.text'),
+      author: t('common.trustpilot.sampleReviews.review3.author'),
+      rating: parseInt(t('common.trustpilot.sampleReviews.review3.rating')),
+    },
+  ]
+})
+
+const fullStars = computed(() => Math.floor(displayRating.value))
+const hasHalfStar = computed(() => displayRating.value % 1 !== 0)
 </script>
 
 <style scoped>
