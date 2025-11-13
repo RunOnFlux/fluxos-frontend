@@ -87,13 +87,4 @@ export default {
 
     return Api().post('/id/checkprivilege', qs.stringify(data))
   },
-
-  // Payment request methods
-  paymentRequest() {
-    return Api().get('/payment/paymentrequest')
-  },
-
-  verifyPayment(paymentData) {
-    return Api().post('/payment/verifypayment', qs.stringify(paymentData))
-  },
 }

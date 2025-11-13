@@ -546,7 +546,7 @@ import qs from 'qs'
 import { payWithSSP, payWithZelcore } from '@/utils/walletService'
 import { useTheme } from 'vuetify'
 import { useI18n } from 'vue-i18n'
-import IDService from '@/services/IDService'
+import PaymentService from '@/services/PaymentService'
 import { getDetectedBackendURL } from '@/utils/backend'
 
 // Props
@@ -1125,7 +1125,7 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
           // Generate payment request ID for callback
           let callbackUrl = null
           try {
-            const paymentResponse = await IDService.paymentRequest()
+            const paymentResponse = await PaymentService.paymentRequest()
             if (paymentResponse.data.status === 'success') {
               const paymentId = paymentResponse.data.data.paymentId
               const backendURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
@@ -1291,7 +1291,7 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
           // Generate payment request ID for callback
           let callbackUrl = null
           try {
-            const paymentResponse = await IDService.paymentRequest()
+            const paymentResponse = await PaymentService.paymentRequest()
             if (paymentResponse.data.status === 'success') {
               const paymentId = paymentResponse.data.data.paymentId
               const backendURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
