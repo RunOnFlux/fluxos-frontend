@@ -167,6 +167,37 @@ const verticalNavAttrs = computed(() => {
   // 👉 Footer
   .layout-footer {
     @include mixins.boxed-content;
+
+    &.statusbar-hidden {
+      padding: 0;
+      height: 0;
+      min-height: 0;
+
+      .footer-content-container {
+        block-size: 0;
+        min-block-size: 0;
+      }
+
+      // Reduce bottom padding of page content when statusbar is hidden
+      ~ .layout-page-content,
+      & ~ * .layout-page-content {
+        padding-block-end: 0;
+      }
+    }
+  }
+
+  // When statusbar is hidden, reduce bottom padding
+  .layout-footer.statusbar-hidden ~ * {
+    .layout-page-content {
+      padding-block-end: 0;
+    }
+  }
+
+  // Direct sibling approach - reduce page content bottom padding when footer has statusbar-hidden class
+  .layout-content-wrapper:has(.layout-footer.statusbar-hidden) {
+    .layout-page-content {
+      padding-block-end: 0.25rem;
+    }
   }
 
   // 👉 Layout overlay

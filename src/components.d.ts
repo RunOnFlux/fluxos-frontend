@@ -107,6 +107,5 @@ declare module 'vue' {
     VersionsDialog: typeof import('./components/FluxDrive/VersionsDialog.vue')['default']
     VolumeBrowser: typeof import('./@core/components/VolumeBrowser.vue')['default']
     VolumePathBuilder: typeof import('./@core/components/VolumePathBuilder.vue')['default']
-    VueApexCharts: typeof import('vue3-apexcharts')['default']
   }
 }

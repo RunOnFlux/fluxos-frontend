@@ -132,10 +132,18 @@ watch(() => route.path, () => {
 <style lang="scss">
 .layout-horizontal-nav {
   .nav-group {
+    white-space: nowrap;
+    flex-shrink: 0;
+
     .nav-group-label {
       display: flex;
       align-items: center;
       cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .nav-item-title {
+      white-space: nowrap;
     }
 
     .popper-content {
