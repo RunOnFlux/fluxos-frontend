@@ -1356,7 +1356,10 @@ import { useSnackbar } from '@/composables/useSnackbar'
 import axios from 'axios'
 import { useFluxStore } from '@/stores/flux'
 import { getDetectedBackendURL } from '@/utils/backend'
-import { VueMonacoEditor } from '@guolao/vue-monaco-editor'
+// Lazy-load Monaco Editor to reduce main bundle size
+const VueMonacoEditor = defineAsyncComponent(() =>
+  import('@guolao/vue-monaco-editor').then(m => m.VueMonacoEditor)
+)
 import { useTheme } from 'vuetify'
 
 const { t } = useI18n()

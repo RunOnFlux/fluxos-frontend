@@ -1811,7 +1811,10 @@ import { useI18n } from 'vue-i18n'
 import { useFluxDrive } from '@/composables/useFluxDrive'
 import PricingPlans from '@/components/FluxDrive/PricingPlans.vue'
 import VersionsDialog from '@/components/FluxDrive/VersionsDialog.vue'
-import { VueMonacoEditor } from '@guolao/vue-monaco-editor'
+// Lazy-load Monaco Editor to reduce main bundle size
+const VueMonacoEditor = defineAsyncComponent(() =>
+  import('@guolao/vue-monaco-editor').then(m => m.VueMonacoEditor)
+)
 import ClipboardJS from 'clipboard'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 
