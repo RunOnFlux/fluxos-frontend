@@ -1,6 +1,5 @@
 <template>
-  <VContainer>
-
+  <div class="pricing-plans-container">
     <!-- Result message -->
     <VAlert
       v-if="resultMessage"
@@ -9,177 +8,113 @@
       v-html="resultMessage"
     />
 
-    <!-- Pricing Plans -->
-    <div class="text-center mb-8">
-      <h3 class="text-h3 mb-2">
-        {{ t('components.fluxDrive.pricingPlans.title') }}
-      </h3>
-      <p class="text-body-1 mb-6">
-        {{ t('components.fluxDrive.pricingPlans.subtitle') }}
-      </p>
-    </div>
+    <!-- Title Section -->
+    <div class="plans-section">
+      <h2 class="section-title">{{ t('components.fluxDrive.pricingPlans.title') }}</h2>
+      <p class="section-subtitle">{{ t('components.fluxDrive.pricingPlans.subtitle') }}</p>
 
-    <VRow class="justify-center pricing-grid d-flex justify-center" no-gutters>
-      <VCol
-        v-for="plan in fluxDrivePlans"
-        :key="plan.id"
-        cols="12"
-        sm="6"
-        md="6"
-        lg="3"
-        xl="3"
-        class="d-flex pricing-col"
-      >
-        <div class="pricing-card-wrapper position-relative">
-          <!-- Badge -->
-          <div v-if="plan.badge" class="position-absolute top-badge">
-            <VChip
-              color="primary"
-              text-color="white"
-              size="small"
-              variant="flat"
-              class="font-weight-medium"
-            >
-              {{ plan.badge }}
-            </VChip>
+      <!-- Plans Grid -->
+      <div class="plans-grid">
+        <div
+          v-for="plan in fluxDrivePlans"
+          :key="plan.id"
+          class="plan-card"
+          :class="{
+            'recommended': plan.popular,
+            'current-plan': getPlanStatus(plan.id) === 'current',
+            'disabled-plan': (getPlanStatus(plan.id) === 'downgrade' && hasActiveSubscription) || getPlanStatus(plan.id) === 'downgrade-blocked'
+          }"
+        >
+          <!-- Recommended Badge -->
+          <div v-if="plan.popular" class="recommended-badge">
+            {{ plan.badge || t('components.fluxDrive.pricingPlans.popular') }}
           </div>
 
-          <VCard
-            flat
-            class="pricing-card h-100 w-100 d-flex flex-column rounded-lg elevation-8"
-            :class="[
-              plan.popular ? 'pricing-card--popular' : 'pricing-card--standard',
-              getPlanStatus(plan.id) === 'current' ? 'pricing-card--current' : '',
-              getPlanStatus(plan.id) === 'downgrade' || getPlanStatus(plan.id) === 'downgrade-blocked' ? 'pricing-card--downgrade' : ''
-            ]"
-            color="surface"
-            variant="elevated"
-            :disabled="(getPlanStatus(plan.id) === 'downgrade' && hasActiveSubscription) || getPlanStatus(plan.id) === 'downgrade-blocked'"
+          <!-- Price Badge -->
+          <div class="plan-price-badge">
+            <span v-if="plan.price && plan.price.trim()" class="price-amount">{{ plan.price }}</span>
+            <span v-else class="price-amount">{{ t('components.fluxDrive.pricingPlans.customPricing') }}</span>
+            <span class="price-period">{{ plan.price ? t('components.fluxDrive.pricingPlans.perMonth') : t('components.fluxDrive.pricingPlans.pricing') }}</span>
+          </div>
+
+          <!-- Plan Header -->
+          <div class="plan-header">
+            <h3 class="plan-name">{{ plan.name }}</h3>
+            <p v-if="getPlanStatus(plan.id) === 'current'" class="plan-status-badge current">
+              {{ t('components.fluxDrive.pricingPlans.currentPlan') }}
+            </p>
+          </div>
+
+          <!-- Plan Resources -->
+          <div class="plan-resources">
+            <!-- Storage -->
+            <div class="resource-row">
+              <VIcon class="resource-icon storage-icon">mdi-database</VIcon>
+              <span class="resource-label">{{ t('components.fluxDrive.pricingPlans.storage') }}</span>
+              <span class="resource-value">{{ plan.storage }}</span>
+            </div>
+
+            <!-- Daily Cost -->
+            <div v-if="plan.price && plan.price.trim()" class="resource-row">
+              <VIcon class="resource-icon cost-icon">mdi-calendar-today</VIcon>
+              <span class="resource-label">{{ t('components.fluxDrive.pricingPlans.dailyCost') }}</span>
+              <span class="resource-value">{{ t('components.fluxDrive.pricingPlans.dailyCostValue') }}</span>
+            </div>
+
+            <!-- Features as Resource Rows -->
+            <div
+              v-for="(feature, index) in plan.features.slice(0, 3)"
+              :key="index"
+              class="resource-row"
+            >
+              <VIcon class="resource-icon feature-icon">mdi-check-circle</VIcon>
+              <span class="resource-label" style="grid-column: 2 / 4;">{{ feature }}</span>
+            </div>
+          </div>
+
+          <!-- Action Button -->
+          <VBtn
+            v-if="getPlanStatus(plan.id) === 'current' && paymentGateway === 'cryptocom'"
+            block
+            color="error"
+            variant="outlined"
+            size="large"
+            class="plan-btn"
+            @click="$emit('cancelSubscription')"
           >
-
-            <VCardText class="text-center pa-8 d-flex flex-column flex-grow-1">
-              <!-- Plan name -->
-              <h3 class="text-h5 mb-4 font-weight-bold">
-                {{ plan.name }}
-              </h3>
-
-              <!-- Plan price -->
-              <div class="mb-6 price-section">
-                <div v-if="plan.price && plan.price.trim()">
-                  <!-- Daily pricing chip -->
-                  <div class="d-flex justify-center mb-2">
-                    <VChip
-                      color="surface-variant"
-                      variant="tonal"
-                      size="default"
-                      class="pricing-chip-small text-body-2 font-weight-medium"
-                    >
-                      $0.0017 GB {{ t('components.fluxDrive.pricingPlans.perDay') }}
-                    </VChip>
-                  </div>
-
-                  <!-- Separator -->
-                  <VDivider class="my-2 pricing-divider" />
-
-                  <!-- Monthly pricing chip -->
-                  <div class="d-flex justify-center">
-                    <VChip
-                      color="primary"
-                      variant="flat"
-                      size="default"
-                      class="pricing-chip-large text-h6 font-weight-bold text-white"
-                    >
-                      {{ plan.price }} {{ t('components.fluxDrive.pricingPlans.perMonth') }}
-                    </VChip>
-                  </div>
-                </div>
-                <div v-else>
-                  <div class="d-flex justify-center">
-                    <VChip
-                      color="surface-variant"
-                      variant="tonal"
-                      size="default"
-                      class="pricing-chip-large text-body-1"
-                    >
-                      {{ t('components.fluxDrive.pricingPlans.billedMonthly') }}
-                    </VChip>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Storage amount -->
-              <div class="mb-6 text-center">
-                <span class="text-h6 font-weight-medium text-medium-emphasis">
-                  {{ plan.storage }}
-                </span>
-                <div class="text-body-2 mt-1 text-medium-emphasis">
-                  {{ t('components.fluxDrive.pricingPlans.storage') }}
-                </div>
-              </div>
-
-              <!-- Plan features -->
-              <div class="mb-6 flex-grow-1 features-container">
-                <div
-                  v-for="feature in plan.features"
-                  :key="feature"
-                  class="d-flex align-center justify-start py-2"
-                >
-                  <VIcon
-                    size="16"
-                    icon="mdi-check-circle"
-                    color="success"
-                    class="me-3"
-                  />
-                  <span class="text-body-2">{{ feature }}</span>
-                </div>
-              </div>
-
-              <!-- Plan actions -->
-              <!-- Show Cancel button for current plan (only for Crypto.com subscriptions) -->
-              <VBtn
-                v-if="getPlanStatus(plan.id) === 'current' && paymentGateway === 'cryptocom'"
-                block
-                color="error"
-                variant="outlined"
-                size="small"
-                class="pricing-btn mt-auto"
-                @click="$emit('cancelSubscription')"
-              >
-                {{ t('pages.fluxDrive.cancel') }}
-              </VBtn>
-              <!-- Show disabled Current Plan button for FluxPay users -->
-              <VBtn
-                v-else-if="getPlanStatus(plan.id) === 'current'"
-                block
-                color="success"
-                variant="flat"
-                size="small"
-                class="pricing-btn mt-auto"
-                disabled
-              >
-                {{ t('components.fluxDrive.pricingPlans.current') }}
-              </VBtn>
-              <!-- Show regular button for non-current plans -->
-              <VBtn
-                v-else
-                block
-                :color="getButtonConfig(plan).color"
-                :variant="getButtonConfig(plan).variant"
-                :loading="subscribing && selectedPlan === plan.id"
-                :disabled="subscribing || getButtonConfig(plan).disabled"
-                size="large"
-                height="48"
-                class="pricing-btn mt-auto"
-                @click="handleSelectPlan(plan.id)"
-              >
-                {{ getButtonConfig(plan).text }}
-              </VBtn>
-            </VCardText>
-          </VCard>
+            <VIcon start>mdi-cancel</VIcon>
+            {{ t('pages.fluxDrive.cancel') }}
+          </VBtn>
+          <VBtn
+            v-else-if="getPlanStatus(plan.id) === 'current'"
+            block
+            color="success"
+            variant="flat"
+            size="large"
+            class="plan-btn"
+            disabled
+          >
+            <VIcon start>mdi-check</VIcon>
+            {{ t('components.fluxDrive.pricingPlans.current') }}
+          </VBtn>
+          <VBtn
+            v-else
+            block
+            :color="getButtonConfig(plan).color"
+            :variant="getButtonConfig(plan).variant"
+            :loading="subscribing && selectedPlan === plan.id"
+            :disabled="subscribing || getButtonConfig(plan).disabled"
+            size="large"
+            class="plan-btn"
+            @click="handleSelectPlan(plan.id)"
+          >
+            <VIcon start>{{ getButtonIcon(plan) }}</VIcon>
+            {{ getButtonConfig(plan).text }}
+          </VBtn>
         </div>
-      </VCol>
-    </VRow>
-  </VContainer>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -248,7 +183,7 @@ const getButtonConfig = plan => {
       text: t('components.fluxDrive.pricingPlans.renew'),
       color: 'error',
       variant: 'flat',
-      disabled: hasActiveSubscription.value, // Only enabled when subscription expired
+      disabled: false,
       action: 'renew',
     }
   case 'upgrade':
@@ -263,390 +198,365 @@ const getButtonConfig = plan => {
     return {
       text: t('components.fluxDrive.pricingPlans.downgrade'),
       color: 'warning',
-      variant: 'flat',
-      disabled: hasActiveSubscription.value, // Only enabled when subscription expired
+      variant: 'outlined',
+      disabled: hasActiveSubscription.value,
       action: 'downgrade',
     }
   case 'downgrade-blocked':
     return {
-      text: t('components.fluxDrive.pricingPlans.downgrade'),
-      color: 'grey',
+      text: t('components.fluxDrive.pricingPlans.downgradeBlocked'),
+      color: 'error',
       variant: 'outlined',
-      disabled: true, // Always disabled - files exceed capacity
+      disabled: true,
       action: 'downgrade-blocked',
     }
-  case 'signup':
   default:
     return {
-      text: t('components.fluxDrive.pricingPlans.signUp'),
+      text: t('components.fluxDrive.pricingPlans.getStarted'),
       color: 'primary',
       variant: 'flat',
       disabled: false,
-      action: 'signup',
+      action: 'subscribe',
     }
   }
 }
 
-// Handle plan selection and emit to parent
+// Get button icon based on plan
+const getButtonIcon = plan => {
+  if (plan.id === 'enterprise') return 'mdi-email'
+  if (!isLoggedIn.value) return 'mdi-login'
+
+  const status = getPlanStatus(plan.id)
+  switch (status) {
+  case 'current':
+    return 'mdi-check'
+  case 'renew':
+    return 'mdi-refresh'
+  case 'upgrade':
+    return 'mdi-arrow-up-bold'
+  case 'downgrade':
+    return 'mdi-arrow-down-bold'
+  default:
+    return 'mdi-cart'
+  }
+}
+
+// Handle plan selection
 const handleSelectPlan = planId => {
-  const config = getButtonConfig({ id: planId })
+  const plan = fluxDrivePlans.value.find(p => p.id === planId)
+  if (!plan) return
 
-  // Handle Contact Us action differently
-  if (config.action === 'contact') {
-    // Open support URL like FluxCloud does
-    const supportUrl = 'https://support.runonflux.io'
-    window.open(supportUrl, '_blank', 'noopener,noreferrer')
-    
-    return
-  }
+  const buttonConfig = getButtonConfig(plan)
 
-  // For signin action, just trigger login without plan selection
-  if (config.action === 'signin') {
-    // Emit without planId to just trigger login
-    emit('selectPlan', null, 'signin')
+  // Handle enterprise/contact plans
+  if (buttonConfig.action === 'contact') {
+    window.location.href = 'mailto:support@runonflux.io?subject=FluxDrive%20Enterprise%20Plan%20Inquiry'
 
     return
   }
 
-  // For all other actions, emit to parent with action type
-  emit('selectPlan', planId, config.action)
+  // Handle sign in
+  if (buttonConfig.action === 'signin') {
+    // Trigger sign in modal or redirect
+    // This should be handled by parent component
+    emit('selectPlan', planId, 'subscribe')
+
+    return
+  }
+
+  // Emit event with action type for other cases
+  const actionType = buttonConfig.action === 'subscribe' ? 'subscribe' : buttonConfig.action
+  emit('selectPlan', planId, actionType)
 }
 </script>
 
 <style scoped>
-.card-list {
-  --v-card-list-gap: 0.75rem;
+.pricing-plans-container {
+  padding: 24px 0;
+  margin: 0 auto;
 }
 
-.h-100 {
-  height: 100%;
+/* Section Styling */
+.plans-section {
+  padding: 32px 0;
 }
 
-.pricing-grid {
-  row-gap: 40px;
-  column-gap: 8px;
-  justify-content: center !important;
-  display: flex !important;
-  flex-wrap: wrap !important;
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  text-align: center;
 }
 
-.pricing-card-wrapper {
+.section-subtitle {
+  font-size: 1.1rem;
+  text-align: center;
+  opacity: 0.7;
+  margin-bottom: 48px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Plans Grid */
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin: 0 auto;
+}
+
+/* Plan Card */
+.plan-card {
+  position: relative;
+  background: rgba(var(--v-theme-surface), 1);
+  border: 2px solid rgba(var(--v-theme-on-surface), 0.12);
+  border-radius: 20px;
+  padding: 24px;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  transform: translateY(0);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
-.pricing-card-wrapper:hover {
-  transform: translateY(-8px) scale(1.02);
+.plan-card.recommended {
+  border-color: rgb(var(--v-theme-primary));
+  box-shadow: 0 8px 32px rgba(var(--v-theme-primary), 0.3);
 }
 
-.pricing-card {
-  background: linear-gradient(145deg,
-    rgb(var(--v-theme-surface)) 0%,
-    color-mix(in srgb, rgb(var(--v-theme-surface)) 95%, rgb(var(--v-theme-on-surface)) 5%) 100%);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(var(--v-theme-outline), 0.12);
-  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+.plan-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(33, 150, 243, 0.4);
+  border-color: rgba(33, 150, 243, 0.5);
 }
 
-.pricing-card-wrapper:hover .pricing-card {
-  box-shadow:
-    0 20px 40px rgba(var(--v-theme-shadow), 0.15),
-    0 10px 20px rgba(var(--v-theme-shadow), 0.1),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.1);
+.plan-card.current-plan {
+  border-color: rgb(var(--v-theme-success));
+  box-shadow: 0 8px 32px rgba(var(--v-theme-success), 0.2);
 }
 
-.pricing-card--popular {
-  background: linear-gradient(145deg,
-    rgb(var(--v-theme-surface)) 0%,
-    color-mix(in srgb, rgb(var(--v-theme-surface)) 98%, rgb(var(--v-theme-on-surface)) 2%) 100%);
-  box-shadow:
-    0 15px 35px rgba(var(--v-theme-primary), 0.2),
-    0 8px 15px rgba(var(--v-theme-shadow), 0.1),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.05);
-  border: 2px solid rgb(var(--v-theme-primary));
+.plan-card.disabled-plan {
+  opacity: 0.6;
+  pointer-events: none;
 }
 
-.pricing-card-wrapper:hover .pricing-card--popular {
-  box-shadow:
-    0 25px 50px rgba(var(--v-theme-primary), 0.3),
-    0 15px 25px rgba(var(--v-theme-shadow), 0.15),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.08);
-  border: 2px solid rgb(var(--v-theme-primary));
+/* Recommended Badge */
+.recommended-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-secondary)) 100%);
+  color: white;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.4);
 }
 
-.pricing-card-wrapper:has(.pricing-card--popular):hover {
-  transform: translateY(-12px) scale(1.03);
+/* Price Badge */
+.plan-price-badge {
+  display: flex;
+  flex-direction: row;
+  align-items: baseline;
+  justify-content: center;
+  gap: 6px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.2) 0%, rgba(var(--v-theme-success), 0.1) 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(var(--v-theme-success), 0.3);
 }
 
-.pricing-card--standard {
-  background: linear-gradient(145deg,
-    rgb(var(--v-theme-surface)) 0%,
-    color-mix(in srgb, rgb(var(--v-theme-surface)) 98%, rgb(var(--v-theme-on-surface)) 2%) 100%);
-  box-shadow:
-    0 10px 25px rgba(var(--v-theme-shadow), 0.08),
-    0 5px 10px rgba(var(--v-theme-shadow), 0.04),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.05);
-  border: 1px solid rgba(var(--v-theme-outline), 0.08);
+.price-amount {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-success));
+  line-height: 1;
 }
 
-.pricing-card-wrapper:hover .pricing-card--standard {
-  background: linear-gradient(145deg,
-    rgb(var(--v-theme-surface)) 0%,
-    color-mix(in srgb, rgb(var(--v-theme-surface)) 96%, rgb(var(--v-theme-on-surface)) 4%) 100%);
-  box-shadow:
-    0 20px 40px rgba(var(--v-theme-shadow), 0.12),
-    0 10px 20px rgba(var(--v-theme-shadow), 0.08),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.08);
+.price-period {
+  font-size: 1rem;
+  font-weight: 500;
+  opacity: 0.7;
 }
 
-.pricing-btn {
+/* Plan Header */
+.plan-header {
+  text-align: center;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+}
+
+.plan-name {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.plan-status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 8px;
+}
+
+.plan-status-badge.current {
+  background: rgba(var(--v-theme-success), 0.2);
+  color: rgb(var(--v-theme-success));
+  border: 1px solid rgba(var(--v-theme-success), 0.3);
+}
+
+/* Plan Resources */
+.plan-resources {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex: 1;
+}
+
+.resource-row {
+  display: grid;
+  grid-template-columns: 32px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.resource-row:hover {
+  background: rgba(var(--v-theme-on-surface), 0.08);
+  transform: translateX(4px);
+}
+
+.resource-icon {
+  font-size: 22px;
+}
+
+.storage-icon {
+  color: #2196F3;
+}
+
+.cost-icon {
+  color: #4CAF50;
+}
+
+.feature-icon {
+  color: rgb(var(--v-theme-success));
+  font-size: 18px;
+}
+
+.resource-label {
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.resource-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-primary));
+  text-align: right;
+}
+
+/* Plan Button */
+.plan-btn {
+  margin-top: auto;
   min-height: 48px !important;
-  height: 48px !important;
-  font-size: 16px !important;
+  font-size: 1rem !important;
   font-weight: 600 !important;
   letter-spacing: 0.5px !important;
   text-transform: none !important;
   border-radius: 12px !important;
+  box-shadow: 0 4px 12px rgba(var(--v-theme-primary), 0.3);
+  transition: all 0.3s ease;
 }
 
-.top-badge {
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+.plan-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(var(--v-theme-primary), 0.4);
 }
 
-.top-badge .v-chip {
-  position: relative;
+/* Mobile Responsive */
+@media (max-width: 960px) {
+  .plans-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
 }
 
-.top-badge .v-chip::before {
-  content: '';
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 6px solid transparent;
-  border-right: 6px solid transparent;
-  border-top: 6px solid rgb(var(--v-theme-primary));
-}
-
-.price-section {
-  min-height: 90px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.pricing-chip-small {
-  height: 32px !important;
-  min-width: 160px !important;
-  border-radius: 4px !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
-.pricing-chip-large {
-  height: 40px !important;
-  min-width: 160px !important;
-  border-radius: 4px !important;
-  padding: 0 16px !important;
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-}
-
-/* Mobile optimizations */
 @media (max-width: 600px) {
-  .pricing-grid {
-    row-gap: 32px !important;
-    justify-content: center !important;
-    padding-bottom: 40px !important;
+  .pricing-plans-container {
+    padding: 16px 0;
   }
 
-  .pricing-col {
-    max-width: 100% !important;
-    flex: 0 0 100% !important;
+  .plans-section {
+    padding: 24px 0;
   }
 
-  .pricing-col:last-child {
-    margin-bottom: 0 !important;
+  .plans-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    max-width: 400px;
   }
 
-  .pricing-card-wrapper {
-    margin-bottom: 0 !important;
-    max-width: 340px !important;
-    width: 100% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    will-change: transform;
-    backface-visibility: hidden;
+  .plan-card {
+    padding: 20px;
   }
 
-  .pricing-chip-small,
-  .pricing-chip-large {
-    min-width: 180px !important;
-    max-width: 220px !important;
-    font-size: 0.875rem !important;
+  .section-title {
+    font-size: 1.5rem;
   }
 
-  .price-section {
-    min-height: 80px;
+  .section-subtitle {
+    font-size: 0.95rem;
+    margin-bottom: 32px;
   }
 
-  .top-badge {
-    top: -8px;
+  .recommended-badge {
+    top: -10px;
+    font-size: 0.7rem;
+    padding: 5px 16px;
   }
 
-  .top-badge .v-chip {
-    font-size: 0.75rem !important;
+  .price-amount {
+    font-size: 2.25rem;
   }
 
-  .pricing-btn {
-    font-size: 1rem !important;
-    min-height: 52px !important;
-    height: 52px !important;
+  .plan-name {
+    font-size: 1.35rem;
   }
 
-  .pricing-card .v-card-text {
-    padding: 24px 16px !important;
+  .resource-row {
+    padding: 10px;
   }
 
-  .pricing-card .features-container {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    width: 100% !important;
-    justify-content: center !important;
-    text-align: center !important;
+  .resource-icon {
+    font-size: 20px;
   }
 
-  .pricing-card .features-container .d-flex {
-    width: 200px !important;
-    justify-content: flex-start !important;
-    align-items: center !important;
-    margin: 0 auto !important;
-    position: relative !important;
-    transform: translateX(15px) !important;
+  .resource-label,
+  .resource-value {
+    font-size: 0.9rem;
   }
-
-  .pricing-card .v-card-text {
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-  }
-
-  .pricing-divider {
-    max-width: 60% !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    opacity: 0.2 !important;
-  }
-}
-
-/* Extra small screens - wider cards */
-@media (max-width: 400px) {
-  .pricing-card-wrapper {
-    max-width: 85% !important;
-  }
-}
-
-@media (max-width: 960px) and (min-width: 601px) {
-  .pricing-col {
-    display: flex !important;
-    justify-content: center !important;
-  }
-}
-
-/* Ensure proper spacing and centering for all screen sizes */
-.pricing-col {
-  display: flex !important;
-  justify-content: center !important;
-}
-
-/* 2-card layout optimization */
-@media (min-width: 600px) and (max-width: 1199px) {
-  .pricing-grid {
-    column-gap: 40px !important;
-    max-width: 840px !important;
-    margin: 0 auto !important;
-  }
-
-  .pricing-col {
-    flex: 0 0 calc(50% - 20px) !important;
-    max-width: 400px !important;
-    margin: 0 !important;
-  }
-
-  .pricing-card-wrapper {
-    max-width: 100% !important;
-    width: 100% !important;
-  }
-}
-
-/* 4-card layout optimization for large screens */
-@media (min-width: 1200px) {
-  .pricing-col {
-    flex: 1 1 24% !important;
-    max-width: 260px !important;
-    margin: 0 !important;
-  }
-}
-
-/* Reset mobile styles on larger screens */
-@media (min-width: 601px) {
-  .pricing-card .features-container {
-    display: block !important;
-    text-align: left !important;
-  }
-
-  .pricing-card .features-container .d-flex {
-    width: auto !important;
-    margin: 0 !important;
-    transform: none !important;
-  }
-
-  .pricing-card .v-card-text {
-    display: block !important;
-  }
-}
-
-/* FluxCloud-style plan states */
-.pricing-card--current {
-  border: 2px solid rgb(var(--v-theme-success)) !important;
-  background: linear-gradient(145deg,
-    color-mix(in srgb, rgb(var(--v-theme-success)) 3%, rgb(var(--v-theme-surface)) 97%) 0%,
-    color-mix(in srgb, rgb(var(--v-theme-success)) 1%, rgb(var(--v-theme-surface)) 99%) 100%);
-  box-shadow:
-    0 15px 35px rgba(var(--v-theme-success), 0.15),
-    0 8px 15px rgba(var(--v-theme-shadow), 0.08),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.05);
-}
-
-.pricing-card--downgrade {
-  opacity: 0.85;
-  border: 1px solid rgba(var(--v-theme-warning), 0.3) !important;
-  background: linear-gradient(145deg,
-    color-mix(in srgb, rgb(var(--v-theme-surface)) 95%, rgb(var(--v-theme-outline)) 5%) 0%,
-    color-mix(in srgb, rgb(var(--v-theme-surface)) 98%, rgb(var(--v-theme-outline)) 2%) 100%);
-}
-
-.pricing-card-wrapper:hover .pricing-card--current {
-  box-shadow:
-    0 25px 50px rgba(var(--v-theme-success), 0.25),
-    0 15px 25px rgba(var(--v-theme-shadow), 0.12),
-    inset 0 1px 0 rgba(var(--v-theme-on-surface), 0.08);
-}
-
-.pricing-card-wrapper:has(.pricing-card--downgrade):hover {
-  transform: translateY(-4px) scale(1.02);
-}
-
-.pricing-card--downgrade:hover {
-  opacity: 1;
-  border-color: rgba(var(--v-theme-warning), 0.5) !important;
 }
 </style>

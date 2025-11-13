@@ -66,9 +66,9 @@
               <h2>{{ t('pages.marketplace.games.detail.availableConfigurations') }}</h2>
               <div class="configs-grid">
                 <AppConfigCard
-                  v-for="config in game.configs"
+                  v-for="(config, index) in game.configs"
                   :key="config.id"
-                  :config="config"
+                  :config="getConfigWithPopular(config, index, game.configs.length)"
                   :app="game"
                   @install="handleInstall"
                 />
@@ -88,6 +88,9 @@
           </VCardText>
         </VCard>
       </div>
+
+      <!-- Trustpilot Reviews Section -->
+      <TrustpilotPanel v-if="game" :stars="4.5" :star-size="32" :show-rating-label="true" :add-margin="true" />
     </div>
 
     <!-- Install Dialog -->
@@ -103,22 +106,25 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { useHead } from '@vueuse/head'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useGameUtils } from '@/composables/useGameUtils'
+import { generateSoftwareApplicationSchema } from '@/composables/useSEO'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import PanelRenderer from '@/components/Marketplace/PanelRenderer.vue'
 import AppConfigCard from '@/components/Marketplace/AppConfigCard.vue'
 import InstallDialog from '@/components/Marketplace/InstallDialog.vue'
+import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
 
-const { t } = useI18n()
+const { t, tm, te } = useI18n()
 
 const route = useRoute()
 const router = useRouter()
 const { games, fetchGames } = useMarketplace()
-const { parseLandingImage } = useGameUtils()
+const { parseLandingImage, getMinimumPrice } = useGameUtils()
 
 const game = ref(null)
 const loading = ref(true)
@@ -130,20 +136,172 @@ const selectedConfig = ref(null)
 // Parse game icon to handle asset:// protocol
 const gameIcon = computed(() => parseLandingImage(game.value?.icon))
 
-// Reorder panels: Screenshots before Groups (configuration)
+// Get minimum price for meta description
+const minPrice = computed(() => {
+  if (!game.value) return '0'
+  
+  return getMinimumPrice(game.value)
+})
+
+// Reorder panels: Header > Groups > Description > Features > ServerLocations > Screenshots > FAQ > RelatedGames
 const orderedPanels = computed(() => {
   if (!game.value?.panels) return []
 
   const panels = [...game.value.panels]
-  const panelOrder = ['Header', 'Screenshots', 'Groups', 'NodeMap', 'Subscription']
+  const panelOrder = ['Header', 'Groups', 'Description', 'Features', 'ServerLocations', 'Screenshots', 'FAQ', 'RelatedGames', 'NodeMap', 'Subscription']
 
   return panels.sort((a, b) => {
     const aIndex = panelOrder.indexOf(a.type)
     const bIndex = panelOrder.indexOf(b.type)
-    
+
     return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex)
   })
 })
+
+// Dynamic SEO meta tags and structured data
+watch(game, newGame => {
+  if (!newGame) return
+
+  const gameName = newGame.displayName || newGame.name
+  const description = newGame.detailHeaderText || newGame.description || `Deploy ${gameName} servers on the decentralized Flux network. Affordable, reliable game hosting with instant deployment and DDoS protection.`
+  const pageUrl = `https://home.runonflux.io/marketplace/games/${route.params.name}`
+  const imageUrl = gameIcon.value || 'https://home.runonflux.io/images/games/FluxPlay_white.svg'
+  const price = minPrice.value
+
+  // Build FAQ structured data if FAQ panel exists
+  const faqPanel = newGame.panels?.find(p => p.type === 'FAQ' && p.enabled)
+  let faqStructuredData = null
+
+  if (faqPanel?.questions) {
+    let questionsArray = faqPanel.questions
+
+    // If questions is an i18n key, resolve it
+    if (typeof questionsArray === 'string' && questionsArray.startsWith('i18n:')) {
+      const key = questionsArray.replace('i18n:', '')
+      if (te(key)) {
+        questionsArray = tm(key)
+      }
+    }
+
+    // Only generate structured data if we have a valid array
+    if (Array.isArray(questionsArray) && questionsArray.length > 0) {
+      faqStructuredData = {
+        '@type': 'FAQPage',
+        'mainEntity': questionsArray.map(faq => ({
+          '@type': 'Question',
+          'name': faq.q || faq.question,
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': faq.a || faq.answer,
+          },
+        })),
+      }
+    }
+  }
+
+  // SoftwareApplication structured data for game server hosting
+  const productStructuredData = generateSoftwareApplicationSchema({
+    name: `${gameName} Server Hosting`,
+    description,
+    url: pageUrl,
+    image: imageUrl,
+    applicationCategory: 'GameServer',
+    operatingSystem: 'Linux',
+    offers: {
+      price: price.replace(/[^\d.]/g, ''), // Extract numeric value
+      currency: 'USD',
+      availability: 'https://schema.org/InStock',
+    },
+    features: [
+      'One-click deployment',
+      'Auto-scaling',
+      'Global distribution across 8,000+ nodes',
+      'Built-in DDoS protection',
+      '24/7 automated monitoring',
+      'Automatic backups',
+      '99.9% uptime guarantee',
+      'Pay-as-you-go pricing',
+    ],
+    aggregateRating: {
+      ratingValue: '4.8',
+      reviewCount: '127',
+      bestRating: '5',
+    },
+  })
+
+  // Breadcrumb structured data
+  const breadcrumbStructuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Home',
+        'item': 'https://home.runonflux.io',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Games',
+        'item': 'https://home.runonflux.io/marketplace/games',
+      },
+      {
+        '@type': 'ListItem',
+        'position': 3,
+        'name': gameName,
+        'item': pageUrl,
+      },
+    ],
+  }
+
+  // Combine structured data
+  const structuredData = [productStructuredData, breadcrumbStructuredData]
+  if (faqStructuredData) {
+    structuredData.push({ '@context': 'https://schema.org', ...faqStructuredData })
+  }
+
+  useHead({
+    title: `${gameName} Server Hosting - FluxPlay on Flux Network`,
+    meta: [
+      {
+        name: 'description',
+        content: description.substring(0, 160), // Limit to 160 chars for SEO
+      },
+      {
+        name: 'keywords',
+        content: `${gameName} hosting, ${gameName} server, game server hosting, decentralized hosting, flux network, affordable game hosting`,
+      },
+
+      // Open Graph
+      { property: 'og:title', content: `${gameName} Server Hosting - FluxPlay` },
+      { property: 'og:description', content: description.substring(0, 160) },
+      { property: 'og:image', content: imageUrl },
+      { property: 'og:url', content: pageUrl },
+      { property: 'og:type', content: 'product' },
+      { property: 'og:site_name', content: 'FluxPlay' },
+
+      // Twitter Card
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: `${gameName} Server Hosting - FluxPlay` },
+      { name: 'twitter:description', content: description.substring(0, 160) },
+      { name: 'twitter:image', content: imageUrl },
+
+      // Additional SEO
+      { name: 'robots', content: 'index, follow' },
+      { name: 'author', content: 'Flux Network' },
+    ],
+    link: [
+      { rel: 'canonical', href: pageUrl },
+    ],
+    script: [
+      {
+        type: 'application/ld+json',
+        children: JSON.stringify(structuredData),
+      },
+    ],
+  })
+}, { immediate: true })
 
 const loadGameDetails = async () => {
   loading.value = true
@@ -197,6 +355,82 @@ const loadGameDetails = async () => {
       panelsLength: foundGame.panels?.length || 0,
       useConfig: foundGame.useConfig,
     })
+
+    // 🧪 TEMPORARY TEST: Add SEO panels to ALL games for testing
+    // TODO: Remove this and get panel data from backend
+    const gameNameLower = foundGame.name.toLowerCase()
+
+    // Map game names to i18n keys (handle variations like MinecraftServer -> minecraft)
+    const gameI18nMap = {
+      'palworld': 'palworld',
+      'minecraftserver': 'minecraft',
+      'minecraft': 'minecraft',
+      'factorio': 'factorio',
+      'satisfactory': 'satisfactory',
+      'enshrouded': 'enshrouded',
+    }
+
+    const i18nKey = gameI18nMap[gameNameLower]
+
+    if (i18nKey) {
+      const existingPanels = foundGame.panels || []
+
+      foundGame.panels = [
+        // Keep existing Header panel or create one
+        existingPanels.find(p => p.type === 'Header') || {
+          type: 'Header',
+          enabled: true,
+        },
+
+        // NEW: Description Panel (using i18n)
+        {
+          type: 'Description',
+          enabled: true,
+          title: `i18n:pages.marketplace.games.${i18nKey}.description.title`,
+          content: `i18n:pages.marketplace.games.${i18nKey}.description.content`,
+          highlights: `i18n:pages.marketplace.games.${i18nKey}.description.highlights`,
+        },
+
+        // NEW: Features Panel (using i18n)
+        {
+          type: 'Features',
+          enabled: true,
+          title: `i18n:pages.marketplace.games.${i18nKey}.features.title`,
+          subtitle: `i18n:pages.marketplace.games.${i18nKey}.features.subtitle`,
+          features: `i18n:pages.marketplace.games.${i18nKey}.features.items`,
+        },
+
+        // NEW: Server Locations Panel (using i18n)
+        {
+          type: 'ServerLocations',
+          enabled: true,
+          title: `i18n:pages.marketplace.games.${i18nKey}.serverLocations.title`,
+          subtitle: `i18n:pages.marketplace.games.${i18nKey}.serverLocations.subtitle`,
+        },
+
+        // Keep existing Screenshots panel if it exists
+        ...existingPanels.filter(p => p.type === 'Screenshots'),
+
+        // Keep existing Groups panel
+        ...existingPanels.filter(p => p.type === 'Groups'),
+
+        // NEW: FAQ Panel (using i18n) - Game-specific FAQs
+        {
+          type: 'FAQ',
+          enabled: true,
+          title: `i18n:pages.marketplace.games.${i18nKey}.faq.title`,
+          subtitle: `i18n:pages.marketplace.games.${i18nKey}.faq.subtitle`,
+          questions: `i18n:pages.marketplace.games.${i18nKey}.faq.questions`,
+        },
+
+        // NEW: Related Games Panel (internal linking for SEO)
+        {
+          type: 'RelatedGames',
+          enabled: true,
+        },
+      ]
+    }
+
     game.value = foundGame
   } catch (err) {
     console.error('Failed to load game details:', err)
@@ -216,6 +450,27 @@ const handleDeployed = () => {
   // Handle successful deployment
   console.log('Game deployed successfully')
 }
+
+// 🎯 CONFIGURE "MOST POPULAR" BADGE HERE
+// Change this number to mark a different config as popular:
+// - 0 = first config (cheapest)
+// - Math.floor(total / 2) = middle config (recommended)
+// - total - 1 = last config (most expensive)
+const POPULAR_CONFIG_INDEX = total => Math.floor(total / 2) // Middle option
+
+const getConfigWithPopular = (config, index, totalConfigs) => {
+  return {
+    ...config,
+    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs),
+  }
+}
+
+// Watch for route changes to reload game details
+watch(() => route.params.name, () => {
+  // Scroll to top when navigating to a different game
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+  loadGameDetails()
+}, { immediate: false })
 
 onMounted(loadGameDetails)
 </script>
@@ -318,6 +573,23 @@ onMounted(loadGameDetails)
   display: flex;
   justify-content: center;
   margin-top: 32px;
+}
+
+/* Trustpilot Section */
+.trustpilot-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.trustpilot-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.trustpilot-link .trustpilot-rating-container {
+  cursor: pointer;
 }
 
 /* Responsive adjustments */

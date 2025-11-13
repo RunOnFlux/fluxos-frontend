@@ -74,6 +74,13 @@ declare global {
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
   const formatDate: typeof import('./@core/utils/formatters.js')['formatDate']
   const formatDateToMonthShort: typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']
+  const generateBreadcrumbSchema: typeof import('./composables/useSEO.js')['generateBreadcrumbSchema']
+  const generateFAQSchema: typeof import('./composables/useSEO.js')['generateFAQSchema']
+  const generateItemListSchema: typeof import('./composables/useSEO.js')['generateItemListSchema']
+  const generateOrganizationSchema: typeof import('./composables/useSEO.js')['generateOrganizationSchema']
+  const generateProductSchema: typeof import('./composables/useSEO.js')['generateProductSchema']
+  const generateSoftwareApplicationSchema: typeof import('./composables/useSEO.js')['generateSoftwareApplicationSchema']
+  const generateWebApplicationSchema: typeof import('./composables/useSEO.js')['generateWebApplicationSchema']
   const geolocation: typeof import('./utils/geolocation.js')['default']
   const getActivePinia: typeof import('pinia')['getActivePinia']
   const getAndConvertSpec: typeof import('./utils/specConverter.js')['getAndConvertSpec']
@@ -83,6 +90,8 @@ declare global {
   const getDetectedBackendURL: typeof import('./utils/backend.js')['getDetectedBackendURL']
   const getEnterprisePGPKeys: typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']
   const getMetaMaskSDK: typeof import('./utils/walletService.js')['getMetaMaskSDK']
+  const getOptimizedImagePath: typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']
+  const getPictureSources: typeof import('./composables/useOptimizedImage.js')['getPictureSources']
   const getRedirectResult: typeof import('./utils/firebase.js')['getRedirectResult']
   const getSpecFromPermanentMessages: typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']
   const getStickyBackendDNS: typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']
@@ -327,6 +336,7 @@ declare global {
   const useObjectUrl: typeof import('@vueuse/core')['useObjectUrl']
   const useOffsetPagination: typeof import('@vueuse/core')['useOffsetPagination']
   const useOnline: typeof import('@vueuse/core')['useOnline']
+  const useOptimizedImage: typeof import('./composables/useOptimizedImage.js')['useOptimizedImage']
   const usePageLeave: typeof import('@vueuse/core')['usePageLeave']
   const useParallax: typeof import('@vueuse/core')['useParallax']
   const useParentElement: typeof import('@vueuse/core')['useParentElement']
@@ -350,6 +360,8 @@ declare global {
   const useRound: typeof import('@vueuse/math')['useRound']
   const useRoute: typeof import('vue-router/auto')['useRoute']
   const useRouter: typeof import('vue-router/auto')['useRouter']
+  const useSEO: typeof import('./composables/useSEO.js')['useSEO']
+  const useSEONoIndex: typeof import('./composables/useSEO.js')['useSEONoIndex']
   const useScreenOrientation: typeof import('@vueuse/core')['useScreenOrientation']
   const useScreenSafeArea: typeof import('@vueuse/core')['useScreenSafeArea']
   const useScriptTag: typeof import('@vueuse/core')['useScriptTag']
@@ -389,6 +401,7 @@ declare global {
   const useToggle: typeof import('@vueuse/core')['useToggle']
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useTrunc: typeof import('@vueuse/math')['useTrunc']
+  const useTrustpilot: typeof import('./composables/useTrustpilot.js')['useTrustpilot']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
   const useUserMedia: typeof import('@vueuse/core')['useUserMedia']
   const useVModel: typeof import('@vueuse/core')['useVModel']
@@ -503,6 +516,13 @@ declare module 'vue' {
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
     readonly formatDate: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDate']>
     readonly formatDateToMonthShort: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']>
+    readonly generateBreadcrumbSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateBreadcrumbSchema']>
+    readonly generateFAQSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateFAQSchema']>
+    readonly generateItemListSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateItemListSchema']>
+    readonly generateOrganizationSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateOrganizationSchema']>
+    readonly generateProductSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateProductSchema']>
+    readonly generateSoftwareApplicationSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateSoftwareApplicationSchema']>
+    readonly generateWebApplicationSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateWebApplicationSchema']>
     readonly geolocation: UnwrapRef<typeof import('./utils/geolocation.js')['default']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getAndConvertSpec: UnwrapRef<typeof import('./utils/specConverter.js')['getAndConvertSpec']>
@@ -512,6 +532,8 @@ declare module 'vue' {
     readonly getDetectedBackendURL: UnwrapRef<typeof import('./utils/backend.js')['getDetectedBackendURL']>
     readonly getEnterprisePGPKeys: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']>
     readonly getMetaMaskSDK: UnwrapRef<typeof import('./utils/walletService.js')['getMetaMaskSDK']>
+    readonly getOptimizedImagePath: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']>
+    readonly getPictureSources: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getPictureSources']>
     readonly getSpecFromPermanentMessages: UnwrapRef<typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']>
     readonly getStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']>
     readonly getUser: UnwrapRef<typeof import('./utils/firebase.js')['getUser']>
@@ -754,6 +776,7 @@ declare module 'vue' {
     readonly useObjectUrl: UnwrapRef<typeof import('@vueuse/core')['useObjectUrl']>
     readonly useOffsetPagination: UnwrapRef<typeof import('@vueuse/core')['useOffsetPagination']>
     readonly useOnline: UnwrapRef<typeof import('@vueuse/core')['useOnline']>
+    readonly useOptimizedImage: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['useOptimizedImage']>
     readonly usePageLeave: UnwrapRef<typeof import('@vueuse/core')['usePageLeave']>
     readonly useParallax: UnwrapRef<typeof import('@vueuse/core')['useParallax']>
     readonly useParentElement: UnwrapRef<typeof import('@vueuse/core')['useParentElement']>
@@ -777,6 +800,8 @@ declare module 'vue' {
     readonly useRound: UnwrapRef<typeof import('@vueuse/math')['useRound']>
     readonly useRoute: UnwrapRef<typeof import('vue-router/auto')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router/auto')['useRouter']>
+    readonly useSEO: UnwrapRef<typeof import('./composables/useSEO.js')['useSEO']>
+    readonly useSEONoIndex: UnwrapRef<typeof import('./composables/useSEO.js')['useSEONoIndex']>
     readonly useScreenOrientation: UnwrapRef<typeof import('@vueuse/core')['useScreenOrientation']>
     readonly useScreenSafeArea: UnwrapRef<typeof import('@vueuse/core')['useScreenSafeArea']>
     readonly useScriptTag: UnwrapRef<typeof import('@vueuse/core')['useScriptTag']>
@@ -816,6 +841,7 @@ declare module 'vue' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useTrunc: UnwrapRef<typeof import('@vueuse/math')['useTrunc']>
+    readonly useTrustpilot: UnwrapRef<typeof import('./composables/useTrustpilot.js')['useTrustpilot']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>

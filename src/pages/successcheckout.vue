@@ -1,6 +1,7 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
+import { useSEONoIndex } from '@/composables/useSEO'
 import miscMaskDark from '@images/pages/misc-mask-dark.png'
 import miscMaskLight from '@images/pages/misc-mask-light.png'
 
@@ -13,6 +14,9 @@ definePage({
 
 const { t } = useI18n()
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
+
+// Prevent indexing of success checkout confirmation page
+useSEONoIndex()
 
 // Auto-close window after 10 seconds (only if popup)
 const closeTimer = ref(10)
@@ -88,8 +92,9 @@ onBeforeUnmount(() => {
     <img
       class="misc-footer-img d-none d-md-block"
       :src="authThemeMask"
-      alt="misc-footer-img"
+      :alt="t('pages.successCheckout.footerImageAlt')"
       height="320"
+      loading="lazy"
     >
   </div>
 </template>

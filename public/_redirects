@@ -1,0 +1,3 @@
+# Netlify/Cloudflare Pages SPA fallback
+# Redirect all requests to index.html to support client-side routing
+/*    /index.html   200

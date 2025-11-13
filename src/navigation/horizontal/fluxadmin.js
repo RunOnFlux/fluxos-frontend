@@ -25,6 +25,18 @@ export default [
         icon: { icon: 'mdi-information-outline', size: 20 },
         privilege: ['admin', 'fluxteam'],
       },
+      {
+        title: 'menu.application.globalApps',
+        icon: { icon: 'tabler-world-search', size: 20 },
+        to: 'apps-global',
+        privilege: ['fluxteam'],
+      },
+      {
+        title: 'menu.application.localApps',
+        icon: { icon: 'mdi-folder-search-outline', size: 20 },
+        to: 'apps-local',
+        privilege: ['admin', 'fluxteam'],
+      },
     ],
   },
 ]

@@ -14,9 +14,9 @@
 
       <div class="configs-grid">
         <AppConfigCard
-          v-for="config in configs"
+          v-for="(config, index) in configs"
           :key="config.id"
-          :config="config"
+          :config="getConfigWithPopular(config, index, configs.length)"
           :app="app"
           @install="handleInstall"
         />
@@ -58,6 +58,20 @@ const groupStyle = computed(() => ({
   position: 'relative',
   overflow: 'hidden',
 }))
+
+// 🎯 CONFIGURE "MOST POPULAR" BADGE HERE
+// Change this number to mark a different config as popular:
+// - 0 = first config (cheapest)
+// - Math.floor(total / 2) = middle config (recommended)
+// - total - 1 = last config (most expensive)
+const POPULAR_CONFIG_INDEX = total => Math.floor(total / 2) // Middle option
+
+const getConfigWithPopular = (config, index, totalConfigs) => {
+  return {
+    ...config,
+    isPopular: index === POPULAR_CONFIG_INDEX(totalConfigs),
+  }
+}
 
 const handleInstall = data => {
   emit('install', data)

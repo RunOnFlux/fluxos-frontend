@@ -6,7 +6,7 @@
         style="height: 450px; width: 100%"
       />
       <div
-        v-if="!loading && tierDisplay"
+        v-if="!loading && tierDisplay && showTierDisplay"
         class="tier-label"
       >
         {{ tierDisplay }}
@@ -38,6 +38,7 @@ const props = defineProps({
   nodes: { type: Array, default: () => [] },
   showAll: { type: Boolean, default: true },
   filterNodes: { type: Array, default: () => [] },
+  showTierDisplay: { type: Boolean, default: true },
 })
 
 const { t } = useI18n()
@@ -305,6 +306,7 @@ function initMap() {
     zoom: 2,
     minZoom: 2,
     maxZoom: 18,
+    attributionControl: false, // Hide attribution control (removes Ukraine flag)
   })
 
   console.log('Leaflet map created')

@@ -1,4 +1,77 @@
 <template>
+  <!-- Introduction Section -->
+  <VRow class="mb-6">
+    <VCol cols="12">
+      <VCard flat class="intro-card">
+        <VCardTitle class="text-h4 mb-4">
+          {{ t('pages.dashboard.overview.intro.title') }}
+        </VCardTitle>
+        <VCardText>
+          <VRow>
+            <VCol cols="12" md="6">
+              <a
+                href="https://runonflux.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="info-link"
+              >
+                <div class="info-section">
+                  <div class="d-flex align-center mb-3">
+                    <VAvatar
+                      size="40"
+                      color="primary"
+                      variant="tonal"
+                      class="mr-3"
+                    >
+                      <VIcon size="24">mdi-cube-outline</VIcon>
+                    </VAvatar>
+                    <h3 class="text-h5">{{ t('pages.dashboard.overview.intro.blockchain.title') }}</h3>
+                  </div>
+                  <p class="text-body-1">
+                    {{ t('pages.dashboard.overview.intro.blockchain.description') }}
+                  </p>
+                  <div class="learn-more">
+                    <VIcon size="18" class="mr-1">mdi-open-in-new</VIcon>
+                    {{ t('pages.dashboard.overview.intro.learnMore') }}
+                  </div>
+                </div>
+              </a>
+            </VCol>
+            <VCol cols="12" md="6">
+              <a
+                href="https://runonflux.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="info-link"
+              >
+                <div class="info-section">
+                  <div class="d-flex align-center mb-3">
+                    <VAvatar
+                      size="40"
+                      color="success"
+                      variant="tonal"
+                      class="mr-3"
+                    >
+                      <VIcon size="24">mdi-cloud-outline</VIcon>
+                    </VAvatar>
+                    <h3 class="text-h5">{{ t('pages.dashboard.overview.intro.cloud.title') }}</h3>
+                  </div>
+                  <p class="text-body-1">
+                    {{ t('pages.dashboard.overview.intro.cloud.description', { nodes: beautifyValue(totalNodes, 0) }) }}
+                  </p>
+                  <div class="learn-more">
+                    <VIcon size="18" class="mr-1">mdi-open-in-new</VIcon>
+                    {{ t('pages.dashboard.overview.intro.learnMore') }}
+                  </div>
+                </div>
+              </a>
+            </VCol>
+          </VRow>
+        </VCardText>
+      </VCard>
+    </VCol>
+  </VRow>
+
   <VRow class="match-height">
     <!-- Card 1: Total Nodes -->
     <VCol
@@ -365,6 +438,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from "vue"
 import { useI18n } from "vue-i18n"
+import { useHead } from '@vueuse/head'
 import axios from "axios"
 import tierColors from "@/utils/colors"
 import DashboardService from "@/services/DashboardService"
@@ -372,6 +446,38 @@ import { useConfigStore } from "@core/stores/config"
 import { storeToRefs } from "pinia"
 
 const { t } = useI18n()
+
+// SEO meta tags
+const title = 'Flux Network Overview - Real-Time Node Statistics | FluxCloud'
+const description = 'View real-time statistics of the Flux decentralized network. Track 8,000+ active FluxNodes across Cumulus, Nimbus, and Stratus tiers. Monitor network health, supply, and node distribution worldwide.'
+const pageUrl = 'https://home.runonflux.io/dashboards/overview'
+const imageUrl = 'https://home.runonflux.io/images/logo.png'
+
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { name: 'keywords', content: 'Flux network, FluxNodes, node statistics, blockchain network, decentralized infrastructure, Cumulus, Nimbus, Stratus, network monitoring, node tiers' },
+
+    // Open Graph
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:image', content: imageUrl },
+    { property: 'og:url', content: pageUrl },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'FluxCloud' },
+
+    // Twitter
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: imageUrl },
+    { name: 'twitter:site', content: '@RunOnFlux' },
+  ],
+  link: [
+    { rel: 'canonical', href: pageUrl },
+  ],
+})
 
 // Data properties
 const isLoading = ref(true) // Unified loading state
@@ -635,6 +741,49 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.intro-card {
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.05) 0%, rgba(var(--v-theme-success), 0.05) 100%);
+  border: 1px solid rgba(var(--v-theme-primary), 0.1);
+}
+
+.info-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.info-section {
+  height: 100%;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(var(--v-theme-surface), 0.6);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  position: relative;
+}
+
+.info-section:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(var(--v-theme-primary), 0.15);
+}
+
+.learn-more {
+  display: flex;
+  align-items: center;
+  margin-top: 12px;
+  color: rgb(var(--v-theme-primary));
+  font-size: 0.875rem;
+  font-weight: 600;
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.info-section:hover .learn-more {
+  opacity: 1;
+}
+
 .overlay {
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);

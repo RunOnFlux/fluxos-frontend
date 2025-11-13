@@ -1,6 +1,7 @@
 import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
+import { createHead } from '@vueuse/head'
 import sanitizeHtml from '@/utils/sanitizeHtml'
 
 // Styles
@@ -132,6 +133,10 @@ window.addEventListener('load', () => {
 
 // Create vue app
 const app = createApp(App)
+
+// Create and install head management
+const head = createHead()
+app.use(head)
 
 registerPlugins(app)
 app.directive('sanitize-html', sanitizeHtml)

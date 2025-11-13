@@ -1,4 +1,5 @@
 import { computed } from 'vue'
+import { getGameDisplayName, getPlayerCountForRAM } from '@/config/gameServers'
 
 /**
  * Game-specific utility functions
@@ -11,14 +12,24 @@ export function useGameUtils() {
    * @returns {string} Formatted minimum price
    */
   const getMinimumPrice = game => {
+    if (!game) return '0.00'
+
     if (game.useConfig && game.configs?.length) {
-      const prices = game.configs.map(c => c.price || 0)
+      const prices = game.configs.map(c => c.price || 0).filter(p => !isNaN(p) && p >= 0)
+
+      if (prices.length === 0) return '0.00'
+
       const lowest = Math.min(...prices)
-      
+
+      // Ensure we don't return Infinity or invalid numbers
+      if (!isFinite(lowest)) return '0.00'
+
       return lowest.toFixed(2)
     }
+
+    const price = game.price || 0
     
-    return (game.price || 0).toFixed(2)
+    return (typeof price === 'number' && isFinite(price) ? price : 0).toFixed(2)
   }
 
   /**
@@ -126,8 +137,33 @@ export function useGameUtils() {
       const j = Math.floor(Math.random() * (i + 1))
       ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
     }
-    
+
     return shuffled
+  }
+
+  /**
+   * Transform RAM-based configuration names to player-based names
+   * Uses centralized game server configurations from @/config/gameServers
+   * @param {string} gameName - Game name (e.g., "Palworld", "Minecraft")
+   * @param {Object} config - Configuration object with name and components
+   * @returns {string} Player-based configuration name
+   */
+  const getPlayerBasedConfigName = (gameName, config) => {
+    const resources = getConfigResources(config)
+    const ramGB = Math.round(resources.ram / 1024) // Convert MB to GB
+
+    // Get player count from centralized config
+    const playerCount = getPlayerCountForRAM(gameName, ramGB)
+
+    if (!playerCount) {
+      // If no mapping found, return original name
+      return config.name
+    }
+
+    // Get display name from centralized config
+    const displayGameName = getGameDisplayName(gameName)
+
+    return `${displayGameName} - ${playerCount} Players`
   }
 
   return {
@@ -140,5 +176,6 @@ export function useGameUtils() {
     usesConfigs,
     usesGroups,
     shuffleArray,
+    getPlayerBasedConfigName,
   }
 }

@@ -1,5 +1,31 @@
 <template>
   <div>
+    <!-- Flux Cloud Info Card -->
+    <VCard
+      class="mb-6"
+      variant="tonal"
+      color="primary"
+    >
+      <VCardText>
+        <div class="d-flex align-start gap-4">
+          <VIcon
+            icon="mdi-cloud-check-outline"
+            size="48"
+            color="primary"
+            class="mt-1"
+          />
+          <div class="flex-grow-1">
+            <h2 class="text-h5 mb-2">
+              {{ t('myApps.fluxCloudTitle') }}
+            </h2>
+            <p class="text-body-1 mb-0">
+              {{ t('myApps.fluxCloudDescription') }}
+            </p>
+          </div>
+        </div>
+      </VCardText>
+    </VCard>
+
     <VTabs
       v-model="tabIndex"
       grow
@@ -108,7 +134,25 @@ import { decryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey, 
 import { storeToRefs } from "pinia"
 import { useFluxStore } from "@/stores/flux"
 
+// SEO
+import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema } from '@/composables/useSEO'
+
 const { t } = useI18n()
+
+// SEO configuration
+useSEO({
+  title: 'My Applications - Manage FluxCloud Apps | FluxCloud',
+  description: 'Manage your deployed applications on Flux decentralized cloud. View app status, monitor performance, update configurations, and manage your FluxCloud deployments from a unified dashboard.',
+  url: 'https://home.runonflux.io/apps/management',
+  keywords: 'manage apps, FluxCloud dashboard, app management, deployed apps, monitor apps, app status, flux applications, container management, cloud dashboard',
+  structuredData: [
+    generateOrganizationSchema(),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://home.runonflux.io' },
+      { name: 'My Applications', url: 'https://home.runonflux.io/apps/management' },
+    ]),
+  ],
+})
 
 const fluxStore = useFluxStore()
 const { privilege } = storeToRefs(fluxStore)

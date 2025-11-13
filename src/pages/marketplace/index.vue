@@ -153,6 +153,14 @@ import NewListedCard from '@/components/Marketplace/NewListedCard.vue'
 import SponsoredCard from '@/components/Marketplace/SponsoredCard.vue'
 import AppsGrid from '@/components/Marketplace/AppsGrid.vue'
 
+// SEO composable
+import {
+  useSEO,
+  generateOrganizationSchema,
+  generateBreadcrumbSchema,
+  generateItemListSchema,
+} from '@/composables/useSEO'
+
 const { t } = useI18n()
 const router = useRouter()
 const { width, height } = useDisplay()
@@ -172,6 +180,56 @@ const {
   fetchSponsoredApps,
   fetchCategories,
 } = useMarketplace()
+
+const pageUrl = 'https://home.runonflux.io/marketplace'
+const title = 'Marketplace - Deploy Decentralized Apps on Flux | FluxCloud'
+const description = 'Browse and deploy decentralized applications on Flux\'s Web3 cloud infrastructure. Discover Docker containers, web apps, APIs, and services running on 8,000+ FluxNodes worldwide. One-click deployment with transparent pricing.'
+const imageUrl = 'https://home.runonflux.io/images/logo.png'
+
+// Generate structured data
+const organizationSchema = generateOrganizationSchema()
+const breadcrumbSchema = generateBreadcrumbSchema([
+  { name: 'Home', url: 'https://home.runonflux.io' },
+  { name: 'Marketplace', url: pageUrl },
+])
+
+// Generate dynamic ItemList schema for marketplace apps
+const itemListSchema = computed(() => {
+  if (apps.value.length === 0) return null
+
+  // Take top 20 apps for structured data
+  const topApps = apps.value.slice(0, 20).map(app => ({
+    name: app.displayName || app.name || 'Unknown App',
+    url: `https://home.runonflux.io/marketplace/${app.uuid || app.name}`,
+    description: app.description || `Deploy ${app.displayName || app.name} on Flux decentralized cloud`,
+  }))
+
+  return generateItemListSchema(topApps, 'FluxCloud Marketplace Applications')
+})
+
+// Watch for apps changes and update SEO
+watch(itemListSchema, newSchema => {
+  if (newSchema) {
+    useSEO({
+      title,
+      description,
+      url: pageUrl,
+      image: imageUrl,
+      keywords: 'decentralized marketplace, Web3 apps, docker hosting, decentralized cloud, blockchain apps, flux marketplace, deploy applications, container hosting, API hosting, microservices, flux apps, one-click deployment',
+      structuredData: [organizationSchema, breadcrumbSchema, newSchema],
+    })
+  }
+}, { immediate: false })
+
+// Initial SEO (before apps are loaded)
+useSEO({
+  title,
+  description,
+  url: pageUrl,
+  image: imageUrl,
+  keywords: 'decentralized marketplace, Web3 apps, docker hosting, decentralized cloud, blockchain apps, flux marketplace, deploy applications, container hosting, API hosting, microservices, flux apps, one-click deployment',
+  structuredData: [organizationSchema, breadcrumbSchema],
+})
 
 // Responsive breakpoints (matching FluxCloud)
 const isLargeScreen = computed(() => width.value > 600)

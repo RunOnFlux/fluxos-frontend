@@ -4,6 +4,7 @@
     <VImg
       v-if="isBase64Image"
       :src="parsedIcon"
+      :alt="`${app.displayName || app.name} icon`"
       :width="size"
       :height="size"
       :aspect-ratio="1"
@@ -26,6 +27,7 @@
     <VImg
       v-else-if="isNetworkImage"
       :src="proxyImageUrl"
+      :alt="`${app.displayName || app.name} icon`"
       :width="size"
       :height="size"
       :aspect-ratio="1"

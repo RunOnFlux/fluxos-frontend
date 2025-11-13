@@ -1,5 +1,23 @@
 <template>
-  <div>
+  <div class="fluxdrive-page">
+    <!-- Breadcrumb Navigation -->
+    <BreadcrumbNav
+      :items="[
+        { text: 'Home', to: '/' },
+        { text: 'FluxDrive' }
+      ]"
+    />
+
+    <!-- Hero Section -->
+    <HeroSection
+      :title="t('pages.fluxDrive.intro.title')"
+      :subtitle="t('pages.fluxDrive.intro.subtitle')"
+      background-image="/banner/FluxDrive2.png"
+      icon="mdi-cloud-upload"
+      icon-aria-label="FluxDrive Cloud Storage"
+      min-height="300px"
+    />
+
     <!-- Loading state while checking subscription -->
     <LoadingSpinner
       v-if="!subscriptionChecked"
@@ -9,10 +27,29 @@
     />
 
     <!-- Show pricing plans only for users who have never had a subscription -->
-    <PricingPlans
-      v-else-if="!hasOrHadSubscription"
-      @selectPlan="(planId, actionType) => handlePlanSelection(planId, actionType)"
-    />
+    <div v-if="!hasOrHadSubscription">
+      <PricingPlans @selectPlan="(planId, actionType) => handlePlanSelection(planId, actionType)"
+      />
+
+      <!-- Features Section -->
+      <FeatureShowcase
+        :title="t('pages.fluxDrive.features.title')"
+        :items="features"
+        class="ma-4"
+        grid-min-width="300px"
+      />
+
+      <!-- Benefits Section -->
+      <BenefitsGrid
+        :title="t('pages.fluxDrive.benefits.title')"
+        :items="benefits"
+        grid-template-columns="repeat(auto-fit, minmax(280px, 1fr))"
+        class="ma-4"
+      />
+
+      <!-- Trustpilot Reviews Section -->
+      <TrustpilotPanel :stars="4.5" :star-size="32" :show-rating-label="true" :add-margin="true" />
+    </div>
 
     <!-- Show actual FluxDrive interface for subscribers or users with subscription history -->
     <div v-else>
@@ -69,14 +106,189 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useHead } from '@vueuse/head'
 import { useFluxDrive } from '@/composables/useFluxDrive'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import PricingPlans from '@/components/FluxDrive/PricingPlans.vue'
 import FileManager from '@/components/FluxDrive/FileManager.vue'
 import StorageInfo from '@/components/FluxDrive/StorageInfo.vue'
 import CheckoutContent from '@/components/CheckoutContent.vue'
+import FeatureShowcase from '@/components/FeatureShowcase.vue'
+import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
+import BenefitsGrid from '@/components/BenefitsGrid.vue'
+import HeroSection from '@/components/HeroSection.vue'
+import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 
 const { t } = useI18n()
+
+// SEO meta tags and structured data
+const pageUrl = 'https://home.runonflux.io/flux-drive'
+const title = 'FluxDrive - Decentralized IPFS Cloud Storage | Flux Network'
+const description = 'Secure decentralized cloud storage powered by IPFS on the Flux network. Store files across distributed FluxNodes with encryption, redundancy, and censorship resistance. No centralized providers needed.'
+const imageUrl = 'https://home.runonflux.io/banner/FluxDriveBanner.png'
+
+// SoftwareApplication structured data
+const softwareApplicationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  'name': 'FluxDrive',
+  'applicationCategory': 'BusinessApplication',
+  'operatingSystem': 'Web',
+  'offers': {
+    '@type': 'AggregateOffer',
+    'priceCurrency': 'USD',
+    'lowPrice': '5',
+    'highPrice': '50',
+    'offerCount': '4',
+  },
+  'description': 'Decentralized cloud storage solution built on IPFS and the Flux network. Encrypted, distributed file storage with censorship resistance.',
+  'url': pageUrl,
+  'image': imageUrl,
+  'provider': {
+    '@type': 'Organization',
+    'name': 'Flux Network',
+    'url': 'https://runonflux.com',
+  },
+  'featureList': [
+    'IPFS-based decentralized storage',
+    'End-to-end encryption',
+    'Distributed across FluxNodes',
+    'Censorship resistant',
+    'No centralized providers',
+    'Permanent file availability',
+    'Redundant storage',
+  ],
+}
+
+// Organization structured data
+const organizationStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  'name': 'Flux Network',
+  'url': 'https://home.runonflux.io',
+  'logo': 'https://home.runonflux.io/logo.png',
+  'description': 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
+  'sameAs': [
+    'https://twitter.com/RunOnFlux',
+    'https://github.com/RunOnFlux',
+  ],
+}
+
+// Breadcrumb structured data
+const breadcrumbStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  'itemListElement': [
+    {
+      '@type': 'ListItem',
+      'position': 1,
+      'name': 'Home',
+      'item': 'https://home.runonflux.io',
+    },
+    {
+      '@type': 'ListItem',
+      'position': 2,
+      'name': 'FluxDrive',
+      'item': pageUrl,
+    },
+  ],
+}
+
+// FAQPage structured data for better SEO
+const faqStructuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  'mainEntity': [
+    {
+      '@type': 'Question',
+      'name': 'What is FluxDrive?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'FluxDrive is a decentralized cloud storage solution built on IPFS and the Flux network. It provides secure, encrypted file storage distributed across thousands of FluxNodes worldwide, ensuring censorship resistance and permanent file availability.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'How much does FluxDrive cost?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'FluxDrive offers flexible pricing starting from $5/month for 100GB of storage. Plans range up to $50/month for 1000GB, with a daily rate of $0.0017 per GB. Enterprise custom plans are also available.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'Is my data encrypted on FluxDrive?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Yes, all files uploaded to FluxDrive are encrypted end-to-end. Your data is secured with strong encryption and distributed across multiple FluxNodes, ensuring privacy and security.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'How is FluxDrive different from traditional cloud storage?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'Unlike traditional centralized cloud storage, FluxDrive is completely decentralized. Your files are stored across a global network of FluxNodes using IPFS technology, making them censorship-resistant with no single point of failure. There are no centralized providers that can access or control your data.',
+      },
+    },
+    {
+      '@type': 'Question',
+      'name': 'What happens if I cancel my FluxDrive subscription?',
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': 'If you cancel your subscription, you will retain access to your files until the end of your billing period. After that, your files will be removed from the network. We recommend downloading your files before cancellation.',
+      },
+    },
+  ],
+}
+
+useHead({
+  title,
+  meta: [
+    {
+      name: 'description',
+      content: description,
+    },
+    {
+      name: 'keywords',
+      content: 'decentralized storage, IPFS storage, cloud storage, blockchain storage, distributed storage, encrypted storage, Flux network, censorship resistant storage, Web3 storage, decentralized cloud, permanent storage, IPFS, FluxDrive, file storage, secure storage, private cloud',
+    },
+
+    // Open Graph
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:image', content: imageUrl },
+    { property: 'og:image:width', content: '1200' },
+    { property: 'og:image:height', content: '630' },
+    { property: 'og:image:alt', content: 'FluxDrive - Decentralized IPFS Cloud Storage' },
+    { property: 'og:url', content: pageUrl },
+    { property: 'og:type', content: 'website' },
+    { property: 'og:site_name', content: 'FluxCloud' },
+    { property: 'og:locale', content: 'en_US' },
+
+    // Twitter Card
+    { name: 'twitter:card', content: 'summary_large_image' },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+    { name: 'twitter:image', content: imageUrl },
+    { name: 'twitter:image:alt', content: 'FluxDrive - Decentralized IPFS Cloud Storage' },
+    { name: 'twitter:site', content: '@RunOnFlux' },
+    { name: 'twitter:creator', content: '@RunOnFlux' },
+
+    // Additional SEO
+    { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
+    { name: 'author', content: 'Flux Network' },
+  ],
+  link: [
+    { rel: 'canonical', href: pageUrl },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify([softwareApplicationStructuredData, organizationStructuredData, breadcrumbStructuredData, faqStructuredData]),
+    },
+  ],
+})
 
 // Use the composable
 const {
@@ -114,6 +326,86 @@ const hasOrHadSubscription = computed(() => {
          hasExistingFiles.value ||
          subscriptionPeriodEnd.value !== null
 })
+
+// Features data for landing page
+const features = [
+  {
+    icon: 'mdi-lock-outline',
+    color: 'primary',
+    title: t('pages.fluxDrive.features.encryption.title'),
+    description: t('pages.fluxDrive.features.encryption.description'),
+  },
+  {
+    icon: 'mdi-server-network',
+    color: 'success',
+    title: t('pages.fluxDrive.features.distributed.title'),
+    description: t('pages.fluxDrive.features.distributed.description'),
+  },
+  {
+    icon: 'mdi-shield-check',
+    color: 'warning',
+    title: t('pages.fluxDrive.features.censorship.title'),
+    description: t('pages.fluxDrive.features.censorship.description'),
+  },
+  {
+    icon: 'mdi-cloud-check',
+    color: 'info',
+    title: t('pages.fluxDrive.features.ipfs.title'),
+    description: t('pages.fluxDrive.features.ipfs.description'),
+  },
+  {
+    icon: 'mdi-check-decagram',
+    color: 'success',
+    title: t('pages.fluxDrive.features.permanent.title'),
+    description: t('pages.fluxDrive.features.permanent.description'),
+  },
+  {
+    icon: 'mdi-lightning-bolt',
+    color: 'error',
+    title: t('pages.fluxDrive.features.fast.title'),
+    description: t('pages.fluxDrive.features.fast.description'),
+  },
+  {
+    icon: 'mdi-cash-refund',
+    color: 'success',
+    title: t('pages.fluxDrive.features.guarantee.title'),
+    description: t('pages.fluxDrive.features.guarantee.description'),
+  },
+]
+
+// Benefits data for landing page
+const benefits = [
+  {
+    icon: 'mdi-check-circle',
+    color: 'success',
+    text: t('pages.fluxDrive.benefits.noCentralized'),
+  },
+  {
+    icon: 'mdi-check-circle',
+    color: 'success',
+    text: t('pages.fluxDrive.benefits.fullControl'),
+  },
+  {
+    icon: 'mdi-check-circle',
+    color: 'success',
+    text: t('pages.fluxDrive.benefits.globalRedundancy'),
+  },
+  {
+    icon: 'mdi-check-circle',
+    color: 'success',
+    text: t('pages.fluxDrive.benefits.transparentPricing'),
+  },
+  {
+    icon: 'mdi-check-circle',
+    color: 'success',
+    text: t('pages.fluxDrive.benefits.noVendorLock'),
+  },
+  {
+    icon: 'mdi-check-circle',
+    color: 'success',
+    text: t('pages.fluxDrive.benefits.openSource'),
+  },
+]
 
 // Checkout dialog state
 const showCheckout = ref(false)
@@ -453,4 +745,74 @@ onMounted(async () => {
 
 <style scoped>
 @import '@styles/flux-drive.scss';
+
+.fluxdrive-page {
+  padding: 8px 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+  min-height: calc(100vh - 100px);
+}
+
+/* Section Cards */
+.section-card {
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin-top: 32px !important;
+}
+
+.section-title {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.section-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+}
+
+
+/* Mobile Responsive */
+@media (max-width: 960px) {
+  .section-card {
+    padding: 24px 16px;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+}
+
+/* Trustpilot Section */
+.trustpilot-link {
+  text-decoration: none;
+  color: inherit;
+  display: inline-block;
+  transition: all 0.3s ease;
+}
+
+.trustpilot-link:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.trustpilot-link .trustpilot-rating-container {
+  cursor: pointer;
+}
+
+@media (max-width: 600px) {
+  .fluxdrive-page {
+    padding: 8px 16px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .breadcrumb-nav {
+    margin-bottom: 12px;
+  }
+}
 </style>

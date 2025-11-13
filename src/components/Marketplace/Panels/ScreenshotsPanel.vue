@@ -13,6 +13,7 @@
           >
             <VImg
               :src="screenshot"
+              :alt="`${app.displayName || app.name} server screenshot ${(index % screenshots.length) + 1}`"
               height="200"
               cover
               class="screenshot-image"
@@ -56,7 +57,12 @@
       max-width="90vw"
     >
       <VCard>
-        <VImg :src="selectedImage" contain max-height="90vh" />
+        <VImg
+          :src="selectedImage"
+          :alt="`${app.displayName || app.name} server screenshot fullscreen`"
+          contain
+          max-height="90vh"
+        />
         <VBtn
           icon="mdi-close"
           position="absolute"

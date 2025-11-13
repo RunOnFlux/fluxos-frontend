@@ -110,6 +110,43 @@
       "loginRequired": "Wymagane Logowanie",
       "loggedOutSuccessfully": "Wylogowano pomyślnie"
     },
+    "guarantee": {
+      "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+      "description": "Wypróbuj naszą usługę bez ryzyka. Jeśli nie będziesz w pełni zadowolony w ciągu pierwszych 30 dni, zwrócimy Ci pieniądze—bez zadawania pytań.",
+      "shortTitle": "Gwarancja Zwrotu Pieniędzy",
+      "badge": "30-Dniowa Gwarancja",
+      "trustMessage": "Twoja satysfakcja jest naszym priorytetem"
+    },
+    "trustpilot": {
+      "title": "Zaufali nam tysiące osób",
+      "ratingLabel": "Doskonały",
+      "rating": "4.5 na 5",
+      "reviews": "Na podstawie 16 recenzji",
+      "basedOn": "Na podstawie {count} recenzji",
+      "reviewsCount": "16",
+      "score": "4.5",
+      "outOf": "na 5",
+      "verifiedCustomer": "Zweryfikowany klient",
+      "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
+      "viewAllReviews": "Zobacz wszystkie recenzje na Trustpilot",
+      "sampleReviews": {
+        "review1": {
+          "text": "Byłem zaskoczony jak tani jest hosting w Runonflux. Jak dotąd bez problemów.",
+          "author": "Tuukka Tinkala",
+          "rating": "5"
+        },
+        "review2": {
+          "text": "Czas pracy bez awarii jest niewiarygodny, a redundancja wbudowana. Ceny nie do pobicia w porównaniu do gigantów.",
+          "author": "ST",
+          "rating": "5"
+        },
+        "review3": {
+          "text": "Płynne wdrożenie naszych aplikacji w chmurze Flux. Bardzo łatwe w użyciu, bezproblemowe. Nie wymaga KYC",
+          "author": "Cyber fly",
+          "rating": "5"
+        }
+      }
+    },
     "resources": {
       "cpu": "CPU",
       "ram": "RAM",
@@ -117,7 +154,7 @@
       "storage": "Pamięć masowa",
       "disk": "Dysk",
       "hdd": "HDD",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "bandwidth": "Przepustowość",
       "cores": "Rdzenie",
       "threads": "Wątki"
@@ -146,7 +183,7 @@
       "title": "Strona główna"
     },
     "dashboard": {
-      "title": "Panel informacyjny",
+      "title": "Sieć Flux",
       "overview": "Podsumowanie",
       "resources": "Zasoby",
       "map": "Mapa",
@@ -155,6 +192,7 @@
     },
     "application": {
       "title": "Aplikacje",
+      "myApplications": "Moje Aplikacje",
       "management": "Zarządzanie",
       "globalApps": "Aplikacje Globalne",
       "localApps": "Aplikacje Lokalne",
@@ -234,9 +272,13 @@
       "title": "Flux Drive"
     }
   },
+  "myApps": {
+    "fluxCloudTitle": "Flux Cloud - Zdecentralizowane Zarządzanie Aplikacjami",
+    "fluxCloudDescription": "Monitoruj i zarządzaj wszystkimi swoimi aplikacjami w kontenerach Docker działającymi w zdecentralizowanej sieci chmurowej Flux. Przeglądaj status w czasie rzeczywistym, zużycie zasobów i metryki wydajności swoich rozproszonych aplikacji wdrożonych w naszej globalnej infrastrukturze opartej na blockchain. Kliknij dowolną aplikację, aby uzyskać dostęp do szczegółowych kontroli zarządzania i analiz."
+  },
   "sections": {
     "dashboard": {
-      "title": "Panel informacyjny",
+      "title": "Sieć Flux",
       "description": "Zobacz informacje o stanie sieci Flux, dostępnych zasobach oraz mapę z lokalizacjami serwerów."
     },
     "application": {
@@ -303,7 +345,7 @@
       "hardwareResources": "Zasoby sprzętowe",
       "cpu": "CPU",
       "ram": "RAM",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "vCore": "vCore",
       "vCores": "vCores",
       "ramValue": "{value} MB",
@@ -484,7 +526,7 @@
       "downloadSelected": "Pobierz zaznaczone",
       "downloadAll": "Pobierz wszystkie",
       "removeAllBackupFiles": "Usuń wszystkie pliki kopii zapasowych",
-      "backupListDescription": "Lista dostępnych kopii zapasowych na lokalnym komputerze (kopie zapasowe są automatycznie usuwane 24 godziny po utworzeniu)",
+      "backupListDescription": "Automatyczne cotygodniowe kopie zapasowe są tworzone i utrzymywane, gdy aplikacja jest aktywna. Najnowsza kopia zapasowa jest zawsze zachowywana do wygaśnięcia aplikacji. Możesz również tworzyć ręczne kopie zapasowe w dowolnym momencie.",
       "downloadBackupFile": "Pobierz plik kopii zapasowej",
       "removeBackupFile": "Usuń plik kopii zapasowej",
       "selectComponentsToUpload": "Wybierz komponenty aplikacji, które chcesz przesłać",
@@ -900,7 +942,7 @@
       "vCore": "vCore",
       "ram": "RAM",
       "mb": "MB",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "gb": "GB",
       "searchNodes": "Szukaj węzłów",
       "searchNodesPlaceholder": "IP, adres, poziom...",
@@ -1232,7 +1274,8 @@
         "installNow": "Instaluj Teraz",
         "perMonth": "/mc",
         "core": "Rdzeń",
-        "cores": "Rdzenie"
+        "cores": "Rdzenie",
+        "mostPopular": "Najpopularniejsze"
       },
       "appsGrid": {
         "title": "Aplikacje Flux",
@@ -1259,6 +1302,21 @@
         },
         "headerPanel": {
           "serverHosting": "Hosting Serwera {name}"
+        },
+        "descriptionPanel": {
+          "keyFeatures": "Kluczowe Funkcje"
+        },
+        "serverLocationsPanel": {
+          "noData": "Brak dostępnych danych o serwerach",
+          "activeServers": "Aktywne Serwery",
+          "countries": "Kraje",
+          "global": "Globalny",
+          "coverage": "Zasięg"
+        },
+        "relatedGamesPanel": {
+          "title": "Więcej Gier do Hostowania",
+          "subtitle": "Odkryj inne popularne serwery gier, które możesz wdrożyć na FluxCloud",
+          "startingAt": "Począwszy od"
         }
       },
       "installDialog": {
@@ -1882,6 +1940,14 @@
         "perDay": "/ dzień",
         "perMonth": "/ Miesiąc",
         "billedMonthly": "Rozliczane miesięcznie",
+        "popular": "Popularny",
+        "customPricing": "Indywidualny",
+        "pricing": "Wycena",
+        "dailyCost": "Koszt dzienny",
+        "dailyCostValue": "$0.0017 za GB",
+        "currentPlan": "Aktualny Plan",
+        "getStarted": "Rozpocznij",
+        "downgradeBlocked": "Obniżenie niedostępne",
         "plans": {
           "starter": "Starter",
           "standard": "Standard",
@@ -2358,8 +2424,10 @@
       }
     },
     "costCalculator": {
-      "title": "Kalkulator Kosztów",
-      "subtitle": "Oblicz koszty wdrożenia dla swoich aplikacji Flux",
+      "title": "Kalkulator Kosztów Hostingu Aplikacji",
+      "subtitle": "Przystępny hosting zdecentralizowany od $0.99/miesiąc - Oblicz dokładne koszty",
+      "description": "Wdrażaj swoje aplikacje w zdecentralizowanej sieci chmurowej Flux z przejrzystymi cenami pay-as-you-go. Wybierz zasoby obliczeniowe (CPU, RAM, pamięć), określ liczbę instancji i uzyskaj natychmiastową wycenę. Bez ukrytych opłat, bez uzależnienia od dostawcy. Idealne dla kontenerów Docker, aplikacji webowych, API, baz danych i mikroserwisów. Od zaledwie $0.99/miesiąc dla podstawowych konfiguracji.",
+      "learnMore": "Dowiedz się więcej o hostingu Flux",
       "configuration": "Konfiguracja",
       "instancesQuestion": "Ile instancji będziesz uruchamiać?",
       "instancesHint": "(min 3 / maks 100) 1 Instancja = 1 Węzeł",
@@ -2400,7 +2468,7 @@
       "nodes": "Węzły",
       "cpu": "CPU",
       "ram": "RAM",
-      "ssd": "SSD",
+      "ssd": "SSD/NVMe",
       "cost": "Koszt",
       "select": "Wybierz",
       "estimatedRate": "*Szacowane 1 Flux = ${rate} USD",
@@ -2439,10 +2507,80 @@
         "calculationError": "Błąd obliczania. Spróbuj ponownie.",
         "httpsWarning": "Funkcje Enterprise wymagają HTTPS. Tylko standardowe wdrożenia dostępne przez HTTP."
       },
-      "helpTitle": "Pomoc"
+      "helpTitle": "Pomoc",
+      "faq": {
+        "items": {
+          "pricing": {
+            "question": "Ile kosztuje hosting aplikacji na Flux?",
+            "answer": "Hosting na Flux zaczyna się od zaledwie $0.99/miesiąc. Końcowa cena zależy od wymagań dotyczących zasobów (CPU, RAM, pamięć) oraz liczby instancji. Użyj kalkulatora kosztów powyżej, aby uzyskać dokładną cenę dla swoich potrzeb. Oferujemy przejrzyste ceny pay-as-you-go bez ukrytych opłat i długoterminowych umów."
+          },
+          "comparison": {
+            "question": "Jak ceny Flux wypadają w porównaniu z tradycyjnymi dostawcami chmury?",
+            "answer": "Flux zazwyczaj kosztuje 50-80% mniej niż tradycyjni dostawcy chmury, tacy jak AWS, Google Cloud czy Azure. Nasza zdecentralizowana sieć eliminuje pośredników i przekazuje oszczędności Tobie. Na przykład hosting podstawowej aplikacji webowej, który kosztuje $50/miesiąc na AWS, zazwyczaj kosztuje około $10-15/miesiąc na Flux."
+          },
+          "paymentMethods": {
+            "question": "Jakie metody płatności akceptuje Flux?",
+            "answer": "Flux akceptuje kryptowalutę FLUX (natywne monety FLUX na głównym łańcuchu), a także tradycyjne metody płatności za pośrednictwem zintegrowanych bramek płatniczych. Możesz płacić miesięcznie bez długoterminowego zobowiązania."
+          },
+          "hiddenFees": {
+            "question": "Czy są jakieś ukryte opłaty lub dodatkowe koszty?",
+            "answer": "Nie. Cena obliczona w naszym kalkulatorze kosztów to dokładna kwota, którą płacisz. Nie ma opłat za konfigurację, ukrytych opłat za transfer danych ani niespodziewanych rachunków. Wszystkie koszty są przejrzyste i zawarte w pokazanej cenie miesięcznej."
+          },
+          "planChanges": {
+            "question": "Czy mogę zmienić plan hostingowy po wdrożeniu?",
+            "answer": "Tak! Flux oferuje elastyczne skalowanie. Możesz łatwo zwiększyć lub zmniejszyć CPU, RAM i pamięć w dowolnym momencie. Wystarczy dostosować specyfikacje, a ceny zostaną odpowiednio zaktualizowane. Zmiany wchodzą w życie natychmiast i płacisz tylko za to, czego używasz."
+          },
+          "resourceExceeded": {
+            "question": "Co się stanie, jeśli moja aplikacja przekroczy przydzielone zasoby?",
+            "answer": "Twoja aplikacja zostanie ograniczona, aby zapobiec użyciu większej liczby zasobów niż przydzielone. Chroni to innych użytkowników w sieci. Jeśli potrzebujesz więcej zasobów, możesz łatwo ulepszyć swój plan za pośrednictwem panelu Flux. Zalecamy monitorowanie użycia aplikacji i proaktywne dostosowywanie zasobów."
+          }
+        }
+      },
+      "relatedResources": {
+        "title": "Gotowy do wdrożenia?",
+        "subtitle": "Przeglądaj nasz marketplace i wdróż swoją aplikację już dziś",
+        "links": [
+          {
+            "title": "Hosting Serwerów Gier",
+            "description": "Wdrażaj serwery Minecraft, Palworld, Factorio i innych popularnych gier natychmiast",
+            "url": "/marketplace/games",
+            "icon": "mdi-gamepad-variant"
+          },
+          {
+            "title": "Hosting WordPress",
+            "description": "Uruchom witryny WordPress z automatycznymi kopiami zapasowymi i ochroną DDoS",
+            "url": "/marketplace/wordpress",
+            "icon": "mdi-wordpress"
+          },
+          {
+            "title": "Aplikacje Niestandardowe",
+            "description": "Zarejestruj i wdróż dowolną aplikację Docker w sieci Flux",
+            "url": "/apps/register",
+            "icon": "mdi-docker"
+          },
+          {
+            "title": "Przeglądaj Marketplace",
+            "description": "Odkryj wstępnie skonfigurowane aplikacje gotowe do wdrożenia",
+            "url": "/marketplace",
+            "icon": "mdi-apps"
+          }
+        ]
+      }
     },
     "dashboard": {
       "overview": {
+        "intro": {
+          "title": "Witamy w ekosystemie Flux",
+          "blockchain": {
+            "title": "Blockchain Flux",
+            "description": "Flux działa na własnym autorskim blockchainie, obsługującym zarządzanie, tokenomikę i zapewniającym interoperacyjność z innymi blockchainami poprzez równoległe aktywa. Natywna kryptowaluta FLUX napędza cały ekosystem, umożliwiając zdecentralizowaną infrastrukturę i integrację DeFi."
+          },
+          "cloud": {
+            "title": "Sieć FluxCloud",
+            "description": "FluxCloud to zdecentralizowana platforma przetwarzania w chmurze zasilana przez ponad {nodes} globalnie rozproszonych węzłów FluxNodes. Zapewnia infrastrukturę gotową na Web3 do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń AI/ML—oferując zdecentralizowaną alternatywę dla tradycyjnych dostawców chmury, takich jak AWS czy Google Cloud."
+          },
+          "learnMore": "Dowiedz się więcej"
+        },
         "totalNodes": "Łącznie węzłów",
         "nodeHistory": "Historia węzłów",
         "lockedSupply": "Zablokowane",
@@ -2459,6 +2597,11 @@
         "errorFetchingHistoryStats": "Nie można pobrać statystyk historycznych"
       },
       "locations": {
+        "intro": {
+          "title": "Globalna sieć FluxCloud",
+          "subtitle": "Prawdziwie zdecentralizowana infrastruktura",
+          "description": "FluxCloud obsługuje największą na świecie zdecentralizowaną sieć infrastruktury chmurowej, z węzłami FluxNodes rozproszonymi na wszystkich kontynentach i setkami dostawców hostingu. Ta różnorodność geograficzna zapewnia właścicielom aplikacji niezrównane korzyści: niskie opóźnienia dzięki przetwarzaniu brzegowemu, wysoką redundancję i tolerancję błędów, odporność na censurę oraz prawdziwą decentralizację. Twoje aplikacje działają na prawdziwym, niezależnie obsługiwanym sprzęcie—nie w scentralizowanych centrach danych."
+        },
         "geographicTitle": "Lokalizacje geograficzne ({count})",
         "providersTitle": "Dostawcy ({count})",
         "noGeographicData": "Brak dostępnych danych geograficznych.",
@@ -2482,16 +2625,24 @@
         }
       },
       "resources": {
+        "intro": {
+          "title": "Zasoby sieci FluxCloud",
+          "subtitle": "Pojemność infrastruktury w czasie rzeczywistym",
+          "description": "To są całkowite zasoby obliczeniowe dostępne obecnie w całej sieci FluxCloud. Nasza zdecentralizowana infrastruktura jest zasilana przez tysiące węzłów FluxNodes na całym świecie, zapewniając skalowalną pojemność CPU, RAM i pamięci masowej do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń bez polegania na tradycyjnych dostawcach chmury."
+        },
+        "summary": {
+          "title": "Całkowita pojemność sieci"
+        },
         "vCores": "vCores",
         "ram": "RAM",
-        "ssd": "SSD",
+        "ssd": "SSD/NVMe",
         "hdd": "HDD",
         "cpuHistory": "Historia CPU",
         "ramHistory": "Historia RAM",
         "storageHistory": "Historia pamięci",
         "totalVCores": "Łącznie vCores",
         "totalRam": "Łączny RAM",
-        "totalSsd": "Łączny SSD",
+        "totalSsd": "Łączny SSD/NVMe",
         "totalHdd": "Łączny HDD",
         "tierCumulus": "Cumulus",
         "tierNimbus": "Nimbus",
@@ -2500,6 +2651,12 @@
         "close": "Zamknij"
       },
       "rewards": {
+        "intro": {
+          "title": "Nagrody dla operatorów FluxNode",
+          "subtitle": "Zarabiaj FLUX za zasilanie sieci",
+          "description": "Operatorzy FluxNode stanowią fundament sieci FluxCloud, zapewniając niezbędną infrastrukturę obliczeniową, która zasila zdecentralizowane aplikacje na całym świecie. W nagrodę za swój wkład operatorzy otrzymują kryptowalutę FLUX bezpośrednio z blockchainu. Nagrody te są dystrybuowane automatycznie na podstawie poziomu węzła i wydajności, tworząc zrównoważony model zachęt do utrzymywania niezawodnej, wysokiej jakości infrastruktury.",
+          "learnMore": "Dowiedz się więcej o FluxNodes"
+        },
         "cumulusTotalRewards": "Całkowite Nagrody Cumulus",
         "nimbusTotalRewards": "Całkowite Nagrody Nimbus",
         "stratusTotalRewards": "Całkowite Nagrody Stratus",
@@ -2521,6 +2678,12 @@
       }
     },
     "fluxDrive": {
+      "intro": {
+        "title": "FluxDrive",
+        "subtitle": "Zdecentralizowana pamięć w chmurze zasilana przez IPFS",
+        "description": "FluxDrive to zdecentralizowane rozwiązanie pamięci w chmurze zbudowane na bazie sieci FluxCloud, wykorzystujące technologię IPFS (InterPlanetary File System). Przechowuj swoje pliki w rozproszonej sieci FluxNodes na całym świecie, zapewniając redundancję, odporność na censurę i stałą dostępność. W przeciwieństwie do tradycyjnej pamięci w chmurze, Twoje dane są szyfrowane, fragmentowane i rozproszone na wielu węzłach—co daje Ci prawdziwą własność i kontrolę nad plikami bez polegania na scentralizowanych dostawcach.",
+        "learnMore": "Dowiedz się więcej o FluxDrive"
+      },
       "loading": "Ładowanie FluxDrive...",
       "checkout": "Kasa",
       "renewal": "Odnowienie",
@@ -2529,7 +2692,47 @@
       "renewalSuccess": "Subskrypcja odnowiona pomyślnie!",
       "renewalFailed": "Odnowienie nie powiodło się: ",
       "upgradeFailed": "Aktualizacja nie powiodła się: ",
-      "cancel": "Anuluj"
+      "cancel": "Anuluj",
+      "features": {
+        "title": "Dlaczego FluxDrive",
+        "encryption": {
+          "title": "Szyfrowanie End-to-End",
+          "description": "Twoje pliki są szyfrowane przed przesłaniem i pozostają bezpieczne w rozproszonej sieci. Tylko Ty posiadasz klucze."
+        },
+        "distributed": {
+          "title": "Globalna Dystrybucja",
+          "description": "Pliki są dystrybuowane na tysiącach FluxNodes na całym świecie, zapewniając redundancję i szybki dostęp z dowolnego miejsca."
+        },
+        "censorship": {
+          "title": "Odporność na Cenzurę",
+          "description": "Brak pojedynczego punktu awarii lub kontroli. Twoje pliki pozostają dostępne nawet jeśli pojedyncze węzły są offline."
+        },
+        "ipfs": {
+          "title": "Zbudowane na IPFS",
+          "description": "Zasilane technologią InterPlanetary File System do trwałego przechowywania plików z adresowaniem treści."
+        },
+        "permanent": {
+          "title": "Trwała Pamięć",
+          "description": "Twoje pliki pozostają dostępne przez cały okres subskrypcji ze wbudowaną redundancją."
+        },
+        "fast": {
+          "title": "Szybkie i Niezawodne",
+          "description": "Korzystaj z globalnej wydajności podobnej do CDN z plikami dystrybuowanymi na najbliższych dostępnych węzłach."
+        },
+        "guarantee": {
+          "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+          "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+        }
+      },
+      "benefits": {
+        "title": "Korzyści FluxDrive",
+        "noCentralized": "Żaden scentralizowany dostawca nie ma dostępu do Twoich danych",
+        "fullControl": "Pełna własność i kontrola nad Twoimi plikami",
+        "globalRedundancy": "Globalna redundancja na ponad 2600 węzłach",
+        "transparentPricing": "Przejrzyste ceny bez ukrytych opłat",
+        "noVendorLock": "Brak uzależnienia od dostawcy lub zastrzeżonych formatów",
+        "openSource": "Zbudowane na technologii IPFS open-source"
+      }
     },
     "marketplace": {
       "loading": "Ładowanie sklepu...",
@@ -2562,11 +2765,153 @@
       },
       "games": {
         "index": {
-          "title": "Podnieś Poziom Swojej Gry",
-          "subtitle": "Hosting gier premium z globalnymi serwerami, błyskawicznymi połączeniami i elastycznymi planami dla każdego gracza.",
-          "loading": "Ładowanie gier...",
-          "maintenanceTitle": "Sklep Gier\nW Trakcie Konserwacji",
-          "maintenanceSubtitle": "Obecnie występują problemy techniczne ze sklepem gier. Nasz zespół pracuje nad jak najszybszym rozwiązaniem tego problemu."
+          "title": "Hosting Serwerów Gier",
+          "subtitle": "Wdrażaj i zarządzaj serwerami gier w FluxCloud",
+          "loading": "Ładowanie dostępnych gier...",
+          "maintenanceTitle": "Marketplace Gier Tymczasowo Niedostępny",
+          "maintenanceSubtitle": "Doświadczamy tymczasowych problemów",
+          "hero": {
+            "title": "Profesjonalny Hosting Serwerów Gier w FluxCloud",
+            "subtitle": "Wdróż swoje ulubione serwery gier w sekundach z globalną dystrybucją, ochroną DDoS i rozliczeniami pay-as-you-go opartymi na technologii blockchain.",
+            "cta": "Przeglądaj Serwery Gier",
+            "benefits": {
+              "instant": "Natychmiastowe Wdrożenie",
+              "global": "Serwery Globalne",
+              "ddos": "Ochrona DDoS",
+              "pricing": "Przejrzyste Ceny"
+            }
+          },
+          "trust": {
+            "servers": {
+              "value": "1000+",
+              "label": "Aktywnych Serwerów"
+            },
+            "uptime": {
+              "value": "99.9%",
+              "label": "Uptime SLA"
+            },
+            "locations": {
+              "value": "50+",
+              "label": "Krajów"
+            },
+            "deployment": {
+              "value": "< 30s",
+              "label": "Czas Wdrożenia"
+            }
+          },
+          "features": {
+            "title": "Dlaczego Warto Wybrać FluxPlay do Hostingu Gier?",
+            "items": {
+              "instant": {
+                "title": "Natychmiastowe Wdrożenie",
+                "description": "Uruchom serwer gry w mniej niż 30 sekund dzięki naszemu zautomatyzowanemu systemowi wdrożeniowemu. Nie wymaga wiedzy technicznej."
+              },
+              "ddos": {
+                "title": "Wbudowana Ochrona DDoS",
+                "description": "Ochrona DDoS klasy korporacyjnej utrzymuje serwer online, a graczy podłączonych, nawet podczas ataków."
+              },
+              "global": {
+                "title": "Globalna Sieć Serwerów",
+                "description": "Wybieraj spośród ponad 50 krajów na całym świecie, aby zminimalizować opóźnienia i zapewnić najlepsze doświadczenie dla graczy."
+              },
+              "monitoring": {
+                "title": "Monitorowanie 24/7",
+                "description": "Monitoring wydajności w czasie rzeczywistym z automatycznymi alertami zapewnia, że serwer pozostaje zdrowy i responsywny."
+              },
+              "paygo": {
+                "title": "Płać za to, czego Używasz",
+                "description": "Płać tylko za używane zasoby dzięki przejrzystym, elastycznym cenom. Bez ukrytych opłat czy długoterminowych umów."
+              },
+              "blockchain": {
+                "title": "Napędzany Blockchain",
+                "description": "Zbudowany na zdecentralizowanej infrastrukturze Flux dla zwiększonego bezpieczeństwa, przejrzystości i odporności na centralne awarie."
+              },
+              "uptime": {
+                "title": "Gwarancja 99,9% Uptime",
+                "description": "Nasza zdecentralizowana infrastruktura zapewnia maksymalną niezawodność z gwarancją 99,9% uptime SLA, utrzymując serwer gry online, gdy potrzebują go gracze."
+              },
+              "moneyback": {
+                "title": "30-Dniowy Zwrot Pieniędzy",
+                "description": "Wypróbuj FluxPlay bez ryzyka dzięki naszej 30-dniowej gwarancji zwrotu pieniędzy. Jeśli nie jesteś zadowolony, zwrócimy płatność bez pytań."
+              }
+            }
+          },
+          "content": {
+            "title": "Profesjonalny Hosting Serwerów Gier Made Simple",
+            "body": "<p><strong>FluxPlay</strong> rewolucjonizuje hosting serwerów gier, łącząc moc zdecentralizowanej infrastruktury z prostotą tradycyjnego hostingu. Niezależnie od tego, czy hostujesz serwery <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong>, czy <strong>Enshrouded</strong>, nasza platforma zapewnia niezrównaną wydajność i niezawodność.</p><p>Zbudowany na <strong>FluxCloud</strong>, FluxPlay zapewnia hosting gier klasy korporacyjnej z automatycznym skalowaniem, dystrybucją geograficzną i bezpieczeństwem klasy wojskowej. Nasza zdecentralizowana architektura gwarantuje, że serwer gry pozostanie online, nawet jeśli pojedyncze węzły zawiodą, zapewniając lepszy uptime niż tradycyjni dostawcy scentralizowanego hostingu.</p><p>Dzięki natychmiastowemu wdrożeniu, przejrzystym cenom i wbudowanej ochronie DDoS, FluxPlay to nowoczesne rozwiązanie dla graczy, społeczności i administratorów serwerów, którzy wymagają najlepszego.</p>"
+          },
+          "serverLocations": {
+            "title": "Globalna Sieć Serwerów",
+            "subtitle": "Nasza zdecentralizowana infrastruktura rozprzestrzenia się na całym świecie, zapewniając niskie opóźnienia i wysoką dostępność dla Twoich serwerów gier, gdziekolwiek są Twoi gracze."
+          },
+          "gamesTitle": "Dostępne Serwery Gier",
+          "gamesSubtitle": "Wybierz grę i wdróż serwer w sekundach",
+          "comparison": {
+            "title": "Dlaczego FluxPlay vs Tradycyjny Hosting",
+            "feature": "Funkcja",
+            "fluxplay": "FluxPlay",
+            "traditional": "Tradycyjny Hosting",
+            "rows": {
+              "setup": "Czas Konfiguracji",
+              "pricing": "Model Cenowy",
+              "ddos": "Ochrona DDoS",
+              "decentralized": "Zdecentralizowany",
+              "locations": "Lokalizacje Serwerów",
+              "scaling": "Szybkość Skalowania"
+            },
+            "values": {
+              "instant": "< 30 sekund",
+              "hours": "Godziny do dni",
+              "transparent": "Przejrzyste Pay-As-You-Go",
+              "hidden": "Ukryte opłaty + umowy",
+              "extra": "Dodatkowy koszt",
+              "countries": "50+ krajów",
+              "limited": "Ograniczone regiony",
+              "slow": "Powolny proces manualny"
+            }
+          },
+          "faq": {
+            "title": "Najczęściej Zadawane Pytania",
+            "items": {
+              "what": {
+                "question": "Czym jest hosting serwerów gier FluxPlay?",
+                "answer": "<p>FluxPlay to zdecentralizowana platforma hostingu serwerów gier zbudowana na FluxCloud. Pozwala wdrażać i zarządzać serwerami gier jak Minecraft, Palworld, Factorio i więcej z natychmiastowym wdrożeniem, globalną dystrybucją i bezpieczeństwem klasy korporacyjnej.</p>"
+              },
+              "different": {
+                "question": "Czym FluxPlay różni się od tradycyjnego hostingu gier?",
+                "answer": "<p>FluxPlay używa <strong>zdecentralizowanej infrastruktury blockchain</strong> zamiast scentralizowanych centrów danych. Zapewnia to lepszy uptime, przejrzyste ceny, wbudowaną ochronę DDoS i odporność na pojedyncze punkty awarii. Możesz wdrożyć serwery w mniej niż 30 sekund w porównaniu do godzin lub dni u tradycyjnych dostawców.</p>"
+              },
+              "games": {
+                "question": "Jakie gry mogę hostować na FluxPlay?",
+                "answer": "<p>FluxPlay obecnie wspiera popularne gry, w tym <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong> i <strong>Enshrouded</strong>. Stale dodajemy nowe gry na podstawie zapotrzebowania społeczności.</p>"
+              },
+              "deploy": {
+                "question": "Jak szybko mogę wdrożyć serwer gry?",
+                "answer": "<p>Serwery gier wdrażają się <strong>w mniej niż 30 sekund</strong> średnio. Po prostu wybierz grę, konfigurację i lokalizację serwera, a następnie kliknij wdróż. Nasz zautomatyzowany system obsługuje wszystkie techniczne ustawienia za Ciebie.</p>"
+              },
+              "ddosProtection": {
+                "question": "Czy ochrona DDoS jest wliczona w cenę?",
+                "answer": "<p>Tak! <strong>Ochrona DDoS klasy korporacyjnej jest wliczona</strong> we wszystkie serwery gier bez dodatkowych kosztów. Twój serwer jest chroniony przed typowymi wektorami ataków, zapewniając, że gracze pozostaną połączeni nawet podczas ataków.</p>"
+              },
+              "pricing": {
+                "question": "Jak działają ceny?",
+                "answer": "<p>FluxPlay używa <strong>przejrzystych cen pay-as-you-go</strong>. Płacisz tylko za zasoby obliczeniowe (CPU, RAM, storage), których używa Twój serwer. Bez ukrytych opłat, kosztów konfiguracji czy długoterminowych umów. Ceny różnią się w zależności od gry i konfiguracji, zaczynając od $__MIN_PRICE__/miesiąc dla małych serwerów.</p>"
+              },
+              "support": {
+                "question": "Jakie wsparcie jest dostępne?",
+                "answer": "<p>Wszystkie serwery FluxPlay zawierają <strong>zautomatyzowany monitoring 24/7</strong> z alertami w czasie rzeczywistym. Dla wsparcia technicznego możesz uzyskać dostęp do naszej dokumentacji, forów społeczności i systemu ticketów. Pakiety wsparcia premium są dostępne dla klientów korporacyjnych.</p>"
+              },
+              "blockchain": {
+                "question": "Czy potrzebuję kryptowaluty, aby używać FluxPlay?",
+                "answer": "<p>Choć FluxPlay jest zbudowany na technologii blockchain, możesz płacić <strong>tradycyjnymi metodami płatności</strong>, w tym kartami kredytowymi. Infrastruktura blockchain zapewnia bezpieczeństwo i korzyści decentralizacji w tle bez konieczności zarządzania kryptowalutą.</p>"
+              }
+            }
+          },
+          "cta": {
+            "title": "Gotowy do Wdrożenia Serwera Gry?",
+            "subtitle": "Dołącz do tysięcy graczy hostujących w zdecentralizowanej sieci Flux",
+            "button": "Rozpocznij Teraz"
+          }
         },
         "detail": {
           "loadingTitle": "Ładowanie szczegółów gry...",
@@ -2576,6 +2921,535 @@
           "gameNotFound": "Nie znaleziono gry",
           "gameNotAvailable": "Gra niedostępna",
           "failedToLoad": "Nie udało się załadować gry"
+        },
+        "palworld": {
+          "description": {
+            "title": "O Hostingu Serwera Palworld",
+            "content": "<p><strong>Palworld</strong> to wieloosobowa gra survivalowa z otwartym światem, w której tajemnicze stworzenia zwane \"Palami\" zamieszkują krainy. W tej grze możesz zaprzyjaźniać się i zbierać Palom, używać ich w bitwach, kazać im pracować w Twojej bazie, a nawet je sprzedawać!</p><p>Uruchamianie własnego serwera Palworld w sieci Flux daje Ci pełną kontrolę nad doświadczeniem z gry. Dostosuj ustawienia gry, zarządzaj dostępem graczy i ciesz się płynną rozgrywką ze znajomymi. <strong>Hosting serwera rozpoczyna się od zaledwie [[minPrice]]/miesiąc</strong> z elastycznymi opcjami skalowania w miarę wzrostu bazy graczy.</p><p>Niezależnie od tego, czy budujesz ultimatywne sanktuarium Pali, czy tworzysz konkurencyjne środowisko PvP, hosting na Flux zapewnia niezawodność i wydajność, których potrzebujesz.</p>",
+            "highlights": [
+              "Do 32 graczy na serwer",
+              "Pełna kontrola nad dostosowaniem",
+              "Trwałe zapisy świata",
+              "Gotowość na mody",
+              "Automatyczne kopie zapasowe",
+              "Ochrona przed DDoS wliczona"
+            ]
+          },
+          "features": {
+            "title": "Dlaczego Hostować na FluxCloud?",
+            "subtitle": "Zdecentralizowana infrastruktura zbudowana dla wydajności w grach",
+            "items": [
+              {
+                "icon": "mdi-shield-check",
+                "title": "Ochrona przed DDoS",
+                "description": "Wbudowana ochrona utrzymuje Twój serwer online nawet podczas ataków, zapewniając nieprzerwaną rozgrywkę."
+              },
+              {
+                "icon": "mdi-flash",
+                "title": "Natychmiastowe Wdrożenie",
+                "description": "Twój serwer jest gotowy w minuty, a nie godziny. Wdrażaj, konfiguruj i zacznij grać bez oczekiwania."
+              },
+              {
+                "icon": "mdi-access-point-network",
+                "title": "Niskie Opóźnienia na Całym Świecie",
+                "description": "Serwery strategicznie rozmieszczone na całym świecie zapewniają minimalny ping i płynną rozgrywkę dla graczy wszędzie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "Zdecentralizowana Sieć",
+                "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
+              },
+              {
+                "icon": "mdi-currency-usd-off",
+                "title": "Przystępne Ceny",
+                "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
+              },
+              {
+                "icon": "mdi-chart-line",
+                "title": "Skalowalne Zasoby",
+                "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "99.9% Czasu Działania",
+                "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "Globalna Sieć Serwerów",
+            "subtitle": "Twoja gra hostowana na światowej zdecentralizowanej infrastrukturze z serwerami na wielu kontynentach, zapewniająca niskie opóźnienia i wysoką dostępność dla graczy wszędzie."
+          },
+          "faq": {
+            "title": "Często Zadawane Pytania",
+            "subtitle": "Wszystko, co musisz wiedzieć o hostingu Palworld na FluxCloud",
+            "questions": [
+              {
+                "q": "Jak hostować serwer Palworld na FluxCloud?",
+                "a": "Po prostu wybierz preferowaną konfigurację serwera z opcji powyżej, kliknij \"Instaluj\" i postępuj zgodnie z kreatorem wdrażania. Twój serwer będzie gotowy w zaledwie kilka minut!"
+              },
+              {
+                "q": "Ile kosztuje hosting Palworld?",
+                "a": "Ceny zaczynają się już od <strong>[[minPrice]]/miesiąc</strong> i skalują się w zależności od pojemności. Wszystkie ceny obejmują ochronę przed DDoS i automatyczne kopie zapasowe."
+              },
+              {
+                "q": "Czy mogę dostosować ustawienia serwera?",
+                "a": "Absolutnie! Masz pełną kontrolę nad ustawieniami serwera, w tym poziomem trudności, ustawieniami PvP, współczynnikami doświadczenia i więcej. Konfiguruj swoją grę przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją."
+              },
+              {
+                "q": "Jakie są minimalne wymagania?",
+                "a": "Dla do 8 graczy: 2 rdzenie CPU, 4GB RAM, 10GB przestrzeni dyskowej. Dla większych serwerów (16-32 graczy), wybierz nasze plany wyższego poziomu."
+              },
+              {
+                "q": "Ile czasu zajmuje wdrożenie?",
+                "a": "Wdrożenie serwera zazwyczaj kończy się w ciągu <strong>5-10 minut</strong>. Możesz natychmiast zacząć zapraszać graczy!"
+              },
+              {
+                "q": "Czy oferujecie zwroty?",
+                "a": "Tak! Oferujemy <strong>30-dniową gwarancję zwrotu pieniędzy</strong>. Skontaktuj się z wsparciem w ciągu 30 dni, aby otrzymać pełny zwrot, jeśli nie jesteś zadowolony."
+              }
+            ]
+          }
+        },
+        "minecraft": {
+          "description": {
+            "title": "O Hostingu Serwera Minecraft",
+            "content": "<p><strong>Minecraft</strong> to najpopularniejsza piaskownica na świecie, pozwalająca budować, eksplorować i przetrwać w nieskończonym, proceduralnie generowanym świecie. Z ponad 140 milionami aktywnych graczy na całym świecie, to ostateczny plac zabaw dla kreatywności.</p><p>Hostuj własny serwer Minecraft na Flux dla ostatecznej kontroli, wydajności i niezawodności. Idealny dla vanilli, zmodowanych lub niestandardowych doświadczeń z rozgrywką ze znajomymi, społecznościami lub dużymi sieciami wieloosobowymi. <strong>Hosting serwera Minecraft rozpoczyna się od [[minPrice]]/miesiąc</strong> z skalowalnymi zasobami dostosowanymi do liczby graczy.</p><p>Niezależnie od tego, czy prowadzisz serwer survivalowy, świat kreatywnego budowania, hub mini-gier czy zmodowaną przygodę, Flux zapewnia infrastrukturę potrzebną do tworzenia niezapomnianych doświadczeń.</p>",
+            "highlights": [
+              "Wsparcie dla nieograniczonej liczby graczy",
+              "Wsparcie dla modów i wtyczek (Bukkit, Spigot, Paper, Forge, Fabric)",
+              "Regularne automatyczne kopie zapasowe",
+              "Gwarancja czasu działania serwera 24/7",
+              "Ochrona przed DDoS wliczona",
+              "Łatwe zarządzanie światem"
+            ]
+          },
+          "features": {
+            "title": "Dlaczego Hostować na FluxCloud?",
+            "subtitle": "Zdecentralizowana infrastruktura zbudowana dla wydajności w grach",
+            "items": [
+              {
+                "icon": "mdi-shield-check",
+                "title": "Ochrona przed DDoS",
+                "description": "Wbudowana ochrona utrzymuje Twój serwer online nawet podczas ataków, zapewniając nieprzerwaną rozgrywkę."
+              },
+              {
+                "icon": "mdi-flash",
+                "title": "Natychmiastowe Wdrożenie",
+                "description": "Twój serwer jest gotowy w minuty, a nie godziny. Wdrażaj, konfiguruj i zacznij grać bez oczekiwania."
+              },
+              {
+                "icon": "mdi-access-point-network",
+                "title": "Niskie Opóźnienia na Całym Świecie",
+                "description": "Serwery strategicznie rozmieszczone na całym świecie zapewniają minimalny ping i płynną rozgrywkę dla graczy wszędzie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "Zdecentralizowana Sieć",
+                "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
+              },
+              {
+                "icon": "mdi-currency-usd-off",
+                "title": "Przystępne Ceny",
+                "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
+              },
+              {
+                "icon": "mdi-chart-line",
+                "title": "Skalowalne Zasoby",
+                "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "99.9% Czasu Działania",
+                "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "Globalna Sieć Serwerów",
+            "subtitle": "Twoja gra hostowana na światowej zdecentralizowanej infrastrukturze z serwerami na wielu kontynentach, zapewniająca niskie opóźnienia i wysoką dostępność dla graczy wszędzie."
+          },
+          "faq": {
+            "title": "Często Zadawane Pytania",
+            "subtitle": "Wszystko, co musisz wiedzieć o hostingu Minecraft na FluxCloud",
+            "questions": [
+              {
+                "q": "Jak hostować serwer Minecraft na FluxCloud?",
+                "a": "Wybierz preferowaną konfigurację serwera w oparciu o liczbę graczy, kliknij \"Instaluj\" i postępuj zgodnie z naszym prostym kreatorem wdrażania. Twój serwer będzie działać w ciągu kilku minut!"
+              },
+              {
+                "q": "Ile kosztuje hosting Minecraft?",
+                "a": "Plany zaczynają się od <strong>[[minPrice]]/miesiąc</strong> i skalują się w zależności od RAM, CPU i pojemności graczy. Wszystkie plany obejmują ochronę przed DDoS i automatyczne kopie zapasowe."
+              },
+              {
+                "q": "Czy mogę zainstalować mody i wtyczki?",
+                "a": "Tak! Pełne wsparcie dla Bukkit, Spigot, Paper, Forge, Fabric i wszystkich głównych loaderów modów. Przesyłaj i konfiguruj niestandardowe wtyczki i modpaki przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją."
+              },
+              {
+                "q": "Które wersje Minecrafta są wspierane?",
+                "a": "Wszystkie wersje Minecraft Java Edition od 1.8 do najnowszego wydania. Zmieniaj wersje w dowolnym momencie przez SSH lub Przeglądarkę Woluminów w zarządzaniu aplikacją."
+              },
+              {
+                "q": "Jak działają kopie zapasowe?",
+                "a": "Automatyczne cotygodniowe kopie zapasowe są tworzone i utrzymywane, gdy aplikacja jest aktywna. Najnowsza kopia zapasowa jest zawsze zachowywana do wygaśnięcia aplikacji. Możesz również tworzyć ręczne kopie zapasowe w dowolnym momencie i przywracać jednym kliknięciem."
+              },
+              {
+                "q": "Czy mogę przenieść mój istniejący świat Minecraft?",
+                "a": "Absolutnie! Prześlij swoje istniejące pliki świata przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją. Oferujemy również bezpłatną pomoc w migracji dla serwerów hostowanych gdzie indziej."
+              }
+            ]
+          },
+          "gettingStarted": {
+            "title": "Jak Zacząć z Hostingiem Serwera Minecraft",
+            "subtitle": "Uruchom swój serwer Minecraft w 3 prostych krokach",
+            "steps": [
+              {
+                "number": "1",
+                "title": "Wybierz Swoją Konfigurację",
+                "description": "Wybierz RAM, CPU i pamięć w oparciu o spodziewaną liczbę graczy. Oferujemy konfiguracje od małych prywatnych serwerów (5-10 graczy) do dużych sieci wieloosobowych (100+ graczy)."
+              },
+              {
+                "number": "2",
+                "title": "Wdróż Swój Serwer",
+                "description": "Kliknij przycisk wdrażania, a nasz automatyczny system zapewni Twój serwer Minecraft w zdecentralizowanej sieci Flux. Twój serwer będzie gotowy w mniej niż 5 minut z najnowszą wersją Minecraft."
+              },
+              {
+                "number": "3",
+                "title": "Dostosuj i Graj",
+                "description": "Uzyskaj dostęp do serwera przez SSH lub Przeglądarkę Woluminów, aby zainstalować mody, skonfigurować ustawienia i przesłać niestandardowe światy. Udostępnij adres IP serwera znajomym i zacznij grać natychmiast!"
+              }
+            ]
+          },
+          "technicalSpecs": {
+            "title": "Specyfikacje Techniczne",
+            "subtitle": "Co otrzymujesz z hostingiem Minecraft na FluxCloud",
+            "specs": [
+              {
+                "label": "Typ Serwera",
+                "value": "Java Edition (wszystkie wersje)"
+              },
+              {
+                "label": "Wspierane Platformy",
+                "value": "Vanilla, Bukkit, Spigot, Paper, Forge, Fabric"
+              },
+              {
+                "label": "Panel Sterowania",
+                "value": "Przeglądarka Woluminów w sieci + dostęp SSH"
+              },
+              {
+                "label": "Częstotliwość Kopii Zapasowych",
+                "value": "Cotygodniowe automatyczne + manualne na żądanie"
+              },
+              {
+                "label": "Ochrona przed DDoS",
+                "value": "Klasy korporacyjnej, wliczona za darmo"
+              },
+              {
+                "label": "Gwarancja Czasu Działania",
+                "value": "99.9% gwarantowane"
+              },
+              {
+                "label": "Czas Wdrożenia",
+                "value": "< 5 minut średnio"
+              },
+              {
+                "label": "Skalowanie Graczy",
+                "value": "Od 5 do 500+ równoczesnych graczy"
+              }
+            ]
+          }
+        },
+        "factorio": {
+          "description": {
+            "title": "O Hostingu Serwera Factorio",
+            "content": "<p><strong>Factorio</strong> to uznana gra o budowaniu i tworzeniu zautomatyzowanych fabryk do produkcji coraz bardziej złożonych przedmiotów. Projektuj skomplikowane linie produkcyjne, automatyzuj logistykę i broń się przed atakami obcych w tym inżynieryjnym arcydziele.</p><p>Hostuj swój serwer Factorio na Flux dla płynnej wieloosobowej rozgrywki ze znajomymi i współpracownikami. Budujcie masywne fabryki, współpracujcie nad planami i optymalizujcie łańcuchy produkcyjne razem na niezawodnej infrastrukturze. <strong>Hosting serwera Factorio rozpoczyna się od [[minPrice]]/miesiąc</strong> i skaluje się wraz z Twoimi ambicjami megabazy.</p><p>Idealny dla entuzjastów inżynierii, miłośników automatyzacji i zespołów chcących zbudować ultimatywną fabrykę. Od skromnych początków po wystrzelenie rakiet, sukces Twojej fabryki zależy od niezawodnego hostingu.</p>",
+            "highlights": [
+              "Stabilna wydajność multiplayer dla złożonych fabryk",
+              "Pełne wsparcie dla modów (przez portal modów)",
+              "Funkcja auto-zapisu co 5 minut",
+              "Połączenia o ultra niskich opóźnieniach",
+              "Łatwa konfiguracja serwera",
+              "Ochrona przed DDoS wliczona"
+            ]
+          },
+          "features": {
+            "title": "Dlaczego Hostować na FluxCloud?",
+            "subtitle": "Zdecentralizowana infrastruktura zbudowana dla wydajności w grach",
+            "items": [
+              {
+                "icon": "mdi-shield-check",
+                "title": "Ochrona przed DDoS",
+                "description": "Wbudowana ochrona utrzymuje Twój serwer online nawet podczas ataków, zapewniając nieprzerwaną rozgrywkę."
+              },
+              {
+                "icon": "mdi-flash",
+                "title": "Natychmiastowe Wdrożenie",
+                "description": "Twój serwer jest gotowy w minuty, a nie godziny. Wdrażaj, konfiguruj i zacznij grać bez oczekiwania."
+              },
+              {
+                "icon": "mdi-access-point-network",
+                "title": "Niskie Opóźnienia na Całym Świecie",
+                "description": "Serwery strategicznie rozmieszczone na całym świecie zapewniają minimalny ping i płynną rozgrywkę dla graczy wszędzie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "Zdecentralizowana Sieć",
+                "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
+              },
+              {
+                "icon": "mdi-currency-usd-off",
+                "title": "Przystępne Ceny",
+                "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
+              },
+              {
+                "icon": "mdi-chart-line",
+                "title": "Skalowalne Zasoby",
+                "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "99.9% Czasu Działania",
+                "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "Globalna Sieć Serwerów",
+            "subtitle": "Twoja gra hostowana na światowej zdecentralizowanej infrastrukturze z serwerami na wielu kontynentach, zapewniająca niskie opóźnienia i wysoką dostępność dla graczy wszędzie."
+          },
+          "faq": {
+            "title": "Często Zadawane Pytania",
+            "subtitle": "Wszystko, co musisz wiedzieć o hostingu Factorio na FluxCloud",
+            "questions": [
+              {
+                "q": "Jak hostować serwer Factorio na FluxCloud?",
+                "a": "Wybierz konfigurację serwera, kliknij \"Instaluj\" i wdróż w minuty. Prześlij swój plik zapisu lub zacznij od nowa. Twoja fabryka będzie działać, zanim biters dotrą do Twoich murów!"
+              },
+              {
+                "q": "Ile kosztuje hosting Factorio?",
+                "a": "Począwszy od <strong>[[minPrice]]/miesiąc</strong> i skaluje się do planów korporacyjnych dla masywnych megabaz. Wszystkie plany obejmują automatyczne kopie zapasowe i ochronę przed DDoS."
+              },
+              {
+                "q": "Czy mogę używać modów na moim serwerze?",
+                "a": "Tak! Pełne wsparcie dla portalu modów Factorio. Instaluj i konfiguruj mody przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją. Popularne modpaki jak Space Exploration i Krastorio 2 działają doskonale."
+              },
+              {
+                "q": "Co się stanie, jeśli moja fabryka stanie się zbyt duża?",
+                "a": "Łatwo uaktualnij do planu wyższego poziomu z większą ilością CPU i RAM. Twój serwer skaluje się wraz z Twoimi ambicjami megabazy. Aktualizacje na żywo z minimalnym przestojem."
+              },
+              {
+                "q": "Jak często tworzone są kopie zapasowe zapisów?",
+                "a": "Automatyczne cotygodniowe kopie zapasowe są tworzone i utrzymywane, gdy aplikacja jest aktywna. Najnowsza kopia zapasowa jest zawsze zachowywana do wygaśnięcia aplikacji. Możesz również tworzyć ręczne kopie zapasowe w dowolnym momencie."
+              },
+              {
+                "q": "Czy mogę przenieść moją istniejącą fabrykę?",
+                "a": "Absolutnie! Prześlij swoje istniejące pliki zapisu przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją. Wszystkie mody, plany i postępy badań przenoszą się bezproblemowo."
+              }
+            ]
+          }
+        },
+        "satisfactory": {
+          "description": {
+            "title": "O Hostingu Serwera Satisfactory",
+            "content": "<p><strong>Satisfactory</strong> to gra budowania fabryk z perspektywy pierwszej osoby w otwartym świecie z odrobiną eksploracji i walki. Eksploruj obcą planetę, zbieraj zasoby i buduj masywne zautomatyzowane fabryki w oszałamiających środowiskach 3D.</p><p>Hostuj swój dedykowany serwer Satisfactory na Flux dla płynnej kooperacyjnej rozgrywki z do 4 graczy. Budujcie mega-fabryki razem, eksplorujcie niebezpieczne biomy i automatyzujcie łańcuchy produkcyjne na niezawodnej, wysokowydajnej infrastrukturze. <strong>Hosting serwera Satisfactory rozpoczyna się od [[minPrice]]/miesiąc</strong> z mocą do obsługi nawet najbardziej złożonych mega-fabryk.</p><p>Od skromnych początków z podstawowymi przenośnikami po rozległe wielopoziomowe fabryki z pociągami, dronami i hipertunem - Twoje przemysłowe imperium potrzebuje solidnego hostingu, aby poradzić sobie ze złożonością.</p>",
+            "highlights": [
+              "Kooperacyjny multiplayer dla do 4 graczy",
+              "Trwały stan świata między sesjami",
+              "Regularne automatyczne zapisy co 5 minut",
+              "Wysokowydajny hosting dla mega-fabryk",
+              "Łatwe zarządzanie sesjami",
+              "Ochrona przed DDoS wliczona"
+            ]
+          },
+          "features": {
+            "title": "Dlaczego Hostować na FluxCloud?",
+            "subtitle": "Zdecentralizowana infrastruktura zbudowana dla wydajności w grach",
+            "items": [
+              {
+                "icon": "mdi-shield-check",
+                "title": "Ochrona przed DDoS",
+                "description": "Wbudowana ochrona utrzymuje Twój serwer online nawet podczas ataków, zapewniając nieprzerwaną rozgrywkę."
+              },
+              {
+                "icon": "mdi-flash",
+                "title": "Natychmiastowe Wdrożenie",
+                "description": "Twój serwer jest gotowy w minuty, a nie godziny. Wdrażaj, konfiguruj i zacznij grać bez oczekiwania."
+              },
+              {
+                "icon": "mdi-access-point-network",
+                "title": "Niskie Opóźnienia na Całym Świecie",
+                "description": "Serwery strategicznie rozmieszczone na całym świecie zapewniają minimalny ping i płynną rozgrywkę dla graczy wszędzie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "Zdecentralizowana Sieć",
+                "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
+              },
+              {
+                "icon": "mdi-currency-usd-off",
+                "title": "Przystępne Ceny",
+                "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
+              },
+              {
+                "icon": "mdi-chart-line",
+                "title": "Skalowalne Zasoby",
+                "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "99.9% Czasu Działania",
+                "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "Globalna Sieć Serwerów",
+            "subtitle": "Twoja gra hostowana na światowej zdecentralizowanej infrastrukturze z serwerami na wielu kontynentach, zapewniająca niskie opóźnienia i wysoką dostępność dla graczy wszędzie."
+          },
+          "faq": {
+            "title": "Często Zadawane Pytania",
+            "subtitle": "Wszystko, co musisz wiedzieć o hostingu Satisfactory na FluxCloud",
+            "questions": [
+              {
+                "q": "Jak hostować serwer Satisfactory na FluxCloud?",
+                "a": "Wybierz swój plan serwera, kliknij \"Instaluj\" i wdróż w ciągu kilku minut. Załaduj swój istniejący zapis lub zacznij od nowa. Twoja fabryka będzie online i gotowa do kooperacyjnego budowania!"
+              },
+              {
+                "q": "Ile kosztuje hosting Satisfactory?",
+                "a": "Plany zaczynają się od <strong>[[minPrice]]/miesiąc</strong> dla standardowych serwerów i skalują się, aby obsługiwać nawet najbardziej złożone mega-fabryki. Ochrona przed DDoS i kopie zapasowe wliczone."
+              },
+              {
+                "q": "Czy mogę używać modów na moim serwerze?",
+                "a": "Tak! Pełne wsparcie dla modów Satisfactory Mod Manager (SMM). Przesyłaj i konfiguruj mody przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją. Popularne mody jak Refined Power, Smart! i MAM Enhancer działają doskonale. Wszyscy gracze muszą mieć zainstalowane pasujące mody."
+              },
+              {
+                "q": "Jakie są wymagania serwera?",
+                "a": "Minimum: 4GB RAM dla startowych fabryk. Zalecane: 8GB RAM dla środkowej gry. Zaawansowane: 16GB RAM dla masywnych fabryk późnej gry z pociągami i dronami. CPU skaluje się wraz ze złożonością fabryki."
+              },
+              {
+                "q": "Jak działają pliki zapisów?",
+                "a": "Automatyczne cotygodniowe kopie zapasowe są tworzone i utrzymywane, gdy aplikacja jest aktywna. Najnowsza kopia zapasowa jest zawsze zachowywana do wygaśnięcia aplikacji. Możesz również tworzyć ręczne kopie zapasowe w dowolnym momencie. Pobieraj zapisy, aby grać offline lub przenosić między serwerami."
+              },
+              {
+                "q": "Czy mogę przenieść swój zapis dla jednego gracza?",
+                "a": "Absolutnie! Prześlij swój plik zapisu dla jednego gracza przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją. Kontynuuj swoją fabrykę ze znajomymi dokładnie tam, gdzie skończyłeś, ze wszystkimi budynkami i postępem nienaruszonymi."
+              }
+            ]
+          }
+        },
+        "enshrouded": {
+          "description": {
+            "title": "O Hostingu Serwera Enshrouded",
+            "content": "<p><strong>Enshrouded</strong> to survivalowe RPG akcji, w którym możesz grać solo lub z do 16 graczy w trybie kooperacyjnym. Eksploruj rozległy wokselowy świat Embervale, walcz z dzikimi wrogami, twórz potężny sprzęt i buduj epickie bazy ze znajomymi.</p><p>Uruchom własny serwer Enshrouded na Flux dla wciągającego doświadczenia kooperacyjnego. Wkrocz w śmiercionośną Mgłę, odkryj starożytne tajemnice, buduj wspaniałe struktury i przetrwajcie razem w tym pięknym, lecz niebezpiecznym świecie. <strong>Hosting serwera Enshrouded rozpoczyna się od [[minPrice]]/miesiąc</strong> z wsparciem dla do 16 graczy.</p><p>Niezależnie od tego, czy skupiasz się na walce, budowaniu, eksploracji czy tworzeniu przedmiotów, hosting na Flux zapewnia, że Twoje przygody są płynne, trwałe i zawsze dostępne dla całej Twojej drużyny.</p>",
+            "highlights": [
+              "Kooperacyjny multiplayer dla do 16 graczy",
+              "Pełna trwałość świata i progresja",
+              "Niestandardowe ustawienia serwera i trudności",
+              "Automatyczne kopie zapasowe co 30 minut",
+              "Wysokowydajne serwery dla wokselowych światów",
+              "Ochrona przed DDoS wliczona"
+            ]
+          },
+          "features": {
+            "title": "Dlaczego Hostować na FluxCloud?",
+            "subtitle": "Zdecentralizowana infrastruktura zbudowana dla wydajności w grach",
+            "items": [
+              {
+                "icon": "mdi-shield-check",
+                "title": "Ochrona przed DDoS",
+                "description": "Wbudowana ochrona utrzymuje Twój serwer online nawet podczas ataków, zapewniając nieprzerwaną rozgrywkę."
+              },
+              {
+                "icon": "mdi-flash",
+                "title": "Natychmiastowe Wdrożenie",
+                "description": "Twój serwer jest gotowy w minuty, a nie godziny. Wdrażaj, konfiguruj i zacznij grać bez oczekiwania."
+              },
+              {
+                "icon": "mdi-access-point-network",
+                "title": "Niskie Opóźnienia na Całym Świecie",
+                "description": "Serwery strategicznie rozmieszczone na całym świecie zapewniają minimalny ping i płynną rozgrywkę dla graczy wszędzie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "Zdecentralizowana Sieć",
+                "description": "Hostowane w globalnej sieci Flux dla maksymalnej dostępności i odporności."
+              },
+              {
+                "icon": "mdi-currency-usd-off",
+                "title": "Przystępne Ceny",
+                "description": "Przejrzyste ceny bez ukrytych opłat. Płać tylko za to, czego używasz, z elastycznymi opcjami cenowymi."
+              },
+              {
+                "icon": "mdi-chart-line",
+                "title": "Skalowalne Zasoby",
+                "description": "Łatwo ulepszaj zasoby serwera wraz ze wzrostem bazy graczy. Skaluj w górę lub w dół w dowolnym momencie."
+              },
+              {
+                "icon": "mdi-server-network",
+                "title": "99.9% Czasu Działania",
+                "description": "Rozproszona infrastruktura zapewnia, że Twój serwer pozostaje online. Automatyczne przełączanie awaryjne wliczone."
+              },
+              {
+                "icon": "mdi-cash-refund",
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "Globalna Sieć Serwerów",
+            "subtitle": "Twoja gra hostowana na światowej zdecentralizowanej infrastrukturze z serwerami na wielu kontynentach, zapewniająca niskie opóźnienia i wysoką dostępność dla graczy wszędzie."
+          },
+          "faq": {
+            "title": "Często Zadawane Pytania",
+            "subtitle": "Wszystko, co musisz wiedzieć o hostingu Enshrouded na FluxCloud",
+            "questions": [
+              {
+                "q": "Jak hostować serwer Enshrouded na FluxCloud?",
+                "a": "Wybierz konfigurację serwera w oparciu o liczbę graczy, kliknij \"Instaluj\" i wdróż w minuty. Twój świat Embervale będzie gotowy do kooperacyjnych przygód natychmiast!"
+              },
+              {
+                "q": "Ile kosztuje hosting Enshrouded?",
+                "a": "Począwszy od <strong>[[minPrice]]/miesiąc</strong> i skaluje się w zależności od pojemności graczy (do 16 graczy). Wszystkie plany obejmują ochronę przed DDoS, automatyczne kopie zapasowe i wysokowydajną pamięć SSD/NVMe."
+              },
+              {
+                "q": "Czy mogę dostosować ustawienia serwera?",
+                "a": "Tak! Pełna kontrola nad trudnością, ustawieniami walki, współczynnikami pojawiania się zasobów, długością cyklu dzień/noc i więcej. Konfiguruj swoją grę przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją, aby dopasować ją do swojego stylu gry."
+              },
+              {
+                "q": "Jakie są minimalne wymagania?",
+                "a": "Dla 8 graczy: 8GB RAM, 4 rdzenie CPU. Dla 16 graczy: zalecane 16GB RAM, 6 rdzeni CPU. Wokselowy świat korzysta z wysokiej wydajności CPU do generowania terenu."
+              },
+              {
+                "q": "Jak działają kopie zapasowe?",
+                "a": "Automatyczne cotygodniowe kopie zapasowe są tworzone i utrzymywane, gdy aplikacja jest aktywna. Najnowsza kopia zapasowa jest zawsze zachowywana do wygaśnięcia aplikacji. Możesz również tworzyć ręczne kopie zapasowe w dowolnym momencie i przywracać jednym kliknięciem."
+              },
+              {
+                "q": "Czy mogę przenieść mój świat dla jednego gracza?",
+                "a": "Tak! Prześlij swój plik zapisu dla jednego gracza przez SSH do serwera gry lub używając funkcji Przeglądarki Woluminów w zarządzaniu aplikacją. Twoja postać, baza, progresja i zbadane obszary przenoszą się bezproblemowo do multiplayera. Kontynuuj swoją podróż ze znajomymi!"
+              }
+            ]
+          }
         }
       },
       "wordpress": {
@@ -2584,6 +3458,74 @@
         "maintenanceSubtitle": "Obecnie występują problemy techniczne z marketplace WordPress. Nasz zespół pracuje nad jak najszybszym rozwiązaniem tego problemu.",
         "maintenanceDescription": "Proszę sprawdzić później lub skontaktować się z wsparciem, jeśli potrzebujesz natychmiastowej pomocy.",
         "pageTitle": "Hosting WordPress na Flux",
+        "landing": {
+          "title": "Hosting WordPress na FluxCloud",
+          "subtitle": "Wdrażaj potężne, skalowalne strony WordPress w zdecentralizowanej sieci FluxCloud z automatycznymi kopiami zapasowymi, certyfikatami SSL i globalnym CDN.",
+          "description": {
+            "title": "Dlaczego warto wybrać WordPress na FluxCloud?",
+            "content": "Hostuj swoją stronę WordPress na zdecentralizowanej infrastrukturze, która łączy wydajność, bezpieczeństwo i niezawodność. Nasz zarządzany hosting WordPress obejmuje automatyczne aktualizacje, cotygodniowe kopie zapasowe i bezpieczeństwo na poziomie korporacyjnym - wszystko zasilane przez sieć FluxCloud.",
+            "highlights": {
+              "security": "Bezpieczeństwo na poziomie korporacyjnym z automatycznymi aktualizacjami",
+              "performance": "Wysokowydajne dyski SSD/NVMe i zoptymalizowane serwery",
+              "updates": "Automatyczne aktualizacje rdzenia WordPress i wtyczek",
+              "decentralized": "Zdecentralizowany hosting na wielu węzłach globalnych"
+            }
+          },
+          "plans": {
+            "title": "Wybierz swój plan WordPress",
+            "subtitle": "Wybierz idealny plan dla potrzeb Twojej witryny. Wszystkie plany obejmują bazę danych MySQL, certyfikaty SSL i pełną funkcjonalność WordPress.",
+            "recommended": "Najpopularniejsze",
+            "buyNow": "Kup teraz",
+            "perMonth": "/mies.",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "storage": "Przestrzeń",
+            "instances": "Węzły",
+            "getStarted": "Rozpocznij"
+          },
+          "features": {
+            "title": "Wszystko czego potrzebujesz dla WordPress",
+            "items": {
+              "quickDeploy": {
+                "title": "Szybkie wdrożenie",
+                "description": "Uruchom swoją stronę WordPress w kilka minut dzięki naszemu systemowi wdrażania jednym kliknięciem."
+              },
+              "mysql": {
+                "title": "Baza danych MySQL",
+                "description": "W pełni zarządzana baza danych MySQL 8.3 z automatycznymi kopiami zapasowymi i optymalizacją."
+              },
+              "ssl": {
+                "title": "Darmowe certyfikaty SSL",
+                "description": "Automatyczne przydzielanie i odnawianie certyfikatów SSL dla bezpiecznych połączeń HTTPS."
+              },
+              "scalable": {
+                "title": "Skalowalne zasoby",
+                "description": "Łatwo uaktualnij swój plan wraz z rozwojem witryny, aby obsłużyć zwiększony ruch."
+              },
+              "backup": {
+                "title": "Automatyczne kopie zapasowe",
+                "description": "Cotygodniowe automatyczne kopie zapasowe z łatwą funkcją przywracania, aby chronić Twoje dane."
+              },
+              "pricing": {
+                "title": "Przejrzyste ceny",
+                "description": "Bez ukrytych opłat. Płacisz tylko za to, co używasz, z elastycznym rozliczeniem miesięcznym."
+              },
+              "guarantee": {
+                "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+                "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+              }
+            }
+          },
+          "serverNetwork": {
+            "title": "Globalna sieć serwerów",
+            "subtitle": "Twoja witryna WordPress jest hostowana w zdecentralizowanej sieci FluxCloud, rozproszonej na tysiącach węzłów na całym świecie dla maksymalnej niezawodności i wydajności.",
+            "noData": "Brak dostępnych danych serwera",
+            "activeServers": "Aktywne serwery",
+            "countries": "Kraje",
+            "global": "Globalny",
+            "coverage": "Zasięg"
+          }
+        },
         "form": {
           "dappName": "Nazwa Dapp WordPress",
           "dappNameTooltip": "Nazwa wyświetlana dla Twojej strony WordPress. Unikalna nazwa aplikacji Flux zostanie wygenerowana automatycznie.",
@@ -2600,7 +3542,7 @@
           "whitelistIpLabel": "Whitelist IP dla kopii zapasowej/przywracania (opcjonalne)",
           "whitelistIpPlaceholder": "Wpisz adres IP",
           "performancePlan": "Plan wydajności",
-          "performancePlanTooltip": "Wybierz zasoby serwera (CPU, RAM, SSD) dla Twojej strony WordPress",
+          "performancePlanTooltip": "Wybierz zasoby serwera (CPU, RAM, SSD/NVMe) dla Twojej strony WordPress",
           "deploymentLocation": "Lokalizacja wdrożenia",
           "deploymentLocationTooltip": "Wybierz region geograficzny do wdrożenia strony WordPress. Wybierz Globalny dla automatycznego wyboru.",
           "instances": "instancji",
@@ -2696,12 +3638,286 @@
           "agreement": "Przeczytałem i akceptuję",
           "link": "Regulamin",
           "loadError": "Nie udało się załadować Regulaminu. Odwiedź <a href=\"https://runonflux.io/terms\" target=\"_blank\">https://runonflux.io/terms</a>"
+        },
+        "games": {
+          "index": {
+            "title": "Hosting Serwerów Gier",
+            "subtitle": "Wdrażaj i zarządzaj serwerami gier w FluxCloud",
+            "loading": "Ładowanie dostępnych gier...",
+            "maintenanceTitle": "Marketplace Gier Tymczasowo Niedostępny",
+            "maintenanceSubtitle": "Doświadczamy tymczasowych problemów",
+            "hero": {
+              "title": "Profesjonalny Hosting Serwerów Gier w FluxCloud",
+              "subtitle": "Wdróż swoje ulubione serwery gier w sekundach z globalną dystrybucją, ochroną DDoS i rozliczeniami pay-as-you-go opartymi na technologii blockchain.",
+              "cta": "Przeglądaj Serwery Gier",
+              "benefits": {
+                "instant": "Natychmiastowe Wdrożenie",
+                "global": "Serwery Globalne",
+                "ddos": "Ochrona DDoS",
+                "pricing": "Przejrzyste Ceny"
+              }
+            },
+            "trust": {
+              "servers": {
+                "value": "1000+",
+                "label": "Aktywnych Serwerów"
+              },
+              "uptime": {
+                "value": "99.9%",
+                "label": "Uptime SLA"
+              },
+              "locations": {
+                "value": "50+",
+                "label": "Krajów"
+              },
+              "deployment": {
+                "value": "< 30s",
+                "label": "Czas Wdrożenia"
+              }
+            },
+            "features": {
+              "title": "Dlaczego Warto Wybrać FluxPlay do Hostingu Gier?",
+              "items": {
+                "instant": {
+                  "title": "Natychmiastowe Wdrożenie",
+                  "description": "Uruchom serwer gry w mniej niż 30 sekund dzięki naszemu zautomatyzowanemu systemowi wdrożeniowemu. Nie wymaga wiedzy technicznej."
+                },
+                "ddos": {
+                  "title": "Wbudowana Ochrona DDoS",
+                  "description": "Ochrona DDoS klasy korporacyjnej utrzymuje serwer online, a graczy podłączonych, nawet podczas ataków."
+                },
+                "global": {
+                  "title": "Globalna Sieć Serwerów",
+                  "description": "Wybieraj spośród ponad 50 krajów na całym świecie, aby zminimalizować opóźnienia i zapewnić najlepsze doświadczenie dla graczy."
+                },
+                "monitoring": {
+                  "title": "Monitorowanie 24/7",
+                  "description": "Monitoring wydajności w czasie rzeczywistym z automatycznymi alertami zapewnia, że serwer pozostaje zdrowy i responsywny."
+                },
+                "paygo": {
+                  "title": "Płać za to, czego Używasz",
+                  "description": "Płać tylko za używane zasoby dzięki przejrzystym, elastycznym cenom. Bez ukrytych opłat czy długoterminowych umów."
+                },
+                "blockchain": {
+                  "title": "Napędzany Blockchain",
+                  "description": "Zbudowany na zdecentralizowanej infrastrukturze Flux dla zwiększonego bezpieczeństwa, przejrzystości i odporności na centralne awarie."
+                }
+              }
+            },
+            "content": {
+              "title": "Profesjonalny Hosting Serwerów Gier Made Simple",
+              "body": "<p><strong>FluxPlay</strong> rewolucjonizuje hosting serwerów gier, łącząc moc zdecentralizowanej infrastruktury z prostotą tradycyjnego hostingu. Niezależnie od tego, czy hostujesz serwery <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong>, czy <strong>Enshrouded</strong>, nasza platforma zapewnia niezrównaną wydajność i niezawodność.</p><p>Zbudowany na <strong>FluxCloud</strong>, FluxPlay zapewnia hosting gier klasy korporacyjnej z automatycznym skalowaniem, dystrybucją geograficzną i bezpieczeństwem klasy wojskowej. Nasza zdecentralizowana architektura gwarantuje, że serwer gry pozostanie online, nawet jeśli pojedyncze węzły zawiodą, zapewniając lepszy uptime niż tradycyjni dostawcy scentralizowanego hostingu.</p><p>Dzięki natychmiastowemu wdrożeniu, przejrzystym cenom i wbudowanej ochronie DDoS, FluxPlay to nowoczesne rozwiązanie dla graczy, społeczności i administratorów serwerów, którzy wymagają najlepszego.</p>"
+            },
+            "gamesTitle": "Dostępne Serwery Gier",
+            "gamesSubtitle": "Wybierz grę i wdróż serwer w sekundach",
+            "comparison": {
+              "title": "Dlaczego FluxPlay vs Tradycyjny Hosting",
+              "feature": "Funkcja",
+              "fluxplay": "FluxPlay",
+              "traditional": "Tradycyjny Hosting",
+              "rows": {
+                "setup": "Czas Konfiguracji",
+                "pricing": "Model Cenowy",
+                "ddos": "Ochrona DDoS",
+                "decentralized": "Zdecentralizowany",
+                "locations": "Lokalizacje Serwerów",
+                "scaling": "Szybkość Skalowania"
+              },
+              "values": {
+                "instant": "< 30 sekund",
+                "hours": "Godziny do dni",
+                "transparent": "Przejrzyste Pay-As-You-Go",
+                "hidden": "Ukryte opłaty + umowy",
+                "extra": "Dodatkowy koszt",
+                "countries": "50+ krajów",
+                "limited": "Ograniczone regiony",
+                "slow": "Powolny proces manualny"
+              }
+            },
+            "faq": {
+              "title": "Najczęściej Zadawane Pytania",
+              "items": {
+                "what": {
+                  "question": "Czym jest hosting serwerów gier FluxPlay?",
+                  "answer": "<p>FluxPlay to zdecentralizowana platforma hostingu serwerów gier zbudowana na FluxCloud. Pozwala wdrażać i zarządzać serwerami gier jak Minecraft, Palworld, Factorio i więcej z natychmiastowym wdrożeniem, globalną dystrybucją i bezpieczeństwem klasy korporacyjnej.</p>"
+                },
+                "different": {
+                  "question": "Czym FluxPlay różni się od tradycyjnego hostingu gier?",
+                  "answer": "<p>FluxPlay używa <strong>zdecentralizowanej infrastruktury blockchain</strong> zamiast scentralizowanych centrów danych. Zapewnia to lepszy uptime, przejrzyste ceny, wbudowaną ochronę DDoS i odporność na pojedyncze punkty awarii. Możesz wdrożyć serwery w mniej niż 30 sekund w porównaniu do godzin lub dni u tradycyjnych dostawców.</p>"
+                },
+                "games": {
+                  "question": "Jakie gry mogę hostować na FluxPlay?",
+                  "answer": "<p>FluxPlay obecnie wspiera popularne gry, w tym <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong> i <strong>Enshrouded</strong>. Stale dodajemy nowe gry na podstawie zapotrzebowania społeczności.</p>"
+                },
+                "deploy": {
+                  "question": "Jak szybko mogę wdrożyć serwer gry?",
+                  "answer": "<p>Serwery gier wdrażają się <strong>w mniej niż 30 sekund</strong> średnio. Po prostu wybierz grę, konfigurację i lokalizację serwera, a następnie kliknij wdróż. Nasz zautomatyzowany system obsługuje wszystkie techniczne ustawienia za Ciebie.</p>"
+                },
+                "ddosProtection": {
+                  "question": "Czy ochrona DDoS jest wliczona w cenę?",
+                  "answer": "<p>Tak! <strong>Ochrona DDoS klasy korporacyjnej jest wliczona</strong> we wszystkie serwery gier bez dodatkowych kosztów. Twój serwer jest chroniony przed typowymi wektorami ataków, zapewniając, że gracze pozostaną połączeni nawet podczas ataków.</p>"
+                },
+                "pricing": {
+                  "question": "Jak działają ceny?",
+                  "answer": "<p>FluxPlay używa <strong>przejrzystych cen pay-as-you-go</strong>. Płacisz tylko za zasoby obliczeniowe (CPU, RAM, storage), których używa Twój serwer. Bez ukrytych opłat, kosztów konfiguracji czy długoterminowych umów. Ceny różnią się w zależności od gry i konfiguracji, zazwyczaj zaczynając od około $10-15/miesiąc dla małych serwerów.</p>"
+                },
+                "support": {
+                  "question": "Jakie wsparcie jest dostępne?",
+                  "answer": "<p>Wszystkie serwery FluxPlay zawierają <strong>zautomatyzowany monitoring 24/7</strong> z alertami w czasie rzeczywistym. Dla wsparcia technicznego możesz uzyskać dostęp do naszej dokumentacji, forów społeczności i systemu ticketów. Pakiety wsparcia premium są dostępne dla klientów korporacyjnych.</p>"
+                },
+                "blockchain": {
+                  "question": "Czy potrzebuję kryptowaluty, aby używać FluxPlay?",
+                  "answer": "<p>Choć FluxPlay jest zbudowany na technologii blockchain, możesz płacić <strong>tradycyjnymi metodami płatności</strong>, w tym kartami kredytowymi. Infrastruktura blockchain zapewnia bezpieczeństwo i korzyści decentralizacji w tle bez konieczności zarządzania kryptowalutą.</p>"
+                }
+              }
+            },
+            "cta": {
+              "title": "Gotowy do Wdrożenia Serwera Gry?",
+              "subtitle": "Dołącz do tysięcy graczy hostujących w zdecentralizowanej sieci Flux",
+              "button": "Rozpocznij Teraz"
+            },
+            "relatedResources": {
+              "title": "Odkryj Więcej Usług FluxCloud",
+              "subtitle": "Poznaj inne sposoby wykorzystania zdecentralizowanej infrastruktury",
+              "links": [
+                {
+                  "title": "Kalkulator Kosztów",
+                  "description": "Oblicz dokładne koszty hostingu dla swoich aplikacji z przejrzystymi cenami",
+                  "url": "/cost-calculator",
+                  "icon": "mdi-calculator"
+                },
+                {
+                  "title": "Hosting WordPress",
+                  "description": "Wdrażaj witryny WordPress na zdecentralizowanej infrastrukturze z instalacją jednym kliknięciem",
+                  "url": "/marketplace/wordpress",
+                  "icon": "mdi-wordpress"
+                },
+                {
+                  "title": "Wdrożenie Niestandardowej Aplikacji",
+                  "description": "Zarejestruj i wdróż niestandardowe aplikacje Docker w sieci Flux",
+                  "url": "/apps/register",
+                  "icon": "mdi-application-cog"
+                },
+                {
+                  "title": "Pełny Marketplace",
+                  "description": "Przeglądaj wszystkie dostępne aplikacje, gry i usługi na FluxCloud",
+                  "url": "/marketplace",
+                  "icon": "mdi-store"
+                }
+              ]
+            }
+          }
+        },
+        "wordpress": {
+          "loadingTitle": "Ładowanie Planów Hostingu WordPress...",
+          "maintenanceTitle": "Hosting WordPress Tymczasowo Niedostępny",
+          "maintenanceSubtitle": "Doświadczamy tymczasowych problemów",
+          "maintenanceDescription": "Nasza usługa hostingu WordPress jest obecnie niedostępna. Spróbuj ponownie później.",
+          "landing": {
+            "title": "Hosting WordPress na Flux",
+            "subtitle": "Wdróż swoją stronę WordPress w zdecentralizowanej sieci Flux z natychmiastową konfiguracją i globalną dystrybucją",
+            "plans": {
+              "title": "Wybierz Plan Hostingu WordPress",
+              "subtitle": "Elastyczne plany dla każdej potrzeby - od osobistych blogów do stron korporacyjnych",
+              "recommended": "Polecane",
+              "perMonth": "/miesiąc",
+              "cpu": "CPU",
+              "ram": "RAM",
+              "storage": "Pamięć",
+              "instances": "Instancje",
+              "getStarted": "Rozpocznij"
+            },
+            "description": {
+              "title": "Profesjonalny Hosting WordPress Made Simple",
+              "content": "Doświadcz przyszłości hostingu WordPress z FluxPlay. Nasza zdecentralizowana infrastruktura zapewnia wydajność, bezpieczeństwo i niezawodność klasy korporacyjnej dla Twoich stron WordPress. Zbudowany na sieci blockchain Flux, Twoja strona korzysta z globalnej dystrybucji, automatycznego skalowania i lepszego uptime w porównaniu z tradycyjnymi dostawcami hostingu."
+            }
+          }
+        }
+      },
+      "common": {
+        "whyFlux": {
+          "title": "Dlaczego Hostować na Flux Cloud",
+          "subtitle": "Doświadcz mocy zdecentralizowanej infrastruktury chmurowej zbudowanej na technologii Web3",
+          "benefits": [
+            {
+              "icon": "mdi-web",
+              "title": "Globalna Sieć",
+              "description": "Wdrażaj w 62+ krajach dzięki naszej światowej zdecentralizowanej infrastrukturze dla niskich opóźnień wszędzie."
+            },
+            {
+              "icon": "mdi-flash",
+              "title": "Błyskawiczne Wdrożenie",
+              "description": "Uruchom swoje aplikacje w minuty dzięki naszemu automatycznemu systemowi wdrażania."
+            },
+            {
+              "icon": "mdi-currency-usd-off",
+              "title": "Opłacalne",
+              "description": "Oszczędź do 70% w porównaniu z tradycyjnymi dostawcami chmury dzięki przejrzystym, konkurencyjnym cenom."
+            },
+            {
+              "icon": "mdi-server-network",
+              "title": "99.9% Czasu Działania",
+              "description": "Rozproszona architektura sieciowa zapewnia maksymalną dostępność i redundancję."
+            },
+            {
+              "icon": "mdi-chart-line",
+              "title": "Łatwe Skalowanie",
+              "description": "Skaluj zasoby w górę lub w dół natychmiast, aby dopasować się do zapotrzebowania bez przestojów."
+            },
+            {
+              "icon": "mdi-lock-open",
+              "title": "Bez Uzależnienia od Dostawcy",
+              "description": "Pełna przenośność danych i otwarte standardy oznaczają, że nigdy nie jesteś uzależniony od jednego dostawcy."
+            },
+            {
+              "icon": "mdi-account-heart",
+              "title": "Wsparcie 24/7",
+              "description": "Zespół ekspertów dostępny przez całą dobę, aby pomóc w każdej sprawie lub pytaniu."
+            },
+            {
+              "icon": "mdi-cash-refund",
+              "title": "30-Dniowa Gwarancja Zwrotu Pieniędzy",
+              "description": "Niezadowolony? Otrzymaj pełny zwrot w ciągu 30 dni, bez zbędnych pytań. Jesteśmy pewni, że pokochasz naszą usługę."
+            }
+          ]
+        },
+        "genericFAQ": {
+          "title": "Często Zadawane Pytania",
+          "subtitle": "Wszystko, co musisz wiedzieć o hostingu na Flux Cloud",
+          "questions": [
+            {
+              "q": "Czym jest Flux Cloud?",
+              "a": "Flux Cloud to <strong>zdecentralizowana sieć chmurowa Web3</strong> zasilana przez ponad <strong>2600 FluxNodes</strong> działających w <strong>62+ krajach</strong>. W przeciwieństwie do tradycyjnych dostawców chmury, Twoje aplikacje działają na naprawdę zdecentralizowanej infrastrukturze z wbudowaną redundancją, brakiem pojedynczego punktu awarii oraz globalnym przyspieszeniem brzegowym. To połączenie bezpieczeństwa, wydajności i niezawodności—bez uzależnienia od dostawcy."
+            },
+            {
+              "q": "Jak rozpocząć wdrażanie na Flux Cloud?",
+              "a": "Wdrażanie na Flux Cloud jest proste: <strong>wybierz aplikację</strong> z marketplace lub podaj własne specyfikacje Docker, <strong>wybierz konfigurację zasobów</strong> (CPU, RAM, dysk), i <strong>wdróż jednym kliknięciem</strong>. Twoja aplikacja jest automatycznie dystrybuowana na globalną sieć FluxNode z wbudowanymi kopiami zapasowymi, certyfikatami SSL i monitorowaniem uptime. Żadnej konfiguracji serwera ani wiedzy DevOps nie jest wymagane."
+            },
+            {
+              "q": "Czy mogę przenieść istniejące aplikacje Docker na Flux Cloud?",
+              "a": "Tak! Jeśli Twoja aplikacja działa w Docker, może działać na Flux Cloud. Wystarczy <strong>podać obraz Docker, zmienne środowiskowe i porty</strong>—nie musisz przepisywać kodu. Flux obsługuje zarówno <strong>aplikacje bezstanowe, jak i stanowe</strong> z trwałą pamięcią. W przypadku <strong>aplikacji wielokontenerowych</strong>, Flux obsługuje Docker Compose, umożliwiając wdrażanie całych stosów (np. aplikacja + baza danych) jako pojedynczej jednostki."
+            },
+            {
+              "q": "Jak działa ceny i rozliczenia?",
+              "a": "Płacisz tylko za zasoby, których używasz—<strong>bez ukrytych opłat lub nieoczekiwanych kosztów</strong>. Ceny są określane przez <strong>zasoby CPU, RAM i dysku</strong>, z opcjami miesięcznej lub rocznej subskrypcji. Oferujemy <strong>30-dniową gwarancję zwrotu pieniędzy</strong>, więc możesz wypróbować hosting bez ryzyka. Możesz skalować w górę lub w dół w dowolnym momencie, a Twoje rozliczenia dostosowują się proporcjonalnie."
+            },
+            {
+              "q": "Jaką otrzymuję gwarancję uptime?",
+              "a": "Flux Cloud oferuje <strong>gwarancję uptime 99.9%</strong> wspieraną przez naszą zdecentralizowaną sieć. Jeśli pojedynczy FluxNode ulegnie awarii, ruch jest automatycznie kierowany do zdrowych węzłów—<strong>bez przestojów</strong>. Ta redundancja w połączeniu z monitorowaniem w czasie rzeczywistym zapewnia, że Twoje aplikacje pozostają dostępne, nawet podczas awarii sprzętu lub ataków DDoS."
+            },
+            {
+              "q": "Czy otrzymuję wsparcie techniczne?",
+              "a": "Tak! Nasz zespół wsparcia jest dostępny <strong>24/7</strong> za pomocą czatu na żywo, e-maila i Discord. Niezależnie od tego, czy masz pytania dotyczące wdrażania, rozwiązywania problemów czy optymalizacji wydajności, jesteśmy tutaj, aby pomóc. Oferujemy również <strong>szczegółową dokumentację, poradniki oraz społeczność deweloperów</strong> do samoobsługi."
+            }
+          ]
         }
       }
     },
     "xdao": {
       "title": "Flux XDAO",
-      "subtitle": "Zdecentralizowane zarządzanie ekosystemem Flux",
+      "subtitle": "Platforma zdecentralizowanego zarządzania kierowana przez społeczność, gdzie operatorzy FluxNode głosują na ulepszenia sieci, zmiany protokołu i alokacje skarbca",
+      "description": "Flux XDAO (Extended Decentralized Autonomous Organization) umożliwia społeczności kształtowanie przyszłości ekosystemu Flux poprzez zarządzanie on-chain. Operatorzy FluxNode mogą składać propozycje, dyskutować o inicjatywach i głosować nad kluczowymi decyzjami dotyczącymi rozwoju sieci, alokacji funduszy i aktualizacji protokołu. Każdy głos jest zapisywany na blockchainie, zapewniając przejrzystość i niezmienność.",
+      "learnMore": "Dowiedz się więcej o XDAO",
       "loggedIn": "Zalogowany",
       "login": "Zaloguj",
       "loginToVote": "Zaloguj się, aby głosować",
@@ -2746,8 +3962,8 @@
       "pageNotFoundTitle": "Strona nie znaleziona ⚠️",
       "pageNotFoundDescription": "Nie mogliśmy znaleźć strony, której szukasz.",
       "backToHome": "Powrót do strony głównej",
-      "error404Alt": "błąd 404",
-      "footerImageAlt": "obraz stopki"
+      "error404Alt": "404 Strona nie znaleziona - Ilustracja błędu",
+      "footerImageAlt": "Dekoracyjny obraz stopki"
     },
     "successCheckout": {
       "title": "Płatność zakończona pomyślnie! 🎉",
@@ -2755,12 +3971,14 @@
       "deploymentTime": "Może to potrwać do 45 minut",
       "deploymentMessage": "zanim Twoja aplikacja zostanie wdrożona w sieci Flux.",
       "autoCloseMessage": "To okno zamknie się automatycznie za {seconds} sekund",
-      "safeToClose": "Możesz teraz bezpiecznie zamknąć to okno"
+      "safeToClose": "Możesz teraz bezpiecznie zamknąć to okno",
+      "footerImageAlt": "Dekoracyjny obraz stopki strony sukcesu"
     },
     "unauthorized": {
       "title": "Nie masz autoryzacji! 🔐",
       "description": "Nie masz uprawnień do dostępu do tej strony.",
-      "backToHome": "Powrót do strony głównej"
+      "backToHome": "Powrót do strony głównej",
+      "footerImageAlt": "Dekoracyjny obraz stopki strony braku autoryzacji"
     }
   },
   "$vuetify": {

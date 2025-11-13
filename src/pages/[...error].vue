@@ -1,12 +1,16 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
 import { useGenerateImageVariant } from '@core/composable/useGenerateImageVariant'
+import { useSEONoIndex } from '@/composables/useSEO'
 import misc404 from '@images/pages/404.png'
 import miscMaskDark from '@images/pages/misc-mask-dark.png'
 import miscMaskLight from '@images/pages/misc-mask-light.png'
 
 const { t } = useI18n()
 const authThemeMask = useGenerateImageVariant(miscMaskLight, miscMaskDark)
+
+// Prevent indexing of 404 error pages
+useSEONoIndex()
 
 definePage({
   alias: '/pages/misc/not-found/:error(.*)',
@@ -47,6 +51,7 @@ definePage({
       :src="authThemeMask"
       :alt="t('pages.error.footerImageAlt')"
       height="320"
+      loading="lazy"
     >
   </div>
 </template>
