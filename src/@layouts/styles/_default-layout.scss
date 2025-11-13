@@ -13,7 +13,8 @@ body {
   flex-grow: 1;
 
   // TODO: Use grid gutter variable here
-  padding-block: 1.5rem;
+  padding-block-start: 1.5rem;
+  padding-block-end: 0.5rem;
 }
 
 .page-content-container {
@@ -39,6 +40,8 @@ body {
 }
 
 .layout-footer {
+  padding-block-end: 0.5rem;
+
   .footer-content-container {
     block-size: variables.$layout-vertical-nav-footer-height;
   }

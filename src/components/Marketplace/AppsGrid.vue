@@ -92,7 +92,7 @@
       </div>
 
       <div v-else class="apps-container">
-        <div class="apps-content">
+        <div class="apps-content" :style="{ height: containerHeight + 'px' }">
           <Transition :name="slideDirection === 'next' ? 'slide-next' : 'slide-prev'">
             <div :key="currentPage" class="apps-grid" :class="gridClass">
               <AppCard
@@ -256,10 +256,30 @@ const columnsCount = computed(() => {
   }
 })
 
+const rowsCount = computed(() => {
+  // Calculate rows based on window height
+  const minCardHeight = 280  // Approximate height of each card
+  const headerHeight = 200   // Header with search/filters
+  const paginationHeight = 60 // Pagination controls
+  const reservedSpace = 150  // Footer, statusbar, and padding
+
+  const availableHeight = window.innerHeight - headerHeight - paginationHeight - reservedSpace
+  const maxRows = Math.max(1, Math.floor(availableHeight / minCardHeight))
+
+  // Limit to reasonable maximum
+  return Math.min(maxRows, 4)
+})
+
 const itemsPerPage = computed(() => {
-  const rows = 1  // Only 1 row per page
-  
-  return columnsCount.value * rows
+  return columnsCount.value * rowsCount.value
+})
+
+const containerHeight = computed(() => {
+  const cardHeight = 280  // Height per card/row
+  const gridGap = 16      // Gap between rows
+
+  // Calculate total height: (rows × cardHeight) + (gaps between rows)
+  return (rowsCount.value * cardHeight) + ((rowsCount.value - 1) * gridGap)
 })
 
 const gridClass = computed(() => {
@@ -496,7 +516,8 @@ watch(() => props.sortBy, val => { sort.value = val })
 .apps-content {
   position: relative;
   overflow: hidden;
-  height: 250px;
+  /* height is now set dynamically via inline style based on rowsCount */
+  transition: height 0.3s ease;
 }
 
 
@@ -594,7 +615,7 @@ watch(() => props.sortBy, val => { sort.value = val })
   justify-content: center;
   align-items: center;
   gap: 20px;
-  padding: 16px 0;
+  padding: 8px 0 0 0;
 }
 
 

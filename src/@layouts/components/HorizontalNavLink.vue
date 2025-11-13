@@ -57,9 +57,19 @@ const props = defineProps({
 
 <style lang="scss">
 .layout-horizontal-nav {
+  .nav-link {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   .nav-link a {
     display: flex;
     align-items: center;
+    white-space: nowrap;
+  }
+
+  .nav-item-title {
+    white-space: nowrap;
   }
 }
 </style>

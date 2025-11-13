@@ -1,10 +1,10 @@
 <template>
-  <VCard
-    v-if="!isHidden"
-    icon="mdi-server"
-    class="rounded-xl elevation-4 mb-6 pa-2"
-    style="width: 100%; position: relative;"
-  >
+    <VCard
+      v-if="!isHidden"
+      icon="mdi-server"
+      class="rounded elevation-4 mb-0 pa-2 statusbar-card"
+      style="width: 100%; position: relative;"
+    >
     <VTooltip location="left">
       <template #activator="{ props }">
         <VBtn

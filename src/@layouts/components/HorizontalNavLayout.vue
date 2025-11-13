@@ -116,8 +116,27 @@ const configStore = useLayoutConfigStore()
     // 👉 Footer
     // Boxed content
     .layout-footer {
+
       .footer-content-container {
         @include mixins.boxed-content;
+      }
+
+      &.statusbar-hidden {
+        padding: 0;
+        height: 0;
+        min-height: 0;
+
+        .footer-content-container {
+          block-size: 0;
+          min-block-size: 0;
+        }
+      }
+    }
+
+    // Reduce page content bottom padding when statusbar is hidden
+    .layout-content-wrapper:has(.layout-footer.statusbar-hidden) {
+      .layout-page-content {
+        padding-block-end: 0.25rem;
       }
     }
   }
@@ -155,6 +174,11 @@ const configStore = useLayoutConfigStore()
 
   .horizontal-nav-content-container {
     @include mixins.boxed-content(true);
+
+    // Ensure horizontal nav wrapper uses full available width
+    .horizontal-nav-wrapper {
+      width: 100%;
+    }
   }
 }
 </style>
