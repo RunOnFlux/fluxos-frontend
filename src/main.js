@@ -18,6 +18,41 @@ import { EventEmitter2 } from 'eventemitter2'
 window.process = process
 window.Buffer = Buffer
 
+// Handle backend URL parameter from FluxOS redirect
+// This allows FluxOS instances to redirect users to cloud.runonflux.com
+// while maintaining connection to their specific FluxOS backend
+(function handleBackendParameter() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search)
+    const backendParam = urlParams.get('backend')
+
+    if (backendParam) {
+      // Validate the backend URL format
+      const backendUrl = decodeURIComponent(backendParam)
+
+      // Basic validation: should be http:// or https:// followed by IP/domain:port
+      // Supports: http://192.168.1.1:16127, https://myflux.com:16127, http://localhost:16127
+      const urlPattern = /^https?:\/\/([\w.-]+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?$/
+      if (urlPattern.test(backendUrl)) {
+        // Store in localStorage for ApiClient to use
+        localStorage.setItem('backendURL', backendUrl)
+        console.log('✅ Backend URL set from redirect:', backendUrl)
+
+        // Clean up URL by removing the backend parameter
+        const cleanUrl = new URL(window.location.href)
+        cleanUrl.searchParams.delete('backend')
+
+        // Replace history state to clean URL without page reload
+        window.history.replaceState({}, document.title, cleanUrl.toString())
+      } else {
+        console.warn('⚠️ Invalid backend URL format:', backendUrl)
+      }
+    }
+  } catch (error) {
+    console.error('❌ Error handling backend parameter:', error)
+  }
+})()
+
 // Handle chunk load failures after deployment (stale cache)
 window.addEventListener('error', event => {
   const RELOAD_MARKER = 'chunk-reload-attempted'
