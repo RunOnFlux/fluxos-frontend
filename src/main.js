@@ -12,11 +12,37 @@ import '@fontsource/montserrat/700.css' // Bold
 import '@fontsource/montserrat/600.css' // Semi-bold
 
 import process from 'process'
-import { Buffer } from 'buffer'
+import { Buffer as BufferPolyfill } from 'buffer'
 import { EventEmitter2 } from 'eventemitter2'
 
+// Create a Buffer wrapper that supports the old Buffer(data) syntax for backward compatibility
+// Some libraries still use the deprecated Buffer() constructor syntax
+const BufferWrapper = function(data, encoding) {
+  if (!(this instanceof BufferWrapper)) {
+    // Called without 'new' - use Buffer.from() for backward compatibility
+    if (typeof data === 'number') {
+      return BufferPolyfill.alloc(data)
+    }
+    return BufferPolyfill.from(data, encoding)
+  }
+  // Called with 'new'
+  return BufferPolyfill.from(data, encoding)
+}
+
+// Copy all static methods from Buffer to our wrapper
+Object.setPrototypeOf(BufferWrapper, BufferPolyfill)
+BufferWrapper.prototype = BufferPolyfill.prototype
+
+// Copy all static properties
+Object.getOwnPropertyNames(BufferPolyfill).forEach(prop => {
+  if (prop !== 'prototype' && prop !== 'length' && prop !== 'name') {
+    BufferWrapper[prop] = BufferPolyfill[prop]
+  }
+})
+
 window.process = process
-window.Buffer = Buffer
+window.Buffer = BufferWrapper
+window.global = window.global || window
 
 // Handle backend URL parameter from FluxOS redirect
 // This allows FluxOS instances to redirect users to cloud.runonflux.com
