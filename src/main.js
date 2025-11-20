@@ -2,6 +2,7 @@ import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
 import sanitizeHtml from '@/utils/sanitizeHtml'
+import { router } from '@/plugins/1.router/index.js'
 
 // Styles
 import '@core/scss/template/index.scss'
@@ -40,44 +41,36 @@ Object.getOwnPropertyNames(BufferPolyfill).forEach(prop => {
   }
 })
 
-window.process = process
-window.Buffer = BufferWrapper
-window.global = window.global || window
-
 // Handle backend URL parameter from FluxOS redirect
 // This allows FluxOS instances to redirect users to cloud.runonflux.com
 // while maintaining connection to their specific FluxOS backend
-(function handleBackendParameter() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search)
-    const backendParam = urlParams.get('backend')
+try {
+  const urlParams = new URLSearchParams(window.location.search)
+  const backendParam = urlParams.get('backend')
 
-    if (backendParam) {
-      // Validate the backend URL format
-      const backendUrl = decodeURIComponent(backendParam)
+  if (backendParam) {
+    const backendUrl = decodeURIComponent(backendParam)
 
-      // Basic validation: should be http:// or https:// followed by IP/domain:port
-      // Supports: http://192.168.1.1:16127, https://myflux.com:16127, http://localhost:16127
-      const urlPattern = /^https?:\/\/([\w.-]+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?$/
-      if (urlPattern.test(backendUrl)) {
-        // Store in localStorage for ApiClient to use
-        localStorage.setItem('backendURL', backendUrl)
-        console.log('✅ Backend URL set from redirect:', backendUrl)
+    // Basic validation: should be http:// or https:// followed by IP/domain:port
+    // Supports: http://192.168.1.1:16127, https://myflux.com:16127, http://localhost:16127
+    const urlPattern = /^https?:\/\/([\w.-]+|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(:\d+)?$/
 
-        // Clean up URL by removing the backend parameter
-        const cleanUrl = new URL(window.location.href)
-        cleanUrl.searchParams.delete('backend')
-
-        // Replace history state to clean URL without page reload
-        window.history.replaceState({}, document.title, cleanUrl.toString())
-      } else {
-        console.warn('⚠️ Invalid backend URL format:', backendUrl)
-      }
+    if (urlPattern.test(backendUrl)) {
+      // Store in localStorage for ApiClient to use
+      localStorage.setItem('backendURL', backendUrl)
+      console.log('✅ Backend URL set from redirect:', backendUrl)
+      // URL cleanup happens after Vue Router is ready (see bottom of file)
+    } else {
+      console.warn('⚠️ Invalid backend URL format:', backendUrl)
     }
-  } catch (error) {
-    console.error('❌ Error handling backend parameter:', error)
   }
-})()
+} catch (error) {
+  console.error('❌ Error handling backend parameter:', error)
+}
+
+window.process = process
+window.Buffer = BufferWrapper
+window.global = window.global || window
 
 // Handle chunk load failures after deployment (stale cache)
 window.addEventListener('error', event => {
@@ -199,3 +192,22 @@ app.directive('sanitize-html', sanitizeHtml)
 
 // Mount vue app
 app.mount('#app')
+
+// Clean up backend parameter from URL after Vue Router is ready
+// Vue Router navigation happens after mount, so we wait for it to be ready
+router.isReady().then(() => {
+  if (window.location.search.includes('backend=')) {
+    // Use router.replace to ensure Vue Router updates its internal state
+    // Preserve other query parameters, only remove 'backend'
+    const currentRoute = router.currentRoute.value
+    const cleanQuery = { ...currentRoute.query }
+    delete cleanQuery.backend
+
+    router.replace({
+      path: currentRoute.path,
+      query: cleanQuery,
+      hash: currentRoute.hash
+    })
+    console.log('✅ Backend parameter removed from URL')
+  }
+})
