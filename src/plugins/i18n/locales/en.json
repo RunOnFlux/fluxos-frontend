@@ -1226,15 +1226,8 @@
       "testPaymentConfirmed": "TEST: Payment confirmed! Your application is now active and running.",
       "sspPaymentInitiated": "SSP payment initiated: {txid}",
       "tos": {
-        "title": "Terms of Service Agreement",
-        "dialogTitle": "Flux Terms of Service",
-        "description": "Before registering your application, you must read and accept our Terms of Service. This ensures you understand the guidelines and responsibilities for using our platform.",
-        "agreement": "I have read and accept the",
-        "link": "Terms of Service",
-        "agree": "I Agree",
-        "disagree": "I Disagree",
-        "errorMessage": "Please read and accept the Terms of Service before proceeding to other tabs.",
-        "loadError": "Failed to load Terms of Service. Please visit:"
+        "agreeToTerms": "I agree to the <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: inherit; text-decoration: none; font-weight: bold;\">Terms of Use</a>",
+        "errorMessage": "Please read and accept the Terms of Service before proceeding to other tabs."
       }
     },
     "statusBar": {

@@ -324,39 +324,17 @@
         <div class="pa-2">
           <VForm>
             <!-- Terms of Service Agreement (only for new apps) -->
-            <VCard v-if="props.newApp" variant="tonal" color="info" class="mb-4">
-              <VCardText class="pa-4">
-                <div class="d-flex align-center mb-3">
-                  <VIcon icon="mdi-shield-check-outline" size="28" color="info" class="mr-3" />
-                  <span class="text-h6 font-weight-semibold">{{ t('core.subscriptionManager.tos.title') }}</span>
-                </div>
-
-                <VAlert type="info" variant="tonal" density="compact" class="mb-3">
-                  {{ t('core.subscriptionManager.tos.description') }}
-                </VAlert>
-
-                <VCheckbox
-                  v-model="acceptedTerms"
-                  density="comfortable"
-                  color="primary"
-                  hide-details
-                >
-                  <template #label>
-                    <span class="text-body-1">
-                      {{ t('core.subscriptionManager.tos.agreement') }}
-                      <a
-                        href="#"
-                        class="text-primary font-weight-medium"
-                        style="text-decoration: underline;"
-                        @click.prevent="showTermsDialog = true"
-                      >
-                        {{ t('core.subscriptionManager.tos.link') }}
-                      </a>
-                    </span>
-                  </template>
-                </VCheckbox>
-              </VCardText>
-            </VCard>
+            <div v-if="props.newApp" class="mb-4 pa-4 rounded-lg" style="background-color: rgba(var(--v-theme-primary), 0.08); border: 2px solid rgba(var(--v-theme-primary), 0.3);">
+              <VCheckbox
+                v-model="acceptedTerms"
+                color="primary"
+                hide-details
+              >
+                <template #label>
+                  <span class="text-body-2 font-weight-medium" v-html="t('core.subscriptionManager.tos.agreeToTerms')"></span>
+                </template>
+              </VCheckbox>
+            </div>
 
             <VTextField
               v-model="appDetails.name"
@@ -364,7 +342,7 @@
               prepend-inner-icon="mdi-rename-box"
               variant="outlined"
               density="comfortable"
-              :disabled="isNameLocked || (props.newApp && !acceptedTerms)"
+              :disabled="isNameLocked"
               class="mb-3"
             >
               <template #append-inner>
@@ -3059,57 +3037,6 @@
     @copy="showToast('success', t('core.subscriptionManager.copiedToClipboard'))"
   />
 
-  <!-- Terms of Service Dialog -->
-  <VDialog v-model="showTermsDialog" max-width="800" scrollable>
-    <VCard style="border-radius: 16px;">
-      <VCardTitle class="d-flex align-center justify-space-between pa-4 bg-primary">
-        <div class="d-flex align-center gap-3">
-          <VIcon icon="mdi-file-document-outline" size="32" color="white" />
-          <span class="text-h5 font-weight-semibold" style="color: white;">{{ t('core.subscriptionManager.tos.dialogTitle') }}</span>
-        </div>
-        <VBtn
-          icon="mdi-close"
-          variant="text"
-          size="small"
-          color="white"
-          @click="showTermsDialog = false"
-        />
-      </VCardTitle>
-
-      <VDivider />
-
-      <VCardText class="pa-6 tos-scroll-area" style="max-height: calc(80vh - 200px); overflow-y: auto;">
-        <div class="tos-content" v-html="tosHtmlContent"></div>
-      </VCardText>
-
-      <VDivider />
-
-      <VCardActions class="pa-4 justify-center">
-        <VBtn
-          color="success"
-          variant="flat"
-          size="large"
-          min-width="140"
-          prepend-icon="mdi-check-circle"
-          @click="acceptTerms"
-        >
-          {{ t('core.subscriptionManager.tos.agree') }}
-        </VBtn>
-        <VBtn
-          color="error"
-          variant="outlined"
-          size="large"
-          min-width="140"
-          prepend-icon="mdi-close-circle"
-          class="ml-4"
-          @click="showTermsDialog = false"
-        >
-          {{ t('core.subscriptionManager.tos.disagree') }}
-        </VBtn>
-      </VCardActions>
-    </VCard>
-  </VDialog>
-
   <!-- TOS Error Snackbar -->
   <VSnackbar
     v-model="showTosError"
@@ -3213,9 +3140,7 @@ const isUploadingContacts = ref(false)
 
 // TOS related
 const acceptedTerms = ref(false)
-const showTermsDialog = ref(false)
 const showTosError = ref(false)
-const tosHtmlContent = ref('')
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
 const logsExpanded = ref(true)
@@ -3240,27 +3165,6 @@ function isCryptoPayment(method) {
   return ['Zelcore', 'SSP'].includes(method)
 }
 
-// TOS Functions
-const acceptTerms = () => {
-  acceptedTerms.value = true
-  showTermsDialog.value = false
-}
-
-// Load TOS HTML content
-const loadTOS = async () => {
-  try {
-    const response = await fetch('/html/wordpress/tos.html')
-    if (!response.ok) {
-      throw new Error('Failed to load TOS')
-    }
-    const html = await response.text()
-    tosHtmlContent.value = html
-  } catch (error) {
-    console.error('Failed to load TOS:', error)
-    tosHtmlContent.value = `<p>${t('core.subscriptionManager.tos.loadError')} <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a></p>`
-  }
-}
-
 // Watch tab changes to prevent navigation without TOS acceptance (only for new apps)
 watch(tab, (newTab, oldTab) => {
   // Only enforce TOS for new app registration
@@ -3279,11 +3183,6 @@ watch(tab, (newTab, oldTab) => {
 onMounted(() => {
   // Initialize i18n labels after component is mounted
   updateRenewalLabels()
-
-  // Load TOS content if this is a new app
-  if (props.newApp) {
-    loadTOS()
-  }
 
   const urlParams = new URLSearchParams(window.location.search)
   const paymentSuccess = urlParams.get('payment_success')
