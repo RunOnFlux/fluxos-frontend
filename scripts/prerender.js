@@ -32,6 +32,7 @@ const distPath = path.join(__dirname, '../dist')
 // Retry configuration
 const MAX_RETRIES = 3
 const INITIAL_RETRY_DELAY_MS = 1000 // 1 second
+const CONCURRENCY = 4 // Number of pages to render in parallel
 
 /**
  * Sleep for a given number of milliseconds
@@ -279,17 +280,17 @@ async function renderPageWithRetry(context, route, port) {
     try {
       const url = `http://localhost:${port}${route}`
 
-      // Navigate to the page
-      await page.goto(url, { waitUntil: 'networkidle', timeout: 30000 })
+      // Navigate to the page - use domcontentloaded instead of networkidle for speed
+      await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 15000 })
 
-      // Wait for app content to render
+      // Wait for app content to render (reduced timeout)
       try {
         await page.waitForFunction(() => {
           return document.querySelector('#app')?.innerHTML?.length > 100
-        }, { timeout: 10000 })
+        }, { timeout: 5000 })
       } catch {
         // If the app content check fails, wait a bit more
-        await page.waitForTimeout(3000)
+        await page.waitForTimeout(1000)
       }
 
       // Wait for @vueuse/head to update the title (non-default title means SEO loaded)
@@ -299,13 +300,13 @@ async function renderPageWithRetry(context, route, port) {
 
           // Wait until title changes from the default
           return title && !title.includes('FluxCloud - Decentralized Web3 Cloud Infrastructure')
-        }, { timeout: 5000 })
+        }, { timeout: 2000 })
       } catch {
         // Some pages might keep default title, that's ok
       }
 
-      // Extra wait for head meta tags to fully update
-      await page.waitForTimeout(1000)
+      // Extra wait for head meta tags to fully update (reduced)
+      await page.waitForTimeout(500)
 
       // Get the rendered HTML
       let html = await page.content()
@@ -376,12 +377,13 @@ async function prerender() {
       userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
     })
 
-    console.log('⏳ Rendering routes...\n')
+    console.log(`⏳ Rendering routes (${CONCURRENCY} concurrent)...\n`)
 
     let successCount = 0
     let errorCount = 0
 
-    for (const route of routes) {
+    // Process routes in parallel batches
+    const processRoute = async route => {
       const result = await renderPageWithRetry(context, route, port)
 
       if (result.success) {
@@ -403,11 +405,24 @@ async function prerender() {
         // Write the pre-rendered HTML
         fs.writeFileSync(outputPath, result.html)
         console.log(`  ✅ ${route}`)
-        successCount++
+
+        return true
       } else {
         console.error(`  ❌ ${route}: ${result.error} (failed after ${MAX_RETRIES} attempts)`)
-        errorCount++
+
+        return false
       }
+    }
+
+    // Process in batches of CONCURRENCY
+    for (let i = 0; i < routes.length; i += CONCURRENCY) {
+      const batch = routes.slice(i, i + CONCURRENCY)
+      const results = await Promise.all(batch.map(route => processRoute(route)))
+
+      results.forEach(success => {
+        if (success) successCount++
+        else errorCount++
+      })
     }
 
     console.log(`\n${'─'.repeat(50)}`)
