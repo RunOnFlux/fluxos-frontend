@@ -77,6 +77,7 @@ declare global {
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
   const formatDate: typeof import('./@core/utils/formatters.js')['formatDate']
   const formatDateToMonthShort: typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']
+  const generateArticleSchema: typeof import('./composables/useSEO.js')['generateArticleSchema']
   const generateBreadcrumbSchema: typeof import('./composables/useSEO.js')['generateBreadcrumbSchema']
   const generateFAQSchema: typeof import('./composables/useSEO.js')['generateFAQSchema']
   const generateItemListSchema: typeof import('./composables/useSEO.js')['generateItemListSchema']
@@ -528,6 +529,7 @@ declare module 'vue' {
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
     readonly formatDate: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDate']>
     readonly formatDateToMonthShort: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']>
+    readonly generateArticleSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateArticleSchema']>
     readonly generateBreadcrumbSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateBreadcrumbSchema']>
     readonly generateFAQSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateFAQSchema']>
     readonly generateItemListSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateItemListSchema']>

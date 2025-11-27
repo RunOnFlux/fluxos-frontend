@@ -85,6 +85,7 @@ module.exports = {
     "firebaseApp": true,
     "formatDate": true,
     "formatDateToMonthShort": true,
+    "generateArticleSchema": true,
     "generateBreadcrumbSchema": true,
     "generateFAQSchema": true,
     "generateItemListSchema": true,

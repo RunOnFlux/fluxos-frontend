@@ -250,5 +250,19 @@ const closeDialog = () => {
 .cookie-settings-dialog {
   border-radius: 16px;
   overflow: hidden;
+
+  // Ensure cookie dialog appears above reCAPTCHA overlays
+  z-index: 9999 !important;
+}
+
+// Override Vuetify overlay to ensure it's above reCAPTCHA
+.v-overlay.v-dialog {
+  &:has(.cookie-settings-dialog) {
+    z-index: 9999 !important;
+
+    .v-overlay__scrim {
+      z-index: 9998 !important;
+    }
+  }
 }
 </style>

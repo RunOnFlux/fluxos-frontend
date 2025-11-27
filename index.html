@@ -61,6 +61,16 @@
     body > div:not([id]):not([class]):has(div:only-child) {
       display: none !important;
     }
+    /* Ensure reCAPTCHA invisible badge doesn't block clicks */
+    .grecaptcha-badge {
+      z-index: 1 !important;
+      pointer-events: none;
+    }
+    /* Prevent invisible reCAPTCHA iframe from blocking UI */
+    iframe[src*="recaptcha"][style*="visibility: hidden"],
+    iframe[src*="recaptcha"][style*="opacity: 0"] {
+      pointer-events: none !important;
+    }
   </style>
 </head>
 

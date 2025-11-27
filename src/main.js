@@ -142,6 +142,7 @@ const handleUnhandledRejection = event => {
   const thirdPartyErrors = [
     'Timed out',                                    // reCAPTCHA timeout
     'Timeout',                                       // reCAPTCHA timeout variants
+    'Timeout (',                                     // reCAPTCHA timeout variants like "Timeout (C)" or "Timeout (z)"
     'Could not establish connection',                // Chrome extension errors
     'Receiving end does not exist',                  // Chrome extension errors
     'Extension context invalidated',                 // Chrome extension errors
