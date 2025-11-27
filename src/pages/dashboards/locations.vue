@@ -171,14 +171,14 @@ const { t } = useI18n()
 useSEO({
   title: 'Flux Node Locations - Global Network Map | FluxCloud',
   description: 'Explore the global distribution of 8,000+ FluxNodes. Interactive map showing node locations across 70+ countries. View network decentralization and geographic spread of Flux infrastructure worldwide.',
-  url: 'https://home.runonflux.io/dashboards/locations',
+  url: 'https://cloud.runonflux.com/dashboards/locations',
   keywords: 'flux node map, node locations, global network, geographic distribution, flux nodes worldwide, decentralized network map, node distribution, blockchain network map',
   structuredData: [
     generateOrganizationSchema(),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://home.runonflux.io' },
-      { name: 'Flux Network', url: 'https://home.runonflux.io/dashboards/overview' },
-      { name: 'Locations', url: 'https://home.runonflux.io/dashboards/locations' },
+      { name: 'Home', url: 'https://cloud.runonflux.com' },
+      { name: 'Flux Network', url: 'https://cloud.runonflux.com/dashboards/overview' },
+      { name: 'Locations', url: 'https://cloud.runonflux.com/dashboards/locations' },
     ]),
   ],
 })

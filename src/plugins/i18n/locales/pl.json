@@ -209,8 +209,10 @@
       "title": "Szanujemy Twoją prywatność",
       "description": "Używamy plików cookie, aby poprawić komfort przeglądania i analizować ruch. Klikając Akceptuj wszystkie, zgadzasz się na nasze użycie plików cookie.",
       "learnMore": "Dowiedz się więcej",
+      "accept": "Akceptuj",
       "acceptAll": "Akceptuj wszystkie",
       "onlyNecessary": "Tylko niezbędne",
+      "close": "Zamknij",
       "customize": "Dostosuj",
       "manageCookies": "Zarządzaj plikami cookie",
       "settingsTitle": "Preferencje plików cookie",
@@ -854,7 +856,7 @@
       "quickAddLogs": "Dodaj Logi",
       "quickAddConfig": "Dodaj Konfigurację",
       "quickAddData": "Dodaj Folder Danych",
-      "advancedMode": "Tryb Zaawansowany",
+      "advancedMode": "Zaawansowane",
       "entryNumber": "Montowanie #{number}",
       "validationSubdirRequired": "Podkatalog jest wymagany",
       "validationInvalidSubdir": "Podkatalog nie może zawierać / lub ..",
@@ -1234,8 +1236,13 @@
         "agree": "Akceptuję",
         "disagree": "Odrzucam",
         "errorMessage": "Proszę przeczytać i zaakceptować Warunki świadczenia usług przed przejściem do innych zakładek.",
-        "loadError": "Nie udało się załadować Warunków świadczenia usług. Odwiedź:"
+        "loadError": "Nie udało się załadować Warunków świadczenia usług. Odwiedź:",
+        "loading": "Ładowanie Warunków świadczenia usług...",
+        "acceptFirst": "Najpierw zaakceptuj Warunki świadczenia usług, aby importować"
       }
+    },
+    "tosDialog": {
+      "loading": "Ładowanie Warunków świadczenia usług..."
     },
     "statusBar": {
       "backend": "Serwer",
@@ -1405,7 +1412,7 @@
         "walletAltSSP": "SSP",
         "walletAltMetaMask": "MetaMask",
         "walletAltWalletConnect": "WalletConnect",
-        "agreeToTerms": "Zgadzam się z <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: inherit; text-decoration: none; font-weight: bold;\">Warunkami korzystania</a> i <a href=\"https://runonflux.io/privacy\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: inherit; text-decoration: none; font-weight: bold;\">Polityką prywatności</a>",
+        "agreeToTerms": "Zgadzam się z <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: inherit; text-decoration: none; font-weight: bold;\">Warunkami korzystania</a>",
         "oneMonth": "1 Miesiąc",
         "threeMonths": "3 Miesiące",
         "sixMonths": "6 Miesięcy",
@@ -2676,9 +2683,7 @@
             "noData": "Dane mapy serwerów są obecnie niedostępne",
             "subtitle": "Twoje aplikacje wdrożone w globalnej zdecentralizowanej infrastrukturze z węzłami na każdym kontynencie.",
             "title": "Globalna Sieć Serwerów"
-          },
-          "subtitle": "Doświadcz mocy prawdziwie zdecentralizowanego cloud computing. Wdrażaj kontenery Docker, aplikacje internetowe, bazy danych, API i mikrousługi w naszej globalnej sieci ponad 13 000 węzłów w ponad 62 krajach.",
-          "title": "Wdróż Swoją Aplikację w FluxCloud"
+          }
         }
       }
     },

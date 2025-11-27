@@ -387,6 +387,7 @@ import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useSEO, generateBreadcrumbSchema } from '@/composables/useSEO'
+import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 import DOMPurify from 'dompurify'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useFluxStore } from '@/stores/flux'
@@ -396,6 +397,8 @@ import InstallDialog from '@/components/Marketplace/InstallDialog.vue'
 import FeatureShowcase from '@/components/FeatureShowcase.vue'
 import ServerLocationsPanel from '@/components/Marketplace/Panels/ServerLocationsPanel.vue'
 import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
+
+const analytics = useAnalytics()
 
 const i18n = useI18n()
 const { t, tm, te } = i18n
@@ -723,7 +726,6 @@ const handleAppDeployed = deployedApp => {
   console.log('App deployed successfully:', deployedApp.displayName || deployedApp.name)
 
   // Track successful app deployment
-  const analytics = useAnalytics()
   analytics.trackAppAction(
     deployedApp.displayName || deployedApp.name,
     'deploy',
@@ -756,6 +758,14 @@ const loadAppDetails = async () => {
     // Fetch detailed app data (includes compose specifications for hardware requirements)
     const appData = await fetchAppDetails(appId)
     app.value = appData
+
+    // Track app view with app name
+    analytics.trackMarketplace('app_view', {
+      page: 'app_detail',
+      app_name: appData.displayName || appData.name,
+      app_id: appId,
+      category: appData.category,
+    })
   } catch (err) {
     console.error('💥 Failed to load app details:', err)
 
@@ -840,12 +850,12 @@ const seoDescription = computed(() => {
 })
 
 const seoImage = computed(() => {
-  if (!app.value) return 'https://home.runonflux.io/flux-logo.png'
-  
-  return app.value.icon || app.value.logo || 'https://home.runonflux.io/flux-logo.png'
+  if (!app.value) return 'https://cloud.runonflux.com/images/logo.png'
+
+  return app.value.icon || app.value.logo || 'https://cloud.runonflux.com/images/logo.png'
 })
 
-const seoUrl = computed(() => `https://home.runonflux.io/marketplace/${route.params.id}`)
+const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/${route.params.id}`)
 
 const seoKeywords = computed(() => {
   if (!app.value) return 'Flux, cloud hosting, decentralized hosting, Web3, blockchain hosting'
@@ -900,8 +910,8 @@ const structuredData = computed(() => {
 
   // Breadcrumb schema
   const breadcrumbStructuredData = generateBreadcrumbSchema([
-    { name: 'Home', url: 'https://home.runonflux.io' },
-    { name: 'Marketplace', url: 'https://home.runonflux.io/marketplace' },
+    { name: 'Home', url: 'https://cloud.runonflux.com' },
+    { name: 'Marketplace', url: 'https://cloud.runonflux.com/marketplace' },
     { name: newApp.displayName || newApp.name, url: seoUrl.value },
   ])
 

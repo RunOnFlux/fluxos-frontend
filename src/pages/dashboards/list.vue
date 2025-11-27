@@ -101,8 +101,8 @@ import DashboardService from "@/services/DashboardService"
 // SEO for Flux node list page
 const title = 'Flux Network Node List - Live Node Directory'
 const description = 'Browse the complete list of Flux network nodes. View node details, locations, and performance metrics across the decentralized infrastructure.'
-const pageUrl = 'https://home.runonflux.io/dashboards/list'
-const imageUrl = 'https://home.runonflux.io/logo.png'
+const pageUrl = 'https://cloud.runonflux.com/dashboards/list'
+const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 
 // Structured data schemas
 const structuredData = [
@@ -110,8 +110,8 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Flux Network',
-    url: 'https://home.runonflux.io',
-    logo: 'https://home.runonflux.io/logo.png',
+    url: 'https://cloud.runonflux.com',
+    logo: 'https://cloud.runonflux.com/images/logo.png',
     description: 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
     sameAs: [
       'https://twitter.com/RunOnFlux',
@@ -126,19 +126,19 @@ const structuredData = [
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://home.runonflux.io',
+        item: 'https://cloud.runonflux.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Dashboards',
-        item: 'https://home.runonflux.io/dashboards/overview',
+        item: 'https://cloud.runonflux.com/dashboards/overview',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: 'Node List',
-        item: 'https://home.runonflux.io/dashboards/list',
+        item: 'https://cloud.runonflux.com/dashboards/list',
       },
     ],
   },

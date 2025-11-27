@@ -52,8 +52,8 @@ The `useAnalytics()` composable is auto-imported throughout your application. Si
 <script setup>
 const analytics = useAnalytics()
 
-const handleButtonClick = () => {
-  analytics.trackButtonClick('deploy-app', 'marketplace')
+const handleDeploy = () => {
+  analytics.trackAppAction('my-app', 'deploy', { tier: 'basic' })
   // Your logic here
 }
 </script>
@@ -92,21 +92,6 @@ analytics.trackEvent('video_watched', {
   duration: 120,
   completed: true
 })
-```
-
----
-
-#### `trackPageView(pagePath, pageTitle)`
-
-Manually track a page view (usually automatic via router).
-
-**Parameters:**
-- `pagePath` (string) - Page path (e.g., '/marketplace')
-- `pageTitle` (string) - Page title
-
-**Example:**
-```javascript
-analytics.trackPageView('/marketplace', 'Flux Marketplace')
 ```
 
 ---
@@ -243,41 +228,6 @@ analytics.trackNodeAction('update', {
 
 ---
 
-### Search
-
-#### `trackSearch(query, context, resultsCount)`
-
-Track search queries across the application.
-
-**Parameters:**
-- `query` (string) - Search query text
-- `context` (string) - Search context: 'marketplace', 'apps', 'global' (default: 'global')
-- `resultsCount` (number) - Number of results returned (default: 0)
-
-**Example:**
-```javascript
-analytics.trackSearch('docker compose', 'marketplace', 12)
-```
-
----
-
-### Forms
-
-#### `trackFormSubmit(formName, success)`
-
-Track form submission events.
-
-**Parameters:**
-- `formName` (string) - Form identifier
-- `success` (boolean) - Whether submission succeeded (default: true)
-
-**Example:**
-```javascript
-analytics.trackFormSubmit('app-deployment-form', true)
-```
-
----
-
 ### Error Tracking
 
 #### `trackError(errorType, errorMessage, context)`
@@ -296,128 +246,6 @@ try {
 } catch (error) {
   analytics.trackError('deployment_error', error.message, 'app-register')
 }
-```
-
----
-
-### Navigation
-
-#### `trackNavigation(itemName, destination)`
-
-Track menu/navigation clicks.
-
-**Parameters:**
-- `itemName` (string) - Menu item name
-- `destination` (string) - Destination path
-
-**Example:**
-```javascript
-analytics.trackNavigation('Marketplace', '/marketplace')
-```
-
----
-
-### Features
-
-#### `trackFeatureUse(featureName, metadata)`
-
-Track feature usage across the application.
-
-**Parameters:**
-- `featureName` (string) - Feature name/identifier
-- `metadata` (object) - Additional context
-
-**Example:**
-```javascript
-analytics.trackFeatureUse('dark-mode', {
-  previous_theme: 'light',
-  new_theme: 'dark'
-})
-```
-
----
-
-### Button Clicks
-
-#### `trackButtonClick(buttonName, context)`
-
-Track button clicks with context.
-
-**Parameters:**
-- `buttonName` (string) - Button identifier
-- `context` (string) - Context where clicked (default: '')
-
-**Example:**
-```javascript
-analytics.trackButtonClick('deploy-now', 'marketplace-detail')
-```
-
----
-
-### Downloads
-
-#### `trackDownload(fileName, fileType, fileSize)`
-
-Track file downloads.
-
-**Parameters:**
-- `fileName` (string) - Downloaded file name
-- `fileType` (string) - File type/extension (default: 'unknown')
-- `fileSize` (number) - File size in bytes (default: 0)
-
-**Example:**
-```javascript
-analytics.trackDownload('flux-spec.json', 'application/json', 4096)
-```
-
----
-
-### Media
-
-#### `trackMedia(action, mediaName)`
-
-Track video/media interactions.
-
-**Parameters:**
-- `action` (string) - Action: 'play', 'pause', 'complete'
-- `mediaName` (string) - Media identifier
-
-**Example:**
-```javascript
-analytics.trackMedia('play', 'flux-tutorial-video')
-```
-
----
-
-### Internationalization
-
-#### `trackLanguageChange(fromLang, toLang)`
-
-Track language preference changes.
-
-**Parameters:**
-- `fromLang` (string) - Previous language code
-- `toLang` (string) - New language code
-
-**Example:**
-```javascript
-analytics.trackLanguageChange('en', 'pl')
-```
-
----
-
-### Theme
-
-#### `trackThemeChange(theme)`
-
-Track theme preference changes.
-
-**Parameters:**
-- `theme` (string) - Theme name: 'light', 'dark'
-
-**Example:**
-```javascript
-analytics.trackThemeChange('dark')
 ```
 
 ---
@@ -465,45 +293,6 @@ analytics.trackPaymentSystemSelected('cryptocom', {
   plan: 'pro',
   price: 49.99,
   currency: 'USD'
-})
-```
-
----
-
-### Wallet Integration
-
-#### `trackWalletConnection(walletType, success)`
-
-Track Web3 wallet connection events.
-
-**Parameters:**
-- `walletType` (string) - Wallet type: 'metamask', 'walletconnect'
-- `success` (boolean) - Connection success (default: true)
-
-**Example:**
-```javascript
-analytics.trackWalletConnection('metamask', true)
-```
-
----
-
-### Engagement
-
-#### `trackEngagement(pageName, timeSeconds)`
-
-Track user engagement time on pages.
-
-**Parameters:**
-- `pageName` (string) - Page identifier
-- `timeSeconds` (number) - Time spent in seconds
-
-**Example:**
-```javascript
-let startTime = Date.now()
-
-onBeforeUnmount(() => {
-  const timeSpent = Math.floor((Date.now() - startTime) / 1000)
-  analytics.trackEngagement('marketplace-home', timeSpent)
 })
 ```
 
@@ -670,10 +459,10 @@ const handleDeploy = () => {
 
 ```javascript
 // ❌ Vague tracking
-analytics.trackButtonClick('button1')
+analytics.trackEvent('action', { name: 'button1' })
 
 // ✅ Descriptive tracking
-analytics.trackButtonClick('deploy-wordpress', 'marketplace-detail-page')
+analytics.trackAppAction('wordpress', 'deploy', { context: 'marketplace-detail' })
 ```
 
 ### 3. Track Errors for Debugging

@@ -1354,12 +1354,16 @@ import { ref, onMounted, computed, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSEONoIndex } from '@/composables/useSEO'
 import { useSnackbar } from '@/composables/useSnackbar'
+import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 import axios from 'axios'
 import { useFluxStore } from '@/stores/flux'
 import { getDetectedBackendURL } from '@/utils/backend'
 
 // Prevent indexing of manage Flux admin page (private admin data)
 useSEONoIndex()
+
+// Analytics
+const analytics = useAnalytics()
 
 // Lazy-load Monaco Editor to reduce main bundle size
 const VueMonacoEditor = defineAsyncComponent(() =>
@@ -1536,6 +1540,11 @@ const updateFlux = async () => {
   updateFluxDialog.value = false
   showSnackbar(t('pages.administration.manageFlux.messages.checkingForFluxUpdates'), 'info')
 
+  // Track update action
+  analytics.trackNodeAction('update', {
+    action: 'flux_update_initiated',
+  })
+
   try {
     const versionResponse = await axios.get('https://raw.githubusercontent.com/runonflux/flux/master/package.json')
     const latestVersion = versionResponse.data.version
@@ -1636,6 +1645,12 @@ const adjustBlockedRepositories = async () => {
 
 const restartFluxOS = async () => {
   restartFluxOSDialog.value = false
+
+  // Track restart action
+  analytics.trackNodeAction('restart', {
+    action: 'flux_restart_initiated',
+  })
+
   const response = await callAPI('/flux/restart')
   if (response?.status === 'error')
     showSnackbar(response.data.message || response.data, 'error', 3000, 'mdi-alert-circle')
@@ -1876,6 +1891,12 @@ const stopDaemon = async () => {
 // Benchmark control functions
 const startBenchmark = async () => {
   startBenchmarkDialog.value = false
+
+  // Track benchmark action
+  analytics.trackNodeAction('benchmark', {
+    action: 'start',
+  })
+
   const response = await callAPI('/benchmark/start')
   if (response?.status === 'error')
     showSnackbar(response.data?.message || response.data || 'Failed to start benchmark', 'error', 3000, 'mdi-alert-circle')
@@ -1885,6 +1906,12 @@ const startBenchmark = async () => {
 
 const restartBenchmark = async () => {
   restartBenchmarkDialog.value = false
+
+  // Track benchmark action
+  analytics.trackNodeAction('benchmark', {
+    action: 'restart',
+  })
+
   const response = await callAPI('/benchmark/restart')
   if (response?.status === 'error')
     showSnackbar(response.data?.message || response.data || 'Failed to restart benchmark', 'error', 3000, 'mdi-alert-circle')
@@ -1894,6 +1921,12 @@ const restartBenchmark = async () => {
 
 const stopBenchmark = async () => {
   stopBenchmarkDialog.value = false
+
+  // Track benchmark action
+  analytics.trackNodeAction('benchmark', {
+    action: 'stop',
+  })
+
   const response = await callAPI('/benchmark/stop')
   if (response?.status === 'error')
     showSnackbar(response.data?.message || response.data || 'Failed to stop benchmark', 'error', 3000, 'mdi-alert-circle')
@@ -2117,6 +2150,11 @@ watch(logsTab, newTab => {
 })
 
 onMounted(() => {
+  // Track node management page view
+  analytics.trackNodeAction('page_view', {
+    page: 'manage_flux',
+  })
+
   getRouterIP()
   getBlockedPorts()
   getAPIPort()

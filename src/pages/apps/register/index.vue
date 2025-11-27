@@ -448,19 +448,19 @@ const breadcrumbSchema = computed(() => ({
       '@type': 'ListItem',
       'position': 1,
       'name': 'Home',
-      'item': 'https://home.runonflux.io/',
+      'item': 'https://cloud.runonflux.com/',
     },
     {
       '@type': 'ListItem',
       'position': 2,
       'name': 'Applications',
-      'item': 'https://home.runonflux.io/apps/management',
+      'item': 'https://cloud.runonflux.com/apps/management',
     },
     {
       '@type': 'ListItem',
       'position': 3,
       'name': 'Deploy New App',
-      'item': 'https://home.runonflux.io/apps/register',
+      'item': 'https://cloud.runonflux.com/apps/register',
     },
   ],
 }))
@@ -483,12 +483,12 @@ const webPageSchema = computed(() => ({
   '@type': 'WebPage',
   'name': 'Deploy Your App on FluxCloud - Decentralized Cloud Computing',
   'description': 'Deploy your applications on FluxCloud\'s decentralized network. Affordable, secure, and globally distributed cloud computing with no vendor lock-in.',
-  'url': 'https://home.runonflux.io/apps/register',
-  'image': 'https://home.runonflux.io/banner/FluxDeploy.webp',
+  'url': 'https://cloud.runonflux.com/apps/register',
+  'image': 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
   'publisher': {
     '@type': 'Organization',
     'name': 'FluxCloud',
-    'url': 'https://home.runonflux.io',
+    'url': 'https://cloud.runonflux.com',
   },
 }))
 
@@ -500,7 +500,7 @@ const offerSchema = computed(() => ({
   'price': '8.99',
   'priceCurrency': 'USD',
   'availability': 'https://schema.org/InStock',
-  'url': 'https://home.runonflux.io/apps/register',
+  'url': 'https://cloud.runonflux.com/apps/register',
   'seller': {
     '@type': 'Organization',
     'name': 'FluxCloud',
@@ -606,6 +606,7 @@ const fetchNetworkData = async () => {
         })
       } catch (error) {
         console.warn('Failed to load server locations:', error.message)
+
         // Continue anyway - page will use fallback values
       }
     }
@@ -674,11 +675,11 @@ useHead({
     },
     {
       property: 'og:url',
-      content: 'https://home.runonflux.io/apps/register',
+      content: 'https://cloud.runonflux.com/apps/register',
     },
     {
       property: 'og:image',
-      content: 'https://home.runonflux.io/banner/FluxDeploy.webp',
+      content: 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
     },
     {
       property: 'og:image:width',
@@ -702,13 +703,13 @@ useHead({
     },
     {
       name: 'twitter:image',
-      content: 'https://home.runonflux.io/banner/FluxDeploy.webp',
+      content: 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
     },
   ],
   link: [
     {
       rel: 'canonical',
-      href: 'https://home.runonflux.io/apps/register',
+      href: 'https://cloud.runonflux.com/apps/register',
     },
   ],
   script: [

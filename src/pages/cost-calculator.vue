@@ -617,10 +617,10 @@ import { generateFAQSchema } from '@/composables/useSEO'
 const { t } = useI18n()
 
 // SEO meta tags and structured data
-const pageUrl = 'https://home.runonflux.io/cost-calculator'
+const pageUrl = 'https://cloud.runonflux.com/cost-calculator'
 const title = 'Cost Calculator - App Hosting from $0.99 | FluxCloud'
 const description = 'Calculate app hosting costs on Flux decentralized cloud. Transparent pricing from $0.99/month for Docker, web apps, APIs, databases. Pay-as-you-go pricing.'
-const imageUrl = 'https://home.runonflux.io/banner/FluxHostingBanner.png'
+const imageUrl = 'https://cloud.runonflux.com/banner/FluxHostingBanner.png'
 
 // WebApplication structured data
 const webApplicationStructuredData = {
@@ -685,8 +685,8 @@ const organizationStructuredData = {
   '@context': 'https://schema.org',
   '@type': 'Organization',
   'name': 'Flux Network',
-  'url': 'https://home.runonflux.io',
-  'logo': 'https://home.runonflux.io/logo.png',
+  'url': 'https://cloud.runonflux.com',
+  'logo': 'https://cloud.runonflux.com/images/logo.png',
   'description': 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
   'sameAs': [
     'https://twitter.com/RunOnFlux',
@@ -703,7 +703,7 @@ const breadcrumbStructuredData = {
       '@type': 'ListItem',
       'position': 1,
       'name': 'Home',
-      'item': 'https://home.runonflux.io',
+      'item': 'https://cloud.runonflux.com',
     },
     {
       '@type': 'ListItem',

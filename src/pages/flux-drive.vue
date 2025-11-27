@@ -100,8 +100,9 @@
 <script setup>
 import { onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHead } from '@vueuse/head'
+import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema } from '@/composables/useSEO'
 import { useFluxDrive } from '@/composables/useFluxDrive'
+import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import PricingPlans from '@/components/FluxDrive/PricingPlans.vue'
 import FileManager from '@/components/FluxDrive/FileManager.vue'
@@ -114,12 +115,13 @@ import HeroSection from '@/components/HeroSection.vue'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 
 const { t } = useI18n()
+const analytics = useAnalytics()
 
 // SEO meta tags and structured data
-const pageUrl = 'https://home.runonflux.io/flux-drive'
+const pageUrl = 'https://cloud.runonflux.com/flux-drive'
 const title = 'FluxDrive - Decentralized IPFS Cloud Storage | Flux Network'
 const description = 'Secure IPFS cloud storage on Flux network. Store files across distributed FluxNodes with encryption, redundancy & censorship resistance. Decentralized.'
-const imageUrl = 'https://home.runonflux.io/banner/FluxDriveBanner.png'
+const imageUrl = 'https://cloud.runonflux.com/banner/FluxDriveBanner.png'
 
 // SoftwareApplication structured data
 const softwareApplicationStructuredData = {
@@ -154,133 +156,46 @@ const softwareApplicationStructuredData = {
   ],
 }
 
-// Organization structured data
-const organizationStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  'name': 'Flux Network',
-  'url': 'https://home.runonflux.io',
-  'logo': 'https://home.runonflux.io/logo.png',
-  'description': 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
-  'sameAs': [
-    'https://twitter.com/RunOnFlux',
-    'https://github.com/RunOnFlux',
-  ],
-}
+// FAQ items for structured data
+const faqItems = [
+  {
+    question: 'What is FluxDrive?',
+    answer: 'FluxDrive is a decentralized cloud storage solution built on IPFS and the Flux network. It provides secure, encrypted file storage distributed across thousands of FluxNodes worldwide, ensuring censorship resistance and permanent file availability.',
+  },
+  {
+    question: 'How much does FluxDrive cost?',
+    answer: 'FluxDrive offers flexible pricing starting from $5/month for 100GB of storage. Plans range up to $50/month for 1000GB, with a daily rate of $0.0017 per GB. Enterprise custom plans are also available.',
+  },
+  {
+    question: 'Is my data encrypted on FluxDrive?',
+    answer: 'Yes, all files uploaded to FluxDrive are encrypted end-to-end. Your data is secured with strong encryption and distributed across multiple FluxNodes, ensuring privacy and security.',
+  },
+  {
+    question: 'How is FluxDrive different from traditional cloud storage?',
+    answer: 'Unlike traditional centralized cloud storage, FluxDrive is completely decentralized. Your files are stored across a global network of FluxNodes using IPFS technology, making them censorship-resistant with no single point of failure. There are no centralized providers that can access or control your data.',
+  },
+  {
+    question: 'What happens if I cancel my FluxDrive subscription?',
+    answer: 'If you cancel your subscription, you will retain access to your files until the end of your billing period. After that, your files will be removed from the network. We recommend downloading your files before cancellation.',
+  },
+]
 
-// Breadcrumb structured data
-const breadcrumbStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  'itemListElement': [
-    {
-      '@type': 'ListItem',
-      'position': 1,
-      'name': 'Home',
-      'item': 'https://home.runonflux.io',
-    },
-    {
-      '@type': 'ListItem',
-      'position': 2,
-      'name': 'FluxDrive',
-      'item': pageUrl,
-    },
-  ],
-}
-
-// FAQPage structured data for better SEO
-const faqStructuredData = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  'mainEntity': [
-    {
-      '@type': 'Question',
-      'name': 'What is FluxDrive?',
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': 'FluxDrive is a decentralized cloud storage solution built on IPFS and the Flux network. It provides secure, encrypted file storage distributed across thousands of FluxNodes worldwide, ensuring censorship resistance and permanent file availability.',
-      },
-    },
-    {
-      '@type': 'Question',
-      'name': 'How much does FluxDrive cost?',
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': 'FluxDrive offers flexible pricing starting from $5/month for 100GB of storage. Plans range up to $50/month for 1000GB, with a daily rate of $0.0017 per GB. Enterprise custom plans are also available.',
-      },
-    },
-    {
-      '@type': 'Question',
-      'name': 'Is my data encrypted on FluxDrive?',
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': 'Yes, all files uploaded to FluxDrive are encrypted end-to-end. Your data is secured with strong encryption and distributed across multiple FluxNodes, ensuring privacy and security.',
-      },
-    },
-    {
-      '@type': 'Question',
-      'name': 'How is FluxDrive different from traditional cloud storage?',
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': 'Unlike traditional centralized cloud storage, FluxDrive is completely decentralized. Your files are stored across a global network of FluxNodes using IPFS technology, making them censorship-resistant with no single point of failure. There are no centralized providers that can access or control your data.',
-      },
-    },
-    {
-      '@type': 'Question',
-      'name': 'What happens if I cancel my FluxDrive subscription?',
-      'acceptedAnswer': {
-        '@type': 'Answer',
-        'text': 'If you cancel your subscription, you will retain access to your files until the end of your billing period. After that, your files will be removed from the network. We recommend downloading your files before cancellation.',
-      },
-    },
-  ],
-}
-
-useHead({
+useSEO({
   title,
-  meta: [
-    {
-      name: 'description',
-      content: description,
-    },
-    {
-      name: 'keywords',
-      content: 'decentralized storage, IPFS storage, cloud storage, blockchain storage, distributed storage, encrypted storage, Flux network, censorship resistant storage, Web3 storage, decentralized cloud, permanent storage, IPFS, FluxDrive, file storage, secure storage, private cloud',
-    },
-
-    // Open Graph
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
-    { property: 'og:image', content: imageUrl },
-    { property: 'og:image:width', content: '1200' },
-    { property: 'og:image:height', content: '630' },
-    { property: 'og:image:alt', content: 'FluxDrive - Decentralized IPFS Cloud Storage' },
-    { property: 'og:url', content: pageUrl },
-    { property: 'og:type', content: 'website' },
-    { property: 'og:site_name', content: 'FluxCloud' },
-    { property: 'og:locale', content: 'en_US' },
-
-    // Twitter Card
-    { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description },
-    { name: 'twitter:image', content: imageUrl },
-    { name: 'twitter:image:alt', content: 'FluxDrive - Decentralized IPFS Cloud Storage' },
-    { name: 'twitter:site', content: '@RunOnFlux' },
-    { name: 'twitter:creator', content: '@RunOnFlux' },
-
-    // Additional SEO
-    { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
-    { name: 'author', content: 'Flux Network' },
-  ],
-  link: [
-    { rel: 'canonical', href: pageUrl },
-  ],
-  script: [
-    {
-      type: 'application/ld+json',
-      children: JSON.stringify([softwareApplicationStructuredData, organizationStructuredData, breadcrumbStructuredData, faqStructuredData]),
-    },
+  description,
+  url: pageUrl,
+  image: imageUrl,
+  imageAlt: 'FluxDrive - Decentralized IPFS Cloud Storage',
+  keywords: 'decentralized storage, IPFS storage, cloud storage, blockchain storage, distributed storage, encrypted storage, Flux network, censorship resistant storage, Web3 storage, decentralized cloud, permanent storage, IPFS, FluxDrive, file storage, secure storage, private cloud',
+  robots: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1',
+  structuredData: [
+    softwareApplicationStructuredData,
+    generateOrganizationSchema(),
+    generateBreadcrumbSchema([
+      { name: 'Home', url: 'https://cloud.runonflux.com' },
+      { name: 'FluxDrive', url: pageUrl },
+    ]),
+    generateFAQSchema(faqItems),
   ],
 })
 
@@ -425,6 +340,12 @@ const checkoutContentRef = ref(null)
 // Handle plan selection from PricingPlans component
 const handlePlanSelection = async (planId, actionType = null) => {
   console.log('🎯 Plan selected:', planId, 'Action:', actionType)
+
+  // Track plan selection
+  analytics.trackFluxDrive('plan_selected', {
+    plan_id: planId,
+    action_type: actionType || 'browse',
+  })
 
   // Handle signin action - just show login dialog without saving plan
   if (actionType === 'signin') {
@@ -644,6 +565,12 @@ watch(isLoggedIn, async (newValue, oldValue) => {
 
 // Handle payment success
 const handlePaymentSuccess = async () => {
+  // Track successful payment
+  analytics.trackFluxDrive('payment_success', {
+    plan_id: selectedCheckoutPlan.value,
+    action_type: selectedActionType.value,
+  })
+
   showCheckout.value = false
   selectedCheckoutPlan.value = ''
   selectedActionType.value = ''
@@ -715,6 +642,13 @@ onMounted(async () => {
   console.log('🔄 FluxDrive page mounted')
   console.log('🔍 Initial hasActiveSubscription value:', hasActiveSubscription.value)
   console.log('🔍 Initial isLoggedIn value:', isLoggedIn.value)
+
+  // Track FluxDrive page view
+  analytics.trackFluxDrive('page_view', {
+    page: 'fluxdrive',
+    has_subscription: hasActiveSubscription.value,
+    is_logged_in: isLoggedIn.value,
+  })
 
   // Clear any stale checkout selections from previous sessions
   // These should only be set when user actively selects a plan

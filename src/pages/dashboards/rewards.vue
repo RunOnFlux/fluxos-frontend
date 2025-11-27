@@ -154,14 +154,14 @@ const { t } = useI18n()
 useSEO({
   title: 'Flux Node Rewards - FLUX Token Mining & Staking | FluxCloud',
   description: 'Track Flux node rewards and FLUX token distribution. View real-time rewards for Cumulus, Nimbus, and Stratus nodes. Monitor block rewards, node earnings, and staking returns on the Flux network.',
-  url: 'https://home.runonflux.io/dashboards/rewards',
+  url: 'https://cloud.runonflux.com/dashboards/rewards',
   keywords: 'flux rewards, flux token, node rewards, FLUX mining, flux staking, node earnings, flux income, blockchain rewards, passive income, flux node profit',
   structuredData: [
     generateOrganizationSchema(),
     generateBreadcrumbSchema([
-      { name: 'Home', url: 'https://home.runonflux.io' },
-      { name: 'Flux Network', url: 'https://home.runonflux.io/dashboards/overview' },
-      { name: 'Rewards', url: 'https://home.runonflux.io/dashboards/rewards' },
+      { name: 'Home', url: 'https://cloud.runonflux.com' },
+      { name: 'Flux Network', url: 'https://cloud.runonflux.com/dashboards/overview' },
+      { name: 'Rewards', url: 'https://cloud.runonflux.com/dashboards/rewards' },
     ]),
   ],
 })

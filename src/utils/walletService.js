@@ -65,8 +65,8 @@ const projectId = "df787edc6839c7de49d527bba9199eaa"
 const metadata = {
   name: "Flux Cloud",
   description: "Flux, Your Gateway to a Decentralized World",
-  url: isLocalhost ? window.location.origin : "https://home.runonflux.io",
-  icons: ["https://home.runonflux.io/img/logo.png"],
+  url: isLocalhost ? window.location.origin : "https://cloud.runonflux.com",
+  icons: ["https://cloud.runonflux.com/images/logo.png"],
 }
 
 // Singleton pattern to ensure AppKit and WagmiAdapter are only created once globally
@@ -162,7 +162,7 @@ const MMSDK = new MetaMaskSDK({
   useDeeplink: false, // Don't use deeplinks when extension is available
   dappMetadata: {
     name: 'Flux Cloud',
-    url: isLocalhost ? window.location.origin : 'https://home.runonflux.io',
+    url: isLocalhost ? window.location.origin : 'https://cloud.runonflux.com',
   },
 })
 

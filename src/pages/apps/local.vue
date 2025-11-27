@@ -186,7 +186,7 @@ onMounted(async () => {
   console.log("Initial data fetching complete")
 })
 
-const isFluxAdminLoggedIn = computed(() => privilege.value === 'fluxteam')
+const isFluxAdminLoggedIn = computed(() => privilege.value === 'fluxteam' || privilege.value === 'admin')
 
 onBeforeUnmount(() => {
   eventBus.off('backendURLChanged', loadInstalledApps)

@@ -17,24 +17,24 @@
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://home.runonflux.io/" />
+  <meta property="og:url" content="https://cloud.runonflux.com/" />
   <meta property="og:title" content="FluxCloud - Decentralized Web3 Cloud Infrastructure" />
   <meta property="og:description" content="Deploy applications on FluxCloud's decentralized Web3 infrastructure. Host games, WordPress sites, and custom apps on a network of 8,000+ FluxNodes worldwide. Starting at $0.99/month." />
-  <meta property="og:image" content="https://home.runonflux.io/images/logo.png" />
+  <meta property="og:image" content="https://cloud.runonflux.com/images/logo.png" />
   <meta property="og:site_name" content="FluxCloud" />
   <meta property="og:locale" content="en_US" />
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:url" content="https://home.runonflux.io/" />
+  <meta name="twitter:url" content="https://cloud.runonflux.com/" />
   <meta name="twitter:title" content="FluxCloud - Decentralized Web3 Cloud Infrastructure" />
   <meta name="twitter:description" content="Deploy applications on FluxCloud's decentralized Web3 infrastructure. Host games, WordPress sites, and custom apps on a network of 8,000+ FluxNodes worldwide. Starting at $0.99/month." />
-  <meta name="twitter:image" content="https://home.runonflux.io/images/logo.png" />
+  <meta name="twitter:image" content="https://cloud.runonflux.com/images/logo.png" />
   <meta name="twitter:site" content="@RunOnFlux" />
   <meta name="twitter:creator" content="@RunOnFlux" />
 
   <!-- Canonical URL -->
-  <link rel="canonical" href="https://home.runonflux.io/" />
+  <link rel="canonical" href="https://cloud.runonflux.com/" />
 
   <!-- Preconnect to critical third-party domains for better performance -->
   <link rel="preconnect" href="https://api.runonflux.io" crossorigin />
@@ -93,71 +93,44 @@
   <script>
     (function() {
       try {
-        // Helper function to get cookie value
-        function getCookie(name) {
-          const value = `; ${document.cookie}`
-          const parts = value.split(`; ${name}=`)
-          if (parts.length === 2) {
-            let cookieValue = parts.pop().split(';').shift()
-            // Remove quotes if present and decode URI component
-            try {
-              cookieValue = decodeURIComponent(cookieValue).replace(/^["']|["']$/g, '')
-            } catch (e) {
-              // Silent fail
-            }
-            return cookieValue
-          }
-          return null
+        // Default English disclaimer (fallback)
+        const defaultDisclaimer = 'Get instant answers about Flux products, deployment, and app management. Powered by AI trained on official docs, whitepapers, and support resources.'
+
+        // Function to initialize Kapa widget with disclaimer
+        function initKapaWidget(disclaimer) {
+          const kapaScript = document.createElement('script')
+          kapaScript.defer = true
+          kapaScript.id = 'kapa-widget-script'
+          kapaScript.src = 'https://widget.kapa.ai/kapa-widget.bundle.js'
+          kapaScript.setAttribute('data-website-id', '16d7ee8e-1911-40a9-9bed-15eaadbcd99d')
+          kapaScript.setAttribute('data-project-name', 'Flux')
+          kapaScript.setAttribute('data-button-hide', 'true')
+          kapaScript.setAttribute('data-modal-override-open-id-ask-ai', 'flux-ai-button')
+          kapaScript.setAttribute('data-user-analytics-fingerprint-enabled', 'true')
+          kapaScript.setAttribute('data-search-mode-enabled', 'true')
+          kapaScript.setAttribute('data-project-logo', 'https://raw.githubusercontent.com/RunOnFlux/media-logos/refs/heads/master/Flux_Asset_SVG/Flux%20Logo/Symbol/Round%20Symbol/SVG/Flux_symbol_blue-white.svg')
+          kapaScript.setAttribute('data-modal-image', 'https://raw.githubusercontent.com/RunOnFlux/media-logos/refs/heads/master/Flux_Asset_SVG/Flux%20Logo/Symbol/Round%20Symbol/SVG/Flux_symbol_blue-white.svg')
+          kapaScript.setAttribute('data-modal-disclaimer', disclaimer)
+          document.body.appendChild(kapaScript)
         }
 
-        // Get stored locale from cookie (Flux-language)
-        const storedLocale = getCookie('Flux-language') || 'en'
-        const jsonPath = `/src/plugins/i18n/locales/${storedLocale}.json`
+        // Listen for i18n ready event from Vue app (will be emitted after i18n loads)
+        const handleI18nReady = function(event) {
+          const disclaimer = event.detail?.disclaimer || defaultDisclaimer
+          initKapaWidget(disclaimer)
+          // Remove listener after first use to prevent memory leak
+          window.removeEventListener('i18n-ready', handleI18nReady)
+        }
+        window.addEventListener('i18n-ready', handleI18nReady)
 
-        // Load translation file and extract disclaimer
-        fetch(jsonPath)
-          .then(response => response.json())
-          .then(translations => {
-            const disclaimer = translations?.components?.fluxAIToggler?.disclaimer ||
-              'Get instant answers about Flux products, deployment, and app management. Powered by AI trained on official docs, whitepapers, and support resources.'
-
-            // Create and append Kapa script with correct disclaimer
-            const kapaScript = document.createElement('script')
-            kapaScript.defer = true
-            kapaScript.id = 'kapa-widget-script'
-            kapaScript.src = 'https://widget.kapa.ai/kapa-widget.bundle.js'
-            kapaScript.setAttribute('data-website-id', '16d7ee8e-1911-40a9-9bed-15eaadbcd99d')
-            kapaScript.setAttribute('data-project-name', 'Flux')
-            kapaScript.setAttribute('data-button-hide', 'true')
-            kapaScript.setAttribute('data-modal-override-open-id-ask-ai', 'flux-ai-button')
-            kapaScript.setAttribute('data-user-analytics-fingerprint-enabled', 'true')
-            kapaScript.setAttribute('data-search-mode-enabled', 'true')
-            kapaScript.setAttribute('data-project-logo', 'https://raw.githubusercontent.com/RunOnFlux/media-logos/refs/heads/master/Flux_Asset_SVG/Flux%20Logo/Symbol/Round%20Symbol/SVG/Flux_symbol_blue-white.svg')
-            kapaScript.setAttribute('data-modal-image', 'https://raw.githubusercontent.com/RunOnFlux/media-logos/refs/heads/master/Flux_Asset_SVG/Flux%20Logo/Symbol/Round%20Symbol/SVG/Flux_symbol_blue-white.svg')
-            kapaScript.setAttribute('data-modal-disclaimer', disclaimer)
-            document.body.appendChild(kapaScript)
-          })
-          .catch(error => {
-            // Fallback to English disclaimer if JSON can't be loaded
-            const disclaimer = 'Get instant answers about Flux products, deployment, and app management. Powered by AI trained on official docs, whitepapers, and support resources.'
-
-            const kapaScript = document.createElement('script')
-            kapaScript.defer = true
-            kapaScript.id = 'kapa-widget-script'
-            kapaScript.src = 'https://widget.kapa.ai/kapa-widget.bundle.js'
-            kapaScript.setAttribute('data-website-id', '16d7ee8e-1911-40a9-9bed-15eaadbcd99d')
-            kapaScript.setAttribute('data-project-name', 'Flux')
-            kapaScript.setAttribute('data-button-hide', 'true')
-            kapaScript.setAttribute('data-modal-override-open-id-ask-ai', 'flux-ai-button')
-            kapaScript.setAttribute('data-user-analytics-fingerprint-enabled', 'true')
-            kapaScript.setAttribute('data-search-mode-enabled', 'true')
-            kapaScript.setAttribute('data-project-logo', 'https://raw.githubusercontent.com/RunOnFlux/media-logos/refs/heads/master/Flux_Asset_SVG/Flux%20Logo/Symbol/Round%20Symbol/SVG/Flux_symbol_blue-white.svg')
-            kapaScript.setAttribute('data-modal-image', 'https://raw.githubusercontent.com/RunOnFlux/media-logos/refs/heads/master/Flux_Asset_SVG/Flux%20Logo/Symbol/Round%20Symbol/SVG/Flux_symbol_blue-white.svg')
-            kapaScript.setAttribute('data-modal-disclaimer', disclaimer)
-            document.body.appendChild(kapaScript)
-          })
+        // Timeout fallback: if i18n doesn't load within 3 seconds, use default
+        setTimeout(function() {
+          if (!document.getElementById('kapa-widget-script')) {
+            initKapaWidget(defaultDisclaimer)
+          }
+        }, 3000)
       } catch (error) {
-        // Silent fail
+        // Silent fail - worst case, Kapa loads with default English disclaimer
       }
     })()
   </script>

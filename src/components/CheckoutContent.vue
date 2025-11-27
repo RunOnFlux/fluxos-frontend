@@ -541,6 +541,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useFluxStore } from '@/stores/flux'
 import { useSnackbar } from '@/composables/useSnackbar'
+import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 import ClipboardJS from 'clipboard'
 import qs from 'qs'
 import { payWithSSP, payWithZelcore } from '@/utils/walletService'
@@ -622,8 +623,49 @@ defineExpose({
 // Composables
 const fluxStore = useFluxStore()
 const { showSnackbar, hideSnackbar } = useSnackbar()
+const analytics = useAnalytics()
 const theme = useTheme()
 const { t } = useI18n()
+
+/**
+ * Track successful purchase/payment completion
+ * Uses GA4 recommended event format for better reporting
+ */
+const trackPurchaseSuccess = actionType => {
+  try {
+    // Get plan details for tracking
+    const planDetails = plans.value?.find(p => p.id === props.planId) || {}
+    const price = planDetails.pricePerMonth || planDetails.usd || 0
+
+    // Track using GA4 recommended 'purchase' event format
+    analytics.trackCheckout('purchase', {
+      transaction_id: fluxPayment.value?.sub_id || `tx_${Date.now()}`,
+      value: price,
+      currency: 'USD',
+      items: [{
+        item_id: props.planId,
+        item_name: planDetails.name || props.planId,
+        item_category: props.gateway || 'unknown',
+        price: price,
+        quantity: 1,
+      }],
+
+      // Custom parameters
+      payment_gateway: props.gateway,
+      action_type: actionType || props.actionType || 'signup',
+      plan_id: props.planId,
+    })
+
+    console.log('📊 Purchase tracked:', {
+      plan: props.planId,
+      gateway: props.gateway,
+      action: actionType || props.actionType,
+      price,
+    })
+  } catch (error) {
+    console.warn('Failed to track purchase:', error)
+  }
+}
 
 // Theme-aware SSP logo
 const SSPLogoThemeImg = computed(() => {
@@ -1741,6 +1783,9 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             localStorage.setItem('fluxdrive_gateway', props.gateway)
             console.log('💾 Stored payment gateway:', props.gateway)
 
+            // Track purchase success
+            trackPurchaseSuccess('signup')
+
             showSnackbar(successMessage, 'success', 8000)
             emit('success')
           }
@@ -1809,6 +1854,9 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
               localStorage.setItem('fluxdrive_gateway', props.gateway)
               console.log('💾 Stored payment gateway:', props.gateway)
 
+              // Track purchase success
+              trackPurchaseSuccess('renew')
+
               showSnackbar(t('components.checkoutContent.paymentConfirmedRenewed'), 'success', 8000)
               emit('success')
             } else if (hasSubscriptionExpiredNow) {
@@ -1864,6 +1912,9 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
               // Store payment gateway in localStorage for subscription management
               localStorage.setItem('fluxdrive_gateway', props.gateway)
               console.log('💾 Stored payment gateway:', props.gateway)
+
+              // Track purchase success
+              trackPurchaseSuccess(props.actionType)
 
               const message = props.actionType === 'upgrade'
                 ? t('components.checkoutContent.paymentConfirmedUpgraded')
@@ -1946,6 +1997,9 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             // Store payment gateway in localStorage for subscription management
             localStorage.setItem('fluxdrive_gateway', props.gateway)
             console.log('💾 Stored payment gateway:', props.gateway)
+
+            // Track purchase success
+            trackPurchaseSuccess('signup')
 
             showSnackbar(t('components.checkoutContent.paymentConfirmedSubscriptionActive'), 'success', 8000)
             emit('success')

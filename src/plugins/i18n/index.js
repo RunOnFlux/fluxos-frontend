@@ -55,5 +55,20 @@ export const getI18n = () => {
   return _i18n
 }
 export default function (app) {
-  app.use(getI18n())
+  const i18n = getI18n()
+  app.use(i18n)
+
+  // Emit i18n-ready event for index.html Kapa AI widget initialization
+  // This prevents 404 errors when trying to fetch locale JSON files directly
+  if (typeof window !== 'undefined') {
+    // Wait for next tick to ensure i18n is fully initialized
+    setTimeout(() => {
+      const disclaimer = i18n.global.t('components.fluxAIToggler.disclaimer',
+        'Get instant answers about Flux products, deployment, and app management. Powered by AI trained on official docs, whitepapers, and support resources.')
+
+      window.dispatchEvent(new CustomEvent('i18n-ready', {
+        detail: { disclaimer },
+      }))
+    }, 0)
+  }
 }

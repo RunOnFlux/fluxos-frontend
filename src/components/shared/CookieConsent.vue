@@ -1,85 +1,15 @@
 <template>
-  <VSnackbar
-    v-model="showBanner"
-    :timeout="-1"
-    location="bottom"
-    multi-line
-    class="cookie-consent-banner"
-    color="surface"
-    elevation="0"
-  >
-    <VCard
-      class="cookie-consent-card"
-      elevation="0"
-    >
-      <VCardText class="pa-6">
-        <div class="d-flex flex-column ga-4">
-          <!-- Header with icon -->
-          <div class="d-flex align-start gap-3">
-            <div class="cookie-icon-wrapper">
-              <VIcon size="24" color="success">mdi-cookie</VIcon>
-            </div>
-            <div class="flex-grow-1">
-              <div class="text-h6 font-weight-bold mb-2">
-                {{ t('common.cookieConsent.title') }}
-              </div>
-              <div class="text-body-2 text-medium-emphasis">
-                {{ t('common.cookieConsent.description') }}
-                <a
-                  href="https://runonflux.com/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-success font-weight-medium"
-                >
-                  {{ t('common.cookieConsent.learnMore') }}
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <!-- Action buttons -->
-          <div class="d-flex flex-wrap gap-2">
-            <VBtn
-              color="success"
-              variant="flat"
-              class="flex-grow-1 flex-sm-grow-0"
-              @click="acceptAll"
-            >
-              <VIcon start size="20">mdi-check-circle</VIcon>
-              {{ t('common.cookieConsent.acceptAll') }}
-            </VBtn>
-            <VBtn
-              color="secondary"
-              variant="tonal"
-              class="flex-grow-1 flex-sm-grow-0"
-              @click="acceptNecessary"
-            >
-              {{ t('common.cookieConsent.onlyNecessary') }}
-            </VBtn>
-            <VBtn
-              color="info"
-              variant="text"
-              @click="showSettings = true"
-            >
-              <VIcon start size="20">mdi-cog</VIcon>
-              {{ t('common.cookieConsent.customize') }}
-            </VBtn>
-          </div>
-        </div>
-      </VCardText>
-    </VCard>
-  </VSnackbar>
-
-  <!-- Cookie Settings Dialog -->
+  <!-- Cookie Settings Dialog - shown on first visit and when managing cookies -->
   <VDialog
     v-model="showSettings"
     max-width="600"
     content-class="cookie-settings-dialog"
+    :persistent="isFirstVisit"
   >
     <VCard class="dialog-card">
       <VCardTitle class="d-flex justify-space-between align-center pa-3 dialog-header">
         <div class="d-flex align-center gap-3">
-          <VIcon size="28">mdi-cog</VIcon>
+          <VIcon size="28">mdi-cookie</VIcon>
           <span>{{ t('common.cookieConsent.settingsTitle') }}</span>
         </div>
         <VBtn
@@ -87,7 +17,7 @@
           variant="text"
           size="small"
           class="close-btn"
-          @click="showSettings = false"
+          @click="closeDialog"
         />
       </VCardTitle>
 
@@ -136,21 +66,29 @@
         </div>
       </VCardText>
 
-      <VCardActions class="dialog-actions">
+      <VCardActions class="dialog-actions px-6 pb-4">
+        <VBtn
+          color="secondary"
+          variant="outlined"
+          @click="closeDialog"
+        >
+          {{ t('common.cookieConsent.close') }}
+        </VBtn>
         <VSpacer />
         <VBtn
-          color="error"
-          variant="text"
-          @click="showSettings = false"
+          color="warning"
+          variant="tonal"
+          @click="acceptNecessary"
         >
-          {{ t('common.buttons.cancel') }}
+          {{ t('common.cookieConsent.onlyNecessary') }}
         </VBtn>
         <VBtn
-          color="primary"
+          color="success"
           variant="flat"
-          @click="savePreferences"
+          @click="acceptSelected"
         >
-          {{ t('common.buttons.save') }}
+          <VIcon start size="20">mdi-check-circle</VIcon>
+          {{ t('common.cookieConsent.accept') }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -171,22 +109,29 @@ const {
   disableAnalytics,
 } = useCookieConsent()
 
-const showBanner = ref(false)
 const showSettings = ref(false)
+const isFirstVisit = ref(false)
 const necessaryCookiesEnabled = ref(true) // Always true, for display purposes
 const preferences = ref({
-  analytics: false,
+  analytics: true, // Pre-selected to yes on first visit
 })
 
 // Listen for cookie settings open event from StatusBar
 const handleOpenCookieSettings = () => {
+  // When opening from StatusBar, load current preferences
+  const consent = getConsent()
+  if (consent) {
+    preferences.value.analytics = consent.analytics
+  }
   showSettings.value = true
 }
 
 onMounted(() => {
-  // Show banner if user hasn't made a choice
+  // Show dialog if user hasn't made a choice (first visit)
   if (!hasConsent()) {
-    showBanner.value = true
+    isFirstVisit.value = true
+    preferences.value.analytics = true // Pre-select analytics to yes
+    showSettings.value = true
   } else {
     // Load existing preferences
     const consent = getConsent()
@@ -206,27 +151,8 @@ onBeforeUnmount(() => {
   window.removeEventListener('open-cookie-settings', handleOpenCookieSettings)
 })
 
-const acceptAll = () => {
-  preferences.value.analytics = true
-  saveConsent({
-    necessary: true,
-    analytics: true,
-  })
-  enableAnalytics()
-  showBanner.value = false
-}
-
-const acceptNecessary = () => {
-  preferences.value.analytics = false
-  saveConsent({
-    necessary: true,
-    analytics: false,
-  })
-  disableAnalytics()
-  showBanner.value = false
-}
-
-const savePreferences = () => {
+// Accept button - saves whatever is currently selected
+const acceptSelected = () => {
   saveConsent({
     necessary: true,
     analytics: preferences.value.analytics,
@@ -238,56 +164,32 @@ const savePreferences = () => {
     disableAnalytics()
   }
 
+  isFirstVisit.value = false
   showSettings.value = false
-  showBanner.value = false
+}
+
+// Only Necessary button - accepts only necessary cookies
+const acceptNecessary = () => {
+  preferences.value.analytics = false
+  saveConsent({
+    necessary: true,
+    analytics: false,
+  })
+  disableAnalytics()
+  isFirstVisit.value = false
+  showSettings.value = false
+}
+
+// Close button - closes dialog without saving (no analytics enabled)
+const closeDialog = () => {
+  // If first visit and closing without saving, don't enable any non-essential cookies
+  // This is GDPR compliant - no consent = no cookies
+  isFirstVisit.value = false
+  showSettings.value = false
 }
 </script>
 
 <style scoped lang="scss">
-.cookie-consent-banner {
-  :deep(.v-snackbar__wrapper) {
-    max-width: 800px;
-    min-width: 320px;
-    border-radius: 16px;
-    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.2);
-    border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
-    backdrop-filter: blur(10px);
-    margin: 16px;
-
-    @media (max-width: 600px) {
-      margin: 12px;
-      max-width: calc(100% - 24px);
-    }
-  }
-
-  :deep(.v-snackbar__content) {
-    padding: 0;
-  }
-}
-
-.cookie-consent-card {
-  width: 100%;
-  background: rgb(var(--v-theme-surface));
-  border-radius: 16px;
-}
-
-.cookie-icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  border-radius: 12px;
-  background: rgba(var(--v-theme-success), 0.1);
-
-  @media (max-width: 600px) {
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-  }
-}
-
 .cookie-category {
   border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
   border-radius: 12px;
@@ -302,17 +204,6 @@ const savePreferences = () => {
 
   .d-flex {
     gap: 16px;
-  }
-}
-
-// Better responsive button layout
-.d-flex.flex-wrap.gap-2 {
-  @media (max-width: 600px) {
-    flex-direction: column;
-
-    .v-btn {
-      width: 100%;
-    }
   }
 }
 
@@ -341,8 +232,16 @@ const savePreferences = () => {
 
 .dialog-actions {
   :deep(.v-btn) {
-    height: 30px;
-    min-height: 30px;
+    min-height: 36px;
+  }
+
+  @media (max-width: 600px) {
+    flex-wrap: wrap;
+    gap: 8px;
+
+    :deep(.v-btn) {
+      flex: 1 1 auto;
+    }
   }
 }
 </style>

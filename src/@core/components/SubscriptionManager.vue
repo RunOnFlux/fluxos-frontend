@@ -39,7 +39,7 @@
               <span>{{ t('core.subscriptionManager.upgradeToLatest') }}</span>
             </VTooltip>
 
-            <!-- Import Spec Button (only for new apps) -->
+            <!-- Import Spec Button (only for new apps, disabled until ToS accepted) -->
             <VTooltip v-if="props.newApp" location="top">
               <template #activator="{ props: tooltipProps }">
                 <VBtn
@@ -49,12 +49,13 @@
                   variant="tonal"
                   density="comfortable"
                   class="import-glow-btn border-frame-btn"
+                  :disabled="!acceptedTerms"
                   @click="showSpecImportDialog = true"
                 >
                   <VIcon size="22">mdi-file-import</VIcon>
                 </VBtn>
               </template>
-              <span>{{ t('core.subscriptionManager.importSpec') }}</span>
+              <span>{{ acceptedTerms ? t('core.subscriptionManager.importSpec') : t('core.subscriptionManager.tos.acceptFirst') }}</span>
             </VTooltip>
           </div>
         </div>
@@ -346,7 +347,7 @@
                       {{ t('core.subscriptionManager.tos.agreement') }}
                       <a
                         href="#"
-                        class="text-primary font-weight-medium"
+                        class="font-weight-bold text-high-emphasis"
                         style="text-decoration: underline;"
                         @click.prevent="showTermsDialog = true"
                       >
@@ -358,321 +359,325 @@
               </VCardText>
             </VCard>
 
-            <VTextField
-              v-model="appDetails.name"
-              :label="t('core.subscriptionManager.name')"
-              prepend-inner-icon="mdi-rename-box"
-              variant="outlined"
-              density="comfortable"
-              :disabled="isNameLocked || (props.newApp && !acceptedTerms)"
-              class="mb-3"
-            >
-              <template #append-inner>
-                <VTooltip location="top">
-                  <template #activator="{ props }">
-                    <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+            <div :class="{ 'disabled-fieldset': props.newApp && !acceptedTerms }">
+              <fieldset :disabled="props.newApp && !acceptedTerms">
+                <VTextField
+                  v-model="appDetails.name"
+                  :label="t('core.subscriptionManager.name')"
+                  prepend-inner-icon="mdi-rename-box"
+                  variant="outlined"
+                  density="comfortable"
+                  :disabled="isNameLocked"
+                  class="mb-3"
+                >
+                  <template #append-inner>
+                    <VTooltip location="top">
+                      <template #activator="{ props }">
+                        <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+                      </template>
+                      <span>{{ t('core.subscriptionManager.nameTooltip') }}</span>
+                    </VTooltip>
                   </template>
-                  <span>{{ t('core.subscriptionManager.nameTooltip') }}</span>
-                </VTooltip>
-              </template>
-            </VTextField>
+                </VTextField>
 
-            <VTextarea
-              v-model="appDetails.description"
-              :label="t('core.subscriptionManager.description')"
-              prepend-inner-icon="mdi-text"
-              auto-grow
-              rows="1"
-              variant="outlined"
-              density="comfortable"
-              class="mb-3"
-            >
-              <template #append-inner>
-                <VTooltip location="top">
-                  <template #activator="{ props }">
-                    <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+                <VTextarea
+                  v-model="appDetails.description"
+                  :label="t('core.subscriptionManager.description')"
+                  prepend-inner-icon="mdi-text"
+                  auto-grow
+                  rows="1"
+                  variant="outlined"
+                  density="comfortable"
+                  class="mb-3"
+                >
+                  <template #append-inner>
+                    <VTooltip location="top">
+                      <template #activator="{ props }">
+                        <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+                      </template>
+                      <span>{{ t('core.subscriptionManager.descriptionTooltip') }}</span>
+                    </VTooltip>
                   </template>
-                  <span>{{ t('core.subscriptionManager.descriptionTooltip') }}</span>
-                </VTooltip>
-              </template>
-            </VTextarea>
+                </VTextarea>
 
-            <VTextField
-              v-model="appDetails.owner"
-              :label="t('core.subscriptionManager.owner')"
-              prepend-inner-icon="mdi-account"
-              variant="outlined"
-              density="comfortable"
-              class="mb-3"
-            >
-              <template #append-inner>
-                <VTooltip location="top">
-                  <template #activator="{ props }">
-                    <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+                <VTextField
+                  v-model="appDetails.owner"
+                  :label="t('core.subscriptionManager.owner')"
+                  prepend-inner-icon="mdi-account"
+                  variant="outlined"
+                  density="comfortable"
+                  class="mb-3"
+                >
+                  <template #append-inner>
+                    <VTooltip location="top">
+                      <template #activator="{ props }">
+                        <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+                      </template>
+                      <span>{{ t('core.subscriptionManager.ownerTooltip') }}</span>
+                    </VTooltip>
                   </template>
-                  <span>{{ t('core.subscriptionManager.ownerTooltip') }}</span>
-                </VTooltip>
-              </template>
-            </VTextField>
+                </VTextField>
 
-            <!-- Specification Version (shown for update and redeploy, not for new registration) -->
-            <VTextField
-              v-if="!props.newApp"
-              :model-value="specVersion"
-              :label="t('core.subscriptionManager.specVersion')"
-              prepend-inner-icon="mdi-tag"
-              variant="outlined"
-              density="comfortable"
-              readonly
-              class="mb-3"
-            >
-              <template #append-inner>
-                <VTooltip location="top" max-width="300">
-                  <template #activator="{ props: tooltipProps }">
-                    <VIcon
-                      v-bind="tooltipProps"
-                      size="20"
-                      :color="specVersion >= LATEST_SPEC_VERSION ? 'success' : 'warning'"
-                      class="mr-2"
-                    >
-                      {{ specVersion >= LATEST_SPEC_VERSION ? 'mdi-check-circle' : 'mdi-alert-circle' }}
-                    </VIcon>
+                <!-- Specification Version (shown for update and redeploy, not for new registration) -->
+                <VTextField
+                  v-if="!props.newApp"
+                  :model-value="specVersion"
+                  :label="t('core.subscriptionManager.specVersion')"
+                  prepend-inner-icon="mdi-tag"
+                  variant="outlined"
+                  density="comfortable"
+                  readonly
+                  class="mb-3"
+                >
+                  <template #append-inner>
+                    <VTooltip location="top" max-width="300">
+                      <template #activator="{ props: tooltipProps }">
+                        <VIcon
+                          v-bind="tooltipProps"
+                          size="20"
+                          :color="specVersion >= LATEST_SPEC_VERSION ? 'success' : 'warning'"
+                          class="mr-2"
+                        >
+                          {{ specVersion >= LATEST_SPEC_VERSION ? 'mdi-check-circle' : 'mdi-alert-circle' }}
+                        </VIcon>
+                      </template>
+                      <span v-if="specVersion >= LATEST_SPEC_VERSION">{{ t('core.subscriptionManager.usingLatestSpec') }}</span>
+                      <span v-else>{{ t('core.subscriptionManager.olderSpecWarning') }}</span>
+                    </VTooltip>
+                    <VTooltip location="top">
+                      <template #activator="{ props: tooltipProps }">
+                        <VIcon v-bind="tooltipProps" size="20" color="grey">mdi-information-outline</VIcon>
+                      </template>
+                      <span>{{ t('core.subscriptionManager.currentSpecVersion') }}</span>
+                    </VTooltip>
                   </template>
-                  <span v-if="specVersion >= LATEST_SPEC_VERSION">{{ t('core.subscriptionManager.usingLatestSpec') }}</span>
-                  <span v-else>{{ t('core.subscriptionManager.olderSpecWarning') }}</span>
-                </VTooltip>
-                <VTooltip location="top">
-                  <template #activator="{ props: tooltipProps }">
-                    <VIcon v-bind="tooltipProps" size="20" color="grey">mdi-information-outline</VIcon>
-                  </template>
-                  <span>{{ t('core.subscriptionManager.currentSpecVersion') }}</span>
-                </VTooltip>
-              </template>
-            </VTextField>
+                </VTextField>
 
-            <!--
-              <VCombobox
-              v-model="appDetails.contacts"
-              label="Contact"
-              prepend-inner-icon="mdi-email"
-              multiple
-              outlined
-              dense
-              class="mb-3"
-              :items="[]"
-              hide-no-data
-              hide-details
-              menu-icon=""
-              @change="removeDuplicates"
-              >
-              <template #selection="{ item, index }">
-              <VChip
-              class="ma-1"
-              closable
-              @click:close="appDetails.contacts.splice(index, 1)"
-              >
-              {{ item.value }}
-              </VChip>
-              </template>
-              </VCombobox> 
-            -->
-          
-          
-            <div v-if="versionFlags.supportsContacts" class="d-flex align-center mb-3">
-              <VCombobox
-                v-model="appDetails.contacts"
-                :label="t('core.subscriptionManager.contact')"
-                prepend-inner-icon="mdi-email"
-                multiple
-                variant="outlined"
-                density="comfortable"
-                :items="[]"
-                hide-no-data
-                hide-details
-                menu-icon=""
-                class="flex-grow-1"
-                @change="removeDuplicates"
-              >
-                <template #selection="{ item, index }">
+                <!--
+                  <VCombobox
+                  v-model="appDetails.contacts"
+                  label="Contact"
+                  prepend-inner-icon="mdi-email"
+                  multiple
+                  outlined
+                  dense
+                  class="mb-3"
+                  :items="[]"
+                  hide-no-data
+                  hide-details
+                  menu-icon=""
+                  @change="removeDuplicates"
+                  >
+                  <template #selection="{ item, index }">
                   <VChip
-                    v-if="item.value && item.value.trim()"
-                    class="ma-1"
-                    closable
-                    @click:close="appDetails.contacts.splice(index, 1)"
+                  class="ma-1"
+                  closable
+                  @click:close="appDetails.contacts.splice(index, 1)"
                   >
-                    {{ item.value }}
+                  {{ item.value }}
                   </VChip>
-                </template>
-                <template #append-inner>
-                  <VTooltip location="top">
-                    <template #activator="{ props }">
-                      <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
-                    </template>
-                    <span>{{ t('core.subscriptionManager.contactTooltip') }}</span>
-                  </VTooltip>
-                </template>
-              </VCombobox>
-
-              <VTooltip :text="t('core.subscriptionManager.uploadContactsTooltip')" location="top">
-                <template #activator="{ props }">
-                  <VBtn
-                    v-bind="props"
-                    icon
-                    variant="flat"
-                    color="primary"
-                    class="ml-2"
-                    :disabled="appDetails?.contacts?.length === 0 || isUploadingContacts"
-                    @click="uploadContactsToFluxStorage"
+                  </template>
+                  </VCombobox> 
+                -->
+          
+          
+                <div v-if="versionFlags.supportsContacts" class="d-flex align-center mb-3">
+                  <VCombobox
+                    v-model="appDetails.contacts"
+                    :label="t('core.subscriptionManager.contact')"
+                    prepend-inner-icon="mdi-email"
+                    multiple
+                    variant="outlined"
+                    density="comfortable"
+                    :items="[]"
+                    hide-no-data
+                    hide-details
+                    menu-icon=""
+                    class="flex-grow-1"
+                    @change="removeDuplicates"
                   >
-                    <VIcon size="24">mdi-cloud-upload</VIcon>
-                  </VBtn>
-                </template>
-              </VTooltip>
+                    <template #selection="{ item, index }">
+                      <VChip
+                        v-if="item.value && item.value.trim()"
+                        class="ma-1"
+                        closable
+                        @click:close="appDetails.contacts.splice(index, 1)"
+                      >
+                        {{ item.value }}
+                      </VChip>
+                    </template>
+                    <template #append-inner>
+                      <VTooltip location="top">
+                        <template #activator="{ props }">
+                          <VIcon v-bind="props" size="20" color="grey">mdi-information-outline</VIcon>
+                        </template>
+                        <span>{{ t('core.subscriptionManager.contactTooltip') }}</span>
+                      </VTooltip>
+                    </template>
+                  </VCombobox>
+
+                  <VTooltip :text="t('core.subscriptionManager.uploadContactsTooltip')" location="top">
+                    <template #activator="{ props }">
+                      <VBtn
+                        v-bind="props"
+                        icon
+                        variant="flat"
+                        color="primary"
+                        class="ml-2"
+                        :disabled="appDetails?.contacts?.length === 0 || isUploadingContacts"
+                        @click="uploadContactsToFluxStorage"
+                      >
+                        <VIcon size="24">mdi-cloud-upload</VIcon>
+                      </VBtn>
+                    </template>
+                  </VTooltip>
+                </div>
+              </fieldset>
             </div>
           </VForm>
-          <!-- Instances Section -->
-          <div class="border rounded pa-3">
-            <div>
-              <div class="d-flex align-center justify-space-between mb-2">
-                <VChip color="default" variant="tonal" class="mr-2" style="width: 110px" label>
-                  <VIcon class="mr-1">mdi-laptop</VIcon>
-                  {{ t('core.subscriptionManager.instances') }}
-                </VChip>
-                <VChip color="success" variant="tonal" size="small">
-                  {{ t('core.subscriptionManager.instancesCount', appDetails.instances, { count: appDetails.instances }) }}
-                </VChip>
-              </div>
-              <VSlider
-                v-model="appDetails.instances"
-                :min="3"
-                :max="100"
-                step="1"
-                hide-details
-                :thumb-label="false"
-                :thumb-size="18"
-                track-size="4"
-              />
-            </div>
 
-            <!-- Renewal Period Section (Only for V6+ apps) -->
-            <div v-if="versionFlags.supportsExpire" class="mb-2 mt-2">
-              <div class="d-flex align-center justify-space-between mb-1">
-                <div class="d-flex align-center">
+          <div :class="{ 'disabled-fieldset': props.newApp && !acceptedTerms }">
+            <!-- Instances Section -->
+            <div class="border rounded pa-3">
+              <div>
+                <div class="d-flex align-center justify-space-between mb-2">
                   <VChip color="default" variant="tonal" class="mr-2" style="width: 110px" label>
-                    <VIcon class="mr-1">mdi-calendar-clock</VIcon>
-                    {{ t('core.subscriptionManager.period') }}
+                    <VIcon class="mr-1">mdi-laptop</VIcon>
+                    {{ t('core.subscriptionManager.instances') }}
+                  </VChip>
+                  <VChip color="success" variant="tonal" size="small">
+                    {{ t('core.subscriptionManager.instancesCount', appDetails.instances, { count: appDetails.instances }) }}
                   </VChip>
                 </div>
-                <VSwitch
-                  v-if="!newApp"
-                  v-model="renewalEnabled"
-                  inset
+                <VSlider
+                  v-model="appDetails.instances"
+                  :min="3"
+                  :max="100"
+                  step="1"
                   hide-details
-                  class="ma-0"
-                  :label="t('core.subscriptionManager.renewal')"
+                  :thumb-label="false"
+                  :thumb-size="18"
+                  track-size="4"
                 />
               </div>
 
-              <VSlider
-                v-model="appDetails.renewalIndex"
-                :min="0"
-                :max="(renewalOptions.value?.length ?? 6) - 1"
-                step="1"
-                class="flex-grow-1"
-                hide-details
-                :thumb-label="false"
-                :thumb-size="18"
-                track-size="4"
-                :disabled="!renewalEnabled && !newApp"
-              />
-              <span class="mb-5">
-                <div class="d-flex justify-space-between align-center px-3">
-                  <!-- left -->
-                  <span style="line-height: 1.25; font-size: 0.875rem;">
-                    <template v-if="newApp">
-                      {{ t('core.subscriptionManager.yourApplicationWillBeSubscribedUntil') }}
-                      <b>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</b>.
-                    </template>
-                    <template v-else>
-                      {{ t('core.subscriptionManager.currentlyYourApplicationIsSubscribedUntil') }}
-                      <b>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</b>.
-                    </template>
-                  </span>
-                  <!-- right -->
-                  <span class="text-caption grey--text" style="line-height: 1.25; white-space: nowrap;">
-                    {{ renewalLabels[appDetails.renewalIndex] }}
-                  </span>
+              <!-- Renewal Period Section (Only for V6+ apps) -->
+              <div v-if="versionFlags.supportsExpire" class="mb-2 mt-2">
+                <div class="d-flex align-center justify-space-between mb-1">
+                  <div class="d-flex align-center">
+                    <VChip color="default" variant="tonal" class="mr-2" style="width: 110px" label>
+                      <VIcon class="mr-1">mdi-calendar-clock</VIcon>
+                      {{ t('core.subscriptionManager.period') }}
+                    </VChip>
+                  </div>
+                  <VSwitch
+                    v-if="!newApp"
+                    v-model="renewalEnabled"
+                    inset
+                    hide-details
+                    class="ma-0"
+                    :label="t('core.subscriptionManager.renewal')"
+                  />
                 </div>
-                <span v-if="renewalEnabled && !newApp" class="px-3" style="font-size: 0.8125rem;">
-                  {{ t('core.subscriptionManager.yourNewAdjustedSubscriptionEndsOn') }}
-                  <b>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</b>.
+
+                <VSlider
+                  v-model="appDetails.renewalIndex"
+                  :min="0"
+                  :max="(renewalOptions.value?.length ?? 6) - 1"
+                  step="1"
+                  class="flex-grow-1"
+                  hide-details
+                  :thumb-label="false"
+                  :thumb-size="18"
+                  track-size="4"
+                  :disabled="!renewalEnabled && !newApp"
+                />
+                <span class="mb-5">
+                  <div class="d-flex justify-space-between align-center px-3">
+                    <!-- left -->
+                    <span style="line-height: 1.25; font-size: 0.875rem;">
+                      <template v-if="newApp">
+                        {{ t('core.subscriptionManager.yourApplicationWillBeSubscribedUntil') }}
+                        <b>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</b>.
+                      </template>
+                      <template v-else>
+                        {{ t('core.subscriptionManager.currentlyYourApplicationIsSubscribedUntil') }}
+                        <b>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</b>.
+                      </template>
+                    </span>
+                    <!-- right -->
+                    <span class="text-caption grey--text" style="line-height: 1.25; white-space: nowrap;">
+                      {{ renewalLabels[appDetails.renewalIndex] }}
+                    </span>
+                  </div>
+                  <span v-if="renewalEnabled && !newApp" class="px-3" style="font-size: 0.8125rem;">
+                    {{ t('core.subscriptionManager.yourNewAdjustedSubscriptionEndsOn') }}
+                    <b>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</b>.
+                  </span>
+                  <div v-if="!renewalEnabled && !newApp" class="d-flex align-center px-3" style="font-size: 0.875rem; color: #ff9800;">
+                    <VIcon size="18" color="warning" class="mr-2">mdi-information</VIcon>
+                    <span>{{ t('core.subscriptionManager.subscriptionNotExtended') }}</span>
+                  </div>
+                  <span v-if="appRunningTill.new < appRunningTill.current && renewalEnabled" style="color: red">
+                    <VAlert
+                      type="warning"
+                      color="error"
+                      variant="tonal"
+                      density="compact"
+                      size="small"
+                      class="mt-1 mx-3"
+                    >
+                      {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
+                    </VAlert>
+                  </span>
                 </span>
-                <div v-if="!renewalEnabled && !newApp" class="d-flex align-center px-3" style="font-size: 0.875rem; color: #ff9800;">
-                  <VIcon size="18" color="warning" class="mr-2">mdi-information</VIcon>
-                  <span>{{ t('core.subscriptionManager.subscriptionNotExtended') }}</span>
-                </div>
-                <span v-if="appRunningTill.new < appRunningTill.current && renewalEnabled" style="color: red">
-                  <VAlert
-                    type="warning"
-                    color="error"
-                    variant="tonal"
+              </div>
+              <!-- Additional Options Section (V7+) -->
+              <div v-if="versionFlags.supportsStaticIp" class="d-flex align-center mb-1 mt-4">
+                <VChip color="default" variant="tonal" class="mr-2"  label>
+                  <VIcon class="mr-1">mdi-cog-box</VIcon>
+                  {{ t('core.subscriptionManager.additionalOptions') }}
+                </VChip>
+              </div>
+              <div v-if="versionFlags.supportsStaticIp" class="d-flex flex-wrap gap-4 mt-1 pa-2">
+                <!-- Static IP Switch -->
+                <div class="d-flex align-center pa-2 switch-container">
+                  <VSwitch
+                    v-model="appDetails.staticip"
+                    inset
+                    hide-details
+                    class="ma-0"
                     density="compact"
-                    size="small"
-                    class="mt-1 mx-3"
-                  >
-                    {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
-                  </VAlert>
-                </span>
-              </span>
-            </div>
-            <!-- Additional Options Section (V7+) -->
-            <div v-if="versionFlags.supportsStaticIp" class="d-flex align-center mb-1 mt-4">
-              <VChip color="default" variant="tonal" class="mr-2"  label>
-                <VIcon class="mr-1">mdi-cog-box</VIcon>
-                {{ t('core.subscriptionManager.additionalOptions') }}
-              </VChip>
-            </div>
-            <div v-if="versionFlags.supportsStaticIp" class="d-flex flex-wrap gap-4 mt-1 pa-2">
-              <!-- Static IP Switch -->
-              <div class="d-flex align-center pa-2 switch-container">
-                <VSwitch
-                  v-model="appDetails.staticip"
-                  inset
-                  hide-details
-                  class="ma-0"
-                  density="compact"
-                  :label="t('core.subscriptionManager.staticIp')"
-                />
-                <VTooltip location="top" max-width="300">
-                  <template #activator="{ props }">
-                    <VIcon v-bind="props" size="20" color="grey" class="ml-2" style="vertical-align: middle;">mdi-information-outline</VIcon>
-                  </template>
-                  <span>{{ t('core.subscriptionManager.staticIpTooltip') }}</span>
-                </VTooltip>
-              </div>
+                    :label="t('core.subscriptionManager.staticIp')"
+                  />
+                  <VTooltip location="top" max-width="300">
+                    <template #activator="{ props }">
+                      <VIcon v-bind="props" size="20" color="grey" class="ml-2" style="vertical-align: middle;">mdi-information-outline</VIcon>
+                    </template>
+                    <span>{{ t('core.subscriptionManager.staticIpTooltip') }}</span>
+                  </VTooltip>
+                </div>
 
-              <!-- Enterprise Switch -->
-              <div class="d-flex align-center pa-2 switch-container">
-                <VSwitch
-                  v-model="isPrivateApp"
-                  inset
-                  hide-details
-                  class="ma-0"
-                  density="compact"
-                  :label="t('core.subscriptionManager.enterprise')"
-                />
-                <VTooltip location="top" max-width="300">
-                  <template #activator="{ props }">
-                    <VIcon v-bind="props" size="20" color="grey" class="ml-2" style="vertical-align: middle;">mdi-information-outline</VIcon>
-                  </template>
-                  <span>{{ t('core.subscriptionManager.enterpriseTooltip') }}</span>
-                </VTooltip>
+                <!-- Enterprise Switch -->
+                <div class="d-flex align-center pa-2 switch-container">
+                  <VSwitch
+                    v-model="isPrivateApp"
+                    inset
+                    hide-details
+                    class="ma-0"
+                    density="compact"
+                    :label="t('core.subscriptionManager.enterprise')"
+                  />
+                  <VTooltip location="top" max-width="300">
+                    <template #activator="{ props }">
+                      <VIcon v-bind="props" size="20" color="grey" class="ml-2" style="vertical-align: middle;">mdi-information-outline</VIcon>
+                    </template>
+                    <span>{{ t('core.subscriptionManager.enterpriseTooltip') }}</span>
+                  </VTooltip>
+                </div>
               </div>
             </div>
-
           </div>
-
-
         </div>
       </VWindowItem>
 
@@ -3060,55 +3065,13 @@
   />
 
   <!-- Terms of Service Dialog -->
-  <VDialog v-model="showTermsDialog" max-width="800" scrollable>
-    <VCard style="border-radius: 16px;">
-      <VCardTitle class="d-flex align-center justify-space-between pa-4 bg-primary">
-        <div class="d-flex align-center gap-3">
-          <VIcon icon="mdi-file-document-outline" size="32" color="white" />
-          <span class="text-h5 font-weight-semibold" style="color: white;">{{ t('core.subscriptionManager.tos.dialogTitle') }}</span>
-        </div>
-        <VBtn
-          icon="mdi-close"
-          variant="text"
-          size="small"
-          color="white"
-          @click="showTermsDialog = false"
-        />
-      </VCardTitle>
-
-      <VDivider />
-
-      <VCardText class="pa-6 tos-scroll-area" style="max-height: calc(80vh - 200px); overflow-y: auto;">
-        <div class="tos-content" v-html="tosHtmlContent"></div>
-      </VCardText>
-
-      <VDivider />
-
-      <VCardActions class="pa-4 justify-center">
-        <VBtn
-          color="success"
-          variant="flat"
-          size="large"
-          min-width="140"
-          prepend-icon="mdi-check-circle"
-          @click="acceptTerms"
-        >
-          {{ t('core.subscriptionManager.tos.agree') }}
-        </VBtn>
-        <VBtn
-          color="error"
-          variant="outlined"
-          size="large"
-          min-width="140"
-          prepend-icon="mdi-close-circle"
-          class="ml-4"
-          @click="showTermsDialog = false"
-        >
-          {{ t('core.subscriptionManager.tos.disagree') }}
-        </VBtn>
-      </VCardActions>
-    </VCard>
-  </VDialog>
+  <TosDialog
+    v-model="showTermsDialog"
+    :title="t('core.subscriptionManager.tos.dialogTitle')"
+    :agree-text="t('core.subscriptionManager.tos.agree')"
+    :disagree-text="t('core.subscriptionManager.tos.disagree')"
+    @agree="acceptTerms"
+  />
 
   <!-- TOS Error Snackbar -->
   <VSnackbar
@@ -3215,7 +3178,6 @@ const isUploadingContacts = ref(false)
 const acceptedTerms = ref(false)
 const showTermsDialog = ref(false)
 const showTosError = ref(false)
-const tosHtmlContent = ref('')
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
 const logsExpanded = ref(true)
@@ -3246,21 +3208,6 @@ const acceptTerms = () => {
   showTermsDialog.value = false
 }
 
-// Load TOS HTML content
-const loadTOS = async () => {
-  try {
-    const response = await fetch('/html/wordpress/tos.html')
-    if (!response.ok) {
-      throw new Error('Failed to load TOS')
-    }
-    const html = await response.text()
-    tosHtmlContent.value = html
-  } catch (error) {
-    console.error('Failed to load TOS:', error)
-    tosHtmlContent.value = `<p>${t('core.subscriptionManager.tos.loadError')} <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a></p>`
-  }
-}
-
 // Watch tab changes to prevent navigation without TOS acceptance (only for new apps)
 watch(tab, (newTab, oldTab) => {
   // Only enforce TOS for new app registration
@@ -3279,11 +3226,6 @@ watch(tab, (newTab, oldTab) => {
 onMounted(() => {
   // Initialize i18n labels after component is mounted
   updateRenewalLabels()
-
-  // Load TOS content if this is a new app
-  if (props.newApp) {
-    loadTOS()
-  }
 
   const urlParams = new URLSearchParams(window.location.search)
   const paymentSuccess = urlParams.get('payment_success')
@@ -9843,5 +9785,26 @@ async function signMethod() {
 
 .tos-scroll-area::-webkit-scrollbar-thumb:hover {
   background: rgba(var(--v-theme-on-surface), 0.4);
+}
+
+/* Remove default fieldset styling */
+fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+  min-width: 0;
+}
+
+/* Make disabled fieldset look disabled */
+.disabled-fieldset {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+  user-select: none;
+}
+
+.disabled-fieldset * {
+  pointer-events: none !important;
+  cursor: not-allowed !important;
 }
 </style>

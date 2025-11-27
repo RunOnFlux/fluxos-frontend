@@ -167,6 +167,8 @@ const verticalNavAttrs = computed(() => {
   // 👉 Footer
   .layout-footer {
     @include mixins.boxed-content;
+    padding-block-start: 1.25rem;
+    padding-block-end: 0.5rem;
 
     &.statusbar-hidden {
       padding: 0;

@@ -1204,7 +1204,7 @@ onMounted(async () => {
   //   enableAnalytics: true,
   //   dappMetadata: {
   //     name: "Flux Cloud",
-  //     url: isLocalhost ? window.location.origin : "https://home.runonflux.io",
+  //     url: isLocalhost ? window.location.origin : "https://cloud.runonflux.com",
   //   },
   // })
 

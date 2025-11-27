@@ -195,9 +195,6 @@ onMounted(() => {
             icon="mdi-server-network"
             size="20"
           />
-          <VTooltip activator="parent" location="bottom">
-            {{ backendUrl }}
-          </VTooltip>
         </VBtn>
 
         <!-- Full button with text on medium+ screens -->

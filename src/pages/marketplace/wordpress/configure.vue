@@ -338,7 +338,7 @@
               <template #label>
                 <span class="text-body-2">
                   {{ t('pages.marketplace.wordpress.termsOfService.agreement') }}
-                  <a href="#" style="text-decoration: underline; color: inherit;" @click.prevent="showTermsDialog = true">
+                  <a href="#" class="font-weight-bold" style="text-decoration: underline; color: inherit;" @click.prevent="showTermsDialog = true">
                     {{ t('pages.marketplace.wordpress.termsOfService.link') }}
                   </a>
                 </span>
@@ -363,51 +363,13 @@
     </VRow>
 
     <!-- Terms Dialog -->
-    <VDialog v-model="showTermsDialog" max-width="750" scrollable>
-      <VCard style="border-radius: 32px;" id="tos-dialog">
-        <VCardTitle class="d-flex align-center justify-space-between px-4 py-2 bg-primary">
-          <div class="d-flex align-center gap-2">
-            <VIcon icon="mdi-file-document-outline" size="28" color="white" />
-            <span class="text-h5" style="color: white;">{{ t('pages.marketplace.wordpress.termsOfService.title') }}</span>
-          </div>
-          <VBtn
-            icon="mdi-close"
-            variant="text"
-            size="small"
-            color="white"
-            @click="showTermsDialog = false"
-          />
-        </VCardTitle>
-
-        <VDivider />
-
-        <VCardText class="px-8 py-4 tos-scroll-area" style="max-height: calc(80vh - 200px); overflow-y: auto;">
-          <div class="tos-content" v-html="tosHtmlContent"></div>
-        </VCardText>
-
-        <VCardActions class="pa-6 pt-4 justify-center">
-          <VBtn
-            color="primary"
-            variant="flat"
-            size="default"
-            min-width="100"
-            @click="acceptTerms"
-          >
-            I AGREE
-          </VBtn>
-          <VBtn
-            color="grey"
-            variant="flat"
-            size="default"
-            min-width="100"
-            class="ml-4"
-            @click="showTermsDialog = false"
-          >
-            I DISAGREE
-          </VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
+    <TosDialog
+      v-model="showTermsDialog"
+      :title="t('pages.marketplace.wordpress.termsOfService.title')"
+      :agree-text="t('pages.marketplace.wordpress.termsOfService.agree')"
+      :disagree-text="t('pages.marketplace.wordpress.termsOfService.disagree')"
+      @agree="acceptTerms"
+    />
 
     <!-- Best Practices Dialog -->
     <VDialog v-model="showBestPracticesDialog" max-width="700" scrollable>
@@ -643,9 +605,6 @@ const isLoggedIn = computed(() => privilege.value !== 'none')
 
 // WordPress configuration from API
 const wpConfig = ref(null)
-
-// TOS HTML content
-const tosHtmlContent = ref('')
 
 // Generate timestamp once for consistent app naming (not in computed to avoid regeneration)
 const appTimestamp = ref(Date.now())
@@ -1091,27 +1050,8 @@ const loadPlans = async () => {
   }
 }
 
-// Load TOS HTML content
-const loadTOS = async () => {
-  try {
-    const response = await fetch('/html/wordpress/tos.html')
-    let html = await response.text()
-
-    // Replace all "color: black" and "color:black" with current text color
-    html = html.replace(/color:\s*black/gi, 'color: inherit')
-    html = html.replace(/color:\s*#000000/gi, 'color: inherit')
-    html = html.replace(/color:\s*rgb\(0,\s*0,\s*0\)/gi, 'color: inherit')
-
-    tosHtmlContent.value = html
-  } catch (error) {
-    console.error('Failed to load TOS:', error)
-    tosHtmlContent.value = `<p>${t('pages.marketplace.wordpress.errors.tosLoadFailed')} <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a></p>`
-  }
-}
-
 onMounted(() => {
   loadPlans()
-  loadTOS()
 })
 </script>
 

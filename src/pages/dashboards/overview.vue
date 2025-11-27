@@ -480,8 +480,8 @@ const { t } = useI18n()
 // SEO meta tags
 const title = 'Flux Network Overview - Real-Time Node Statistics | FluxCloud'
 const description = 'View real-time statistics of the Flux decentralized network. Track 8,000+ active FluxNodes across Cumulus, Nimbus, and Stratus tiers. Monitor network health, supply, and node distribution worldwide.'
-const pageUrl = 'https://home.runonflux.io/dashboards/overview'
-const imageUrl = 'https://home.runonflux.io/logo.png'
+const pageUrl = 'https://cloud.runonflux.com/dashboards/overview'
+const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 
 // Structured data schemas
 const structuredData = [
@@ -489,8 +489,8 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Flux Network',
-    url: 'https://home.runonflux.io',
-    logo: 'https://home.runonflux.io/logo.png',
+    url: 'https://cloud.runonflux.com',
+    logo: 'https://cloud.runonflux.com/images/logo.png',
     description: 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
     sameAs: [
       'https://twitter.com/RunOnFlux',
@@ -505,19 +505,19 @@ const structuredData = [
         '@type': 'ListItem',
         position: 1,
         name: 'Home',
-        item: 'https://home.runonflux.io',
+        item: 'https://cloud.runonflux.com',
       },
       {
         '@type': 'ListItem',
         position: 2,
         name: 'Dashboards',
-        item: 'https://home.runonflux.io/dashboards/overview',
+        item: 'https://cloud.runonflux.com/dashboards/overview',
       },
       {
         '@type': 'ListItem',
         position: 3,
         name: 'Network Overview',
-        item: 'https://home.runonflux.io/dashboards/overview',
+        item: 'https://cloud.runonflux.com/dashboards/overview',
       },
     ],
   },

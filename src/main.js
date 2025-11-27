@@ -7,6 +7,7 @@ import sanitizeHtml from '@/utils/sanitizeHtml'
 // Styles
 import '@core/scss/template/index.scss'
 import '@styles/styles.scss'
+import 'element-plus/dist/index.css'
 
 // Fonts
 import '@fontsource/montserrat/700.css' // Bold
@@ -130,6 +131,49 @@ window.addEventListener('error', event => {
 window.addEventListener('load', () => {
   sessionStorage.removeItem('chunk-reload-attempted')
 })
+
+// Handle unhandled promise rejections from third-party scripts
+// This prevents console errors from reCAPTCHA timeouts and browser extensions
+const handleUnhandledRejection = event => {
+  const error = event.reason
+  const errorMessage = error?.message || error?.toString() || ''
+
+  // Known third-party errors to suppress
+  const thirdPartyErrors = [
+    'Timed out',                                    // reCAPTCHA timeout
+    'Timeout',                                       // reCAPTCHA timeout variants
+    'Could not establish connection',                // Chrome extension errors
+    'Receiving end does not exist',                  // Chrome extension errors
+    'Extension context invalidated',                 // Chrome extension errors
+    'The message port closed',                       // Chrome extension errors
+  ]
+
+  const isThirdPartyError = thirdPartyErrors.some(pattern =>
+    errorMessage.includes(pattern))
+
+  if (isThirdPartyError) {
+    // Prevent error from appearing in console
+    event.preventDefault()
+
+    // Optional: Log in development for debugging
+    if (import.meta.env.DEV) {
+      console.warn('[Suppressed third-party error]:', errorMessage)
+    }
+
+    return
+  }
+
+  // Let other errors through for proper handling
+}
+
+window.addEventListener('unhandledrejection', handleUnhandledRejection)
+
+// Cleanup on HMR (Hot Module Replacement) in development
+if (import.meta.hot) {
+  import.meta.hot.dispose(() => {
+    window.removeEventListener('unhandledrejection', handleUnhandledRejection)
+  })
+}
 
 // Create vue app
 const app = createApp(App)

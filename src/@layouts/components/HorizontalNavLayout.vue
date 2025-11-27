@@ -116,6 +116,8 @@ const configStore = useLayoutConfigStore()
     // 👉 Footer
     // Boxed content
     .layout-footer {
+      padding-block-start: 1.25rem;
+      padding-block-end: 0.5rem;
 
       .footer-content-container {
         @include mixins.boxed-content;

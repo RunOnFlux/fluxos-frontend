@@ -14,7 +14,7 @@ body {
 
   // TODO: Use grid gutter variable here
   padding-block-start: 1.5rem;
-  padding-block-end: 0.5rem;
+  padding-block-end: 0;
 }
 
 .page-content-container {
@@ -43,7 +43,7 @@ body {
   padding-block-end: 0.5rem;
 
   .footer-content-container {
-    block-size: variables.$layout-vertical-nav-footer-height;
+    block-size: auto;
   }
 
   .layout-footer-sticky & {

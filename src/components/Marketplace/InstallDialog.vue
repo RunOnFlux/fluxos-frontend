@@ -1668,7 +1668,7 @@ const termsAccepted = ref(false)
 const signatureError = ref('') // Deprecated - kept for compatibility
 
 // Handle clicks on the terms label to allow link clicks without toggling checkbox
-const handleTermsLabelClick = (event) => {
+const handleTermsLabelClick = event => {
   // If the click was on a link, prevent checkbox toggle and let the link work
   if (event.target.tagName === 'A') {
     event.stopPropagation()

@@ -3,17 +3,27 @@
 </template>
 
 <script setup>
+import { onMounted, computed } from 'vue'
 import LandingServices from "@/components/LandingServices.vue"
 import { useI18n } from "vue-i18n"
 import { useHead } from '@vueuse/head'
+import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 
 const { t } = useI18n()
+const analytics = useAnalytics()
+
+// Track home page view on mount
+onMounted(() => {
+  analytics.trackEvent('page_view', {
+    page: 'home',
+  })
+})
 
 // SEO meta tags
 const title = 'FluxCloud - Decentralized Web3 Cloud Infrastructure'
 const description = 'Deploy apps on FluxCloud\'s decentralized Web3 infrastructure. Host games, WordPress, custom apps on 8,000+ FluxNodes worldwide. From $0.99/month.'
-const pageUrl = 'https://home.runonflux.io/'
-const imageUrl = 'https://home.runonflux.io/logo.png'
+const pageUrl = 'https://cloud.runonflux.com/'
+const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 
 // Structured data schemas
 const structuredData = [
@@ -21,8 +31,8 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Flux Network',
-    url: 'https://home.runonflux.io',
-    logo: 'https://home.runonflux.io/logo.png',
+    url: 'https://cloud.runonflux.com',
+    logo: 'https://cloud.runonflux.com/images/logo.png',
     description: 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
     sameAs: [
       'https://twitter.com/RunOnFlux',
@@ -33,14 +43,14 @@ const structuredData = [
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'FluxCloud',
-    url: 'https://home.runonflux.io',
+    url: 'https://cloud.runonflux.com',
     description: description,
     publisher: {
       '@type': 'Organization',
       name: 'Flux Network',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://home.runonflux.io/logo.png',
+        url: 'https://cloud.runonflux.com/images/logo.png',
       },
     },
   },

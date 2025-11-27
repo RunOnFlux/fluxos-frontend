@@ -430,13 +430,7 @@
                 :href="tosLink"
                 target="_blank"
                 rel="noopener noreferrer"
-              >{{ t("core.login.termsOfService") }}</a>
-              {{ t("core.login.and") }}
-              <a
-                :href="privacyLink"
-                target="_blank"
-                rel="noopener noreferrer"
-              >{{ t("core.login.privacyPolicy") }}</a>.
+              >{{ t("core.login.termsOfService") }}</a>.
             </p>
           </VCardText>
           <VCardActions>
@@ -518,7 +512,6 @@ const props = defineProps({
 const emit = defineEmits(['loginSuccess'])
 
 const tosLink = "https://cdn.runonflux.io/Flux_Terms_of_Service.pdf"
-const privacyLink = "https://runonflux.io/privacyPolicy"
 
 const { t } = useI18n()
 const fluxStore = useFluxStore()

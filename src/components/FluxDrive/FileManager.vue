@@ -2769,7 +2769,7 @@ const generateVideoThumbnail = async item => {
     video.src = `${ipfsHost}/ipfs/${item.hash}`
     video.currentTime = 1 // Capture frame at 1 second
 
-    video.addEventListener('loadeddata', () => {
+    const handleLoadedData = () => {
       const canvas = document.createElement('canvas')
       canvas.width = 48
       canvas.height = 48
@@ -2785,13 +2785,23 @@ const generateVideoThumbnail = async item => {
       videoThumbnails.value[item.hash] = thumbnail
       resolve(thumbnail)
 
+      // Clean up event listeners before removing element
+      video.removeEventListener('loadeddata', handleLoadedData)
+      video.removeEventListener('error', handleError)
       video.remove()
-    })
+    }
 
-    video.addEventListener('error', () => {
+    const handleError = () => {
       resolve(null)
+
+      // Clean up event listeners before removing element
+      video.removeEventListener('loadeddata', handleLoadedData)
+      video.removeEventListener('error', handleError)
       video.remove()
-    })
+    }
+
+    video.addEventListener('loadeddata', handleLoadedData)
+    video.addEventListener('error', handleError)
   })
 }
 

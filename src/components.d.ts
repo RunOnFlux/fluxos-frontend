@@ -113,6 +113,7 @@ declare module 'vue' {
     TerminalWindowManager: typeof import('./@core/components/TerminalWindowManager.vue')['default']
     TheCustomizer: typeof import('./@core/components/TheCustomizer.vue')['default']
     ThemeSwitcher: typeof import('./@core/components/ThemeSwitcher.vue')['default']
+    TosDialog: typeof import('./@core/components/TosDialog.vue')['default']
     TrustpilotPanel: typeof import('./components/Marketplace/Panels/TrustpilotPanel.vue')['default']
     UpgradeSpecDialog: typeof import('./components/dialogs/UpgradeSpecDialog.vue')['default']
     UsageChips: typeof import('./@core/components/UsageChips.vue')['default']

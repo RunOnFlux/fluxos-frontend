@@ -104,7 +104,9 @@ export function enableAnalytics() {
     analytics_storage: 'granted',
   })
 
-  console.log('✅ Analytics enabled')
+  if (import.meta.env.DEV) {
+    console.log('✅ Analytics enabled')
+  }
 }
 
 /**
@@ -123,7 +125,9 @@ export function disableAnalytics() {
   // Clear GA cookies
   clearGACookies()
 
-  console.log('🔒 Analytics disabled')
+  if (import.meta.env.DEV) {
+    console.log('🔒 Analytics disabled')
+  }
 }
 
 /**

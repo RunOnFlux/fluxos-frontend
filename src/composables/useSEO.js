@@ -7,12 +7,31 @@ import { useHead } from '@vueuse/head'
 import { computed } from 'vue'
 
 /**
+ * Escape HTML special characters to prevent XSS in user-provided content
+ * @param {string} str - String to sanitize
+ * @returns {string} Sanitized string with HTML entities escaped
+ */
+function escapeHtml(str) {
+  if (typeof str !== 'string') return str
+  
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
+/**
  * Generate comprehensive SEO meta tags using useHead
  * @param {Object} options - SEO configuration options
  * @param {string} options.title - Page title
  * @param {string} options.description - Page description
  * @param {string} options.url - Canonical URL
  * @param {string} [options.image] - Social sharing image URL
+ * @param {string} [options.imageWidth='1200'] - Image width for OG/Twitter
+ * @param {string} [options.imageHeight='630'] - Image height for OG/Twitter
+ * @param {string} [options.imageAlt] - Image alt text (defaults to title)
  * @param {string} [options.type='website'] - Open Graph type
  * @param {string} [options.keywords] - Comma-separated keywords
  * @param {Array<Object>} [options.structuredData] - Array of structured data objects
@@ -25,7 +44,10 @@ export function useSEO(options) {
     title,
     description,
     url,
-    image = 'https://home.runonflux.io/images/logo.png',
+    image = 'https://cloud.runonflux.com/images/logo.png',
+    imageWidth = '1200',
+    imageHeight = '630',
+    imageAlt,
     type = 'website',
     keywords = '',
     structuredData = [],
@@ -34,11 +56,19 @@ export function useSEO(options) {
     robots = 'index, follow',
   } = options
 
+  // Sanitize user-provided content to prevent XSS
+  const safeTitle = escapeHtml(title)
+  const safeDescription = escapeHtml(description)
+  const safeKeywords = escapeHtml(keywords)
+
+  // Use title as default alt text if not provided
+  const imgAlt = escapeHtml(imageAlt || title)
+
   // Default meta tags
   const defaultMeta = [
     {
       name: 'description',
-      content: description,
+      content: safeDescription,
     },
     {
       name: 'author',
@@ -50,9 +80,12 @@ export function useSEO(options) {
     },
 
     // Open Graph
-    { property: 'og:title', content: title },
-    { property: 'og:description', content: description },
+    { property: 'og:title', content: safeTitle },
+    { property: 'og:description', content: safeDescription },
     { property: 'og:image', content: image },
+    { property: 'og:image:width', content: imageWidth },
+    { property: 'og:image:height', content: imageHeight },
+    { property: 'og:image:alt', content: imgAlt },
     { property: 'og:url', content: url },
     { property: 'og:type', content: type },
     { property: 'og:site_name', content: 'FluxCloud' },
@@ -60,18 +93,19 @@ export function useSEO(options) {
 
     // Twitter Card
     { name: 'twitter:card', content: 'summary_large_image' },
-    { name: 'twitter:title', content: title },
-    { name: 'twitter:description', content: description },
+    { name: 'twitter:title', content: safeTitle },
+    { name: 'twitter:description', content: safeDescription },
     { name: 'twitter:image', content: image },
+    { name: 'twitter:image:alt', content: imgAlt },
     { name: 'twitter:site', content: '@RunOnFlux' },
     { name: 'twitter:creator', content: '@RunOnFlux' },
   ]
 
   // Add keywords if provided
-  if (keywords) {
+  if (safeKeywords) {
     defaultMeta.push({
       name: 'keywords',
-      content: keywords,
+      content: safeKeywords,
     })
   }
 
@@ -96,7 +130,7 @@ export function useSEO(options) {
   })
 
   useHead({
-    title,
+    title: safeTitle,
     meta: [...defaultMeta, ...meta],
     link: [...defaultLink, ...link],
     script: scripts, // Pass computed ref so useHead can track changes
@@ -112,8 +146,8 @@ export function generateOrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     'name': 'Flux Network',
-    'url': 'https://home.runonflux.io',
-    'logo': 'https://home.runonflux.io/logo.png',
+    'url': 'https://cloud.runonflux.com',
+    'logo': 'https://cloud.runonflux.com/images/logo.png',
     'description': 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
     'sameAs': [
       'https://twitter.com/RunOnFlux',
@@ -352,6 +386,62 @@ export function generateSoftwareApplicationSchema(software) {
       'bestRating': aggregateRating.bestRating || '5',
       'worstRating': '1',
     }
+  }
+
+  return schema
+}
+
+/**
+ * Generate Article structured data with timestamps
+ * @param {Object} article - Article information
+ * @param {string} article.headline - Article headline/title
+ * @param {string} article.description - Article description
+ * @param {string} article.url - Article URL
+ * @param {string} article.image - Article image URL
+ * @param {string} [article.datePublished] - ISO date string for publication date
+ * @param {string} [article.dateModified] - ISO date string for last modification date
+ * @param {string} [article.author] - Author name (defaults to 'Flux Network')
+ * @returns {Object} Article schema
+ */
+export function generateArticleSchema(article) {
+  const {
+    headline,
+    description,
+    url,
+    image,
+    datePublished,
+    dateModified,
+    author = 'Flux Network',
+  } = article
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    'headline': headline,
+    'description': description,
+    'url': url,
+    'image': image,
+    'author': {
+      '@type': 'Organization',
+      'name': author,
+      'url': 'https://runonflux.com',
+    },
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'Flux Network',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': 'https://cloud.runonflux.com/images/logo.png',
+      },
+    },
+  }
+
+  if (datePublished) {
+    schema.datePublished = datePublished
+  }
+
+  if (dateModified) {
+    schema.dateModified = dateModified
   }
 
   return schema
