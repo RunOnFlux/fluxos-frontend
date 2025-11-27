@@ -173,6 +173,10 @@ onBeforeUnmount(() => {
 
 // Accept button - saves whatever is currently selected
 const acceptSelected = () => {
+  // CRITICAL: Set isFirstVisit to false IMMEDIATELY to prevent handleClickOutside from reopening
+  isFirstVisit.value = false
+
+  // Save to localStorage
   saveConsent({
     necessary: true,
     analytics: preferences.value.analytics,
@@ -184,19 +188,25 @@ const acceptSelected = () => {
     disableAnalytics()
   }
 
-  isFirstVisit.value = false
+  // Close dialog
   showSettings.value = false
 }
 
 // Only Necessary button - accepts only necessary cookies
 const acceptNecessary = () => {
+  // CRITICAL: Set isFirstVisit to false IMMEDIATELY to prevent handleClickOutside from reopening
+  isFirstVisit.value = false
+
   preferences.value.analytics = false
+
+  // Save to localStorage
   saveConsent({
     necessary: true,
     analytics: false,
   })
   disableAnalytics()
-  isFirstVisit.value = false
+
+  // Close dialog
   showSettings.value = false
 }
 
