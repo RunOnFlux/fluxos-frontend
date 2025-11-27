@@ -372,9 +372,29 @@ async function prerender() {
       ],
     })
 
+    // Set localStorage with cookie consent to prevent dialog from appearing during prerender.
+    // Without this, the cookie consent dialog gets baked into the pre-rendered HTML as static
+    // HTML without Vue event handlers, causing buttons to be unresponsive in production.
+    // When Vue hydrates, there's a mismatch because the dialog is open in HTML but Vue's
+    // showSettings ref is false, breaking the button click handlers.
     context = await browser.newContext({
       viewport: { width: 1920, height: 1080 },
       userAgent: 'Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)',
+      storageState: {
+        cookies: [],
+        origins: [{
+          origin: `http://localhost:${port}`,
+          localStorage: [{
+            name: 'flux_cookie_consent',
+            value: JSON.stringify({
+              version: '1.0',
+              timestamp: new Date().toISOString(),
+              necessary: true,
+              analytics: false,
+            }),
+          }],
+        }],
+      },
     })
 
     console.log(`⏳ Rendering routes (${CONCURRENCY} concurrent)...\n`)
