@@ -42,9 +42,10 @@ function sleep(ms) {
 }
 
 // Fallback static routes (used if prerender-routes.json doesn't exist)
+// Note: Homepage '/' is intentionally excluded - it has static SEO meta tags in index.html
+// and prerendering it can cause issues with components like the cookie consent dialog
 const FALLBACK_ROUTES = Object.freeze([
-  // Main landing pages
-  '/',
+  // Main landing pages (excluding homepage)
   '/marketplace',
   '/marketplace/wordpress',
   '/marketplace/games',

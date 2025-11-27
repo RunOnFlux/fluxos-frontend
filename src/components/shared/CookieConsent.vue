@@ -117,6 +117,7 @@ const necessaryCookiesEnabled = ref(true) // Always true, for display purposes
 const preferences = ref({
   analytics: true, // Pre-selected to yes on first visit
 })
+let appReadyTimeout = null // Store timeout reference for cleanup
 
 // Listen for cookie settings open event from StatusBar
 const handleOpenCookieSettings = () => {
@@ -130,8 +131,11 @@ const handleOpenCookieSettings = () => {
 
 // Handle app-ready event to show dialog after loader
 const handleAppReady = async () => {
+  // Clear any existing timeout
+  if (appReadyTimeout) clearTimeout(appReadyTimeout)
+
   // Wait for loader to fade out completely (1 second after app-ready)
-  setTimeout(async () => {
+  appReadyTimeout = setTimeout(async () => {
     // Show dialog if user hasn't made a choice (first visit)
     if (!hasConsent()) {
       isFirstVisit.value = true
@@ -167,6 +171,8 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  // Clear timeout to prevent memory leak
+  if (appReadyTimeout) clearTimeout(appReadyTimeout)
   window.removeEventListener('app-ready', handleAppReady)
   window.removeEventListener('open-cookie-settings', handleOpenCookieSettings)
 })
