@@ -4,7 +4,6 @@
     v-model="showSettings"
     max-width="600"
     content-class="cookie-settings-dialog"
-    :persistent="isFirstVisit"
     @click:outside="handleClickOutside"
   >
     <VCard class="dialog-card">
@@ -81,14 +80,14 @@
         <VBtn
           color="warning"
           variant="tonal"
-          @click="acceptNecessary"
+          @click.stop="acceptNecessary"
         >
           {{ t('common.cookieConsent.onlyNecessary') }}
         </VBtn>
         <VBtn
           color="success"
           variant="flat"
-          @click="acceptSelected"
+          @click.stop="acceptSelected"
         >
           <VIcon start size="20">mdi-check-circle</VIcon>
           {{ t('common.cookieConsent.accept') }}
@@ -99,7 +98,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useCookieConsent } from '@/composables/useCookieConsent'
 
@@ -130,14 +129,22 @@ const handleOpenCookieSettings = () => {
 }
 
 // Handle app-ready event to show dialog after loader
-const handleAppReady = () => {
+const handleAppReady = async () => {
   // Wait for loader to fade out completely (1 second after app-ready)
-  setTimeout(() => {
+  setTimeout(async () => {
     // Show dialog if user hasn't made a choice (first visit)
     if (!hasConsent()) {
       isFirstVisit.value = true
       preferences.value.analytics = true // Pre-select analytics to yes
+
+      // Wait for Vue to update reactive state
+      await nextTick()
+
+      // Show dialog after state is ready
       showSettings.value = true
+
+      // Wait one more tick to ensure dialog is fully rendered with event handlers
+      await nextTick()
     } else {
       // Load existing preferences
       const consent = getConsent()
@@ -197,10 +204,20 @@ const acceptNecessary = () => {
 const handleClickOutside = (event) => {
   // Prevent closing dialog on first visit by clicking outside
   if (isFirstVisit.value) {
-    // Force dialog to stay open by re-setting showSettings to true
-    // This is needed because Vuetify might close it before this handler runs
-    showSettings.value = true
-    return
+    // Prevent the event from closing the dialog
+    event?.preventDefault()
+    event?.stopPropagation()
+
+    // Force dialog to stay open - Vuetify may have already closed it
+    // Use nextTick to ensure this runs after Vuetify's internal handler
+    // Re-check isFirstVisit to handle race condition with button clicks
+    nextTick(() => {
+      if (isFirstVisit.value) {
+        showSettings.value = true
+      }
+    })
+
+    return false
   }
   closeDialog()
 }
