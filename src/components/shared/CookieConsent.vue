@@ -5,6 +5,7 @@
     max-width="600"
     content-class="cookie-settings-dialog"
     :persistent="isFirstVisit"
+    @click:outside="handleClickOutside"
   >
     <VCard class="dialog-card">
       <VCardTitle class="d-flex justify-space-between align-center pa-3 dialog-header">
@@ -13,6 +14,7 @@
           <span>{{ t('common.cookieConsent.settingsTitle') }}</span>
         </div>
         <VBtn
+          v-if="!isFirstVisit"
           icon="mdi-close"
           variant="text"
           size="small"
@@ -68,6 +70,7 @@
 
       <VCardActions class="dialog-actions px-6 pb-4">
         <VBtn
+          v-if="!isFirstVisit"
           color="secondary"
           variant="outlined"
           @click="closeDialog"
@@ -126,28 +129,38 @@ const handleOpenCookieSettings = () => {
   showSettings.value = true
 }
 
-onMounted(() => {
-  // Show dialog if user hasn't made a choice (first visit)
-  if (!hasConsent()) {
-    isFirstVisit.value = true
-    preferences.value.analytics = true // Pre-select analytics to yes
-    showSettings.value = true
-  } else {
-    // Load existing preferences
-    const consent = getConsent()
-    preferences.value.analytics = consent.analytics
+// Handle app-ready event to show dialog after loader
+const handleAppReady = () => {
+  // Wait for loader to fade out completely (1 second after app-ready)
+  setTimeout(() => {
+    // Show dialog if user hasn't made a choice (first visit)
+    if (!hasConsent()) {
+      isFirstVisit.value = true
+      preferences.value.analytics = true // Pre-select analytics to yes
+      showSettings.value = true
+    } else {
+      // Load existing preferences
+      const consent = getConsent()
+      preferences.value.analytics = consent.analytics
 
-    // Enable analytics if previously consented
-    if (consent.analytics) {
-      enableAnalytics()
+      // Enable analytics if previously consented
+      if (consent.analytics) {
+        enableAnalytics()
+      }
     }
-  }
+  }, 1000) // 1000ms delay after app-ready to ensure loader has faded out
+}
+
+onMounted(() => {
+  // Listen for app-ready event (fired after loader completes)
+  window.addEventListener('app-ready', handleAppReady)
 
   // Listen for cookie settings open event
   window.addEventListener('open-cookie-settings', handleOpenCookieSettings)
 })
 
 onBeforeUnmount(() => {
+  window.removeEventListener('app-ready', handleAppReady)
   window.removeEventListener('open-cookie-settings', handleOpenCookieSettings)
 })
 
@@ -178,6 +191,18 @@ const acceptNecessary = () => {
   disableAnalytics()
   isFirstVisit.value = false
   showSettings.value = false
+}
+
+// Handle clicking outside dialog
+const handleClickOutside = (event) => {
+  // Prevent closing dialog on first visit by clicking outside
+  if (isFirstVisit.value) {
+    // Force dialog to stay open by re-setting showSettings to true
+    // This is needed because Vuetify might close it before this handler runs
+    showSettings.value = true
+    return
+  }
+  closeDialog()
 }
 
 // Close button - closes dialog without saving (no analytics enabled)
