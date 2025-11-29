@@ -4105,9 +4105,21 @@ const testableFieldsHaveChanged = computed(() => {
   try {
     const currentSpecCopy = cloneDeep(props.appSpec)
     NON_TESTABLE_FIELDS.forEach(field => delete currentSpecCopy[field])
+    // Also exclude from compose components
+    if (currentSpecCopy.compose && Array.isArray(currentSpecCopy.compose)) {
+      currentSpecCopy.compose.forEach(component => {
+        NON_TESTABLE_FIELDS.forEach(field => delete component[field])
+      })
+    }
 
     const snapshotCopy = cloneDeep(snapshotToCompare)
     NON_TESTABLE_FIELDS.forEach(field => delete snapshotCopy[field])
+    // Also exclude from compose components
+    if (snapshotCopy.compose && Array.isArray(snapshotCopy.compose)) {
+      snapshotCopy.compose.forEach(component => {
+        NON_TESTABLE_FIELDS.forEach(field => delete component[field])
+      })
+    }
 
     const hasChanged = JSON.stringify(currentSpecCopy) !== JSON.stringify(snapshotCopy)
 
@@ -4201,6 +4213,17 @@ watch(() => props.appSpec, newSpec => {
         delete currentSpecForTest[field]
         delete signedSpecForTest[field]
       })
+      // Also exclude from compose components
+      if (currentSpecForTest.compose && Array.isArray(currentSpecForTest.compose)) {
+        currentSpecForTest.compose.forEach(component => {
+          NON_TESTABLE_FIELDS.forEach(field => delete component[field])
+        })
+      }
+      if (signedSpecForTest.compose && Array.isArray(signedSpecForTest.compose)) {
+        signedSpecForTest.compose.forEach(component => {
+          NON_TESTABLE_FIELDS.forEach(field => delete component[field])
+        })
+      }
 
       const testableFieldsChanged = JSON.stringify(currentSpecForTest) !== JSON.stringify(signedSpecForTest)
 
@@ -5506,9 +5529,9 @@ watch(tab, (newTab, oldTab) => {
         startPaymentMonitoring()
       }
 
-      // For paid apps/updates with unchanged specs, skip test and show payment section
-      else if (!props.newApp && !specsHaveChanged.value) {
-        console.log('💰 PAID UPDATE (unchanged specs) - Skipping test, showing payment section')
+      // For paid apps/updates with unchanged testable specs, skip test and show payment section
+      else if (!props.newApp && !testableFieldsHaveChanged.value) {
+        console.log('💰 PAID UPDATE (unchanged testable specs) - Skipping test, showing payment section')
         testFinished.value = true
         testError.value = false
       }
@@ -7377,6 +7400,12 @@ async function testAppInstall() {
     if (props.newApp && props.appSpec && !testError.value) {
       const specCopy = cloneDeep(props.appSpec)
       NON_TESTABLE_FIELDS.forEach(field => delete specCopy[field])
+      // Also exclude from compose components
+      if (specCopy.compose && Array.isArray(specCopy.compose)) {
+        specCopy.compose.forEach(component => {
+          NON_TESTABLE_FIELDS.forEach(field => delete component[field])
+        })
+      }
       testedSpecSnapshot.value = specCopy
       console.log('📸 Saved tested spec snapshot for new app (test succeeded, excluding non-testable fields:', NON_TESTABLE_FIELDS, ')')
     } else if (props.newApp && testError.value) {
