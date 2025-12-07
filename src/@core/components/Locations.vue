@@ -71,106 +71,93 @@
       >
         <VDataTable
           :headers="appLocationFields"
-          :items="paginatedLocations"
+          :items="filteredLocations"
           :items-per-page="appLocationOptions.perPage"
-          :page="appLocationOptions.currentPage"
+          v-model:page="appLocationOptions.currentPage"
+          v-model:sort-by="appLocationOptions.sortBy"
+          must-sort
           class="locations-table"
           hide-default-footer
-          hide-headers
           fixed-header
           density="compact"
           :no-data-text="t('core.locations.noInstancesFound')"
         >
-          <template #headers />
-  
-          <template #item.ip="{ item }">
-            <div class="d-flex align-center text-no-wrap">
-              <VChip
-                color="info"
-                size="small"
-                class="mr-2"
-              >
-                <VIcon
-                  icon="mdi-laptop"
-                  size="18"
-                />
-              </VChip>
-              <VChip
-                color="success"
-                label
-                size="small"
-                class="text-no-wrap"
-                style="border-radius: 15px"
-              >
-                <strong>{{ item.ip }}</strong>
-              </VChip>
+          <template #header.ip>
+            <div class="d-flex align-center">
+              <VIcon :icon="headerIcons.ip" size="18" class="mr-2" />
+              <span>{{ t('core.locations.ipAddress') }}</span>
             </div>
+          </template>
+
+          <template #header.osUptime>
+            <div class="d-flex align-center">
+              <VIcon :icon="headerIcons.osUptime" size="18" class="mr-2" />
+              <span>{{ t('core.locations.uptime') }}</span>
+            </div>
+          </template>
+
+          <template #header.runningSince>
+            <div class="d-flex align-center">
+              <VIcon :icon="headerIcons.running" size="18" class="mr-2" />
+              <span>{{ t('core.locations.running') }}</span>
+            </div>
+          </template>
+
+          <template #item.ip="{ item }">
+            <VChip
+              color="success"
+              label
+              size="small"
+              class="text-no-wrap"
+              style="border-radius: 15px"
+            >
+              <strong>{{ item.ip }}</strong>
+            </VChip>
           </template>
   
           <template #item.osUptime="{ item }">
-            <span
-              v-bind="props"
+            <VChip
+              color="success"
+              label
+              size="small"
               class="text-no-wrap"
+              style="border-radius: 15px"
             >
-              <VTooltip :text="t('core.locations.systemUptimeTooltip')">
-                <template #activator="{ props: tooltipProps }">
-                  <VChip
-                    color="info"
-                    size="small"
-                    class="mr-2 ml-2 text-no-wrap"
-                    v-bind="tooltipProps"
-                  >
-                    <VIcon
-                      icon="mdi-home-clock"
-                      size="18"
-                    />
-                  </VChip>
-                </template>
-              </VTooltip>
-
-              <VChip
-                color="success"
-                label
-                size="small"
-                class="text-no-wrap"
-                style="border-radius: 15px"
-              >
-                <strong>{{ formatUptime(item.osUptime) }}</strong>
-              </VChip>
-            </span>
+              <strong>{{ formatUptime(item.osUptime) }}</strong>
+            </VChip>
           </template>
 
-          <template #item.running="{ item }">
-            <span
-              v-bind="props"
+          <template #item.runningSince="{ item }">
+            <VChip
+              color="success"
+              label
+              size="small"
               class="text-no-wrap"
+              style="border-radius: 15px"
             >
-              <VTooltip :text="t('core.locations.timeElapsedTooltip')">
-                <template #activator="{ props: tooltipProps }">
-                  <VChip
-                    color="info"
-                    size="small"
-                    class="mr-2 ml-2 text-no-wrap"
-                    v-bind="tooltipProps"
-                  >
-                    <VIcon
-                      icon="mdi-clock-fast"
-                      size="20"
-                    />
-                  </VChip>
-                </template>
-              </VTooltip>
+              <strong>{{ timeElapsed(item.runningSince) }}</strong>
+            </VChip>
+          </template>
 
-              <VChip
-                color="success"
-                label
-                size="small"
-                class="text-no-wrap"
-                style="border-radius: 15px"
-              >
-                <strong>{{ timeElapsed(item.runningSince) }}</strong>
-              </VChip>
-            </span>
+          <template #header.continent>
+            <div class="d-flex align-center">
+              <VIcon :icon="headerIcons.continent" size="18" class="mr-2" />
+              <span>{{ t('core.locations.continent') }}</span>
+            </div>
+          </template>
+
+          <template #header.country>
+            <div class="d-flex align-center">
+              <VIcon :icon="headerIcons.country" size="18" class="mr-2" />
+              <span>{{ t('core.locations.country') }}</span>
+            </div>
+          </template>
+
+          <template #header.region>
+            <div class="d-flex align-center">
+              <VIcon :icon="headerIcons.region" size="18" class="mr-2" />
+              <span>{{ t('core.locations.region') }}</span>
+            </div>
           </template>
 
           <template #item.continent="{ item }">
@@ -328,23 +315,40 @@ const appLocationOptions = ref({
   pageOptions: [5, 10, 25, 50, 100],
   currentPage: 1,
   filter: "",
+  sortBy: [],
 })
 
 const appLocationFields = computed(() => [
-  { key: "ip", title: t('core.locations.ipAddress'), cellClass: 'column-ip', headerProps: { class: 'column-ip' } },
-  { key: "osUptime", title: t('core.locations.uptime'), cellClass: 'column-uptime', headerProps: { class: 'column-uptime' } },
-  { key: "running", title: t('core.locations.running'), cellClass: 'column-running', headerProps: { class: 'column-running' } },
+  { key: "ip", title: t('core.locations.ipAddress'), sortable: true, cellClass: 'column-ip', headerProps: { class: 'column-ip' } },
+  { key: "osUptime", title: t('core.locations.uptime'), sortable: true, cellClass: 'column-uptime', headerProps: { class: 'column-uptime' } },
+  {
+    key: "runningSince",
+    value: "runningSince",
+    title: t('core.locations.running'),
+    sortable: true,
+    cellClass: 'column-running',
+    headerProps: { class: 'column-running' }
+  },
   ...(props.showLocation
-    ? [{ key: "continent", title: t('core.locations.continent'), sortable: false, cellClass: 'column-continent', headerProps: { class: 'column-continent' } }]
+    ? [{ key: "continent", title: t('core.locations.continent'), sortable: true, cellClass: 'column-continent', headerProps: { class: 'column-continent' } }]
     : []),
   ...(props.showLocation
-    ? [{ key: "country", title: t('core.locations.country'), sortable: false, cellClass: 'column-country', headerProps: { class: 'column-country' } }]
+    ? [{ key: "country", title: t('core.locations.country'), sortable: true, cellClass: 'column-country', headerProps: { class: 'column-country' } }]
     : []),
   ...(props.showLocation
-    ? [{ key: "region", title: t('core.locations.region'), sortable: false, cellClass: 'column-region', headerProps: { class: 'column-region' } }]
+    ? [{ key: "region", title: t('core.locations.region'), sortable: true, cellClass: 'column-region', headerProps: { class: 'column-region' } }]
     : []),
-  { key: "visit", title: "" },
+  { key: "visit", title: "", sortable: false },
 ])
+
+const headerIcons = {
+  ip: 'mdi-laptop',
+  osUptime: 'mdi-home-clock',
+  running: 'mdi-clock-fast',
+  continent: 'mdi-earth',
+  country: 'mdi-flag',
+  region: 'mdi-map-marker',
+}
 
 
 
@@ -569,21 +573,9 @@ onMounted(async () => {
  
 
 /* Adjust column width and padding for clarity */
-::v-deep(.locations-table td.v-data-table__td:nth-child(1)),
-::v-deep(.locations-table th.v-data-table__th:nth-child(1)) {
-  padding: 0px 16px 0px 24px !important;
-  min-width: 230px !important;
-  max-width: 255px !important;
-  white-space: nowrap;
-}
-
-::v-deep(.locations-table td.v-data-table__td:nth-child(2)),
-::v-deep(.locations-table th.v-data-table__th:nth-child(2)),
-::v-deep(.locations-table td.v-data-table__td:nth-child(3)),
-::v-deep(.locations-table th.v-data-table__th:nth-child(3)) {
-  padding: 0 !important;
-  min-width: 155px !important;
-  max-width: 175px !important;
+::v-deep(.locations-table td.v-data-table__td),
+::v-deep(.locations-table th.v-data-table__th) {
+  padding: 8px 16px !important;
   white-space: nowrap;
 }
   </style>

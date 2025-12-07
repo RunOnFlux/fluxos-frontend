@@ -71,9 +71,9 @@ function redeployApp(appSpecs, isFromActive = false) {
     isRedeploy: true,
   }))
 
-  console.log('🚀 [REDEPLOY] Stored in sessionStorage, navigating to apps-register')
+  console.log('🚀 [REDEPLOY] Stored in sessionStorage, navigating to apps-register-configure')
 
   //Navigate to register page
-  router.push({ name: 'apps-register' })
+  router.push({ name: 'apps-register-configure' })
 }
 </script>

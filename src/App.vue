@@ -91,32 +91,26 @@ watch(
   animation: none !important;
 }
 
-/* Normal smooth transitions when not switching themes */
-html:not(.theme-transitioning) *,
-html:not(.theme-transitioning) *::before,
-html:not(.theme-transitioning) *::after {
-  transition:
-    background-color 0.2s ease,
-    border-color 0.2s ease,
-    color 0.2s ease,
-    fill 0.2s ease,
-    stroke 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-/* Always exclude these elements from color transitions */
-.v-progress-circular,
-.v-progress-linear,
-.v-slider,
-.v-range-slider,
-*[class*="animate"]:not([class*="theme"]) {
-  transition: none !important;
-}
-
-/* Restore their original transitions */
-html:not(.theme-transitioning) .v-progress-circular,
-html:not(.theme-transitioning) .v-progress-linear {
-  transition: opacity 0.2s ease !important;
+/*
+ * Theme-aware transitions - only apply to elements that need smooth theme changes
+ * Using specific selectors instead of * for better performance
+ */
+html:not(.theme-transitioning) .v-app,
+html:not(.theme-transitioning) .v-card,
+html:not(.theme-transitioning) .v-btn,
+html:not(.theme-transitioning) .v-chip,
+html:not(.theme-transitioning) .v-list-item,
+html:not(.theme-transitioning) .v-navigation-drawer,
+html:not(.theme-transitioning) .v-app-bar,
+html:not(.theme-transitioning) .v-toolbar,
+html:not(.theme-transitioning) .v-footer,
+html:not(.theme-transitioning) .v-dialog,
+html:not(.theme-transitioning) .v-menu,
+html:not(.theme-transitioning) .v-alert,
+html:not(.theme-transitioning) .v-avatar,
+html:not(.theme-transitioning) .v-badge,
+html:not(.theme-transitioning) .v-table {
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 /* Modern scrollbar for TOS dialog */

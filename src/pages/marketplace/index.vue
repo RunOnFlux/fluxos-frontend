@@ -127,6 +127,7 @@ const itemListSchema = computed(() => {
     name: app.displayName || app.name || 'Unknown App',
     url: `https://cloud.runonflux.com/marketplace/${app.uuid || app.name}`,
     description: app.description || `Deploy ${app.displayName || app.name} on Flux decentralized cloud`,
+    price: app.price || 0,
   }))
 
   return generateItemListSchema(topApps, 'FluxCloud Marketplace Applications')

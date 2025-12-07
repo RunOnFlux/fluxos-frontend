@@ -1369,7 +1369,7 @@
                   <div class="d-flex justify-center align-center flex-wrap gap-2">
                     <VChip color="warning" variant="tonal" size="small" class="summary-chip">
                       <VIcon start icon="mdi-cpu-64-bit" size="14" />
-                      {{ t('components.marketplace.installDialog.coresCount', { count: config.cpu }) }}
+                      {{ t('components.marketplace.installDialog.coresCount', { count: Number(config.cpu).toFixed(1) }) }}
                     </VChip>
                     <VChip color="success" variant="tonal" size="small" class="summary-chip">
                       <VIcon start icon="mdi-memory" size="14" />
@@ -1555,7 +1555,7 @@ import geolocationData from '@/utils/geolocation'
 import { paymentBridge } from '@/utils/fiatGateways'
 import { getUser } from '@/utils/firebase'
 import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'
-import { payWithZelcore, payWithSSP, isSSPAvailable, isZelcoreAvailable, isBrowserMetaMaskAvailable, getConnectedAccount, hasWalletConnectSession, signWithWalletConnect as walletServiceSignWithWalletConnect, watchWalletAccount, signWithSSP as walletServiceSignWithSSP, signWithZelcore as walletServiceSignWithZelcore } from '@/utils/walletService'
+import { payWithZelcore, payWithSSP, isSSPAvailable, isZelcoreAvailable, isBrowserMetaMaskAvailable, getConnectedAccount, hasWalletConnectSession, signWithWalletConnect as walletServiceSignWithWalletConnect, watchWalletAccount, signWithSSP as walletServiceSignWithSSP, signWithZelcore as walletServiceSignWithZelcore, sanitizeUnicodeForSigning } from '@/utils/walletService'
 import axios from 'axios'
 import qs from 'query-string'
 import ManualSignDialog from '@/@core/components/ManualSignDialog.vue'
@@ -2742,26 +2742,35 @@ const isFluxCloudGame = computed(() => {
 const getEnvironmentParameters = () => {
   const params = []
 
-  // For FluxCloud games, parameters come from compose section (not configs)
-  // For regular apps, also check compose section
-  if (detailedApp.value.compose) {
-    for (const component of detailedApp.value.compose) {
-      if (component.userEnvironmentParameters) {
-        for (const param of component.userEnvironmentParameters) {
-          const paramObj = {
-            name: param.name,
-            description: param.description || param.name,
-            placeholder: param.placeholder || '',
-            optional: param.optional || false,
-            advanced: param.advanced || false,
-            options: param.parameterConfig?.values || null,
-            defaultValue: param.parameterConfig?.defaultValue || param.defaultValue || '',
-            source: 'compose.userEnvironmentParameters',
+  try {
+    // For FluxCloud games, parameters come from compose section (not configs)
+    // For regular apps, also check compose section
+    if (detailedApp.value && detailedApp.value.compose && Array.isArray(detailedApp.value.compose)) {
+      for (let componentIndex = 0; componentIndex < detailedApp.value.compose.length; componentIndex++) {
+        const component = detailedApp.value.compose[componentIndex]
+        if (component && component.userEnvironmentParameters && Array.isArray(component.userEnvironmentParameters)) {
+          for (const param of component.userEnvironmentParameters) {
+            if (param && param.name) {
+              const paramObj = {
+                name: param.name,
+                description: param.description || param.name,
+                placeholder: param.placeholder || '',
+                optional: param.optional || false,
+                advanced: param.advanced || false,
+                options: param.parameterConfig?.values || null,
+                defaultValue: param.parameterConfig?.defaultValue || param.defaultValue || '',
+                source: 'compose.userEnvironmentParameters',
+                componentIndex: componentIndex, // Track which component this param belongs to
+                componentName: component.name || `Component ${componentIndex}`, // Also store component name for reference
+              }
+              params.push(paramObj)
+            }
           }
-          params.push(paramObj)
         }
       }
     }
+  } catch (error) {
+    console.error('Error processing environment parameters:', error)
   }
 
   return params
@@ -3411,10 +3420,16 @@ const generateDeploymentMessage = async () => {
   const ramMultiplier = isWordPress.value ? 1.0 : (appRAM > 0 ? config.value.ram / appRAM : 1.0)
   const ssdMultiplier = isWordPress.value ? 1.0 : (appSSD > 0 ? config.value.storage / appSSD : 1.0)
 
+  // Sanitize description to replace Unicode punctuation with ASCII equivalents
+  // This prevents signature verification failures with Ethereum wallets (WalletConnect/MetaMask)
+  // due to UTF-16 vs UTF-8 encoding differences in backend's toHex() function
+  const rawDescription = detailedApp.value.description || props.app.description || detailedApp.value.displayName || props.app.displayName
+  const sanitizedDescription = sanitizeUnicodeForSigning(rawDescription)
+
   const globalAppSpec = {
     version: 8,
     name: appName,
-    description: detailedApp.value.description || props.app.description || detailedApp.value.displayName || props.app.displayName,
+    description: sanitizedDescription,
     owner: owner,
     compose: baseComponents.map((component, index) => {
       // Build environmentParameters like FluxCloud
@@ -3423,10 +3438,27 @@ const generateDeploymentMessage = async () => {
         ...(component.environmentParameters || component.enviromentParameters || []),
       ]
 
-      // Add user-configured parameters
-      for (const [key, value] of Object.entries(config.value.parameters)) {
-        if (value) {
-          environmentParameters.push(`${key}=${value}`)
+      // Add user-configured parameters - ONLY for this specific component
+      try {
+        const envParams = getEnvironmentParameters()
+        for (const [key, value] of Object.entries(config.value.parameters || {})) {
+          if (value) {
+            // Find the parameter definition to check which component it belongs to
+            const paramDef = envParams.find(p => p && p.name === key)
+
+            // Only add this parameter if it belongs to the current component (or if no component tracking exists)
+            if (!paramDef || paramDef.componentIndex === undefined || paramDef.componentIndex === index) {
+              environmentParameters.push(`${key}=${value}`)
+            }
+          }
+        }
+      } catch (error) {
+        console.warn(`Failed to process environment parameters for component ${index}:`, error)
+        // Fallback: Add all parameters if there's an error (backward compatibility)
+        for (const [key, value] of Object.entries(config.value.parameters || {})) {
+          if (value) {
+            environmentParameters.push(`${key}=${value}`)
+          }
         }
       }
 
@@ -3469,14 +3501,15 @@ const generateDeploymentMessage = async () => {
       }
 
       // Match exact structure from FluxCloud AppComponent (lines 150-176)
+      // Sanitize text fields to prevent Unicode encoding issues with Ethereum signatures
       const appComponent = {
         name: component.name,
-        description: component.description,
+        description: sanitizeUnicodeForSigning(component.description),
         repotag: component.repotag,
         ports: componentPorts,
-        domains: component.domains.map(d => d.replace(/"/g, '"')),
+        domains: component.domains.map(d => sanitizeUnicodeForSigning(d.replace(/"/g, '"'))),
         environmentParameters: environmentParameters, // Version 4+ uses correct spelling
-        commands: component.commands.map(c => c.replace(/"/g, '"')),
+        commands: component.commands.map(c => sanitizeUnicodeForSigning(c.replace(/"/g, '"'))),
         containerPorts: component.containerPorts,
         containerData: component.containerData,
         tiered: component.tiered,
@@ -3861,7 +3894,7 @@ const signWithWalletConnect = async message => {
     const signature = await walletServiceSignWithWalletConnect(message)
     console.log('[InstallDialog] Sign function returned, signature:', signature?.substring(0, 20) + '...')
 
-    const connectedAccount = getConnectedAccount()
+    const connectedAccount = await getConnectedAccount()
     console.log('[InstallDialog] Connected account:', connectedAccount)
 
     if (!connectedAccount?.address) {

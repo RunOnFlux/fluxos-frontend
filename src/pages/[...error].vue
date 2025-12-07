@@ -50,6 +50,7 @@ definePage({
       class="misc-footer-img d-none d-md-block"
       :src="authThemeMask"
       :alt="t('pages.error.footerImageAlt')"
+      width="100%"
       height="320"
       loading="lazy"
     >

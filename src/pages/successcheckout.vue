@@ -99,6 +99,7 @@ onBeforeUnmount(() => {
       class="misc-footer-img d-none d-md-block"
       :src="authThemeMask"
       :alt="t('pages.successCheckout.footerImageAlt')"
+      width="100%"
       height="320"
       loading="lazy"
     >

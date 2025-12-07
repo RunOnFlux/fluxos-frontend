@@ -1,3 +1,42 @@
+// Node.js polyfills - global, Buffer, process loaded from index.html
+// Only import EventEmitter2 here since it needs the actual library
+import { EventEmitter2 } from 'eventemitter2'
+
+// window.process and window.Buffer are already set by index.html polyfills
+// Just set EventEmitter2
+window.EventEmitter2 = EventEmitter2
+
+// Suppress third-party library warnings (must be before any imports that load wallet libraries)
+// This runs early to catch font preload warnings from Reown AppKit
+if (typeof window !== 'undefined') {
+  const originalWarn = console.warn
+  console.warn = (...args) => {
+    const message = args[0] || ''
+    const str = typeof message === 'string' ? message : ''
+
+    // Suppress font preload warnings from AppKit/Reown
+    if (str.includes('was preloaded') && str.includes('fonts.reown.com')) return
+
+    // Suppress Lit update warnings from AppKit components
+    if (str.includes('scheduled an update') || str.includes('change-in-update')) return
+    originalWarn.apply(console, args)
+  }
+
+  // Suppress console.error for third-party library issues
+  const originalError = console.error
+  console.error = (...args) => {
+    const message = args[0] || ''
+    const str = typeof message === 'string' ? message : String(message)
+
+    // Suppress SVG attribute errors from phosphor-icons (used by AppKit wallet modal)
+    // These are cosmetic - icons render correctly despite the error
+    if (str.includes('<svg> attribute') && str.includes('Unexpected end of attribute')) return
+    if (str.includes('<svg> attribute') && str.includes('Expected length')) return
+
+    originalError.apply(console, args)
+  }
+}
+
 import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
@@ -7,18 +46,13 @@ import sanitizeHtml from '@/utils/sanitizeHtml'
 // Styles
 import '@core/scss/template/index.scss'
 import '@styles/styles.scss'
-import 'element-plus/dist/index.css'
+
+// Element Plus - only import styles for components we use (ElTree)
+import 'element-plus/es/components/tree/style/css'
 
 // Fonts
 import '@fontsource/montserrat/700.css' // Bold
 import '@fontsource/montserrat/600.css' // Semi-bold
-
-import process from 'process'
-import { Buffer } from 'buffer'
-import { EventEmitter2 } from 'eventemitter2'
-
-window.process = process
-window.Buffer = Buffer
 
 // Handle chunk load failures after deployment (stale cache)
 window.addEventListener('error', event => {

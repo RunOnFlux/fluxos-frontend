@@ -325,39 +325,54 @@
         <div class="pa-2">
           <VForm>
             <!-- Terms of Service Agreement (only for new apps) -->
-            <VCard v-if="props.newApp" variant="tonal" color="info" class="mb-4">
-              <VCardText class="pa-4">
-                <div class="d-flex align-center mb-3">
-                  <VIcon icon="mdi-shield-check-outline" size="28" color="info" class="mr-3" />
-                  <span class="text-h6 font-weight-semibold">{{ t('core.subscriptionManager.tos.title') }}</span>
-                </div>
-
-                <VAlert type="info" variant="tonal" density="compact" class="mb-3">
-                  {{ t('core.subscriptionManager.tos.description') }}
-                </VAlert>
-
-                <VCheckbox
-                  v-model="acceptedTerms"
-                  density="comfortable"
-                  color="primary"
-                  hide-details
-                >
-                  <template #label>
-                    <span class="text-body-1">
-                      {{ t('core.subscriptionManager.tos.agreement') }}
-                      <a
-                        href="#"
-                        class="font-weight-bold text-high-emphasis"
-                        style="text-decoration: underline;"
-                        @click.prevent="showTermsDialog = true"
+            <VExpansionPanels v-if="props.newApp" v-model="tosPanel" class="mb-4 tos-panel-bordered">
+              <VExpansionPanel value="0">
+                <VExpansionPanelTitle class="text-h6 font-weight-semibold">
+                  <template #default>
+                    <div class="d-flex align-center">
+                      <VAvatar
+                        size="36"
+                        class="mr-2"
+                        :color="acceptedTerms ? 'success' : 'warning'"
                       >
-                        {{ t('core.subscriptionManager.tos.link') }}
-                      </a>
-                    </span>
+                        <VIcon
+                          icon="mdi-shield-check-outline"
+                          size="20"
+                          color="white"
+                        />
+                      </VAvatar>
+                      <span>{{ t('core.subscriptionManager.tos.title') }}</span>
+                    </div>
                   </template>
-                </VCheckbox>
-              </VCardText>
-            </VCard>
+                </VExpansionPanelTitle>
+                <VExpansionPanelText>
+                  <VAlert type="info" variant="tonal" density="compact" class="mt-4 mb-3">
+                    {{ t('core.subscriptionManager.tos.description') }}
+                  </VAlert>
+
+                  <VCheckbox
+                    v-model="acceptedTerms"
+                    density="comfortable"
+                    color="primary"
+                    hide-details
+                  >
+                    <template #label>
+                      <span class="text-body-1">
+                        {{ t('core.subscriptionManager.tos.agreement') }}
+                        <a
+                          href="#"
+                          class="font-weight-bold text-high-emphasis"
+                          style="text-decoration: underline;"
+                          @click.prevent="showTermsDialog = true"
+                        >
+                          {{ t('core.subscriptionManager.tos.link') }}
+                        </a>
+                      </span>
+                    </template>
+                  </VCheckbox>
+                </VExpansionPanelText>
+              </VExpansionPanel>
+            </VExpansionPanels>
 
             <div :class="{ 'disabled-fieldset': props.newApp && !acceptedTerms }">
               <fieldset :disabled="props.newApp && !acceptedTerms">
@@ -948,7 +963,6 @@
                   density="comfortable"
                   variant="outlined"
                   class="mb-3"
-                  :readonly="!props.newApp"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
@@ -3100,6 +3114,7 @@ const props = defineProps({
   resetTrigger: Number, // Timestamp to trigger internal tab reset when subscription tab becomes active
   isRedeploy: Boolean, // Flag to indicate if this is a redeploy operation
   instanceReady: Boolean, // Flag to indicate if instance/location is loaded (for existing apps)
+  initialAction: String, // Initial management action: 'renewal', 'update', or 'cancel'
 })
 
 // Define emits
@@ -3113,6 +3128,7 @@ import { getDetectedBackendURL } from "@/utils/backend"
 import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
 import ExplorerService from '@/services/ExplorerService'
+import DaemonService from '@/services/DaemonService'
 import { storeToRefs } from "pinia"
 import ManualSignDialog from '@/@core/components/ManualSignDialog.vue'
 import { useFluxStore } from "@/stores/flux"
@@ -3168,19 +3184,52 @@ const clipboardInstance = ref(null) // ClipboardJS instance for proper cleanup
 const tab = ref(0)
 const previousTab = ref(0) // Track previous tab for TOS validation
 const renewalEnabled = ref(false)
-const managementAction = ref('renewal') // Management action: 'renewal', 'update', 'cancel'
+const managementAction = ref(props.initialAction || 'renewal') // Management action: 'renewal', 'update', 'cancel'
 const isNameLocked = ref(false)
 const isUploadingCmd = ref(false)
 const isUploadingEnv = ref(false)
 const isUploadingContacts = ref(false)
 
-// TOS related
-const acceptedTerms = ref(false)
+// TOS related - restore acceptance state from session storage
+const acceptedTerms = ref(sessionStorage.getItem('flux-tos-accepted') === 'true')
 const showTermsDialog = ref(false)
 const showTosError = ref(false)
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
 const logsExpanded = ref(true)
+
+// ToS panel state - internal ref that's controlled by computed logic (use string '0' to match VExpansionPanel value)
+const tosPanelInternal = ref(sessionStorage.getItem('flux-tos-accepted') === 'true' ? undefined : '0')
+
+// ToS panel state - computed to control expansion based on acceptedTerms
+const tosPanel = computed({
+  get: () => {
+    // If not accepted, always return '0' (open) to match VExpansionPanel value="0"
+    // If accepted, return internal state (allows manual toggle)
+    const value = acceptedTerms.value ? tosPanelInternal.value : '0'
+    console.log('[ToS] tosPanel.get():', { acceptedTerms: acceptedTerms.value, internal: tosPanelInternal.value, returning: value })
+    return value
+  },
+  set: (newValue) => {
+    console.log('[ToS] tosPanel.set():', { newValue, acceptedTerms: acceptedTerms.value })
+
+    // Check if trying to close (newValue is undefined/null)
+    const tryingToClose = newValue === undefined || newValue === null
+
+    if (acceptedTerms.value) {
+      // If accepted, allow any state change
+      tosPanelInternal.value = newValue
+      console.log('[ToS] Updated internal state to:', newValue)
+    } else if (tryingToClose) {
+      // If not accepted and trying to close, prevent it
+      console.log('[ToS] Prevented collapse - terms not accepted')
+    } else {
+      // If not accepted but trying to open (newValue is 0 or '0'), update internal state
+      tosPanelInternal.value = newValue
+      console.log('[ToS] Allowed expansion - updating internal state to:', newValue)
+    }
+  }
+})
 const paymentCompleted = ref(false)
 const paymentMethod = ref('')
 const paymentAmount = ref(0)
@@ -3219,6 +3268,18 @@ watch(tab, (newTab, oldTab) => {
     })
   } else {
     previousTab.value = oldTab
+  }
+})
+
+// Save ToS acceptance state to session storage and collapse panel when accepted
+watch(acceptedTerms, (newValue) => {
+  console.log('[ToS] acceptedTerms changed:', { newValue })
+  sessionStorage.setItem('flux-tos-accepted', newValue.toString())
+
+  // Collapse panel when accepted
+  if (newValue) {
+    tosPanelInternal.value = undefined
+    console.log('[ToS] Collapsed panel because terms accepted')
   }
 })
 
@@ -5685,6 +5746,13 @@ watch(() => props.appSpec?.compose?.length, newLength => {
   }
 }, { immediate: true })
 
+// Watch for initialAction changes to update managementAction
+watch(() => props.initialAction, (newAction) => {
+  if (newAction && !props.newApp) {
+    managementAction.value = newAction
+  }
+})
+
 // Reset editIndex and focusState when removing a component
 function removeComposeComponent(index) {
   if (!props.appSpec.compose || index < 0 || index >= props.appSpec.compose.length) return
@@ -6994,7 +7062,8 @@ async function priceForAppSpec() {
 
 async function fetchBlockHeight() {
   try {
-    const res = await props.executeLocalCommand('/daemon/getblockcount')
+    // Use DaemonService public API globally instead of local command
+    const res = await DaemonService.getBlockCount()
 
     if (res?.data?.status === 'success' && typeof res.data?.data === 'number') {
       blockHeight.value = res.data.data
@@ -8191,7 +8260,7 @@ async function initSSPPay() {
 
 async function initWalletConnect() {
   try {
-    const account = getConnectedAccount()
+    const account = await getConnectedAccount()
     if (!account) {
       showToast('error', 'WalletConnect not connected. Please log into FluxOS first.')
 
@@ -8328,12 +8397,12 @@ function onError(evt) { console.error('WS error', evt) }
 // === WalletConnect ===
 async function initSignWalletConnect() {
   try {
-    const account = getConnectedAccount()
+    const account = await getConnectedAccount()
     if (!account) {
       showToast('error', 'WalletConnect not connected. Please log into FluxOS first.')
       isSigning.value = false
       signingFailed.value = true
-      
+
       return
     }
 
@@ -9835,5 +9904,12 @@ fieldset {
 .disabled-fieldset * {
   pointer-events: none !important;
   cursor: not-allowed !important;
+}
+
+/* ToS Panel Border */
+.tos-panel-bordered {
+  border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  border-radius: 6px;
+  overflow: hidden;
 }
 </style>

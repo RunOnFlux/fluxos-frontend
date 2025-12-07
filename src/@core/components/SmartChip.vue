@@ -54,6 +54,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  disabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 const emit = defineEmits(['update:modelValue'])
@@ -129,6 +133,7 @@ const trailingIconColor = computed(() => {
           color="primary"
           class="toggle-btn mr-2"
           rounded="pill"
+          :disabled="disabled"
           @click="isToggled = true"
         >
           {{ toggleTrueLabel }}
@@ -139,6 +144,7 @@ const trailingIconColor = computed(() => {
           color="primary"
           rounded="pill"
           class="toggle-btn"
+          :disabled="disabled"
           @click="isToggled = false"
         >
           {{ toggleFalseLabel }}
@@ -179,6 +185,12 @@ const trailingIconColor = computed(() => {
   height: 22px !important;
   align-items: center !important;
   display: inline-flex !important;
+}
+
+/* Make outlined buttons more visible on info background */
+.chip-buttons :deep(.v-btn--variant-outlined) {
+  background-color: rgba(255, 255, 255, 0.95) !important;
+  border-width: 2px !important;
 }
 
 ::v-deep(.v-chip__content) {

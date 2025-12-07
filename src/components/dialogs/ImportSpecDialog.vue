@@ -385,6 +385,10 @@ function handleImport() {
 
     // Always force version to 8
     spec.version = 8
+
+    // Remove owner field from imported spec
+    delete spec.owner
+
     emit('import', spec)
     closeDialog()
   } catch (error) {
@@ -526,7 +530,6 @@ function convertDockerComposeToFluxOS(dockerCompose) {
     version: 8,
     name: appName,
     description: dockerCompose.description || `Imported from Docker Compose`,
-    owner: '', // Must be filled by user
     compose,
     contacts: [],
     geolocation: [],

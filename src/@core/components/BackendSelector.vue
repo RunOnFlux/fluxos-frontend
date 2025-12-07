@@ -184,18 +184,27 @@ onMounted(() => {
     >
       <template #activator="{ props: activatorProps }">
         <!-- Icon only on small screens -->
-        <VBtn
+        <IconBtn
           v-bind="activatorProps"
-          variant="outlined"
-          color="grey"
-          size="small"
-          class="d-flex d-md-none backend-icon-btn"
+          class="d-md-none"
         >
+          <VBadge
+            v-if="ipPortPattern.test(backendUrl)"
+            dot
+            color="warning"
+            location="top end"
+          >
+            <VIcon
+              icon="mdi-server-network"
+              size="22"
+            />
+          </VBadge>
           <VIcon
+            v-else
             icon="mdi-server-network"
-            size="20"
+            size="22"
           />
-        </VBtn>
+        </IconBtn>
 
         <!-- Full button with text on medium+ screens -->
         <VBtn

@@ -217,7 +217,7 @@ const acceptNecessary = () => {
 }
 
 // Handle clicking outside dialog
-const handleClickOutside = (event) => {
+const handleClickOutside = event => {
   // Prevent closing dialog on first visit by clicking outside
   if (isFirstVisit.value) {
     // Prevent the event from closing the dialog

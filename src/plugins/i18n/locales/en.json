@@ -344,6 +344,9 @@
     "appDetailsCard": {
       "general": "General",
       "copySpecification": "Copy Specification",
+      "updateSubscription": "Update",
+      "renewSubscription": "Renew",
+      "cancelSubscription": "Cancel",
       "name": "Name",
       "description": "Description",
       "owner": "Owner",
@@ -1096,7 +1099,7 @@
       "componentNameTooltip": "Component name (must be unique within the app)",
       "componentDescriptionTooltip": "Brief description of this component's purpose",
       "repositoryTagTooltipNew": "Docker image repository and tag (e.g., nginx:latest)",
-      "repositoryTagTooltipUpdate": "Repository tag cannot be changed when updating an existing app",
+      "repositoryTagTooltipUpdate": "Docker image repository and tag (e.g., nginx:latest)",
       "enableEnterpriseHint": "Enable Enterprise mode in General section to use this feature",
       "enterpriseFeatureTooltip": "Enterprise feature - Enable Enterprise mode to use private repository authentication",
       "dockerRegistryCredentialsTooltip": "Docker registry credentials (format: username:password or username:token)",
@@ -2437,7 +2440,10 @@
           "noInstancesAvailableMessage": "This application has no running instances. The app may be deploying, redeploying, not yet deployed, or all instances are offline.",
           "retry": "Retry",
           "loadingTitle": "Loading...",
-          "loadingMessage": "Retrieving application information..."
+          "loadingMessage": "Retrieving application information...",
+          "noInstancesWarningTitle": "Limited Functionality - No Running Instances",
+          "noInstancesWarningMessage": "This app has no active instances. Some features are unavailable. You can still manage subscriptions and view specifications.",
+          "noInstancesChip": "No Instances"
         },
         "placeholders": {
           "searchProcesses": "Search processes..."

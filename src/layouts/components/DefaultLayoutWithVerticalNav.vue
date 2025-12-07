@@ -200,9 +200,15 @@ onMounted(() => {
             icon="tabler-menu-2"
           />
         </IconBtn>
-        <BackendSelector />
-        <FluxAIToggler class="d-none d-sm-flex" />
+        <div class="d-none d-md-flex align-center ga-2">
+          <BackendSelector />
+          <FluxAIToggler />
+        </div>
         <VSpacer />
+        <div class="d-md-none d-flex align-center ga-2">
+          <BackendSelector />
+          <FluxAIToggler />
+        </div>
         <IconBtn
           class="d-none d-lg-block"
           @click="openCustomizer"
@@ -217,7 +223,9 @@ onMounted(() => {
           :languages="themeConfig.app.i18n.langConfig"
         />
         <NavbarThemeSwitcher />
-        <NavBarMemoryMonitor />
+        <div class="d-none d-md-flex">
+          <NavBarMemoryMonitor />
+        </div>
         <NavBarStatusBarToggle :class="{ 'mr-3': privilege !== 'none' && privilege !== 'admin' && privilege !== 'fluxteam' }" />
         <NavBarNotifications v-show="privilege === 'admin' || privilege === 'fluxteam'" class="mr-3" />
         <UserProfile />
@@ -548,6 +556,23 @@ onMounted(() => {
   }
   .login-form-side {
     height: 100vh;
+  }
+
+  /* Force mobile components to show only icon version */
+  .navbar-content > .d-flex.d-md-none .v-btn {
+    display: none !important;
+  }
+
+  .navbar-content > .d-flex.d-md-none .bookmark-wrapper .v-btn {
+    display: none !important;
+  }
+}
+
+/* Force desktop components to show only button version */
+@media (min-width: 960px) {
+  .navbar-content > .d-none.d-md-flex .v-btn__icon,
+  .navbar-content > .d-none.d-md-flex .bookmark-wrapper .v-btn__icon {
+    display: none !important;
   }
 }
 </style>

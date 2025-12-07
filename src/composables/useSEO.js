@@ -289,7 +289,7 @@ export function generateFAQSchema(faqs) {
 
 /**
  * Generate ItemList structured data (useful for marketplace listings)
- * @param {Array<Object>} items - List items [{name: '...', url: '...', description: '...'}]
+ * @param {Array<Object>} items - List items [{name: '...', url: '...', description: '...', price: 0}]
  * @param {string} [listName] - Name of the list
  * @returns {Object} ItemList schema
  */
@@ -301,10 +301,18 @@ export function generateItemListSchema(items, listName) {
       '@type': 'ListItem',
       'position': index + 1,
       'item': {
-        '@type': 'Product',
+        '@type': 'SoftwareApplication',
         'name': item.name,
         'url': item.url,
         'description': item.description,
+        'applicationCategory': 'WebApplication',
+        'operatingSystem': 'Web',
+        'offers': {
+          '@type': 'Offer',
+          'price': item.price || 0,
+          'priceCurrency': 'USD',
+          'availability': 'https://schema.org/InStock',
+        },
       },
     })),
   }

@@ -98,3 +98,30 @@
     background-position: 0% 50%;
   }
 }
+
+// Fix VTextField label/placeholder interference globally
+// Hide placeholder when field is not focused to prevent overlap with label
+.v-field:not(.v-field--focused) .v-field__input::placeholder {
+  opacity: 0 !important;
+}
+
+// Show placeholder only after label has floated up (with delay to ensure animation completes)
+.v-field--focused .v-field__input::placeholder {
+  opacity: 0.6 !important;
+  transition: opacity 0.2s ease 0.15s;
+}
+
+// Disable button tooltips on mobile devices only (< 600px)
+@media (max-width: 599px) {
+  .v-btn .v-tooltip,
+  .v-btn + .v-tooltip,
+  button .v-tooltip,
+  button + .v-tooltip {
+    display: none !important;
+    pointer-events: none !important;
+  }
+
+  .v-overlay-container .v-tooltip {
+    display: none !important;
+  }
+}

@@ -344,6 +344,9 @@
     "appDetailsCard": {
       "general": "Ogólne",
       "copySpecification": "Kopiuj Specyfikację",
+      "updateSubscription": "Aktualizuj",
+      "renewSubscription": "Odnów",
+      "cancelSubscription": "Anuluj",
       "name": "Nazwa",
       "description": "Opis",
       "owner": "Właściciel",
@@ -1074,7 +1077,7 @@
       "componentNameTooltip": "Nazwa komponentu (musi być unikalna w aplikacji)",
       "componentDescriptionTooltip": "Krótki opis celu tego komponentu",
       "repositoryTagTooltipNew": "Repozytorium obrazu Docker i tag (np. nginx:latest)",
-      "repositoryTagTooltipUpdate": "Tag repozytorium nie może być zmieniony przy aktualizacji istniejącej aplikacji",
+      "repositoryTagTooltipUpdate": "Repozytorium obrazu Docker i tag (np. nginx:latest)",
       "enableEnterpriseHint": "Włącz tryb Enterprise w sekcji Ogólne aby użyć tej funkcji",
       "enterpriseFeatureTooltip": "Funkcja Enterprise - Włącz tryb Enterprise aby użyć uwierzytelniania prywatnego repozytorium",
       "dockerRegistryCredentialsTooltip": "Dane logowania do rejestru Docker (format: użytkownik:hasło lub użytkownik:token)",
@@ -2414,7 +2417,10 @@
           "noInstancesAvailableMessage": "Ta aplikacja nie ma uruchomionych instancji. Aplikacja może być w trakcie wdrażania, ponownego wdrażania, nie została jeszcze wdrożona lub wszystkie instancje są offline.",
           "retry": "Ponów",
           "loadingTitle": "Ładowanie...",
-          "loadingMessage": "Pobieranie informacji o aplikacji..."
+          "loadingMessage": "Pobieranie informacji o aplikacji...",
+          "noInstancesWarningTitle": "Ograniczona funkcjonalność - Brak uruchomionych instancji",
+          "noInstancesWarningMessage": "Ta aplikacja nie ma aktywnych instancji. Niektóre funkcje są niedostępne. Nadal możesz zarządzać subskrypcjami i przeglądać specyfikacje.",
+          "noInstancesChip": "Brak instancji"
         },
         "placeholders": {
           "searchProcesses": "Szukaj procesów..."

@@ -367,6 +367,8 @@
           :src="selectedImage"
           :alt="`${app.displayName || app.name} - Screenshot`"
           class="image-viewer-img"
+          width="auto"
+          height="auto"
           style="max-width: calc(100vw - 48px); max-height: calc(100vh - 48px); object-fit: contain; display: block;"
         />
       </VCard>
@@ -560,9 +562,10 @@ const genericFAQs = computed(() => {
       const extractString = obj => {
         if (typeof obj === 'string') return obj
         if (obj && typeof obj === 'object') {
-          return obj.body?.static || obj.loc?.source || obj.static || JSON.stringify(obj)
+          // Handle various i18n compiled message object structures
+          return obj.b?.s || obj.body?.static || obj.loc?.source || obj.static || obj.s || JSON.stringify(obj)
         }
-        
+
         return String(obj)
       }
 

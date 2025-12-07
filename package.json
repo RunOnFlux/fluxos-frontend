@@ -1,6 +1,6 @@
 {
   "name": "flux-gravity",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -76,7 +76,6 @@
     "roboto-fontface": "0.10.0",
     "shepherd.js": "13.0.3",
     "swiper": "11.1.15",
-    "three": "^0.175.0",
     "typescript": "^5.8.2",
     "ufo": "1.5.4",
     "unplugin-vue-define-options": "1.5.3",
@@ -112,12 +111,6 @@
     "@babel/core": "^7.28.0",
     "@babel/eslint-parser": "^7.28.0",
     "@babel/preset-env": "^7.28.0",
-    "@fullcalendar/core": "6.1.15",
-    "@fullcalendar/daygrid": "6.1.15",
-    "@fullcalendar/interaction": "6.1.15",
-    "@fullcalendar/list": "6.1.15",
-    "@fullcalendar/timegrid": "6.1.15",
-    "@fullcalendar/vue3": "6.1.15",
     "@iconify-json/fa": "1.2.1",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/tabler": "^1.2.19",
