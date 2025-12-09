@@ -1,0 +1,40 @@
+name: Build and Upload Release Assets
+
+on:
+  release:
+    types: [created]
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 22
+        run: |
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          nvm install 22
+          nvm use 22
+          echo "$HOME/.nvm/versions/node/$(nvm current)/bin" >> $GITHUB_PATH
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright Chromium
+        run: npx playwright install chromium
+
+      - name: Build for SEO
+        run: npm run build:seo
+
+      - name: Create dist tarball
+        run: tar -czvf dist.tar.gz dist
+
+      - name: Upload dist.tar.gz to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist.tar.gz
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
