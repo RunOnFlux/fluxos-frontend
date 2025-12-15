@@ -918,6 +918,7 @@
       "registerNewApplication": "Zarejestruj Nową Aplikację",
       "upgradeToLatest": "Zaktualizuj do Najnowszej Specyfikacji",
       "importSpec": "Importuj Specyfikację",
+      "exportSpec": "Eksportuj Specyfikację",
       "reviewAndSign": "Sprawdź i Podpisz",
       "component": "Komponent",
       "review": "Sprawdź",

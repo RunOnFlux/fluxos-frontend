@@ -13,6 +13,7 @@ import vuetify from 'vite-plugin-vuetify';
 import svgLoader from 'vite-svg-loader';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
@@ -83,6 +84,8 @@ export default defineConfig(({ mode }) => {
         ],
       }),
       svgLoader(),
+      // Monaco Editor - bundle editor files locally instead of loading from CDN
+      monacoEditorPlugin.default({}),
       // Image optimization for production builds
       ViteImageOptimizer({
         // PNG optimization

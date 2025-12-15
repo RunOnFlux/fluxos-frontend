@@ -19,8 +19,8 @@
 
           <!-- Right side buttons -->
           <div class="d-flex align-center gap-4">
-            <!-- Upgrade to Latest Application Specification Button (only for V3-V7 apps, shown for redeploy) -->
-            <VTooltip v-if="props.isRedeploy && specVersion >= 3 && specVersion < LATEST_SPEC_VERSION" location="top">
+            <!-- Upgrade to Latest Application Specification Button (only for V3-V7 apps, shown for redeploy or update) -->
+            <VTooltip v-if="(props.isRedeploy || managementAction === 'update') && specVersion >= 3 && specVersion < LATEST_SPEC_VERSION" location="top">
               <template #activator="{ props: tooltipProps }">
                 <VBtn
                   v-bind="tooltipProps"
@@ -37,6 +37,24 @@
                 </VBtn>
               </template>
               <span>{{ t('core.subscriptionManager.upgradeToLatest') }}</span>
+            </VTooltip>
+
+            <!-- Export Spec Button (only for update mode) -->
+            <VTooltip v-if="!props.newApp && managementAction === 'update'" location="top">
+              <template #activator="{ props: tooltipProps }">
+                <VBtn
+                  v-bind="tooltipProps"
+                  icon
+                  color="info"
+                  variant="tonal"
+                  density="comfortable"
+                  class="import-glow-btn border-frame-btn"
+                  @click="exportSpecification"
+                >
+                  <VIcon size="22">mdi-file-export</VIcon>
+                </VBtn>
+              </template>
+              <span>{{ t('core.subscriptionManager.exportSpec') }}</span>
             </VTooltip>
 
             <!-- Import Spec Button (only for new apps, disabled until ToS accepted) -->
@@ -3574,7 +3592,7 @@ function saveCommandChanges() {
 
 // Upgrade spec to latest version
 function openConversionDialog() {
-  if (!props.isRedeploy || specVersion.value >= LATEST_SPEC_VERSION) return
+  if ((!props.isRedeploy && managementAction.value !== 'update') || specVersion.value >= LATEST_SPEC_VERSION) return
   showUpgradeDialog.value = true
 }
 
@@ -3605,6 +3623,26 @@ function convertToLatestSpec() {
     showToast('error', `Failed to upgrade specification: ${error.message}`)
   } finally {
     isConverting.value = false
+  }
+}
+
+function exportSpecification() {
+  try {
+    const spec = props.appSpec
+    const specJSON = JSON.stringify(spec, null, 2)
+    const blob = new Blob([specJSON], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${spec.name || 'app'}-spec-v${spec.version || 'unknown'}.json`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+    showToast('success', 'Application specification exported successfully')
+  } catch (error) {
+    console.error('Error exporting specification:', error)
+    showToast('error', `Failed to export specification: ${error.message}`)
   }
 }
 

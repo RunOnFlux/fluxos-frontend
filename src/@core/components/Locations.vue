@@ -306,7 +306,12 @@ const props = defineProps({
 })
   
 const { t } = useI18n()
-  
+
+// Detect if we're accessing via IP or domain
+const hostname = window.location.hostname
+const regex = /[A-Za-z]/g
+const ipAccess = !hostname.match(regex)
+
 // Reactive state
 const mapVisible = ref(props.expanded)
   
@@ -483,7 +488,10 @@ async function fetchLocationsWithGeolocation() {
     const tasks = props.appLocations.map(node => async () => {
       const ip = node.ip.split(':')[0]
       const port = node.ip.split(':')[1] || 16127
-      const url = `http://${ip}:${port}/flux/geolocation`
+      let url = `https://${ip.replace(/\./g, '-')}-${port}.node.api.runonflux.io/flux/geolocation`
+      if (ipAccess) {
+        url = `http://${ip}:${port}/flux/geolocation`
+      }
 
       try {
         const geoData = await axios.get(url)

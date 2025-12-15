@@ -939,6 +939,7 @@
       "registerNewApplication": "Register New Application",
       "upgradeToLatest": "Upgrade to Latest Specification",
       "importSpec": "Import Specification",
+      "exportSpec": "Export Specification",
       "reviewAndSign": "Review and Sign",
       "component": "Component",
       "review": "Review",

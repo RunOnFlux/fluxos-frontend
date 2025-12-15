@@ -183,19 +183,28 @@ async function encryptMessage(message, publicKeys) {
 
 async function getEnterprisePGPKeys(selectedNodes) {
   const fetchedKeys = []
-  
+
+  // Detect if accessing via IP or domain (same logic as HomeUI)
+  const { hostname } = window.location
+  const regex = /[A-Za-z]/g
+  const ipAccess = !hostname.match(regex) // true if hostname is IP address (no letters)
+
   for (const node of selectedNodes) {
     try {
-      // Check if the IP already includes a port
+      // Parse node IP and port
+      const nodeIp = node.ip.split(':')[0]
+      const nodePort = node.ip.split(':')[1] ? Number(node.ip.split(':')[1]) : 16127
+
+      // Build URL based on access method
       let nodeUrl
-      if (node.ip.includes(':')) {
-        // IP already has port, use as is
-        nodeUrl = `http://${node.ip}/flux/pgp`
+      if (ipAccess) {
+        // IP-based access: direct HTTP connection
+        nodeUrl = `http://${nodeIp}:${nodePort}/flux/pgp`
       } else {
-        // No port specified, use default 16127
-        nodeUrl = `http://${node.ip}:16127/flux/pgp`
+        // Domain-based access: use node API domain
+        nodeUrl = `https://${nodeIp.replace(/\./g, '-')}-${nodePort}.node.api.runonflux.io/flux/pgp`
       }
-      
+
       const keyResponse = await axios.get(nodeUrl)
       if (keyResponse.data.status === 'success') {
         fetchedKeys.push(keyResponse.data.data)
