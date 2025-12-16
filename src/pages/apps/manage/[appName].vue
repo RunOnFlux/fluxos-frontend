@@ -1320,6 +1320,7 @@ const tabs = computed(() => {
     // No instance selected - only show tabs that don't require instances
     return allTabs.value.filter(tab => !tab.requiresInstance)
   }
+
   // Instance selected - show all tabs
   return allTabs.value
 })
@@ -1480,7 +1481,7 @@ watch(status, () => {
 })
 
 // Auto-switch to global spec when no instances available
-watch(selectedIp, (newIp) => {
+watch(selectedIp, newIp => {
   if (!newIp) {
     // No instance selected - force global spec
     status.value = false
@@ -2053,6 +2054,7 @@ async function getInstalledApplicationSpecifics(silent = false) {
     console.log('No local spec available, using global spec as fallback')
     appSpecification.value = { ...callBResponse.value.data }
     InstalledLoading.value = false
+
     // Don't set InstalledApiError since we have valid spec data
     return
   }

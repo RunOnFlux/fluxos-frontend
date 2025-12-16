@@ -111,6 +111,23 @@ const {
   disableAnalytics,
 } = useCookieConsent()
 
+/**
+ * Check if the current hostname is an IP address (IPv4 or IPv6)
+ * Used to skip cookie consent dialog when accessing via IP:port
+ */
+const isIPAddress = () => {
+  const hostname = window.location.hostname
+
+  // IPv4 pattern
+  const ipv4Pattern = /^(\d{1,3}\.){3}\d{1,3}$/
+
+  // IPv6 pattern (simplified - covers most cases including localhost)
+  const ipv6Pattern = /^([0-9a-fA-F]{0,4}:){2,7}[0-9a-fA-F]{0,4}$|^::1$|^\[.*\]$/
+
+  // Also check for localhost
+  return ipv4Pattern.test(hostname) || ipv6Pattern.test(hostname) || hostname === 'localhost'
+}
+
 const showSettings = ref(false)
 const isFirstVisit = ref(false)
 const necessaryCookiesEnabled = ref(true) // Always true, for display purposes
@@ -136,6 +153,12 @@ const handleAppReady = async () => {
 
   // Wait for loader to fade out completely (1 second after app-ready)
   appReadyTimeout = setTimeout(async () => {
+    // Skip cookie consent dialog when accessing via IP:port (direct node access)
+    // Analytics are not needed for direct node access
+    if (isIPAddress()) {
+      return
+    }
+
     // Show dialog if user hasn't made a choice (first visit)
     if (!hasConsent()) {
       isFirstVisit.value = true

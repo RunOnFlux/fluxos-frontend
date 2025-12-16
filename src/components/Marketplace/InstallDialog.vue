@@ -866,11 +866,11 @@
                           <VTextField
                             v-model="emailNotifications.email"
                             :label="t('components.marketplace.installDialog.emailAddress')"
-                            :placeholder="t('components.marketplace.installDialog.enterEmailOptional')"
+                            :placeholder="t('components.marketplace.installDialog.enterEmailRequired')"
                             variant="outlined"
                             density="comfortable"
                             type="email"
-                            :rules="emailRules"
+                            :rules="emailRulesRequired"
                             class="email-input"
                             @input="validateEmail"
                           >
@@ -2263,6 +2263,12 @@ const emailRules = computed(() => [
   v => !v || /.+@.+\..+/.test(v) || t('components.marketplace.installDialog.emailMustBeValid'),
 ])
 
+// Email validation rules (required with format validation)
+const emailRulesRequired = computed(() => [
+  v => !!v || t('components.marketplace.installDialog.emailRequired'),
+  v => /.+@.+\..+/.test(v) || t('components.marketplace.installDialog.emailMustBeValid'),
+])
+
 // Locked values functionality - check if configuration values are locked by the app
 const isValueLocked = valueName => {
   return props.app?.lockedValues?.includes(valueName) || false
@@ -2423,7 +2429,9 @@ const fetchPricingFromAPI = async () => {
 
     const appSpec = {
       version: 8,
-      name: props.app.name || props.app.displayName,
+
+      // Convert app name to lowercase for consistency
+      name: (props.app.name || props.app.displayName || '').toLowerCase(),
       description: props.app.description || props.app.displayName || 'Marketplace App',
       owner: props.app.owner || 'marketplace',
       compose: appSpecCompose,
@@ -2875,8 +2883,8 @@ const canProceed = computed(() => {
     return true
   }
   if (currentStep.value === 3) {
-    // Email step - always allow proceeding (email is optional)
-    return true
+    // Email step - email is required
+    return validateEmail()
   }
   if (currentStep.value === 4) {
     // Signing step - block until both signing and registry are completed (for both SSO and wallet)
@@ -3345,7 +3353,8 @@ const generateDeploymentMessage = async () => {
   // Generate FluxCloud-compatible deployment message
   const timestamp = Date.now()
   deploymentTimestamp.value = timestamp // Store for WebSocket
-  const appName = `${props.app.name}${timestamp}`
+  // Convert app name to lowercase for consistency
+  const appName = `${props.app.name.toLowerCase()}${timestamp}`
 
   // Get owner from zelidauth
   let owner = ''
@@ -3454,6 +3463,7 @@ const generateDeploymentMessage = async () => {
         }
       } catch (error) {
         console.warn(`Failed to process environment parameters for component ${index}:`, error)
+
         // Fallback: Add all parameters if there's an error (backward compatibility)
         for (const [key, value] of Object.entries(config.value.parameters || {})) {
           if (value) {
@@ -4347,11 +4357,11 @@ const processStripePayment = async () => {
       signature: authData.signature,
       loginPhrase: authData.loginPhrase,
       details: {
-        name: props.app.name,
+        name: props.app.name.toLowerCase(),
         description: props.app.description,
         hash: paymentHash.value,
         price: parseFloat(estimatedCost.value),
-        productName: props.app.name,
+        productName: props.app.name.toLowerCase(),
         success_url: `${window.location.origin}/successcheckout`,
         cancel_url: `${window.location.origin}/marketplace`,
         kpi: {
@@ -4434,11 +4444,11 @@ const processPayPalPayment = async () => {
       signature: authData.signature,
       loginPhrase: authData.loginPhrase,
       details: {
-        name: props.app.name,
+        name: props.app.name.toLowerCase(),
         description: props.app.description,
         hash: paymentHash.value,
         price: parseFloat(estimatedCost.value),
-        productName: props.app.name,
+        productName: props.app.name.toLowerCase(),
         return_url: `${window.location.origin}/successcheckout`,
         cancel_url: `${window.location.origin}/marketplace`,
         kpi: {

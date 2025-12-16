@@ -402,6 +402,7 @@
                   density="comfortable"
                   :disabled="isNameLocked"
                   class="mb-3"
+                  @input="props.newApp && (appDetails.name = appDetails.name.toLowerCase())"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
@@ -517,7 +518,7 @@
                 <div v-if="versionFlags.supportsContacts" class="d-flex align-center mb-3">
                   <VCombobox
                     v-model="appDetails.contacts"
-                    :label="t('core.subscriptionManager.contact')"
+                    :label="t('core.subscriptionManager.contact') + ' *'"
                     prepend-inner-icon="mdi-email"
                     multiple
                     variant="outlined"
@@ -945,6 +946,7 @@
                   variant="outlined"
                   class="mb-3"
                   :disabled="!props.newApp"
+                  @input="props.newApp && (component.name = component.name.toLowerCase())"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
@@ -3147,6 +3149,7 @@ import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
 import ExplorerService from '@/services/ExplorerService'
 import DaemonService from '@/services/DaemonService'
+import StorageService from '@/services/StorageService'
 import { storeToRefs } from "pinia"
 import ManualSignDialog from '@/@core/components/ManualSignDialog.vue'
 import { useFluxStore } from "@/stores/flux"
@@ -3226,9 +3229,10 @@ const tosPanel = computed({
     // If accepted, return internal state (allows manual toggle)
     const value = acceptedTerms.value ? tosPanelInternal.value : '0'
     console.log('[ToS] tosPanel.get():', { acceptedTerms: acceptedTerms.value, internal: tosPanelInternal.value, returning: value })
+    
     return value
   },
-  set: (newValue) => {
+  set: newValue => {
     console.log('[ToS] tosPanel.set():', { newValue, acceptedTerms: acceptedTerms.value })
 
     // Check if trying to close (newValue is undefined/null)
@@ -3246,7 +3250,7 @@ const tosPanel = computed({
       tosPanelInternal.value = newValue
       console.log('[ToS] Allowed expansion - updating internal state to:', newValue)
     }
-  }
+  },
 })
 const paymentCompleted = ref(false)
 const paymentMethod = ref('')
@@ -3290,7 +3294,7 @@ watch(tab, (newTab, oldTab) => {
 })
 
 // Save ToS acceptance state to session storage and collapse panel when accepted
-watch(acceptedTerms, (newValue) => {
+watch(acceptedTerms, newValue => {
   console.log('[ToS] acceptedTerms changed:', { newValue })
   sessionStorage.setItem('flux-tos-accepted', newValue.toString())
 
@@ -4204,6 +4208,7 @@ const testableFieldsHaveChanged = computed(() => {
   try {
     const currentSpecCopy = cloneDeep(props.appSpec)
     NON_TESTABLE_FIELDS.forEach(field => delete currentSpecCopy[field])
+
     // Also exclude from compose components
     if (currentSpecCopy.compose && Array.isArray(currentSpecCopy.compose)) {
       currentSpecCopy.compose.forEach(component => {
@@ -4213,6 +4218,7 @@ const testableFieldsHaveChanged = computed(() => {
 
     const snapshotCopy = cloneDeep(snapshotToCompare)
     NON_TESTABLE_FIELDS.forEach(field => delete snapshotCopy[field])
+
     // Also exclude from compose components
     if (snapshotCopy.compose && Array.isArray(snapshotCopy.compose)) {
       snapshotCopy.compose.forEach(component => {
@@ -4312,6 +4318,7 @@ watch(() => props.appSpec, newSpec => {
         delete currentSpecForTest[field]
         delete signedSpecForTest[field]
       })
+
       // Also exclude from compose components
       if (currentSpecForTest.compose && Array.isArray(currentSpecForTest.compose)) {
         currentSpecForTest.compose.forEach(component => {
@@ -5785,7 +5792,7 @@ watch(() => props.appSpec?.compose?.length, newLength => {
 }, { immediate: true })
 
 // Watch for initialAction changes to update managementAction
-watch(() => props.initialAction, (newAction) => {
+watch(() => props.initialAction, newAction => {
   if (newAction && !props.newApp) {
     managementAction.value = newAction
   }
@@ -6621,6 +6628,25 @@ async function verifyAppSpec() {
     const appSpecTemp = cloneDeep(props.appSpec)
 
     // ========================================================================
+    // CONVERT APP NAME TO LOWERCASE (only for new app registration)
+    // App name changes are not allowed on updates
+    // ========================================================================
+    if (props.newApp) {
+      if (appSpecTemp.name) {
+        appSpecTemp.name = appSpecTemp.name.toLowerCase()
+      }
+
+      // Also convert component names in compose array
+      if (appSpecTemp.compose && Array.isArray(appSpecTemp.compose)) {
+        appSpecTemp.compose.forEach(component => {
+          if (component.name) {
+            component.name = component.name.toLowerCase()
+          }
+        })
+      }
+    }
+
+    // ========================================================================
     // MARKETPLACE APP REPOTAG CHECK (only for new app registration)
     // ========================================================================
     if (props.newApp && marketPlaceApps.value.length > 0 && appSpecTemp.compose) {
@@ -6800,6 +6826,36 @@ async function verifyAppSpec() {
     if (appSpecTemp.version >= 5) {
       if (!appSpecTemp.contacts) appSpecTemp.contacts = []
       if (!appSpecTemp.geolocation) appSpecTemp.geolocation = []
+    }
+
+    // Validate contacts field - at least one contact is required for both registration and updates
+    const contacts = appSpecTemp.contacts || []
+    const validContacts = contacts.filter(c => c && c.trim())
+    if (validContacts.length === 0) {
+      throw new Error(t('core.subscriptionManager.contactRequired'))
+    }
+
+    // Auto-upload contacts to Flux Storage if they are email addresses (not already storage references)
+    // This matches the behavior in InstallDialog for marketplace/games
+    const hasStorageReference = validContacts.some(c => c.startsWith('F_S_CONTACTS='))
+    if (!hasStorageReference && validContacts.length > 0) {
+      try {
+        console.log('📧 Auto-uploading contacts to Flux Storage:', validContacts)
+        const contactsId = StorageService.generateContactsId()
+        const contactsData = {
+          contactsid: contactsId,
+          contacts: validContacts,
+        }
+        await StorageService.uploadContacts(contactsData)
+        const storageReference = StorageService.getContactsStorageReference(contactsId)
+
+        // Replace contacts with storage reference
+        appSpecTemp.contacts = [storageReference]
+        console.log('✅ Contacts uploaded to storage:', storageReference)
+      } catch (error) {
+        console.error('❌ Failed to upload contacts to Flux Storage:', error)
+        throw new Error(`Uploading contacts to Flux Storage failed: ${error.message}`)
+      }
     }
 
     // For UPDATE without renewal: Send fork-aware remaining blocks
@@ -7507,6 +7563,7 @@ async function testAppInstall() {
     if (props.newApp && props.appSpec && !testError.value) {
       const specCopy = cloneDeep(props.appSpec)
       NON_TESTABLE_FIELDS.forEach(field => delete specCopy[field])
+
       // Also exclude from compose components
       if (specCopy.compose && Array.isArray(specCopy.compose)) {
         specCopy.compose.forEach(component => {

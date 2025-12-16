@@ -312,6 +312,7 @@ module.exports = {
     "useFileSystemAccess": true,
     "useFloor": true,
     "useFluxDrive": true,
+    "useFluxShare": true,
     "useFocus": true,
     "useFocusWithin": true,
     "useFps": true,

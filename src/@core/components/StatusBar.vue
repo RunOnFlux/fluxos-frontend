@@ -12,7 +12,7 @@
           size="x-small"
           variant="flat"
           color="error"
-          :class="['position-absolute', 'close-btn-hover', windowWidth < 745 ? 'mobile-small' : 'desktop-small']"
+          class="position-absolute close-btn-hover" :class="[windowWidth < 745 ? 'mobile-small' : 'desktop-small']"
           style="top: -4px; right: -4px;"
           @click="toggleVisibility"
           v-bind="props"

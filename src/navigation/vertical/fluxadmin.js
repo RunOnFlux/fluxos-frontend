@@ -16,6 +16,12 @@ export default [
         icon: { icon: 'mdi-fingerprint', size: 20 },
         privilege: ['admin', 'fluxteam'],
       },
+      {
+        title: 'menu.administration.fluxShare',
+        to: 'administration-flux-share',
+        icon: { icon: 'mdi-share-variant', size: 20 },
+        privilege: ['admin', 'fluxteam'],
+      },
 
       // {
       //   title: 'menu.administration.dockerEvents',

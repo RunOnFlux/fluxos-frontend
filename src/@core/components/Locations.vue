@@ -332,7 +332,7 @@ const appLocationFields = computed(() => [
     title: t('core.locations.running'),
     sortable: true,
     cellClass: 'column-running',
-    headerProps: { class: 'column-running' }
+    headerProps: { class: 'column-running' },
   },
   ...(props.showLocation
     ? [{ key: "continent", title: t('core.locations.continent'), sortable: true, cellClass: 'column-continent', headerProps: { class: 'column-continent' } }]

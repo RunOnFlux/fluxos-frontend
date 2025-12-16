@@ -63,6 +63,8 @@ declare module 'vue' {
     FeaturesPanel: typeof import('./components/Marketplace/Panels/FeaturesPanel.vue')['default']
     FileManager: typeof import('./components/FluxDrive/FileManager.vue')['default']
     FileUpload: typeof import('./@core/components/FileUpload.vue')['default']
+    FluxShareFileManager: typeof import('./components/FluxShare/FluxShareFileManager.vue')['default']
+    FluxShareFileUpload: typeof import('./components/FluxShare/FluxShareFileUpload.vue')['default']
     GameCard: typeof import('./components/Marketplace/GameCard.vue')['default']
     Games: typeof import('./components/Marketplace/games/index.vue')['default']
     GroupsPanel: typeof import('./components/Marketplace/Panels/GroupsPanel.vue')['default']

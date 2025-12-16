@@ -306,6 +306,7 @@ declare global {
   const useFileSystemAccess: typeof import('@vueuse/core')['useFileSystemAccess']
   const useFloor: typeof import('@vueuse/math')['useFloor']
   const useFluxDrive: typeof import('./composables/useFluxDrive.js')['useFluxDrive']
+  const useFluxShare: typeof import('./composables/useFluxShare.js')['useFluxShare']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -759,6 +760,7 @@ declare module 'vue' {
     readonly useFileSystemAccess: UnwrapRef<typeof import('@vueuse/core')['useFileSystemAccess']>
     readonly useFloor: UnwrapRef<typeof import('@vueuse/math')['useFloor']>
     readonly useFluxDrive: UnwrapRef<typeof import('./composables/useFluxDrive.js')['useFluxDrive']>
+    readonly useFluxShare: UnwrapRef<typeof import('./composables/useFluxShare.js')['useFluxShare']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>

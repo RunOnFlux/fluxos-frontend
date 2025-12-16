@@ -260,11 +260,12 @@ export default {
       },
     })
   },
-  getFolder(zelidauthHeader, folder) {
+  getFolder(zelidauthHeader, folder, options = {}) {
     return Api().get(`/apps/fluxshare/getfolder/${folder}`, {
       headers: {
         zelidauth: zelidauthHeader,
       },
+      ...options,
     })
   },
   createFolder(zelidauthHeader, folder) {
