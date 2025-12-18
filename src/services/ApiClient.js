@@ -15,6 +15,25 @@ const sourceCancelToken = axios.CancelToken.source()
 export { sourceCancelToken }
 
 /**
+ * Fix malformed backendURL in localStorage (remove surrounding quotes)
+ * This runs once on module load to clean up any stringified values
+ */
+(function cleanupBackendURL() {
+  try {
+    const backendURL = localStorage.getItem('backendURL')
+    if (backendURL && typeof backendURL === 'string') {
+      const cleaned = backendURL.replace(/^["']|["']$/g, '')
+      if (cleaned !== backendURL) {
+        console.warn('[ApiClient] Fixing malformed backendURL in localStorage:', backendURL, '->', cleaned)
+        localStorage.setItem('backendURL', cleaned)
+      }
+    }
+  } catch (error) {
+    console.error('[ApiClient] Failed to cleanup backendURL:', error)
+  }
+})()
+
+/**
  * APIs that should BYPASS sticky backend and use round-robin load balancing
  *
  * This list matches the backend's roundrobinEndpointsAcl configuration.
