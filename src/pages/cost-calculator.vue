@@ -69,16 +69,55 @@
               <VTextField
                 v-model.number="formData.instances"
                 type="number"
-                :min="3"
+                :min="minInstances"
                 :max="100"
                 :rules="[
                   v => !!v || t('pages.costCalculator.validation.instancesRequired'),
-                  v => v >= 3 || t('pages.costCalculator.validation.instancesMin'),
+                  v => v >= minInstances || (syncEnabled ? t('pages.costCalculator.validation.instancesMinSync') : t('pages.costCalculator.validation.instancesMin')),
                   v => v <= 100 || t('pages.costCalculator.validation.instancesMax')
                 ]"
                 :placeholder="t('pages.costCalculator.instancesPlaceholder')"
                 @input="calculateCost"
               />
+
+              <!-- Warning for syncthing minimum instances -->
+              <VAlert
+                v-if="syncEnabled"
+                type="info"
+                variant="tonal"
+                density="compact"
+                class="mt-2"
+              >
+                <div class="d-flex align-center">
+                  <VIcon size="18" class="mr-2">mdi-information</VIcon>
+                  <span>{{ t('pages.costCalculator.validation.instancesMinSyncInfo') }}</span>
+                </div>
+              </VAlert>
+              <!-- Warning for low instance count (only when sync is not enabled) -->
+              <VAlert
+                v-else-if="formData.instances === 1"
+                type="warning"
+                variant="tonal"
+                density="compact"
+                class="mt-2"
+              >
+                <div class="d-flex align-center">
+                  <VIcon size="18" class="mr-2">mdi-alert</VIcon>
+                  <span>{{ t('pages.costCalculator.validation.instancesWarningOne') }}</span>
+                </div>
+              </VAlert>
+              <VAlert
+                v-else-if="formData.instances === 2"
+                type="warning"
+                variant="tonal"
+                density="compact"
+                class="mt-2"
+              >
+                <div class="d-flex align-center">
+                  <VIcon size="18" class="mr-2">mdi-alert</VIcon>
+                  <span>{{ t('pages.costCalculator.validation.instancesWarningTwo') }}</span>
+                </div>
+              </VAlert>
             </div>
 
             <!-- Renewal Period -->
@@ -798,6 +837,16 @@ const formData = reactive({
 
 // Synchronization switch
 const syncEnabled = ref(false)
+
+// Minimum instances: 3 if sync is enabled, 1 otherwise
+const minInstances = computed(() => syncEnabled.value ? 3 : 1)
+
+// Watch sync status - auto-adjust instances to minimum 3 when sync is enabled
+watch(syncEnabled, newValue => {
+  if (newValue && formData.instances < 3) {
+    formData.instances = 3
+  }
+})
 
 // Port input for adding new ports
 const newPortInput = ref('')

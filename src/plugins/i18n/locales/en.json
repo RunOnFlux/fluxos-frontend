@@ -2803,7 +2803,7 @@
       "learnMore": "Learn More",
       "configuration": "Configuration",
       "instancesQuestion": "How many instances will you be running?",
-      "instancesHint": "(min 3 / max 100) 1 Instance = 1 Node",
+      "instancesHint": "(min 1 / max 100) 1 Instance = 1 Node",
       "instancesPlaceholder": "3",
       "renewalPeriod": "Renewal period",
       "renewalHint": "(Manual renewal required)",
@@ -2848,7 +2848,11 @@
       "gotIt": "Got it",
       "validation": {
         "instancesRequired": "Instances is required",
-        "instancesMin": "Minimum 3 instances required",
+        "instancesMin": "Minimum 1 instance required",
+        "instancesMinSync": "Minimum 3 instances required when data synchronization is enabled",
+        "instancesMinSyncInfo": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization.",
+        "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
+        "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
         "instancesMax": "Maximum 100 instances allowed"
       },
       "renewalOptions": {

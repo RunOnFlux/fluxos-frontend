@@ -2780,7 +2780,7 @@
       "learnMore": "Dowiedz się więcej o hostingu Flux",
       "configuration": "Konfiguracja",
       "instancesQuestion": "Ile instancji będziesz uruchamiać?",
-      "instancesHint": "(min 3 / maks 100) 1 Instancja = 1 Węzeł",
+      "instancesHint": "(min 1 / maks 100) 1 Instancja = 1 Węzeł",
       "instancesPlaceholder": "3",
       "renewalPeriod": "Okres odnowienia",
       "renewalHint": "(Wymagane ręczne odnowienie)",
@@ -2825,7 +2825,11 @@
       "gotIt": "Rozumiem",
       "validation": {
         "instancesRequired": "Instancje są wymagane",
-        "instancesMin": "Wymagane minimum 3 instancje",
+        "instancesMin": "Wymagana minimum 1 instancja",
+        "instancesMinSync": "Wymagane minimum 3 instancje gdy synchronizacja danych jest włączona",
+        "instancesMinSyncInfo": "Minimalna liczba instancji dla aplikacji z zdecentralizowanym trwałym przechowywaniem danych to 3. Aby użyć mniejszej liczby instancji, wyłącz synchronizację danych.",
+        "instancesWarningOne": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3. Przy tylko 1 instancji, Twoja aplikacja może doświadczyć kilku minut przestoju, jeśli węzeł uruchamiający aplikację zostanie zrestartowany lub wyłączony.",
+        "instancesWarningTwo": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3.",
         "instancesMax": "Maksymalnie 100 instancji dozwolone"
       },
       "renewalOptions": {
