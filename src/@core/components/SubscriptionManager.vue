@@ -585,7 +585,7 @@
                 </div>
                 <VSlider
                   v-model="appDetails.instances"
-                  :min="3"
+                  :min="minInstances"
                   :max="100"
                   step="1"
                   hide-details
@@ -593,6 +593,46 @@
                   :thumb-size="18"
                   track-size="4"
                 />
+
+                <!-- Info for legacy app updates (version < 8) - cannot reduce below 3 -->
+                <VAlert
+                  v-if="isLegacyAppUpdate"
+                  type="info"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  {{ t('core.subscriptionManager.instancesWarningLegacy') }}
+                </VAlert>
+                <!-- Warning for syncthing minimum instances (new apps or version >= 8) -->
+                <VAlert
+                  v-else-if="shouldEnforceSyncthingMinimum"
+                  type="info"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  {{ t('core.subscriptionManager.instancesWarningSyncthing') }}
+                </VAlert>
+                <!-- Warning for low instance count (only when syncthing minimum is not enforced) -->
+                <VAlert
+                  v-else-if="appDetails.instances === 1"
+                  type="warning"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  {{ t('core.subscriptionManager.instancesWarningOne') }}
+                </VAlert>
+                <VAlert
+                  v-else-if="appDetails.instances === 2"
+                  type="warning"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  {{ t('core.subscriptionManager.instancesWarningTwo') }}
+                </VAlert>
               </div>
 
               <!-- Renewal Period Section (Only for V6+ apps) -->
@@ -3391,6 +3431,50 @@ const appDetails = ref({
 
 const isPrivateApp = ref(false)
 
+// Computed property to check if any component has syncthing (decentralized persistent storage) enabled
+// Syncthing is indicated by containerData starting with 'r:', 'g:', or 's:'
+const hasSyncthingEnabled = computed(() => {
+  if (!props.appSpec?.compose) return false
+
+  return props.appSpec.compose.some(component => {
+    const containerData = component.containerData || ''
+
+    return containerData.startsWith('r:') || containerData.startsWith('g:') || containerData.startsWith('s:')
+  })
+})
+
+// Check if this is a legacy app update (version < 8) - these cannot reduce instances below 3
+const isLegacyAppUpdate = computed(() => {
+  return !props.newApp && specVersion.value < 8
+})
+
+// Check if syncthing minimum instances rule should apply
+// Only applies to new apps or updates with version >= 8
+const shouldEnforceSyncthingMinimum = computed(() => {
+  if (!hasSyncthingEnabled.value) return false
+
+  // For new apps, always enforce
+  if (props.newApp) return true
+
+  // For updates, only enforce for version >= 8
+  return specVersion.value >= 8
+})
+
+// Minimum instances:
+// - Legacy app updates (version < 8): always 3 (no reduction allowed)
+// - New apps or version >= 8 updates with syncthing: 3
+// - New apps or version >= 8 updates without syncthing: 1
+const minInstances = computed(() => {
+  // Legacy apps cannot reduce below 3
+  if (isLegacyAppUpdate.value) return 3
+
+  // For new apps or v8+ updates, syncthing enforces 3
+  if (shouldEnforceSyncthingMinimum.value) return 3
+
+  // Otherwise allow down to 1
+  return 1
+})
+
 const marketPlaceApps = ref([])
 const generalMultiplier = ref(10)
 const isMarketplaceApp = ref(false)
@@ -4658,6 +4742,14 @@ watch(() => appDetails.value.renewalIndex, newIndex => {
   if (renewalEnabled.value || props.newApp || managementAction.value === 'renewal') {
     const selectedExpire = renewalOptions.value[newIndex]?.value
     props.appSpec.expire = selectedExpire
+  }
+})
+
+// Watch syncthing status - auto-adjust instances to minimum 3 when syncthing is enabled
+// Only applies to new apps or updates with version >= 8
+watch(shouldEnforceSyncthingMinimum, newValue => {
+  if (newValue && appDetails.value.instances < 3) {
+    appDetails.value.instances = 3
   }
 })
 

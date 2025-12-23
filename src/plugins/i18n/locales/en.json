@@ -963,6 +963,10 @@
       "contactRequired": "At least one contact email is required",
       "instances": "Instances",
       "instancesCount": "{count} instance | {count} instances",
+      "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
+      "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
+      "instancesWarningSyncthing": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization in the volume path settings.",
+      "instancesWarningLegacy": "Reducing instances below 3 is only available for apps with specification version 8 or higher. Update your app specification to enable this feature.",
       "period": "Period",
       "renewal": "Renewal",
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
@@ -2706,7 +2710,7 @@
             "ram": "RAM",
             "storage": "Storage",
             "pricePerMonth": "Price/Month",
-            "note": "Prices are approximate and based on publicly available pricing for similar configurations. FluxCloud offers up to 70% savings compared to traditional cloud providers."
+            "note": "Prices are approximate and based on publicly available pricing for similar configurations. *Akash Network uses a bidding marketplace, so actual prices may vary. FluxCloud price is calculated in real-time from our pricing API."
           },
           "serverNetwork": {
             "title": "Global Server Network",
@@ -2799,7 +2803,7 @@
       "learnMore": "Learn More",
       "configuration": "Configuration",
       "instancesQuestion": "How many instances will you be running?",
-      "instancesHint": "(min 3 / max 100) 1 Instance = 1 Node",
+      "instancesHint": "(min 1 / max 100) 1 Instance = 1 Node",
       "instancesPlaceholder": "3",
       "renewalPeriod": "Renewal period",
       "renewalHint": "(Manual renewal required)",
@@ -2844,7 +2848,11 @@
       "gotIt": "Got it",
       "validation": {
         "instancesRequired": "Instances is required",
-        "instancesMin": "Minimum 3 instances required",
+        "instancesMin": "Minimum 1 instance required",
+        "instancesMinSync": "Minimum 3 instances required when data synchronization is enabled",
+        "instancesMinSyncInfo": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization.",
+        "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
+        "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
         "instancesMax": "Maximum 100 instances allowed"
       },
       "renewalOptions": {
