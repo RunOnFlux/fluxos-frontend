@@ -945,6 +945,7 @@
       "instancesWarningTwo": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3.",
       "instancesWarningOne": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3. Przy tylko 1 instancji, Twoja aplikacja może doświadczyć kilku minut przestoju, jeśli węzeł uruchamiający aplikację zostanie zrestartowany lub wyłączony.",
       "instancesWarningSyncthing": "Minimalna liczba instancji dla aplikacji z zdecentralizowanym trwałym przechowywaniem danych to 3. Aby użyć mniejszej liczby instancji, wyłącz synchronizację danych w ustawieniach ścieżki woluminu.",
+      "instancesWarningLegacy": "Zmniejszenie liczby instancji poniżej 3 jest dostępne tylko dla aplikacji ze specyfikacją w wersji 8 lub wyższej. Zaktualizuj specyfikację aplikacji, aby włączyć tę funkcję.",
       "period": "Okres",
       "renewal": "Odnowienie",
       "subscriptionNotExtended": "Włącz Odnowienie, aby przedłużyć okres subskrypcji.",

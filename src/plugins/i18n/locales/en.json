@@ -966,6 +966,7 @@
       "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
       "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
       "instancesWarningSyncthing": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization in the volume path settings.",
+      "instancesWarningLegacy": "Reducing instances below 3 is only available for apps with specification version 8 or higher. Update your app specification to enable this feature.",
       "period": "Period",
       "renewal": "Renewal",
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
