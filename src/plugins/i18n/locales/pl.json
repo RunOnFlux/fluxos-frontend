@@ -807,6 +807,15 @@
       "rightToLeft": "Od prawej do lewej"
     },
     "volumePathBuilder": {
+      "syncTitle": "Synchronizacja Danych Między Instancjami",
+      "syncDescription": "Włącz tę opcję, jeśli chcesz, aby Twoje dane były synchronizowane między wieloma instancjami aplikacji działającymi na różnych węzłach Flux.",
+      "syncEnableLabel": "Synchronizuj dane między instancjami",
+      "syncEnabledHint": "Twoje dane będą synchronizowane między wszystkimi instancjami",
+      "syncDisabledHint": "Każda instancja będzie miała swoje własne trwałe dane",
+      "syncModeLabel": "Strategia Synchronizacji",
+      "modePhasedMasterMasterDesc": "Wszystkie instancje mogą odczytywać i zapisywać, z kontrolowaną fazową synchronizacją",
+      "modePrimaryStandbyDesc": "Jedna główna instancja obsługuje zapisy, pozostałe są kopiami zapasowymi tylko do odczytu",
+      "modeMasterMasterDesc": "Wszystkie instancje mogą odczytywać i zapisywać jednocześnie",
       "modeNone": "Brak",
       "modePhasedMasterMaster": "Phased Master-Master (r)",
       "modePrimaryStandby": "Primary-Standby (g)",
