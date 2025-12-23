@@ -602,10 +602,7 @@
                   density="compact"
                   class="mt-2"
                 >
-                  <div class="d-flex align-center">
-                    <VIcon size="18" class="mr-2">mdi-information</VIcon>
-                    <span>{{ t('core.subscriptionManager.instancesWarningLegacy') }}</span>
-                  </div>
+                  {{ t('core.subscriptionManager.instancesWarningLegacy') }}
                 </VAlert>
                 <!-- Warning for syncthing minimum instances (new apps or version >= 8) -->
                 <VAlert
@@ -615,10 +612,7 @@
                   density="compact"
                   class="mt-2"
                 >
-                  <div class="d-flex align-center">
-                    <VIcon size="18" class="mr-2">mdi-information</VIcon>
-                    <span>{{ t('core.subscriptionManager.instancesWarningSyncthing') }}</span>
-                  </div>
+                  {{ t('core.subscriptionManager.instancesWarningSyncthing') }}
                 </VAlert>
                 <!-- Warning for low instance count (only when syncthing minimum is not enforced) -->
                 <VAlert
@@ -628,10 +622,7 @@
                   density="compact"
                   class="mt-2"
                 >
-                  <div class="d-flex align-center">
-                    <VIcon size="18" class="mr-2">mdi-alert</VIcon>
-                    <span>{{ t('core.subscriptionManager.instancesWarningOne') }}</span>
-                  </div>
+                  {{ t('core.subscriptionManager.instancesWarningOne') }}
                 </VAlert>
                 <VAlert
                   v-else-if="appDetails.instances === 2"
@@ -640,10 +631,7 @@
                   density="compact"
                   class="mt-2"
                 >
-                  <div class="d-flex align-center">
-                    <VIcon size="18" class="mr-2">mdi-alert</VIcon>
-                    <span>{{ t('core.subscriptionManager.instancesWarningTwo') }}</span>
-                  </div>
+                  {{ t('core.subscriptionManager.instancesWarningTwo') }}
                 </VAlert>
               </div>
 

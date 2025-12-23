@@ -88,10 +88,7 @@
                 density="compact"
                 class="mt-2"
               >
-                <div class="d-flex align-center">
-                  <VIcon size="18" class="mr-2">mdi-information</VIcon>
-                  <span>{{ t('pages.costCalculator.validation.instancesMinSyncInfo') }}</span>
-                </div>
+                {{ t('pages.costCalculator.validation.instancesMinSyncInfo') }}
               </VAlert>
               <!-- Warning for low instance count (only when sync is not enabled) -->
               <VAlert
@@ -101,10 +98,7 @@
                 density="compact"
                 class="mt-2"
               >
-                <div class="d-flex align-center">
-                  <VIcon size="18" class="mr-2">mdi-alert</VIcon>
-                  <span>{{ t('pages.costCalculator.validation.instancesWarningOne') }}</span>
-                </div>
+                {{ t('pages.costCalculator.validation.instancesWarningOne') }}
               </VAlert>
               <VAlert
                 v-else-if="formData.instances === 2"
@@ -113,10 +107,7 @@
                 density="compact"
                 class="mt-2"
               >
-                <div class="d-flex align-center">
-                  <VIcon size="18" class="mr-2">mdi-alert</VIcon>
-                  <span>{{ t('pages.costCalculator.validation.instancesWarningTwo') }}</span>
-                </div>
+                {{ t('pages.costCalculator.validation.instancesWarningTwo') }}
               </VAlert>
             </div>
 
