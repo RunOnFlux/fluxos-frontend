@@ -291,7 +291,7 @@ const benefits = computed(() => [
 const pricingComparison = computed(() => [
   {
     name: 'FluxCloud',
-    instances: '3',
+    instances: '1',
     cpu: '2 vCPU',
     ram: '4 GB',
     storage: '20 GB SSD',
@@ -513,7 +513,7 @@ const calculateFluxCloudPrice = async () => {
     fluxCloudPriceLoading.value = true
 
     // Specifications matching the pricing comparison table
-    // 2 vCPU, 4 GB RAM, 20 GB SSD, 3 instances (minimum), 1 month
+    // 2 vCPU, 4 GB RAM, 20 GB SSD, 1 instance, 1 month
     // Post-fork: 88000 blocks = 1 month (30 days)
     const expire = 88000
 
@@ -537,7 +537,7 @@ const calculateFluxCloudPrice = async () => {
         hdd: "20",
         tiered: false,
       }],
-      instances: 3,
+      instances: 1,
       nodes: [],
       contacts: [""],
       geolocation: [""],
