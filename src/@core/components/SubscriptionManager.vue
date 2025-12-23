@@ -585,7 +585,7 @@
                 </div>
                 <VSlider
                   v-model="appDetails.instances"
-                  :min="3"
+                  :min="minInstances"
                   :max="100"
                   step="1"
                   hide-details
@@ -593,6 +593,45 @@
                   :thumb-size="18"
                   track-size="4"
                 />
+
+                <!-- Warning for syncthing minimum instances -->
+                <VAlert
+                  v-if="hasSyncthingEnabled"
+                  type="info"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  <div class="d-flex align-center">
+                    <VIcon size="18" class="mr-2">mdi-information</VIcon>
+                    <span>{{ t('core.subscriptionManager.instancesWarningSyncthing') }}</span>
+                  </div>
+                </VAlert>
+                <!-- Warning for low instance count (only when syncthing is not enabled) -->
+                <VAlert
+                  v-else-if="appDetails.instances === 1"
+                  type="warning"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  <div class="d-flex align-center">
+                    <VIcon size="18" class="mr-2">mdi-alert</VIcon>
+                    <span>{{ t('core.subscriptionManager.instancesWarningOne') }}</span>
+                  </div>
+                </VAlert>
+                <VAlert
+                  v-else-if="appDetails.instances === 2"
+                  type="warning"
+                  variant="tonal"
+                  density="compact"
+                  class="mt-2"
+                >
+                  <div class="d-flex align-center">
+                    <VIcon size="18" class="mr-2">mdi-alert</VIcon>
+                    <span>{{ t('core.subscriptionManager.instancesWarningTwo') }}</span>
+                  </div>
+                </VAlert>
               </div>
 
               <!-- Renewal Period Section (Only for V6+ apps) -->
@@ -3391,6 +3430,21 @@ const appDetails = ref({
 
 const isPrivateApp = ref(false)
 
+// Computed property to check if any component has syncthing (decentralized persistent storage) enabled
+// Syncthing is indicated by containerData starting with 'r:', 'g:', or 's:'
+const hasSyncthingEnabled = computed(() => {
+  if (!props.appSpec?.compose) return false
+
+  return props.appSpec.compose.some(component => {
+    const containerData = component.containerData || ''
+
+    return containerData.startsWith('r:') || containerData.startsWith('g:') || containerData.startsWith('s:')
+  })
+})
+
+// Minimum instances: 3 if syncthing is enabled, 1 otherwise
+const minInstances = computed(() => hasSyncthingEnabled.value ? 3 : 1)
+
 const marketPlaceApps = ref([])
 const generalMultiplier = ref(10)
 const isMarketplaceApp = ref(false)
@@ -4658,6 +4712,13 @@ watch(() => appDetails.value.renewalIndex, newIndex => {
   if (renewalEnabled.value || props.newApp || managementAction.value === 'renewal') {
     const selectedExpire = renewalOptions.value[newIndex]?.value
     props.appSpec.expire = selectedExpire
+  }
+})
+
+// Watch syncthing status - auto-adjust instances to minimum 3 when syncthing is enabled
+watch(hasSyncthingEnabled, newValue => {
+  if (newValue && appDetails.value.instances < 3) {
+    appDetails.value.instances = 3
   }
 })
 
