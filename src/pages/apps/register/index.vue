@@ -299,6 +299,15 @@ const pricingComparison = computed(() => [
     highlighted: true,
   },
   {
+    name: 'Akash Network',
+    instances: '1',
+    cpu: '2 vCPU',
+    ram: '4 GB',
+    storage: '20 GB SSD',
+    price: '~$8.00*',
+    highlighted: false,
+  },
+  {
     name: 'AWS EC2',
     instances: '1',
     cpu: '2 vCPU',

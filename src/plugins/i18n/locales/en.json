@@ -2710,7 +2710,7 @@
             "ram": "RAM",
             "storage": "Storage",
             "pricePerMonth": "Price/Month",
-            "note": "Prices are approximate and based on publicly available pricing for similar configurations. FluxCloud offers up to 70% savings compared to traditional cloud providers."
+            "note": "Prices are approximate and based on publicly available pricing for similar configurations. *Akash Network uses a bidding marketplace, so actual prices may vary. FluxCloud price is calculated in real-time from our pricing API."
           },
           "serverNetwork": {
             "title": "Global Server Network",

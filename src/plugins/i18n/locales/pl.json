@@ -2742,7 +2742,7 @@
           "getStarted": "Rozpocznij Wdrażanie",
           "pricing": {
             "cpu": "CPU",
-            "note": "Ceny są przybliżone i oparte na publicznie dostępnych cenach dla podobnych konfiguracji. FluxCloud oferuje do 70% oszczędności w porównaniu do tradycyjnych dostawców chmury.",
+            "note": "Ceny są przybliżone i oparte na publicznie dostępnych cenach dla podobnych konfiguracji. *Akash Network używa rynku licytacyjnego, więc rzeczywiste ceny mogą się różnić. Cena FluxCloud jest obliczana w czasie rzeczywistym z naszego API cenowego.",
             "pricePerMonth": "Cena/Miesiąc",
             "provider": "Dostawca",
             "ram": "RAM",
