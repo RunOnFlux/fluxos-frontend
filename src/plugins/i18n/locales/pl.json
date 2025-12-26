@@ -2845,7 +2845,10 @@
               "healthChecks": "Monitoring zdrowia",
               "healthChecksDetail": "Wbudowane kontrole zdrowia i nadzór nad procesami",
               "security": "Zwiększone bezpieczeństwo",
-              "securityDetail": "Wykonywanie bez uprawnień root i automatyczna rotacja logów"
+              "securityDetail": "Wykonywanie bez uprawnień root i automatyczna rotacja logów",
+              "unlimitedBuildsDetail": "Bez limitu liczby buildów ani czasu ich trwania",
+              "dedicatedResources": "Dedykowane zasoby",
+              "dedicatedResourcesDetail": "Brak współdzielonego sprzętu - wynajęte zasoby są wyłącznie dla Twojej aplikacji"
             },
             "free": "Początkujący",
             "developer": "Developer",

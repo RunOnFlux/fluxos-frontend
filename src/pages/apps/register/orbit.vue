@@ -714,6 +714,14 @@
                           <VIcon color="success">mdi-infinity</VIcon>
                           <div class="feature-text">
                             <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.unlimitedBuilds') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.unlimitedBuildsDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-memory</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.dedicatedResources') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.dedicatedResourcesDetail') }}</span>
                           </div>
                         </div>
                         <div class="shared-feature-item">
@@ -1212,96 +1220,8 @@
                       </div>
                     </div>
 
-                    <!-- Testing Phase -->
-                    <div v-else-if="!testFinished && !testError" class="testing-phase">
-                      <h3 class="step-title">{{ t('pages.apps.register.orbit.deploy.testingInstallation') }}</h3>
-                      <p class="step-description">
-                        {{ t('pages.apps.register.orbit.deploy.verifyingDeployment') }}
-                      </p>
-
-                      <div class="test-progress">
-                        <LoadingSpinner
-                          v-if="testRunning"
-                          :message="t('pages.apps.register.orbit.deploy.runningTest')"
-                          loading
-                        />
-
-                        <VBtn
-                          v-if="!testRunning && !testFinished"
-                          color="primary"
-                          size="large"
-                          @click="testAppInstall"
-                        >
-                          <VIcon start>mdi-play</VIcon>
-                          {{ t('pages.apps.register.orbit.deploy.startTest') }}
-                        </VBtn>
-
-                        <!-- Test Output -->
-                        <VCard v-if="testOutput.length > 0" class="mt-2 test-output-card">
-                          <VCardTitle class="bg-secondary text-white d-flex align-center">
-                            <VIcon start>mdi-console</VIcon>
-                            {{ t('pages.apps.register.orbit.deploy.testOutput') }}
-                            <VSpacer />
-                            <VBtn
-                              icon
-                              size="small"
-                              color="white"
-                              variant="text"
-                              @click="logsExpanded = !logsExpanded"
-                            >
-                              <VIcon>{{ logsExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</VIcon>
-                            </VBtn>
-                          </VCardTitle>
-                          <VExpandTransition>
-                            <VCardText v-show="logsExpanded" class="test-logs">
-                              <div
-                                v-for="(log, index) in testOutput"
-                                :key="index"
-                                class="log-line"
-                                :class="log.type"
-                              >
-                                {{ log.message }}
-                              </div>
-                            </VCardText>
-                          </VExpandTransition>
-                        </VCard>
-                      </div>
-                    </div>
-
-                    <!-- Test Error -->
-                    <div v-else-if="testError" class="test-error-phase">
-                      <VAlert type="error" variant="tonal" class="mb-4">
-                        <template #prepend>
-                          <VIcon size="48">mdi-alert-circle</VIcon>
-                        </template>
-                        <div>
-                          <strong>{{ t('pages.apps.register.orbit.deploy.testFailed') }}</strong>
-                          <p class="mb-0 mt-2">{{ testErrorMessage }}</p>
-                        </div>
-                      </VAlert>
-
-                      <div class="d-flex justify-center gap-3">
-                        <VBtn
-                          color="primary"
-                          variant="outlined"
-                          @click="testAppInstall"
-                          :loading="testRunning"
-                        >
-                          <VIcon start>mdi-restart</VIcon>
-                          {{ t('pages.apps.register.orbit.deploy.retryTest') }}
-                        </VBtn>
-                        <VBtn
-                          variant="text"
-                          @click="currentStep = 3"
-                        >
-                          <VIcon start>mdi-cog</VIcon>
-                          {{ t('pages.apps.register.orbit.deploy.editConfiguration') }}
-                        </VBtn>
-                      </div>
-                    </div>
-
-                    <!-- Registration Success - Auto advancing to Payment -->
-                    <div v-else-if="testFinished && !testError" class="registration-success">
+                    <!-- Registration Success -->
+                    <div v-else-if="testFinished" class="registration-success">
                       <div class="text-center">
                         <VIcon size="48" color="success" class="mb-2">mdi-check-circle</VIcon>
                         <h3 class="text-h5 font-weight-bold mb-1">Registration Complete</h3>
@@ -1309,36 +1229,6 @@
                           Your application has been successfully registered on the Flux network.
                         </p>
                       </div>
-
-                      <!-- Show test output in success phase -->
-                      <VCard v-if="testOutput.length > 0" class="mt-2 test-output-card">
-                        <VCardTitle class="bg-success text-white d-flex align-center py-2">
-                          <VIcon start size="18">mdi-check-circle</VIcon>
-                          Test Output
-                          <VSpacer />
-                          <VBtn
-                            icon
-                            size="small"
-                            color="white"
-                            variant="text"
-                            @click="logsExpanded = !logsExpanded"
-                          >
-                            <VIcon>{{ logsExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</VIcon>
-                          </VBtn>
-                        </VCardTitle>
-                        <VExpandTransition>
-                          <VCardText v-show="logsExpanded" class="test-logs">
-                            <div
-                              v-for="(log, index) in testOutput"
-                              :key="index"
-                              class="log-line"
-                              :class="log.type"
-                            >
-                              {{ log.message }}
-                            </div>
-                          </VCardText>
-                        </VExpandTransition>
-                      </VCard>
 
                       <div class="text-center mt-3">
                         <p class="text-body-2 text-medium-emphasis">Proceeding to payment...</p>
@@ -3042,13 +2932,8 @@ const loginType = ref('zelcore') // Default to zelcore
 const websocket = ref(null)
 const finalAppSpec = ref(null) // Spec with uploaded contacts
 
-// Test state
-const testRunning = ref(false)
+// Registration success state
 const testFinished = ref(false)
-const testError = ref(false)
-const testErrorMessage = ref('')
-const testOutput = ref([])
-const logsExpanded = ref(true)
 
 // Payment state
 const paymentProcessing = ref(false)
@@ -3617,9 +3502,18 @@ const propagateSignedMessage = async () => {
     isSigning.value = false
     isPropagating.value = false
 
-    // Auto-start test after successful registration
-    await nextTick()
-    testAppInstall()
+    // Skip testing phase - go directly to success
+    testFinished.value = true
+
+    // Auto-advance to Payment step after a brief delay
+    setTimeout(() => {
+      currentStep.value = 6
+
+      // For free plan, start deployment monitoring immediately
+      if (selectedPlan.value === 'free') {
+        startPaymentMonitoring()
+      }
+    }, 1500)
   } catch (error) {
     console.error('Propagation error:', error)
     registrationError.value = error.message || 'Failed to propagate registration'
@@ -3646,73 +3540,6 @@ const retryRegistration = async () => {
   registrationHash.value = null
   registrationError.value = ''
   await startRegistration()
-}
-
-// Test app installation
-const testAppInstall = async () => {
-  if (!registrationHash.value) {
-    testErrorMessage.value = 'No registration hash found'
-    testError.value = true
-    
-    return
-  }
-
-  testRunning.value = true
-  testFinished.value = false
-  testError.value = false
-  testErrorMessage.value = ''
-  testOutput.value = []
-
-  try {
-    const zelidauth = localStorage.getItem('zelidauth')
-
-    addTestOutput('Starting installation test...', 'info')
-    addTestOutput(`Registration hash: ${registrationHash.value}`, 'info')
-
-    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
-
-    if (response.data.status === 'error') {
-      throw new Error(response.data.data?.message || response.data.data || 'Test failed')
-    }
-
-    // Parse test results
-    const testData = response.data.data
-
-    if (Array.isArray(testData)) {
-      testData.forEach(item => {
-        addTestOutput(item.message || JSON.stringify(item), item.status === 'error' ? 'error' : 'success')
-      })
-    } else if (typeof testData === 'object') {
-      addTestOutput(testData.message || 'Test completed', 'success')
-    } else {
-      addTestOutput(String(testData), 'success')
-    }
-
-    addTestOutput('Installation test completed successfully!', 'success')
-    testFinished.value = true
-
-    // Auto-advance to Payment step after a brief delay
-    setTimeout(() => {
-      currentStep.value = 6
-
-      // For free plan, start deployment monitoring immediately
-      if (selectedPlan.value === 'free') {
-        startPaymentMonitoring()
-      }
-    }, 1500)
-  } catch (error) {
-    console.error('Test error:', error)
-    addTestOutput(`Error: ${error.message}`, 'error')
-    testErrorMessage.value = error.message || 'Installation test failed'
-    testError.value = true
-  } finally {
-    testRunning.value = false
-  }
-}
-
-// Add test output
-const addTestOutput = (message, type = 'info') => {
-  testOutput.value.push({ message, type, timestamp: new Date().toISOString() })
 }
 
 // Payment monitoring
@@ -3955,8 +3782,6 @@ const resetForm = () => {
   finalAppSpec.value = null
   signature.value = ''
   testFinished.value = false
-  testError.value = false
-  testOutput.value = []
   paymentConfirmed.value = false
   paymentProcessing.value = false
 }

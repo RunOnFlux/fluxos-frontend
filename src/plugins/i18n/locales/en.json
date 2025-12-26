@@ -2845,7 +2845,10 @@
               "healthChecks": "Health Monitoring",
               "healthChecksDetail": "Built-in health checks and process supervision",
               "security": "Enhanced Security",
-              "securityDetail": "Non-root execution and automatic log rotation"
+              "securityDetail": "Non-root execution and automatic log rotation",
+              "unlimitedBuildsDetail": "No limit on build count or build duration",
+              "dedicatedResources": "Dedicated Resources",
+              "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
             "free": "Beginner",
             "developer": "Developer",
