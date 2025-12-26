@@ -95,48 +95,6 @@
         </VCardText>
       </VCard>
 
-      <!-- Why Choose Flux Cloud Section -->
-      <VCard class="section-card why-choose-section">
-        <VCardText>
-          <h2 class="section-title">
-            <VIcon size="28" color="primary" class="mr-2">mdi-cloud-check</VIcon>
-            {{ t('pages.apps.register.orbit.whyChoose.title') }}
-          </h2>
-          <p class="section-subtitle">{{ t('pages.apps.register.orbit.whyChoose.subtitle') }}</p>
-
-          <div class="advantages-grid four-cards">
-            <div class="advantage-card">
-              <VIcon size="32" color="success">mdi-cash-multiple</VIcon>
-              <div class="advantage-content">
-                <h4>{{ t('pages.apps.register.orbit.comparison.advantage1.title') }}</h4>
-                <p>{{ t('pages.apps.register.orbit.comparison.advantage1.description') }}</p>
-              </div>
-            </div>
-            <div class="advantage-card">
-              <VIcon size="32" color="primary">mdi-memory</VIcon>
-              <div class="advantage-content">
-                <h4>{{ t('pages.apps.register.orbit.comparison.advantage2.title') }}</h4>
-                <p>{{ t('pages.apps.register.orbit.comparison.advantage2.description') }}</p>
-              </div>
-            </div>
-            <div class="advantage-card">
-              <VIcon size="32" color="warning">mdi-infinity</VIcon>
-              <div class="advantage-content">
-                <h4>{{ t('pages.apps.register.orbit.comparison.advantage3.title') }}</h4>
-                <p>{{ t('pages.apps.register.orbit.comparison.advantage3.description') }}</p>
-              </div>
-            </div>
-            <div class="advantage-card">
-              <VIcon size="32" color="info">mdi-earth</VIcon>
-              <div class="advantage-content">
-                <h4>{{ t('pages.apps.register.orbit.comparison.advantage4.title') }}</h4>
-                <p>{{ t('pages.apps.register.orbit.comparison.advantage4.description') }}</p>
-              </div>
-            </div>
-          </div>
-        </VCardText>
-      </VCard>
-
       <!-- How Orbit Compares Section -->
       <VCard class="section-card orbit-comparison-section">
         <VCardText>
@@ -163,8 +121,8 @@
                 <tr class="orbit-row highlight-row">
                   <td class="provider-col">
                     <div class="provider-cell-inner">
-                      <VIcon size="20" color="primary">mdi-orbit</VIcon>
-                      <span class="provider-name">Orbit</span>
+                      <VIcon size="20" color="primary">mdi-rocket-launch</VIcon>
+                      <span class="provider-name">FluxCloud Orbit</span>
                       <VChip size="x-small" color="success" variant="flat" class="ml-1">{{ t('pages.apps.register.orbit.comparison.best') }}</VChip>
                     </div>
                   </td>
@@ -434,6 +392,12 @@ const benefits = computed(() => [
     color: 'primary',
     title: t('pages.apps.register.landing.benefits.loadBalancer.title'),
     description: t('pages.apps.register.landing.benefits.loadBalancer.description'),
+  },
+  {
+    icon: 'mdi-memory',
+    color: 'warning',
+    title: t('pages.apps.register.landing.benefits.dedicatedResources.title'),
+    description: t('pages.apps.register.landing.benefits.dedicatedResources.description'),
   },
 ])
 
@@ -1076,54 +1040,6 @@ onMounted(async () => {
 
 .pricing-note-text {
   flex: 1;
-}
-
-/* Why Choose Flux Cloud Section */
-.why-choose-section .section-title {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.advantages-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  margin-top: 1rem;
-}
-
-.advantages-grid.four-cards {
-  grid-template-columns: repeat(4, 1fr);
-}
-
-.advantage-card {
-  display: flex;
-  align-items: flex-start;
-  gap: 1rem;
-  padding: 1.5rem;
-  background: rgba(var(--v-theme-on-surface), 0.03);
-  border-radius: 12px;
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.advantage-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-}
-
-.advantage-content h4 {
-  font-size: 1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: rgb(var(--v-theme-on-surface));
-}
-
-.advantage-content p {
-  font-size: 0.875rem;
-  color: rgba(var(--v-theme-on-surface), 0.7);
-  margin: 0;
-  line-height: 1.5;
 }
 
 /* Orbit Comparison Section */

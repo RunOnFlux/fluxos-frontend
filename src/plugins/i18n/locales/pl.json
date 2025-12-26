@@ -2670,6 +2670,10 @@
               "description": "Brak pojedynczego punktu awarii. Twoje aplikacje działają na tysiącach niezależnie zarządzanych węzłów na całym świecie.",
               "title": "Prawdziwie Zdecentralizowany"
             },
+            "dedicatedResources": {
+              "description": "Gwarantowane CPU, RAM i pamięć masowa. Bez współdzielonej infrastruktury czy zimnych startów.",
+              "title": "Dedykowane Zasoby"
+            },
             "freeDomain": {
               "description": "Automatyczne zarządzanie domenami i certyfikaty SSL w cenie. Wskaż swoją domenę, a my zajmiemy się resztą bez konfiguracji.",
               "title": "Bezpłatna Usługa Zarządzania Domeną"
@@ -2691,7 +2695,7 @@
               "title": "Bez Uzależnienia od Dostawcy"
             },
             "scalable": {
-              "description": "Skaluj od 3 do ponad 100 instancji natychmiast. Płać tylko za to, czego używasz, z elastyczną alokacją zasobów.",
+              "description": "Skaluj od 1 do 100 instancji natychmiast. Płać tylko za to, czego używasz, z elastyczną alokacją zasobów.",
               "title": "Natychmiast Skalowalny"
             },
             "title": "Dlaczego Wybrać FluxCloud?"
@@ -3138,27 +3142,7 @@
             "limited": "Ograniczone",
             "creditBased": "Na kredyty",
             "usageBased": "Wg użycia",
-            "minutes": "min/mies",
-            "advantage1": {
-              "title": "Do 90% taniej",
-              "description": "Oszczędzaj w porównaniu z Vercel, Netlify i Render dzięki konkurencyjnym cenom."
-            },
-            "advantage2": {
-              "title": "Dedykowane zasoby",
-              "description": "Gwarantowane CPU i RAM. Bez współdzielonej infrastruktury czy zimnych startów."
-            },
-            "advantage3": {
-              "title": "Nieograniczone buildy",
-              "description": "Bez limitów buildów ani ograniczeń czasowych. Wdrażaj tak często, jak potrzebujesz."
-            },
-            "advantage4": {
-              "title": "Zdecentralizowana sieć",
-              "description": "Wdrażaj w globalnej sieci niezależnych węzłów. Bez pojedynczego punktu awarii."
-            }
-          },
-          "whyChoose": {
-            "title": "Dlaczego Orbit na Flux Cloud",
-            "subtitle": "Zdecentralizowana infrastruktura z niezrównaną wartością i wydajnością"
+            "minutes": "min/mies"
           }
         }
       }

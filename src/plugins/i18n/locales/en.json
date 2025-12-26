@@ -2679,7 +2679,7 @@
             },
             "scalable": {
               "title": "Instantly Scalable",
-              "description": "Scale from 3 to 100+ instances instantly. Pay only for what you use with flexible resource allocation."
+              "description": "Scale from 1 to 100 instances instantly. Pay only for what you use with flexible resource allocation."
             },
             "noVendor": {
               "title": "No Vendor Lock-in",
@@ -2696,6 +2696,10 @@
             "loadBalancer": {
               "title": "Load Balancer Integrated",
               "description": "Built-in load balancing across all instances. Automatic traffic distribution ensures optimal performance and reliability."
+            },
+            "dedicatedResources": {
+              "title": "Dedicated Resources",
+              "description": "Get guaranteed CPU & RAM & Storage. No shared infrastructure or cold starts."
             }
           },
           "pricing": {
@@ -3138,27 +3142,7 @@
             "limited": "Limited",
             "creditBased": "Credit-based",
             "usageBased": "Usage-based",
-            "minutes": "min/mo",
-            "advantage1": {
-              "title": "Up to 90% Cheaper",
-              "description": "Save significantly compared to Vercel, Netlify, and Render with our competitive pricing."
-            },
-            "advantage2": {
-              "title": "Dedicated Resources",
-              "description": "Get guaranteed CPU & RAM. No shared infrastructure or cold starts."
-            },
-            "advantage3": {
-              "title": "Unlimited Builds",
-              "description": "No build limits or time restrictions. Deploy as often as you need."
-            },
-            "advantage4": {
-              "title": "Decentralized Network",
-              "description": "Deploy on a global network of independent nodes. No single point of failure."
-            }
-          },
-          "whyChoose": {
-            "title": "Why Choose Orbit on Flux Cloud",
-            "subtitle": "Decentralized infrastructure with unbeatable value and performance"
+            "minutes": "min/mo"
           }
         }
       }
