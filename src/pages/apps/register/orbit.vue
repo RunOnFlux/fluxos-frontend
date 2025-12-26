@@ -1827,8 +1827,9 @@ const detectPortFromPackageJson = content => {
     // ==========================================
 
     // Vue.js (often uses Vite, but production runs on 3000)
+    // Don't check 'preview' or 'dev' - those are dev server ports, not production
     if (deps['vue']) {
-      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      const customPort = findPortInScripts(['start', 'serve'])
       if (customPort) return { port: customPort, framework: 'Vue' }
 
       // Production static servers default to 3000
@@ -1837,7 +1838,7 @@ const detectPortFromPackageJson = content => {
 
     // React (often uses Vite/CRA, but production runs on 3000)
     if (deps['react']) {
-      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      const customPort = findPortInScripts(['start', 'serve'])
       if (customPort) return { port: customPort, framework: 'React' }
 
       // Production static servers default to 3000
@@ -1846,7 +1847,7 @@ const detectPortFromPackageJson = content => {
 
     // Svelte (not SvelteKit - plain Svelte apps)
     if (deps['svelte'] && !deps['@sveltejs/kit']) {
-      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      const customPort = findPortInScripts(['start', 'serve'])
       if (customPort) return { port: customPort, framework: 'Svelte' }
 
       return { port: 3000, framework: 'Svelte' }
@@ -1862,7 +1863,7 @@ const detectPortFromPackageJson = content => {
 
     // Preact
     if (deps['preact']) {
-      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      const customPort = findPortInScripts(['start', 'serve'])
       if (customPort) return { port: customPort, framework: 'Preact' }
 
       return { port: 3000, framework: 'Preact' }
@@ -1870,7 +1871,7 @@ const detectPortFromPackageJson = content => {
 
     // Solid.js
     if (deps['solid-js']) {
-      const customPort = findPortInScripts(['start', 'serve', 'dev'])
+      const customPort = findPortInScripts(['start', 'serve'])
       if (customPort) return { port: customPort, framework: 'Solid' }
 
       return { port: 3000, framework: 'Solid' }
@@ -1878,7 +1879,7 @@ const detectPortFromPackageJson = content => {
 
     // Qwik
     if (deps['@builder.io/qwik']) {
-      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      const customPort = findPortInScripts(['start', 'serve'])
       if (customPort) return { port: customPort, framework: 'Qwik' }
 
       return { port: 3000, framework: 'Qwik' }
@@ -1890,13 +1891,11 @@ const detectPortFromPackageJson = content => {
     // ==========================================
 
     // Vite (build tool - production uses static server on 3000)
+    // Don't check 'dev' or 'preview' - those are Vite dev server ports
+    // In production, Vite apps are served by static servers (serve, http-server, nginx)
     if (deps['vite']) {
-      // Check for preview port (more representative of production)
-      const previewScript = pkg.scripts?.preview || ''
-      const previewPort = previewScript.match(/--port[=\s]+(\d+)|-p\s*(\d+)/)
-      if (previewPort) {
-        return { port: parseInt(previewPort[1] || previewPort[2], 10), framework: 'Vite' }
-      }
+      const customPort = findPortInScripts(['start', 'serve'])
+      if (customPort) return { port: customPort, framework: 'Vite' }
 
       // For production, Vite apps are served by static servers (default 3000)
       return { port: 3000, framework: 'Vite' }
@@ -1927,9 +1926,12 @@ const detectPortFromPackageJson = content => {
     }
 
     // ==========================================
-    // 5. Check scripts for explicit PORT pattern
+    // 5. Check production scripts for explicit PORT pattern
+    // Only check start/serve scripts, not dev/preview which are for development
     // ==========================================
-    for (const script of Object.values(pkg.scripts || {})) {
+    const productionScripts = ['start', 'serve', 'production', 'prod']
+    for (const scriptName of productionScripts) {
+      const script = pkg.scripts?.[scriptName] || ''
       const portMatch = script.match(/PORT=(\d+)|--port[=\s]+(\d+)|-p\s*(\d+)/)
       if (portMatch) {
         return { port: parseInt(portMatch[1] || portMatch[2] || portMatch[3], 10), framework: null }
