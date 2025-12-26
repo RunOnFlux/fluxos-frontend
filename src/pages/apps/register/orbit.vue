@@ -699,109 +699,113 @@
                       {{ t('pages.apps.register.orbit.pricing.stepDescription') }}
                     </p>
 
-                    <div class="plans-grid">
-                      <!-- Beta Plan (Active) - First -->
-                      <div
-                        class="plan-card recommended"
-                        :class="{ 'selected': selectedPlan === 'beta' }"
-                        @click="selectedPlan = 'beta'"
-                      >
-                        <div class="recommended-badge">
-                          {{ t('pages.apps.register.orbit.pricing.beta') }}
+                    <!-- Shared Features Card -->
+                    <div class="shared-features-card">
+                      <div class="shared-features-header">
+                        <div class="shared-features-title">
+                          <VIcon class="orbit-icon">mdi-orbit</VIcon>
+                          <h4>{{ t('pages.apps.register.orbit.pricing.sharedFeatures.title') }}</h4>
                         </div>
-
-                        <div class="plan-price-badge">
-                          <span class="price-amount">$0</span>
-                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
-                        </div>
-
-                        <div class="plan-header">
-                          <h3 class="plan-name">{{ t('pages.apps.register.orbit.pricing.beta') }}</h3>
-                          <p class="plan-description">{{ t('pages.apps.register.orbit.pricing.betaPriceDetail') }}</p>
-                        </div>
-
-                        <div class="plan-resources">
-                          <div class="resource-row">
-                            <VIcon class="resource-icon deployments-icon">mdi-infinity</VIcon>
-                            <span class="resource-label">Deployments</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.deployments') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon builds-icon">mdi-hammer-wrench</VIcon>
-                            <span class="resource-label">Builds</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.builds') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon cpu-icon">mdi-speedometer</VIcon>
-                            <span class="resource-label">CPU</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.cpu') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon ram-icon">mdi-memory</VIcon>
-                            <span class="resource-label">RAM</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.ram') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon ssd-icon">mdi-harddisk</VIcon>
-                            <span class="resource-label">Storage</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.storage') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon instances-icon">mdi-server-network</VIcon>
-                            <span class="resource-label">Instances</span>
-                            <span class="resource-value">2</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon frameworks-icon">mdi-code-tags</VIcon>
-                            <span class="resource-label">Frameworks</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.frameworks') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon branch-icon">mdi-source-branch</VIcon>
-                            <span class="resource-label">Previews</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.branchPreviews') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon cicd-icon">mdi-pipe</VIcon>
-                            <span class="resource-label">CI/CD</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.betaFeatures.cicd') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon domain-icon">mdi-web</VIcon>
-                            <span class="resource-label">Domain</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.customDomain') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon geo-icon">mdi-earth</VIcon>
-                            <span class="resource-label">Geo</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.geolocation') }}</span>
-                          </div>
-                        </div>
-
-                        <div class="plan-btn-wrapper">
-                          <VBtn
-                            block
-                            color="success"
-                            size="large"
-                            variant="elevated"
-                            class="plan-btn"
-                            @click.stop="selectedPlan = 'beta'"
-                          >
-                            <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'beta' ? 'Selected' : 'Select Plan' }}
-                          </VBtn>
-                        </div>
+                        <p class="shared-features-subtitle">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.subtitle') }}</p>
                       </div>
 
-                      <!-- Free Plan (Coming Soon) -->
-                      <div class="plan-card disabled-plan">
-                        <div class="coming-soon-badge">
-                          {{ t('pages.apps.register.orbit.pricing.comingSoon') }}
+                      <div class="shared-features-grid">
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-infinity</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.unlimitedBuilds') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-code-tags</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.frameworks') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.frameworksDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-auto-fix</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.zeroConfig') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.zeroConfigDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-pipe</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.cicd') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.cicdDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-web</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.customDomain') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.customDomainDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-earth</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.geolocation') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.geolocationDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-source-branch</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.branchPreviews') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.branchPreviewsDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-backup-restore</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.autoRollback') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.autoRollbackDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-folder-multiple</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.monorepo') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.monorepoDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-heart-pulse</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.healthChecks') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.healthChecksDetail') }}</span>
+                          </div>
+                        </div>
+                        <div class="shared-feature-item">
+                          <VIcon color="success">mdi-shield-check</VIcon>
+                          <div class="feature-text">
+                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.security') }}</span>
+                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.securityDetail') }}</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <h4 class="plans-section-title">{{ t('pages.apps.register.orbit.pricing.allPlansInclude') }}</h4>
+
+                    <div class="plans-grid">
+                      <!-- Free Plan -->
+                      <div
+                        class="plan-card"
+                        :class="{ 'selected': selectedPlan === 'free' }"
+                        @click="selectedPlan = 'free'"
+                      >
+                        <div class="plan-price-badge">
+                          <span class="price-amount">$0<span class="price-asterisk">*</span></span>
+                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
                         </div>
 
-                        <div class="plan-price-badge disabled">
-                          <span class="price-amount">$0</span>
-                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
+                        <div class="first-month-free-badge">
+                          <VIcon size="14">mdi-gift-outline</VIcon>
+                          {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
                         </div>
 
                         <div class="plan-header">
@@ -810,16 +814,6 @@
                         </div>
 
                         <div class="plan-resources">
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-layers-triple</VIcon>
-                            <span class="resource-label">Deployments</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.freeFeatures.deployments') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-hammer-wrench</VIcon>
-                            <span class="resource-label">Builds</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.freeFeatures.builds') }}</span>
-                          </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-speedometer</VIcon>
                             <span class="resource-label">CPU</span>
@@ -840,37 +834,100 @@
                             <span class="resource-label">Instances</span>
                             <span class="resource-value">1</span>
                           </div>
+                        </div>
+
+                        <div class="plan-btn-wrapper">
+                          <VBtn
+                            block
+                            color="primary"
+                            size="large"
+                            variant="elevated"
+                            class="plan-btn"
+                            @click.stop="selectedPlan = 'free'"
+                          >
+                            <VIcon start>mdi-check-circle</VIcon>
+                            {{ selectedPlan === 'free' ? 'Selected' : 'Select Plan' }}
+                          </VBtn>
+                        </div>
+                      </div>
+
+                      <!-- Developer Plan -->
+                      <div
+                        class="plan-card recommended"
+                        :class="{ 'selected': selectedPlan === 'developer' }"
+                        @click="selectedPlan = 'developer'"
+                      >
+                        <div class="recommended-badge">
+                          {{ t('pages.apps.register.orbit.pricing.mostPopular') }}
+                        </div>
+
+                        <div class="plan-price-badge">
+                          <span class="price-amount">$2.38</span>
+                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
+                        </div>
+
+                        <div class="first-month-free-badge">
+                          <VIcon size="14">mdi-gift-outline</VIcon>
+                          {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
+                        </div>
+
+                        <div class="plan-header">
+                          <h3 class="plan-name">{{ t('pages.apps.register.orbit.pricing.developer') }}</h3>
+                          <p class="plan-description">{{ t('pages.apps.register.orbit.pricing.developerPriceDetail') }}</p>
+                        </div>
+
+                        <div class="plan-resources">
                           <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-code-tags</VIcon>
-                            <span class="resource-label">Frameworks</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.freeFeatures.frameworks') }}</span>
+                            <VIcon class="resource-icon">mdi-speedometer</VIcon>
+                            <span class="resource-label">CPU</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.developerFeatures.cpu') }}</span>
+                          </div>
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-memory</VIcon>
+                            <span class="resource-label">RAM</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.developerFeatures.ram') }}</span>
+                          </div>
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-harddisk</VIcon>
+                            <span class="resource-label">Storage</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.developerFeatures.storage') }}</span>
+                          </div>
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-server-network</VIcon>
+                            <span class="resource-label">Instances</span>
+                            <span class="resource-value">2</span>
                           </div>
                         </div>
 
                         <div class="plan-btn-wrapper">
                           <VBtn
                             block
-                            color="grey"
+                            color="primary"
                             size="large"
                             variant="elevated"
                             class="plan-btn"
-                            disabled
+                            @click.stop="selectedPlan = 'developer'"
                           >
-                            <VIcon start>mdi-clock-outline</VIcon>
-                            Coming Soon
+                            <VIcon start>mdi-check-circle</VIcon>
+                            {{ selectedPlan === 'developer' ? 'Selected' : 'Select Plan' }}
                           </VBtn>
                         </div>
                       </div>
 
-                      <!-- Pro Plan (Coming Soon) -->
-                      <div class="plan-card disabled-plan">
-                        <div class="coming-soon-badge">
-                          {{ t('pages.apps.register.orbit.pricing.comingSoon') }}
+                      <!-- Pro Plan -->
+                      <div
+                        class="plan-card"
+                        :class="{ 'selected': selectedPlan === 'pro' }"
+                        @click="selectedPlan = 'pro'"
+                      >
+                        <div class="plan-price-badge">
+                          <span class="price-amount">$3.80</span>
+                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
                         </div>
 
-                        <div class="plan-price-badge disabled">
-                          <span class="price-amount">$15</span>
-                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
+                        <div class="first-month-free-badge">
+                          <VIcon size="14">mdi-gift-outline</VIcon>
+                          {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
                         </div>
 
                         <div class="plan-header">
@@ -879,16 +936,6 @@
                         </div>
 
                         <div class="plan-resources">
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-layers-triple</VIcon>
-                            <span class="resource-label">Deployments</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.deployments') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-hammer-wrench</VIcon>
-                            <span class="resource-label">Builds</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.builds') }}</span>
-                          </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-speedometer</VIcon>
                             <span class="resource-label">CPU</span>
@@ -909,37 +956,34 @@
                             <span class="resource-label">Instances</span>
                             <span class="resource-value">2</span>
                           </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-source-branch</VIcon>
-                            <span class="resource-label">Previews</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.branchPreviews') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-web</VIcon>
-                            <span class="resource-label">Domain</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.customDomain') }}</span>
-                          </div>
-                          <div class="resource-row">
-                            <VIcon class="resource-icon">mdi-earth</VIcon>
-                            <span class="resource-label">Geo</span>
-                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.geolocation') }}</span>
-                          </div>
                         </div>
 
                         <div class="plan-btn-wrapper">
                           <VBtn
                             block
-                            color="grey"
+                            color="primary"
                             size="large"
                             variant="elevated"
                             class="plan-btn"
-                            disabled
+                            @click.stop="selectedPlan = 'pro'"
                           >
-                            <VIcon start>mdi-clock-outline</VIcon>
-                            Coming Soon
+                            <VIcon start>mdi-check-circle</VIcon>
+                            {{ selectedPlan === 'pro' ? 'Selected' : 'Select Plan' }}
                           </VBtn>
                         </div>
                       </div>
+                    </div>
+
+                    <!-- Beginner Plan Disclaimer -->
+                    <div class="plan-disclaimer">
+                      <p class="disclaimer-text">
+                        <span class="disclaimer-asterisk">*</span>
+                        {{ t('pages.apps.register.orbit.pricing.beginnerDisclaimer') }}
+                      </p>
+                      <p class="disclaimer-text disclaimer-note">
+                        <VIcon size="16" class="disclaimer-icon">mdi-information-outline</VIcon>
+                        {{ t('pages.apps.register.orbit.pricing.beginnerDowntimeNote') }}
+                      </p>
                     </div>
                   </div>
                 </template>
@@ -1308,8 +1352,8 @@
                 <template #item.6>
                   <div class="step-content payment-step">
 
-                    <!-- Payment Phase (for Pro plan) -->
-                    <div v-if="selectedPlan === 'pro' && !paymentConfirmed" class="payment-phase">
+                    <!-- Payment Phase (for paid plans) -->
+                    <div v-if="(selectedPlan === 'developer' || selectedPlan === 'pro') && !paymentConfirmed" class="payment-phase">
                       <h3 class="step-title">{{ t('pages.apps.register.orbit.deploy.paymentTitle') }}</h3>
                       <p class="step-description">
                         {{ t('pages.apps.register.orbit.deploy.paymentDescription') }}
@@ -1338,7 +1382,7 @@
                         <VCard class="mb-4 price-summary-card" variant="tonal" color="primary">
                           <VCardText class="d-flex align-center justify-space-between">
                             <div>
-                              <span class="text-body-1">{{ t('pages.apps.register.orbit.pricing.pro') }} - {{ billingPeriodLabel }}</span>
+                              <span class="text-body-1">{{ t(`pages.apps.register.orbit.pricing.${selectedPlan}`) }} - {{ billingPeriodLabel }}</span>
                               <p class="text-caption mb-0">{{ discountPercentage > 0 ? t('pages.apps.register.orbit.deploy.discountApplied', { percent: discountPercentage }) : '' }}</p>
                             </div>
                             <span class="text-h4 font-weight-bold">${{ totalPrice.toFixed(2) }}</span>
@@ -1786,86 +1830,232 @@ const detectPortFromPackageJson = content => {
     // Check for known frameworks and their default ports
     const deps = { ...pkg.dependencies, ...pkg.devDependencies }
 
+    // Helper to check scripts for custom port
+    const findPortInScripts = (scriptNames = ['start', 'dev', 'serve', 'preview']) => {
+      for (const name of scriptNames) {
+        const script = pkg.scripts?.[name] || ''
+        const portMatch = script.match(/-p\s*(\d+)|--port[=\s]+(\d+)|PORT=(\d+)/)
+        if (portMatch) {
+          return parseInt(portMatch[1] || portMatch[2] || portMatch[3], 10)
+        }
+      }
+
+      return null
+    }
+
+    // ==========================================
+    // 1. Full-stack/SSR frameworks (have their own server)
+    // ==========================================
+
     // Next.js
     if (deps['next']) {
-      // Check scripts for custom port
-      const devScript = pkg.scripts?.dev || ''
-      const portMatch = devScript.match(/-p\s*(\d+)|--port\s*(\d+)|PORT=(\d+)/)
-      if (portMatch) {
-        return { port: parseInt(portMatch[1] || portMatch[2] || portMatch[3], 10), framework: 'Next.js' }
-      }
-      
+      const customPort = findPortInScripts(['dev', 'start'])
+      if (customPort) return { port: customPort, framework: 'Next.js' }
+
       return { port: 3000, framework: 'Next.js' }
     }
 
     // Nuxt
     if (deps['nuxt'] || deps['nuxt3']) {
+      const customPort = findPortInScripts(['dev', 'start', 'preview'])
+      if (customPort) return { port: customPort, framework: 'Nuxt' }
+
       return { port: 3000, framework: 'Nuxt' }
     }
 
     // Remix
     if (deps['@remix-run/node'] || deps['@remix-run/react']) {
+      const customPort = findPortInScripts(['dev', 'start'])
+      if (customPort) return { port: customPort, framework: 'Remix' }
+
       return { port: 3000, framework: 'Remix' }
     }
 
-    // Vite
-    if (deps['vite']) {
-      return { port: 5173, framework: 'Vite' }
+    // SvelteKit (has its own server in production)
+    if (deps['@sveltejs/kit']) {
+      const customPort = findPortInScripts(['dev', 'preview', 'start'])
+      if (customPort) return { port: customPort, framework: 'SvelteKit' }
+
+      return { port: 3000, framework: 'SvelteKit' }
     }
 
-    // Astro
+    // Astro (can be SSR or static)
     if (deps['astro']) {
+      const customPort = findPortInScripts(['dev', 'preview', 'start'])
+      if (customPort) return { port: customPort, framework: 'Astro' }
+
       return { port: 4321, framework: 'Astro' }
     }
 
+    // ==========================================
+    // 2. Backend frameworks (have their own server)
+    // ==========================================
+
     // Express
     if (deps['express']) {
-      // Try to find port in scripts
-      const startScript = pkg.scripts?.start || pkg.scripts?.dev || ''
-      const portMatch = startScript.match(/PORT=(\d+)/)
-      if (portMatch) {
-        return { port: parseInt(portMatch[1], 10), framework: 'Express' }
-      }
-      
+      const customPort = findPortInScripts(['start', 'dev', 'serve'])
+      if (customPort) return { port: customPort, framework: 'Express' }
+
       return { port: 3000, framework: 'Express' }
     }
 
     // NestJS
     if (deps['@nestjs/core']) {
+      const customPort = findPortInScripts(['start', 'start:dev', 'start:prod'])
+      if (customPort) return { port: customPort, framework: 'NestJS' }
+
       return { port: 3000, framework: 'NestJS' }
     }
 
     // Fastify
     if (deps['fastify']) {
+      const customPort = findPortInScripts(['start', 'dev'])
+      if (customPort) return { port: customPort, framework: 'Fastify' }
+
       return { port: 3000, framework: 'Fastify' }
     }
 
     // Hono
     if (deps['hono']) {
+      const customPort = findPortInScripts(['start', 'dev'])
+      if (customPort) return { port: customPort, framework: 'Hono' }
+
       return { port: 3000, framework: 'Hono' }
     }
 
-    // SvelteKit
-    if (deps['@sveltejs/kit']) {
-      return { port: 5173, framework: 'SvelteKit' }
+    // Koa
+    if (deps['koa']) {
+      const customPort = findPortInScripts(['start', 'dev'])
+      if (customPort) return { port: customPort, framework: 'Koa' }
+
+      return { port: 3000, framework: 'Koa' }
     }
 
-    // Check scripts for PORT pattern
+    // ==========================================
+    // 3. Frontend frameworks (need static server in production)
+    // These use build tools like Vite/Webpack but run on port 3000 in production
+    // ==========================================
+
+    // Vue.js (often uses Vite, but production runs on 3000)
+    if (deps['vue']) {
+      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      if (customPort) return { port: customPort, framework: 'Vue' }
+
+      // Production static servers default to 3000
+      return { port: 3000, framework: 'Vue' }
+    }
+
+    // React (often uses Vite/CRA, but production runs on 3000)
+    if (deps['react']) {
+      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      if (customPort) return { port: customPort, framework: 'React' }
+
+      // Production static servers default to 3000
+      return { port: 3000, framework: 'React' }
+    }
+
+    // Svelte (not SvelteKit - plain Svelte apps)
+    if (deps['svelte'] && !deps['@sveltejs/kit']) {
+      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      if (customPort) return { port: customPort, framework: 'Svelte' }
+
+      return { port: 3000, framework: 'Svelte' }
+    }
+
+    // Angular
+    if (deps['@angular/core']) {
+      const customPort = findPortInScripts(['start', 'serve'])
+      if (customPort) return { port: customPort, framework: 'Angular' }
+
+      return { port: 4200, framework: 'Angular' }
+    }
+
+    // Preact
+    if (deps['preact']) {
+      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      if (customPort) return { port: customPort, framework: 'Preact' }
+
+      return { port: 3000, framework: 'Preact' }
+    }
+
+    // Solid.js
+    if (deps['solid-js']) {
+      const customPort = findPortInScripts(['start', 'serve', 'dev'])
+      if (customPort) return { port: customPort, framework: 'Solid' }
+
+      return { port: 3000, framework: 'Solid' }
+    }
+
+    // Qwik
+    if (deps['@builder.io/qwik']) {
+      const customPort = findPortInScripts(['start', 'serve', 'preview'])
+      if (customPort) return { port: customPort, framework: 'Qwik' }
+
+      return { port: 3000, framework: 'Qwik' }
+    }
+
+    // ==========================================
+    // 4. Build tools (lowest priority - only if no framework detected)
+    // For production deployment, these typically use serve/http-server on port 3000
+    // ==========================================
+
+    // Vite (build tool - production uses static server on 3000)
+    if (deps['vite']) {
+      // Check for preview port (more representative of production)
+      const previewScript = pkg.scripts?.preview || ''
+      const previewPort = previewScript.match(/--port[=\s]+(\d+)|-p\s*(\d+)/)
+      if (previewPort) {
+        return { port: parseInt(previewPort[1] || previewPort[2], 10), framework: 'Vite' }
+      }
+
+      // For production, Vite apps are served by static servers (default 3000)
+      return { port: 3000, framework: 'Vite' }
+    }
+
+    // Webpack (build tool)
+    if (deps['webpack'] || deps['webpack-cli']) {
+      const customPort = findPortInScripts(['start', 'serve'])
+      if (customPort) return { port: customPort, framework: 'Webpack' }
+
+      return { port: 3000, framework: 'Webpack' }
+    }
+
+    // Parcel (build tool)
+    if (deps['parcel'] || deps['parcel-bundler']) {
+      const customPort = findPortInScripts(['start', 'serve', 'dev'])
+      if (customPort) return { port: customPort, framework: 'Parcel' }
+
+      return { port: 1234, framework: 'Parcel' }
+    }
+
+    // esbuild (build tool)
+    if (deps['esbuild']) {
+      const customPort = findPortInScripts(['start', 'serve', 'dev'])
+      if (customPort) return { port: customPort, framework: 'esbuild' }
+
+      return { port: 3000, framework: 'esbuild' }
+    }
+
+    // ==========================================
+    // 5. Check scripts for explicit PORT pattern
+    // ==========================================
     for (const script of Object.values(pkg.scripts || {})) {
-      const portMatch = script.match(/PORT=(\d+)|--port[=\s](\d+)|-p\s*(\d+)/)
+      const portMatch = script.match(/PORT=(\d+)|--port[=\s]+(\d+)|-p\s*(\d+)/)
       if (portMatch) {
         return { port: parseInt(portMatch[1] || portMatch[2] || portMatch[3], 10), framework: null }
       }
     }
 
-    // Default for Node.js projects
+    // ==========================================
+    // 6. Default for Node.js projects
+    // ==========================================
     if (deps || pkg.main || pkg.scripts?.start) {
       return { port: 3000, framework: 'Node.js' }
     }
   } catch {
     // Invalid JSON
   }
-  
+
   return { port: null }
 }
 
@@ -2695,7 +2885,7 @@ const runtimeEnvVarMap = {
 }
 
 // Step 3: Plan
-const selectedPlan = ref('beta')
+const selectedPlan = ref(null)
 const billingPeriod = ref('1')
 
 // Pro plan features
@@ -2875,11 +3065,13 @@ const planResources = computed(() => {
   if (selectedPlan.value === 'free') {
     return { cpu: 1, ram: 2, storage: 10, instances: 1 }
   }
-  if (selectedPlan.value === 'beta') {
-    return { cpu: 2, ram: 4, storage: 20, instances: 2 }
+
+  if (selectedPlan.value === 'developer') {
+    return { cpu: 1.5, ram: 4, storage: 15, instances: 2 }
   }
 
-  return { cpu: 2, ram: 6, storage: 40, instances: 2 }
+  // Pro plan
+  return { cpu: 2, ram: 6, storage: 20, instances: 2 }
 })
 
 // Provider detection
@@ -2924,17 +3116,20 @@ const discountPercentage = computed(() => {
 })
 
 const totalPrice = computed(() => {
-  if (selectedPlan.value === 'free' || selectedPlan.value === 'beta') return 0
+  if (selectedPlan.value === 'free') return 0
   const months = parseInt(billingPeriod.value, 10)
-  const basePrice = 15 * months
+
+  // First month is free
+  const paidMonths = Math.max(0, months - 1)
+  const monthlyPrice = selectedPlan.value === 'developer' ? 2.38 : 3.80
+  const basePrice = monthlyPrice * paidMonths
   const discount = basePrice * (discountPercentage.value / 100)
 
   return basePrice - discount
 })
 
 const formattedTotalPrice = computed(() => {
-  if (selectedPlan.value === 'free') return '$0 (Free)'
-  if (selectedPlan.value === 'beta') return '$0 (Beta)'
+  if (selectedPlan.value === 'free') return '$0 (Beginner)'
 
   return `$${totalPrice.value.toFixed(2)} (${billingPeriodLabel.value})`
 })
@@ -3102,19 +3297,17 @@ const generatedAppSpec = computed(() => {
     ? `orbit_${appName.value || 'app'}_${Date.now().toString(36)}`
     : ''
 
-  // Build domains array - include custom domain for Pro and Beta plans
-  const domains = (selectedPlan.value === 'pro' || selectedPlan.value === 'beta') && customDomain.value
+  // Build domains array - include custom domain for all plans
+  const domains = customDomain.value
     ? [customDomain.value]
     : ['']
 
-  // Build geolocation array - for Pro and Beta plans
+  // Build geolocation array - available for all plans
   // Use selectedGeo to build the geolocation code (same format as games section)
   let geolocation = []
-  if (selectedPlan.value === 'pro' || selectedPlan.value === 'beta') {
-    if (selectedGeo.value.continent && selectedGeo.value.continent !== 'ALL') {
-      const geoCode = buildGeoCode(selectedGeo.value)
-      geolocation = [geoCode]
-    }
+  if (selectedGeo.value.continent && selectedGeo.value.continent !== 'ALL') {
+    const geoCode = buildGeoCode(selectedGeo.value)
+    geolocation = [geoCode]
   }
 
   return {
@@ -3501,8 +3694,9 @@ const testAppInstall = async () => {
     // Auto-advance to Payment step after a brief delay
     setTimeout(() => {
       currentStep.value = 6
-      // For free/beta plan, start deployment monitoring immediately
-      if (selectedPlan.value === 'free' || selectedPlan.value === 'beta') {
+
+      // For free plan, start deployment monitoring immediately
+      if (selectedPlan.value === 'free') {
         startPaymentMonitoring()
       }
     }, 1500)
@@ -3748,7 +3942,7 @@ const resetForm = () => {
   customEnvVars.value = []
 
   // Reset plan
-  selectedPlan.value = 'beta'
+  selectedPlan.value = 'free'
   billingPeriod.value = '1'
   customDomain.value = ''
 
@@ -4112,6 +4306,101 @@ onMounted(() => {
   border-radius: 3px;
 }
 
+/* Shared Features Card */
+.shared-features-card {
+  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.08) 0%, rgba(var(--v-theme-success), 0.08) 100%);
+  border: 2px solid rgba(var(--v-theme-primary), 0.2);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.shared-features-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.shared-features-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.shared-features-title .orbit-icon {
+  font-size: 32px;
+  color: rgb(var(--v-theme-primary));
+}
+
+.shared-features-title h4 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-on-surface));
+  margin: 0;
+}
+
+.shared-features-subtitle {
+  font-size: 1rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  margin: 0;
+  font-style: italic;
+}
+
+.shared-features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.shared-feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 12px;
+  background: rgba(var(--v-theme-surface), 0.8);
+  border-radius: 12px;
+  transition: all 0.2s ease;
+}
+
+.shared-feature-item:hover {
+  background: rgba(var(--v-theme-surface), 1);
+  transform: translateY(-2px);
+}
+
+.shared-feature-item .v-icon {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.feature-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.feature-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.feature-detail {
+  font-size: 0.8rem;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  line-height: 1.3;
+}
+
+.plans-section-title {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: rgba(var(--v-theme-on-surface), 0.8);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* Plans Grid - WordPress style */
 .plans-grid {
   display: grid;
@@ -4226,6 +4515,65 @@ onMounted(() => {
   font-size: 1rem;
   font-weight: 500;
   opacity: 0.7;
+}
+
+.price-asterisk {
+  font-size: 1.2rem;
+  color: rgb(var(--v-theme-warning));
+  vertical-align: super;
+  margin-left: 2px;
+}
+
+.first-month-free-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.15) 0%, rgba(var(--v-theme-success), 0.08) 100%);
+  border: 1px solid rgba(var(--v-theme-success), 0.3);
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-success));
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 8px auto 0;
+  width: fit-content;
+}
+
+.plan-disclaimer {
+  margin-top: 2rem;
+  padding: 1rem 1.5rem;
+  background: rgba(var(--v-theme-on-surface), 0.03);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.disclaimer-text {
+  font-size: 0.85rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.disclaimer-text.disclaimer-note {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.disclaimer-asterisk {
+  color: rgb(var(--v-theme-warning));
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.disclaimer-icon {
+  color: rgb(var(--v-theme-info));
+  flex-shrink: 0;
+  margin-top: 2px;
 }
 
 .plan-header {
