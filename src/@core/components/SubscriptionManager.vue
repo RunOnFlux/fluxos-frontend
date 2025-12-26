@@ -4263,7 +4263,8 @@ const shouldShowTestSection = computed(() => {
                  !paymentProcessing.value &&
                  !paymentConfirmed.value &&
                  (props.newApp || managementAction.value !== 'cancel')
-                 // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
+
+  // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
 
   console.log('🧪 Test Section Visibility Check:', {
     shouldShow: result,

@@ -93,6 +93,8 @@ declare module 'vue' {
     MoreBtn: typeof import('./@core/components/MoreBtn.vue')['default']
     NewListedCard: typeof import('./components/Marketplace/NewListedCard.vue')['default']
     Notifications: typeof import('./@core/components/Notifications.vue')['default']
+    OrbitDeploymentChoice: typeof import('./components/OrbitDeploymentChoice.vue')['default']
+    OrbitPricingCard: typeof import('./components/OrbitPricingCard.vue')['default']
     PanelRenderer: typeof import('./components/Marketplace/PanelRenderer.vue')['default']
     PricingPlans: typeof import('./components/FluxDrive/PricingPlans.vue')['default']
     ProposalDetailDialog: typeof import('./components/xdao/ProposalDetailDialog.vue')['default']

@@ -15,6 +15,18 @@
 
     <!-- Content -->
     <div class="hero-content">
+      <!-- Badge -->
+      <VChip
+        v-if="badgeText"
+        :color="badgeColor"
+        variant="flat"
+        size="small"
+        class="hero-badge mb-3"
+      >
+        <VIcon start size="16">mdi-new-box</VIcon>
+        {{ resolvedBadgeText }}
+      </VChip>
+
       <h1 class="hero-title">{{ resolvedTitle }}</h1>
       <p v-if="resolvedSubtitle" class="hero-subtitle">{{ resolvedSubtitle }}</p>
 
@@ -146,6 +158,16 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+
+  // Badge
+  badgeText: {
+    type: String,
+    default: '',
+  },
+  badgeColor: {
+    type: String,
+    default: 'success',
+  },
 })
 
 const emit = defineEmits(['ctaClick'])
@@ -172,6 +194,7 @@ const resolveI18nValue = value => {
 
 const resolvedTitle = computed(() => resolveI18nValue(props.title))
 const resolvedSubtitle = computed(() => resolveI18nValue(props.subtitle))
+const resolvedBadgeText = computed(() => resolveI18nValue(props.badgeText))
 
 // Use optimized image (WebP with PNG fallback)
 const { url: optimizedBackgroundUrl } = useOptimizedImage(props.backgroundImage)
@@ -248,6 +271,15 @@ const handleCtaClick = event => {
   max-width: 800px;
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-badge {
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .hero-title {

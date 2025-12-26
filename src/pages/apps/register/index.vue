@@ -10,12 +10,12 @@
         overlay-gradient="linear-gradient(135deg, rgba(var(--v-theme-primary), 0.5) 0%, rgba(var(--v-theme-secondary), 0.5) 100%)"
         icon="mdi-cloud-upload"
         icon-aria-label="Flux Cloud Logo"
-        show-cta
-        :cta-text="t('pages.apps.register.landing.getStarted')"
-        cta-icon="mdi-rocket-launch"
-        cta-color="primary"
-        :cta-to="{ name: 'apps-register-configure' }"
+        :badge-text="t('pages.apps.register.orbit.landing.badge')"
+        badge-color="success"
       />
+
+      <!-- Deployment Method Choice Section -->
+      <OrbitDeploymentChoice />
 
       <!-- App Types Section -->
       <VCard class="section-card app-types-section">
@@ -152,6 +152,7 @@ import RelatedLinksGrid from '@/components/RelatedLinksGrid.vue'
 import HeroSection from '@/components/HeroSection.vue'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import CtaSection from '@/components/CtaSection.vue'
+import OrbitDeploymentChoice from '@/components/OrbitDeploymentChoice.vue'
 
 const { t } = useI18n()
 
