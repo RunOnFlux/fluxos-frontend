@@ -2875,6 +2875,9 @@ const planResources = computed(() => {
   if (selectedPlan.value === 'free') {
     return { cpu: 1, ram: 2, storage: 10, instances: 1 }
   }
+  if (selectedPlan.value === 'beta') {
+    return { cpu: 2, ram: 4, storage: 20, instances: 2 }
+  }
 
   return { cpu: 2, ram: 6, storage: 40, instances: 2 }
 })
