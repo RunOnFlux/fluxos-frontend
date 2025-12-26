@@ -2850,8 +2850,8 @@
               "dedicatedResources": "Dedicated Resources",
               "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
-            "free": "Beginner",
-            "developer": "Developer",
+            "free": "Basic",
+            "developer": "Standard",
             "pro": "Pro",
             "beta": "Beta",
             "comingSoon": "Coming Soon",
@@ -2930,9 +2930,9 @@
             "recommended": "Recommended",
             "mostPopular": "Most Popular",
             "firstMonthFree": "First month free",
-            "beginnerDisclaimer": "The Beginner plan is free and automatically renewed by the InFlux Team as long as you have only one Orbit app running on the network. If you deploy additional Orbit apps, each Beginner plan app will be charged $0.99/month.",
-            "beginnerDowntimeNote": "The Beginner plan runs on a single instance. Since Flux is a decentralized network, brief downtime (typically a few minutes) may occur if the hosting node restarts or goes offline. For high-availability applications, we recommend the Developer or Pro plans which run on multiple instances.",
-            "privateRepoDisclaimer": "Private repositories (Enterprise) have an additional cost: $1.33/month for Beginner plan, $2.66/month for Developer and Pro plans."
+            "beginnerDisclaimer": "The Basic plan is free and automatically renewed by the InFlux Team as long as you have only one Orbit app running on the network. If you deploy additional Orbit apps, each Basic plan app will be charged $0.99/month.",
+            "beginnerDowntimeNote": "The Basic plan runs on a single instance. Since Flux is a decentralized network, brief downtime (typically a few minutes) may occur if the hosting node restarts or goes offline. For high-availability applications, we recommend the Standard or Pro plans which run on multiple instances.",
+            "privateRepoDisclaimer": "Private repositories (Enterprise) have an additional cost: $1.33/month for Basic plan, $2.66/month for Standard and Pro plans."
           },
           "review": {
             "stepTitle": "Review & Deploy",
