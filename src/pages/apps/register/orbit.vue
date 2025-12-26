@@ -992,6 +992,10 @@
                         <VIcon size="16" class="disclaimer-icon">mdi-information-outline</VIcon>
                         {{ t('pages.apps.register.orbit.pricing.beginnerDowntimeNote') }}
                       </p>
+                      <p class="disclaimer-text disclaimer-note">
+                        <VIcon size="16" class="disclaimer-icon">mdi-github</VIcon>
+                        {{ t('pages.apps.register.orbit.pricing.privateRepoDisclaimer') }}
+                      </p>
                     </div>
                   </div>
                 </template>
