@@ -2873,10 +2873,10 @@ const showCryptoOptions = ref(false)
 // Plan resources
 const planResources = computed(() => {
   if (selectedPlan.value === 'free') {
-    return { cpu: 1, ram: 2, storage: 10 }
+    return { cpu: 1, ram: 2, storage: 10, instances: 1 }
   }
-  
-  return { cpu: 2, ram: 6, storage: 40 }
+
+  return { cpu: 2, ram: 6, storage: 40, instances: 2 }
 })
 
 // Provider detection
@@ -3120,7 +3120,7 @@ const generatedAppSpec = computed(() => {
     description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
     owner: zelid.value || '',
     contacts: [contactEmail.value],
-    instances: 3,
+    instances: planResources.value.instances,
     staticip: false,
     enterprise: enterpriseId, // Set enterprise flag for private repos
     nodes: [],
