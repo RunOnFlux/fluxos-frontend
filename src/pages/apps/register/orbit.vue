@@ -1246,132 +1246,52 @@
                 <template #item.6>
                   <div class="step-content payment-step">
 
-                    <!-- Payment Phase (for paid plans) -->
-                    <div v-if="(selectedPlan === 'developer' || selectedPlan === 'pro') && !paymentConfirmed" class="payment-phase">
-                      <h3 class="step-title">{{ t('pages.apps.register.orbit.deploy.paymentTitle') }}</h3>
-                      <p class="step-description">
-                        {{ t('pages.apps.register.orbit.deploy.paymentDescription') }}
-                      </p>
-
-                      <!-- Payment Monitoring -->
-                      <div v-if="paymentProcessing" class="payment-monitoring">
-                        <LoadingSpinner
-                          :message="t('pages.apps.register.orbit.deploy.waitingConfirmation')"
-                          loading
-                        />
-                        <VBtn
-                          color="error"
-                          variant="outlined"
-                          class="mt-4"
-                          @click="cancelPaymentMonitoring"
-                        >
-                          <VIcon start>mdi-close</VIcon>
-                          {{ t('pages.apps.register.orbit.deploy.cancel') }}
-                        </VBtn>
+                    <!-- Payment Processing Phase -->
+                    <div v-if="!paymentConfirmed" class="payment-phase">
+                      <!-- Free Month Info -->
+                      <div class="text-center mb-6">
+                        <VAvatar size="80" color="success" variant="tonal" class="mb-4">
+                          <VIcon size="48">mdi-gift-outline</VIcon>
+                        </VAvatar>
+                        <h3 class="text-h4 font-weight-bold mb-2">{{ t('pages.apps.register.orbit.deploy.freeMonthTitle') }}</h3>
+                        <p class="text-body-1 text-medium-emphasis mb-2">
+                          {{ t('pages.apps.register.orbit.deploy.freeMonthDescription') }}
+                        </p>
+                        <VChip color="primary" variant="tonal" size="small">
+                          <VIcon start size="16">mdi-domain</VIcon>
+                          {{ t('pages.apps.register.orbit.deploy.sponsoredBy') }}
+                        </VChip>
                       </div>
 
-                      <!-- Payment Options -->
-                      <div v-else class="payment-options">
-                        <!-- Price Summary -->
-                        <VCard class="mb-4 price-summary-card" variant="tonal" color="primary">
-                          <VCardText class="d-flex align-center justify-space-between">
-                            <div>
-                              <span class="text-body-1">{{ t(`pages.apps.register.orbit.pricing.${selectedPlan}`) }} - {{ billingPeriodLabel }}</span>
-                              <p class="text-caption mb-0">{{ discountPercentage > 0 ? t('pages.apps.register.orbit.deploy.discountApplied', { percent: discountPercentage }) : '' }}</p>
-                            </div>
-                            <span class="text-h4 font-weight-bold">${{ totalPrice.toFixed(2) }}</span>
-                          </VCardText>
-                        </VCard>
+                      <!-- Payment Submission Info -->
+                      <VCard variant="outlined" class="mb-6">
+                        <VCardText class="text-center py-4">
+                          <VIcon color="info" size="24" class="mb-2">mdi-information-outline</VIcon>
+                          <p class="text-body-2 text-medium-emphasis mb-0">
+                            {{ t('pages.apps.register.orbit.deploy.paymentSubmissionInfo') }}
+                          </p>
+                        </VCardText>
+                      </VCard>
 
-                        <VRow>
-                          <!-- Fiat Payment -->
-                          <VCol cols="12" md="6">
-                            <VCard class="payment-method-card h-100" hover @click="showFiatOptions = !showFiatOptions">
-                              <VCardText class="text-center py-6">
-                                <VAvatar size="64" color="success" variant="tonal" class="mb-3">
-                                  <VIcon size="32">mdi-currency-usd</VIcon>
-                                </VAvatar>
-                                <h4 class="text-h6 mb-1">{{ t('pages.apps.register.orbit.deploy.fiatPayment') }}</h4>
-                                <p class="text-body-2 text-medium-emphasis mb-0">{{ t('pages.apps.register.orbit.deploy.fiatDescription') }}</p>
-                              </VCardText>
-                            </VCard>
-
-                            <VExpandTransition>
-                              <div v-if="showFiatOptions" class="fiat-buttons mt-2">
-                                <VBtn
-                                  color="primary"
-                                  variant="flat"
-                                  block
-                                  class="mb-2"
-                                  :loading="checkoutLoading && paymentMethod === 'stripe'"
-                                  @click="initStripePay"
-                                >
-                                  <VIcon start>mdi-credit-card</VIcon>
-                                  {{ t('pages.apps.register.orbit.deploy.payWithStripe') }}
-                                </VBtn>
-                                <VBtn
-                                  color="info"
-                                  variant="flat"
-                                  block
-                                  :loading="checkoutLoading && paymentMethod === 'paypal'"
-                                  @click="initPaypalPay"
-                                >
-                                  <VIcon start>mdi-paypal</VIcon>
-                                  {{ t('pages.apps.register.orbit.deploy.payWithPaypal') }}
-                                </VBtn>
-                              </div>
-                            </VExpandTransition>
-                          </VCol>
-
-                          <!-- Crypto Payment -->
-                          <VCol cols="12" md="6">
-                            <VCard class="payment-method-card h-100" hover @click="showCryptoOptions = !showCryptoOptions">
-                              <VCardText class="text-center py-6">
-                                <VAvatar size="64" color="warning" variant="tonal" class="mb-3">
-                                  <VIcon size="32">mdi-bitcoin</VIcon>
-                                </VAvatar>
-                                <h4 class="text-h6 mb-1">{{ t('pages.apps.register.orbit.deploy.cryptoPayment') }}</h4>
-                                <p class="text-body-2 text-medium-emphasis mb-0">{{ t('pages.apps.register.orbit.deploy.cryptoDescription') }}</p>
-                              </VCardText>
-                            </VCard>
-
-                            <VExpandTransition>
-                              <div v-if="showCryptoOptions" class="crypto-buttons mt-2">
-                                <VBtn
-                                  color="warning"
-                                  variant="flat"
-                                  block
-                                  class="mb-2"
-                                  :loading="checkoutLoading && paymentMethod === 'zelcore'"
-                                  @click="initZelcorePay"
-                                >
-                                  <VIcon start>mdi-wallet</VIcon>
-                                  {{ t('pages.apps.register.orbit.deploy.payWithZelcore') }}
-                                </VBtn>
-                                <VBtn
-                                  color="secondary"
-                                  variant="flat"
-                                  block
-                                  :loading="checkoutLoading && paymentMethod === 'ssp'"
-                                  @click="initSSPPay"
-                                >
-                                  <VIcon start>mdi-shield-check</VIcon>
-                                  {{ t('pages.apps.register.orbit.deploy.payWithSSP') }}
-                                </VBtn>
-                              </div>
-                            </VExpandTransition>
-                          </VCol>
-                        </VRow>
+                      <!-- System Checking -->
+                      <div class="payment-monitoring">
+                        <LoadingSpinner
+                          :message="t('pages.apps.register.orbit.deploy.checkingRegistration')"
+                          loading
+                        />
+                        <p class="text-body-2 text-medium-emphasis text-center mt-4">
+                          {{ t('pages.apps.register.orbit.deploy.checkingDescription') }}
+                        </p>
                       </div>
                     </div>
 
-                    <!-- Deployment Success (Free/Beta plan or after payment) -->
+                    <!-- Deployment Success -->
                     <div v-else class="deployment-success">
                       <div class="text-center">
                         <VIcon size="80" color="success" class="mb-4">mdi-check-circle</VIcon>
-                        <h3 class="text-h4 font-weight-bold mb-2">{{ t('pages.apps.register.orbit.deploy.successTitle') }}</h3>
-                        <p class="text-body-1 text-medium-emphasis mb-6">
-                          {{ t('pages.apps.register.orbit.deploy.successDescription') }}
+                        <h3 class="text-h4 font-weight-bold mb-2">{{ t('pages.apps.register.orbit.deploy.registrationCompleteTitle') }}</h3>
+                        <p class="text-body-1 text-medium-emphasis mb-4">
+                          {{ t('pages.apps.register.orbit.deploy.registrationCompleteDescription') }}
                         </p>
 
                         <VCard variant="outlined" class="mb-4">
@@ -1380,9 +1300,13 @@
                               <VIcon color="primary">mdi-application</VIcon>
                               <span class="text-h6">{{ appName }}</span>
                             </div>
-                            <p class="text-body-2 text-medium-emphasis mb-0">
-                              {{ t('pages.apps.register.orbit.deploy.appAvailableSoon') }}
-                            </p>
+                            <VDivider class="my-3" />
+                            <div class="d-flex align-center justify-center gap-2">
+                              <VIcon color="info" size="20">mdi-server</VIcon>
+                              <p class="text-body-2 text-medium-emphasis mb-0">
+                                {{ t('pages.apps.register.orbit.deploy.nodesSpawning') }}
+                              </p>
+                            </div>
                           </VCardText>
                         </VCard>
 
@@ -3515,10 +3439,8 @@ const propagateSignedMessage = async () => {
     setTimeout(() => {
       currentStep.value = 6
 
-      // For free plan, start deployment monitoring immediately
-      if (selectedPlan.value === 'free') {
-        startPaymentMonitoring()
-      }
+      // Start monitoring for app registration on the network
+      startPaymentMonitoring()
     }, 1500)
   } catch (error) {
     console.error('Propagation error:', error)
@@ -3548,7 +3470,7 @@ const retryRegistration = async () => {
   await startRegistration()
 }
 
-// Payment monitoring
+// Payment monitoring - checks if app specification is registered on the network
 const startPaymentMonitoring = async () => {
   // Clear any existing intervals
   if (paymentMonitoringInterval.value) {
@@ -3572,26 +3494,25 @@ const startPaymentMonitoring = async () => {
     }
   }, 30 * 60 * 1000)
 
-  // Poll every 10 seconds
+  // Poll every 10 seconds - check if app specification exists on the network
   paymentMonitoringInterval.value = setInterval(async () => {
     try {
-      const response = await AppsService.getAppLocation(appName.value)
+      const response = await AppsService.getAppSpecifics(appName.value)
 
-      if (response.data.status === 'success') {
-        const locations = response.data.data
+      if (response.data.status === 'success' && response.data.data) {
+        // App specification is now registered on the network!
+        clearInterval(paymentMonitoringInterval.value)
+        clearTimeout(paymentMonitoringTimeout.value)
+        paymentMonitoringInterval.value = null
+        paymentMonitoringTimeout.value = null
+        paymentConfirmed.value = true
+        paymentProcessing.value = false
 
-        if (locations && locations.length > 0) {
-          // App is now running!
-          clearInterval(paymentMonitoringInterval.value)
-          clearTimeout(paymentMonitoringTimeout.value)
-          paymentMonitoringInterval.value = null
-          paymentMonitoringTimeout.value = null
-          paymentConfirmed.value = true
-          paymentProcessing.value = false
-        }
+        // Refresh user apps to show "My applications" menu item
+        await fluxStore.checkUserApps()
       }
     } catch {
-      // Silently ignore deployment status check errors
+      // Silently ignore - app not yet registered
     }
   }, 10000)
 }
