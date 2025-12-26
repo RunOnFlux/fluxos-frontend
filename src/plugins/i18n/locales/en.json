@@ -2813,7 +2813,9 @@
             "dockerCta": "Deploy with Docker",
             "startingAt": "Starting at",
             "dockerPriceDetail": "3 instances, 2 vCPU, 4GB RAM",
-            "comparisonHint": "Not sure which to choose? Orbit is perfect for most web apps. Docker gives you maximum control."
+            "comparisonHint": "Not sure which to choose? Orbit is perfect for most web apps. Docker gives you maximum control.",
+            "deployment": "deployment",
+            "deployments": "deployments"
           },
           "pricing": {
             "title": "Orbit Plans",
@@ -2932,7 +2934,12 @@
             "firstMonthFree": "First month free",
             "beginnerDisclaimer": "The Basic plan is free and automatically renewed by the InFlux Team as long as you have only one Orbit app running on the network. If you deploy additional Orbit apps, each Basic plan app will be charged $0.99/month.",
             "beginnerDowntimeNote": "The Basic plan runs on a single instance. Since Flux is a decentralized network, brief downtime (typically a few minutes) may occur if the hosting node restarts or goes offline. For high-availability applications, we recommend the Standard or Pro plans which run on multiple instances.",
-            "privateRepoDisclaimer": "Private repositories (Enterprise) have an additional cost: $1.33/month for Basic plan, $2.66/month for Standard and Pro plans."
+            "privateRepoDisclaimer": "Private repositories (Enterprise) have an additional cost: $1.33/month for Basic plan, $2.66/month for Standard and Pro plans.",
+            "competitive": {
+              "savings": "Up to 85% cheaper than Vercel/Render",
+              "dedicated": "Dedicated resources, not shared",
+              "unlimitedBuilds": "Unlimited builds included"
+            }
           },
           "review": {
             "stepTitle": "Review & Deploy",
@@ -3113,6 +3120,45 @@
             "heroDescription": "Deploy any web application directly from GitHub, GitLab, or Bitbucket. Orbit auto-detects your framework and handles everything else.",
             "getStartedFree": "Start Free",
             "viewPricing": "View Pricing"
+          },
+          "comparison": {
+            "title": "How Orbit Compares",
+            "subtitle": "See how Orbit stacks up against other Git deployment platforms",
+            "provider": "Provider",
+            "plan": "Plan",
+            "price": "Price",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "builds": "Builds",
+            "best": "Best Value",
+            "cores": "Cores",
+            "core": "Core",
+            "unlimited": "Unlimited",
+            "shared": "Shared",
+            "limited": "Limited",
+            "creditBased": "Credit-based",
+            "usageBased": "Usage-based",
+            "minutes": "min/mo",
+            "advantage1": {
+              "title": "Up to 90% Cheaper",
+              "description": "Save significantly compared to Vercel, Netlify, and Render with our competitive pricing."
+            },
+            "advantage2": {
+              "title": "Dedicated Resources",
+              "description": "Get guaranteed CPU & RAM. No shared infrastructure or cold starts."
+            },
+            "advantage3": {
+              "title": "Unlimited Builds",
+              "description": "No build limits or time restrictions. Deploy as often as you need."
+            },
+            "advantage4": {
+              "title": "Decentralized Network",
+              "description": "Deploy on a global network of independent nodes. No single point of failure."
+            }
+          },
+          "whyChoose": {
+            "title": "Why Choose Orbit on Flux Cloud",
+            "subtitle": "Decentralized infrastructure with unbeatable value and performance"
           }
         }
       }

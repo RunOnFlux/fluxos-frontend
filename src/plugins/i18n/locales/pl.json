@@ -2813,7 +2813,9 @@
             "dockerCta": "Wdróż z Docker",
             "startingAt": "Od",
             "dockerPriceDetail": "3 instancje, 2 vCPU, 4GB RAM",
-            "comparisonHint": "Nie wiesz, co wybrać? Orbit jest idealny dla większości aplikacji webowych. Docker daje maksymalną kontrolę."
+            "comparisonHint": "Nie wiesz, co wybrać? Orbit jest idealny dla większości aplikacji webowych. Docker daje maksymalną kontrolę.",
+            "deployment": "wdrożenie",
+            "deployments": "wdrożenia"
           },
           "pricing": {
             "title": "Plany Orbit",
@@ -2932,7 +2934,12 @@
             "firstMonthFree": "Pierwszy miesiąc gratis",
             "beginnerDisclaimer": "Plan Basic jest darmowy i automatycznie odnawiany przez zespół InFlux, o ile masz tylko jedną aplikację Orbit działającą w sieci. Jeśli wdrożysz dodatkowe aplikacje Orbit, każda aplikacja na planie Basic będzie kosztować 0,99$/miesiąc.",
             "beginnerDowntimeNote": "Plan Basic działa na pojedynczej instancji. Ponieważ Flux to sieć zdecentralizowana, mogą wystąpić krótkie przestoje (zwykle kilka minut), gdy węzeł hostujący zostanie zrestartowany lub przejdzie offline. Dla aplikacji wymagających wysokiej dostępności zalecamy plany Standard lub Pro, które działają na wielu instancjach.",
-            "privateRepoDisclaimer": "Prywatne repozytoria (Enterprise) mają dodatkowy koszt: 1,33$/miesiąc dla planu Basic, 2,66$/miesiąc dla planów Standard i Pro."
+            "privateRepoDisclaimer": "Prywatne repozytoria (Enterprise) mają dodatkowy koszt: 1,33$/miesiąc dla planu Basic, 2,66$/miesiąc dla planów Standard i Pro.",
+            "competitive": {
+              "savings": "Do 85% taniej niż Vercel/Render",
+              "dedicated": "Dedykowane zasoby, nie współdzielone",
+              "unlimitedBuilds": "Nieograniczone buildy w cenie"
+            }
           },
           "review": {
             "stepTitle": "Przegląd i wdrożenie",
@@ -3113,6 +3120,45 @@
             "heroDescription": "Wdrażaj dowolną aplikację webową bezpośrednio z GitHub, GitLab lub Bitbucket. Orbit automatycznie wykrywa Twój framework i zajmuje się resztą.",
             "getStartedFree": "Zacznij za darmo",
             "viewPricing": "Zobacz cennik"
+          },
+          "comparison": {
+            "title": "Porównanie z konkurencją",
+            "subtitle": "Zobacz jak Orbit wypada na tle innych platform do wdrażania z Git",
+            "provider": "Dostawca",
+            "plan": "Plan",
+            "price": "Cena",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "builds": "Buildy",
+            "best": "Najlepsza oferta",
+            "cores": "Rdzeni",
+            "core": "Rdzeń",
+            "unlimited": "Bez limitu",
+            "shared": "Współdzielone",
+            "limited": "Ograniczone",
+            "creditBased": "Na kredyty",
+            "usageBased": "Wg użycia",
+            "minutes": "min/mies",
+            "advantage1": {
+              "title": "Do 90% taniej",
+              "description": "Oszczędzaj w porównaniu z Vercel, Netlify i Render dzięki konkurencyjnym cenom."
+            },
+            "advantage2": {
+              "title": "Dedykowane zasoby",
+              "description": "Gwarantowane CPU i RAM. Bez współdzielonej infrastruktury czy zimnych startów."
+            },
+            "advantage3": {
+              "title": "Nieograniczone buildy",
+              "description": "Bez limitów buildów ani ograniczeń czasowych. Wdrażaj tak często, jak potrzebujesz."
+            },
+            "advantage4": {
+              "title": "Zdecentralizowana sieć",
+              "description": "Wdrażaj w globalnej sieci niezależnych węzłów. Bez pojedynczego punktu awarii."
+            }
+          },
+          "whyChoose": {
+            "title": "Dlaczego Orbit na Flux Cloud",
+            "subtitle": "Zdecentralizowana infrastruktura z niezrównaną wartością i wydajnością"
           }
         }
       }

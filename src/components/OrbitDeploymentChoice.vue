@@ -59,17 +59,20 @@
 
           <!-- Orbit Pricing Preview -->
           <div class="pricing-preview">
-            <div class="pricing-tiers">
+            <div class="pricing-tiers three-tiers">
               <div class="tier free-tier">
                 <span class="tier-name">{{ t('pages.apps.register.orbit.pricing.free') }}</span>
                 <span class="tier-price">$0<small>/{{ t('common.labels.monthly') }}</small></span>
-                <span class="tier-detail">{{ t('pages.apps.register.orbit.pricing.freeBuilds') }}</span>
+              </div>
+              <div class="tier-divider"></div>
+              <div class="tier standard-tier">
+                <span class="tier-name">{{ t('pages.apps.register.orbit.pricing.developer') }}</span>
+                <span class="tier-price">$2.38<small>/{{ t('common.labels.monthly') }}</small></span>
               </div>
               <div class="tier-divider"></div>
               <div class="tier pro-tier">
                 <span class="tier-name">{{ t('pages.apps.register.orbit.pricing.pro') }}</span>
-                <span class="tier-price">$15<small>/{{ t('common.labels.monthly') }}</small></span>
-                <span class="tier-detail">{{ t('pages.apps.register.orbit.pricing.proBuilds') }}</span>
+                <span class="tier-price">$3.80<small>/{{ t('common.labels.monthly') }}</small></span>
               </div>
             </div>
           </div>
@@ -131,8 +134,7 @@
           <div class="pricing-preview docker-pricing">
             <div class="docker-price">
               <span class="price-label">{{ t('pages.apps.register.orbit.choice.startingAt') }}</span>
-              <span class="price-value">$8.99<small>/{{ t('common.labels.monthly') }}</small></span>
-              <span class="price-detail">{{ t('pages.apps.register.orbit.choice.dockerPriceDetail') }}</span>
+              <span class="price-value">$0.99<small>/{{ t('common.labels.monthly') }}</small></span>
             </div>
           </div>
 
@@ -148,12 +150,6 @@
             {{ t('pages.apps.register.orbit.choice.dockerCta') }}
           </VBtn>
         </div>
-      </div>
-
-      <!-- Comparison hint -->
-      <div class="comparison-hint">
-        <VIcon size="20" color="primary" class="mr-2">mdi-information-outline</VIcon>
-        <span>{{ t('pages.apps.register.orbit.choice.comparisonHint') }}</span>
       </div>
     </VCardText>
   </VCard>
@@ -199,7 +195,6 @@ const selectMethod = method => {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 2rem;
-  margin-bottom: 1.5rem;
 }
 
 .deployment-card {
@@ -348,8 +343,20 @@ const selectMethod = method => {
   margin-top: 0.25rem;
 }
 
+.three-tiers {
+  gap: 0.5rem;
+}
+
+.three-tiers .tier {
+  padding: 0.5rem 0.75rem;
+}
+
 .free-tier .tier-price {
   color: rgb(var(--v-theme-success));
+}
+
+.standard-tier .tier-price {
+  color: rgb(var(--v-theme-info));
 }
 
 .pro-tier .tier-price {
@@ -393,17 +400,6 @@ const selectMethod = method => {
 .card-cta {
   width: 100%;
   margin-top: auto;
-}
-
-.comparison-hint {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-  background: rgba(var(--v-theme-primary), 0.05);
-  border-radius: 8px;
-  font-size: 0.875rem;
-  color: rgba(var(--v-theme-on-surface), 0.8);
 }
 
 /* Responsive */
