@@ -3033,10 +3033,10 @@
             "freeMonthDescription": "Twój pierwszy miesiąc hostingu jest całkowicie bezpłatny, sponsorowany przez InFlux Technologies.",
             "sponsoredBy": "Sponsorowane przez InFlux Technologies",
             "paymentSubmissionInfo": "Płatność za Twoją aplikację zostanie przesłana do sieci w ciągu kilku najbliższych minut.",
-            "checkingRegistration": "Sprawdzanie statusu rejestracji...",
-            "checkingDescription": "Weryfikacja, czy Twoja aplikacja została pomyślnie zarejestrowana w sieci Flux.",
-            "registrationCompleteTitle": "Rejestracja zakończona!",
-            "registrationCompleteDescription": "Twoja aplikacja została pomyślnie zarejestrowana w sieci Flux.",
+            "checkingRegistration": "Sprawdzanie statusu płatności/rejestracji...",
+            "checkingDescription": "Weryfikacja, czy Twoja aplikacja została pomyślnie opłacona/zarejestrowana w sieci Flux.",
+            "registrationCompleteTitle": "Rejestracja/Płatność zakończona!",
+            "registrationCompleteDescription": "Twoja aplikacja została pomyślnie opłacona/zarejestrowana w sieci Flux.",
             "nodesSpawning": "Węzły sieci uruchamiają teraz Twoją aplikację. Będzie dostępna wkrótce."
           },
           "navigation": {

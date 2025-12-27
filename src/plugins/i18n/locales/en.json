@@ -3033,10 +3033,10 @@
             "freeMonthDescription": "Your first month of hosting is completely free, sponsored by InFlux Technologies.",
             "sponsoredBy": "Sponsored by InFlux Technologies",
             "paymentSubmissionInfo": "The payment for your application will be submitted to the network in the next few minutes.",
-            "checkingRegistration": "Checking registration status...",
-            "checkingDescription": "Verifying that your application has been successfully registered on the Flux network.",
-            "registrationCompleteTitle": "Registration Complete!",
-            "registrationCompleteDescription": "Your application has been successfully registered on the Flux network.",
+            "checkingRegistration": "Checking payment registration status...",
+            "checkingDescription": "Verifying that your application has been successfully paid/registered on the Flux network.",
+            "registrationCompleteTitle": "Registration/Payment Complete!",
+            "registrationCompleteDescription": "Your application has been successfully paid/registered on the Flux network.",
             "nodesSpawning": "Network nodes are now spawning your application. It will be available shortly."
           },
           "navigation": {
