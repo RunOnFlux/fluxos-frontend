@@ -434,6 +434,17 @@
                         persistent-hint
                       />
 
+                      <VSelect
+                        v-model="pollingInterval"
+                        :items="pollingIntervalOptions"
+                        label="Auto-Update Polling Interval"
+                        prepend-inner-icon="mdi-update"
+                        variant="outlined"
+                        class="mb-4"
+                        hint="How often Orbit checks your repository for new commits"
+                        persistent-hint
+                      />
+
                       <!-- Runtime Version Selection -->
                       <VExpansionPanels class="mb-4">
                         <VExpansionPanel>
@@ -1307,6 +1318,47 @@
                                 {{ t('pages.apps.register.orbit.deploy.nodesSpawning') }}
                               </p>
                             </div>
+
+                            <VDivider class="my-3" />
+
+                            <!-- Access Information -->
+                            <div class="text-left">
+                              <p class="text-subtitle-2 font-weight-medium mb-2">
+                                <VIcon size="18" class="mr-1">mdi-information-outline</VIcon>
+                                Once your app is installed on a node, you can access it at:
+                              </p>
+                              <div class="access-info-list">
+                                <div class="d-flex align-center gap-2 mb-2">
+                                  <VIcon size="16" color="primary">mdi-web</VIcon>
+                                  <span class="text-body-2">
+                                    <strong>App URL:</strong>
+                                    <code class="ml-1">https://{{ appName }}.app.runonflux.io</code>
+                                  </span>
+                                </div>
+                                <div class="d-flex align-center gap-2 mb-2">
+                                  <VIcon size="16" color="success">mdi-api</VIcon>
+                                  <span class="text-body-2">
+                                    <strong>API Status:</strong>
+                                    <code class="ml-1">https://{{ appName }}.app.runonflux.io:{{ orbitManagementPort }}/status</code>
+                                  </span>
+                                </div>
+                                <div class="d-flex align-center gap-2">
+                                  <VIcon size="16" color="info">mdi-book-open-variant</VIcon>
+                                  <span class="text-body-2">
+                                    <strong>API Docs:</strong>
+                                    <a
+                                      href="https://orbit.app.runonflux.io/docs/api/webhook-api"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      class="ml-1"
+                                    >
+                                      https://orbit.app.runonflux.io/docs/api/webhook-api
+                                      <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                    </a>
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
                           </VCardText>
                         </VCard>
 
@@ -1504,6 +1556,22 @@ const appDescription = ref('')
 const appPort = ref('3000')
 const portAutoDetected = ref(false)
 const contactEmail = ref('')
+const pollingInterval = ref('1800') // Default: 30 minutes in seconds
+
+// Polling interval options (value in seconds, 'disabled' to not add env var)
+const pollingIntervalOptions = [
+  { title: 'Disabled', value: 'disabled' },
+  { title: '5 minutes', value: '300' },
+  { title: '10 minutes', value: '600' },
+  { title: '15 minutes', value: '900' },
+  { title: '30 minutes (default)', value: '1800' },
+  { title: '1 hour', value: '3600' },
+  { title: '2 hours', value: '7200' },
+  { title: '6 hours', value: '21600' },
+  { title: '12 hours', value: '43200' },
+  { title: '24 hours', value: '86400' },
+]
+
 const selectedRuntime = ref(null)
 const runtimeVersion = ref('')
 const customEnvVars = ref([])
@@ -2835,12 +2903,24 @@ const getGeolocationLabel = code => {
 }
 
 // Generate random exposed port between 20000-65535
-const generateRandomPort = () => {
-  return Math.floor(Math.random() * (65535 - 20000 + 1)) + 20000
+const generateRandomPort = (min = 20000, max = 65535) => {
+  return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
 // Random exposed port (generated once on mount)
 const exposedPort = ref(generateRandomPort())
+
+// Random port for Orbit management interface (container port 9001)
+// Ensure it's different from the exposed port
+const generateUniqueManagementPort = () => {
+  let port = generateRandomPort(10000, 65535)
+  while (port === exposedPort.value) {
+    port = generateRandomPort(10000, 65535)
+  }
+  
+  return port
+}
+const orbitManagementPort = ref(generateUniqueManagementPort())
 
 // Step 4: Terms
 const acceptedTerms = ref(false)
@@ -2973,13 +3053,6 @@ const availableOrbitEnvVars = [
     autoValue: 'Auto-detected: npm install, yarn install, or pnpm install based on lockfile',
   },
   {
-    key: 'POLLING_INTERVAL',
-    description: 'Interval in seconds for auto-update checks (polls your repo for new commits)',
-    example: '300',
-    placeholder: '300',
-    autoValue: 'Disabled (no auto-polling). Set to enable automatic updates',
-  },
-  {
     key: 'WEBHOOK_SECRET',
     description: 'Secret for GitHub webhook deployments (for instant deploys on push)',
     example: 'your-webhook-secret',
@@ -3092,6 +3165,11 @@ const buildEnvironmentParameters = () => {
     }
   }
 
+  // Add polling interval if not disabled
+  if (pollingInterval.value && pollingInterval.value !== 'disabled') {
+    envParams.push(`POLLING_INTERVAL=${pollingInterval.value}`)
+  }
+
   // Add custom environment variables
   customEnvVars.value.forEach(env => {
     if (env.key && env.value) {
@@ -3106,16 +3184,15 @@ const buildEnvironmentParameters = () => {
 const generatedAppSpec = computed(() => {
   const containerPort = parseInt(appPort.value, 10) || 3000
   const exposePort = typeof exposedPort.value === 'number' ? exposedPort.value : parseInt(exposedPort.value, 10)
+  const mgmtPort = typeof orbitManagementPort.value === 'number' ? orbitManagementPort.value : parseInt(orbitManagementPort.value, 10)
 
   // Generate a unique enterprise identifier for private repos
   const enterpriseId = isEnterpriseApp.value
     ? `orbit_${appName.value || 'app'}_${Date.now().toString(36)}`
     : ''
 
-  // Build domains array - include custom domain for all plans
-  const domains = customDomain.value
-    ? [customDomain.value]
-    : ['']
+  // Build domains array - first for app port, second for management port (always empty)
+  const domains = [customDomain.value || '', '']
 
   // Build geolocation array - available for all plans
   // Use selectedGeo to build the geolocation code (same format as games section)
@@ -3142,8 +3219,8 @@ const generatedAppSpec = computed(() => {
         name: appName.value || 'orbit-app',
         description: appDescription.value || 'Orbit deployment',
         repotag: 'runonflux/orbit:latest',
-        ports: [exposePort], // Random external port between 20000-65535
-        containerPorts: [containerPort], // Internal app port
+        ports: [exposePort, mgmtPort], // Random external ports for app and management
+        containerPorts: [containerPort, 9001], // Internal app port and Orbit management port
         domains,
         environmentParameters: buildEnvironmentParameters(),
         commands: [],
