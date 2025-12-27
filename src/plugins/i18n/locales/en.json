@@ -3248,6 +3248,7 @@
             "serverLocation": "Server Location",
             "continentLabel": "Continent",
             "countryLabel": "Country",
+            "regionLabel": "Region",
             "selectRegionInfo": "Select a region to deploy your application closer to your users.",
             "customDomainTitle": "Custom Domain",
             "customDomainLabel": "Custom Domain",

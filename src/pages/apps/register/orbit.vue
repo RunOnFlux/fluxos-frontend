@@ -624,7 +624,7 @@
                               </p>
 
                               <VRow>
-                                <VCol cols="12" sm="6">
+                                <VCol cols="12" sm="4">
                                   <VSelect
                                     v-model="selectedGeo.continent"
                                     :items="getContinents()"
@@ -634,9 +634,23 @@
                                     prepend-inner-icon="mdi-earth"
                                     variant="outlined"
                                     density="compact"
-                                  />
+                                  >
+                                    <template #item="{ props, item }">
+                                      <VListItem v-bind="props">
+                                        <template v-if="item.raw.instances" #append>
+                                          <VChip
+                                            size="x-small"
+                                            color="success"
+                                            variant="tonal"
+                                          >
+                                            {{ item.raw.instances }}
+                                          </VChip>
+                                        </template>
+                                      </VListItem>
+                                    </template>
+                                  </VSelect>
                                 </VCol>
-                                <VCol cols="12" sm="6">
+                                <VCol cols="12" sm="4">
                                   <VSelect
                                     v-model="selectedGeo.country"
                                     :items="getCountries(selectedGeo.continent)"
@@ -647,7 +661,48 @@
                                     variant="outlined"
                                     density="compact"
                                     :disabled="selectedGeo.continent === 'ALL'"
-                                  />
+                                  >
+                                    <template #item="{ props, item }">
+                                      <VListItem v-bind="props">
+                                        <template v-if="item.raw.instances" #append>
+                                          <VChip
+                                            size="x-small"
+                                            color="success"
+                                            variant="tonal"
+                                          >
+                                            {{ item.raw.instances }}
+                                          </VChip>
+                                        </template>
+                                      </VListItem>
+                                    </template>
+                                  </VSelect>
+                                </VCol>
+                                <VCol cols="12" sm="4">
+                                  <VSelect
+                                    v-model="selectedGeo.region"
+                                    :items="getRegions(selectedGeo.continent, selectedGeo.country)"
+                                    item-title="text"
+                                    item-value="value"
+                                    :label="t('pages.apps.register.orbit.config.regionLabel')"
+                                    prepend-inner-icon="mdi-map-marker-radius"
+                                    variant="outlined"
+                                    density="compact"
+                                    :disabled="selectedGeo.country === 'ALL'"
+                                  >
+                                    <template #item="{ props, item }">
+                                      <VListItem v-bind="props">
+                                        <template v-if="item.raw.instances" #append>
+                                          <VChip
+                                            size="x-small"
+                                            color="success"
+                                            variant="tonal"
+                                          >
+                                            {{ item.raw.instances }}
+                                          </VChip>
+                                        </template>
+                                      </VListItem>
+                                    </template>
+                                  </VSelect>
                                 </VCol>
                               </VRow>
 
@@ -2819,55 +2874,76 @@ const fetchGeolocationData = async () => {
   }
 }
 
-// Get continents from available locations
+// Get continents from available locations with instance counts
 const getContinents = () => {
-  const options = [{ value: 'ALL', text: 'Global (Any Location)' }]
-  const seen = new Set()
+  const options = [{ value: 'ALL', text: 'Global (Any Location)', instances: null }]
+  const continentInstances = {}
 
   possibleLocations.value.forEach(loc => {
-    const cont = loc.value.split('_')[0]
-    if (!seen.has(cont)) {
-      seen.add(cont)
-      const name = geolocations.continents.find(c => c.code === cont)?.name || cont
-      options.push({ value: cont, text: name })
+    const parts = loc.value.split('_')
+
+    // Only count continent-level entries (no underscores)
+    if (parts.length === 1) {
+      const cont = parts[0]
+      continentInstances[cont] = (continentInstances[cont] || 0) + loc.instances
     }
+  })
+
+  Object.entries(continentInstances).forEach(([cont, instances]) => {
+    const name = geolocations.continents.find(c => c.code === cont)?.name || cont
+    options.push({ value: cont, text: name, instances })
   })
 
   return options
 }
 
-// Get countries for selected continent
+// Get countries for selected continent with instance counts
 const getCountries = continentCode => {
-  if (!continentCode || continentCode === 'ALL') return [{ value: 'ALL', text: 'All Countries' }]
+  if (!continentCode || continentCode === 'ALL') return [{ value: 'ALL', text: 'All Countries', instances: null }]
 
-  const seen = new Set()
-  const countries = [{ value: 'ALL', text: 'All Countries' }]
+  const countryInstances = {}
 
   possibleLocations.value.forEach(loc => {
-    const [cont, count] = loc.value.split('_')
-    if (cont === continentCode && count && !seen.has(count)) {
-      seen.add(count)
-      const name = geolocations.countries.find(c => c.code === count)?.name || count
-      countries.push({ value: count, text: name })
+    const parts = loc.value.split('_')
+
+    // Only count country-level entries (exactly 2 parts: continent_country)
+    if (parts.length === 2 && parts[0] === continentCode) {
+      const count = parts[1]
+      countryInstances[count] = (countryInstances[count] || 0) + loc.instances
     }
+  })
+
+  const countries = [{ value: 'ALL', text: 'All Countries', instances: null }]
+  Object.entries(countryInstances).forEach(([count, instances]) => {
+    const name = geolocations.countries.find(c => c.code === count)?.name || count
+    countries.push({ value: count, text: name, instances })
   })
 
   return countries
 }
 
-// Get regions for selected country
+// Get regions for selected country with instance counts
 const getRegions = (continentCode, countryCode) => {
-  if (!continentCode || !countryCode || countryCode === 'ALL') return [{ value: 'ALL', text: 'All Regions' }]
+  if (!continentCode || !countryCode || countryCode === 'ALL') return [{ value: 'ALL', text: 'All Regions', instances: null }]
 
-  const regions = new Set()
+  const regionInstances = {}
+
   possibleLocations.value.forEach(loc => {
-    const [cont, count, region] = loc.value.split('_')
-    if (cont === continentCode && count === countryCode && region) {
-      regions.add(region)
+    const parts = loc.value.split('_')
+
+    // Only count region-level entries (exactly 3 parts: continent_country_region)
+    if (parts.length === 3 && parts[0] === continentCode && parts[1] === countryCode) {
+      const region = parts[2]
+      regionInstances[region] = (regionInstances[region] || 0) + loc.instances
     }
   })
 
-  return [{ value: 'ALL', text: 'All Regions' }, ...[...regions].map(r => ({ value: r, text: r }))]
+  const regions = [{ value: 'ALL', text: 'All Regions', instances: null }]
+  Object.entries(regionInstances).forEach(([region, instances]) => {
+    regions.push({ value: region, text: region, instances })
+  })
+
+  return regions
 }
 
 // Build geolocation code from selection
