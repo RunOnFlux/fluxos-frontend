@@ -186,7 +186,8 @@ export default defineConfig(({ mode }) => {
     },
     build: {
       chunkSizeWarningLimit: 1800, // Warn about chunks larger than 1800KB
-      reportCompressedSize: true, // Report gzip sizes
+      sourcemap: false, // Disable source maps to reduce memory usage
+      reportCompressedSize: false, // Disable gzip size reporting to reduce memory usage
       minify: 'esbuild', // Use esbuild for fast builds
       commonjsOptions: {
         include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
