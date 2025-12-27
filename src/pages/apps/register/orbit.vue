@@ -912,7 +912,7 @@
                         <div class="plan-btn-wrapper">
                           <VBtn
                             block
-                            color="primary"
+                            :color="selectedPlan === 'free' ? 'success' : 'primary'"
                             size="large"
                             variant="elevated"
                             class="plan-btn"
@@ -975,7 +975,7 @@
                         <div class="plan-btn-wrapper">
                           <VBtn
                             block
-                            color="primary"
+                            :color="selectedPlan === 'developer' ? 'success' : 'primary'"
                             size="large"
                             variant="elevated"
                             class="plan-btn"
@@ -1034,7 +1034,7 @@
                         <div class="plan-btn-wrapper">
                           <VBtn
                             block
-                            color="primary"
+                            :color="selectedPlan === 'pro' ? 'success' : 'primary'"
                             size="large"
                             variant="elevated"
                             class="plan-btn"
