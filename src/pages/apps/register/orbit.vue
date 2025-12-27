@@ -28,7 +28,7 @@
                     </h1>
 
                     <p class="text-body-1 text-medium-emphasis mb-8 px-4">
-                      Sign in to deploy your application from Git using Orbit.
+                      {{ t('pages.apps.register.orbit.signIn.description') }}
                     </p>
 
                     <!-- Features List -->
@@ -38,21 +38,21 @@
                           <div class="mr-sm-8">
                             <div class="d-flex align-center mb-2">
                               <VIcon color="success" size="20" class="mr-2 flex-shrink-0">mdi-check-circle</VIcon>
-                              <span class="text-body-2 text-no-wrap">No Docker knowledge needed</span>
+                              <span class="text-body-2 text-no-wrap">{{ t('pages.apps.register.orbit.signIn.noDockerNeeded') }}</span>
                             </div>
                             <div class="d-flex align-center mb-2">
                               <VIcon color="success" size="20" class="mr-2 flex-shrink-0">mdi-check-circle</VIcon>
-                              <span class="text-body-2 text-no-wrap">100+ frameworks supported</span>
+                              <span class="text-body-2 text-no-wrap">{{ t('pages.apps.register.orbit.signIn.frameworksSupported') }}</span>
                             </div>
                           </div>
                           <div>
                             <div class="d-flex align-center mb-2">
                               <VIcon color="success" size="20" class="mr-2 flex-shrink-0">mdi-check-circle</VIcon>
-                              <span class="text-body-2 text-no-wrap">Built-in CI/CD</span>
+                              <span class="text-body-2 text-no-wrap">{{ t('pages.apps.register.orbit.signIn.builtInCicd') }}</span>
                             </div>
                             <div class="d-flex align-center">
                               <VIcon color="success" size="20" class="mr-2 flex-shrink-0">mdi-check-circle</VIcon>
-                              <span class="text-body-2 text-no-wrap">Free tier available</span>
+                              <span class="text-body-2 text-no-wrap">{{ t('pages.apps.register.orbit.signIn.freeTierAvailable') }}</span>
                             </div>
                           </div>
                         </div>
@@ -74,7 +74,7 @@
                         :to="{ name: 'apps-register' }"
                       >
                         <VIcon size="22" class="mr-2">mdi-arrow-left</VIcon>
-                        Back to Options
+                        {{ t('pages.apps.register.orbit.signIn.backToOptions') }}
                       </VBtn>
                     </div>
                   </div>
@@ -93,13 +93,13 @@
                   class="back-btn"
                 >
                   <VIcon start>mdi-arrow-left</VIcon>
-                  Back to deployment options
+                  {{ t('pages.apps.register.orbit.header.backToDeploymentOptions') }}
                 </VBtn>
                 <div class="orbit-header-content">
                   <VIcon size="32" color="primary" class="mr-3">mdi-rocket-launch</VIcon>
                   <div>
-                    <h1 class="orbit-title">Deploy with Orbit</h1>
-                    <p class="orbit-subtitle">Connect your Git repository and deploy in minutes</p>
+                    <h1 class="orbit-title">{{ t('pages.apps.register.orbit.header.deployWithOrbit') }}</h1>
+                    <p class="orbit-subtitle">{{ t('pages.apps.register.orbit.header.connectAndDeploy') }}</p>
                   </div>
                 </div>
               </div>
@@ -114,21 +114,21 @@
                 <!-- Step 2: Repository -->
                 <template #item.2>
                   <div class="step-content">
-                    <h3 class="step-title">Connect Your Repository</h3>
+                    <h3 class="step-title">{{ t('pages.apps.register.orbit.repository.stepTitle') }}</h3>
                     <p class="step-description">
-                      Enter your Git repository URL. We support GitHub, GitLab, and Bitbucket.
+                      {{ t('pages.apps.register.orbit.repository.stepDescription') }}
                     </p>
 
                     <VForm ref="repoForm" @submit.prevent="nextStep">
                       <VTextField
                         v-model="repoUrl"
-                        label="Repository URL *"
-                        placeholder="https://github.com/username/repo"
+                        :label="t('pages.apps.register.orbit.repository.repoUrlLabel')"
+                        :placeholder="t('pages.apps.register.orbit.repository.repoUrlPlaceholder')"
                         prepend-inner-icon="mdi-github"
                         :rules="[rules.required, rules.validRepoUrl]"
                         variant="outlined"
                         class="mb-2"
-                        hint="Public or private repository URL"
+                        :hint="t('pages.apps.register.orbit.repository.repoUrlHint')"
                         persistent-hint
                         :loading="repoCheckStatus === 'checking'"
                       />
@@ -138,25 +138,25 @@
                         <!-- Checking -->
                         <VChip v-if="repoCheckStatus === 'checking'" color="info" variant="tonal" size="small">
                           <VProgressCircular indeterminate size="14" width="2" class="mr-2" />
-                          Checking repository...
+                          {{ t('pages.apps.register.orbit.repository.checkingRepository') }}
                         </VChip>
 
                         <!-- Public repo -->
                         <VChip v-else-if="repoCheckStatus === 'public'" color="success" variant="tonal" size="small">
                           <VIcon start size="16">mdi-lock-open</VIcon>
-                          Public Repository
+                          {{ t('pages.apps.register.orbit.repository.publicRepository') }}
                         </VChip>
 
                         <!-- Private repo -->
                         <VChip v-else-if="repoCheckStatus === 'private'" color="warning" variant="tonal" size="small">
                           <VIcon start size="16">mdi-lock</VIcon>
-                          Private Repository - Authentication Required
+                          {{ t('pages.apps.register.orbit.repository.privateRepoAuth') }}
                         </VChip>
 
                         <!-- Error -->
                         <VChip v-else-if="repoCheckStatus === 'error'" color="error" variant="tonal" size="small">
                           <VIcon start size="16">mdi-alert-circle</VIcon>
-                          {{ repoCheckError || 'Error checking repository' }}
+                          {{ repoCheckError || t('pages.apps.register.orbit.repository.errorCheckingRepo') }}
                         </VChip>
 
                         <!-- Provider badge -->
@@ -168,7 +168,7 @@
                         <!-- Framework detected badge -->
                         <VChip v-if="detectedFramework" color="primary" variant="tonal" size="small" class="ml-2">
                           <VIcon start size="16">mdi-auto-fix</VIcon>
-                          {{ detectedFramework }} detected
+                          {{ detectedFramework }} {{ t('pages.apps.register.orbit.repository.detected') }}
                         </VChip>
                       </div>
 
@@ -180,33 +180,33 @@
                               <VIcon>mdi-lock</VIcon>
                             </template>
                             <div>
-                              <strong>Private Repository Detected</strong>
+                              <strong>{{ t('pages.apps.register.orbit.repository.privateRepoDetected') }}</strong>
                               <p class="text-body-2 mb-0 mt-1">
-                                This repository requires authentication. Your app will be registered as an enterprise application.
+                                {{ t('pages.apps.register.orbit.repository.privateRepoMessage') }}
                               </p>
                             </div>
                           </VAlert>
 
                           <VTextField
                             v-model="repoUsername"
-                            label="Username / Token Name"
-                            placeholder="github-username or token"
+                            :label="t('pages.apps.register.orbit.repository.usernameLabel')"
+                            :placeholder="t('pages.apps.register.orbit.repository.usernamePlaceholder')"
                             prepend-inner-icon="mdi-account"
                             variant="outlined"
                             class="mb-3"
-                            hint="For GitHub, use your username or 'token'"
+                            :hint="t('pages.apps.register.orbit.repository.usernameHint')"
                             persistent-hint
                           />
                           <VTextField
                             v-model="repoToken"
-                            label="Personal Access Token *"
-                            placeholder="ghp_xxxxxxxxxxxx"
+                            :label="t('pages.apps.register.orbit.repository.tokenLabel')"
+                            :placeholder="t('pages.apps.register.orbit.repository.tokenPlaceholder')"
                             prepend-inner-icon="mdi-key"
                             :type="showToken ? 'text' : 'password'"
                             :append-inner-icon="showToken ? 'mdi-eye-off' : 'mdi-eye'"
                             variant="outlined"
                             :rules="repoCheckStatus === 'private' ? [rules.required] : []"
-                            hint="Generate a token with repo access from your Git provider settings"
+                            :hint="t('pages.apps.register.orbit.repository.tokenHint')"
                             persistent-hint
                             @click:append-inner="showToken = !showToken"
                           />
@@ -221,7 +221,7 @@
                               @click="testAuthConnection"
                             >
                               <VIcon start>mdi-connection</VIcon>
-                              Test Connection
+                              {{ t('pages.apps.register.orbit.repository.testConnection') }}
                             </VBtn>
 
                             <!-- Auth test status -->
@@ -230,7 +230,7 @@
                                 <template #prepend>
                                   <VIcon>mdi-check-circle</VIcon>
                                 </template>
-                                <strong>Connection successful!</strong> Repository access verified.
+                                <strong>{{ t('pages.apps.register.orbit.repository.connectionSuccess') }}</strong> {{ t('pages.apps.register.orbit.repository.connectionVerified') }}
                               </VAlert>
                             </div>
 
@@ -255,13 +255,13 @@
                             :items="branchItems"
                             item-title="title"
                             item-value="value"
-                            label="Branch"
-                            placeholder="Select a branch"
+                            :label="t('pages.apps.register.orbit.repository.branchLabel')"
+                            :placeholder="t('pages.apps.register.orbit.repository.branchPlaceholder')"
                             prepend-inner-icon="mdi-source-branch"
                             variant="outlined"
                             class="mb-4"
                             :loading="branchesLoading"
-                            :no-data-text="branchesLoading ? 'Loading branches...' : 'No branches found'"
+                            :no-data-text="branchesLoading ? t('pages.apps.register.orbit.repository.loadingBranches') : t('pages.apps.register.orbit.repository.noBranchesFound')"
                             clearable
                             auto-select-first
                           >
@@ -282,7 +282,7 @@
                                     color="primary"
                                     variant="tonal"
                                   >
-                                    Default
+                                    {{ t('pages.apps.register.orbit.repository.default') }}
                                   </VChip>
                                 </template>
                               </VListItem>
@@ -290,10 +290,10 @@
                             <template #details>
                               <div class="d-flex align-center flex-wrap gap-2">
                                 <span v-if="branches.length > 0" class="text-caption">
-                                  {{ branches.length }} branches available
+                                  {{ branches.length }} {{ t('pages.apps.register.orbit.repository.branchesAvailable') }}
                                 </span>
                                 <span v-else class="text-caption">
-                                  Default: main
+                                  {{ t('pages.apps.register.orbit.repository.defaultMain') }}
                                 </span>
                               </div>
                             </template>
@@ -304,7 +304,7 @@
                             <!-- Loading state -->
                             <div v-if="detectingMonorepo" class="monorepo-loading">
                               <VProgressCircular indeterminate size="20" width="2" class="mr-2" />
-                              <span class="text-body-2">Detecting monorepo structure...</span>
+                              <span class="text-body-2">{{ t('pages.apps.register.orbit.repository.detectingMonorepo') }}</span>
                             </div>
 
                             <!-- Monorepo detected with projects -->
@@ -314,15 +314,15 @@
                                   <VIcon>mdi-folder-multiple</VIcon>
                                 </template>
                                 <div class="d-flex align-center flex-wrap gap-2">
-                                  <span><strong>Monorepo detected!</strong></span>
+                                  <span><strong>{{ t('pages.apps.register.orbit.repository.monorepoDetected') }}</strong></span>
                                   <VChip size="x-small" color="primary" variant="flat">
                                     {{ monorepoType }}
                                   </VChip>
-                                  <span class="text-body-2">{{ monorepoProjects.length }} projects found</span>
+                                  <span class="text-body-2">{{ monorepoProjects.length }} {{ t('pages.apps.register.orbit.repository.projectsFound') }}</span>
                                 </div>
                               </VAlert>
 
-                              <p class="text-body-2 mb-2">Select the project to deploy:</p>
+                              <p class="text-body-2 mb-2">{{ t('pages.apps.register.orbit.repository.selectProject') }}</p>
 
                               <div class="monorepo-projects">
                                 <div
@@ -363,10 +363,10 @@
                             <div v-else>
                               <VTextField
                                 v-model="projectPath"
-                                label="Project Path (Monorepo)"
-                                placeholder="/"
+                                :label="t('pages.apps.register.orbit.repository.projectPathLabel')"
+                                :placeholder="t('pages.apps.register.orbit.repository.projectPathPlaceholder')"
                                 prepend-inner-icon="mdi-folder"
-                                hint="For monorepos, specify the folder containing your app (e.g., /apps/frontend)"
+                                :hint="t('pages.apps.register.orbit.repository.projectPathHint')"
                                 persistent-hint
                                 variant="outlined"
                               />
@@ -381,28 +381,28 @@
                 <!-- Step 3: Configuration -->
                 <template #item.3>
                   <div class="step-content">
-                    <h3 class="step-title">Application Configuration</h3>
+                    <h3 class="step-title">{{ t('pages.apps.register.orbit.config.stepTitle') }}</h3>
                     <p class="step-description">
-                      Configure your application settings. Orbit will auto-detect your framework.
+                      {{ t('pages.apps.register.orbit.config.stepDescription') }}
                     </p>
 
                     <VForm ref="configForm">
                       <VTextField
                         v-model="appName"
-                        label="Application Name *"
-                        placeholder="my-awesome-app"
+                        :label="t('pages.apps.register.orbit.config.appNameLabel')"
+                        :placeholder="t('pages.apps.register.orbit.config.appNamePlaceholder')"
                         prepend-inner-icon="mdi-application"
                         :rules="[rules.required, rules.appName]"
                         variant="outlined"
                         class="mb-4"
-                        hint="Lowercase letters, numbers, and hyphens only (3-32 chars)"
+                        :hint="t('pages.apps.register.orbit.config.appNameHint')"
                         persistent-hint
                       />
 
                       <VTextField
                         v-model="appPort"
-                        label="Application Port *"
-                        placeholder="3000"
+                        :label="t('pages.apps.register.orbit.config.appPortLabel')"
+                        :placeholder="t('pages.apps.register.orbit.config.appPortPlaceholder')"
                         prepend-inner-icon="mdi-lan-connect"
                         type="number"
                         :rules="[rules.required, rules.port]"
@@ -412,10 +412,10 @@
                       >
                         <template #details>
                           <div class="d-flex align-center flex-wrap gap-2">
-                            <span class="text-caption">The port your application listens on</span>
+                            <span class="text-caption">{{ t('pages.apps.register.orbit.config.portListensOn') }}</span>
                             <VChip v-if="portAutoDetected" color="success" size="x-small" variant="flat">
                               <VIcon start size="12">mdi-auto-fix</VIcon>
-                              Auto-detected{{ detectedFramework ? ` from ${detectedFramework}` : '' }}
+                              {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
                             </VChip>
                           </div>
                         </template>
@@ -423,25 +423,25 @@
 
                       <VTextField
                         v-model="contactEmail"
-                        label="Contact Email *"
-                        placeholder="you@example.com"
+                        :label="t('pages.apps.register.orbit.config.contactEmailLabel')"
+                        :placeholder="t('pages.apps.register.orbit.config.contactEmailPlaceholder')"
                         prepend-inner-icon="mdi-email"
                         type="email"
                         :rules="[rules.required, rules.email]"
                         variant="outlined"
                         class="mb-4"
-                        hint="For deployment notifications and alerts"
+                        :hint="t('pages.apps.register.orbit.config.contactEmailHint')"
                         persistent-hint
                       />
 
                       <VSelect
                         v-model="pollingInterval"
                         :items="pollingIntervalOptions"
-                        label="Auto-Update Polling Interval"
+                        :label="t('pages.apps.register.orbit.config.pollingIntervalLabel')"
                         prepend-inner-icon="mdi-update"
                         variant="outlined"
                         class="mb-4"
-                        hint="How often Orbit checks your repository for new commits"
+                        :hint="t('pages.apps.register.orbit.config.pollingIntervalHint')"
                         persistent-hint
                       />
 
@@ -450,17 +450,17 @@
                         <VExpansionPanel>
                           <VExpansionPanelTitle>
                             <VIcon start size="20">mdi-cog</VIcon>
-                            Runtime Version (Optional)
+                            {{ t('pages.apps.register.orbit.config.runtimeVersionTitle') }}
                           </VExpansionPanelTitle>
                           <VExpansionPanelText>
                             <VAlert type="info" variant="tonal" density="compact" class="mb-4">
-                              Orbit auto-detects your runtime. Only specify if you need a specific version.
+                              {{ t('pages.apps.register.orbit.config.runtimeAutoDetect') }}
                             </VAlert>
 
                             <VSelect
                               v-model="selectedRuntime"
                               :items="runtimeOptions"
-                              label="Runtime"
+                              :label="t('pages.apps.register.orbit.config.runtimeLabel')"
                               prepend-inner-icon="mdi-code-tags"
                               variant="outlined"
                               class="mb-3"
@@ -486,19 +486,19 @@
                         <VExpansionPanel>
                           <VExpansionPanelTitle>
                             <VIcon start size="20">mdi-variable</VIcon>
-                            Environment Variables
+                            {{ t('pages.apps.register.orbit.config.envVariablesTitle') }}
                             <VChip v-if="customEnvVars.length > 0" size="x-small" color="primary" class="ml-2">
                               {{ customEnvVars.length }}
                             </VChip>
                           </VExpansionPanelTitle>
                           <VExpansionPanelText>
                             <VAlert type="info" variant="tonal" density="compact" class="mb-4">
-                              Configure environment variables for your application. Click on any Orbit variable below to add it.
+                              {{ t('pages.apps.register.orbit.config.envVariablesInfo') }}
                             </VAlert>
 
                             <!-- Available Orbit Environment Variables -->
                             <div class="orbit-env-vars mb-4">
-                              <p class="text-subtitle-2 font-weight-medium mb-2">Available Orbit Variables</p>
+                              <p class="text-subtitle-2 font-weight-medium mb-2">{{ t('pages.apps.register.orbit.config.availableOrbitVars') }}</p>
                               <div class="orbit-env-list">
                                 <div
                                   v-for="orbitVar in availableOrbitEnvVars"
@@ -516,7 +516,7 @@
                                       variant="flat"
                                     >
                                       <VIcon start size="12">mdi-check</VIcon>
-                                      Added
+                                      {{ t('pages.apps.register.orbit.config.added') }}
                                     </VChip>
                                     <VBtn
                                       v-else
@@ -526,7 +526,7 @@
                                       @click.stop="addOrbitEnvVar(orbitVar)"
                                     >
                                       <VIcon start size="14">mdi-plus</VIcon>
-                                      Add
+                                      {{ t('pages.apps.register.orbit.config.add') }}
                                     </VBtn>
                                   </div>
                                   <p class="orbit-env-description text-caption text-medium-emphasis mb-0">
@@ -534,11 +534,11 @@
                                   </p>
                                   <p v-if="orbitVar.autoValue" class="orbit-env-auto text-caption mb-0">
                                     <VIcon size="12" color="success" class="mr-1">mdi-auto-fix</VIcon>
-                                    <span class="text-success font-weight-medium">If not set:</span>
+                                    <span class="text-success font-weight-medium">{{ t('pages.apps.register.orbit.config.ifNotSet') }}</span>
                                     {{ orbitVar.autoValue }}
                                   </p>
                                   <p v-if="orbitVar.example" class="orbit-env-example text-caption mb-0">
-                                    Example: <code>{{ orbitVar.example }}</code>
+                                    {{ t('pages.apps.register.orbit.config.example') }} <code>{{ orbitVar.example }}</code>
                                   </p>
                                 </div>
                               </div>
@@ -548,16 +548,16 @@
 
                             <!-- Added Environment Variables -->
                             <p class="text-subtitle-2 font-weight-medium mb-2">
-                              Your Environment Variables
+                              {{ t('pages.apps.register.orbit.config.yourEnvVariables') }}
                               <span v-if="customEnvVars.length === 0" class="text-caption text-medium-emphasis">
-                                (none added yet)
+                                {{ t('pages.apps.register.orbit.config.noneAddedYet') }}
                               </span>
                             </p>
 
                             <div v-for="(envVar, index) in customEnvVars" :key="index" class="env-var-row mb-3">
                               <VTextField
                                 v-model="envVar.key"
-                                label="Key"
+                                :label="t('pages.apps.register.orbit.config.keyLabel')"
                                 placeholder="API_KEY"
                                 variant="outlined"
                                 density="compact"
@@ -566,7 +566,7 @@
                               />
                               <VTextField
                                 v-model="envVar.value"
-                                label="Value"
+                                :label="t('pages.apps.register.orbit.config.valueLabel')"
                                 :placeholder="envVar.placeholder || 'your-value'"
                                 variant="outlined"
                                 density="compact"
@@ -590,7 +590,7 @@
                               @click="addEnvVar"
                             >
                               <VIcon start>mdi-plus</VIcon>
-                              Add Custom Variable
+                              {{ t('pages.apps.register.orbit.config.addCustomVariable') }}
                             </VBtn>
                           </VExpansionPanelText>
                         </VExpansionPanel>
@@ -601,7 +601,7 @@
                         <VExpansionPanel>
                           <VExpansionPanelTitle>
                             <VIcon start size="20">mdi-earth</VIcon>
-                            Deployment Location & Domain
+                            {{ t('pages.apps.register.orbit.config.deploymentLocationTitle') }}
                             <VChip
                               v-if="selectedGeo.continent !== 'ALL' || customDomain"
                               size="x-small"
@@ -613,14 +613,14 @@
                           </VExpansionPanelTitle>
                           <VExpansionPanelText>
                             <VAlert type="info" variant="tonal" density="compact" class="mb-4">
-                              Choose where your application will be deployed and optionally set a custom domain.
+                              {{ t('pages.apps.register.orbit.config.deploymentLocationInfo') }}
                             </VAlert>
 
                             <!-- Geolocation Selection -->
                             <div class="mb-4">
                               <p class="text-subtitle-2 font-weight-medium mb-2">
                                 <VIcon start size="18">mdi-map-marker</VIcon>
-                                Server Location
+                                {{ t('pages.apps.register.orbit.config.serverLocation') }}
                               </p>
 
                               <VRow>
@@ -630,7 +630,7 @@
                                     :items="getContinents()"
                                     item-title="text"
                                     item-value="value"
-                                    label="Continent"
+                                    :label="t('pages.apps.register.orbit.config.continentLabel')"
                                     prepend-inner-icon="mdi-earth"
                                     variant="outlined"
                                     density="compact"
@@ -642,7 +642,7 @@
                                     :items="getCountries(selectedGeo.continent)"
                                     item-title="text"
                                     item-value="value"
-                                    label="Country"
+                                    :label="t('pages.apps.register.orbit.config.countryLabel')"
                                     prepend-inner-icon="mdi-flag"
                                     variant="outlined"
                                     density="compact"
@@ -653,7 +653,7 @@
 
                               <p class="text-caption text-medium-emphasis mt-2">
                                 <VIcon size="14" class="mr-1">mdi-information-outline</VIcon>
-                                Select a region to deploy your application closer to your users.
+                                {{ t('pages.apps.register.orbit.config.selectRegionInfo') }}
                               </p>
                             </div>
 
@@ -663,17 +663,17 @@
                             <div>
                               <p class="text-subtitle-2 font-weight-medium mb-2">
                                 <VIcon start size="18">mdi-web</VIcon>
-                                Custom Domain
+                                {{ t('pages.apps.register.orbit.config.customDomainTitle') }}
                               </p>
 
                               <VTextField
                                 v-model="customDomain"
-                                label="Custom Domain"
-                                placeholder="myapp.example.com"
+                                :label="t('pages.apps.register.orbit.config.customDomainLabel')"
+                                :placeholder="t('pages.apps.register.orbit.config.customDomainPlaceholder')"
                                 prepend-inner-icon="mdi-link-variant"
                                 variant="outlined"
                                 density="compact"
-                                hint="Enter your custom domain (you'll need to configure DNS separately)"
+                                :hint="t('pages.apps.register.orbit.config.customDomainHint')"
                                 persistent-hint
                               />
                             </div>
@@ -691,10 +691,9 @@
                           <VIcon>mdi-auto-fix</VIcon>
                         </template>
                         <div>
-                          <strong>Auto-Detection Enabled</strong>
+                          <strong>{{ t('pages.apps.register.orbit.config.autoDetectionEnabled') }}</strong>
                           <p class="text-body-2 mb-0 mt-1">
-                            Orbit automatically detects your framework (Next.js, Django, Rails, Spring Boot, etc.)
-                            and configures the build process. No Dockerfile needed!
+                            {{ t('pages.apps.register.orbit.config.autoDetectionDescription') }}
                           </p>
                         </div>
                       </VAlert>
@@ -835,22 +834,22 @@
                         <div class="plan-resources">
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-speedometer</VIcon>
-                            <span class="resource-label">CPU</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.cpuLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.freeFeatures.cpu') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-memory</VIcon>
-                            <span class="resource-label">RAM</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.ramLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.freeFeatures.ram') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-harddisk</VIcon>
-                            <span class="resource-label">Storage</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.storageLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.freeFeatures.storage') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-server-network</VIcon>
-                            <span class="resource-label">Instances</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}</span>
                             <span class="resource-value">1</span>
                           </div>
                         </div>
@@ -865,7 +864,7 @@
                             @click.stop="selectedPlan = 'free'"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'free' ? 'Selected' : 'Select Plan' }}
+                            {{ selectedPlan === 'free' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
                           </VBtn>
                         </div>
                       </div>
@@ -898,22 +897,22 @@
                         <div class="plan-resources">
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-speedometer</VIcon>
-                            <span class="resource-label">CPU</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.cpuLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.developerFeatures.cpu') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-memory</VIcon>
-                            <span class="resource-label">RAM</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.ramLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.developerFeatures.ram') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-harddisk</VIcon>
-                            <span class="resource-label">Storage</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.storageLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.developerFeatures.storage') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-server-network</VIcon>
-                            <span class="resource-label">Instances</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}</span>
                             <span class="resource-value">2</span>
                           </div>
                         </div>
@@ -928,7 +927,7 @@
                             @click.stop="selectedPlan = 'developer'"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'developer' ? 'Selected' : 'Select Plan' }}
+                            {{ selectedPlan === 'developer' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
                           </VBtn>
                         </div>
                       </div>
@@ -957,22 +956,22 @@
                         <div class="plan-resources">
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-speedometer</VIcon>
-                            <span class="resource-label">CPU</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.cpuLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.cpu') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-memory</VIcon>
-                            <span class="resource-label">RAM</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.ramLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.ram') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-harddisk</VIcon>
-                            <span class="resource-label">Storage</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.storageLabel') }}</span>
                             <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.proFeatures.storage') }}</span>
                           </div>
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-server-network</VIcon>
-                            <span class="resource-label">Instances</span>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}</span>
                             <span class="resource-value">2</span>
                           </div>
                         </div>
@@ -987,7 +986,7 @@
                             @click.stop="selectedPlan = 'pro'"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'pro' ? 'Selected' : 'Select Plan' }}
+                            {{ selectedPlan === 'pro' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
                           </VBtn>
                         </div>
                       </div>
@@ -1147,7 +1146,7 @@
                           </span>
                         </div>
                         <div v-if="customDomain" class="review-item">
-                          <span class="review-label">Custom Domain:</span>
+                          <span class="review-label">{{ t('pages.apps.register.orbit.config.customDomainLabel') }}:</span>
                           <span class="review-value">
                             <VChip
                               size="x-small"
@@ -1239,14 +1238,14 @@
                     <div v-else-if="testFinished" class="registration-success">
                       <div class="text-center">
                         <VIcon size="48" color="success" class="mb-2">mdi-check-circle</VIcon>
-                        <h3 class="text-h5 font-weight-bold mb-1">Registration Complete</h3>
+                        <h3 class="text-h5 font-weight-bold mb-1">{{ t('pages.apps.register.orbit.register.registrationComplete') }}</h3>
                         <p class="text-body-2 text-medium-emphasis mb-2">
-                          Your application has been successfully registered on the Flux network.
+                          {{ t('pages.apps.register.orbit.register.registrationCompleteMessage') }}
                         </p>
                       </div>
 
                       <div class="text-center mt-3">
-                        <p class="text-body-2 text-medium-emphasis">Proceeding to payment...</p>
+                        <p class="text-body-2 text-medium-emphasis">{{ t('pages.apps.register.orbit.register.proceedingToPayment') }}</p>
                         <VProgressLinear indeterminate color="primary" class="mt-2" style="max-width: 200px; margin: 0 auto;" />
                       </div>
                     </div>
@@ -1325,29 +1324,27 @@
                             <div class="text-left">
                               <p class="text-subtitle-2 font-weight-medium mb-2">
                                 <VIcon size="18" class="mr-1">mdi-information-outline</VIcon>
-                                First installation can take a while depending on your project as need to download and install all dependencies. 
-                                You can check that on the logs section of applications management.
-                                Once your app is installed on a node, you can access it at:
+                                {{ t('pages.apps.register.orbit.register.firstInstallInfo') }}
                               </p>
                               <div class="access-info-list">
                                 <div class="d-flex align-center gap-2 mb-2">
                                   <VIcon size="16" color="primary">mdi-web</VIcon>
                                   <span class="text-body-2">
-                                    <strong>App URL:</strong>
+                                    <strong>{{ t('pages.apps.register.orbit.register.appUrl') }}</strong>
                                     <code class="ml-1">https://{{ appName }}.app.runonflux.io</code>
                                   </span>
                                 </div>
                                 <div class="d-flex align-center gap-2 mb-2">
                                   <VIcon size="16" color="success">mdi-api</VIcon>
                                   <span class="text-body-2">
-                                    <strong>ORBIT API:</strong>
+                                    <strong>{{ t('pages.apps.register.orbit.register.orbitApi') }}</strong>
                                     <code class="ml-1">https://{{ appName }}_{{ orbitManagementPort }}.app.runonflux.io</code>
                                   </span>
                                 </div>
                                 <div class="d-flex align-center gap-2">
                                   <VIcon size="16" color="info">mdi-book-open-variant</VIcon>
                                   <span class="text-body-2">
-                                    <strong>ORBIT Documentation:</strong>
+                                    <strong>{{ t('pages.apps.register.orbit.register.orbitDocumentation') }}</strong>
                                     <a
                                       href="https://orbit.app.runonflux.io/docs/intro"
                                       target="_blank"
@@ -1418,7 +1415,7 @@
                       @click="proceedToPayment"
                     >
                       <VIcon start>mdi-rocket-launch</VIcon>
-                      Register Application
+                      {{ t('pages.apps.register.orbit.config.registerApplication') }}
                     </VBtn>
                     <!-- No action buttons on steps 5 and 6 - handled within the step content -->
                   </div>
@@ -1472,14 +1469,14 @@ watch(isLoggedIn, newValue => {
 
 // Stepper
 const currentStep = ref(1)
-const stepItems = [
-  { title: 'Plan', value: 1 },
-  { title: 'Repository', value: 2 },
-  { title: 'Configure', value: 3 },
-  { title: 'Review', value: 4 },
-  { title: 'Register', value: 5 },
-  { title: 'Payment', value: 6 },
-]
+const stepItems = computed(() => [
+  { title: t('pages.apps.register.orbit.stepper.plan'), value: 1 },
+  { title: t('pages.apps.register.orbit.stepper.repository'), value: 2 },
+  { title: t('pages.apps.register.orbit.stepper.configure'), value: 3 },
+  { title: t('pages.apps.register.orbit.stepper.review'), value: 4 },
+  { title: t('pages.apps.register.orbit.stepper.register'), value: 5 },
+  { title: t('pages.apps.register.orbit.stepper.payment'), value: 6 },
+])
 
 // Scroll to top when step changes
 watch(currentStep, () => {
