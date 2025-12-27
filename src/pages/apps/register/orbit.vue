@@ -1325,6 +1325,8 @@
                             <div class="text-left">
                               <p class="text-subtitle-2 font-weight-medium mb-2">
                                 <VIcon size="18" class="mr-1">mdi-information-outline</VIcon>
+                                First installation can take a while depending on your project as need to download and install all dependencies. 
+                                You can check that on the logs section of applications management.
                                 Once your app is installed on a node, you can access it at:
                               </p>
                               <div class="access-info-list">
@@ -1338,21 +1340,21 @@
                                 <div class="d-flex align-center gap-2 mb-2">
                                   <VIcon size="16" color="success">mdi-api</VIcon>
                                   <span class="text-body-2">
-                                    <strong>API Status:</strong>
-                                    <code class="ml-1">https://{{ appName }}.app.runonflux.io:{{ orbitManagementPort }}/status</code>
+                                    <strong>ORBIT API:</strong>
+                                    <code class="ml-1">https://{{ appName }}_{{ orbitManagementPort }}.app.runonflux.io</code>
                                   </span>
                                 </div>
                                 <div class="d-flex align-center gap-2">
                                   <VIcon size="16" color="info">mdi-book-open-variant</VIcon>
                                   <span class="text-body-2">
-                                    <strong>API Docs:</strong>
+                                    <strong>ORBIT Documentation:</strong>
                                     <a
-                                      href="https://orbit.app.runonflux.io/docs/api/webhook-api"
+                                      href="https://orbit.app.runonflux.io/docs/intro"
                                       target="_blank"
                                       rel="noopener noreferrer"
                                       class="ml-1"
                                     >
-                                      https://orbit.app.runonflux.io/docs/api/webhook-api
+                                      https://orbit.app.runonflux.io/docs/intro
                                       <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
                                     </a>
                                   </span>
