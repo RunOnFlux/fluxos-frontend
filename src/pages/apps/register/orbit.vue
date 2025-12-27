@@ -3299,7 +3299,7 @@ const generatedAppSpec = computed(() => {
         domains,
         environmentParameters: buildEnvironmentParameters(),
         commands: [],
-        containerData: '/app/data',
+        containerData: '/app',
         cpu: Number(planResources.value.cpu),
         ram: Number(planResources.value.ram) * 1000, // Convert GB to MB
         hdd: Number(planResources.value.storage),
