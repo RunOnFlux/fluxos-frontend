@@ -2936,7 +2936,7 @@
             "recommended": "Polecany",
             "mostPopular": "Najpopularniejszy",
             "firstMonthFree": "Pierwszy miesiąc gratis",
-            "beginnerDisclaimer": "Plan Basic jest darmowy i automatycznie odnawiany przez zespół InFlux, o ile masz tylko jedną aplikację Orbit działającą w sieci. Jeśli wdrożysz dodatkowe aplikacje Orbit, każda aplikacja na planie Basic będzie kosztować 0,99$/miesiąc.",
+            "beginnerDisclaimer": "Plan Basic jest darmowy i automatycznie odnawiany przez InFlux Technologies, o ile masz tylko jedną aplikację Orbit działającą w sieci. Jeśli wdrożysz dodatkowe aplikacje Orbit, każda aplikacja na planie Basic będzie kosztować 0,99$/miesiąc.",
             "beginnerDowntimeNote": "Plan Basic działa na pojedynczej instancji. Ponieważ Flux to sieć zdecentralizowana, mogą wystąpić krótkie przestoje (zwykle kilka minut), gdy węzeł hostujący zostanie zrestartowany lub przejdzie offline. Dla aplikacji wymagających wysokiej dostępności zalecamy plany Standard lub Pro, które działają na wielu instancjach.",
             "privateRepoDisclaimer": "Prywatne repozytoria (Enterprise) mają dodatkowy koszt: 1,33$/miesiąc dla planu Basic, 2,66$/miesiąc dla planów Standard i Pro.",
             "competitive": {
