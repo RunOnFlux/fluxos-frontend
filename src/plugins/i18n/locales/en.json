@@ -3224,7 +3224,7 @@
             "autoDetected": "Auto-detected",
             "autoDetectedFrom": "Auto-detected from {framework}",
             "contactEmailLabel": "Contact Email *",
-            "contactEmailPlaceholder": "you@example.com",
+            "contactEmailPlaceholder": "you{'@'}example.com",
             "contactEmailHint": "For deployment notifications and alerts",
             "pollingIntervalLabel": "Auto-Update Polling Interval",
             "pollingIntervalHint": "How often Orbit checks your repository for new commits",
