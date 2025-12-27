@@ -2799,6 +2799,7 @@
             "title": "Jak chcesz wdrożyć?",
             "subtitle": "Wybierz metodę wdrożenia najlepiej dopasowaną do Twojego przepływu pracy",
             "newBadge": "NOWOŚĆ",
+            "betaBadge": "BETA",
             "orbitSubtitle": "Wdrożenie oparte na Git",
             "orbitDescription": "Po prostu podłącz repozytorium, a my zajmiemy się resztą. Nie wymagana znajomość Dockera.",
             "orbitFeature1": "Nie wymaga znajomości Dockera",

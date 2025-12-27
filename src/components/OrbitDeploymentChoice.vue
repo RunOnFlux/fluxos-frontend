@@ -19,6 +19,9 @@
             <VChip color="success" size="small" variant="flat">
               {{ t('pages.apps.register.orbit.choice.newBadge') }}
             </VChip>
+            <VChip color="warning" size="small" variant="flat">
+              {{ t('pages.apps.register.orbit.choice.betaBadge') }}
+            </VChip>
           </div>
 
           <div class="card-icon">
@@ -235,6 +238,8 @@ const selectMethod = method => {
   position: absolute;
   top: -12px;
   right: 20px;
+  display: flex;
+  gap: 0.5rem;
 }
 
 .card-icon {
