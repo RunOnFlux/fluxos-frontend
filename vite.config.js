@@ -16,6 +16,7 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 import compression from 'vite-plugin-compression';
 import purgecss from 'vite-plugin-purgecss';
+import { VitePWA } from 'vite-plugin-pwa';
 import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
@@ -281,6 +282,120 @@ export default defineConfig(({ mode }) => {
         },
         // Don't remove CSS variables
         variables: false,
+      }),
+      // PWA for offline caching and performance (production only)
+      !isDev && VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
+        workbox: {
+          // Precache all static assets
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          // Don't precache files larger than 2MB (like source maps or large fonts)
+          maximumFileSizeToCacheInBytes: 2 * 1024 * 1024,
+          // Runtime caching for API requests and images
+          runtimeCaching: [
+            {
+              // Cache Google Fonts
+              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-cache',
+                expiration: {
+                  maxEntries: 20,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              // Cache Google Font files
+              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'gstatic-fonts-cache',
+                expiration: {
+                  maxEntries: 20,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              // Cache images with stale-while-revalidate
+              urlPattern: /\.(?:png|gif|jpg|jpeg|webp|avif|svg)$/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'images-cache',
+                expiration: {
+                  maxEntries: 100,
+                  maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                },
+              },
+            },
+            {
+              // Cache API responses with network-first
+              urlPattern: /^https:\/\/api\.runonflux\.io\/.*/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'api-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 5, // 5 minutes
+                },
+                networkTimeoutSeconds: 10,
+              },
+            },
+            {
+              // Cache stats API responses
+              urlPattern: /^https:\/\/stats\.runonflux\.io\/.*/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'stats-api-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 5, // 5 minutes
+                },
+                networkTimeoutSeconds: 10,
+              },
+            },
+          ],
+        },
+        manifest: {
+          name: 'FluxCloud - Decentralized Web3 Cloud',
+          short_name: 'FluxCloud',
+          description: 'Deploy applications on FluxCloud\'s decentralized Web3 infrastructure',
+          theme_color: '#7367F0',
+          background_color: '#FFFFFF',
+          display: 'standalone',
+          orientation: 'portrait-primary',
+          start_url: '/',
+          scope: '/',
+          icons: [
+            {
+              src: '/images/logo.png',
+              sizes: '192x192',
+              type: 'image/png',
+            },
+            {
+              src: '/images/logo.png',
+              sizes: '512x512',
+              type: 'image/png',
+            },
+            {
+              src: '/images/logo.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
+          ],
+        },
+        devOptions: {
+          enabled: false, // Disable in development
+        },
       }),
     ],
     define: {

@@ -50,9 +50,12 @@ import '@styles/styles.scss'
 // Element Plus - only import styles for components we use (ElTree)
 import 'element-plus/es/components/tree/style/css'
 
-// Fonts
-import '@fontsource/montserrat/700.css' // Bold
-import '@fontsource/montserrat/600.css' // Semi-bold
+// Fonts - Latin subset only (smaller than full font files)
+// Using latin + latin-ext for Polish language support
+import '@fontsource/montserrat/latin-700.css' // Bold - Latin
+import '@fontsource/montserrat/latin-600.css' // Semi-bold - Latin
+import '@fontsource/montserrat/latin-ext-700.css' // Bold - Latin Extended (Polish)
+import '@fontsource/montserrat/latin-ext-600.css' // Semi-bold - Latin Extended (Polish)
 
 // Handle chunk load failures after deployment (stale cache)
 window.addEventListener('error', event => {

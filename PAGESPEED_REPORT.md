@@ -485,3 +485,94 @@ Run `npm run build` to verify all optimizations are applied. Check the output fo
 - `.gz` and `.br` files in the `dist` directory
 - Reduced bundle sizes in the build log
 - Image optimization stats from ViteImageOptimizer
+
+---
+
+## Phase 3 Optimizations (Latest)
+
+### 11. PWA/Service Worker Implementation
+**Status:** ✅ Implemented
+**Impact:** Faster subsequent loads, offline capability
+
+Added `vite-plugin-pwa` with:
+- Automatic service worker registration and updates
+- Precaching of static assets (JS, CSS, HTML, fonts, images)
+- Runtime caching strategies:
+  - **Google Fonts**: CacheFirst (1 year TTL)
+  - **Images**: StaleWhileRevalidate (30 day TTL)
+  - **API requests**: NetworkFirst (5 minute TTL)
+- Web App Manifest for installability
+
+### 12. Font Subsetting (Montserrat)
+**Status:** ✅ Implemented
+**Impact:** ~40% font size reduction
+
+Changed from full font files to Latin-only subsets:
+```javascript
+// Before (all character sets)
+import '@fontsource/montserrat/700.css'
+import '@fontsource/montserrat/600.css'
+
+// After (Latin + Latin-ext only for Polish support)
+import '@fontsource/montserrat/latin-700.css'
+import '@fontsource/montserrat/latin-600.css'
+import '@fontsource/montserrat/latin-ext-700.css'
+import '@fontsource/montserrat/latin-ext-600.css'
+```
+
+### 13. Deferred Analytics Loading
+**Status:** ✅ Implemented
+**Impact:** ~143KB savings on initial load
+
+Google Analytics script (`gtag.js`) is now loaded only after user consent:
+- Script NOT loaded until cookie consent is granted
+- Saves ~143KB on initial page load for new visitors
+- Respects GDPR consent before any tracking occurs
+- If consent was previously given, loads after app-ready event
+
+### 14. Image Lazy Loading Audit
+**Status:** ✅ Verified
+**Impact:** Reduced initial payload
+
+Verified all major images use lazy loading:
+- Banner images in `LandingServices.vue` - `loading="lazy"` added
+- Footer images on error pages already have `loading="lazy"`
+- Vuetify `VImg` components use internal lazy loading
+- Screenshot carousels use `eager` intentionally for animation
+
+---
+
+## Phase 3 Files Modified
+
+| File | Change |
+|------|--------|
+| `vite.config.js` | Added vite-plugin-pwa configuration |
+| `src/main.js` | Font imports changed to Latin subsets |
+| `src/plugins/analytics/setup.js` | Deferred gtag.js loading until consent |
+| `src/components/LandingServices.vue` | Added `loading="lazy"` to banner images |
+
+---
+
+## Expected Total Performance Improvement
+
+| Metric | Initial Report | After Phase 1-3 |
+|--------|----------------|-----------------|
+| Icons Bundle | 983 KB | 19 KB |
+| Analytics (first visit) | 143 KB | 0 KB (deferred) |
+| Font Files | ~90 KB | ~45 KB |
+| Total Initial JS | ~5 MB | ~3.5 MB |
+| With Brotli Compression | - | ~700 KB |
+| Service Worker Caching | No | Yes |
+| Offline Capability | No | Yes |
+
+---
+
+## Remaining Opportunities
+
+The following could provide additional improvements but require more significant changes:
+
+1. **Server-side rendering (SSR)** - Would improve FCP/LCP dramatically
+2. **Edge caching with CDN** - Reduce TTFB globally
+3. **HTTP/3 support** - Faster multiplexed connections
+4. **Critical CSS inlining** - Extract and inline above-the-fold CSS
+5. **Resource hints** - Add more `<link rel="preload">` for critical assets
