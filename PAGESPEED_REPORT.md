@@ -333,4 +333,155 @@ Extensive manual chunking configuration in vite.config.js already splits:
 | Total JS Payload | ~5 MB | ~4 MB |
 | Compressed Payload | - | ~800 KB (Brotli) |
 
-**Note:** Server must be configured to serve `.br` (Brotli) or `.gz` (Gzip) files. Check your CDN/hosting provider's documentation for enabling pre-compressed file serving.
+**Note:** Server must be configured to serve `.br` (Brotli) or `.gz` (Gzip) files. See server configuration section below.
+
+---
+
+## Additional Optimizations (Phase 2)
+
+### 7. PurgeCSS for Unused CSS Removal
+**Status:** ✅ Implemented
+**Impact:** Removes unused CSS rules from the bundle
+
+Added `vite-plugin-purgecss` with comprehensive safelist for:
+- Vuetify component classes
+- Utility classes (margins, padding, flex, etc.)
+- Third-party library classes (Leaflet, ApexCharts, Monaco, etc.)
+
+### 8. Image Optimization Enhancement
+**Status:** ✅ Implemented
+**Impact:** Better image compression
+
+Enhanced `ViteImageOptimizer` configuration:
+- Added AVIF format support (best modern compression)
+- Reduced quality to 75% for better compression
+- Enabled progressive JPEG loading
+- Optimized SVG with additional plugins
+
+### 9. Accessibility Improvements
+**Status:** ✅ Implemented
+**Impact:** Better screen reader support
+
+Fixed accessibility issues:
+- Added `aria-label` to icon-only buttons
+- Added accessible names to dialogs
+- Fixed theme switcher, notifications, language selector buttons
+- Added corresponding translation keys
+
+### 10. Modern Browser Targeting
+**Status:** ✅ Implemented
+**Impact:** ~11KB savings by removing legacy polyfills
+
+Set Vite build target to `esnext`:
+- Removes unnecessary polyfills for modern browsers
+- Supports Chrome 87+, Firefox 78+, Safari 14+, Edge 88+
+- Uses native ES modules and modern JavaScript features
+
+---
+
+## Server Configuration Required
+
+To fully benefit from the compression optimizations, your server must be configured to serve pre-compressed files.
+
+### Nginx Configuration
+
+```nginx
+# Enable gzip for dynamic compression fallback
+gzip on;
+gzip_types text/plain text/css application/json application/javascript text/xml application/xml;
+gzip_min_length 1024;
+
+# Serve pre-compressed files
+location ~* \.(js|css|html|svg|json)$ {
+    # Try to serve pre-compressed brotli file first
+    gzip_static on;
+    brotli_static on;
+
+    # Or manually with try_files
+    # try_files $uri.br $uri.gz $uri =404;
+
+    # Add proper headers
+    add_header Cache-Control "public, max-age=31536000, immutable";
+    add_header Vary "Accept-Encoding";
+}
+
+# For .br files
+location ~* \.br$ {
+    add_header Content-Encoding br;
+    add_header Vary "Accept-Encoding";
+    default_type application/javascript;
+}
+
+# For .gz files
+location ~* \.gz$ {
+    add_header Content-Encoding gzip;
+    add_header Vary "Accept-Encoding";
+    default_type application/javascript;
+}
+```
+
+### Apache Configuration (.htaccess)
+
+```apache
+# Enable compression
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json
+</IfModule>
+
+# Serve pre-compressed files
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Serve brotli compressed files if they exist and browser supports it
+    RewriteCond %{HTTP:Accept-Encoding} br
+    RewriteCond %{REQUEST_FILENAME}.br -f
+    RewriteRule ^(.*)$ $1.br [L]
+
+    # Serve gzip compressed files if they exist and browser supports it
+    RewriteCond %{HTTP:Accept-Encoding} gzip
+    RewriteCond %{REQUEST_FILENAME}.gz -f
+    RewriteRule ^(.*)$ $1.gz [L]
+</IfModule>
+
+# Set correct content types
+<FilesMatch "\.js\.br$">
+    AddType application/javascript .br
+    AddEncoding br .br
+</FilesMatch>
+
+<FilesMatch "\.css\.br$">
+    AddType text/css .br
+    AddEncoding br .br
+</FilesMatch>
+```
+
+### Cloudflare / CDN
+
+Most CDNs like Cloudflare automatically handle compression. Ensure:
+1. Brotli compression is enabled in CDN settings
+2. Cache settings are configured to cache static assets
+3. "Cache Everything" page rule for `/assets/*`
+
+### Caching Headers
+
+Add these headers for optimal caching:
+
+```
+# Immutable assets (hashed filenames)
+Cache-Control: public, max-age=31536000, immutable
+
+# HTML files (must revalidate)
+Cache-Control: public, max-age=0, must-revalidate
+
+# API responses
+Cache-Control: private, no-cache
+```
+
+---
+
+## Build Verification
+
+Run `npm run build` to verify all optimizations are applied. Check the output for:
+- `.gz` and `.br` files in the `dist` directory
+- Reduced bundle sizes in the build log
+- Image optimization stats from ViteImageOptimizer

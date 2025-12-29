@@ -82,7 +82,8 @@
     },
     "theme": {
       "light": "Light",
-      "dark": "Dark"
+      "dark": "Dark",
+      "switchTheme": "Switch theme"
     },
     "status": {
       "loading": "Loading...",

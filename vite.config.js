@@ -15,6 +15,7 @@ import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 import compression from 'vite-plugin-compression';
+import purgecss from 'vite-plugin-purgecss';
 import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
@@ -89,21 +90,43 @@ export default defineConfig(({ mode }) => {
       monacoEditorPlugin.default({}),
       // Image optimization for production builds
       ViteImageOptimizer({
-        // PNG optimization
-        png: {
-          quality: 80,
+        // Test patterns for which images to include
+        test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
+        // Exclude patterns
+        exclude: undefined,
+        // Include patterns
+        include: undefined,
+        // Include assets from public folder
+        includePublic: true,
+        // Log stats
+        logStats: true,
+        // AVIF - best compression for modern browsers
+        avif: {
+          quality: 70,
         },
-        // JPEG optimization
+        // PNG optimization - more aggressive compression
+        png: {
+          quality: 75,
+          compressionLevel: 9,
+        },
+        // JPEG optimization - more aggressive
         jpeg: {
-          quality: 80,
+          quality: 75,
+          progressive: true,
         },
         // JPG optimization
         jpg: {
-          quality: 80,
+          quality: 75,
+          progressive: true,
         },
-        // WebP conversion
+        // WebP conversion - excellent compression
         webp: {
-          quality: 80,
+          quality: 75,
+          alphaQuality: 80,
+        },
+        // GIF optimization
+        gif: {
+          interlaced: true,
         },
         // SVG optimization
         svg: {
@@ -114,13 +137,16 @@ export default defineConfig(({ mode }) => {
               params: {
                 overrides: {
                   cleanupNumericValues: false,
-                  // Removed removeViewBox from overrides - moved to separate plugin below
                 },
               },
             },
             {
               name: 'removeViewBox',
-              active: false, // Disable removeViewBox to preserve viewBox attributes
+              active: false, // Preserve viewBox attributes
+            },
+            {
+              name: 'removeDimensions',
+              active: true, // Remove width/height, use viewBox instead
             },
           ],
         },
@@ -146,6 +172,115 @@ export default defineConfig(({ mode }) => {
         ext: '.br',
         threshold: 1024,
         deleteOriginFile: false,
+      }),
+      // PurgeCSS to remove unused CSS (production only)
+      !isDev && purgecss({
+        content: [
+          './index.html',
+          './src/**/*.vue',
+          './src/**/*.js',
+          './src/**/*.ts',
+          './src/**/*.jsx',
+          './src/**/*.tsx',
+        ],
+        safelist: {
+          // Vuetify uses dynamic classes extensively
+          standard: [
+            /^v-/, // All Vuetify classes
+            /^mdi-/, // MDI icons
+            /^tabler-/, // Tabler icons
+            /^theme--/, // Theme classes
+            /^elevation-/, // Elevation utilities
+            /^rounded-/, // Border radius utilities
+            /^text-/, // Text utilities
+            /^bg-/, // Background utilities
+            /^d-/, // Display utilities
+            /^flex-/, // Flex utilities
+            /^justify-/, // Justify utilities
+            /^align-/, // Align utilities
+            /^ma-/, /^mt-/, /^mb-/, /^ml-/, /^mr-/, /^mx-/, /^my-/, // Margin utilities
+            /^pa-/, /^pt-/, /^pb-/, /^pl-/, /^pr-/, /^px-/, /^py-/, // Padding utilities
+            /^ga-/, /^gt-/, /^gb-/, /^gl-/, /^gr-/, /^gx-/, /^gy-/, // Gap utilities
+            /^w-/, /^h-/, // Width/height utilities
+            /^font-/, // Font utilities
+            /^opacity-/, // Opacity utilities
+            /^overflow-/, // Overflow utilities
+            /^position-/, // Position utilities
+            /^cursor-/, // Cursor utilities
+            /^el-/, // Element Plus classes
+            /^leaflet-/, // Leaflet map classes
+            /^apexcharts/, // ApexCharts classes
+            /^xterm/, // xterm classes
+            /^monaco/, // Monaco editor classes
+            /^shepherd/, // Shepherd.js tour classes
+            /data-v-/, // Vue scoped styles
+          ],
+          deep: [
+            /v-application/,
+            /v-theme/,
+            /v-locale/,
+            /v-overlay/,
+            /v-menu/,
+            /v-dialog/,
+            /v-snackbar/,
+            /v-tooltip/,
+            /v-card/,
+            /v-btn/,
+            /v-chip/,
+            /v-alert/,
+            /v-table/,
+            /v-data-table/,
+            /v-select/,
+            /v-autocomplete/,
+            /v-text-field/,
+            /v-textarea/,
+            /v-checkbox/,
+            /v-radio/,
+            /v-switch/,
+            /v-slider/,
+            /v-tabs/,
+            /v-expansion/,
+            /v-list/,
+            /v-navigation/,
+            /v-app-bar/,
+            /v-footer/,
+            /v-img/,
+            /v-avatar/,
+            /v-icon/,
+            /v-badge/,
+            /v-progress/,
+            /v-skeleton/,
+            /v-divider/,
+            /v-timeline/,
+            /v-stepper/,
+            /v-form/,
+            /v-file/,
+            /v-color/,
+            /v-date/,
+            /v-time/,
+            /v-pagination/,
+            /v-breadcrumbs/,
+            /v-rating/,
+            /v-carousel/,
+            /v-window/,
+            /v-sheet/,
+            /v-responsive/,
+            /v-container/,
+            /v-row/,
+            /v-col/,
+            /v-spacer/,
+          ],
+          greedy: [
+            /transition/,
+            /animate/,
+            /fade/,
+            /slide/,
+            /scale/,
+            /scroll/,
+          ],
+        },
+        // Don't remove CSS variables
+        variables: false,
       }),
     ],
     define: {
@@ -200,9 +335,13 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      // Target modern browsers to avoid legacy polyfills (~11KB savings)
+      // Supports: Chrome 87+, Firefox 78+, Safari 14+, Edge 88+
+      target: 'esnext',
       chunkSizeWarningLimit: 1800, // Warn about chunks larger than 1800KB
       reportCompressedSize: true, // Report gzip sizes
       minify: 'esbuild', // Use esbuild for fast builds
+      cssMinify: 'esbuild', // Also minify CSS with esbuild
       commonjsOptions: {
         include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
       },

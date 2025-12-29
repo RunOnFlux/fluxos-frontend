@@ -20,7 +20,10 @@ watch(() => configStore.theme, () => {
 </script>
 
 <template>
-  <IconBtn color="rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity))">
+  <IconBtn
+    color="rgba(var(--v-theme-on-surface), var(--v-high-emphasis-opacity))"
+    :aria-label="t('common.theme.switchTheme')"
+  >
     <VIcon :icon="props.themes.find(t => t.name === configStore.theme)?.icon" />
     <VMenu
       activator="parent"
