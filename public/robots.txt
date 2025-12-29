@@ -21,6 +21,6 @@ Disallow: /zelid.html
 Disallow: /200
 
 # Block .html extensions (SPA doesn't use them)
-Disallow: /*.html$
+Disallow: /*.html
 
 Sitemap: https://cloud.runonflux.com/sitemap.xml
