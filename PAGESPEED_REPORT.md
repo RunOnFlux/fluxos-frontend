@@ -633,11 +633,50 @@ Confirmed existing optimizations:
 
 ---
 
+## Phase 5 Optimizations (Cleanup)
+
+### 19. Removed Unused Dependencies
+**Status:** ✅ Implemented
+**Impact:** Smaller node_modules, cleaner dependency tree
+
+Removed packages that were not imported anywhere in the codebase:
+- `@formkit/drag-and-drop` - using `draggable-resizable-vue3` instead
+- `@sindresorhus/is` - not used
+- `@vue-leaflet/vue-leaflet` - using raw `leaflet` instead
+- `vue-leaflet` - not used
+- `vue-leaflet-markercluster` - not used
+- `vue3-leaflet` - not used
+- `prismjs` - not used
+- `vue-prism-component` - not used
+- `qr` - not used
+- `roboto-fontface` - not used (fonts from Google Fonts)
+- `vuedraggable` - using `draggable-resizable-vue3` instead
+
+### 20. Removed Debug Console.log Statements
+**Status:** ✅ Implemented
+**Impact:** Cleaner production output
+
+Removed console.log statements from Vuetify plugin initialization.
+
+---
+
+## Server Configuration (Already Optimized)
+
+Your FluxOS + Cloudflare + HAProxy setup already provides:
+- ✅ Gzip compression (Express middleware)
+- ✅ Brotli compression (Cloudflare)
+- ✅ HTTP/2 and HTTP/3 (Cloudflare)
+- ✅ Global CDN edge caching (Cloudflare)
+- ✅ Load balancing across 8000+ nodes (HAProxy)
+
+**No server-side changes needed!**
+
+---
+
 ## Remaining Opportunities (Require Major Changes)
 
 The following could provide additional improvements but require significant architectural changes:
 
 1. **Server-side rendering (SSR)** - Would improve FCP/LCP dramatically but requires Nuxt.js migration
-2. **Edge caching with CDN** - Reduce TTFB globally (server configuration)
-3. **HTTP/3 support** - Faster multiplexed connections (server configuration)
-4. **Replace heavy dependencies** - Smaller alternatives to Firebase Auth, ApexCharts
+2. **Replace heavy dependencies** - Smaller alternatives to Firebase Auth, ApexCharts
+3. **Vuetify CSS tree-shaking** - Requires migrating to manual component imports

@@ -53,8 +53,6 @@ export default function (app) {
     },
   })
 
-  console.log(icons.aliases)
   app.use(vuetify)
-  console.log('Vuetify successfully registered')
 }
 
