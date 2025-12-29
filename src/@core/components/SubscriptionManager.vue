@@ -2371,7 +2371,7 @@
               type="warning" 
               variant="tonal" 
               class="mb-4"
-              icon="mdi-alert-triangle"
+              icon="mdi-alert"
             >
               <strong>{{ t('core.subscriptionManager.testWarningsTitle') }}</strong> {{ t('core.subscriptionManager.testWarningsMessage') }}
             </VAlert>
@@ -7039,7 +7039,7 @@ async function verifyAppSpec() {
           console.warn('WebCrypto not available, cannot use enterprise features')
           
           // Show user-friendly toast instead of blocking error
-          showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert-triangle', 6000)
+          showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert', 6000)
           
           // Reset enterprise mode and return gracefully
           appSpec.value.enterprise = ''
@@ -7791,7 +7791,7 @@ function getStatusIcon(status) {
   switch (status) {
   case 'success': return 'mdi-check-circle'
   case 'error': return 'mdi-alert-circle'
-  case 'warning': return 'mdi-alert-triangle'
+  case 'warning': return 'mdi-alert'
   case 'info': return 'mdi-information'
   default: return 'mdi-circle-outline'
   }

@@ -1258,7 +1258,7 @@ function showToast(type, message) {
   const iconMap = {
     success: 'mdi-check-circle',
     error: 'mdi-alert-circle',
-    warning: 'mdi-alert-triangle',
+    warning: 'mdi-alert',
     info: 'mdi-information',
     danger: 'mdi-alert-circle',
   }

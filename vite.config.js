@@ -14,6 +14,7 @@ import svgLoader from 'vite-svg-loader';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+import compression from 'vite-plugin-compression';
 import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
@@ -131,6 +132,20 @@ export default defineConfig(({ mode }) => {
         gzipSize: true,
         brotliSize: true,
         template: 'treemap', // 'sunburst', 'treemap', 'network'
+      }),
+      // Gzip compression for production builds
+      !isDev && compression({
+        algorithm: 'gzip',
+        ext: '.gz',
+        threshold: 1024, // Only compress files > 1KB
+        deleteOriginFile: false, // Keep original files for fallback
+      }),
+      // Brotli compression for production builds (better compression than gzip)
+      !isDev && compression({
+        algorithm: 'brotliCompress',
+        ext: '.br',
+        threshold: 1024,
+        deleteOriginFile: false,
       }),
     ],
     define: {

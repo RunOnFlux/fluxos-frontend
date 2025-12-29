@@ -3199,11 +3199,11 @@ const confirmRename = async () => {
     } else {
       const errorMessage = result.error || result.message || 'Failed to rename item'
       console.error('❌ Rename failed:', errorMessage)
-      showLocalMessage(`Failed to rename: ${errorMessage}`, 'error', 'mdi-rename-box-off')
+      showLocalMessage(`Failed to rename: ${errorMessage}`, 'error', 'mdi-alert-circle')
     }
   } catch (error) {
     console.error('❌ Rename error:', error)
-    showLocalMessage(`Failed to rename: ${error.message}`, 'error', 'mdi-rename-box-off')
+    showLocalMessage(`Failed to rename: ${error.message}`, 'error', 'mdi-alert-circle')
   }
 }
 
