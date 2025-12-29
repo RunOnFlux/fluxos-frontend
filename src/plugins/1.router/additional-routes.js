@@ -14,4 +14,15 @@ export const redirects = [
     path: '/dashboards/home',
     redirect: '/',
   },
+
+  // SEO: Redirect incorrect URL formats to correct ones
+  // These were causing Soft 404 errors in Google Search Console
+  {
+    path: '/fluxdrive',
+    redirect: '/flux-drive',
+  },
+  {
+    path: '/cost_calculator',
+    redirect: '/cost-calculator',
+  },
 ]
