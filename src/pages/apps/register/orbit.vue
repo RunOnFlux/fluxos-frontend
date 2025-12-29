@@ -4602,6 +4602,73 @@ onMounted(() => {
   .plans-grid {
     grid-template-columns: 1fr;
   }
+
+  .shared-features-card {
+    padding: 20px;
+  }
+
+  .shared-features-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 768px) {
+  .shared-features-title h4 {
+    font-size: 1.25rem;
+  }
+
+  .shared-features-subtitle {
+    font-size: 0.875rem;
+  }
+
+  .shared-feature-item {
+    padding: 10px;
+    gap: 10px;
+  }
+
+  .feature-name {
+    font-size: 0.875rem;
+  }
+
+  .feature-detail {
+    font-size: 0.75rem;
+  }
+
+  .plan-card {
+    padding: 20px;
+    gap: 14px;
+  }
+
+  .plan-name {
+    font-size: 1.25rem;
+  }
+
+  .plan-description {
+    font-size: 0.875rem;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
+
+  .resource-row {
+    grid-template-columns: 28px 1fr auto;
+    gap: 10px;
+    padding: 8px 10px;
+  }
+
+  .resource-icon {
+    font-size: 20px;
+  }
+
+  .resource-label {
+    font-size: 0.8rem;
+  }
+
+  .resource-value {
+    font-size: 0.875rem;
+  }
 }
 
 .billing-period {
@@ -4916,10 +4983,159 @@ onMounted(() => {
     padding: 0.75rem 0;
   }
 
+  .step-title {
+    font-size: 1.1rem;
+  }
+
+  .step-description {
+    font-size: 0.8rem;
+  }
+
+  .shared-features-card {
+    padding: 16px;
+    border-radius: 16px;
+  }
+
+  .shared-features-header {
+    margin-bottom: 16px;
+  }
+
+  .shared-features-title {
+    gap: 8px;
+  }
+
+  .shared-features-title .orbit-icon {
+    font-size: 24px;
+  }
+
+  .shared-features-title h4 {
+    font-size: 1.1rem;
+  }
+
+  .shared-features-subtitle {
+    font-size: 0.8rem;
+  }
+
+  .shared-features-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .shared-feature-item {
+    padding: 8px 10px;
+    gap: 8px;
+    border-radius: 10px;
+  }
+
+  .shared-feature-item .v-icon {
+    font-size: 18px !important;
+  }
+
+  .feature-name {
+    font-size: 0.825rem;
+  }
+
+  .feature-detail {
+    font-size: 0.7rem;
+  }
+
+  .plans-section-title {
+    font-size: 0.95rem;
+    margin-bottom: 12px;
+  }
+
+  .plan-card {
+    padding: 16px;
+    gap: 12px;
+    border-radius: 16px;
+  }
+
+  .recommended-badge,
+  .coming-soon-badge {
+    padding: 4px 14px;
+    font-size: 0.65rem;
+  }
+
+  .plan-header {
+    padding-bottom: 12px;
+    min-height: 80px;
+  }
+
+  .plan-name {
+    font-size: 1.1rem;
+    margin-bottom: 6px;
+  }
+
+  .plan-description {
+    font-size: 0.8rem;
+    min-height: 2em;
+  }
+
+  .plan-price-badge {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .price-amount {
+    font-size: 1.75rem;
+  }
+
+  .price-period {
+    font-size: 0.875rem;
+  }
+
+  .first-month-free-badge {
+    font-size: 0.65rem;
+    padding: 3px 10px;
+  }
+
+  .resource-row {
+    grid-template-columns: 24px 1fr auto;
+    gap: 8px;
+    padding: 8px;
+    border-radius: 8px;
+  }
+
+  .resource-icon {
+    font-size: 18px;
+  }
+
+  .resource-label {
+    font-size: 0.7rem;
+  }
+
+  .resource-value {
+    font-size: 0.8rem;
+  }
+
+  .plan-btn-wrapper :deep(.v-btn) {
+    height: 46px !important;
+    min-height: 46px !important;
+    max-height: 46px !important;
+    font-size: 0.85rem !important;
+  }
+
+  .plan-disclaimer {
+    margin-top: 1.5rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .disclaimer-text {
+    font-size: 0.75rem;
+  }
+
   .plan-specs,
   .plan-tagline,
   .billing-period {
     padding-left: 0;
+  }
+
+  .review-section {
+    padding: 1rem;
+  }
+
+  .review-section-title {
+    font-size: 0.9rem;
   }
 
   .review-item {
@@ -4927,8 +5143,17 @@ onMounted(() => {
     gap: 0.25rem;
   }
 
+  .review-label {
+    font-size: 0.85rem;
+  }
+
   .review-value {
     text-align: left;
+    font-size: 0.85rem;
+  }
+
+  .review-value.price {
+    font-size: 1.1rem;
   }
 
   .env-var-row {
@@ -4938,6 +5163,35 @@ onMounted(() => {
   .env-key,
   .env-value {
     flex: 1 1 100%;
+  }
+
+  .monorepo-project-card {
+    padding: 0.5rem;
+  }
+
+  .project-name {
+    font-size: 0.85rem;
+  }
+
+  .project-path {
+    font-size: 0.7rem;
+  }
+
+  .project-description {
+    font-size: 0.75rem;
+    padding-left: 1.5rem;
+  }
+
+  .orbit-env-item {
+    padding: 0.5rem;
+  }
+
+  .orbit-env-key {
+    font-size: 0.75rem;
+  }
+
+  .orbit-env-description {
+    font-size: 0.75rem;
   }
 }
 </style>

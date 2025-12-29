@@ -581,6 +581,15 @@ const selectPlan = plan => {
     font-size: 1.5rem;
   }
 
+  .section-subtitle {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-card {
+    padding: 1.5rem;
+  }
+
   .billing-options :deep(.v-btn-toggle) {
     flex-wrap: wrap;
   }
@@ -594,6 +603,84 @@ const selectPlan = plan => {
     font-size: 0.75rem;
     gap: 0.25rem;
     padding: 0.5rem;
+  }
+
+  .resource-comparison {
+    padding: 1rem;
+  }
+
+  .comparison-title {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .section-subtitle {
+    font-size: 0.875rem;
+    margin-bottom: 1rem;
+  }
+
+  .plan-card {
+    padding: 1.25rem;
+  }
+
+  .plan-name {
+    font-size: 1.25rem;
+  }
+
+  .price-amount {
+    font-size: 2rem;
+  }
+
+  .plan-tagline {
+    font-size: 0.8rem;
+  }
+
+  .feature-item {
+    font-size: 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .feature-item .v-icon {
+    font-size: 16px !important;
+  }
+
+  .coming-soon-badge,
+  .recommended-badge {
+    right: 12px;
+    top: -10px;
+  }
+
+  .coming-soon-badge .v-chip,
+  .recommended-badge .v-chip {
+    font-size: 0.65rem;
+  }
+
+  .resource-comparison {
+    padding: 0.75rem;
+    overflow-x: auto;
+  }
+
+  .comparison-title {
+    font-size: 0.9rem;
+  }
+
+  .comparison-table {
+    min-width: 400px;
+  }
+
+  .comparison-row {
+    font-size: 0.7rem;
+    gap: 0.25rem;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .comparison-row.header {
+    font-size: 0.65rem;
   }
 }
 </style>

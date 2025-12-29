@@ -420,5 +420,93 @@ const selectMethod = method => {
   .card-title {
     font-size: 1.5rem;
   }
+
+  .deployment-card {
+    padding: 1.5rem;
+  }
+
+  .pricing-tiers {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .three-tiers {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .three-tiers .tier {
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+  }
+
+  .tier-divider {
+    display: none;
+  }
+
+  .tier-price {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .section-title {
+    font-size: 1.25rem;
+  }
+
+  .section-subtitle {
+    font-size: 1rem;
+  }
+
+  .deployment-card {
+    padding: 1.25rem;
+  }
+
+  .card-icon {
+    padding: 0.75rem;
+  }
+
+  .card-icon .v-icon {
+    font-size: 40px !important;
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+
+  .card-badge {
+    right: 12px;
+    top: -10px;
+  }
+
+  .card-badge .v-chip {
+    font-size: 0.65rem;
+  }
+
+  .card-description {
+    font-size: 0.875rem;
+  }
+
+  .feature-item {
+    font-size: 0.8rem;
+  }
+
+  .feature-item .v-icon {
+    font-size: 16px !important;
+  }
+
+  .tier-name {
+    font-size: 0.7rem;
+  }
+
+  .tier-price {
+    font-size: 1.125rem;
+  }
+
+  .tier-price small {
+    font-size: 0.65rem;
+  }
 }
 </style>
