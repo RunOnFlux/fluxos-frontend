@@ -19,6 +19,45 @@ import purgecss from 'vite-plugin-purgecss';
 import { VitePWA } from 'vite-plugin-pwa';
 import { aliases } from './aliases.mjs';
 
+// Critical CSS plugin using critters
+function criticalCssPlugin() {
+  return {
+    name: 'vite-plugin-critical-css',
+    apply: 'build',
+    enforce: 'post',
+    async transformIndexHtml(html, ctx) {
+      // Only process in build mode
+      if (!ctx.bundle) return html;
+
+      try {
+        const Critters = (await import('critters')).default;
+        const critters = new Critters({
+          // Inline critical CSS
+          inlineFonts: false,
+          // Preload external stylesheets
+          preload: 'swap',
+          // Don't remove original stylesheets (let browser load them async)
+          pruneSource: false,
+          // Reduce unused CSS rules in inlined styles
+          reduceInlineStyles: true,
+          // Use media="print" trick for async loading
+          noscriptFallback: true,
+          // Merge inlined styles
+          mergeStylesheets: true,
+        });
+
+        // Process HTML with critters
+        const result = await critters.process(html);
+        console.log('✅ Critical CSS extracted and inlined');
+        return result;
+      } catch (error) {
+        console.warn('⚠️ Critical CSS extraction failed:', error.message);
+        return html;
+      }
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
 
@@ -288,10 +327,18 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
         workbox: {
-          // Precache all static assets
+          // Precache static assets (excluding large files)
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-          // Don't precache files larger than 2MB (like source maps or large fonts)
-          maximumFileSizeToCacheInBytes: 2 * 1024 * 1024,
+          // Exclude large files and dev tools from precaching
+          globIgnores: [
+            'stats.html', // Bundle analyzer (4MB+)
+            '**/monacoeditorwork/**', // Monaco workers (12MB+)
+            '**/crypto-walletconnect*', // WalletConnect (4MB+)
+            '**/crypto-viem*', // Viem (1MB+)
+            '**/syntax-highlight*', // Syntax highlighting (1MB+)
+          ],
+          // Increase limit to 5MB for remaining large chunks (CSS)
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
           // Runtime caching for API requests and images
           runtimeCaching: [
             {
@@ -397,6 +444,8 @@ export default defineConfig(({ mode }) => {
           enabled: false, // Disable in development
         },
       }),
+      // Critical CSS extraction (production only)
+      !isDev && criticalCssPlugin(),
     ],
     define: {
       'process.env': {},

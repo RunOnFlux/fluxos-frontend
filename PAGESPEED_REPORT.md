@@ -567,12 +567,77 @@ Verified all major images use lazy loading:
 
 ---
 
-## Remaining Opportunities
+## Phase 4 Optimizations (Final)
 
-The following could provide additional improvements but require more significant changes:
+### 15. Critical CSS Extraction
+**Status:** ✅ Implemented
+**Impact:** Faster First Contentful Paint (FCP)
 
-1. **Server-side rendering (SSR)** - Would improve FCP/LCP dramatically
-2. **Edge caching with CDN** - Reduce TTFB globally
-3. **HTTP/3 support** - Faster multiplexed connections
-4. **Critical CSS inlining** - Extract and inline above-the-fold CSS
-5. **Resource hints** - Add more `<link rel="preload">` for critical assets
+Added custom Vite plugin using `critters` to:
+- Extract critical above-the-fold CSS
+- Inline critical CSS in `<head>`
+- Async load remaining stylesheets with `preload` strategy
+- Reduce render-blocking CSS
+
+### 16. Resource Preload Hints
+**Status:** ✅ Implemented
+**Impact:** Faster resource discovery
+
+Added to `index.html`:
+- `<link rel="preload">` for logo image (LCP element)
+- `<link rel="preconnect">` for Google Fonts
+- `fetchpriority="high"` on critical images
+
+### 17. FetchPriority for LCP Image
+**Status:** ✅ Implemented
+**Impact:** Faster Largest Contentful Paint
+
+Added `fetchpriority="high"` to:
+- Preload hint in `<head>`
+- Loading logo `<img>` element
+- Tells browser to prioritize LCP image
+
+### 18. Bundle Splitting Analysis
+**Status:** ✅ Verified (Already Optimal)
+
+Confirmed existing optimizations:
+- All pages lazy-loaded via `importMode: 'async'`
+- Heavy libraries chunked separately (Leaflet, ApexCharts, Monaco, Firebase)
+- Crypto libraries isolated (MetaMask, WalletConnect, Viem)
+- No further splitting opportunities identified
+
+---
+
+## Phase 4 Files Modified
+
+| File | Change |
+|------|--------|
+| `vite.config.js` | Added criticalCssPlugin() using critters |
+| `index.html` | Added preload hints, preconnect, fetchpriority |
+| `package.json` | Added critters dependency |
+
+---
+
+## Final Expected Performance Improvement
+
+| Metric | Initial Report | After All Phases |
+|--------|----------------|------------------|
+| Icons Bundle | 983 KB | 19 KB |
+| Analytics (first visit) | 143 KB | 0 KB (deferred) |
+| Font Files | ~90 KB | ~45 KB |
+| CSS Render-blocking | ~361 KB | Critical inlined |
+| Total Initial JS | ~5 MB | ~3.5 MB |
+| With Brotli Compression | ~1.2 MB | ~700 KB |
+| Service Worker Caching | No | Yes |
+| Offline Capability | No | Yes |
+
+---
+
+## Remaining Opportunities (Require Major Changes)
+
+The following could provide additional improvements but require significant architectural changes:
+
+1. **Server-side rendering (SSR)** - Would improve FCP/LCP dramatically but requires Nuxt.js migration
+2. **Edge caching with CDN** - Reduce TTFB globally (server configuration)
+3. **HTTP/3 support** - Faster multiplexed connections (server configuration)
+4. **Replace heavy dependencies** - Smaller alternatives to Firebase Auth, ApexCharts

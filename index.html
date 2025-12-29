@@ -50,6 +50,13 @@
   <link rel="dns-prefetch" href="https://www.google.com" />
   <link rel="dns-prefetch" href="https://www.gstatic.com" />
 
+  <!-- Preload critical assets for faster LCP -->
+  <link rel="preload" href="/images/logo.png" as="image" fetchpriority="high" />
+
+  <!-- Preconnect to Google Fonts for faster font loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
   <!-- Critical CSS inlined to avoid render-blocking request -->
   <style>
     /* Loader CSS - Critical for initial loading screen */
@@ -255,7 +262,7 @@
     <div class="loading-wrapper">
       <div class="loading">
         <div class="loading-logo">
-          <img src="/images/logo.png" alt="Logo" />
+          <img src="/images/logo.png" alt="Logo" fetchpriority="high" />
         </div>
         <div class="effect-1 effects"></div>
         <div class="effect-2 effects"></div>
