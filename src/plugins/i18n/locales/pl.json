@@ -2931,6 +2931,17 @@
               "geolocation": "Wybór geolokalizacji",
               "cicd": "Pełny potok CI/CD"
             },
+            "custom": "Własny",
+            "customizable": "Konfigurowalny",
+            "customPriceDetail": "Skonfiguruj własne zasoby i cenę",
+            "startingAt": "Od",
+            "priceAfterFirstMonth": "Cena po pierwszym miesiącu",
+            "customFeatures": {
+              "cpu": "0.1 - 15 rdzeni",
+              "ram": "100 MB - 59 GB",
+              "storage": "1 - 820 GB",
+              "instances": "2 instancje"
+            },
             "buildLimitWarning": "Po osiągnięciu limitu darmowego planu następny build automatycznie uaktualni do planu Pro",
             "currentPlan": "Aktualny plan",
             "selectPlan": "Wybierz plan",
@@ -3256,6 +3267,8 @@
             "customDomainHint": "Wprowadź własną domenę (musisz skonfigurować DNS osobno)",
             "autoDetectionEnabled": "Automatyczne wykrywanie włączone",
             "autoDetectionDescription": "Orbit automatycznie wykrywa Twój framework (Next.js, Django, Rails, Spring Boot, itp.) i konfiguruje proces budowania. Dockerfile nie jest potrzebny!",
+            "customResourcesTitle": "Własne zasoby",
+            "customResourcesInfo": "Skonfiguruj CPU, RAM i dysk dla własnego planu. Cena zostanie obliczona na podstawie wybranych zasobów.",
             "cpuLabel": "CPU",
             "ramLabel": "RAM",
             "storageLabel": "Dysk",

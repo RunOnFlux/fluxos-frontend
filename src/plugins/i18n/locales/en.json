@@ -2931,6 +2931,17 @@
               "geolocation": "Geolocation selection",
               "cicd": "Full CI/CD pipeline"
             },
+            "custom": "Custom",
+            "customizable": "Customizable",
+            "customPriceDetail": "Configure your own resources and pricing",
+            "startingAt": "Starting at",
+            "priceAfterFirstMonth": "Price after first month",
+            "customFeatures": {
+              "cpu": "0.1 - 15 Cores",
+              "ram": "100 MB - 59 GB",
+              "storage": "1 - 820 GB",
+              "instances": "2 instances"
+            },
             "buildLimitWarning": "When free tier limit is reached, the next build will automatically upgrade to Pro",
             "currentPlan": "Current Plan",
             "selectPlan": "Select Plan",
@@ -3256,6 +3267,8 @@
             "customDomainHint": "Enter your custom domain (you'll need to configure DNS separately)",
             "autoDetectionEnabled": "Auto-Detection Enabled",
             "autoDetectionDescription": "Orbit automatically detects your framework (Next.js, Django, Rails, Spring Boot, etc.) and configures the build process. No Dockerfile needed!",
+            "customResourcesTitle": "Custom Resources",
+            "customResourcesInfo": "Configure the CPU, RAM, and storage for your custom plan. The price will be calculated based on your selections.",
             "cpuLabel": "CPU",
             "ramLabel": "RAM",
             "storageLabel": "Storage",

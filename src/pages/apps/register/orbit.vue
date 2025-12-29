@@ -445,6 +445,109 @@
                         persistent-hint
                       />
 
+                      <!-- Custom Plan Resources Configuration -->
+                      <div v-if="selectedPlan === 'custom'" class="custom-resources-section mb-4">
+                        <VCard variant="outlined" class="custom-resources-card">
+                          <VCardTitle class="d-flex align-center gap-2">
+                            <VIcon color="info">mdi-tune-variant</VIcon>
+                            {{ t('pages.apps.register.orbit.config.customResourcesTitle') }}
+                          </VCardTitle>
+                          <VCardText>
+                            <VAlert type="info" variant="tonal" density="compact" class="mb-4">
+                              {{ t('pages.apps.register.orbit.config.customResourcesInfo') }}
+                            </VAlert>
+
+                            <!-- CPU Slider -->
+                            <div class="resource-config-row mb-4">
+                              <div class="resource-config-header">
+                                <VIcon class="resource-icon" size="20" color="primary">mdi-speedometer</VIcon>
+                                <span class="resource-config-label">{{ t('pages.apps.register.orbit.config.cpuLabel') }}</span>
+                                <VChip size="small" color="primary" variant="flat" class="resource-config-value">
+                                  {{ customPlanResources.cpu }} vCores
+                                </VChip>
+                              </div>
+                              <VSlider
+                                v-model="customPlanResources.cpu"
+                                :min="0.1"
+                                :max="15"
+                                :step="0.1"
+                                hide-details
+                                color="primary"
+                                class="resource-slider"
+                              />
+                            </div>
+
+                            <!-- RAM Slider -->
+                            <div class="resource-config-row mb-4">
+                              <div class="resource-config-header">
+                                <VIcon class="resource-icon" size="20" color="success">mdi-memory</VIcon>
+                                <span class="resource-config-label">{{ t('pages.apps.register.orbit.config.ramLabel') }}</span>
+                                <VChip size="small" color="success" variant="flat" class="resource-config-value">
+                                  {{ customPlanResources.ram }} MB
+                                </VChip>
+                              </div>
+                              <VSlider
+                                v-model="customPlanResources.ram"
+                                :min="100"
+                                :max="59000"
+                                :step="100"
+                                hide-details
+                                color="success"
+                                class="resource-slider"
+                              />
+                            </div>
+
+                            <!-- Storage Slider -->
+                            <div class="resource-config-row mb-4">
+                              <div class="resource-config-header">
+                                <VIcon class="resource-icon" size="20" color="warning">mdi-harddisk</VIcon>
+                                <span class="resource-config-label">{{ t('pages.apps.register.orbit.config.storageLabel') }}</span>
+                                <VChip size="small" color="warning" variant="flat" class="resource-config-value">
+                                  {{ customPlanResources.storage }} GB
+                                </VChip>
+                              </div>
+                              <VSlider
+                                v-model="customPlanResources.storage"
+                                :min="1"
+                                :max="820"
+                                :step="1"
+                                hide-details
+                                color="warning"
+                                class="resource-slider"
+                              />
+                            </div>
+
+                            <!-- Price Display -->
+                            <div class="custom-price-display">
+                              <div v-if="customPlanPriceLoading" class="price-loading">
+                                <VProgressCircular indeterminate size="20" width="2" class="mr-2" />
+                                {{ t('pages.costCalculator.calculating') }}
+                              </div>
+                              <div v-else-if="customPlanPrice?.usd" class="price-result">
+                                <div class="price-after-free">
+                                  <VIcon size="18" color="success" class="mr-1">mdi-gift-outline</VIcon>
+                                  {{ t('pages.apps.register.orbit.pricing.priceAfterFirstMonth') }}
+                                </div>
+                                <div class="price-amount-large">
+                                  ${{ customPlanMonthlyPrice }}
+                                  <span class="price-period-small">/ {{ t('common.labels.monthly') }}</span>
+                                </div>
+                                <div v-if="customPlanPrice.flux" class="price-flux">
+                                  {{ customPlanPrice.flux }} FLUX
+                                  <VChip v-if="customPlanPrice.fluxDiscount > 0" size="x-small" color="success" class="ml-1">
+                                    -{{ customPlanPrice.fluxDiscount }}%
+                                  </VChip>
+                                </div>
+                              </div>
+                              <div v-else-if="customPlanPriceError" class="price-error">
+                                <VIcon size="18" color="error" class="mr-1">mdi-alert-circle</VIcon>
+                                {{ customPlanPriceError }}
+                              </div>
+                            </div>
+                          </VCardText>
+                        </VCard>
+                      </div>
+
                       <!-- Runtime Version Selection -->
                       <VExpansionPanels class="mb-4">
                         <VExpansionPanel>
@@ -1045,6 +1148,78 @@
                           </VBtn>
                         </div>
                       </div>
+
+                      <!-- Custom Plan -->
+                      <div
+                        class="plan-card custom-plan"
+                        :class="{ 'selected': selectedPlan === 'custom' }"
+                        @click="selectedPlan = 'custom'"
+                      >
+                        <div class="custom-badge">
+                          {{ t('pages.apps.register.orbit.pricing.customizable') }}
+                        </div>
+
+                        <div class="plan-price-badge custom-price-badge">
+                          <template v-if="customPlanPriceLoading">
+                            <VProgressCircular indeterminate size="24" width="2" color="primary" />
+                          </template>
+                          <template v-else-if="customPlanPrice?.usd">
+                            <span class="price-amount">${{ customPlanMonthlyPrice }}</span>
+                            <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
+                          </template>
+                          <template v-else>
+                            <span class="price-amount price-starting">{{ t('pages.apps.register.orbit.pricing.startingAt') }} $0.99</span>
+                            <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
+                          </template>
+                        </div>
+
+                        <div class="first-month-free-badge">
+                          <VIcon size="14">mdi-gift-outline</VIcon>
+                          {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
+                        </div>
+
+                        <div class="plan-header">
+                          <h3 class="plan-name">{{ t('pages.apps.register.orbit.pricing.custom') }}</h3>
+                          <p class="plan-description">{{ t('pages.apps.register.orbit.pricing.customPriceDetail') }}</p>
+                        </div>
+
+                        <div class="plan-resources">
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-speedometer</VIcon>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.cpuLabel') }}</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.customFeatures.cpu') }}</span>
+                          </div>
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-memory</VIcon>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.ramLabel') }}</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.customFeatures.ram') }}</span>
+                          </div>
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-harddisk</VIcon>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.storageLabel') }}</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.customFeatures.storage') }}</span>
+                          </div>
+                          <div class="resource-row">
+                            <VIcon class="resource-icon">mdi-server-network</VIcon>
+                            <span class="resource-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}</span>
+                            <span class="resource-value">2</span>
+                          </div>
+                        </div>
+
+                        <div class="plan-btn-wrapper">
+                          <VBtn
+                            block
+                            :color="selectedPlan === 'custom' ? 'success' : 'primary'"
+                            size="large"
+                            variant="elevated"
+                            class="plan-btn"
+                            @click.stop="selectedPlan = 'custom'"
+                          >
+                            <VIcon start>mdi-check-circle</VIcon>
+                            {{ selectedPlan === 'custom' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
+                          </VBtn>
+                        </div>
+                      </div>
                     </div>
 
                     <!-- Beginner Plan Disclaimer -->
@@ -1493,6 +1668,7 @@ import { useI18n } from 'vue-i18n'
 import { useSEONoIndex } from '@/composables/useSEO'
 import { useLoginSheet } from '@/composables/useLoginSheet'
 import axios from 'axios'
+import Api from '@/services/ApiClient'
 import geolocations from '@/utils/geolocation'
 import AppsService from '@/services/AppsService'
 import StorageService from '@/services/StorageService'
@@ -2830,6 +3006,19 @@ const runtimeEnvVarMap = {
 const selectedPlan = ref(null)
 const billingPeriod = ref('1')
 
+// Custom plan resources (defaults match Pro plan)
+const customPlanResources = ref({
+  cpu: 2,
+  ram: 6000,
+  storage: 20,
+  instances: 2,
+})
+
+// Custom plan price calculation
+const customPlanPrice = ref(null)
+const customPlanPriceLoading = ref(false)
+const customPlanPriceError = ref(null)
+
 // Pro plan features
 const customDomain = ref('')
 
@@ -3040,6 +3229,15 @@ const planResources = computed(() => {
     return { cpu: 1.5, ram: 4, storage: 15, instances: 2 }
   }
 
+  if (selectedPlan.value === 'custom') {
+    return {
+      cpu: customPlanResources.value.cpu,
+      ram: customPlanResources.value.ram / 1000, // Convert MB to GB for display
+      storage: customPlanResources.value.storage,
+      instances: customPlanResources.value.instances,
+    }
+  }
+
   // Pro plan
   return { cpu: 2, ram: 6, storage: 20, instances: 2 }
 })
@@ -3087,11 +3285,21 @@ const discountPercentage = computed(() => {
 
 const totalPrice = computed(() => {
   if (selectedPlan.value === 'free') return 0
+
   const months = parseInt(billingPeriod.value, 10)
 
   // First month is free
   const paidMonths = Math.max(0, months - 1)
-  const monthlyPrice = selectedPlan.value === 'developer' ? 2.38 : 3.80
+
+  let monthlyPrice = 0
+  if (selectedPlan.value === 'developer') {
+    monthlyPrice = 2.38
+  } else if (selectedPlan.value === 'pro') {
+    monthlyPrice = 3.80
+  } else if (selectedPlan.value === 'custom' && customPlanPrice.value?.usd) {
+    monthlyPrice = customPlanPrice.value.usd
+  }
+
   const basePrice = monthlyPrice * paidMonths
   const discount = basePrice * (discountPercentage.value / 100)
 
@@ -3101,7 +3309,102 @@ const totalPrice = computed(() => {
 const formattedTotalPrice = computed(() => {
   if (selectedPlan.value === 'free') return '$0 (Beginner)'
 
+  if (selectedPlan.value === 'custom') {
+    if (!customPlanPrice.value?.usd) return 'Calculating...'
+    
+    return `$${totalPrice.value.toFixed(2)} (${billingPeriodLabel.value})`
+  }
+
   return `$${totalPrice.value.toFixed(2)} (${billingPeriodLabel.value})`
+})
+
+// Custom plan price calculation function
+const calculateCustomPlanPrice = async () => {
+  if (selectedPlan.value !== 'custom') return
+
+  customPlanPriceLoading.value = true
+  customPlanPriceError.value = null
+
+  try {
+    // Build geolocation code from selection
+    const geoCode = buildGeoCode(selectedGeo.value)
+
+    // Convert 1 month to blocks (post-fork: 88000 blocks = 1 month)
+    const expire = 88000
+
+    const payload = JSON.stringify({
+      version: 8,
+      name: 'orbitcustom',
+      description: 'Orbit custom plan pricing calculation',
+      owner: '176iuPFBqD4yg3Fd7oPVhB3d4NXWxvQyxx',
+      compose: [{
+        name: 'component',
+        description: 'component',
+        repotag: 'runonflux/jetpack2:latest',
+        ports: [3000],
+        domains: [''],
+        environmentParameters: [''],
+        commands: [''],
+        containerPorts: [3000],
+        containerData: '/tmp',
+        cpu: customPlanResources.value.cpu.toString(),
+        ram: customPlanResources.value.ram.toString(),
+        hdd: customPlanResources.value.storage.toString(),
+        tiered: false,
+      }],
+      instances: customPlanResources.value.instances,
+      nodes: [],
+      contacts: [''],
+      geolocation: geoCode && geoCode !== 'a' ? [geoCode] : [''],
+      expire: expire,
+      enterprise: '',
+      staticip: false,
+    })
+
+    const response = await Api().post(
+      '/apps/calculatefiatandfluxprice',
+      payload,
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: 15000,
+      },
+    )
+
+    if (response.data?.status === 'success' && response.data.data?.usd) {
+      customPlanPrice.value = {
+        usd: parseFloat(response.data.data.usd),
+        flux: response.data.data.flux,
+        fluxDiscount: response.data.data.fluxDiscount || 0,
+      }
+    } else {
+      customPlanPriceError.value = 'Failed to calculate price'
+      customPlanPrice.value = null
+    }
+  } catch (error) {
+    console.error('Error calculating custom plan price:', error)
+    customPlanPriceError.value = 'Error calculating price'
+    customPlanPrice.value = null
+  } finally {
+    customPlanPriceLoading.value = false
+  }
+}
+
+// Debounced price calculation for custom plan
+let customPriceDebounceTimer = null
+const debouncedCalculateCustomPrice = () => {
+  if (customPriceDebounceTimer) clearTimeout(customPriceDebounceTimer)
+  customPriceDebounceTimer = setTimeout(() => {
+    calculateCustomPlanPrice()
+  }, 500)
+}
+
+// Custom plan monthly price display
+const customPlanMonthlyPrice = computed(() => {
+  if (!customPlanPrice.value?.usd) return null
+  
+  return customPlanPrice.value.usd.toFixed(2)
 })
 
 // Available Orbit environment variables
@@ -3852,6 +4155,17 @@ const resetForm = () => {
   billingPeriod.value = '1'
   customDomain.value = ''
 
+  // Reset custom plan resources (defaults match Pro plan)
+  customPlanResources.value = {
+    cpu: 2,
+    ram: 6000,
+    storage: 20,
+    instances: 2,
+  }
+  customPlanPrice.value = null
+  customPlanPriceLoading.value = false
+  customPlanPriceError.value = null
+
   // Reset terms
   acceptedTerms.value = false
 
@@ -3888,6 +4202,27 @@ watch(() => selectedGeo.value.continent, () => {
 watch(() => selectedGeo.value.country, () => {
   selectedGeo.value.region = 'ALL'
 })
+
+// Watch for custom plan selection to trigger price calculation
+watch(selectedPlan, newPlan => {
+  if (newPlan === 'custom') {
+    calculateCustomPlanPrice()
+  }
+})
+
+// Watch for custom plan resource changes to recalculate price
+watch(customPlanResources, () => {
+  if (selectedPlan.value === 'custom') {
+    debouncedCalculateCustomPrice()
+  }
+}, { deep: true })
+
+// Watch for geolocation changes to recalculate custom plan price
+watch(selectedGeo, () => {
+  if (selectedPlan.value === 'custom') {
+    debouncedCalculateCustomPrice()
+  }
+}, { deep: true })
 
 // Initialize contact email from user if available
 onMounted(() => {
@@ -4354,6 +4689,170 @@ onMounted(() => {
   opacity: 0.6;
   cursor: not-allowed;
   pointer-events: none;
+}
+
+/* Custom Plan Styles */
+.custom-plan {
+  background: linear-gradient(135deg, rgba(var(--v-theme-info), 0.03) 0%, rgba(var(--v-theme-primary), 0.03) 100%);
+}
+
+.custom-plan:hover,
+.custom-plan.selected {
+  border-color: rgb(var(--v-theme-info));
+  background: linear-gradient(135deg, rgba(var(--v-theme-info), 0.08) 0%, rgba(var(--v-theme-primary), 0.08) 100%);
+}
+
+.custom-plan.selected {
+  box-shadow: 0 8px 32px rgba(var(--v-theme-info), 0.3);
+}
+
+.custom-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(135deg, rgb(var(--v-theme-info)) 0%, rgb(var(--v-theme-primary)) 100%);
+  color: white;
+  padding: 6px 20px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(var(--v-theme-info), 0.4);
+}
+
+.custom-price-badge {
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-starting {
+  font-size: 1.5rem !important;
+}
+
+/* Custom Resources Section in Configure Step */
+.custom-resources-section {
+  margin-bottom: 1rem;
+}
+
+.custom-resources-card {
+  border-color: rgba(var(--v-theme-info), 0.3);
+  background: linear-gradient(135deg, rgba(var(--v-theme-info), 0.03) 0%, rgba(var(--v-theme-primary), 0.03) 100%);
+}
+
+.custom-resources-card .v-card-title {
+  font-size: 1rem;
+  padding-bottom: 0;
+}
+
+.custom-resources-config {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  padding: 16px;
+  background: rgba(var(--v-theme-on-surface), 0.02);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.resource-config-row {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resource-config-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.resource-config-label {
+  flex: 1;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.resource-config-value {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: rgb(var(--v-theme-primary));
+  background: rgba(var(--v-theme-primary), 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.resource-slider {
+  margin-top: -4px;
+}
+
+.custom-geolocation-section {
+  padding-top: 12px;
+  border-top: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+}
+
+.custom-price-display {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(var(--v-theme-success), 0.08);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--v-theme-success), 0.2);
+  text-align: center;
+}
+
+.price-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+}
+
+.price-result {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.price-after-free {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  color: rgb(var(--v-theme-success));
+  font-weight: 500;
+}
+
+.price-amount-large {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: rgb(var(--v-theme-success));
+}
+
+.price-period-small {
+  font-size: 0.875rem;
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+.price-flux {
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.price-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.875rem;
+  color: rgb(var(--v-theme-error));
 }
 
 .recommended-badge {
@@ -5054,6 +5553,50 @@ onMounted(() => {
   .coming-soon-badge {
     padding: 4px 14px;
     font-size: 0.65rem;
+  }
+
+  .custom-badge {
+    padding: 4px 14px;
+    font-size: 0.65rem;
+  }
+
+  .custom-resources-config {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .resource-config-label {
+    font-size: 0.8rem;
+  }
+
+  .resource-config-value {
+    font-size: 0.75rem;
+    padding: 2px 6px;
+  }
+
+  .custom-geolocation-section {
+    padding-top: 10px;
+  }
+
+  .custom-price-display {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .price-after-free {
+    font-size: 0.7rem;
+  }
+
+  .price-amount-large {
+    font-size: 1.5rem;
+  }
+
+  .price-period-small {
+    font-size: 0.75rem;
+  }
+
+  .price-flux {
+    font-size: 0.75rem;
   }
 
   .plan-header {
