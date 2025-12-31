@@ -1222,14 +1222,51 @@
                           class="mb-4"
                         />
                         <VIcon v-else icon="mdi-check-circle" size="64" color="success" class="mb-4" />
-                        <div class="text-h6 mb-2">{{ paymentConfirmed ? t('components.marketplace.installDialog.paymentConfirmed') : t('components.marketplace.installDialog.waitingForPayment') }}</div>
-                        <div class="text-body-2 text-center mb-4 text-medium-emphasis">
-                          <span v-if="!paymentConfirmed" v-html="t('components.marketplace.installDialog.completePaymentInWallet', { wallet: paymentMethod === 'flux' ? 'ZelCore' : 'SSP' })">
-                          </span>
-                          <span v-else-if="redirectCountdown > 0" class="text-success">
-                            {{ t('components.marketplace.installDialog.advancingToDeployment', { seconds: redirectCountdown }) }}
-                          </span>
+
+                        <!-- Phase-specific title -->
+                        <div class="text-h6 mb-2">
+                          <template v-if="paymentConfirmed">{{ t('components.marketplace.installDialog.paymentConfirmed') }}</template>
+                          <template v-else-if="paymentMonitoringPhase === 'blockchain'">{{ t('core.subscriptionManager.checkingBlockchainConfirmation') }}</template>
+                          <template v-else>{{ t('core.subscriptionManager.waitingForNodeDeployment') }}</template>
                         </div>
+
+                        <!-- Phase-specific messages -->
+                        <div class="text-body-2 text-center mb-4 text-medium-emphasis">
+                          <template v-if="paymentConfirmed && redirectCountdown > 0">
+                            <span class="text-success">
+                              {{ t('components.marketplace.installDialog.advancingToDeployment', { seconds: redirectCountdown }) }}
+                            </span>
+                          </template>
+                          <template v-else-if="paymentMonitoringPhase === 'blockchain'">
+                            <div class="d-flex flex-column align-center gap-1">
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="18" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('core.subscriptionManager.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="18" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </div>
+                          </template>
+                          <template v-else-if="paymentMonitoringPhase === 'deployment'">
+                            <div class="d-flex flex-column align-center gap-1">
+                              <div class="d-flex align-center">
+                                <VIcon color="success" size="18" class="mr-2">mdi-check-circle</VIcon>
+                                <span>{{ t('core.subscriptionManager.paymentConfirmedWaitingNodes') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="18" class="mr-2">mdi-server</VIcon>
+                                <span>{{ t('core.subscriptionManager.waitingForNodesPickup') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="18" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.nodeDeploymentTime') }}</span>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+
                         <VBtn
                           v-if="!paymentConfirmed"
                           variant="outlined"
@@ -2675,6 +2712,9 @@ const paymentHash = ref('') // Will be generated after signing/registration
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentConfirmed = ref(false)
+
+// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'deployment' = waiting for nodes to pick up app
+const paymentMonitoringPhase = ref('blockchain')
 const paymentBridgeMaintenance = ref(false)
 const popupBlockedDialog = ref(false)
 const blockedPaymentUrl = ref('')
@@ -4227,7 +4267,9 @@ const resetDialog = () => {
   }
 }
 
-// Payment monitoring function
+// Payment monitoring function - Two-phase detection:
+// Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
+// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
 
   // Clear any existing monitoring
@@ -4237,6 +4279,8 @@ const startPaymentMonitoring = async () => {
   if (paymentMonitoringTimeout.value) {
     clearTimeout(paymentMonitoringTimeout.value)
   }
+
+  paymentMonitoringPhase.value = 'blockchain' // Start with blockchain confirmation phase
 
   // Set a 30-minute timeout (payment validity period)
   paymentMonitoringTimeout.value = setTimeout(() => {
@@ -4250,58 +4294,72 @@ const startPaymentMonitoring = async () => {
     }
   }, 30 * 60 * 1000) // 30 minutes
 
-  // Poll for payment status every 2 minutes (crypto payments)
+  // Poll for payment status every 30 seconds
   paymentMonitoringInterval.value = setInterval(async () => {
     try {
-      // Check if app is deployed on the Flux network by getting its location
-      // getAppLocation returns the nodes where the app is running
       // The app name includes the timestamp from deployment
       const deployedAppName = deploymentTimestamp.value ?
         `${props.app.name}${deploymentTimestamp.value}` :
         props.app.name
 
+      if (paymentMonitoringPhase.value === 'blockchain') {
+        // Phase 1: Check if app spec exists on blockchain (payment confirmed)
+        const specResponse = await AppsService.getAppSpecifics(deployedAppName)
 
-      const response = await AppsService.getAppLocation(deployedAppName)
+        if (specResponse.data && specResponse.data.status === 'success') {
+          const currentAppSpec = specResponse.data.data
 
-      if (response.data && response.data.status === 'success') {
-        const appLocation = response.data.data
-
-        // If app location exists and has running instances, deployment was successful!
-        if (appLocation && appLocation.length > 0) {
-
-          // Clear monitoring
-          clearInterval(paymentMonitoringInterval.value)
-          clearTimeout(paymentMonitoringTimeout.value)
-          paymentMonitoringInterval.value = null
-          paymentMonitoringTimeout.value = null
-          paymentConfirmed.value = true
-          paymentProcessing.value = false
-
-          // Show success message
-          showSnackbar(t('components.marketplace.installDialog.messages.paymentConfirmedActive'), 'success', 8000)
-
-          // Clear any existing countdown before starting new one
-          if (redirectCountdownInterval.value) {
-            clearInterval(redirectCountdownInterval.value)
-            redirectCountdownInterval.value = null
+          // If app spec exists, payment is confirmed on blockchain
+          if (currentAppSpec?.name) {
+            console.log('✅ BLOCKCHAIN CONFIRMED - Moving to deployment phase')
+            paymentMonitoringPhase.value = 'deployment'
+            showSnackbar(t('core.subscriptionManager.paymentConfirmedOnNetwork'), 'success', 5000)
           }
+        }
+      } else if (paymentMonitoringPhase.value === 'deployment') {
+        // Phase 2: Check if app is running on nodes
+        const response = await AppsService.getAppLocation(deployedAppName)
 
-          // Start countdown and auto-advance to deployment step
-          redirectCountdown.value = 5
-          redirectCountdownInterval.value = setInterval(() => {
-            redirectCountdown.value--
-            if (redirectCountdown.value <= 0) {
+        if (response.data && response.data.status === 'success') {
+          const appLocation = response.data.data
+
+          // If app location exists and has running instances, deployment was successful!
+          if (appLocation && appLocation.length > 0) {
+
+            // Clear monitoring
+            clearInterval(paymentMonitoringInterval.value)
+            clearTimeout(paymentMonitoringTimeout.value)
+            paymentMonitoringInterval.value = null
+            paymentMonitoringTimeout.value = null
+            paymentConfirmed.value = true
+            paymentProcessing.value = false
+
+            // Show success message
+            showSnackbar(t('components.marketplace.installDialog.messages.paymentConfirmedActive'), 'success', 8000)
+
+            // Clear any existing countdown before starting new one
+            if (redirectCountdownInterval.value) {
               clearInterval(redirectCountdownInterval.value)
               redirectCountdownInterval.value = null
-              currentStep.value = totalSteps.value - 1
             }
-          }, 1000)
+
+            // Start countdown and auto-advance to deployment step
+            redirectCountdown.value = 5
+            redirectCountdownInterval.value = setInterval(() => {
+              redirectCountdown.value--
+              if (redirectCountdown.value <= 0) {
+                clearInterval(redirectCountdownInterval.value)
+                redirectCountdownInterval.value = null
+                currentStep.value = totalSteps.value - 1
+              }
+            }, 1000)
+          }
         }
       }
     } catch (error) {
       console.error('Error checking payment status:', error)
     }
-  }, 240000) // Check every 4 minutes (240 seconds)
+  }, 30000) // Check every 30 seconds
 }
 
 const processFluxPayment = async () => {

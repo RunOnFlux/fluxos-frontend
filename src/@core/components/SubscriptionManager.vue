@@ -2503,24 +2503,58 @@
                   <VCard elevation="2" class="payment-monitoring-card">
                     <VCardText class="pa-6">
                       <LoadingSpinner
-                        icon="mdi-rocket-launch"
+                        :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : 'mdi-rocket-launch'"
                         :icon-size="48"
-                        :title="t('core.subscriptionManager.waitingForDeployment')"
+                        :title="paymentMonitoringPhase === 'blockchain' ? t('core.subscriptionManager.checkingBlockchainConfirmation') : t('core.subscriptionManager.waitingForNodeDeployment')"
                         message=""
                       />
+                      <!-- Free update sponsor message -->
+                      <div v-if="!props.newApp && appSpecPrice?.flux === 0" class="text-center mb-3">
+                        <VChip color="success" variant="tonal" size="small">
+                          <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
+                          {{ t('core.subscriptionManager.freeUpdateSponsoredBy') }}
+                        </VChip>
+                      </div>
                       <div class="d-flex justify-center">
                         <div class="deployment-monitoring-wrapper">
                           <div class="deployment-message-box">
-                            <div class="d-flex align-center">
-                              <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
-                              <span v-if="props.newApp || props.isRedeploy">{{ t('core.subscriptionManager.autoDetectDeployment') }}</span>
-                              <span v-else-if="appSpecPrice?.flux === 0">{{ t('core.subscriptionManager.autoDetectUpdate') }}</span>
-                              <span v-else>{{ t('core.subscriptionManager.autoDetectPaymentUpdate') }}</span>
-                            </div>
-                            <div class="d-flex align-center">
-                              <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
-                              <span>{{ t('core.subscriptionManager.detectionTimeEstimate') }}</span>
-                            </div>
+                            <!-- Phase 1: Blockchain confirmation -->
+                            <template v-if="paymentMonitoringPhase === 'blockchain'">
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('core.subscriptionManager.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </template>
+                            <!-- Phase 2: Node deployment -->
+                            <template v-else-if="paymentMonitoringPhase === 'deployment'">
+                              <div class="d-flex align-center">
+                                <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
+                                <span>{{ t('core.subscriptionManager.paymentConfirmedWaitingNodes') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-server</VIcon>
+                                <span>{{ t('core.subscriptionManager.waitingForNodesPickup') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.nodeDeploymentTime') }}</span>
+                              </div>
+                            </template>
+                            <!-- For updates (Phase 1 only - blockchain confirmation) -->
+                            <template v-else>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('core.subscriptionManager.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </template>
                           </div>
                           <VBtn
                             variant="outlined"
@@ -3308,6 +3342,9 @@ const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentConfirmed = ref(false)
 const paymentProcessing = ref(false)
+
+// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'deployment' = waiting for nodes to pick up app
+const paymentMonitoringPhase = ref('blockchain')
 const popupBlockedDialog = ref(false)
 const blockedPaymentUrl = ref('')
 const blockedPaymentType = ref('')
@@ -8296,11 +8333,14 @@ async function initPaypalPay(hash = null, name = null, price = null, description
   }
 }
 
-// Payment monitoring function
+// Payment monitoring function - Two-phase detection:
+// Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
+// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
   console.log('🚀 START PAYMENT MONITORING', {
     registrationHash: registrationHash.value,
     isFreeUpdate: appSpecPrice.value?.flux === 0,
+    isNewApp: props.newApp,
   })
 
   // Clear any existing monitoring
@@ -8313,8 +8353,9 @@ const startPaymentMonitoring = async () => {
 
   paymentProcessing.value = true
   paymentConfirmed.value = false
+  paymentMonitoringPhase.value = 'blockchain' // Start with blockchain confirmation phase
 
-  console.log('✅ paymentProcessing set to true - monitoring UI should now be visible')
+  console.log('✅ paymentProcessing set to true - monitoring UI should now be visible (phase: blockchain)')
 
   // Set a 30-minute timeout (payment validity period)
   paymentMonitoringTimeout.value = setTimeout(() => {
@@ -8333,63 +8374,84 @@ const startPaymentMonitoring = async () => {
     // Get app name from correct source: appDetails for new apps, props.appSpec for updates
     const appName = props.newApp ? appDetails.value.name : props.appSpec?.name
 
-    console.log('⏰ MONITORING CHECK - Polling for deployment status...', {
+    console.log('⏰ MONITORING CHECK - Polling for status...', {
       timestamp: new Date().toLocaleTimeString(),
       appName: appName,
-      'appDetails.value.name': appDetails.value.name,
-      'props.appSpec?.name': props.appSpec?.name,
       isNewApp: props.newApp,
+      phase: paymentMonitoringPhase.value,
       registrationHash: registrationHash.value,
     })
 
     try {
       if (!appName) {
         console.warn('⚠️ No app name available for monitoring')
-        
+
         return
       }
 
       if (props.newApp) {
-        // For new apps: Check if app location exists (app gets deployed)
-        const response = await AppsService.getAppLocation(appName)
+        // For NEW APPS: Two-phase detection
+        if (paymentMonitoringPhase.value === 'blockchain') {
+          // Phase 1: Check if app spec exists on blockchain (payment confirmed)
+          const specResponse = await AppsService.getAppSpecifics(appName)
 
-        if (response.data && response.data.status === 'success') {
-          const appLocation = response.data.data
+          if (specResponse.data && specResponse.data.status === 'success') {
+            const currentAppSpec = specResponse.data.data
 
-          console.log('🔍 Checking new app deployment:', {
-            appLocation: appLocation,
-            hasInstances: appLocation && appLocation.length > 0,
-          })
+            console.log('🔍 Phase 1 - Checking blockchain confirmation:', {
+              appSpecExists: !!currentAppSpec,
+              currentHash: currentAppSpec?.hash,
+              registeredHash: registrationHash.value,
+            })
 
-          // If app location exists and has running instances, deployment was successful!
-          if (appLocation && appLocation.length > 0) {
-            console.log('✅ NEW APP DEPLOYMENT DETECTED - App is running!')
+            // If app spec exists and hash matches, payment is confirmed on blockchain
+            if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
+              console.log('✅ BLOCKCHAIN CONFIRMED - Moving to deployment phase')
+              paymentMonitoringPhase.value = 'deployment'
+              showToast('success', t('core.subscriptionManager.paymentConfirmedOnNetwork'))
+            }
+          }
+        } else if (paymentMonitoringPhase.value === 'deployment') {
+          // Phase 2: Check if app is running on nodes
+          const response = await AppsService.getAppLocation(appName)
 
-            // Clear monitoring
-            clearInterval(paymentMonitoringInterval.value)
-            clearTimeout(paymentMonitoringTimeout.value)
-            paymentMonitoringInterval.value = null
-            paymentMonitoringTimeout.value = null
-            paymentConfirmed.value = true
-            paymentProcessing.value = false
-            paymentCompleted.value = true
+          if (response.data && response.data.status === 'success') {
+            const appLocation = response.data.data
 
-            // Note: We don't clear registrationHash here to keep the success message visible
-            // It will be cleared when user navigates away from the tab
-            console.log('✅ Deployment successful - registrationHash kept for UI stability')
+            console.log('🔍 Phase 2 - Checking node deployment:', {
+              appLocation: appLocation,
+              hasInstances: appLocation && appLocation.length > 0,
+            })
 
-            // Show success message
-            showToast('success', appSpecPrice.value?.flux === 0 ? t('core.subscriptionManager.deploymentSuccessfulRunning') : t('core.subscriptionManager.paymentConfirmedActive'))
+            // If app location exists and has running instances, deployment was successful!
+            if (appLocation && appLocation.length > 0) {
+              console.log('✅ NEW APP DEPLOYMENT DETECTED - App is running!')
+
+              // Clear monitoring
+              clearInterval(paymentMonitoringInterval.value)
+              clearTimeout(paymentMonitoringTimeout.value)
+              paymentMonitoringInterval.value = null
+              paymentMonitoringTimeout.value = null
+              paymentConfirmed.value = true
+              paymentProcessing.value = false
+              paymentCompleted.value = true
+
+              console.log('✅ Deployment successful - registrationHash kept for UI stability')
+
+              // Show success message
+              showToast('success', appSpecPrice.value?.flux === 0 ? t('core.subscriptionManager.deploymentSuccessfulRunning') : t('core.subscriptionManager.paymentConfirmedActive'))
+            }
           }
         }
       } else {
-        // For updating existing app: Check if app spec hash matches registered hash
+        // For UPDATING existing app: Only Phase 1 - Check if app spec hash matches registered hash on blockchain
+        // No Phase 2 needed - nodes will pick up the update automatically
         const specResponse = await AppsService.getAppSpecifics(appName)
 
         if (specResponse.data && specResponse.data.status === 'success') {
           const currentAppSpec = specResponse.data.data
 
-          console.log('🔍 Checking update deployment:', {
+          console.log('🔍 Phase 1 (Update) - Checking blockchain confirmation:', {
             currentHash: currentAppSpec?.hash,
             registeredHash: registrationHash.value,
             hashesMatch: currentAppSpec?.hash === registrationHash.value,
@@ -8397,7 +8459,7 @@ const startPaymentMonitoring = async () => {
 
           // Check if the current spec hash matches our registered hash
           if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
-            console.log('✅ UPDATE DETECTED - Hash matches!')
+            console.log('✅ UPDATE CONFIRMED ON BLOCKCHAIN - Hash matches!')
 
             // Clear monitoring
             clearInterval(paymentMonitoringInterval.value)
@@ -8409,7 +8471,6 @@ const startPaymentMonitoring = async () => {
             paymentCompleted.value = true
 
             // Update the original spec snapshot to the deployed spec (so future changes can be detected)
-            // Using cloneDeep for better performance
             if (props.appSpec) {
               const specCopy = cloneDeep(props.appSpec)
               delete specCopy.expire
@@ -8417,12 +8478,10 @@ const startPaymentMonitoring = async () => {
               console.log('📸 Updated originalAppSpecSnapshot after successful deployment')
             }
 
-            // Note: We don't clear registrationHash here to keep the success message visible
-            // It will be cleared when user changes specs or navigates away from the tab
-            console.log('✅ Deployment successful - registrationHash kept for UI stability')
+            console.log('✅ Update confirmed on blockchain - registrationHash kept for UI stability')
 
-            // Show success message
-            showToast('success', appSpecPrice.value?.flux === 0 ? t('core.subscriptionManager.updateDeployedSuccessfully') : t('core.subscriptionManager.paymentConfirmedSpecUpdated'))
+            // Show success message - nodes will pick up the update automatically
+            showToast('success', t('core.subscriptionManager.updateConfirmedNodesWillUpdate'))
           }
         }
       }
