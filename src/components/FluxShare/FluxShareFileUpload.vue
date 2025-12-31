@@ -174,6 +174,7 @@ const isStorageFull = computed(() => {
 const openFileSelector = () => {
   if (isStorageFull.value) {
     showSnackbar(t('pages.administration.fluxShare.errors.storageFull'), 'error')
+    
     return
   }
   fileInputRef.value?.click()
@@ -196,6 +197,7 @@ const handleDrop = event => {
 
   if (isStorageFull.value) {
     showSnackbar(t('pages.administration.fluxShare.errors.storageFull'), 'error')
+    
     return
   }
 
@@ -233,7 +235,7 @@ const addFilesToQueue = files => {
           fileSize: fileMB,
           available: availableMB,
         }),
-        'error'
+        'error',
       )
       continue
     }

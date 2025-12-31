@@ -1070,6 +1070,7 @@
       "priorityNodesTabDescription": "Wybierz w razie potrzeby węzły priorytetowe do uruchomienia aplikacji. Aplikacja może nadal zostać wdrożona na innych węzłach w sieci.",
       "priorityNodesDescription": "Wybierz w razie potrzeby węzły priorytetowe do uruchomienia aplikacji. Aplikacja może nadal zostać wdrożona na innych węzłach w sieci.",
       "subscriptionPeriodDecreaseWarning": "Wybrany okres subskrypcji zmniejszy aktualny czas subskrypcji!",
+      "maxSubscriptionInfo": "Maksymalny czas subskrypcji to 1 rok. Opcje odnowienia są dostosowane do pozostałego czasu subskrypcji.",
       "currentSubscriptionUntil": "Obecna subskrypcja do:",
       "timeLeft": "Pozostały czas:",
       "renewalPeriod": "Okres odnowienia",

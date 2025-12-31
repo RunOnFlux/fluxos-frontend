@@ -1082,6 +1082,7 @@
       "priorityNodesTabDescription": "Select if needed priority nodes to run your app. The app can still deploy on other nodes on the network.",
       "priorityNodesDescription": "Select if needed priority nodes to run your app. The app can still deploy on other nodes on the network.",
       "subscriptionPeriodDecreaseWarning": "Your selected subscription period will decrease the current subscription time!",
+      "maxSubscriptionInfo": "Maximum subscription duration is 1 year. Renewal options are adjusted based on your current remaining time.",
       "currentSubscriptionUntil": "Current subscription until:",
       "timeLeft": "Time left:",
       "renewalPeriod": "Renewal period",

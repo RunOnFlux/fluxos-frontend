@@ -233,7 +233,7 @@
                 <VSlider
                   v-model="appDetails.renewalIndex"
                   :min="0"
-                  :max="(renewalOptions.value?.length ?? 6) - 1"
+                  :max="renewalOptions.length - 1"
                   step="1"
                   hide-details
                   :thumb-label="false"
@@ -259,6 +259,15 @@
                 {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
               </VAlert>
             </div>
+            <VAlert
+              type="info"
+              variant="tonal"
+              density="compact"
+              class="mt-3"
+            >
+              <VIcon size="18" class="mr-2">mdi-information-outline</VIcon>
+              {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
+            </VAlert>
           </div>
 
           <!-- For < V6: Fixed 1 month renewal -->
@@ -657,7 +666,7 @@
                 <VSlider
                   v-model="appDetails.renewalIndex"
                   :min="0"
-                  :max="(renewalOptions.value?.length ?? 6) - 1"
+                  :max="renewalOptions.length - 1"
                   step="1"
                   class="flex-grow-1"
                   hide-details
@@ -3741,6 +3750,10 @@ const FORK_BLOCK_HEIGHT = 2020000
 // All renewal options use post-fork values since renewals happen NOW (post-fork)
 const BLOCKS_PER_MONTH = 88000
 
+// Maximum subscription duration: 1 year = 12 months = 1,056,000 blocks
+// Renewals cannot extend total subscription beyond this limit
+const MAX_SUBSCRIPTION_BLOCKS = BLOCKS_PER_MONTH * 12
+
 const timeOptions = { shortDate: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
 
 // State
@@ -4347,7 +4360,8 @@ const shouldShowTestSection = computed(() => {
                  !paymentProcessing.value &&
                  !paymentConfirmed.value &&
                  (props.newApp || managementAction.value !== 'cancel')
-                 // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
+
+  // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
 
   console.log('🧪 Test Section Visibility Check:', {
     shouldShow: result,
@@ -4518,8 +4532,64 @@ const originalExpireBlocks = computed(() => {
   return adjustedExpiryBlock - currentBlockHeight.value
 })
 
+// Base renewal periods in blocks (before adding currentExpire)
+// These represent the duration being added, not the total
+const BASE_RENEWAL_PERIODS = [
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 4)), labelKey: 'renewal1Week', fallback: '1 Week' },       // ~1 week (22,000 blocks)
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 2)), labelKey: 'renewal2Weeks', fallback: '2 Weeks' },    // ~2 weeks (44,000 blocks)
+  { blocks: BLOCKS_PER_MONTH, labelKey: 'renewal1Month', fallback: '1 Month' },                           // 1 month (88,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 3, labelKey: 'renewal3Months', fallback: '3 Months' },                    // 3 months (264,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months' },                    // 6 months (528,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year' },                       // 1 year (1,056,000 blocks)
+]
+
+// Helper to format blocks as human-readable duration with months and days
+function formatBlocksAsDuration(blocks) {
+  if (blocks <= 0) return '0 Days'
+
+  // Calculate blocks per day (assuming 30 days per month)
+  const BLOCKS_PER_DAY = BLOCKS_PER_MONTH / 30
+
+  // Calculate months and remaining days
+  const totalMonths = Math.floor(blocks / BLOCKS_PER_MONTH)
+  const remainingBlocks = blocks % BLOCKS_PER_MONTH
+  const days = Math.round(remainingBlocks / BLOCKS_PER_DAY)
+
+  // Format years if applicable
+  if (totalMonths >= 12) {
+    const years = Math.floor(totalMonths / 12)
+    const monthsRemainder = totalMonths % 12
+    let result = `${years} Year${years > 1 ? 's' : ''}`
+    if (monthsRemainder > 0) result += ` ${monthsRemainder} Month${monthsRemainder > 1 ? 's' : ''}`
+    if (days > 0) result += ` ${days} Day${days > 1 ? 's' : ''}`
+
+    return result
+  }
+
+  // Format months and days
+  if (totalMonths >= 1) {
+    let result = `${totalMonths} Month${totalMonths > 1 ? 's' : ''}`
+    if (days > 0) result += ` ${days} Day${days > 1 ? 's' : ''}`
+
+    return result
+  }
+
+  // Less than a month - show weeks and days or just days
+  const weeks = Math.floor(days / 7)
+  const daysRemainder = days % 7
+  if (weeks >= 1) {
+    let result = `${weeks} Week${weeks > 1 ? 's' : ''}`
+    if (daysRemainder > 0) result += ` ${daysRemainder} Day${daysRemainder > 1 ? 's' : ''}`
+
+    return result
+  }
+
+  return `${days} Day${days !== 1 ? 's' : ''}`
+}
+
 // Renewal block values (reactively computed with currentExpire)
 // MUST be defined AFTER originalExpireBlocks to avoid initialization errors
+// Caps total subscription at MAX_SUBSCRIPTION_BLOCKS (1 year)
 const renewalValues = computed(() => {
   // Safe fallback: use 0 if originalExpireBlocks is null/undefined/NaN
   let currentExpire = originalExpireBlocks.value
@@ -4527,36 +4597,88 @@ const renewalValues = computed(() => {
     currentExpire = 0
   }
 
-  return [
-    Math.round(BLOCKS_PER_MONTH * (1/4) + currentExpire),     // ~1 week (22,000 blocks)
-    Math.round(BLOCKS_PER_MONTH * (1/2) + currentExpire),    // ~2 weeks (44,000 blocks)
-    BLOCKS_PER_MONTH + currentExpire,                         // 1 month (88,000 blocks)
-    BLOCKS_PER_MONTH * 3 + currentExpire,                    // 3 months (264,000 blocks)
-    BLOCKS_PER_MONTH * 6 + currentExpire,                    // 6 months (528,000 blocks)
-    BLOCKS_PER_MONTH * 12 + currentExpire,                   // 1 year (1,056,000 blocks)
-  ]
+  // Calculate how many blocks can still be added before hitting the max
+  const availableBlocks = Math.max(0, MAX_SUBSCRIPTION_BLOCKS - currentExpire)
+
+  // Filter renewal options based on available blocks
+  const values = []
+  const maxPeriodBlocks = BASE_RENEWAL_PERIODS[BASE_RENEWAL_PERIODS.length - 1].blocks // 1 year
+
+  for (const period of BASE_RENEWAL_PERIODS) {
+    if (period.blocks <= availableBlocks) {
+      // This period fits within the limit - add full value
+      values.push(period.blocks + currentExpire)
+    }
+  }
+
+  // If 1 Year option doesn't fit but there's more available than the last added option,
+  // add a "max available" option at the end
+  if (availableBlocks > 0 && availableBlocks < maxPeriodBlocks) {
+    const lastAddedPeriod = values.length > 0
+      ? values[values.length - 1] - currentExpire
+      : 0
+    if (availableBlocks > lastAddedPeriod) {
+      // Add the maximum available as the last option
+      values.push(MAX_SUBSCRIPTION_BLOCKS)
+    }
+  }
+
+  // If no options available (app already at max), provide option to maintain max
+  if (values.length === 0) {
+    values.push(MAX_SUBSCRIPTION_BLOCKS)
+  }
+
+  return values
 })
 
-// Renewal option labels (i18n)
-// Use ref instead of computed to avoid calling t() during component transitions
-const renewalOptionLabels = ref(['1 Week', '2 Weeks', '1 Month', '3 Months', '6 Months', '1 Year'])
-
-// Function to update labels with i18n (called after mount and on locale change)
-function updateRenewalLabels() {
-  try {
-    renewalOptionLabels.value = [
-      t('core.subscriptionManager.renewal1Week'),
-      t('core.subscriptionManager.renewal2Weeks'),
-      t('core.subscriptionManager.renewal1Month'),
-      t('core.subscriptionManager.renewal3Months'),
-      t('core.subscriptionManager.renewal6Months'),
-      t('core.subscriptionManager.renewal1Year'),
-    ]
-  } catch (error) {
-    console.error('Error getting renewal labels:', error)
-
-    // Keep fallback values
+// Computed labels that dynamically show actual extension duration
+// When capped, shows the actual duration being added (e.g., "7 Months 15 Days" instead of "1 Year")
+const renewalOptionLabels = computed(() => {
+  let currentExpire = originalExpireBlocks.value
+  if (currentExpire == null || isNaN(currentExpire)) {
+    currentExpire = 0
   }
+
+  const availableBlocks = Math.max(0, MAX_SUBSCRIPTION_BLOCKS - currentExpire)
+  const labels = []
+  const maxPeriodBlocks = BASE_RENEWAL_PERIODS[BASE_RENEWAL_PERIODS.length - 1].blocks // 1 year
+
+  for (const period of BASE_RENEWAL_PERIODS) {
+    if (period.blocks <= availableBlocks) {
+      // Full period available - use standard label
+      try {
+        labels.push(t(`core.subscriptionManager.${period.labelKey}`))
+      } catch {
+        labels.push(period.fallback)
+      }
+    }
+  }
+
+  // If 1 Year option doesn't fit but there's more available than the last added option,
+  // add a "max available" label at the end showing exact duration
+  if (availableBlocks > 0 && availableBlocks < maxPeriodBlocks) {
+    const lastAddedPeriodIndex = labels.length - 1
+    const lastAddedPeriodBlocks = lastAddedPeriodIndex >= 0
+      ? BASE_RENEWAL_PERIODS[lastAddedPeriodIndex].blocks
+      : 0
+    if (availableBlocks > lastAddedPeriodBlocks) {
+      // Add formatted duration as the last label (e.g., "7 Months 15 Days")
+      labels.push(formatBlocksAsDuration(availableBlocks))
+    }
+  }
+
+  // Fallback if at max
+  if (labels.length === 0) {
+    labels.push(formatBlocksAsDuration(availableBlocks))
+  }
+
+  return labels
+})
+
+// Legacy function kept for compatibility - now labels are computed dynamically
+function updateRenewalLabels() {
+  // Labels are now computed reactively based on originalExpireBlocks
+  // This function is kept for backward compatibility but does nothing
 }
 
 // Combined renewal options (values + labels)
@@ -4742,6 +4864,15 @@ watch(() => appDetails.value.renewalIndex, newIndex => {
   if (renewalEnabled.value || props.newApp || managementAction.value === 'renewal') {
     const selectedExpire = renewalOptions.value[newIndex]?.value
     props.appSpec.expire = selectedExpire
+  }
+})
+
+// Watch renewalOptions length - clamp renewalIndex if options reduce
+// This can happen when remaining subscription time increases (fewer extension options available)
+watch(() => renewalOptions.value.length, newLength => {
+  if (appDetails.value.renewalIndex >= newLength) {
+    // Clamp to last available option
+    appDetails.value.renewalIndex = Math.max(0, newLength - 1)
   }
 })
 
