@@ -1190,7 +1190,7 @@
                                 </div>
                               </td>
                               <td class="plan-col">Standard</td>
-                              <td class="price-col highlight-price">$2.38/{{ t('common.labels.monthly') }}</td>
+                              <td class="price-col highlight-price">$2.49/{{ t('common.labels.monthly') }}</td>
                               <td class="cpu-col">1.5 {{ t('pages.apps.register.orbit.comparison.cores') }}</td>
                               <td class="ram-col">4 GB</td>
                               <td class="builds-col">
@@ -1337,7 +1337,7 @@
                         </div>
 
                         <div class="plan-price-badge">
-                          <span class="price-amount">$2.38</span>
+                          <span class="price-amount">$2.49</span>
                           <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
                         </div>
 
@@ -1396,7 +1396,7 @@
                         @click="selectedPlan = 'pro'"
                       >
                         <div class="plan-price-badge">
-                          <span class="price-amount">$3.80</span>
+                          <span class="price-amount">$3.99</span>
                           <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
                         </div>
 
@@ -3970,9 +3970,9 @@ const totalPrice = computed(() => {
 
   let monthlyPrice = 0
   if (selectedPlan.value === 'developer') {
-    monthlyPrice = 2.38
+    monthlyPrice = 2.49
   } else if (selectedPlan.value === 'pro') {
-    monthlyPrice = 3.80
+    monthlyPrice = 3.99
   } else if (selectedPlan.value === 'custom' && customPlanPrice.value?.usd) {
     monthlyPrice = customPlanPrice.value.usd
   }

@@ -70,12 +70,12 @@
               <div class="tier-divider"></div>
               <div class="tier standard-tier">
                 <span class="tier-name">{{ t('pages.apps.register.orbit.pricing.developer') }}</span>
-                <span class="tier-price">$2.38<small>/{{ t('common.labels.monthly') }}</small></span>
+                <span class="tier-price">$2.49<small>/{{ t('common.labels.monthly') }}</small></span>
               </div>
               <div class="tier-divider"></div>
               <div class="tier pro-tier">
                 <span class="tier-name">{{ t('pages.apps.register.orbit.pricing.pro') }}</span>
-                <span class="tier-price">$3.80<small>/{{ t('common.labels.monthly') }}</small></span>
+                <span class="tier-price">$3.99<small>/{{ t('common.labels.monthly') }}</small></span>
               </div>
             </div>
           </div>
