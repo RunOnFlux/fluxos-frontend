@@ -4317,6 +4317,10 @@ onMounted(() => {
   padding: 0.5rem;
 }
 
+.orbit-stepper :deep(.v-stepper-item__title) {
+  white-space: nowrap;
+}
+
 .step-content {
   max-width: 1400px;
   margin: 0 auto;
@@ -5453,6 +5457,31 @@ onMounted(() => {
 
 /* Responsive */
 @media (max-width: 600px) {
+  .orbit-stepper :deep(.v-stepper-header) {
+    flex-wrap: wrap;
+    gap: 0.25rem;
+  }
+
+  .orbit-stepper :deep(.v-stepper-item) {
+    flex-basis: calc(33.333% - 0.25rem);
+    padding: 0.25rem;
+  }
+
+  .orbit-stepper :deep(.v-stepper-item__avatar) {
+    width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
+  }
+
+  .orbit-stepper :deep(.v-stepper-item__title) {
+    font-size: 0.625rem;
+    line-height: 1.2;
+  }
+
+  .orbit-stepper :deep(.v-divider) {
+    display: none;
+  }
+
   .orbit-header {
     flex-direction: column;
     padding-top: 2.5rem;
