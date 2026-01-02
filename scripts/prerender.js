@@ -51,6 +51,7 @@ const FALLBACK_ROUTES = Object.freeze([
   '/marketplace/games',
   '/flux-drive',
   '/apps/register',
+  '/apps/register/orbit',
   '/cost-calculator',
 
   // Dashboard pages (public info)

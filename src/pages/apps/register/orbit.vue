@@ -1964,7 +1964,7 @@ import { useRouter } from 'vue-router'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { useSEONoIndex } from '@/composables/useSEO'
+import { useHead } from '@vueuse/head'
 import { useLoginSheet } from '@/composables/useLoginSheet'
 import axios from 'axios'
 import Api from '@/services/ApiClient'
@@ -1976,10 +1976,150 @@ import { signWithSSP, signWithZelcore } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import qs from 'qs'
 
-// Prevent indexing
-useSEONoIndex()
-
 const { t } = useI18n()
+
+// SEO meta tags
+useHead({
+  title: 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+  meta: [
+    {
+      name: 'description',
+      content: 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
+    },
+    {
+      name: 'keywords',
+      content: 'flux orbit, git deployment, ci/cd, react deployment, vue deployment, next.js hosting, node.js deployment, decentralized hosting, web3 deployment',
+    },
+    {
+      name: 'robots',
+      content: 'index, follow',
+    },
+    {
+      name: 'author',
+      content: 'FluxCloud',
+    },
+    {
+      property: 'og:title',
+      content: 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+    },
+    {
+      property: 'og:description',
+      content: 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Built-in CI/CD with support for popular frameworks.',
+    },
+    {
+      property: 'og:type',
+      content: 'website',
+    },
+    {
+      property: 'og:url',
+      content: 'https://cloud.runonflux.com/apps/register/orbit',
+    },
+    {
+      property: 'og:image',
+      content: 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
+    },
+    {
+      property: 'og:image:width',
+      content: '1200',
+    },
+    {
+      property: 'og:image:height',
+      content: '630',
+    },
+    {
+      name: 'twitter:card',
+      content: 'summary_large_image',
+    },
+    {
+      name: 'twitter:title',
+      content: 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+    },
+    {
+      name: 'twitter:description',
+      content: 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Built-in CI/CD with support for popular frameworks.',
+    },
+    {
+      name: 'twitter:image',
+      content: 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
+    },
+  ],
+  link: [
+    {
+      rel: 'canonical',
+      href: 'https://cloud.runonflux.com/apps/register/orbit',
+    },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'WebPage',
+        'name': 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+        'description': 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
+        'url': 'https://cloud.runonflux.com/apps/register/orbit',
+        'image': 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
+        'publisher': {
+          '@type': 'Organization',
+          'name': 'FluxCloud',
+          'url': 'https://cloud.runonflux.com',
+        },
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+          {
+            '@type': 'ListItem',
+            'position': 1,
+            'name': 'Home',
+            'item': 'https://cloud.runonflux.com/',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': 'Deploy App',
+            'item': 'https://cloud.runonflux.com/apps/register',
+          },
+          {
+            '@type': 'ListItem',
+            'position': 3,
+            'name': 'Deploy with Orbit',
+            'item': 'https://cloud.runonflux.com/apps/register/orbit',
+          },
+        ],
+      }),
+    },
+    {
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'SoftwareApplication',
+        'name': 'Flux Orbit',
+        'applicationCategory': 'DeveloperApplication',
+        'operatingSystem': 'Web',
+        'description': 'Git-based deployment platform for FluxCloud. Deploy React, Vue, Next.js, Node.js and more without Docker knowledge.',
+        'offers': {
+          '@type': 'Offer',
+          'price': '0',
+          'priceCurrency': 'USD',
+          'description': 'Free tier available',
+        },
+        'featureList': [
+          'Git repository deployment',
+          'Built-in CI/CD',
+          'React, Vue, Next.js support',
+          'Node.js backend support',
+          'Automatic builds',
+          'No Docker knowledge required',
+        ],
+      }),
+    },
+  ],
+})
 const router = useRouter()
 const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
 
