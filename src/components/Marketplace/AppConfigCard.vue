@@ -17,17 +17,17 @@
         <div v-if="resources.cpu" class="resource-row">
           <VIcon class="resource-icon cpu-icon">mdi-speedometer</VIcon>
           <span class="resource-label">{{ labels.cpu }}</span>
-          <span class="resource-value">{{ Number(resources.cpu.toFixed(2)) }} {{ resources.cpu > 1 ? labels.cores : labels.core }}</span>
+          <span class="resource-value">{{ resources.cpu.toFixed(1) }} {{ resources.cpu > 1 ? labels.cores : labels.core }}</span>
         </div>
         <div v-if="resources.ram" class="resource-row">
           <VIcon class="resource-icon ram-icon">mdi-memory</VIcon>
           <span class="resource-label">{{ labels.ram }}</span>
-          <span class="resource-value">{{ Number(resources.ram.toFixed(0)) }} MB</span>
+          <span class="resource-value">{{ (resources.ram / 1000).toFixed(1) }} GB</span>
         </div>
         <div v-if="resources.hdd" class="resource-row">
           <VIcon class="resource-icon hdd-icon">mdi-harddisk</VIcon>
           <span class="resource-label">{{ labels.storage }}</span>
-          <span class="resource-value">{{ Number(resources.hdd.toFixed(0)) }} GB</span>
+          <span class="resource-value">{{ Number(resources.hdd.toFixed(0)) }} GB SSD/NVMe</span>
         </div>
       </div>
 
