@@ -187,6 +187,37 @@
                             </div>
                           </VAlert>
 
+                          <!-- Enterprise Features Info -->
+                          <VCard variant="outlined" class="mb-4 enterprise-info-card">
+                            <VCardText class="py-3">
+                              <div class="d-flex align-center mb-2">
+                                <VIcon color="warning" class="mr-2">mdi-shield-lock</VIcon>
+                                <span class="text-subtitle-2 font-weight-medium">{{ t('pages.apps.register.orbit.repository.enterpriseFeatures') }}</span>
+                              </div>
+                              <ul class="text-body-2 text-medium-emphasis enterprise-features-list mb-3">
+                                <li>
+                                  <VIcon size="14" color="success" class="mr-1">mdi-check</VIcon>
+                                  {{ t('pages.apps.register.orbit.repository.enterpriseFeature1') }}
+                                </li>
+                                <li>
+                                  <VIcon size="14" color="success" class="mr-1">mdi-check</VIcon>
+                                  {{ t('pages.apps.register.orbit.repository.enterpriseFeature2') }}
+                                </li>
+                                <li>
+                                  <VIcon size="14" color="success" class="mr-1">mdi-check</VIcon>
+                                  {{ t('pages.apps.register.orbit.repository.enterpriseFeature3') }}
+                                </li>
+                              </ul>
+                              <VDivider class="mb-3" />
+                              <div class="d-flex align-center">
+                                <VIcon size="16" color="info" class="mr-2">mdi-information</VIcon>
+                                <span class="text-caption text-medium-emphasis">
+                                  {{ t('pages.apps.register.orbit.repository.enterprisePricing') }}
+                                </span>
+                              </div>
+                            </VCardText>
+                          </VCard>
+
                           <VTextField
                             v-model="repoUsername"
                             :label="t('pages.apps.register.orbit.repository.usernameLabel')"
@@ -4746,6 +4777,24 @@ onMounted(() => {
   border: 1px solid rgba(var(--v-theme-warning), 0.2);
   border-radius: 12px;
   padding: 1rem;
+}
+
+/* Enterprise info card */
+.enterprise-info-card {
+  background: rgba(var(--v-theme-warning), 0.03);
+  border-color: rgba(var(--v-theme-warning), 0.15) !important;
+}
+
+.enterprise-features-list {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.enterprise-features-list li {
+  display: flex;
+  align-items: center;
+  padding: 0.25rem 0;
 }
 
 /* Test connection section */
