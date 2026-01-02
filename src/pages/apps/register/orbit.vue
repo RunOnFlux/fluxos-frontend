@@ -1159,6 +1159,111 @@
                       </div>
                     </div>
 
+                    <!-- How Orbit Compares Section -->
+                    <div class="orbit-comparison-card">
+                      <h4 class="comparison-title">
+                        <VIcon size="22" color="primary" class="mr-2">mdi-chart-bar</VIcon>
+                        {{ t('pages.apps.register.orbit.comparison.title') }}
+                      </h4>
+                      <p class="comparison-subtitle">{{ t('pages.apps.register.orbit.comparison.subtitle') }}</p>
+
+                      <div class="orbit-comparison-table-wrapper">
+                        <table class="orbit-comparison-table">
+                          <thead>
+                            <tr>
+                              <th class="provider-col">{{ t('pages.apps.register.orbit.comparison.provider') }}</th>
+                              <th class="plan-col">{{ t('pages.apps.register.orbit.comparison.plan') }}</th>
+                              <th class="price-col">{{ t('pages.apps.register.orbit.comparison.price') }}</th>
+                              <th class="cpu-col">{{ t('pages.apps.register.orbit.comparison.cpu') }}</th>
+                              <th class="ram-col">{{ t('pages.apps.register.orbit.comparison.ram') }}</th>
+                              <th class="builds-col">{{ t('pages.apps.register.orbit.comparison.builds') }}</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <!-- Orbit Row - Highlighted -->
+                            <tr class="orbit-row highlight-row">
+                              <td class="provider-col">
+                                <div class="provider-cell-inner">
+                                  <VIcon size="20" color="primary">mdi-rocket-launch</VIcon>
+                                  <span class="provider-name">FluxCloud Orbit</span>
+                                  <VChip size="x-small" color="success" variant="flat" class="ml-1">{{ t('pages.apps.register.orbit.comparison.best') }}</VChip>
+                                </div>
+                              </td>
+                              <td class="plan-col">Standard</td>
+                              <td class="price-col highlight-price">$2.38/{{ t('common.labels.monthly') }}</td>
+                              <td class="cpu-col">1.5 {{ t('pages.apps.register.orbit.comparison.cores') }}</td>
+                              <td class="ram-col">4 GB</td>
+                              <td class="builds-col">
+                                <VIcon size="16" color="success" class="mr-1">mdi-infinity</VIcon>
+                                {{ t('pages.apps.register.orbit.comparison.unlimited') }}
+                              </td>
+                            </tr>
+                            <!-- Vercel Row -->
+                            <tr>
+                              <td class="provider-col">
+                                <div class="provider-cell-inner">
+                                  <VIcon size="20">mdi-triangle</VIcon>
+                                  <span class="provider-name">Vercel</span>
+                                </div>
+                              </td>
+                              <td class="plan-col">Pro</td>
+                              <td class="price-col competitor-price">$20/{{ t('common.labels.monthly') }}</td>
+                              <td class="cpu-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
+                              <td class="ram-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
+                              <td class="builds-col">{{ t('pages.apps.register.orbit.comparison.limited') }}</td>
+                            </tr>
+                            <!-- Netlify Row -->
+                            <tr>
+                              <td class="provider-col">
+                                <div class="provider-cell-inner">
+                                  <VIcon size="20">mdi-web</VIcon>
+                                  <span class="provider-name">Netlify</span>
+                                </div>
+                              </td>
+                              <td class="plan-col">Pro</td>
+                              <td class="price-col competitor-price">$19/{{ t('common.labels.monthly') }}</td>
+                              <td class="cpu-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
+                              <td class="ram-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
+                              <td class="builds-col">{{ t('pages.apps.register.orbit.comparison.creditBased') }}</td>
+                            </tr>
+                            <!-- Render Row -->
+                            <tr>
+                              <td class="provider-col">
+                                <div class="provider-cell-inner">
+                                  <VIcon size="20">mdi-server</VIcon>
+                                  <span class="provider-name">Render</span>
+                                </div>
+                              </td>
+                              <td class="plan-col">Standard</td>
+                              <td class="price-col competitor-price">$25/{{ t('common.labels.monthly') }}</td>
+                              <td class="cpu-col">1 {{ t('pages.apps.register.orbit.comparison.core') }}</td>
+                              <td class="ram-col">2 GB</td>
+                              <td class="builds-col">500 {{ t('pages.apps.register.orbit.comparison.minutes') }}</td>
+                            </tr>
+                            <!-- Railway Row -->
+                            <tr>
+                              <td class="provider-col">
+                                <div class="provider-cell-inner">
+                                  <VIcon size="20">mdi-train</VIcon>
+                                  <span class="provider-name">Railway</span>
+                                </div>
+                              </td>
+                              <td class="plan-col">Hobby</td>
+                              <td class="price-col competitor-price">$5/{{ t('common.labels.monthly') }}</td>
+                              <td class="cpu-col">{{ t('pages.apps.register.orbit.comparison.usageBased') }}</td>
+                              <td class="ram-col">{{ t('pages.apps.register.orbit.comparison.usageBased') }}</td>
+                              <td class="builds-col">{{ t('pages.apps.register.orbit.comparison.usageBased') }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+
+                      <div class="orbit-comparison-hint">
+                        <VIcon size="18" color="primary" class="mr-2">mdi-information-outline</VIcon>
+                        <span>{{ t('pages.apps.register.orbit.choice.comparisonHint') }}</span>
+                      </div>
+                    </div>
+
                     <h4 class="plans-section-title">{{ t('pages.apps.register.orbit.pricing.allPlansInclude') }}</h4>
 
                     <div class="plans-grid">
@@ -5069,6 +5174,101 @@ onMounted(() => {
   line-height: 1.3;
 }
 
+/* Orbit Comparison Card */
+.orbit-comparison-card {
+  background: rgba(var(--v-theme-on-surface), 0.02);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  margin-bottom: 24px;
+}
+
+.comparison-title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+}
+
+.comparison-subtitle {
+  text-align: center;
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  margin: 0 0 16px 0;
+}
+
+.orbit-comparison-table-wrapper {
+  overflow-x: auto;
+  margin: 0 0 12px 0;
+}
+
+.orbit-comparison-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+}
+
+.orbit-comparison-table th,
+.orbit-comparison-table td {
+  padding: 0.75rem 0.875rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.orbit-comparison-table th {
+  font-weight: 600;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  background: rgba(var(--v-theme-on-surface), 0.02);
+}
+
+.orbit-comparison-table tbody tr:hover {
+  background: rgba(var(--v-theme-on-surface), 0.02);
+}
+
+.orbit-comparison-table .highlight-row {
+  background: rgba(var(--v-theme-primary), 0.08) !important;
+}
+
+.orbit-comparison-table .highlight-row td {
+  font-weight: 600;
+}
+
+.provider-cell-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.provider-name {
+  font-weight: 600;
+}
+
+.highlight-price {
+  color: rgb(var(--v-theme-success));
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.competitor-price {
+  color: rgba(var(--v-theme-on-surface), 0.7);
+}
+
+.orbit-comparison-hint {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 12px;
+  background: rgba(var(--v-theme-primary), 0.05);
+  border-radius: 8px;
+  font-size: 0.8rem;
+  color: rgba(var(--v-theme-on-surface), 0.8);
+}
+
 .plans-section-title {
   text-align: center;
   font-size: 1.1rem;
@@ -5573,6 +5773,23 @@ onMounted(() => {
     font-size: 0.75rem;
   }
 
+  .orbit-comparison-card {
+    padding: 16px;
+  }
+
+  .comparison-title {
+    font-size: 1rem;
+  }
+
+  .orbit-comparison-table {
+    font-size: 0.8rem;
+  }
+
+  .orbit-comparison-table th,
+  .orbit-comparison-table td {
+    padding: 0.5rem 0.625rem;
+  }
+
   .plan-card {
     padding: 20px;
     gap: 14px;
@@ -6000,6 +6217,33 @@ onMounted(() => {
 
   .feature-detail {
     font-size: 0.7rem;
+  }
+
+  .orbit-comparison-card {
+    padding: 12px;
+    border-radius: 12px;
+  }
+
+  .comparison-title {
+    font-size: 0.9rem;
+  }
+
+  .comparison-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .orbit-comparison-table {
+    font-size: 0.7rem;
+  }
+
+  .orbit-comparison-table th,
+  .orbit-comparison-table td {
+    padding: 0.4rem 0.5rem;
+  }
+
+  .orbit-comparison-hint {
+    font-size: 0.7rem;
+    padding: 8px 10px;
   }
 
   .plans-section-title {
