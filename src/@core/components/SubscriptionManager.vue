@@ -233,7 +233,7 @@
                 <VSlider
                   v-model="appDetails.renewalIndex"
                   :min="0"
-                  :max="(renewalOptions.value?.length ?? 6) - 1"
+                  :max="renewalOptions.length - 1"
                   step="1"
                   hide-details
                   :thumb-label="false"
@@ -259,6 +259,15 @@
                 {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
               </VAlert>
             </div>
+            <VAlert
+              type="info"
+              variant="tonal"
+              density="compact"
+              class="mt-3"
+            >
+              <VIcon size="18" class="mr-2">mdi-information-outline</VIcon>
+              {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
+            </VAlert>
           </div>
 
           <!-- For < V6: Fixed 1 month renewal -->
@@ -657,7 +666,7 @@
                 <VSlider
                   v-model="appDetails.renewalIndex"
                   :min="0"
-                  :max="(renewalOptions.value?.length ?? 6) - 1"
+                  :max="renewalOptions.length - 1"
                   step="1"
                   class="flex-grow-1"
                   hide-details
@@ -2494,24 +2503,58 @@
                   <VCard elevation="2" class="payment-monitoring-card">
                     <VCardText class="pa-6">
                       <LoadingSpinner
-                        icon="mdi-rocket-launch"
+                        :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : 'mdi-rocket-launch'"
                         :icon-size="48"
-                        :title="t('core.subscriptionManager.waitingForDeployment')"
+                        :title="paymentMonitoringPhase === 'blockchain' ? t('core.subscriptionManager.checkingBlockchainConfirmation') : t('core.subscriptionManager.waitingForNodeDeployment')"
                         message=""
                       />
+                      <!-- Free update sponsor message -->
+                      <div v-if="!props.newApp && appSpecPrice?.flux === 0" class="text-center mb-3">
+                        <VChip color="success" variant="tonal" size="small">
+                          <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
+                          {{ t('core.subscriptionManager.freeUpdateSponsoredBy') }}
+                        </VChip>
+                      </div>
                       <div class="d-flex justify-center">
                         <div class="deployment-monitoring-wrapper">
                           <div class="deployment-message-box">
-                            <div class="d-flex align-center">
-                              <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
-                              <span v-if="props.newApp || props.isRedeploy">{{ t('core.subscriptionManager.autoDetectDeployment') }}</span>
-                              <span v-else-if="appSpecPrice?.flux === 0">{{ t('core.subscriptionManager.autoDetectUpdate') }}</span>
-                              <span v-else>{{ t('core.subscriptionManager.autoDetectPaymentUpdate') }}</span>
-                            </div>
-                            <div class="d-flex align-center">
-                              <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
-                              <span>{{ t('core.subscriptionManager.detectionTimeEstimate') }}</span>
-                            </div>
+                            <!-- Phase 1: Blockchain confirmation -->
+                            <template v-if="paymentMonitoringPhase === 'blockchain'">
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('core.subscriptionManager.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </template>
+                            <!-- Phase 2: Node deployment -->
+                            <template v-else-if="paymentMonitoringPhase === 'deployment'">
+                              <div class="d-flex align-center">
+                                <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
+                                <span>{{ t('core.subscriptionManager.paymentConfirmedWaitingNodes') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-server</VIcon>
+                                <span>{{ t('core.subscriptionManager.waitingForNodesPickup') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.nodeDeploymentTime') }}</span>
+                              </div>
+                            </template>
+                            <!-- For updates (Phase 1 only - blockchain confirmation) -->
+                            <template v-else>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('core.subscriptionManager.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </template>
                           </div>
                           <VBtn
                             variant="outlined"
@@ -3299,6 +3342,9 @@ const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentConfirmed = ref(false)
 const paymentProcessing = ref(false)
+
+// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'deployment' = waiting for nodes to pick up app
+const paymentMonitoringPhase = ref('blockchain')
 const popupBlockedDialog = ref(false)
 const blockedPaymentUrl = ref('')
 const blockedPaymentType = ref('')
@@ -3740,6 +3786,10 @@ const FORK_BLOCK_HEIGHT = 2020000
 // Base period: 1 month = 88000 blocks (post-fork, 30-second blocks)
 // All renewal options use post-fork values since renewals happen NOW (post-fork)
 const BLOCKS_PER_MONTH = 88000
+
+// Maximum subscription duration: 1 year = 12 months = 1,056,000 blocks
+// Renewals cannot extend total subscription beyond this limit
+const MAX_SUBSCRIPTION_BLOCKS = BLOCKS_PER_MONTH * 12
 
 const timeOptions = { shortDate: { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' } }
 
@@ -4347,7 +4397,8 @@ const shouldShowTestSection = computed(() => {
                  !paymentProcessing.value &&
                  !paymentConfirmed.value &&
                  (props.newApp || managementAction.value !== 'cancel')
-                 // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
+
+  // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
 
   console.log('🧪 Test Section Visibility Check:', {
     shouldShow: result,
@@ -4518,8 +4569,64 @@ const originalExpireBlocks = computed(() => {
   return adjustedExpiryBlock - currentBlockHeight.value
 })
 
+// Base renewal periods in blocks (before adding currentExpire)
+// These represent the duration being added, not the total
+const BASE_RENEWAL_PERIODS = [
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 4)), labelKey: 'renewal1Week', fallback: '1 Week' },       // ~1 week (22,000 blocks)
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 2)), labelKey: 'renewal2Weeks', fallback: '2 Weeks' },    // ~2 weeks (44,000 blocks)
+  { blocks: BLOCKS_PER_MONTH, labelKey: 'renewal1Month', fallback: '1 Month' },                           // 1 month (88,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 3, labelKey: 'renewal3Months', fallback: '3 Months' },                    // 3 months (264,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months' },                    // 6 months (528,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year' },                       // 1 year (1,056,000 blocks)
+]
+
+// Helper to format blocks as human-readable duration with months and days
+function formatBlocksAsDuration(blocks) {
+  if (blocks <= 0) return '0 Days'
+
+  // Calculate blocks per day (assuming 30 days per month)
+  const BLOCKS_PER_DAY = BLOCKS_PER_MONTH / 30
+
+  // Calculate months and remaining days
+  const totalMonths = Math.floor(blocks / BLOCKS_PER_MONTH)
+  const remainingBlocks = blocks % BLOCKS_PER_MONTH
+  const days = Math.round(remainingBlocks / BLOCKS_PER_DAY)
+
+  // Format years if applicable
+  if (totalMonths >= 12) {
+    const years = Math.floor(totalMonths / 12)
+    const monthsRemainder = totalMonths % 12
+    let result = `${years} Year${years > 1 ? 's' : ''}`
+    if (monthsRemainder > 0) result += ` ${monthsRemainder} Month${monthsRemainder > 1 ? 's' : ''}`
+    if (days > 0) result += ` ${days} Day${days > 1 ? 's' : ''}`
+
+    return result
+  }
+
+  // Format months and days
+  if (totalMonths >= 1) {
+    let result = `${totalMonths} Month${totalMonths > 1 ? 's' : ''}`
+    if (days > 0) result += ` ${days} Day${days > 1 ? 's' : ''}`
+
+    return result
+  }
+
+  // Less than a month - show weeks and days or just days
+  const weeks = Math.floor(days / 7)
+  const daysRemainder = days % 7
+  if (weeks >= 1) {
+    let result = `${weeks} Week${weeks > 1 ? 's' : ''}`
+    if (daysRemainder > 0) result += ` ${daysRemainder} Day${daysRemainder > 1 ? 's' : ''}`
+
+    return result
+  }
+
+  return `${days} Day${days !== 1 ? 's' : ''}`
+}
+
 // Renewal block values (reactively computed with currentExpire)
 // MUST be defined AFTER originalExpireBlocks to avoid initialization errors
+// Caps total subscription at MAX_SUBSCRIPTION_BLOCKS (1 year)
 const renewalValues = computed(() => {
   // Safe fallback: use 0 if originalExpireBlocks is null/undefined/NaN
   let currentExpire = originalExpireBlocks.value
@@ -4527,36 +4634,88 @@ const renewalValues = computed(() => {
     currentExpire = 0
   }
 
-  return [
-    Math.round(BLOCKS_PER_MONTH * (1/4) + currentExpire),     // ~1 week (22,000 blocks)
-    Math.round(BLOCKS_PER_MONTH * (1/2) + currentExpire),    // ~2 weeks (44,000 blocks)
-    BLOCKS_PER_MONTH + currentExpire,                         // 1 month (88,000 blocks)
-    BLOCKS_PER_MONTH * 3 + currentExpire,                    // 3 months (264,000 blocks)
-    BLOCKS_PER_MONTH * 6 + currentExpire,                    // 6 months (528,000 blocks)
-    BLOCKS_PER_MONTH * 12 + currentExpire,                   // 1 year (1,056,000 blocks)
-  ]
+  // Calculate how many blocks can still be added before hitting the max
+  const availableBlocks = Math.max(0, MAX_SUBSCRIPTION_BLOCKS - currentExpire)
+
+  // Filter renewal options based on available blocks
+  const values = []
+  const maxPeriodBlocks = BASE_RENEWAL_PERIODS[BASE_RENEWAL_PERIODS.length - 1].blocks // 1 year
+
+  for (const period of BASE_RENEWAL_PERIODS) {
+    if (period.blocks <= availableBlocks) {
+      // This period fits within the limit - add full value
+      values.push(period.blocks + currentExpire)
+    }
+  }
+
+  // If 1 Year option doesn't fit but there's more available than the last added option,
+  // add a "max available" option at the end
+  if (availableBlocks > 0 && availableBlocks < maxPeriodBlocks) {
+    const lastAddedPeriod = values.length > 0
+      ? values[values.length - 1] - currentExpire
+      : 0
+    if (availableBlocks > lastAddedPeriod) {
+      // Add the maximum available as the last option
+      values.push(MAX_SUBSCRIPTION_BLOCKS)
+    }
+  }
+
+  // If no options available (app already at max), provide option to maintain max
+  if (values.length === 0) {
+    values.push(MAX_SUBSCRIPTION_BLOCKS)
+  }
+
+  return values
 })
 
-// Renewal option labels (i18n)
-// Use ref instead of computed to avoid calling t() during component transitions
-const renewalOptionLabels = ref(['1 Week', '2 Weeks', '1 Month', '3 Months', '6 Months', '1 Year'])
-
-// Function to update labels with i18n (called after mount and on locale change)
-function updateRenewalLabels() {
-  try {
-    renewalOptionLabels.value = [
-      t('core.subscriptionManager.renewal1Week'),
-      t('core.subscriptionManager.renewal2Weeks'),
-      t('core.subscriptionManager.renewal1Month'),
-      t('core.subscriptionManager.renewal3Months'),
-      t('core.subscriptionManager.renewal6Months'),
-      t('core.subscriptionManager.renewal1Year'),
-    ]
-  } catch (error) {
-    console.error('Error getting renewal labels:', error)
-
-    // Keep fallback values
+// Computed labels that dynamically show actual extension duration
+// When capped, shows the actual duration being added (e.g., "7 Months 15 Days" instead of "1 Year")
+const renewalOptionLabels = computed(() => {
+  let currentExpire = originalExpireBlocks.value
+  if (currentExpire == null || isNaN(currentExpire)) {
+    currentExpire = 0
   }
+
+  const availableBlocks = Math.max(0, MAX_SUBSCRIPTION_BLOCKS - currentExpire)
+  const labels = []
+  const maxPeriodBlocks = BASE_RENEWAL_PERIODS[BASE_RENEWAL_PERIODS.length - 1].blocks // 1 year
+
+  for (const period of BASE_RENEWAL_PERIODS) {
+    if (period.blocks <= availableBlocks) {
+      // Full period available - use standard label
+      try {
+        labels.push(t(`core.subscriptionManager.${period.labelKey}`))
+      } catch {
+        labels.push(period.fallback)
+      }
+    }
+  }
+
+  // If 1 Year option doesn't fit but there's more available than the last added option,
+  // add a "max available" label at the end showing exact duration
+  if (availableBlocks > 0 && availableBlocks < maxPeriodBlocks) {
+    const lastAddedPeriodIndex = labels.length - 1
+    const lastAddedPeriodBlocks = lastAddedPeriodIndex >= 0
+      ? BASE_RENEWAL_PERIODS[lastAddedPeriodIndex].blocks
+      : 0
+    if (availableBlocks > lastAddedPeriodBlocks) {
+      // Add formatted duration as the last label (e.g., "7 Months 15 Days")
+      labels.push(formatBlocksAsDuration(availableBlocks))
+    }
+  }
+
+  // Fallback if at max
+  if (labels.length === 0) {
+    labels.push(formatBlocksAsDuration(availableBlocks))
+  }
+
+  return labels
+})
+
+// Legacy function kept for compatibility - now labels are computed dynamically
+function updateRenewalLabels() {
+  // Labels are now computed reactively based on originalExpireBlocks
+  // This function is kept for backward compatibility but does nothing
 }
 
 // Combined renewal options (values + labels)
@@ -4742,6 +4901,15 @@ watch(() => appDetails.value.renewalIndex, newIndex => {
   if (renewalEnabled.value || props.newApp || managementAction.value === 'renewal') {
     const selectedExpire = renewalOptions.value[newIndex]?.value
     props.appSpec.expire = selectedExpire
+  }
+})
+
+// Watch renewalOptions length - clamp renewalIndex if options reduce
+// This can happen when remaining subscription time increases (fewer extension options available)
+watch(() => renewalOptions.value.length, newLength => {
+  if (appDetails.value.renewalIndex >= newLength) {
+    // Clamp to last available option
+    appDetails.value.renewalIndex = Math.max(0, newLength - 1)
   }
 })
 
@@ -8165,11 +8333,14 @@ async function initPaypalPay(hash = null, name = null, price = null, description
   }
 }
 
-// Payment monitoring function
+// Payment monitoring function - Two-phase detection:
+// Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
+// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
   console.log('🚀 START PAYMENT MONITORING', {
     registrationHash: registrationHash.value,
     isFreeUpdate: appSpecPrice.value?.flux === 0,
+    isNewApp: props.newApp,
   })
 
   // Clear any existing monitoring
@@ -8182,8 +8353,9 @@ const startPaymentMonitoring = async () => {
 
   paymentProcessing.value = true
   paymentConfirmed.value = false
+  paymentMonitoringPhase.value = 'blockchain' // Start with blockchain confirmation phase
 
-  console.log('✅ paymentProcessing set to true - monitoring UI should now be visible')
+  console.log('✅ paymentProcessing set to true - monitoring UI should now be visible (phase: blockchain)')
 
   // Set a 30-minute timeout (payment validity period)
   paymentMonitoringTimeout.value = setTimeout(() => {
@@ -8202,63 +8374,84 @@ const startPaymentMonitoring = async () => {
     // Get app name from correct source: appDetails for new apps, props.appSpec for updates
     const appName = props.newApp ? appDetails.value.name : props.appSpec?.name
 
-    console.log('⏰ MONITORING CHECK - Polling for deployment status...', {
+    console.log('⏰ MONITORING CHECK - Polling for status...', {
       timestamp: new Date().toLocaleTimeString(),
       appName: appName,
-      'appDetails.value.name': appDetails.value.name,
-      'props.appSpec?.name': props.appSpec?.name,
       isNewApp: props.newApp,
+      phase: paymentMonitoringPhase.value,
       registrationHash: registrationHash.value,
     })
 
     try {
       if (!appName) {
         console.warn('⚠️ No app name available for monitoring')
-        
+
         return
       }
 
       if (props.newApp) {
-        // For new apps: Check if app location exists (app gets deployed)
-        const response = await AppsService.getAppLocation(appName)
+        // For NEW APPS: Two-phase detection
+        if (paymentMonitoringPhase.value === 'blockchain') {
+          // Phase 1: Check if app spec exists on blockchain (payment confirmed)
+          const specResponse = await AppsService.getAppSpecifics(appName)
 
-        if (response.data && response.data.status === 'success') {
-          const appLocation = response.data.data
+          if (specResponse.data && specResponse.data.status === 'success') {
+            const currentAppSpec = specResponse.data.data
 
-          console.log('🔍 Checking new app deployment:', {
-            appLocation: appLocation,
-            hasInstances: appLocation && appLocation.length > 0,
-          })
+            console.log('🔍 Phase 1 - Checking blockchain confirmation:', {
+              appSpecExists: !!currentAppSpec,
+              currentHash: currentAppSpec?.hash,
+              registeredHash: registrationHash.value,
+            })
 
-          // If app location exists and has running instances, deployment was successful!
-          if (appLocation && appLocation.length > 0) {
-            console.log('✅ NEW APP DEPLOYMENT DETECTED - App is running!')
+            // If app spec exists and hash matches, payment is confirmed on blockchain
+            if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
+              console.log('✅ BLOCKCHAIN CONFIRMED - Moving to deployment phase')
+              paymentMonitoringPhase.value = 'deployment'
+              showToast('success', t('core.subscriptionManager.paymentConfirmedOnNetwork'))
+            }
+          }
+        } else if (paymentMonitoringPhase.value === 'deployment') {
+          // Phase 2: Check if app is running on nodes
+          const response = await AppsService.getAppLocation(appName)
 
-            // Clear monitoring
-            clearInterval(paymentMonitoringInterval.value)
-            clearTimeout(paymentMonitoringTimeout.value)
-            paymentMonitoringInterval.value = null
-            paymentMonitoringTimeout.value = null
-            paymentConfirmed.value = true
-            paymentProcessing.value = false
-            paymentCompleted.value = true
+          if (response.data && response.data.status === 'success') {
+            const appLocation = response.data.data
 
-            // Note: We don't clear registrationHash here to keep the success message visible
-            // It will be cleared when user navigates away from the tab
-            console.log('✅ Deployment successful - registrationHash kept for UI stability')
+            console.log('🔍 Phase 2 - Checking node deployment:', {
+              appLocation: appLocation,
+              hasInstances: appLocation && appLocation.length > 0,
+            })
 
-            // Show success message
-            showToast('success', appSpecPrice.value?.flux === 0 ? t('core.subscriptionManager.deploymentSuccessfulRunning') : t('core.subscriptionManager.paymentConfirmedActive'))
+            // If app location exists and has running instances, deployment was successful!
+            if (appLocation && appLocation.length > 0) {
+              console.log('✅ NEW APP DEPLOYMENT DETECTED - App is running!')
+
+              // Clear monitoring
+              clearInterval(paymentMonitoringInterval.value)
+              clearTimeout(paymentMonitoringTimeout.value)
+              paymentMonitoringInterval.value = null
+              paymentMonitoringTimeout.value = null
+              paymentConfirmed.value = true
+              paymentProcessing.value = false
+              paymentCompleted.value = true
+
+              console.log('✅ Deployment successful - registrationHash kept for UI stability')
+
+              // Show success message
+              showToast('success', appSpecPrice.value?.flux === 0 ? t('core.subscriptionManager.deploymentSuccessfulRunning') : t('core.subscriptionManager.paymentConfirmedActive'))
+            }
           }
         }
       } else {
-        // For updating existing app: Check if app spec hash matches registered hash
+        // For UPDATING existing app: Only Phase 1 - Check if app spec hash matches registered hash on blockchain
+        // No Phase 2 needed - nodes will pick up the update automatically
         const specResponse = await AppsService.getAppSpecifics(appName)
 
         if (specResponse.data && specResponse.data.status === 'success') {
           const currentAppSpec = specResponse.data.data
 
-          console.log('🔍 Checking update deployment:', {
+          console.log('🔍 Phase 1 (Update) - Checking blockchain confirmation:', {
             currentHash: currentAppSpec?.hash,
             registeredHash: registrationHash.value,
             hashesMatch: currentAppSpec?.hash === registrationHash.value,
@@ -8266,7 +8459,7 @@ const startPaymentMonitoring = async () => {
 
           // Check if the current spec hash matches our registered hash
           if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
-            console.log('✅ UPDATE DETECTED - Hash matches!')
+            console.log('✅ UPDATE CONFIRMED ON BLOCKCHAIN - Hash matches!')
 
             // Clear monitoring
             clearInterval(paymentMonitoringInterval.value)
@@ -8278,7 +8471,6 @@ const startPaymentMonitoring = async () => {
             paymentCompleted.value = true
 
             // Update the original spec snapshot to the deployed spec (so future changes can be detected)
-            // Using cloneDeep for better performance
             if (props.appSpec) {
               const specCopy = cloneDeep(props.appSpec)
               delete specCopy.expire
@@ -8286,12 +8478,10 @@ const startPaymentMonitoring = async () => {
               console.log('📸 Updated originalAppSpecSnapshot after successful deployment')
             }
 
-            // Note: We don't clear registrationHash here to keep the success message visible
-            // It will be cleared when user changes specs or navigates away from the tab
-            console.log('✅ Deployment successful - registrationHash kept for UI stability')
+            console.log('✅ Update confirmed on blockchain - registrationHash kept for UI stability')
 
-            // Show success message
-            showToast('success', appSpecPrice.value?.flux === 0 ? t('core.subscriptionManager.updateDeployedSuccessfully') : t('core.subscriptionManager.paymentConfirmedSpecUpdated'))
+            // Show success message - nodes will pick up the update automatically
+            showToast('success', t('core.subscriptionManager.updateConfirmedNodesWillUpdate'))
           }
         }
       }

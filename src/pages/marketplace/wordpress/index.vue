@@ -69,7 +69,7 @@
               <div class="resource-row">
                 <VIcon class="resource-icon ssd-icon">mdi-harddisk</VIcon>
                 <span class="resource-label">{{ t('pages.marketplace.wordpress.landing.plans.storage') }}</span>
-                <span class="resource-value">{{ (plan.ssd[0] + plan.ssd[1]).toFixed(0) }} GB SSD</span>
+                <span class="resource-value">{{ (plan.ssd[0] + plan.ssd[1]).toFixed(0) }} GB SSD/NVMe</span>
               </div>
               <div class="resource-row">
                 <VIcon class="resource-icon instances-icon">mdi-server-network</VIcon>
