@@ -548,6 +548,26 @@
                               />
                             </div>
 
+                            <!-- Instances Slider -->
+                            <div class="resource-config-row mb-4">
+                              <div class="resource-config-header">
+                                <VIcon class="resource-icon" size="20" color="info">mdi-server-network</VIcon>
+                                <span class="resource-config-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}</span>
+                                <VChip size="small" color="info" variant="flat" class="resource-config-value">
+                                  {{ customPlanResources.instances }} {{ customPlanResources.instances === 1 ? 'instance' : 'instances' }}
+                                </VChip>
+                              </div>
+                              <VSlider
+                                v-model="customPlanResources.instances"
+                                :min="1"
+                                :max="100"
+                                :step="1"
+                                hide-details
+                                color="info"
+                                class="resource-slider"
+                              />
+                            </div>
+
                             <!-- Price Display -->
                             <div class="custom-price-display">
                               <div v-if="customPlanPriceLoading" class="price-loading">
@@ -1501,7 +1521,7 @@
                           <div class="resource-row">
                             <VIcon class="resource-icon">mdi-server-network</VIcon>
                             <span class="resource-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}</span>
-                            <span class="resource-value">2</span>
+                            <span class="resource-value">{{ t('pages.apps.register.orbit.pricing.customFeatures.instances') }}</span>
                           </div>
                         </div>
 
