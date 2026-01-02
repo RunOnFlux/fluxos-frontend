@@ -1,5 +1,5 @@
 <template>
-  <VCard class="deployment-choice-section">
+  <VCard id="deployment-choice" class="deployment-choice-section">
     <VCardText>
       <h2 class="section-title">
         {{ t('pages.apps.register.orbit.choice.title') }}

@@ -125,8 +125,8 @@
         card-variant="flat"
         button-icon="mdi-plus-circle"
         button-icon-position="start"
-        :button-to="{ name: 'apps-register-configure' }"
         padding-class="text-center"
+        @button-click="scrollToDeploymentChoice"
       />
 
       <!-- Related Links Section -->
@@ -155,6 +155,14 @@ import CtaSection from '@/components/CtaSection.vue'
 import OrbitDeploymentChoice from '@/components/OrbitDeploymentChoice.vue'
 
 const { t } = useI18n()
+
+// Scroll to deployment choice section
+const scrollToDeploymentChoice = () => {
+  const element = document.getElementById('deployment-choice')
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
 
 // Server Locations Panel Configuration
 const serverLocationsPanel = {
