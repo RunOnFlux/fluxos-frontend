@@ -3303,6 +3303,13 @@
             "orbitApi": "API GIT:",
             "orbitDocumentation": "Dokumentacja GIT:"
           }
+        },
+        "docker": {
+          "header": {
+            "backToDeploymentOptions": "Powrót do opcji wdrożenia",
+            "deployWithDocker": "Wdrażaj z Docker",
+            "fullControlDeployment": "Pełna kontrola z niestandardowymi kontenerami Docker"
+          }
         }
       }
     },
