@@ -119,6 +119,25 @@
                       {{ t('pages.apps.register.orbit.repository.stepDescription') }}
                     </p>
 
+                    <!-- Top Navigation -->
+                    <div class="top-step-navigation">
+                      <VBtn
+                        variant="text"
+                        @click="currentStep--"
+                      >
+                        <VIcon start>mdi-arrow-left</VIcon>
+                        {{ t('pages.apps.register.orbit.navigation.back') }}
+                      </VBtn>
+                      <VSpacer />
+                      <VBtn
+                        color="primary"
+                        @click="nextStep"
+                      >
+                        {{ t('pages.apps.register.orbit.navigation.continue') }}
+                        <VIcon end>mdi-arrow-right</VIcon>
+                      </VBtn>
+                    </div>
+
                     <VForm ref="repoForm" @submit.prevent="nextStep">
                       <VTextField
                         v-model="repoUrl"
@@ -416,6 +435,25 @@
                     <p class="step-description">
                       {{ t('pages.apps.register.orbit.config.stepDescription') }}
                     </p>
+
+                    <!-- Top Navigation -->
+                    <div class="top-step-navigation">
+                      <VBtn
+                        variant="text"
+                        @click="currentStep--"
+                      >
+                        <VIcon start>mdi-arrow-left</VIcon>
+                        {{ t('pages.apps.register.orbit.navigation.back') }}
+                      </VBtn>
+                      <VSpacer />
+                      <VBtn
+                        color="primary"
+                        @click="nextStep"
+                      >
+                        {{ t('pages.apps.register.orbit.navigation.continue') }}
+                        <VIcon end>mdi-arrow-right</VIcon>
+                      </VBtn>
+                    </div>
 
                     <VForm ref="configForm">
                       <VTextField
@@ -1081,6 +1119,18 @@
                       {{ t('pages.apps.register.orbit.overview.stepDescription') }}
                     </p>
 
+                    <!-- Top Navigation -->
+                    <div class="top-step-navigation">
+                      <VSpacer />
+                      <VBtn
+                        color="primary"
+                        @click="nextStep"
+                      >
+                        {{ t('pages.apps.register.orbit.navigation.continue') }}
+                        <VIcon end>mdi-arrow-right</VIcon>
+                      </VBtn>
+                    </div>
+
                     <!-- Shared Features Card -->
                     <div class="shared-features-card">
                       <div class="shared-features-header">
@@ -1293,6 +1343,25 @@
                     <p class="step-description">
                       {{ t('pages.apps.register.orbit.pricing.stepDescription') }}
                     </p>
+
+                    <!-- Top Navigation -->
+                    <div class="top-step-navigation">
+                      <VBtn
+                        variant="text"
+                        @click="currentStep--"
+                      >
+                        <VIcon start>mdi-arrow-left</VIcon>
+                        {{ t('pages.apps.register.orbit.navigation.back') }}
+                      </VBtn>
+                      <VSpacer />
+                      <VBtn
+                        color="primary"
+                        @click="nextStep"
+                      >
+                        {{ t('pages.apps.register.orbit.navigation.continue') }}
+                        <VIcon end>mdi-arrow-right</VIcon>
+                      </VBtn>
+                    </div>
 
                     <h4 class="plans-section-title">{{ t('pages.apps.register.orbit.pricing.allPlansInclude') }}</h4>
 
@@ -1576,6 +1645,28 @@
                     <p class="step-description">
                       {{ t('pages.apps.register.orbit.review.stepDescription') }}
                     </p>
+
+                    <!-- Top Navigation -->
+                    <div class="top-step-navigation">
+                      <VBtn
+                        variant="text"
+                        @click="currentStep--"
+                        :disabled="deploying"
+                      >
+                        <VIcon start>mdi-arrow-left</VIcon>
+                        {{ t('pages.apps.register.orbit.navigation.back') }}
+                      </VBtn>
+                      <VSpacer />
+                      <VBtn
+                        color="primary"
+                        :loading="deploying"
+                        :disabled="!acceptedTerms"
+                        @click="proceedToPayment"
+                      >
+                        <VIcon start>mdi-rocket-launch</VIcon>
+                        {{ t('pages.apps.register.orbit.config.registerApplication') }}
+                      </VBtn>
+                    </div>
 
                     <div class="review-summary">
                       <!-- Repository Section -->
@@ -5021,6 +5112,16 @@ onMounted(() => {
   padding: 1rem;
 }
 
+.top-step-navigation {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 1rem;
+  background: rgba(var(--v-theme-on-surface), 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
 .step-title {
   font-size: 1.25rem;
   font-weight: 600;
@@ -6333,6 +6434,16 @@ onMounted(() => {
 
   .step-content {
     padding: 0.75rem 0;
+  }
+
+  .top-step-navigation {
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .top-step-navigation .v-btn {
+    font-size: 0.75rem;
+    padding: 0 8px;
   }
 
   .step-title {
