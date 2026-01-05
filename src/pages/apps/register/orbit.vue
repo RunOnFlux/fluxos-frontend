@@ -1898,12 +1898,13 @@
                           <strong>{{ t('pages.apps.register.orbit.deploy.registrationFailed') }}:</strong> {{ registrationError }}
                           <template #append>
                             <VBtn
-                              color="error"
-                              variant="text"
+                              color="primary"
+                              variant="flat"
                               size="small"
-                              @click="retryRegistration"
+                              @click="goBackToConfigureStep"
                             >
-                              {{ t('pages.apps.register.orbit.deploy.retry') }}
+                              <VIcon start size="16">mdi-pencil</VIcon>
+                              {{ t('pages.apps.register.orbit.deploy.editConfiguration') }}
                             </VBtn>
                           </template>
                         </VAlert>
@@ -4748,11 +4749,12 @@ const getDeploymentInfo = async () => {
   }
 }
 
-// Retry registration
-const retryRegistration = async () => {
+// Go back to configure step to edit app name or other settings
+const goBackToConfigureStep = () => {
   registrationHash.value = null
   registrationError.value = ''
-  await startRegistration()
+  deploying.value = false
+  currentStep.value = 4 // Configure step
 }
 
 // Payment monitoring - checks if app specification is registered on the network
