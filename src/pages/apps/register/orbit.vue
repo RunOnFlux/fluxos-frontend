@@ -4131,16 +4131,25 @@ const totalPrice = computed(() => {
   return basePrice - discount
 })
 
+// Monthly price for display
+const monthlyPriceDisplay = computed(() => {
+  if (selectedPlan.value === 'free') return 0
+  if (selectedPlan.value === 'developer') return 2.49
+  if (selectedPlan.value === 'pro') return 3.99
+  if (selectedPlan.value === 'custom' && customPlanPrice.value?.usd) {
+    return customPlanPrice.value.usd
+  }
+  return 0
+})
+
 const formattedTotalPrice = computed(() => {
   if (selectedPlan.value === 'free') return '$0 (Beginner)'
 
   if (selectedPlan.value === 'custom') {
     if (!customPlanPrice.value?.usd) return 'Calculating...'
-    
-    return `$${totalPrice.value.toFixed(2)} (${billingPeriodLabel.value})`
   }
 
-  return `$${totalPrice.value.toFixed(2)} (${billingPeriodLabel.value})`
+  return `$${monthlyPriceDisplay.value.toFixed(2)}/month`
 })
 
 // Custom plan price calculation function
