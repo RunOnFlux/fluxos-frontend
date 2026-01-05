@@ -29,7 +29,7 @@
           </div>
 
           <h3 class="card-title">
-            <span class="orbit-logo">Orbit</span>
+            <span class="orbit-logo">Git</span>
           </h3>
           <p class="card-subtitle">{{ t('pages.apps.register.orbit.choice.orbitSubtitle') }}</p>
 

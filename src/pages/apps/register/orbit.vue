@@ -1205,7 +1205,7 @@
                               <td class="provider-col">
                                 <div class="provider-cell-inner">
                                   <VIcon size="20" color="primary">mdi-rocket-launch</VIcon>
-                                  <span class="provider-name">FluxCloud Orbit</span>
+                                  <span class="provider-name">FluxCloud Git</span>
                                   <VChip size="x-small" color="success" variant="flat" class="ml-1">{{ t('pages.apps.register.orbit.comparison.best') }}</VChip>
                                 </div>
                               </td>
@@ -2000,15 +2000,15 @@ const { t } = useI18n()
 
 // SEO meta tags
 useHead({
-  title: 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+  title: 'Deploy with Git - Git-based Deployment on FluxCloud',
   meta: [
     {
       name: 'description',
-      content: 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
+      content: 'Deploy your Git repositories directly to FluxCloud. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
     },
     {
       name: 'keywords',
-      content: 'flux orbit, git deployment, ci/cd, react deployment, vue deployment, next.js hosting, node.js deployment, decentralized hosting, web3 deployment',
+      content: 'flux git, git deployment, ci/cd, react deployment, vue deployment, next.js hosting, node.js deployment, decentralized hosting, web3 deployment',
     },
     {
       name: 'robots',
@@ -2020,11 +2020,11 @@ useHead({
     },
     {
       property: 'og:title',
-      content: 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+      content: 'Deploy with Git - Git-based Deployment on FluxCloud',
     },
     {
       property: 'og:description',
-      content: 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Built-in CI/CD with support for popular frameworks.',
+      content: 'Deploy your Git repositories directly to FluxCloud. No Docker knowledge required. Built-in CI/CD with support for popular frameworks.',
     },
     {
       property: 'og:type',
@@ -2052,11 +2052,11 @@ useHead({
     },
     {
       name: 'twitter:title',
-      content: 'Deploy with Orbit - Git-based Deployment on FluxCloud',
+      content: 'Deploy with Git - Git-based Deployment on FluxCloud',
     },
     {
       name: 'twitter:description',
-      content: 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Built-in CI/CD with support for popular frameworks.',
+      content: 'Deploy your Git repositories directly to FluxCloud. No Docker knowledge required. Built-in CI/CD with support for popular frameworks.',
     },
     {
       name: 'twitter:image',
@@ -2075,8 +2075,8 @@ useHead({
       children: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
-        'name': 'Deploy with Orbit - Git-based Deployment on FluxCloud',
-        'description': 'Deploy your Git repositories directly to FluxCloud with Orbit. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
+        'name': 'Deploy with Git - Git-based Deployment on FluxCloud',
+        'description': 'Deploy your Git repositories directly to FluxCloud. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
         'url': 'https://cloud.runonflux.com/apps/register/orbit',
         'image': 'https://cloud.runonflux.com/banner/FluxDeploy.webp',
         'publisher': {
@@ -2107,7 +2107,7 @@ useHead({
           {
             '@type': 'ListItem',
             'position': 3,
-            'name': 'Deploy with Orbit',
+            'name': 'Deploy with Git',
             'item': 'https://cloud.runonflux.com/apps/register/orbit',
           },
         ],
@@ -2118,7 +2118,7 @@ useHead({
       children: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
-        'name': 'Flux Orbit',
+        'name': 'Flux Git',
         'applicationCategory': 'DeveloperApplication',
         'operatingSystem': 'Web',
         'description': 'Git-based deployment platform for FluxCloud. Deploy React, Vue, Next.js, Node.js and more without Docker knowledge.',

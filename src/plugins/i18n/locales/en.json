@@ -2807,7 +2807,7 @@
             "orbitFeature3": "Built-in CI/CD pipeline",
             "orbitFeature4": "Automatic rollbacks",
             "orbitFeature5": "GitHub/GitLab/Bitbucket support",
-            "orbitCta": "Deploy with Orbit",
+            "orbitCta": "Deploy with Git",
             "dockerSubtitle": "Container-based Deployment",
             "dockerDescription": "Full control with custom Docker containers. Perfect for complex deployments.",
             "dockerFeature1": "Any Docker image",
@@ -2818,19 +2818,19 @@
             "dockerCta": "Deploy with Docker",
             "startingAt": "Starting at",
             "dockerPriceDetail": "3 instances, 2 vCPU, 4GB RAM",
-            "comparisonHint": "Not sure which to choose? Orbit is perfect for most web apps. Docker gives you maximum control.",
+            "comparisonHint": "Not sure which to choose? Git is perfect for most web apps. Docker gives you maximum control.",
             "deployment": "deployment",
             "deployments": "deployments"
           },
           "pricing": {
-            "title": "Orbit Plans",
+            "title": "Git Plans",
             "subtitle": "Simple pricing for Git-based deployments",
             "stepTitle": "Select Your Plan",
             "stepDescription": "Choose your plan based on your resource needs.",
             "allPlansInclude": "Choose Your Resources",
             "poweredByFluxCloud": "Powered by FluxCloud",
             "sharedFeatures": {
-              "title": "FluxCloud Orbit Features",
+              "title": "FluxCloud Git Features",
               "subtitle": "Your Code. Our Magic. Zero Docker Headaches.",
               "unlimitedBuilds": "Unlimited Builds",
               "frameworks": "100+ Frameworks",
@@ -2948,7 +2948,7 @@
             "recommended": "Recommended",
             "mostPopular": "Most Popular",
             "firstMonthFree": "First month free",
-            "beginnerDisclaimer": "The Basic plan is free and automatically renewed by InFlux Technologies as long as you have only one Orbit app running on the network. If you deploy additional Orbit apps, each Basic plan app will be charged $0.99/month.",
+            "beginnerDisclaimer": "The Basic plan is free and automatically renewed by InFlux Technologies as long as you have only one Git app running on the network. If you deploy additional Git apps, each Basic plan app will be charged $0.99/month.",
             "beginnerDowntimeNote": "The Basic plan runs on a single instance. Since Flux is a decentralized network, brief downtime (typically a few minutes) may occur if the hosting node restarts or goes offline. For high-availability applications, we recommend the Standard or Pro plans which run on multiple instances.",
             "privateRepoDisclaimer": "Private GitHub repositories are automatically deployed as Enterprise apps, running exclusively on ArcaneOS nodes with full encryption for your source code and data. Enterprise adds $1.33/month for Basic plan, or $2.66/month for Standard, Pro, and Custom plans.",
             "competitive": {
@@ -3061,14 +3061,14 @@
             "title": "Deploy from Git in Minutes",
             "subtitle": "Push your code, we handle the rest",
             "howItWorks": {
-              "title": "How Orbit Works",
+              "title": "How Git Deployment Works",
               "step1": {
                 "title": "Connect Repository",
                 "description": "Link your GitHub, GitLab, or Bitbucket repository"
               },
               "step2": {
                 "title": "Auto-Detect",
-                "description": "Orbit automatically detects your framework and dependencies"
+                "description": "Git deployment automatically detects your framework and dependencies"
               },
               "step3": {
                 "title": "Build & Deploy",
@@ -3102,7 +3102,7 @@
             },
             "benefits": {
               "zeroDockertitle": "Zero Docker Headaches",
-              "zeroDockerDesc": "No Dockerfile needed. Orbit handles containerization automatically.",
+              "zeroDockerDesc": "No Dockerfile needed. Git deployment handles containerization automatically.",
               "autoRollbackTitle": "Automatic Rollbacks",
               "autoRollbackDesc": "Failed deployments automatically revert to the last working version.",
               "monorepoTitle": "Monorepo Support",
@@ -3112,18 +3112,18 @@
             }
           },
           "faq": {
-            "title": "Orbit FAQ",
+            "title": "Git Deployment FAQ",
             "whatIsOrbit": {
-              "question": "What is Orbit?",
-              "answer": "Orbit is Flux's Git-based deployment platform that automatically builds and deploys your applications without requiring Docker knowledge. Just connect your repository and Orbit handles everything else—framework detection, dependency installation, building, and deployment across the Flux network."
+              "question": "What is Git Deployment?",
+              "answer": "Git Deployment is Flux's Git-based deployment platform that automatically builds and deploys your applications without requiring Docker knowledge. Just connect your repository and Git deployment handles everything else—framework detection, dependency installation, building, and deployment across the Flux network."
             },
             "whatFrameworks": {
               "question": "Which frameworks are supported?",
-              "answer": "Orbit supports 100+ frameworks including Next.js, Django, FastAPI, Rails, Spring Boot, ASP.NET Core, and many more. It auto-detects Node.js, Python, Rust, Go, Java, .NET, Ruby, PHP projects and static sites."
+              "answer": "Git deployment supports 100+ frameworks including Next.js, Django, FastAPI, Rails, Spring Boot, ASP.NET Core, and many more. It auto-detects Node.js, Python, Rust, Go, Java, .NET, Ruby, PHP projects and static sites."
             },
             "howBuildsWork": {
               "question": "How do builds work?",
-              "answer": "A build is triggered every time you push new commits to your repository. Orbit detects the changes via webhooks, pulls your code, builds it using the detected framework, and deploys it across the network. Free tier includes 50 builds per month."
+              "answer": "A build is triggered every time you push new commits to your repository. Git deployment detects the changes via webhooks, pulls your code, builds it using the detected framework, and deploys it across the network. Free tier includes 50 builds per month."
             },
             "exceedLimit": {
               "question": "What happens when I exceed the build limit?",
@@ -3135,20 +3135,20 @@
             },
             "privateRepos": {
               "question": "Are private repositories supported?",
-              "answer": "Yes, Orbit supports private repositories. You'll need to authorize Orbit to access your repository during the setup process."
+              "answer": "Yes, Git deployment supports private repositories. You'll need to authorize Git deployment to access your repository during the setup process."
             }
           },
           "landing": {
             "badge": "NEW: Deploy from Git",
             "heroTitle": "Your Code. Our Magic.",
             "heroSubtitle": "Zero Docker Headaches.",
-            "heroDescription": "Deploy any web application directly from GitHub, GitLab, or Bitbucket. Orbit auto-detects your framework and handles everything else.",
+            "heroDescription": "Deploy any web application directly from GitHub, GitLab, or Bitbucket. Git deployment auto-detects your framework and handles everything else.",
             "getStartedFree": "Start Free",
             "viewPricing": "View Pricing"
           },
           "comparison": {
-            "title": "How Orbit Compares",
-            "subtitle": "See how Orbit stacks up against other Git deployment platforms",
+            "title": "How Git Deployment Compares",
+            "subtitle": "See how Git deployment stacks up against other Git deployment platforms",
             "provider": "Provider",
             "plan": "Plan",
             "price": "Price",
@@ -3166,7 +3166,7 @@
             "minutes": "min/mo"
           },
           "signIn": {
-            "description": "Sign in to deploy your application from Git using Orbit.",
+            "description": "Sign in to deploy your application from Git.",
             "noDockerNeeded": "No Docker knowledge needed",
             "frameworksSupported": "100+ frameworks supported",
             "builtInCicd": "Built-in CI/CD",
@@ -3175,7 +3175,7 @@
           },
           "header": {
             "backToDeploymentOptions": "Back to deployment options",
-            "deployWithOrbit": "Deploy with Orbit",
+            "deployWithOrbit": "Deploy with Git",
             "connectAndDeploy": "Connect your Git repository and deploy in minutes"
           },
           "stepper": {
@@ -3230,7 +3230,7 @@
           },
           "config": {
             "stepTitle": "Application Configuration",
-            "stepDescription": "Configure your application settings. Orbit will auto-detect your framework.",
+            "stepDescription": "Configure your application settings. Git deployment will auto-detect your framework.",
             "appNameLabel": "Application Name *",
             "appNamePlaceholder": "my-awesome-app",
             "appNameHint": "Lowercase letters, numbers, and hyphens only (3-32 chars)",
@@ -3243,13 +3243,13 @@
             "contactEmailPlaceholder": "you{'@'}example.com",
             "contactEmailHint": "For deployment notifications and alerts",
             "pollingIntervalLabel": "Auto-Update Polling Interval",
-            "pollingIntervalHint": "How often Orbit checks your repository for new commits",
+            "pollingIntervalHint": "How often Git deployment checks your repository for new commits",
             "runtimeVersionTitle": "Runtime Version (Optional)",
-            "runtimeAutoDetect": "Orbit auto-detects your runtime. Only specify if you need a specific version.",
+            "runtimeAutoDetect": "Git deployment auto-detects your runtime. Only specify if you need a specific version.",
             "runtimeLabel": "Runtime",
             "envVariablesTitle": "Environment Variables",
-            "envVariablesInfo": "Configure environment variables for your application. Click on any Orbit variable below to add it.",
-            "availableOrbitVars": "Available Orbit Variables",
+            "envVariablesInfo": "Configure environment variables for your application. Click on any Git variable below to add it.",
+            "availableOrbitVars": "Available Git Variables",
             "added": "Added",
             "add": "Add",
             "ifNotSet": "If not set:",
@@ -3278,7 +3278,7 @@
             "customDomainPlaceholder": "myapp.example.com",
             "customDomainHint": "Enter your custom domain (you'll need to configure DNS separately)",
             "autoDetectionEnabled": "Auto-Detection Enabled",
-            "autoDetectionDescription": "Orbit automatically detects your framework (Next.js, Django, Rails, Spring Boot, etc.) and configures the build process. No Dockerfile needed!",
+            "autoDetectionDescription": "Git deployment automatically detects your framework (Next.js, Django, Rails, Spring Boot, etc.) and configures the build process. No Dockerfile needed!",
             "customResourcesTitle": "Custom Resources",
             "customResourcesInfo": "Configure the CPU, RAM, and storage for your custom plan. The price will be calculated based on your selections.",
             "cpuLabel": "CPU",
@@ -3295,8 +3295,8 @@
             "proceedingToPayment": "Proceeding to payment...",
             "firstInstallInfo": "First installation can take a while depending on your project as need to download and install all dependencies. You can check that on the logs section of applications management. Once your app is installed on a node, you can access it at:",
             "appUrl": "App URL:",
-            "orbitApi": "ORBIT API:",
-            "orbitDocumentation": "ORBIT Documentation:"
+            "orbitApi": "GIT API:",
+            "orbitDocumentation": "GIT Documentation:"
           }
         }
       }
