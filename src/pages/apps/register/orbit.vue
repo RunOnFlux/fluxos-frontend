@@ -679,6 +679,7 @@
                           <VExpansionPanelTitle>
                             <VIcon start size="20">mdi-variable</VIcon>
                             {{ t('pages.apps.register.orbit.config.envVariablesTitle') }}
+                            <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
                             <VChip v-if="customEnvVars.length > 0" size="x-small" color="primary" class="ml-2">
                               {{ customEnvVars.length }}
                             </VChip>
@@ -794,6 +795,7 @@
                           <VExpansionPanelTitle>
                             <VIcon start size="20">mdi-earth</VIcon>
                             {{ t('pages.apps.register.orbit.config.deploymentLocationTitle') }}
+                            <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
                             <VChip
                               v-if="selectedGeo.continent !== 'ALL' || customDomain"
                               size="x-small"

@@ -78,7 +78,8 @@
       "billing": "Rozliczenia",
       "monthly": "Miesięcznie",
       "scrollLeft": "Przewiń w lewo",
-      "scrollRight": "Przewiń w prawo"
+      "scrollRight": "Przewiń w prawo",
+      "optional": "Opcjonalne"
     },
     "theme": {
       "light": "Jasny",

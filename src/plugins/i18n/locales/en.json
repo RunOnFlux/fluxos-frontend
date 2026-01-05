@@ -78,7 +78,8 @@
       "billing": "Billing",
       "monthly": "Monthly",
       "scrollLeft": "Scroll left",
-      "scrollRight": "Scroll right"
+      "scrollRight": "Scroll right",
+      "optional": "Optional"
     },
     "theme": {
       "light": "Light",
