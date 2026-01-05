@@ -1768,6 +1768,12 @@
                           </span>
                         </div>
                         <div class="review-item">
+                          <span class="review-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}:</span>
+                          <span class="review-value">
+                            {{ planResources.instances }} {{ planResources.instances === 1 ? 'instance' : 'instances' }}
+                          </span>
+                        </div>
+                        <div class="review-item">
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.activeDeployments') }}:</span>
                           <span class="review-value">
                             {{ t('pages.apps.register.orbit.review.unlimited') }}
@@ -1783,17 +1789,35 @@
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.branchPreviews') }}:</span>
                           <span class="review-value">{{ t('pages.apps.register.orbit.review.enabled') }}</span>
                         </div>
-                        <div v-if="selectedGeo.continent !== 'ALL'" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.geolocation') }}:</span>
+                        <div v-if="allowedGeolocations.length > 0" class="review-item">
+                          <span class="review-label">{{ t('pages.apps.register.orbit.config.allowedLocations') }}:</span>
                           <span class="review-value">
                             <VChip
+                              v-for="(geo, index) in allowedGeolocations"
+                              :key="'review-allowed-' + index"
                               size="x-small"
                               color="success"
-                              class="mr-1"
+                              class="mr-1 mb-1"
                               label
                             >
                               <VIcon start size="12">mdi-map-marker</VIcon>
-                              {{ getGeolocationLabel(buildGeoCode(selectedGeo)) }}
+                              {{ getGeolocationLabel(geo) }}
+                            </VChip>
+                          </span>
+                        </div>
+                        <div v-if="forbiddenGeolocations.length > 0" class="review-item">
+                          <span class="review-label">{{ t('pages.apps.register.orbit.config.forbiddenLocations') }}:</span>
+                          <span class="review-value">
+                            <VChip
+                              v-for="(geo, index) in forbiddenGeolocations"
+                              :key="'review-forbidden-' + index"
+                              size="x-small"
+                              color="error"
+                              class="mr-1 mb-1"
+                              label
+                            >
+                              <VIcon start size="12">mdi-map-marker-off</VIcon>
+                              {{ getGeolocationLabel(geo) }}
                             </VChip>
                           </span>
                         </div>
