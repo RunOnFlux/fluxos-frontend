@@ -111,8 +111,8 @@
                 alt-labels
                 class="orbit-stepper"
               >
-                <!-- Step 2: Repository -->
-                <template #item.2>
+                <!-- Step 3: Repository -->
+                <template #item.3>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.repository.stepTitle') }}</h3>
                     <p class="step-description">
@@ -409,8 +409,8 @@
                   </div>
                 </template>
 
-                <!-- Step 3: Configuration -->
-                <template #item.3>
+                <!-- Step 4: Configuration -->
+                <template #item.4>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.config.stepTitle') }}</h3>
                     <p class="step-description">
@@ -1073,12 +1073,12 @@
                   </div>
                 </template>
 
-                <!-- Step 1: Plan Selection -->
+                <!-- Step 1: Overview -->
                 <template #item.1>
                   <div class="step-content">
-                    <h3 class="step-title">{{ t('pages.apps.register.orbit.pricing.stepTitle') }}</h3>
+                    <h3 class="step-title">{{ t('pages.apps.register.orbit.overview.stepTitle') }}</h3>
                     <p class="step-description">
-                      {{ t('pages.apps.register.orbit.pricing.stepDescription') }}
+                      {{ t('pages.apps.register.orbit.overview.stepDescription') }}
                     </p>
 
                     <!-- Shared Features Card -->
@@ -1283,6 +1283,16 @@
                         <span>{{ t('pages.apps.register.orbit.choice.comparisonHint') }}</span>
                       </div>
                     </div>
+                  </div>
+                </template>
+
+                <!-- Step 2: Plan Selection -->
+                <template #item.2>
+                  <div class="step-content">
+                    <h3 class="step-title">{{ t('pages.apps.register.orbit.pricing.stepTitle') }}</h3>
+                    <p class="step-description">
+                      {{ t('pages.apps.register.orbit.pricing.stepDescription') }}
+                    </p>
 
                     <h4 class="plans-section-title">{{ t('pages.apps.register.orbit.pricing.allPlansInclude') }}</h4>
 
@@ -1559,8 +1569,8 @@
                   </div>
                 </template>
 
-                <!-- Step 4: Review -->
-                <template #item.4>
+                <!-- Step 5: Review -->
+                <template #item.5>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.review.stepTitle') }}</h3>
                     <p class="step-description">
@@ -1746,8 +1756,8 @@
                   </div>
                 </template>
 
-                <!-- Step 5: Register -->
-                <template #item.5>
+                <!-- Step 6: Register -->
+                <template #item.6>
                   <div class="step-content register-step">
                     <!-- Registration Phase -->
                     <div v-if="!registrationHash" class="registration-phase">
@@ -1801,8 +1811,8 @@
                   </div>
                 </template>
 
-                <!-- Step 6: Payment -->
-                <template #item.6>
+                <!-- Step 7: Payment -->
+                <template #item.7>
                   <div class="step-content payment-step">
 
                     <!-- Payment Processing Phase -->
@@ -1948,7 +1958,7 @@
                     </VBtn>
                     <VSpacer />
                     <VBtn
-                      v-if="currentStep < 4"
+                      v-if="currentStep < 5"
                       color="primary"
                       @click="nextStep"
                     >
@@ -1956,7 +1966,7 @@
                       <VIcon end>mdi-arrow-right</VIcon>
                     </VBtn>
                     <VBtn
-                      v-else-if="currentStep === 4"
+                      v-else-if="currentStep === 5"
                       color="primary"
                       size="large"
                       :loading="deploying"
@@ -1966,7 +1976,7 @@
                       <VIcon start>mdi-rocket-launch</VIcon>
                       {{ t('pages.apps.register.orbit.config.registerApplication') }}
                     </VBtn>
-                    <!-- No action buttons on steps 5 and 6 - handled within the step content -->
+                    <!-- No action buttons on steps 6 and 7 - handled within the step content -->
                   </div>
                 </template>
               </VStepper>
@@ -2160,12 +2170,13 @@ watch(isLoggedIn, newValue => {
 // Stepper
 const currentStep = ref(1)
 const stepItems = computed(() => [
-  { title: t('pages.apps.register.orbit.stepper.plan'), value: 1 },
-  { title: t('pages.apps.register.orbit.stepper.repository'), value: 2 },
-  { title: t('pages.apps.register.orbit.stepper.configure'), value: 3 },
-  { title: t('pages.apps.register.orbit.stepper.review'), value: 4 },
-  { title: t('pages.apps.register.orbit.stepper.register'), value: 5 },
-  { title: t('pages.apps.register.orbit.stepper.payment'), value: 6 },
+  { title: t('pages.apps.register.orbit.stepper.overview'), value: 1 },
+  { title: t('pages.apps.register.orbit.stepper.plan'), value: 2 },
+  { title: t('pages.apps.register.orbit.stepper.repository'), value: 3 },
+  { title: t('pages.apps.register.orbit.stepper.configure'), value: 4 },
+  { title: t('pages.apps.register.orbit.stepper.review'), value: 5 },
+  { title: t('pages.apps.register.orbit.stepper.register'), value: 6 },
+  { title: t('pages.apps.register.orbit.stepper.payment'), value: 7 },
 ])
 
 // Scroll to top when step changes
@@ -2177,7 +2188,7 @@ watch(currentStep, () => {
 const repoForm = ref(null)
 const configForm = ref(null)
 
-// Step 1: Repository
+// Step 3: Repository
 const repoUrl = ref('')
 const branch = ref('main')
 const projectPath = ref('/')
@@ -2239,7 +2250,7 @@ const monorepoType = ref(null) // 'pnpm', 'npm', 'yarn', 'lerna', 'nx', 'turbo',
 const monorepoProjects = ref([]) // List of detected projects/workspaces
 const detectingMonorepo = ref(false)
 
-// Step 2: Configuration
+// Step 4: Configuration
 const appName = ref('')
 const appDescription = ref('')
 const appPort = ref('3000')
@@ -3461,7 +3472,7 @@ const runtimeEnvVarMap = {
   'PHP': 'PHP_VERSION',
 }
 
-// Step 3: Plan
+// Step 2: Plan
 const selectedPlan = ref(null)
 const billingPeriod = ref('1')
 
@@ -3883,7 +3894,7 @@ const generateUniqueManagementPort = () => {
 }
 const orbitManagementPort = ref(generateUniqueManagementPort())
 
-// Step 4: Terms
+// Step 5: Terms/Review
 const acceptedTerms = ref(false)
 
 // Deployment state
@@ -4336,13 +4347,14 @@ const rules = {
 
 // Step navigation
 const nextStep = async () => {
-  // Step 1: Plan Selection - no validation needed
-  if (currentStep.value === 2) {
-    // Step 2: Repository - validate repo form
+  // Step 1: Overview - no validation needed
+  // Step 2: Plan Selection - no validation needed
+  if (currentStep.value === 3) {
+    // Step 3: Repository - validate repo form
     const { valid } = await repoForm.value.validate()
     if (!valid) return
-  } else if (currentStep.value === 3) {
-    // Step 3: Configuration - validate config form
+  } else if (currentStep.value === 4) {
+    // Step 4: Configuration - validate config form
     const { valid } = await configForm.value.validate()
     if (!valid) return
   }
@@ -4358,8 +4370,8 @@ const proceedToPayment = async () => {
   deploying.value = true
 
   try {
-    // Go to Step 5 - Register
-    currentStep.value = 5
+    // Go to Step 6 - Register
+    currentStep.value = 6
 
     // Start registration process
     await startRegistration()

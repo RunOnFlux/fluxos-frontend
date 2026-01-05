@@ -2822,6 +2822,10 @@
             "deployment": "deployment",
             "deployments": "deployments"
           },
+          "overview": {
+            "stepTitle": "FluxCloud Git Overview",
+            "stepDescription": "Discover what FluxCloud Git offers and how it compares to other platforms."
+          },
           "pricing": {
             "title": "Git Plans",
             "subtitle": "Simple pricing for Git-based deployments",
@@ -3179,6 +3183,7 @@
             "connectAndDeploy": "Connect your Git repository and deploy in minutes"
           },
           "stepper": {
+            "overview": "Overview",
             "plan": "Plan",
             "repository": "Repository",
             "configure": "Configure",

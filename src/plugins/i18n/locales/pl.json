@@ -2822,6 +2822,10 @@
             "deployment": "wdrożenie",
             "deployments": "wdrożenia"
           },
+          "overview": {
+            "stepTitle": "Przegląd FluxCloud Git",
+            "stepDescription": "Odkryj, co oferuje FluxCloud Git i jak wypada w porównaniu z innymi platformami."
+          },
           "pricing": {
             "title": "Plany Git",
             "subtitle": "Proste ceny dla wdrożeń opartych na Git",
@@ -3179,10 +3183,11 @@
             "connectAndDeploy": "Połącz swoje repozytorium Git i wdróż w kilka minut"
           },
           "stepper": {
+            "overview": "Przegląd",
             "plan": "Plan",
             "repository": "Repozytorium",
             "configure": "Konfiguracja",
-            "review": "Przegląd",
+            "review": "Podsumowanie",
             "register": "Rejestracja",
             "payment": "Płatność"
           },
