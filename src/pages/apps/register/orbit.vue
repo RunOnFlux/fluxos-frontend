@@ -5077,10 +5077,7 @@ onMounted(() => {
   font-size: 1.5rem;
   font-weight: 700;
   margin: 0;
-  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-success)) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: rgb(var(--v-theme-primary));
   line-height: 1.2;
 }
 
@@ -5366,8 +5363,8 @@ onMounted(() => {
 
 /* Shared Features Card */
 .shared-features-card {
-  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.08) 0%, rgba(var(--v-theme-success), 0.08) 100%);
-  border: 2px solid rgba(var(--v-theme-primary), 0.2);
+  background: rgba(var(--v-theme-primary), 0.05);
+  border: 1px solid rgba(var(--v-theme-primary), 0.15);
   border-radius: 20px;
   padding: 24px;
   margin-bottom: 24px;
@@ -5607,17 +5604,17 @@ onMounted(() => {
 
 /* Custom Plan Styles */
 .custom-plan {
-  background: linear-gradient(135deg, rgba(var(--v-theme-info), 0.03) 0%, rgba(var(--v-theme-primary), 0.03) 100%);
+  background: rgba(var(--v-theme-info), 0.03);
 }
 
 .custom-plan:hover,
 .custom-plan.selected {
   border-color: rgb(var(--v-theme-info));
-  background: linear-gradient(135deg, rgba(var(--v-theme-info), 0.08) 0%, rgba(var(--v-theme-primary), 0.08) 100%);
+  background: rgba(var(--v-theme-info), 0.08);
 }
 
 .custom-plan.selected {
-  box-shadow: 0 8px 32px rgba(var(--v-theme-info), 0.3);
+  box-shadow: 0 8px 32px rgba(var(--v-theme-info), 0.25);
 }
 
 .custom-badge {
@@ -5625,7 +5622,7 @@ onMounted(() => {
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, rgb(var(--v-theme-info)) 0%, rgb(var(--v-theme-primary)) 100%);
+  background: rgb(var(--v-theme-info));
   color: white;
   padding: 6px 20px;
   border-radius: 20px;
@@ -5633,7 +5630,7 @@ onMounted(() => {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(var(--v-theme-info), 0.4);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-info), 0.3);
 }
 
 .custom-price-badge {
@@ -5654,7 +5651,7 @@ onMounted(() => {
 
 .custom-resources-card {
   border-color: rgba(var(--v-theme-info), 0.3);
-  background: linear-gradient(135deg, rgba(var(--v-theme-info), 0.03) 0%, rgba(var(--v-theme-primary), 0.03) 100%);
+  background: rgba(var(--v-theme-info), 0.03);
 }
 
 .custom-resources-card .v-card-title {
@@ -5774,7 +5771,7 @@ onMounted(() => {
   top: -12px;
   left: 50%;
   transform: translateX(-50%);
-  background: linear-gradient(135deg, rgb(var(--v-theme-success)) 0%, rgb(var(--v-theme-primary)) 100%);
+  background: rgb(var(--v-theme-success));
   color: white;
   padding: 6px 20px;
   border-radius: 20px;
@@ -5782,7 +5779,7 @@ onMounted(() => {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(var(--v-theme-success), 0.4);
+  box-shadow: 0 4px 12px rgba(var(--v-theme-success), 0.3);
 }
 
 .coming-soon-badge {
@@ -5807,14 +5804,14 @@ onMounted(() => {
   justify-content: center;
   gap: 6px;
   padding: 16px;
-  background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.2) 0%, rgba(var(--v-theme-success), 0.1) 100%);
+  background: rgba(var(--v-theme-success), 0.1);
   border-radius: 16px;
-  border: 1px solid rgba(var(--v-theme-success), 0.3);
+  border: 1px solid rgba(var(--v-theme-success), 0.2);
 }
 
 .plan-price-badge.disabled {
-  background: linear-gradient(135deg, rgba(var(--v-theme-on-surface), 0.1) 0%, rgba(var(--v-theme-on-surface), 0.05) 100%);
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.2);
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.1);
 }
 
 .price-amount {
@@ -5847,8 +5844,8 @@ onMounted(() => {
   justify-content: center;
   gap: 4px;
   padding: 4px 12px;
-  background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.15) 0%, rgba(var(--v-theme-success), 0.08) 100%);
-  border: 1px solid rgba(var(--v-theme-success), 0.3);
+  background: rgba(var(--v-theme-success), 0.1);
+  border: 1px solid rgba(var(--v-theme-success), 0.2);
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;

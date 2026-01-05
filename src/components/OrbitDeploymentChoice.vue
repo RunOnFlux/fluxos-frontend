@@ -236,12 +236,12 @@ const selectMethod = method => {
 }
 
 .orbit-card {
-  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.03) 0%, rgba(var(--v-theme-success), 0.03) 100%);
+  background: rgba(var(--v-theme-primary), 0.03);
 }
 
 .orbit-card:hover,
 .orbit-card.selected {
-  background: linear-gradient(135deg, rgba(var(--v-theme-primary), 0.08) 0%, rgba(var(--v-theme-success), 0.08) 100%);
+  background: rgba(var(--v-theme-primary), 0.08);
 }
 
 .card-badge {
@@ -267,10 +267,7 @@ const selectMethod = method => {
 }
 
 .orbit-logo {
-  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgb(var(--v-theme-success)) 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: rgb(var(--v-theme-primary));
 }
 
 .card-subtitle {

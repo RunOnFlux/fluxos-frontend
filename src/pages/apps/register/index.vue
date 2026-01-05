@@ -7,7 +7,7 @@
         :title="t('pages.apps.register.landing.title')"
         :subtitle="heroSubtitle"
         background-image="/banner/FluxDeploy.webp"
-        overlay-gradient="linear-gradient(135deg, rgba(var(--v-theme-primary), 0.5) 0%, rgba(var(--v-theme-secondary), 0.5) 100%)"
+        overlay-gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%)"
         icon="mdi-cloud-upload"
         icon-aria-label="Flux Cloud Logo"
         :badge-text="t('pages.apps.register.orbit.landing.badge')"
