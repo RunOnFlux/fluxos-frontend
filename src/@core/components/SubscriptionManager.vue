@@ -6905,18 +6905,10 @@ async function verifyAppSpec() {
     }
 
     if (appSpecTemp.version >= 8) {
-      console.log('Version 8+ app - checking enterprise mode')
-      console.log('UI isPrivateApp state:', isPrivateApp.value)
-      console.log('AppSpec enterprise field:', appSpecTemp.enterprise)
-
       // For v8+: Use UI state (isPrivateApp.value) to determine if encryption should happen
       // The UI state is set based on the enterprise checkbox or existing enterprise data
       if (isPrivateApp.value) {
-        console.log('Enterprise v8+ encryption process starting...')
-        console.log('Original appSpecTemp before encryption:', JSON.stringify(appSpecTemp, null, 2))
-        
         const zelidauth = localStorage.getItem('zelidauth')
-        console.log('Using current owner for encryption:', appSpecTemp.owner)
 
         // call api to get RSA public key
         const appPubKeyData = {
@@ -6924,7 +6916,6 @@ async function verifyAppSpec() {
           owner: appSpecTemp.owner,
         }
         const responseGetPublicKey = await AppsService.getAppPublicKey(zelidauth, appPubKeyData)
-        console.log('getAppPublicKey response:', responseGetPublicKey.data)
         if (responseGetPublicKey.data.status === 'error') {
           const errorData = responseGetPublicKey.data.data
           let errorMsg = 'Failed to get app public key'
@@ -6940,18 +6931,15 @@ async function verifyAppSpec() {
           throw new Error(errorMsg)
         }
         const pubkey = responseGetPublicKey.data.data
-        console.log('Retrieved public key length:', pubkey.length)
 
         // Check if WebCrypto is available before proceeding
         if (!isWebCryptoAvailable()) {
-          console.warn('WebCrypto not available, cannot use enterprise features')
-          
           // Show user-friendly toast instead of blocking error
           showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert-triangle', 6000)
-          
+
           // Reset enterprise mode and return gracefully
           appSpec.value.enterprise = ''
-          
+
           return
         }
 
@@ -6966,20 +6954,16 @@ async function verifyAppSpec() {
           contacts: appSpecTemp.contacts,
           compose: appSpecTemp.compose,
         }
-        console.log('Enterprise specs to encrypt:', JSON.stringify(enterpriseSpecs, null, 2))
-        
+
         const encryptedEnterprise = await encryptEnterpriseWithAes(
           JSON.stringify(enterpriseSpecs),
           aesKey,
           encryptedEnterpriseKey,
         )
-        console.log('Encrypted enterprise data length:', encryptedEnterprise.length)
-        
+
         appSpecTemp.enterprise = encryptedEnterprise
         appSpecTemp.contacts = []
         appSpecTemp.compose = []
-        
-        console.log('AppSpecTemp after encryption:', JSON.stringify(appSpecTemp, null, 2))
       }
     } else if (appSpecTemp.version === 7) {
       // Handle v7 encryption

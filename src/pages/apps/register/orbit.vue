@@ -2122,6 +2122,12 @@ import StorageService from '@/services/StorageService'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import { signWithSSP, signWithZelcore } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
+import {
+  encryptAesKeyWithRsaKey,
+  encryptEnterpriseWithAes,
+  importRsaPublicKey,
+  isWebCryptoAvailable,
+} from '@/utils/enterpriseCrypto'
 import qs from 'qs'
 
 const { t } = useI18n()
@@ -4140,6 +4146,7 @@ const monthlyPriceDisplay = computed(() => {
   if (selectedPlan.value === 'custom' && customPlanPrice.value?.usd) {
     return customPlanPrice.value.usd
   }
+  
   return 0
 })
 
@@ -4399,10 +4406,8 @@ const generatedAppSpec = computed(() => {
   const exposePort = typeof exposedPort.value === 'number' ? exposedPort.value : parseInt(exposedPort.value, 10)
   const mgmtPort = typeof orbitManagementPort.value === 'number' ? orbitManagementPort.value : parseInt(orbitManagementPort.value, 10)
 
-  // Generate a unique enterprise identifier for private repos
-  const enterpriseId = isEnterpriseApp.value
-    ? `orbit_${appName.value || 'app'}_${Date.now().toString(36)}`
-    : ''
+  // Enterprise encryption happens during registration, not here
+  // Leave enterprise empty - it will be encrypted in startRegistration if needed
 
   // Build domains array - first for app port, second for management port (always empty)
   const domains = [customDomain.value || '', '']
@@ -4418,7 +4423,7 @@ const generatedAppSpec = computed(() => {
     contacts: [contactEmail.value],
     instances: planResources.value.instances,
     staticip: false,
-    enterprise: enterpriseId, // Set enterprise flag for private repos
+    enterprise: '', // Encryption happens in startRegistration for enterprise apps
     nodes: [],
     geolocation: geolocationCodes,
     expire: billingPeriod.value === '1' ? 88000 : parseInt(billingPeriod.value, 10) * 88000,
@@ -4593,9 +4598,68 @@ const startRegistration = async () => {
     const uploadedContacts = await uploadContactsToStorage(originalSpec.contacts || [contactEmail.value])
 
     // Create a new spec with the storage reference for contacts
-    const specWithContacts = {
+    let specWithContacts = {
       ...originalSpec,
       contacts: uploadedContacts,
+    }
+
+    // Handle enterprise encryption for private repos (v8+)
+    if (isEnterpriseApp.value && specWithContacts.version >= 8) {
+      registrationMessage.value = 'Encrypting enterprise data...'
+
+      // Check WebCrypto availability
+      if (!isWebCryptoAvailable()) {
+        throw new Error('Enterprise features require HTTPS or localhost. Please access this application using a secure connection.')
+      }
+
+      const zelidauth = localStorage.getItem('zelidauth')
+
+      // Get RSA public key for encryption
+      const appPubKeyData = {
+        name: specWithContacts.name,
+        owner: specWithContacts.owner,
+      }
+
+      const responseGetPublicKey = await AppsService.getAppPublicKey(zelidauth, appPubKeyData)
+
+      if (responseGetPublicKey.data.status === 'error') {
+        const errorData = responseGetPublicKey.data.data
+        let errorMsg = 'Failed to get app public key'
+        if (errorData) {
+          errorMsg = typeof errorData === 'string' ? errorData : (errorData.message || JSON.stringify(errorData))
+        }
+        throw new Error(errorMsg)
+      }
+
+      const pubkey = responseGetPublicKey.data.data
+
+      // Generate AES key
+      const aesKey = window.crypto.getRandomValues(new Uint8Array(32))
+
+      // Import RSA public key and encrypt AES key
+      const rsaPubKey = await importRsaPublicKey(pubkey)
+      const encryptedAesKey = await encryptAesKeyWithRsaKey(aesKey, rsaPubKey)
+
+      // Create enterprise specs (contacts + compose to be encrypted)
+      const enterpriseSpecs = {
+        contacts: specWithContacts.contacts,
+        compose: specWithContacts.compose,
+      }
+
+      // Encrypt enterprise data
+      const encryptedEnterprise = await encryptEnterpriseWithAes(
+        JSON.stringify(enterpriseSpecs),
+        aesKey,
+        encryptedAesKey,
+      )
+
+      // Update spec with encrypted enterprise data
+      specWithContacts = {
+        ...specWithContacts,
+        enterprise: encryptedEnterprise,
+        contacts: [],
+        compose: [],
+      }
     }
 
     // Verify app specification with FluxOS backend to get the correct format
