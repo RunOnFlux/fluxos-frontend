@@ -161,13 +161,23 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
 
 const selectedMethod = ref(null)
 
 const selectMethod = method => {
   selectedMethod.value = method
+
+  // Navigate to the appropriate page
+  if (method === 'orbit') {
+    router.push({ name: 'apps-register-orbit' })
+  }
+  else if (method === 'docker') {
+    router.push({ name: 'apps-register-configure' })
+  }
 }
 </script>
 
