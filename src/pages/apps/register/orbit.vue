@@ -1679,13 +1679,15 @@
                             {{ repoUrl }}
                           </span>
                         </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
-                          <span class="review-value">{{ branch || 'main' }}</span>
-                        </div>
-                        <div v-if="projectPath && projectPath !== '/'" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.projectPath') }}:</span>
-                          <span class="review-value">{{ projectPath }}</span>
+                        <div class="review-item-row">
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
+                            <span class="review-value">{{ branch || 'main' }}</span>
+                          </div>
+                          <div v-if="projectPath && projectPath !== '/'" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.projectPath') }}:</span>
+                            <span class="review-value">{{ projectPath }}</span>
+                          </div>
                         </div>
                         <div v-if="repoToken" class="review-item">
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.accessToken') }}:</span>
@@ -6363,6 +6365,19 @@ onUnmounted(() => {
   border-bottom: none;
 }
 
+.review-item-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.06);
+}
+
+.review-item-row .review-item {
+  border-bottom: none;
+  padding: 0;
+}
+
 .review-item.highlight-price {
   margin-top: 0.5rem;
   padding-top: 1rem;
@@ -6845,6 +6860,10 @@ onUnmounted(() => {
   .review-item {
     flex-direction: column;
     gap: 0.25rem;
+  }
+
+  .review-item-row {
+    grid-template-columns: 1fr;
   }
 
   .review-label {
