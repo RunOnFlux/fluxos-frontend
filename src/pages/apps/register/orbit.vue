@@ -2006,6 +2006,7 @@
                     <VBtn
                       v-if="currentStep < 5"
                       color="primary"
+                      :disabled="currentStep === 2 && !selectedPlan"
                       @click="nextStep"
                     >
                       {{ t('pages.apps.register.orbit.navigation.continue') }}
