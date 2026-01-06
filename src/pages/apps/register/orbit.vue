@@ -2074,7 +2074,8 @@
 
                 <!-- Actions -->
                 <template #actions>
-                  <div class="stepper-actions">
+                  <div class="step-content stepper-actions-wrapper">
+                    <div class="stepper-actions">
                     <VBtn
                       v-if="currentStep > 1 && currentStep < 5"
                       variant="text"
@@ -2105,6 +2106,7 @@
                       {{ t('pages.apps.register.orbit.config.registerApplication') }}
                     </VBtn>
                     <!-- No action buttons on steps 6 and 7 - handled within the step content -->
+                    </div>
                   </div>
                 </template>
               </VStepper>
@@ -5236,6 +5238,9 @@ onMounted(() => {
 .orbit-stepper {
   background: transparent !important;
   box-shadow: none !important;
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
 }
 
 .orbit-stepper :deep(.v-stepper-header) {
@@ -5250,20 +5255,28 @@ onMounted(() => {
   white-space: nowrap;
 }
 
+.orbit-stepper :deep(.v-stepper-window),
+.orbit-stepper :deep(.v-stepper-actions) {
+  max-width: 1400px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
 .step-content {
   max-width: 1400px;
   margin: 0 auto;
   padding: 1rem;
+  padding-bottom: 0.5rem;
 }
 
 .top-step-navigation {
   display: flex;
   align-items: center;
   margin-bottom: 1.5rem;
-  padding: 0.75rem 1rem;
-  background: rgba(var(--v-theme-on-surface), 0.02);
-  border-radius: 8px;
-  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+  padding-bottom: 1rem;
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
 }
 
 .step-title {
@@ -6373,10 +6386,15 @@ onMounted(() => {
 }
 
 /* Stepper actions */
+.stepper-actions-wrapper {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 .stepper-actions {
   display: flex;
   align-items: center;
-  padding: 1rem;
+  padding: 0.75rem 0;
   border-top: 1px solid rgba(var(--v-theme-on-surface), 0.12);
 }
 
@@ -6568,13 +6586,8 @@ onMounted(() => {
   }
 
   .top-step-navigation {
-    padding: 0.5rem;
+    padding-bottom: 0.75rem;
     margin-bottom: 1rem;
-  }
-
-  .top-step-navigation .v-btn {
-    font-size: 0.75rem;
-    padding: 0 8px;
   }
 
   .step-title {
