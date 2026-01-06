@@ -4787,7 +4787,7 @@ const propagateSignedMessage = async () => {
 
     // Auto-advance to Payment step after a brief delay
     setTimeout(() => {
-      currentStep.value = 6
+      currentStep.value = 7
 
       // Start monitoring for app registration on the network
       startPaymentMonitoring()
