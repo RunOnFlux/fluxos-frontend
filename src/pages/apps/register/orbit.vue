@@ -1887,6 +1887,18 @@
                           :loading="isPropagating || isSigning"
                         />
 
+                        <!-- Cancel Signing Button -->
+                        <div v-if="isSigning && !isPropagating && !registrationError" class="d-flex justify-center mt-4">
+                          <VBtn
+                            variant="outlined"
+                            color="error"
+                            @click="cancelSigning"
+                          >
+                            <VIcon start size="20">mdi-close-circle</VIcon>
+                            {{ t('core.subscriptionManager.cancelSigning') }}
+                          </VBtn>
+                        </div>
+
                         <VAlert
                           v-if="registrationError"
                           type="error"
@@ -2840,6 +2852,13 @@ const detectMonorepoStructure = async parsed => {
         rawUrl = `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${config.file}`
       }
 
+      // Use HEAD request first to check if file exists (avoids 404 errors in console)
+      const headResponse = await fetch(rawUrl, { method: 'HEAD' })
+      if (!headResponse.ok) {
+        continue // File doesn't exist, skip to next config
+      }
+
+      // File exists, fetch the content
       const response = await fetch(rawUrl)
       if (response.ok) {
         const content = await response.text()
@@ -3374,6 +3393,13 @@ const detectMonorepoStructureWithAuth = async parsed => {
         apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${config.file}?ref=${branchName}`
       }
 
+      // Use HEAD request first to check if file exists (avoids 404 errors in console)
+      const headResponse = await fetch(apiUrl, { method: 'HEAD', headers })
+      if (!headResponse.ok) {
+        continue // File doesn't exist, skip to next config
+      }
+
+      // File exists, fetch the content
       const response = await fetch(apiUrl, { method: 'GET', headers })
       if (response.ok) {
         const content = await response.text()
@@ -4556,6 +4582,27 @@ const onWSMessage = evt => {
 
 const onWSError = evt => {
   console.error('WebSocket error:', evt)
+  registrationError.value = 'WebSocket connection error. Please try again.'
+  isSigning.value = false
+}
+
+// Cancel signing process
+const cancelSigning = () => {
+  isSigning.value = false
+
+  // Close WebSocket if open
+  if (websocket.value) {
+    websocket.value.close()
+    websocket.value = null
+  }
+
+  // Reset registration state
+  registrationError.value = ''
+  registrationMessage.value = ''
+  deploying.value = false
+  currentStep.value = 5 // Go back to Review step
+
+  showToast('info', 'Signing cancelled')
 }
 
 // Upload contacts to Flux Storage
