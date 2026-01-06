@@ -5707,12 +5707,9 @@ onMounted(() => {
 }
 
 .custom-plan:hover,
-.custom-plan.selected {
+.plan-card.custom-plan.selected {
   border-color: rgb(var(--v-theme-info));
   background: rgba(var(--v-theme-info), 0.08);
-}
-
-.custom-plan.selected {
   box-shadow: 0 8px 32px rgba(var(--v-theme-info), 0.25);
 }
 
