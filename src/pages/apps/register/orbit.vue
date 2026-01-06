@@ -1748,8 +1748,8 @@
                         <div class="review-item">
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.plan') }}:</span>
                           <span class="review-value">
-                            <VChip color="success" size="small">
-                              {{ t('pages.apps.register.orbit.pricing.beta') }}
+                            <VChip color="primary" size="small">
+                              {{ selectedPlanDisplayName }}
                             </VChip>
                           </span>
                         </div>
@@ -4184,8 +4184,18 @@ const monthlyPriceDisplay = computed(() => {
   return 0
 })
 
+const selectedPlanDisplayName = computed(() => {
+  const planNames = {
+    free: 'Basic',
+    developer: 'Standard',
+    pro: 'Pro',
+    custom: 'Custom',
+  }
+  return planNames[selectedPlan.value] || selectedPlan.value
+})
+
 const formattedTotalPrice = computed(() => {
-  if (selectedPlan.value === 'free') return '$0 (Beginner)'
+  if (selectedPlan.value === 'free') return '$0'
 
   if (selectedPlan.value === 'custom') {
     if (!customPlanPrice.value?.usd) return 'Calculating...'
