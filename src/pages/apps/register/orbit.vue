@@ -1096,23 +1096,6 @@
                           </VExpansionPanelText>
                         </VExpansionPanel>
                       </VExpansionPanels>
-
-                      <!-- Framework auto-detection notice -->
-                      <VAlert
-                        type="success"
-                        variant="tonal"
-                        class="mb-4"
-                      >
-                        <template #prepend>
-                          <VIcon>mdi-auto-fix</VIcon>
-                        </template>
-                        <div>
-                          <strong>{{ t('pages.apps.register.orbit.config.autoDetectionEnabled') }}</strong>
-                          <p class="text-body-2 mb-0 mt-1">
-                            {{ t('pages.apps.register.orbit.config.autoDetectionDescription') }}
-                          </p>
-                        </div>
-                      </VAlert>
                     </VForm>
                   </div>
                 </template>
