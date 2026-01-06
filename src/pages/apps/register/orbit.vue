@@ -456,17 +456,33 @@
                     </div>
 
                     <VForm ref="configForm">
-                      <VTextField
-                        v-model="appName"
-                        :label="t('pages.apps.register.orbit.config.appNameLabel')"
-                        :placeholder="t('pages.apps.register.orbit.config.appNamePlaceholder')"
-                        prepend-inner-icon="mdi-application"
-                        :rules="[rules.required, rules.appName]"
-                        variant="outlined"
-                        class="mb-4"
-                        :hint="t('pages.apps.register.orbit.config.appNameHint')"
-                        persistent-hint
-                      />
+                      <VRow>
+                        <VCol cols="12" md="6">
+                          <VTextField
+                            v-model="appName"
+                            :label="t('pages.apps.register.orbit.config.appNameLabel')"
+                            :placeholder="t('pages.apps.register.orbit.config.appNamePlaceholder')"
+                            prepend-inner-icon="mdi-application"
+                            :rules="[rules.required, rules.appName]"
+                            variant="outlined"
+                            :hint="t('pages.apps.register.orbit.config.appNameHint')"
+                            persistent-hint
+                          />
+                        </VCol>
+                        <VCol cols="12" md="6">
+                          <VTextField
+                            v-model="contactEmail"
+                            :label="t('pages.apps.register.orbit.config.contactEmailLabel')"
+                            :placeholder="t('pages.apps.register.orbit.config.contactEmailPlaceholder')"
+                            prepend-inner-icon="mdi-email"
+                            type="email"
+                            :rules="[rules.required, rules.email]"
+                            variant="outlined"
+                            :hint="t('pages.apps.register.orbit.config.contactEmailHint')"
+                            persistent-hint
+                          />
+                        </VCol>
+                      </VRow>
 
                       <VTextField
                         v-model="appPort"
@@ -489,19 +505,6 @@
                           </div>
                         </template>
                       </VTextField>
-
-                      <VTextField
-                        v-model="contactEmail"
-                        :label="t('pages.apps.register.orbit.config.contactEmailLabel')"
-                        :placeholder="t('pages.apps.register.orbit.config.contactEmailPlaceholder')"
-                        prepend-inner-icon="mdi-email"
-                        type="email"
-                        :rules="[rules.required, rules.email]"
-                        variant="outlined"
-                        class="mb-4"
-                        :hint="t('pages.apps.register.orbit.config.contactEmailHint')"
-                        persistent-hint
-                      />
 
                       <VSelect
                         v-model="pollingInterval"
