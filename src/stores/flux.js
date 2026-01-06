@@ -464,5 +464,10 @@ export const useFluxStore = defineStore("flux", {
       this.userApps.hasApps = false
       this.userApps.isChecked = false
     },
+
+    setUserHasApps() {
+      this.userApps.hasApps = true
+      this.userApps.isChecked = true
+    },
   },
 })

@@ -4904,8 +4904,8 @@ const startPaymentMonitoring = async () => {
         paymentConfirmed.value = true
         paymentProcessing.value = false
 
-        // Refresh user apps to show "My applications" menu item
-        await fluxStore.checkUserApps()
+        // Show "My applications" menu item immediately
+        fluxStore.setUserHasApps()
       }
     } catch {
       // Silently ignore - app not yet registered
