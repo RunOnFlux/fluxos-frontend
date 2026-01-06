@@ -120,7 +120,7 @@
                     </p>
 
                     <!-- Top Navigation -->
-                    <div class="top-step-navigation">
+                    <div v-show="needsScroll" class="top-step-navigation">
                       <VBtn
                         variant="text"
                         @click="currentStep--"
@@ -437,7 +437,7 @@
                     </p>
 
                     <!-- Top Navigation -->
-                    <div class="top-step-navigation">
+                    <div v-show="needsScroll" class="top-step-navigation">
                       <VBtn
                         variant="text"
                         @click="currentStep--"
@@ -1123,7 +1123,7 @@
                     </p>
 
                     <!-- Top Navigation -->
-                    <div class="top-step-navigation">
+                    <div v-show="needsScroll" class="top-step-navigation">
                       <VSpacer />
                       <VBtn
                         color="primary"
@@ -1348,7 +1348,7 @@
                     </p>
 
                     <!-- Top Navigation -->
-                    <div class="top-step-navigation">
+                    <div v-show="needsScroll" class="top-step-navigation">
                       <VBtn
                         variant="text"
                         @click="currentStep--"
@@ -1641,7 +1641,7 @@
                     </p>
 
                     <!-- Top Navigation -->
-                    <div class="top-step-navigation">
+                    <div v-show="needsScroll" class="top-step-navigation">
                       <VBtn
                         variant="text"
                         @click="currentStep--"
@@ -2318,7 +2318,15 @@ const stepItems = computed(() => [
 // Scroll to top when step changes
 watch(currentStep, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
+  nextTick(() => checkIfScrollable())
 })
+
+// Track if page needs scrolling to show/hide top navigation
+const needsScroll = ref(false)
+
+const checkIfScrollable = () => {
+  needsScroll.value = document.documentElement.scrollHeight > window.innerHeight
+}
 
 // Form refs
 const repoForm = ref(null)
@@ -5169,6 +5177,14 @@ onMounted(() => {
       console.warn('Failed to parse zelidauth:', error)
     }
   }
+
+  // Check if page needs scrolling
+  nextTick(() => checkIfScrollable())
+  window.addEventListener('resize', checkIfScrollable)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', checkIfScrollable)
 })
 </script>
 
