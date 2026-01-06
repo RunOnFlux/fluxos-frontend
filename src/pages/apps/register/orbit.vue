@@ -1837,7 +1837,13 @@
                         </div>
                         <div class="review-item highlight-price">
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
-                          <span class="review-value price">{{ formattedTotalPrice }}</span>
+                          <span class="review-value price">
+                            <VChip color="success" size="small" variant="flat" class="mr-2">
+                              <VIcon start size="14">mdi-gift-outline</VIcon>
+                              {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
+                            </VChip>
+                            {{ formattedTotalPrice }}
+                          </span>
                         </div>
                       </div>
 
