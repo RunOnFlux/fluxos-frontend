@@ -1561,17 +1561,8 @@
                         </div>
 
                         <div class="plan-price-badge custom-price-badge">
-                          <template v-if="customPlanPriceLoading">
-                            <VProgressCircular indeterminate size="24" width="2" color="primary" />
-                          </template>
-                          <template v-else-if="customPlanPrice?.usd">
-                            <span class="price-amount">${{ customPlanMonthlyPrice }}</span>
-                            <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
-                          </template>
-                          <template v-else>
-                            <span class="price-amount price-starting">{{ t('pages.apps.register.orbit.pricing.startingAt') }} $0.99</span>
-                            <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
-                          </template>
+                          <span class="price-amount price-starting">{{ t('pages.apps.register.orbit.pricing.startingAt') }} $0.99</span>
+                          <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
                         </div>
 
                         <div class="first-month-free-badge">
@@ -5096,12 +5087,6 @@ onUnmounted(() => {
   }
 })
 
-// Watch for custom plan selection to trigger price calculation
-watch(selectedPlan, newPlan => {
-  if (newPlan === 'custom') {
-    calculateCustomPlanPrice()
-  }
-})
 
 // Watch for custom plan resource changes to recalculate price
 watch(customPlanResources, () => {
