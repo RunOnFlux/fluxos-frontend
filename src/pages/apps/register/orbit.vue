@@ -5202,7 +5202,14 @@ onMounted(() => {
 
 .orbit-header-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+}
+
+.orbit-header-content .v-icon {
+  margin-right: 0 !important;
+  margin-bottom: 0.5rem;
 }
 
 .back-btn {
@@ -6544,16 +6551,6 @@ onMounted(() => {
   .orbit-header {
     flex-direction: column;
     padding-top: 2.5rem;
-  }
-
-  .orbit-header-content {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .orbit-header-content .v-icon {
-    margin-right: 0 !important;
-    margin-bottom: 0.5rem;
   }
 
   .orbit-title {
