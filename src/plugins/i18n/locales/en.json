@@ -3248,6 +3248,7 @@
             "contactEmailLabel": "Contact Email *",
             "contactEmailPlaceholder": "you{'@'}example.com",
             "contactEmailHint": "For deployment notifications and alerts",
+            "showAdvancedOptions": "Advanced options",
             "pollingIntervalLabel": "Auto-Update Polling Interval",
             "pollingIntervalHint": "How often Git deployment checks your repository for new commits",
             "runtimeVersionTitle": "Runtime Version (Optional)",

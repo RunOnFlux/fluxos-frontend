@@ -3248,6 +3248,7 @@
             "contactEmailLabel": "E-mail kontaktowy *",
             "contactEmailPlaceholder": "ty{'@'}przyklad.com",
             "contactEmailHint": "Do powiadomień o wdrożeniu i alertów",
+            "showAdvancedOptions": "Opcje zaawansowane",
             "pollingIntervalLabel": "Interwał automatycznej aktualizacji",
             "pollingIntervalHint": "Jak często wdrożenie Git sprawdza repozytorium w poszukiwaniu nowych commitów",
             "runtimeVersionTitle": "Wersja runtime (opcjonalnie)",

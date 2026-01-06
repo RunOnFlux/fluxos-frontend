@@ -506,17 +506,6 @@
                         </template>
                       </VTextField>
 
-                      <VSelect
-                        v-model="pollingInterval"
-                        :items="pollingIntervalOptions"
-                        :label="t('pages.apps.register.orbit.config.pollingIntervalLabel')"
-                        prepend-inner-icon="mdi-update"
-                        variant="outlined"
-                        class="mb-4"
-                        :hint="t('pages.apps.register.orbit.config.pollingIntervalHint')"
-                        persistent-hint
-                      />
-
                       <!-- Custom Plan Resources Configuration -->
                       <div v-if="selectedPlan === 'custom'" class="custom-resources-section mb-4">
                         <VCard variant="outlined" class="custom-resources-card">
@@ -640,12 +629,42 @@
                         </VCard>
                       </div>
 
-                      <!-- Runtime Version Selection -->
-                      <VExpansionPanels class="mb-4">
-                        <VExpansionPanel>
-                          <VExpansionPanelTitle>
-                            <VIcon start size="20">mdi-cog</VIcon>
-                            {{ t('pages.apps.register.orbit.config.runtimeVersionTitle') }}
+                      <!-- Advanced Options Toggle -->
+                      <div class="advanced-options-toggle mb-4">
+                        <VCheckbox
+                          v-model="showAdvancedOptions"
+                          :label="t('pages.apps.register.orbit.config.showAdvancedOptions')"
+                          hide-details
+                          density="compact"
+                        >
+                          <template #label>
+                            <span class="d-flex align-center">
+                              <VIcon start size="18">mdi-cog-outline</VIcon>
+                              {{ t('pages.apps.register.orbit.config.showAdvancedOptions') }}
+                            </span>
+                          </template>
+                        </VCheckbox>
+                      </div>
+
+                      <!-- Advanced Options Section -->
+                      <div v-show="showAdvancedOptions" class="advanced-options-section">
+                        <VSelect
+                          v-model="pollingInterval"
+                          :items="pollingIntervalOptions"
+                          :label="t('pages.apps.register.orbit.config.pollingIntervalLabel')"
+                          prepend-inner-icon="mdi-update"
+                          variant="outlined"
+                          class="mb-4"
+                          :hint="t('pages.apps.register.orbit.config.pollingIntervalHint')"
+                          persistent-hint
+                        />
+
+                        <!-- Runtime Version Selection -->
+                        <VExpansionPanels class="mb-4">
+                          <VExpansionPanel>
+                            <VExpansionPanelTitle>
+                              <VIcon start size="20">mdi-cog</VIcon>
+                              {{ t('pages.apps.register.orbit.config.runtimeVersionTitle') }}
                             <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
                           </VExpansionPanelTitle>
                           <VExpansionPanelText>
@@ -1096,6 +1115,7 @@
                           </VExpansionPanelText>
                         </VExpansionPanel>
                       </VExpansionPanels>
+                      </div>
                     </VForm>
                   </div>
                 </template>
@@ -2389,6 +2409,7 @@ const appPort = ref('3000')
 const portAutoDetected = ref(false)
 const contactEmail = ref('')
 const pollingInterval = ref('1800') // Default: 30 minutes in seconds
+const showAdvancedOptions = ref(false)
 
 // Polling interval options (value in seconds, 'disabled' to not add env var)
 const pollingIntervalOptions = [
@@ -5811,6 +5832,18 @@ onUnmounted(() => {
 
 .price-starting {
   font-size: 1.5rem !important;
+}
+
+/* Advanced Options */
+.advanced-options-toggle {
+  padding: 0.75rem 1rem;
+  background: rgba(var(--v-theme-on-surface), 0.02);
+  border-radius: 8px;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.advanced-options-section {
+  padding-top: 0.5rem;
 }
 
 /* Custom Resources Section in Configure Step */
