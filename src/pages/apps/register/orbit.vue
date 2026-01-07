@@ -418,7 +418,7 @@
                     </p>
 
                     <VForm ref="configForm">
-                      <VRow>
+                      <VRow class="mb-4">
                         <VCol cols="12" md="6">
                           <VTextField
                             v-model="appName"
@@ -5209,8 +5209,13 @@ onMounted(() => {
 .step-description {
   text-align: center;
   opacity: 0.8;
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
   font-size: 0.875rem;
+}
+
+/* Ensure proper spacing for form fields with persistent hints */
+.step-content :deep(.v-input--has-messages) {
+  margin-bottom: 0.5rem;
 }
 
 .provider-badge {
