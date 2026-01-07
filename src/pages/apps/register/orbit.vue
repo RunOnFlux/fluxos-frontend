@@ -1138,11 +1138,6 @@
                 <!-- Step 1: Overview -->
                 <template #item.1>
                   <div class="step-content">
-                    <h3 class="step-title">{{ t('pages.apps.register.orbit.overview.stepTitle') }}</h3>
-                    <p class="step-description">
-                      {{ t('pages.apps.register.orbit.overview.stepDescription') }}
-                    </p>
-
                     <!-- Shared Features Card -->
                     <div class="shared-features-card">
                       <div class="shared-features-header">
