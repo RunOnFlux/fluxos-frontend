@@ -3941,22 +3941,80 @@ const getGeolocationCodes = () => {
   return codes
 }
 
-// Generate random exposed port between 20000-65535
+// Banned ports from FluxOS config - apps cannot use these ports
+// Source: fluxosdev/ZelBack/config/default.js
+const BANNED_PORTS = [
+  // Port ranges
+  { min: 16100, max: 16299 },
+  { min: 26100, max: 26299 },
+  { min: 30000, max: 30099 },
+  // Enterprise/privileged ports (0-1023) - require special permissions
+  { min: 0, max: 1023 },
+  // Individual banned ports
+  8384,   // Syncthing
+  27017,  // MongoDB
+  22,     // SSH
+  23,     // Telnet
+  25,     // SMTP
+  3389,   // RDP
+  5900,   // VNC
+  5800,   // VNC HTTP
+  5901,   // VNC
+  161,    // SNMP
+  512,    // rexec
+  513,    // rlogin
+  3388,   // RDP variant
+  4444,   // Common backdoor port
+  123,    // NTP
+  53,     // DNS
+  // Enterprise ports
+  8080,   // HTTP alternate
+  8081,   // HTTP alternate
+  8443,   // HTTPS alternate
+  6667,   // IRC
+]
+
+// Check if a port is banned
+const isPortBanned = (port) => {
+  for (const banned of BANNED_PORTS) {
+    if (typeof banned === 'number') {
+      if (port === banned) return true
+    } else if (banned.min !== undefined && banned.max !== undefined) {
+      if (port >= banned.min && port <= banned.max) return true
+    }
+  }
+  return false
+}
+
+// Generate random exposed port between 20000-65535, avoiding banned ports
 const generateRandomPort = (min = 20000, max = 65535) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min
+  let port
+  let attempts = 0
+  const maxAttempts = 100
+
+  do {
+    port = Math.floor(Math.random() * (max - min + 1)) + min
+    attempts++
+  } while (isPortBanned(port) && attempts < maxAttempts)
+
+  return port
 }
 
 // Random exposed port (generated once on mount)
 const exposedPort = ref(generateRandomPort())
 
 // Random port for Orbit management interface (container port 9001)
-// Ensure it's different from the exposed port
+// Ensure it's different from the exposed port and not banned
 const generateUniqueManagementPort = () => {
   let port = generateRandomPort(10000, 65535)
-  while (port === exposedPort.value) {
+  let attempts = 0
+  const maxAttempts = 100
+
+  while ((port === exposedPort.value || isPortBanned(port)) && attempts < maxAttempts) {
     port = generateRandomPort(10000, 65535)
+    attempts++
   }
-  
+
   return port
 }
 const orbitManagementPort = ref(generateUniqueManagementPort())
