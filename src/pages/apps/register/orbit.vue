@@ -6402,7 +6402,6 @@ onMounted(() => {
 .review-item.highlight-price {
   margin-top: 0.5rem;
   padding-top: 1rem;
-  border-top: 2px solid rgba(var(--v-theme-primary), 0.2);
   border-bottom: none;
 }
 
