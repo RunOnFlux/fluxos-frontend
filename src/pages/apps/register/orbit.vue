@@ -2068,7 +2068,6 @@
                       <VBtn
                         v-else-if="currentStep === 5"
                         color="primary"
-                        size="large"
                         :loading="deploying"
                         :disabled="!acceptedTerms"
                         @click="proceedToPayment"
