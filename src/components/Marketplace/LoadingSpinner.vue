@@ -1,10 +1,17 @@
 <template>
   <div class="loading-container">
     <div class="modern-loader">
-      <div class="loader-ring"></div>
-      <VAvatar :size="80" color="primary" variant="flat" class="icon-avatar">
+      <div v-if="!imageSrc" class="loader-ring"></div>
+      <VAvatar v-if="!imageSrc" :size="80" color="primary" variant="flat" class="icon-avatar">
         <VIcon :icon="icon" :size="iconSize" :class="{ 'rotate-icon': rotateIcon }" />
       </VAvatar>
+      <img
+        v-else
+        :src="imageSrc"
+        :alt="imageAlt"
+        class="spinning-logo"
+        :style="{ width: imageSize + 'px', height: imageSize + 'px' }"
+      >
     </div>
     <h2 v-if="title" :class="titleClass">
       <span v-if="title.endsWith('...')">
@@ -31,6 +38,18 @@ const props = defineProps({
   rotateIcon: {
     type: Boolean,
     default: false,
+  },
+  imageSrc: {
+    type: String,
+    default: '',
+  },
+  imageAlt: {
+    type: String,
+    default: 'Loading',
+  },
+  imageSize: {
+    type: [Number, String],
+    default: 100,
   },
   title: {
     type: String,
@@ -92,6 +111,15 @@ const props = defineProps({
     0 0 50px rgba(var(--v-theme-primary), 0.25),
     inset 0 0 20px rgba(var(--v-theme-primary), 0.1);
   pointer-events: none;
+}
+
+.spinning-logo {
+  position: relative;
+  z-index: 10;
+  border-radius: 50%;
+  animation: spin 2s linear infinite;
+  filter: drop-shadow(0 0 15px rgba(var(--v-theme-primary), 0.6))
+          drop-shadow(0 0 30px rgba(var(--v-theme-primary), 0.3));
 }
 
 @keyframes spin {

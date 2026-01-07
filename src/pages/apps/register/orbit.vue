@@ -680,456 +680,456 @@
                             <VExpansionPanelTitle>
                               <VIcon start size="20">mdi-cog</VIcon>
                               {{ t('pages.apps.register.orbit.config.runtimeVersionTitle') }}
-                            <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
-                          </VExpansionPanelTitle>
-                          <VExpansionPanelText>
-                            <VAlert type="info" variant="tonal" density="compact" class="mb-4">
-                              {{ t('pages.apps.register.orbit.config.runtimeAutoDetect') }}
-                            </VAlert>
+                              <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
+                            </VExpansionPanelTitle>
+                            <VExpansionPanelText>
+                              <VAlert type="info" variant="tonal" density="compact" class="mb-4">
+                                {{ t('pages.apps.register.orbit.config.runtimeAutoDetect') }}
+                              </VAlert>
 
-                            <VSelect
-                              v-model="selectedRuntime"
-                              :items="runtimeOptions"
-                              :label="t('pages.apps.register.orbit.config.runtimeLabel')"
-                              prepend-inner-icon="mdi-code-tags"
-                              variant="outlined"
-                              class="mb-3"
-                              clearable
-                            />
-
-                            <VTextField
-                              v-if="selectedRuntime"
-                              v-model="runtimeVersion"
-                              :label="`${selectedRuntime} Version`"
-                              :placeholder="runtimePlaceholder"
-                              prepend-inner-icon="mdi-tag"
-                              variant="outlined"
-                              :hint="runtimeHint"
-                              persistent-hint
-                            />
-                          </VExpansionPanelText>
-                        </VExpansionPanel>
-                      </VExpansionPanels>
-
-                      <!-- Custom Environment Variables -->
-                      <VExpansionPanels class="mb-4">
-                        <VExpansionPanel>
-                          <VExpansionPanelTitle>
-                            <VIcon start size="20">mdi-variable</VIcon>
-                            {{ t('pages.apps.register.orbit.config.envVariablesTitle') }}
-                            <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
-                            <VChip v-if="customEnvVars.length > 0" size="x-small" color="primary" class="ml-2">
-                              {{ customEnvVars.length }}
-                            </VChip>
-                          </VExpansionPanelTitle>
-                          <VExpansionPanelText>
-                            <VAlert type="info" variant="tonal" density="compact" class="mb-4">
-                              {{ t('pages.apps.register.orbit.config.envVariablesInfo') }}
-                            </VAlert>
-
-                            <!-- Available Orbit Environment Variables -->
-                            <div class="orbit-env-vars mb-4">
-                              <p class="text-subtitle-2 font-weight-medium mb-2">{{ t('pages.apps.register.orbit.config.availableOrbitVars') }}</p>
-                              <div class="orbit-env-list">
-                                <div
-                                  v-for="orbitVar in availableOrbitEnvVars"
-                                  :key="orbitVar.key"
-                                  class="orbit-env-item"
-                                  :class="{ 'added': isEnvVarAdded(orbitVar.key) }"
-                                  @click="addOrbitEnvVar(orbitVar)"
-                                >
-                                  <div class="orbit-env-header">
-                                    <code class="orbit-env-key">{{ orbitVar.key }}</code>
-                                    <VChip
-                                      v-if="isEnvVarAdded(orbitVar.key)"
-                                      size="x-small"
-                                      color="success"
-                                      variant="flat"
-                                    >
-                                      <VIcon start size="12">mdi-check</VIcon>
-                                      {{ t('pages.apps.register.orbit.config.added') }}
-                                    </VChip>
-                                    <VBtn
-                                      v-else
-                                      size="x-small"
-                                      color="primary"
-                                      variant="tonal"
-                                      @click.stop="addOrbitEnvVar(orbitVar)"
-                                    >
-                                      <VIcon start size="14">mdi-plus</VIcon>
-                                      {{ t('pages.apps.register.orbit.config.add') }}
-                                    </VBtn>
-                                  </div>
-                                  <p class="orbit-env-description text-caption text-medium-emphasis mb-0">
-                                    {{ orbitVar.description }}
-                                  </p>
-                                  <p v-if="orbitVar.autoValue" class="orbit-env-auto text-caption mb-0">
-                                    <VIcon size="12" color="success" class="mr-1">mdi-auto-fix</VIcon>
-                                    <span class="text-success font-weight-medium">{{ t('pages.apps.register.orbit.config.ifNotSet') }}</span>
-                                    {{ orbitVar.autoValue }}
-                                  </p>
-                                  <p v-if="orbitVar.example" class="orbit-env-example text-caption mb-0">
-                                    {{ t('pages.apps.register.orbit.config.example') }} <code>{{ orbitVar.example }}</code>
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-
-                            <VDivider class="my-4" />
-
-                            <!-- Added Environment Variables -->
-                            <p class="text-subtitle-2 font-weight-medium mb-2">
-                              {{ t('pages.apps.register.orbit.config.yourEnvVariables') }}
-                              <span v-if="customEnvVars.length === 0" class="text-caption text-medium-emphasis">
-                                {{ t('pages.apps.register.orbit.config.noneAddedYet') }}
-                              </span>
-                            </p>
-
-                            <div v-for="(envVar, index) in customEnvVars" :key="index" class="env-var-row mb-3">
-                              <VTextField
-                                v-model="envVar.key"
-                                :label="t('pages.apps.register.orbit.config.keyLabel')"
-                                placeholder="API_KEY"
+                              <VSelect
+                                v-model="selectedRuntime"
+                                :items="runtimeOptions"
+                                :label="t('pages.apps.register.orbit.config.runtimeLabel')"
+                                prepend-inner-icon="mdi-code-tags"
                                 variant="outlined"
-                                density="compact"
-                                class="env-key"
-                                :readonly="envVar.isOrbitVar"
+                                class="mb-3"
+                                clearable
                               />
-                              <VTextField
-                                v-model="envVar.value"
-                                :label="t('pages.apps.register.orbit.config.valueLabel')"
-                                :placeholder="envVar.placeholder || 'your-value'"
-                                variant="outlined"
-                                density="compact"
-                                class="env-value"
-                              />
-                              <VBtn
-                                icon
-                                variant="text"
-                                color="error"
-                                size="small"
-                                @click="removeEnvVar(index)"
-                              >
-                                <VIcon>mdi-delete</VIcon>
-                              </VBtn>
-                            </div>
-
-                            <VBtn
-                              variant="tonal"
-                              color="primary"
-                              size="small"
-                              @click="addEnvVar"
-                            >
-                              <VIcon start>mdi-plus</VIcon>
-                              {{ t('pages.apps.register.orbit.config.addCustomVariable') }}
-                            </VBtn>
-                          </VExpansionPanelText>
-                        </VExpansionPanel>
-                      </VExpansionPanels>
-
-                      <!-- Deployment Settings (Geolocation & Custom Domain) -->
-                      <VExpansionPanels class="mb-4">
-                        <VExpansionPanel>
-                          <VExpansionPanelTitle>
-                            <VIcon start size="20">mdi-earth</VIcon>
-                            {{ t('pages.apps.register.orbit.config.deploymentLocationTitle') }}
-                            <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
-                            <VChip
-                              v-if="selectedGeo.continent !== 'ALL' || customDomain"
-                              size="x-small"
-                              color="primary"
-                              class="ml-2"
-                            >
-                              {{ (selectedGeo.continent !== 'ALL' ? 1 : 0) + (customDomain ? 1 : 0) }}
-                            </VChip>
-                          </VExpansionPanelTitle>
-                          <VExpansionPanelText>
-                            <VAlert type="info" variant="tonal" density="compact" class="mb-4">
-                              {{ t('pages.apps.register.orbit.config.deploymentLocationInfo') }}
-                            </VAlert>
-
-                            <!-- Geolocation Selection -->
-                            <div class="mb-4">
-                              <p class="text-subtitle-2 font-weight-medium mb-2">
-                                <VIcon start size="18">mdi-map-marker</VIcon>
-                                {{ t('pages.apps.register.orbit.config.serverLocation') }}
-                              </p>
-
-                              <VRow>
-                                <!-- Allowed Geolocation -->
-                                <VCol cols="12" md="6">
-                                  <VCard variant="outlined" class="pa-4">
-                                    <h6 class="text-subtitle-2 mb-4 d-flex align-center">
-                                      <VIcon icon="mdi-check-circle" color="success" class="mr-2" size="20" />
-                                      {{ t('pages.apps.register.orbit.config.allowedLocations') }}
-                                    </h6>
-
-                                    <VSelect
-                                      v-model="geolocation.allowedContinent"
-                                      :items="getContinents().filter(c => c.value !== 'ALL')"
-                                      item-title="text"
-                                      item-value="value"
-                                      :label="t('pages.apps.register.orbit.config.continentLabel')"
-                                      prepend-inner-icon="mdi-earth"
-                                      variant="outlined"
-                                      density="compact"
-                                      clearable
-                                      class="mb-3"
-                                      @update:model-value="geolocation.allowedCountry = null; geolocation.allowedRegion = null"
-                                    >
-                                      <template #item="{ props, item }">
-                                        <VListItem v-bind="props">
-                                          <template v-if="item.raw.instances" #append>
-                                            <VChip size="x-small" color="success" variant="tonal">
-                                              {{ item.raw.instances }}
-                                            </VChip>
-                                          </template>
-                                        </VListItem>
-                                      </template>
-                                    </VSelect>
-
-                                    <VSelect
-                                      v-model="geolocation.allowedCountry"
-                                      :items="getAllowedCountries(geolocation.allowedContinent)"
-                                      item-title="text"
-                                      item-value="value"
-                                      :label="t('pages.apps.register.orbit.config.countryLabel')"
-                                      prepend-inner-icon="mdi-flag"
-                                      variant="outlined"
-                                      density="compact"
-                                      clearable
-                                      :disabled="!geolocation.allowedContinent"
-                                      class="mb-3"
-                                      @update:model-value="geolocation.allowedRegion = null"
-                                    >
-                                      <template #item="{ props, item }">
-                                        <VListItem v-bind="props">
-                                          <template v-if="item.raw.instances" #append>
-                                            <VChip size="x-small" color="success" variant="tonal">
-                                              {{ item.raw.instances }}
-                                            </VChip>
-                                          </template>
-                                        </VListItem>
-                                      </template>
-                                    </VSelect>
-
-                                    <VSelect
-                                      v-model="geolocation.allowedRegion"
-                                      :items="getAllowedRegions(geolocation.allowedContinent, geolocation.allowedCountry)"
-                                      item-title="text"
-                                      item-value="value"
-                                      :label="t('pages.apps.register.orbit.config.regionLabel')"
-                                      prepend-inner-icon="mdi-map-marker-radius"
-                                      variant="outlined"
-                                      density="compact"
-                                      clearable
-                                      :disabled="!geolocation.allowedCountry"
-                                      class="mb-3"
-                                    >
-                                      <template #item="{ props, item }">
-                                        <VListItem v-bind="props">
-                                          <template v-if="item.raw.instances" #append>
-                                            <VChip size="x-small" color="success" variant="tonal">
-                                              {{ item.raw.instances }}
-                                            </VChip>
-                                          </template>
-                                        </VListItem>
-                                      </template>
-                                    </VSelect>
-
-                                    <div class="d-flex justify-center">
-                                      <VBtn
-                                        color="success"
-                                        variant="outlined"
-                                        size="small"
-                                        :disabled="!geolocation.allowedContinent"
-                                        @click="addAllowedGeolocation"
-                                      >
-                                        <VIcon icon="mdi-plus" size="16" class="mr-1" />
-                                        {{ t('pages.apps.register.orbit.config.addAllowed') }}
-                                      </VBtn>
-                                    </div>
-                                  </VCard>
-                                </VCol>
-
-                                <!-- Forbidden Geolocation -->
-                                <VCol cols="12" md="6">
-                                  <VCard variant="outlined" class="pa-4">
-                                    <h6 class="text-subtitle-2 mb-4 d-flex align-center">
-                                      <VIcon icon="mdi-close-circle" color="error" class="mr-2" size="20" />
-                                      {{ t('pages.apps.register.orbit.config.forbiddenLocations') }}
-                                    </h6>
-
-                                    <VSelect
-                                      v-model="geolocation.forbiddenContinent"
-                                      :items="getContinents().filter(c => c.value !== 'ALL')"
-                                      item-title="text"
-                                      item-value="value"
-                                      :label="t('pages.apps.register.orbit.config.continentLabel')"
-                                      prepend-inner-icon="mdi-earth"
-                                      variant="outlined"
-                                      density="compact"
-                                      clearable
-                                      class="mb-3"
-                                      @update:model-value="geolocation.forbiddenCountry = null; geolocation.forbiddenRegion = null"
-                                    >
-                                      <template #item="{ props, item }">
-                                        <VListItem v-bind="props">
-                                          <template v-if="item.raw.instances" #append>
-                                            <VChip size="x-small" color="error" variant="tonal">
-                                              {{ item.raw.instances }}
-                                            </VChip>
-                                          </template>
-                                        </VListItem>
-                                      </template>
-                                    </VSelect>
-
-                                    <VSelect
-                                      v-model="geolocation.forbiddenCountry"
-                                      :items="getForbiddenCountries(geolocation.forbiddenContinent)"
-                                      item-title="text"
-                                      item-value="value"
-                                      :label="t('pages.apps.register.orbit.config.countryLabel')"
-                                      prepend-inner-icon="mdi-flag"
-                                      variant="outlined"
-                                      density="compact"
-                                      clearable
-                                      :disabled="!geolocation.forbiddenContinent"
-                                      class="mb-3"
-                                      @update:model-value="geolocation.forbiddenRegion = null"
-                                    >
-                                      <template #item="{ props, item }">
-                                        <VListItem v-bind="props">
-                                          <template v-if="item.raw.instances" #append>
-                                            <VChip size="x-small" color="error" variant="tonal">
-                                              {{ item.raw.instances }}
-                                            </VChip>
-                                          </template>
-                                        </VListItem>
-                                      </template>
-                                    </VSelect>
-
-                                    <VSelect
-                                      v-model="geolocation.forbiddenRegion"
-                                      :items="getForbiddenRegions(geolocation.forbiddenContinent, geolocation.forbiddenCountry)"
-                                      item-title="text"
-                                      item-value="value"
-                                      :label="t('pages.apps.register.orbit.config.regionLabel')"
-                                      prepend-inner-icon="mdi-map-marker-radius"
-                                      variant="outlined"
-                                      density="compact"
-                                      clearable
-                                      :disabled="!geolocation.forbiddenCountry"
-                                      class="mb-3"
-                                    >
-                                      <template #item="{ props, item }">
-                                        <VListItem v-bind="props">
-                                          <template v-if="item.raw.instances" #append>
-                                            <VChip size="x-small" color="error" variant="tonal">
-                                              {{ item.raw.instances }}
-                                            </VChip>
-                                          </template>
-                                        </VListItem>
-                                      </template>
-                                    </VSelect>
-
-                                    <div class="d-flex justify-center">
-                                      <VBtn
-                                        color="error"
-                                        variant="outlined"
-                                        size="small"
-                                        :disabled="!geolocation.forbiddenContinent"
-                                        @click="addForbiddenGeolocation"
-                                      >
-                                        <VIcon icon="mdi-plus" size="16" class="mr-1" />
-                                        {{ t('pages.apps.register.orbit.config.addForbidden') }}
-                                      </VBtn>
-                                    </div>
-                                  </VCard>
-                                </VCol>
-                              </VRow>
-
-                              <!-- Current Geolocation Rules -->
-                              <div v-if="allowedGeolocations.length > 0 || forbiddenGeolocations.length > 0" class="mt-4">
-                                <h6 class="text-subtitle-2 mb-3 d-flex align-center">
-                                  <VIcon icon="mdi-format-list-bulleted" size="18" class="mr-2" />
-                                  {{ t('pages.apps.register.orbit.config.currentRules') }}
-                                </h6>
-
-                                <!-- Allowed Rules -->
-                                <div v-if="allowedGeolocations.length > 0" class="mb-3">
-                                  <p class="text-caption text-success mb-2 d-flex align-center">
-                                    <VIcon icon="mdi-check-circle" size="16" class="mr-1" />
-                                    {{ t('pages.apps.register.orbit.config.allowedLocationsColon') }}
-                                  </p>
-                                  <div class="d-flex flex-wrap gap-2">
-                                    <VChip
-                                      v-for="(geo, index) in allowedGeolocations"
-                                      :key="'allowed-' + index"
-                                      color="success"
-                                      variant="tonal"
-                                      closable
-                                      size="small"
-                                      @click:close="removeAllowedGeolocation(index)"
-                                    >
-                                      <VIcon icon="mdi-check-circle" size="14" class="mr-1" />
-                                      {{ formatGeolocationLabel(geo) }}
-                                    </VChip>
-                                  </div>
-                                </div>
-
-                                <!-- Forbidden Rules -->
-                                <div v-if="forbiddenGeolocations.length > 0">
-                                  <p class="text-caption text-error mb-2 d-flex align-center">
-                                    <VIcon icon="mdi-close-circle" size="16" class="mr-1" />
-                                    {{ t('pages.apps.register.orbit.config.forbiddenLocationsColon') }}
-                                  </p>
-                                  <div class="d-flex flex-wrap gap-2">
-                                    <VChip
-                                      v-for="(geo, index) in forbiddenGeolocations"
-                                      :key="'forbidden-' + index"
-                                      color="error"
-                                      variant="tonal"
-                                      closable
-                                      size="small"
-                                      @click:close="removeForbiddenGeolocation(index)"
-                                    >
-                                      <VIcon icon="mdi-close-circle" size="14" class="mr-1" />
-                                      {{ formatGeolocationLabel(geo) }}
-                                    </VChip>
-                                  </div>
-                                </div>
-                              </div>
-
-                              <p class="text-caption text-medium-emphasis mt-3">
-                                <VIcon size="14" class="mr-1">mdi-information-outline</VIcon>
-                                {{ t('pages.apps.register.orbit.config.selectRegionInfo') }}
-                              </p>
-                            </div>
-
-                            <VDivider class="my-4" />
-
-                            <!-- Custom Domain -->
-                            <div>
-                              <p class="text-subtitle-2 font-weight-medium mb-2">
-                                <VIcon start size="18">mdi-web</VIcon>
-                                {{ t('pages.apps.register.orbit.config.customDomainTitle') }}
-                              </p>
 
                               <VTextField
-                                v-model="customDomain"
-                                :label="t('pages.apps.register.orbit.config.customDomainLabel')"
-                                :placeholder="t('pages.apps.register.orbit.config.customDomainPlaceholder')"
-                                prepend-inner-icon="mdi-link-variant"
+                                v-if="selectedRuntime"
+                                v-model="runtimeVersion"
+                                :label="`${selectedRuntime} Version`"
+                                :placeholder="runtimePlaceholder"
+                                prepend-inner-icon="mdi-tag"
                                 variant="outlined"
-                                density="compact"
-                                :hint="t('pages.apps.register.orbit.config.customDomainHint')"
+                                :hint="runtimeHint"
                                 persistent-hint
                               />
-                            </div>
-                          </VExpansionPanelText>
-                        </VExpansionPanel>
-                      </VExpansionPanels>
+                            </VExpansionPanelText>
+                          </VExpansionPanel>
+                        </VExpansionPanels>
+
+                        <!-- Custom Environment Variables -->
+                        <VExpansionPanels class="mb-4">
+                          <VExpansionPanel>
+                            <VExpansionPanelTitle>
+                              <VIcon start size="20">mdi-variable</VIcon>
+                              {{ t('pages.apps.register.orbit.config.envVariablesTitle') }}
+                              <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
+                              <VChip v-if="customEnvVars.length > 0" size="x-small" color="primary" class="ml-2">
+                                {{ customEnvVars.length }}
+                              </VChip>
+                            </VExpansionPanelTitle>
+                            <VExpansionPanelText>
+                              <VAlert type="info" variant="tonal" density="compact" class="mb-4">
+                                {{ t('pages.apps.register.orbit.config.envVariablesInfo') }}
+                              </VAlert>
+
+                              <!-- Available Orbit Environment Variables -->
+                              <div class="orbit-env-vars mb-4">
+                                <p class="text-subtitle-2 font-weight-medium mb-2">{{ t('pages.apps.register.orbit.config.availableOrbitVars') }}</p>
+                                <div class="orbit-env-list">
+                                  <div
+                                    v-for="orbitVar in availableOrbitEnvVars"
+                                    :key="orbitVar.key"
+                                    class="orbit-env-item"
+                                    :class="{ 'added': isEnvVarAdded(orbitVar.key) }"
+                                    @click="addOrbitEnvVar(orbitVar)"
+                                  >
+                                    <div class="orbit-env-header">
+                                      <code class="orbit-env-key">{{ orbitVar.key }}</code>
+                                      <VChip
+                                        v-if="isEnvVarAdded(orbitVar.key)"
+                                        size="x-small"
+                                        color="success"
+                                        variant="flat"
+                                      >
+                                        <VIcon start size="12">mdi-check</VIcon>
+                                        {{ t('pages.apps.register.orbit.config.added') }}
+                                      </VChip>
+                                      <VBtn
+                                        v-else
+                                        size="x-small"
+                                        color="primary"
+                                        variant="tonal"
+                                        @click.stop="addOrbitEnvVar(orbitVar)"
+                                      >
+                                        <VIcon start size="14">mdi-plus</VIcon>
+                                        {{ t('pages.apps.register.orbit.config.add') }}
+                                      </VBtn>
+                                    </div>
+                                    <p class="orbit-env-description text-caption text-medium-emphasis mb-0">
+                                      {{ orbitVar.description }}
+                                    </p>
+                                    <p v-if="orbitVar.autoValue" class="orbit-env-auto text-caption mb-0">
+                                      <VIcon size="12" color="success" class="mr-1">mdi-auto-fix</VIcon>
+                                      <span class="text-success font-weight-medium">{{ t('pages.apps.register.orbit.config.ifNotSet') }}</span>
+                                      {{ orbitVar.autoValue }}
+                                    </p>
+                                    <p v-if="orbitVar.example" class="orbit-env-example text-caption mb-0">
+                                      {{ t('pages.apps.register.orbit.config.example') }} <code>{{ orbitVar.example }}</code>
+                                    </p>
+                                  </div>
+                                </div>
+                              </div>
+
+                              <VDivider class="my-4" />
+
+                              <!-- Added Environment Variables -->
+                              <p class="text-subtitle-2 font-weight-medium mb-2">
+                                {{ t('pages.apps.register.orbit.config.yourEnvVariables') }}
+                                <span v-if="customEnvVars.length === 0" class="text-caption text-medium-emphasis">
+                                  {{ t('pages.apps.register.orbit.config.noneAddedYet') }}
+                                </span>
+                              </p>
+
+                              <div v-for="(envVar, index) in customEnvVars" :key="index" class="env-var-row mb-3">
+                                <VTextField
+                                  v-model="envVar.key"
+                                  :label="t('pages.apps.register.orbit.config.keyLabel')"
+                                  placeholder="API_KEY"
+                                  variant="outlined"
+                                  density="compact"
+                                  class="env-key"
+                                  :readonly="envVar.isOrbitVar"
+                                />
+                                <VTextField
+                                  v-model="envVar.value"
+                                  :label="t('pages.apps.register.orbit.config.valueLabel')"
+                                  :placeholder="envVar.placeholder || 'your-value'"
+                                  variant="outlined"
+                                  density="compact"
+                                  class="env-value"
+                                />
+                                <VBtn
+                                  icon
+                                  variant="text"
+                                  color="error"
+                                  size="small"
+                                  @click="removeEnvVar(index)"
+                                >
+                                  <VIcon>mdi-delete</VIcon>
+                                </VBtn>
+                              </div>
+
+                              <VBtn
+                                variant="tonal"
+                                color="primary"
+                                size="small"
+                                @click="addEnvVar"
+                              >
+                                <VIcon start>mdi-plus</VIcon>
+                                {{ t('pages.apps.register.orbit.config.addCustomVariable') }}
+                              </VBtn>
+                            </VExpansionPanelText>
+                          </VExpansionPanel>
+                        </VExpansionPanels>
+
+                        <!-- Deployment Settings (Geolocation & Custom Domain) -->
+                        <VExpansionPanels class="mb-4">
+                          <VExpansionPanel>
+                            <VExpansionPanelTitle>
+                              <VIcon start size="20">mdi-earth</VIcon>
+                              {{ t('pages.apps.register.orbit.config.deploymentLocationTitle') }}
+                              <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
+                              <VChip
+                                v-if="selectedGeo.continent !== 'ALL' || customDomain"
+                                size="x-small"
+                                color="primary"
+                                class="ml-2"
+                              >
+                                {{ (selectedGeo.continent !== 'ALL' ? 1 : 0) + (customDomain ? 1 : 0) }}
+                              </VChip>
+                            </VExpansionPanelTitle>
+                            <VExpansionPanelText>
+                              <VAlert type="info" variant="tonal" density="compact" class="mb-4">
+                                {{ t('pages.apps.register.orbit.config.deploymentLocationInfo') }}
+                              </VAlert>
+
+                              <!-- Geolocation Selection -->
+                              <div class="mb-4">
+                                <p class="text-subtitle-2 font-weight-medium mb-2">
+                                  <VIcon start size="18">mdi-map-marker</VIcon>
+                                  {{ t('pages.apps.register.orbit.config.serverLocation') }}
+                                </p>
+
+                                <VRow>
+                                  <!-- Allowed Geolocation -->
+                                  <VCol cols="12" md="6">
+                                    <VCard variant="outlined" class="pa-4">
+                                      <h6 class="text-subtitle-2 mb-4 d-flex align-center">
+                                        <VIcon icon="mdi-check-circle" color="success" class="mr-2" size="20" />
+                                        {{ t('pages.apps.register.orbit.config.allowedLocations') }}
+                                      </h6>
+
+                                      <VSelect
+                                        v-model="geolocation.allowedContinent"
+                                        :items="getContinents().filter(c => c.value !== 'ALL')"
+                                        item-title="text"
+                                        item-value="value"
+                                        :label="t('pages.apps.register.orbit.config.continentLabel')"
+                                        prepend-inner-icon="mdi-earth"
+                                        variant="outlined"
+                                        density="compact"
+                                        clearable
+                                        class="mb-3"
+                                        @update:model-value="geolocation.allowedCountry = null; geolocation.allowedRegion = null"
+                                      >
+                                        <template #item="{ props, item }">
+                                          <VListItem v-bind="props">
+                                            <template v-if="item.raw.instances" #append>
+                                              <VChip size="x-small" color="success" variant="tonal">
+                                                {{ item.raw.instances }}
+                                              </VChip>
+                                            </template>
+                                          </VListItem>
+                                        </template>
+                                      </VSelect>
+
+                                      <VSelect
+                                        v-model="geolocation.allowedCountry"
+                                        :items="getAllowedCountries(geolocation.allowedContinent)"
+                                        item-title="text"
+                                        item-value="value"
+                                        :label="t('pages.apps.register.orbit.config.countryLabel')"
+                                        prepend-inner-icon="mdi-flag"
+                                        variant="outlined"
+                                        density="compact"
+                                        clearable
+                                        :disabled="!geolocation.allowedContinent"
+                                        class="mb-3"
+                                        @update:model-value="geolocation.allowedRegion = null"
+                                      >
+                                        <template #item="{ props, item }">
+                                          <VListItem v-bind="props">
+                                            <template v-if="item.raw.instances" #append>
+                                              <VChip size="x-small" color="success" variant="tonal">
+                                                {{ item.raw.instances }}
+                                              </VChip>
+                                            </template>
+                                          </VListItem>
+                                        </template>
+                                      </VSelect>
+
+                                      <VSelect
+                                        v-model="geolocation.allowedRegion"
+                                        :items="getAllowedRegions(geolocation.allowedContinent, geolocation.allowedCountry)"
+                                        item-title="text"
+                                        item-value="value"
+                                        :label="t('pages.apps.register.orbit.config.regionLabel')"
+                                        prepend-inner-icon="mdi-map-marker-radius"
+                                        variant="outlined"
+                                        density="compact"
+                                        clearable
+                                        :disabled="!geolocation.allowedCountry"
+                                        class="mb-3"
+                                      >
+                                        <template #item="{ props, item }">
+                                          <VListItem v-bind="props">
+                                            <template v-if="item.raw.instances" #append>
+                                              <VChip size="x-small" color="success" variant="tonal">
+                                                {{ item.raw.instances }}
+                                              </VChip>
+                                            </template>
+                                          </VListItem>
+                                        </template>
+                                      </VSelect>
+
+                                      <div class="d-flex justify-center">
+                                        <VBtn
+                                          color="success"
+                                          variant="outlined"
+                                          size="small"
+                                          :disabled="!geolocation.allowedContinent"
+                                          @click="addAllowedGeolocation"
+                                        >
+                                          <VIcon icon="mdi-plus" size="16" class="mr-1" />
+                                          {{ t('pages.apps.register.orbit.config.addAllowed') }}
+                                        </VBtn>
+                                      </div>
+                                    </VCard>
+                                  </VCol>
+
+                                  <!-- Forbidden Geolocation -->
+                                  <VCol cols="12" md="6">
+                                    <VCard variant="outlined" class="pa-4">
+                                      <h6 class="text-subtitle-2 mb-4 d-flex align-center">
+                                        <VIcon icon="mdi-close-circle" color="error" class="mr-2" size="20" />
+                                        {{ t('pages.apps.register.orbit.config.forbiddenLocations') }}
+                                      </h6>
+
+                                      <VSelect
+                                        v-model="geolocation.forbiddenContinent"
+                                        :items="getContinents().filter(c => c.value !== 'ALL')"
+                                        item-title="text"
+                                        item-value="value"
+                                        :label="t('pages.apps.register.orbit.config.continentLabel')"
+                                        prepend-inner-icon="mdi-earth"
+                                        variant="outlined"
+                                        density="compact"
+                                        clearable
+                                        class="mb-3"
+                                        @update:model-value="geolocation.forbiddenCountry = null; geolocation.forbiddenRegion = null"
+                                      >
+                                        <template #item="{ props, item }">
+                                          <VListItem v-bind="props">
+                                            <template v-if="item.raw.instances" #append>
+                                              <VChip size="x-small" color="error" variant="tonal">
+                                                {{ item.raw.instances }}
+                                              </VChip>
+                                            </template>
+                                          </VListItem>
+                                        </template>
+                                      </VSelect>
+
+                                      <VSelect
+                                        v-model="geolocation.forbiddenCountry"
+                                        :items="getForbiddenCountries(geolocation.forbiddenContinent)"
+                                        item-title="text"
+                                        item-value="value"
+                                        :label="t('pages.apps.register.orbit.config.countryLabel')"
+                                        prepend-inner-icon="mdi-flag"
+                                        variant="outlined"
+                                        density="compact"
+                                        clearable
+                                        :disabled="!geolocation.forbiddenContinent"
+                                        class="mb-3"
+                                        @update:model-value="geolocation.forbiddenRegion = null"
+                                      >
+                                        <template #item="{ props, item }">
+                                          <VListItem v-bind="props">
+                                            <template v-if="item.raw.instances" #append>
+                                              <VChip size="x-small" color="error" variant="tonal">
+                                                {{ item.raw.instances }}
+                                              </VChip>
+                                            </template>
+                                          </VListItem>
+                                        </template>
+                                      </VSelect>
+
+                                      <VSelect
+                                        v-model="geolocation.forbiddenRegion"
+                                        :items="getForbiddenRegions(geolocation.forbiddenContinent, geolocation.forbiddenCountry)"
+                                        item-title="text"
+                                        item-value="value"
+                                        :label="t('pages.apps.register.orbit.config.regionLabel')"
+                                        prepend-inner-icon="mdi-map-marker-radius"
+                                        variant="outlined"
+                                        density="compact"
+                                        clearable
+                                        :disabled="!geolocation.forbiddenCountry"
+                                        class="mb-3"
+                                      >
+                                        <template #item="{ props, item }">
+                                          <VListItem v-bind="props">
+                                            <template v-if="item.raw.instances" #append>
+                                              <VChip size="x-small" color="error" variant="tonal">
+                                                {{ item.raw.instances }}
+                                              </VChip>
+                                            </template>
+                                          </VListItem>
+                                        </template>
+                                      </VSelect>
+
+                                      <div class="d-flex justify-center">
+                                        <VBtn
+                                          color="error"
+                                          variant="outlined"
+                                          size="small"
+                                          :disabled="!geolocation.forbiddenContinent"
+                                          @click="addForbiddenGeolocation"
+                                        >
+                                          <VIcon icon="mdi-plus" size="16" class="mr-1" />
+                                          {{ t('pages.apps.register.orbit.config.addForbidden') }}
+                                        </VBtn>
+                                      </div>
+                                    </VCard>
+                                  </VCol>
+                                </VRow>
+
+                                <!-- Current Geolocation Rules -->
+                                <div v-if="allowedGeolocations.length > 0 || forbiddenGeolocations.length > 0" class="mt-4">
+                                  <h6 class="text-subtitle-2 mb-3 d-flex align-center">
+                                    <VIcon icon="mdi-format-list-bulleted" size="18" class="mr-2" />
+                                    {{ t('pages.apps.register.orbit.config.currentRules') }}
+                                  </h6>
+
+                                  <!-- Allowed Rules -->
+                                  <div v-if="allowedGeolocations.length > 0" class="mb-3">
+                                    <p class="text-caption text-success mb-2 d-flex align-center">
+                                      <VIcon icon="mdi-check-circle" size="16" class="mr-1" />
+                                      {{ t('pages.apps.register.orbit.config.allowedLocationsColon') }}
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                      <VChip
+                                        v-for="(geo, index) in allowedGeolocations"
+                                        :key="'allowed-' + index"
+                                        color="success"
+                                        variant="tonal"
+                                        closable
+                                        size="small"
+                                        @click:close="removeAllowedGeolocation(index)"
+                                      >
+                                        <VIcon icon="mdi-check-circle" size="14" class="mr-1" />
+                                        {{ formatGeolocationLabel(geo) }}
+                                      </VChip>
+                                    </div>
+                                  </div>
+
+                                  <!-- Forbidden Rules -->
+                                  <div v-if="forbiddenGeolocations.length > 0">
+                                    <p class="text-caption text-error mb-2 d-flex align-center">
+                                      <VIcon icon="mdi-close-circle" size="16" class="mr-1" />
+                                      {{ t('pages.apps.register.orbit.config.forbiddenLocationsColon') }}
+                                    </p>
+                                    <div class="d-flex flex-wrap gap-2">
+                                      <VChip
+                                        v-for="(geo, index) in forbiddenGeolocations"
+                                        :key="'forbidden-' + index"
+                                        color="error"
+                                        variant="tonal"
+                                        closable
+                                        size="small"
+                                        @click:close="removeForbiddenGeolocation(index)"
+                                      >
+                                        <VIcon icon="mdi-close-circle" size="14" class="mr-1" />
+                                        {{ formatGeolocationLabel(geo) }}
+                                      </VChip>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <p class="text-caption text-medium-emphasis mt-3">
+                                  <VIcon size="14" class="mr-1">mdi-information-outline</VIcon>
+                                  {{ t('pages.apps.register.orbit.config.selectRegionInfo') }}
+                                </p>
+                              </div>
+
+                              <VDivider class="my-4" />
+
+                              <!-- Custom Domain -->
+                              <div>
+                                <p class="text-subtitle-2 font-weight-medium mb-2">
+                                  <VIcon start size="18">mdi-web</VIcon>
+                                  {{ t('pages.apps.register.orbit.config.customDomainTitle') }}
+                                </p>
+
+                                <VTextField
+                                  v-model="customDomain"
+                                  :label="t('pages.apps.register.orbit.config.customDomainLabel')"
+                                  :placeholder="t('pages.apps.register.orbit.config.customDomainPlaceholder')"
+                                  prepend-inner-icon="mdi-link-variant"
+                                  variant="outlined"
+                                  density="compact"
+                                  :hint="t('pages.apps.register.orbit.config.customDomainHint')"
+                                  persistent-hint
+                                />
+                              </div>
+                            </VExpansionPanelText>
+                          </VExpansionPanel>
+                        </VExpansionPanels>
                       </div>
                     </VForm>
                   </div>
@@ -1941,6 +1941,9 @@
                       <div class="payment-monitoring">
                         <LoadingSpinner
                           :message="t('pages.apps.register.orbit.deploy.checkingRegistration')"
+                          :image-src="fluxLogo"
+                          image-alt="Flux Logo"
+                          :image-size="100"
                           loading
                         />
                         <p class="text-body-2 text-medium-emphasis text-center mt-4">
@@ -2043,36 +2046,36 @@
                 <template #actions>
                   <div class="step-content stepper-actions-wrapper">
                     <div class="stepper-actions">
-                    <VBtn
-                      v-if="currentStep > 1 && currentStep <= 5"
-                      variant="text"
-                      @click="currentStep--"
-                      :disabled="deploying"
-                    >
-                      <VIcon start>mdi-arrow-left</VIcon>
-                      {{ t('pages.apps.register.orbit.navigation.back') }}
-                    </VBtn>
-                    <VSpacer />
-                    <VBtn
-                      v-if="currentStep < 5"
-                      color="primary"
-                      :disabled="currentStep === 2 && !selectedPlan"
-                      @click="nextStep"
-                    >
-                      {{ t('pages.apps.register.orbit.navigation.continue') }}
-                      <VIcon end>mdi-arrow-right</VIcon>
-                    </VBtn>
-                    <VBtn
-                      v-else-if="currentStep === 5"
-                      color="primary"
-                      size="large"
-                      :loading="deploying"
-                      :disabled="!acceptedTerms"
-                      @click="proceedToPayment"
-                    >
-                      <VIcon start>mdi-rocket-launch</VIcon>
-                      {{ t('pages.apps.register.orbit.config.registerApplication') }}
-                    </VBtn>
+                      <VBtn
+                        v-if="currentStep > 1 && currentStep <= 5"
+                        variant="text"
+                        @click="currentStep--"
+                        :disabled="deploying"
+                      >
+                        <VIcon start>mdi-arrow-left</VIcon>
+                        {{ t('pages.apps.register.orbit.navigation.back') }}
+                      </VBtn>
+                      <VSpacer />
+                      <VBtn
+                        v-if="currentStep < 5"
+                        color="primary"
+                        :disabled="currentStep === 2 && !selectedPlan"
+                        @click="nextStep"
+                      >
+                        {{ t('pages.apps.register.orbit.navigation.continue') }}
+                        <VIcon end>mdi-arrow-right</VIcon>
+                      </VBtn>
+                      <VBtn
+                        v-else-if="currentStep === 5"
+                        color="primary"
+                        size="large"
+                        :loading="deploying"
+                        :disabled="!acceptedTerms"
+                        @click="proceedToPayment"
+                      >
+                        <VIcon start>mdi-rocket-launch</VIcon>
+                        {{ t('pages.apps.register.orbit.config.registerApplication') }}
+                      </VBtn>
                     <!-- No action buttons on steps 6 and 7 - handled within the step content -->
                     </div>
                   </div>
@@ -2100,6 +2103,7 @@ import geolocations from '@/utils/geolocation'
 import AppsService from '@/services/AppsService'
 import StorageService from '@/services/StorageService'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
+import fluxLogo from '@images/fluxcloud_symbol.svg'
 import { signWithSSP, signWithZelcore } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import {
@@ -4000,8 +4004,10 @@ const BANNED_PORTS = [
   { min: 16100, max: 16299 },
   { min: 26100, max: 26299 },
   { min: 30000, max: 30099 },
+
   // Enterprise/privileged ports (0-1023) - require special permissions
   { min: 0, max: 1023 },
+
   // Individual banned ports
   8384,   // Syncthing
   27017,  // MongoDB
@@ -4027,7 +4033,7 @@ const BANNED_PORTS = [
 ]
 
 // Check if a port is banned
-const isPortBanned = (port) => {
+const isPortBanned = port => {
   for (const banned of BANNED_PORTS) {
     if (typeof banned === 'number') {
       if (port === banned) return true
@@ -4035,6 +4041,7 @@ const isPortBanned = (port) => {
       if (port >= banned.min && port <= banned.max) return true
     }
   }
+  
   return false
 }
 
@@ -4210,6 +4217,7 @@ const selectedPlanDisplayName = computed(() => {
     pro: 'Pro',
     custom: 'Custom',
   }
+  
   return planNames[selectedPlan.value] || selectedPlan.value
 })
 
