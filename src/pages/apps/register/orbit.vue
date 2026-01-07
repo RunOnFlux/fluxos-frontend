@@ -6280,6 +6280,7 @@ onMounted(() => {
 .review-item-row .review-item {
   border-bottom: none;
   padding: 0;
+  width: 100%;
 }
 
 .review-item.highlight-price {
