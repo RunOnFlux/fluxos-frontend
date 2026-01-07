@@ -1992,7 +1992,7 @@
                   <div class="step-content stepper-actions-wrapper">
                     <div class="stepper-actions">
                     <VBtn
-                      v-if="currentStep > 1 && currentStep < 5"
+                      v-if="currentStep > 1 && currentStep <= 5"
                       variant="text"
                       @click="currentStep--"
                       :disabled="deploying"
