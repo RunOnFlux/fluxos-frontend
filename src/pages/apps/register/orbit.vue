@@ -1645,15 +1645,19 @@
                             {{ repoUrl }}
                           </span>
                         </div>
-                        <div class="review-item-row">
+                        <div v-if="projectPath && projectPath !== '/'" class="review-item-row">
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
                             <span class="review-value">{{ branch || 'main' }}</span>
                           </div>
-                          <div v-if="projectPath && projectPath !== '/'" class="review-item">
+                          <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.projectPath') }}:</span>
                             <span class="review-value">{{ projectPath }}</span>
                           </div>
+                        </div>
+                        <div v-else class="review-item">
+                          <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
+                          <span class="review-value">{{ branch || 'main' }}</span>
                         </div>
                         <div v-if="repoToken" class="review-item">
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.accessToken') }}:</span>
