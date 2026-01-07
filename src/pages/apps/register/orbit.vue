@@ -1303,8 +1303,6 @@
                       {{ t('pages.apps.register.orbit.pricing.stepDescription') }}
                     </p>
 
-                    <h4 class="plans-section-title">{{ t('pages.apps.register.orbit.pricing.allPlansInclude') }}</h4>
-
                     <div class="plans-grid">
                       <!-- Free Plan -->
                       <div
