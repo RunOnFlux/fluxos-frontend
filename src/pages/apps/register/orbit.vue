@@ -280,58 +280,74 @@
                       <!-- Branch Selection & Project Path - Only shown after repo data is collected -->
                       <VExpandTransition>
                         <div v-if="showBranchAndProjectFields">
-                          <!-- Branch Selection -->
-                          <VAutocomplete
-                            v-model="branch"
-                            :items="branchItems"
-                            item-title="title"
-                            item-value="value"
-                            :label="t('pages.apps.register.orbit.repository.branchLabel')"
-                            :placeholder="t('pages.apps.register.orbit.repository.branchPlaceholder')"
-                            prepend-inner-icon="mdi-source-branch"
-                            variant="outlined"
-                            class="mb-4"
-                            :loading="branchesLoading"
-                            :no-data-text="branchesLoading ? t('pages.apps.register.orbit.repository.loadingBranches') : t('pages.apps.register.orbit.repository.noBranchesFound')"
-                            clearable
-                            auto-select-first
-                          >
-                            <template #item="{ props: itemProps, item }">
-                              <VListItem v-bind="itemProps">
-                                <template #prepend>
-                                  <VIcon
-                                    :color="item.raw.isDefault ? 'primary' : 'default'"
-                                    size="small"
-                                  >
-                                    {{ item.raw.isDefault ? 'mdi-star' : 'mdi-source-branch' }}
-                                  </VIcon>
+                          <!-- Branch & Project Path in two-column layout (when not monorepo) -->
+                          <VRow v-if="!detectingMonorepo && !(isMonorepo && monorepoProjects.length > 0)">
+                            <VCol cols="12" md="6">
+                              <!-- Branch Selection -->
+                              <VAutocomplete
+                                v-model="branch"
+                                :items="branchItems"
+                                item-title="title"
+                                item-value="value"
+                                :label="t('pages.apps.register.orbit.repository.branchLabel')"
+                                :placeholder="t('pages.apps.register.orbit.repository.branchPlaceholder')"
+                                prepend-inner-icon="mdi-source-branch"
+                                variant="outlined"
+                                :loading="branchesLoading"
+                                :no-data-text="branchesLoading ? t('pages.apps.register.orbit.repository.loadingBranches') : t('pages.apps.register.orbit.repository.noBranchesFound')"
+                                clearable
+                                auto-select-first
+                              >
+                                <template #item="{ props: itemProps, item }">
+                                  <VListItem v-bind="itemProps">
+                                    <template #prepend>
+                                      <VIcon
+                                        :color="item.raw.isDefault ? 'primary' : 'default'"
+                                        size="small"
+                                      >
+                                        {{ item.raw.isDefault ? 'mdi-star' : 'mdi-source-branch' }}
+                                      </VIcon>
+                                    </template>
+                                    <template #append>
+                                      <VChip
+                                        v-if="item.raw.isDefault"
+                                        size="x-small"
+                                        color="primary"
+                                        variant="tonal"
+                                      >
+                                        {{ t('pages.apps.register.orbit.repository.default') }}
+                                      </VChip>
+                                    </template>
+                                  </VListItem>
                                 </template>
-                                <template #append>
-                                  <VChip
-                                    v-if="item.raw.isDefault"
-                                    size="x-small"
-                                    color="primary"
-                                    variant="tonal"
-                                  >
-                                    {{ t('pages.apps.register.orbit.repository.default') }}
-                                  </VChip>
+                                <template #details>
+                                  <div class="d-flex align-center flex-wrap gap-2">
+                                    <span v-if="branches.length > 0" class="text-caption">
+                                      {{ branches.length }} {{ t('pages.apps.register.orbit.repository.branchesAvailable') }}
+                                    </span>
+                                    <span v-else class="text-caption">
+                                      {{ t('pages.apps.register.orbit.repository.defaultMain') }}
+                                    </span>
+                                  </div>
                                 </template>
-                              </VListItem>
-                            </template>
-                            <template #details>
-                              <div class="d-flex align-center flex-wrap gap-2">
-                                <span v-if="branches.length > 0" class="text-caption">
-                                  {{ branches.length }} {{ t('pages.apps.register.orbit.repository.branchesAvailable') }}
-                                </span>
-                                <span v-else class="text-caption">
-                                  {{ t('pages.apps.register.orbit.repository.defaultMain') }}
-                                </span>
-                              </div>
-                            </template>
-                          </VAutocomplete>
+                              </VAutocomplete>
+                            </VCol>
+                            <VCol cols="12" md="6">
+                              <!-- Project Path -->
+                              <VTextField
+                                v-model="projectPath"
+                                :label="t('pages.apps.register.orbit.repository.projectPathLabel')"
+                                :placeholder="t('pages.apps.register.orbit.repository.projectPathPlaceholder')"
+                                prepend-inner-icon="mdi-folder"
+                                :hint="t('pages.apps.register.orbit.repository.projectPathHint')"
+                                persistent-hint
+                                variant="outlined"
+                              />
+                            </VCol>
+                          </VRow>
 
                           <!-- Monorepo Detection & Project Selection -->
-                          <div class="monorepo-section mb-4">
+                          <div v-else class="monorepo-section mb-4">
                             <!-- Loading state -->
                             <div v-if="detectingMonorepo" class="monorepo-loading">
                               <VProgressCircular indeterminate size="20" width="2" class="mr-2" />
@@ -340,6 +356,56 @@
 
                             <!-- Monorepo detected with projects -->
                             <div v-else-if="isMonorepo && monorepoProjects.length > 0">
+                              <!-- Branch Selection (full width when monorepo) -->
+                              <VAutocomplete
+                                v-model="branch"
+                                :items="branchItems"
+                                item-title="title"
+                                item-value="value"
+                                :label="t('pages.apps.register.orbit.repository.branchLabel')"
+                                :placeholder="t('pages.apps.register.orbit.repository.branchPlaceholder')"
+                                prepend-inner-icon="mdi-source-branch"
+                                variant="outlined"
+                                class="mb-4"
+                                :loading="branchesLoading"
+                                :no-data-text="branchesLoading ? t('pages.apps.register.orbit.repository.loadingBranches') : t('pages.apps.register.orbit.repository.noBranchesFound')"
+                                clearable
+                                auto-select-first
+                              >
+                                <template #item="{ props: itemProps, item }">
+                                  <VListItem v-bind="itemProps">
+                                    <template #prepend>
+                                      <VIcon
+                                        :color="item.raw.isDefault ? 'primary' : 'default'"
+                                        size="small"
+                                      >
+                                        {{ item.raw.isDefault ? 'mdi-star' : 'mdi-source-branch' }}
+                                      </VIcon>
+                                    </template>
+                                    <template #append>
+                                      <VChip
+                                        v-if="item.raw.isDefault"
+                                        size="x-small"
+                                        color="primary"
+                                        variant="tonal"
+                                      >
+                                        {{ t('pages.apps.register.orbit.repository.default') }}
+                                      </VChip>
+                                    </template>
+                                  </VListItem>
+                                </template>
+                                <template #details>
+                                  <div class="d-flex align-center flex-wrap gap-2">
+                                    <span v-if="branches.length > 0" class="text-caption">
+                                      {{ branches.length }} {{ t('pages.apps.register.orbit.repository.branchesAvailable') }}
+                                    </span>
+                                    <span v-else class="text-caption">
+                                      {{ t('pages.apps.register.orbit.repository.defaultMain') }}
+                                    </span>
+                                  </div>
+                                </template>
+                              </VAutocomplete>
+
                               <VAlert type="info" variant="tonal" density="compact" class="mb-3">
                                 <template #prepend>
                                   <VIcon>mdi-folder-multiple</VIcon>
@@ -388,19 +454,6 @@
                                   </div>
                                 </div>
                               </div>
-                            </div>
-
-                            <!-- Not a monorepo or manual input -->
-                            <div v-else>
-                              <VTextField
-                                v-model="projectPath"
-                                :label="t('pages.apps.register.orbit.repository.projectPathLabel')"
-                                :placeholder="t('pages.apps.register.orbit.repository.projectPathPlaceholder')"
-                                prepend-inner-icon="mdi-folder"
-                                :hint="t('pages.apps.register.orbit.repository.projectPathHint')"
-                                persistent-hint
-                                variant="outlined"
-                              />
                             </div>
                           </div>
                         </div>
