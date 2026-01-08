@@ -4310,8 +4310,8 @@ const generatedAppSpec = computed(() => {
     expire: billingPeriod.value === '1' ? 88000 : parseInt(billingPeriod.value, 10) * 88000,
     compose: [
       {
-        name: appName.value || 'orbit-app',
-        description: appDescription.value || 'Orbit deployment',
+        name: 'fluxcloudgit',
+        description: 'fluxcloudgit',
         repotag: 'runonflux/orbit:latest',
         ports: [exposePort, mgmtPort], // Random external ports for app and management
         containerPorts: [containerPort, 9001], // Internal app port and Orbit management port
