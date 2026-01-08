@@ -3256,7 +3256,7 @@
             "contactEmailHint": "For deployment notifications and alerts",
             "showAdvancedOptions": "Advanced options",
             "pollingIntervalLabel": "Auto-Update Polling Interval",
-            "pollingIntervalHint": "How often Git deployment checks your repository for new commits",
+            "pollingIntervalHint": "How often Git deployment checks your repository for new commits. For instant polling, add the WEBHOOK_SECRET environment variable",
             "runtimeVersionTitle": "Runtime Version (Optional)",
             "runtimeAutoDetect": "Git deployment auto-detects your runtime. Only specify if you need a specific version.",
             "runtimeLabel": "Runtime",

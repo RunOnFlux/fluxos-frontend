@@ -2158,21 +2158,17 @@ const appDescription = ref('')
 const appPort = ref('3000')
 const portAutoDetected = ref(false)
 const contactEmail = ref('')
-const pollingInterval = ref('1800') // Default: 30 minutes in seconds
+const pollingInterval = ref('86400') // Default: 24 hours in seconds
 const showAdvancedOptions = ref(false)
 
 // Polling interval options (value in seconds, 'disabled' to not add env var)
 const pollingIntervalOptions = [
   { title: 'Disabled', value: 'disabled' },
-  { title: '5 minutes', value: '300' },
-  { title: '10 minutes', value: '600' },
-  { title: '15 minutes', value: '900' },
-  { title: '30 minutes (default)', value: '1800' },
   { title: '1 hour', value: '3600' },
   { title: '2 hours', value: '7200' },
   { title: '6 hours', value: '21600' },
   { title: '12 hours', value: '43200' },
-  { title: '24 hours', value: '86400' },
+  { title: '24 hours (default)', value: '86400' },
 ]
 
 const selectedRuntime = ref(null)
@@ -5415,7 +5411,7 @@ onMounted(() => {
   font-size: 0.8125rem;
   font-weight: 600;
   color: rgb(var(--v-theme-primary));
-  background: rgba(var(--v-theme-primary), 0.08);
+  background: rgba(var(--v-theme-primary), 0.15);
   padding: 0.125rem 0.5rem;
   border-radius: 4px;
 }
@@ -5443,12 +5439,13 @@ onMounted(() => {
 
 .orbit-env-example {
   margin-top: 0.25rem;
-  opacity: 0.7;
+  color: rgba(var(--v-theme-on-surface), 0.7);
 }
 
 .orbit-env-example code {
   font-size: 0.75rem;
-  background: rgba(var(--v-theme-on-surface), 0.06);
+  background: rgba(var(--v-theme-on-surface), 0.12);
+  color: rgba(var(--v-theme-on-surface), 0.87);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
 }
