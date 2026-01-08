@@ -6478,7 +6478,7 @@ onMounted(() => {
   border-radius: 8px;
   background: rgba(var(--v-theme-warning), 0.1);
   max-width: 400px;
-  margin-top: -1.5rem;
+  margin-top: 0.5rem;
 }
 
 .deployment-message-box span {

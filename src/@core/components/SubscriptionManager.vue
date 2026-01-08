@@ -9230,7 +9230,7 @@ async function signMethod() {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: -1.5rem;
+  margin-top: 0.5rem;
   padding: 0.75rem 1rem;
   border: 2px solid rgba(var(--v-theme-warning), 0.5);
   border-radius: 8px;
