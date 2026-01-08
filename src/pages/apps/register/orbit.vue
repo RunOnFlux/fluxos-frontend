@@ -685,7 +685,6 @@
                             <VExpansionPanelTitle>
                               <VIcon start size="20">mdi-cog</VIcon>
                               {{ t('pages.apps.register.orbit.config.runtimeVersionTitle') }}
-                              <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
                             </VExpansionPanelTitle>
                             <VExpansionPanelText>
                               <VAlert type="info" variant="tonal" density="compact" class="mb-4">
