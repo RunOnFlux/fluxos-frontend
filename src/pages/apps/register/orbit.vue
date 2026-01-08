@@ -6909,11 +6909,14 @@ onMounted(() => {
 .app-port-hint {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
   flex-wrap: wrap;
   padding-top: 4px;
+  text-align: left;
 }
 
 .app-port-hint .v-messages__message {
   line-height: 1.2;
+  color: rgba(var(--v-theme-on-surface), 0.6);
 }
 </style>
