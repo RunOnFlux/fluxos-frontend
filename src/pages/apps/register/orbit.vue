@@ -1937,18 +1937,53 @@
                         </VCardText>
                       </VCard>
 
-                      <!-- System Checking -->
+                      <!-- Two-Phase Monitoring -->
                       <div class="payment-monitoring">
                         <LoadingSpinner
-                          :message="t('pages.apps.register.orbit.deploy.checkingRegistration')"
+                          :message="paymentMonitoringPhase === 'blockchain'
+                            ? t('pages.apps.register.orbit.deploy.checkingRegistration')
+                            : t('pages.apps.register.orbit.deploy.waitingForInstance')"
                           :image-src="fluxLogo"
                           image-alt="Flux Logo"
                           :image-size="100"
                           loading
                         />
-                        <p class="text-body-2 text-medium-emphasis text-center mt-4">
-                          {{ t('pages.apps.register.orbit.deploy.checkingDescription') }}
-                        </p>
+
+                        <!-- Phase Message Box -->
+                        <div class="d-flex justify-center mt-6">
+                          <div class="deployment-message-box">
+                            <!-- Phase 1: Blockchain confirmation -->
+                            <template v-if="paymentMonitoringPhase === 'blockchain'">
+                              <div class="d-flex align-center">
+                                <VIcon color="success" size="20" class="mr-2">mdi-gift-outline</VIcon>
+                                <span>{{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('pages.apps.register.orbit.deploy.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('pages.apps.register.orbit.deploy.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </template>
+                            <!-- Phase 2: Node deployment -->
+                            <template v-else>
+                              <div class="d-flex align-center">
+                                <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
+                                <span>{{ t('pages.apps.register.orbit.deploy.paymentConfirmedWaitingNodes') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-server</VIcon>
+                                <span>{{ t('pages.apps.register.orbit.deploy.waitingForNodesPickup') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('pages.apps.register.orbit.deploy.nodeDeploymentTime') }}</span>
+                              </div>
+                            </template>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -1988,14 +2023,30 @@
                                   <VIcon size="16" color="primary">mdi-web</VIcon>
                                   <span class="text-body-2">
                                     <strong>{{ t('pages.apps.register.orbit.register.appUrl') }}</strong>
-                                    <code class="ml-1">https://{{ appName }}.app.runonflux.io</code>
+                                    <a
+                                      :href="`https://${appName}.app.runonflux.io`"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      class="ml-1"
+                                    >
+                                      https://{{ appName }}.app.runonflux.io
+                                      <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                    </a>
                                   </span>
                                 </div>
                                 <div class="d-flex align-center gap-2 mb-2">
                                   <VIcon size="16" color="success">mdi-api</VIcon>
                                   <span class="text-body-2">
                                     <strong>{{ t('pages.apps.register.orbit.register.orbitApi') }}</strong>
-                                    <code class="ml-1">https://{{ appName }}_{{ orbitManagementPort }}.app.runonflux.io</code>
+                                    <a
+                                      :href="`https://${appName}_${orbitManagementPort}.app.runonflux.io`"
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      class="ml-1"
+                                    >
+                                      https://{{ appName }}_{{ orbitManagementPort }}.app.runonflux.io
+                                      <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                    </a>
                                   </span>
                                 </div>
                                 <div class="d-flex align-center gap-2">
@@ -2022,10 +2073,10 @@
                           <VBtn
                             color="primary"
                             size="large"
-                            :to="{ name: 'apps-management' }"
+                            :to="`/apps/manage/${appName}`"
                           >
-                            <VIcon start>mdi-view-dashboard</VIcon>
-                            {{ t('pages.apps.register.orbit.deploy.viewDashboard') }}
+                            <VIcon start>mdi-cog</VIcon>
+                            {{ t('pages.apps.register.orbit.deploy.manageApplication') }}
                           </VBtn>
                           <VBtn
                             variant="outlined"
@@ -4109,6 +4160,7 @@ const paymentConfirmed = ref(false)
 const paymentMethod = ref('')
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
+const paymentMonitoringPhase = ref('blockchain') // 'blockchain' or 'deployment'
 const checkoutLoading = ref(false)
 const showFiatOptions = ref(false)
 const showCryptoOptions = ref(false)
@@ -4978,7 +5030,9 @@ const goBackToConfigureStep = () => {
   currentStep.value = 4 // Configure step
 }
 
-// Payment monitoring - checks if app specification is registered on the network
+// Payment monitoring - Two-phase detection:
+// Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
+// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
   // Clear any existing intervals
   if (paymentMonitoringInterval.value) {
@@ -4990,6 +5044,7 @@ const startPaymentMonitoring = async () => {
 
   paymentProcessing.value = true
   paymentConfirmed.value = false
+  paymentMonitoringPhase.value = 'blockchain' // Start with blockchain confirmation phase
 
   // Set a 30-minute timeout
   paymentMonitoringTimeout.value = setTimeout(() => {
@@ -5002,25 +5057,46 @@ const startPaymentMonitoring = async () => {
     }
   }, 30 * 60 * 1000)
 
-  // Poll every 10 seconds - check if app specification exists on the network
+  // Poll every 10 seconds - two-phase detection
   paymentMonitoringInterval.value = setInterval(async () => {
     try {
-      const response = await AppsService.getAppSpecifics(appName.value)
+      if (paymentMonitoringPhase.value === 'blockchain') {
+        // Phase 1: Check if app spec exists on blockchain (payment confirmed)
+        const response = await AppsService.getAppSpecifics(appName.value)
 
-      if (response.data.status === 'success' && response.data.data) {
-        // App specification is now registered on the network!
-        clearInterval(paymentMonitoringInterval.value)
-        clearTimeout(paymentMonitoringTimeout.value)
-        paymentMonitoringInterval.value = null
-        paymentMonitoringTimeout.value = null
-        paymentConfirmed.value = true
-        paymentProcessing.value = false
+        if (response.data.status === 'success' && response.data.data) {
+          const currentAppSpec = response.data.data
 
-        // Show "My applications" menu item immediately
-        fluxStore.setUserHasApps()
+          // If app spec exists and hash matches, payment is confirmed on blockchain
+          if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
+            // Move to deployment phase
+            paymentMonitoringPhase.value = 'deployment'
+          }
+        }
+      } else if (paymentMonitoringPhase.value === 'deployment') {
+        // Phase 2: Check if app is running on nodes
+        const response = await AppsService.getAppLocation(appName.value)
+
+        if (response.data && response.data.status === 'success') {
+          const appLocation = response.data.data
+
+          // If app location exists and has running instances, deployment was successful!
+          if (appLocation && appLocation.length > 0) {
+            // Clear monitoring
+            clearInterval(paymentMonitoringInterval.value)
+            clearTimeout(paymentMonitoringTimeout.value)
+            paymentMonitoringInterval.value = null
+            paymentMonitoringTimeout.value = null
+            paymentConfirmed.value = true
+            paymentProcessing.value = false
+
+            // Show "My applications" menu item immediately
+            fluxStore.setUserHasApps()
+          }
+        }
       }
     } catch {
-      // Silently ignore - app not yet registered
+      // Silently ignore - app not yet registered or deployed
     }
   }, 10000)
 }
@@ -5038,6 +5114,7 @@ const cancelPaymentMonitoring = () => {
 
   paymentProcessing.value = false
   paymentConfirmed.value = false
+  paymentMonitoringPhase.value = 'blockchain'
   paymentMethod.value = ''
 }
 
@@ -5230,6 +5307,7 @@ const resetForm = () => {
   testFinished.value = false
   paymentConfirmed.value = false
   paymentProcessing.value = false
+  paymentMonitoringPhase.value = 'blockchain'
 }
 
 // Cleanup on unmount
@@ -6611,6 +6689,22 @@ onMounted(() => {
 .payment-monitoring :deep(.loading-container p) {
   font-size: 0.875rem !important;
   margin-top: 0 !important;
+}
+
+.deployment-message-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  background: rgba(var(--v-theme-warning), 0.1);
+  max-width: 400px;
+}
+
+.deployment-message-box span {
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.9);
+  text-align: left;
 }
 
 .test-output-card {
