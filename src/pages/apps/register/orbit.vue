@@ -2112,6 +2112,7 @@ import {
   isWebCryptoAvailable,
 } from '@/utils/enterpriseCrypto'
 import qs from 'qs'
+import { getUser } from '@/utils/firebase'
 
 const { t } = useI18n()
 
@@ -4591,6 +4592,10 @@ const detectLoginType = () => {
   if (!zelidauth) return 'manual'
 
   try {
+    // Check for SSO (single sign-on via Firebase)
+    const storedLoginType = localStorage.getItem('loginType')
+    if (storedLoginType === 'sso') return 'sso'
+
     // Check for SSP
     const sspSession = localStorage.getItem('sspWalletSession')
     if (sspSession) return 'ssp'
@@ -4789,14 +4794,32 @@ const startRegistration = async () => {
 
     // Detect login type
     loginType.value = detectLoginType()
-    registrationMessage.value = 'Waiting for signature from wallet...'
 
-    if (loginType.value === 'ssp') {
+    if (loginType.value === 'sso') {
+      // SSO signing - automatic via backend API (no user interaction needed)
+      registrationMessage.value = 'Signing message...'
+      const firebaseUser = getUser()
+      if (!firebaseUser) {
+        throw new Error('Not logged in as SSO')
+      }
+      const token = firebaseUser.auth.currentUser.accessToken
+      const headers = {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      }
+      const res = await axios.post('https://service.fluxcore.ai/api/signMessage', { message: dataToSign.value }, { headers })
+      if (res.data?.status !== 'success' || !res.data?.signature) {
+        throw new Error('SSO signing failed')
+      }
+      signature.value = res.data.signature
+    } else if (loginType.value === 'ssp') {
       // SSP signing
+      registrationMessage.value = 'Waiting for signature from wallet...'
       const signResult = await signWithSSP(dataToSign.value)
       signature.value = signResult.signature
     } else {
       // Zelcore signing - set up WebSocket first
+      registrationMessage.value = 'Waiting for signature from wallet...'
       let wsURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
       wsURL = wsURL.replace('https://', 'wss://').replace('http://', 'ws://')
 
