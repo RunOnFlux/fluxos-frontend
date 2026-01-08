@@ -507,7 +507,7 @@
                         type="number"
                         :rules="[rules.required, rules.port]"
                         variant="outlined"
-                        class="mb-4"
+                        class="mb-4 app-port-field"
                         persistent-hint
                       >
                         <template #details>
@@ -6906,13 +6906,16 @@ onMounted(() => {
 }
 
 /* App port hint styling to match other field hints */
+.app-port-field :deep(.v-input__details) {
+  justify-content: flex-start;
+  padding-inline-start: 16px;
+}
+
 .app-port-hint {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding-top: 4px;
-  text-align: left;
 }
 
 .app-port-hint .v-messages__message {
