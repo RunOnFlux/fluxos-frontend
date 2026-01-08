@@ -5668,9 +5668,9 @@ onMounted(() => {
   flex: 0 0 auto;
 }
 
-.plan-card.recommended {
-  border-color: rgb(var(--v-theme-success));
-  box-shadow: 0 8px 32px rgba(var(--v-theme-success), 0.3);
+.plan-card.recommended:not(.selected) {
+  border-color: rgba(var(--v-theme-success), 0.3);
+  box-shadow: 0 4px 16px rgba(var(--v-theme-success), 0.15);
 }
 
 .plan-card.selected {
