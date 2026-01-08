@@ -95,6 +95,9 @@
         </VCardText>
       </VCard>
 
+      <!-- Git Deployment Features Section -->
+      <GitDeploymentFeatures />
+
       <!-- Trustpilot Reviews Section -->
       <TrustpilotPanel :star-size="32" show-rating-label use-live-data />
 
@@ -153,6 +156,7 @@ import HeroSection from '@/components/HeroSection.vue'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import CtaSection from '@/components/CtaSection.vue'
 import OrbitDeploymentChoice from '@/components/OrbitDeploymentChoice.vue'
+import GitDeploymentFeatures from '@/components/GitDeploymentFeatures.vue'
 
 const { t } = useI18n()
 

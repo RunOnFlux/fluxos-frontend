@@ -111,8 +111,8 @@
                 alt-labels
                 class="orbit-stepper"
               >
-                <!-- Step 3: Repository -->
-                <template #item.3>
+                <!-- Step 2: Repository -->
+                <template #item.2>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.repository.stepTitle') }}</h3>
                     <p class="step-description">
@@ -462,8 +462,8 @@
                   </div>
                 </template>
 
-                <!-- Step 4: Configuration -->
-                <template #item.4>
+                <!-- Step 3: Configuration -->
+                <template #item.3>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.config.stepTitle') }}</h3>
                     <p class="step-description">
@@ -1135,216 +1135,8 @@
                   </div>
                 </template>
 
-                <!-- Step 1: Overview -->
+                <!-- Step 1: Plan Selection -->
                 <template #item.1>
-                  <div class="step-content">
-                    <!-- Shared Features Card -->
-                    <div class="shared-features-card">
-                      <div class="shared-features-header">
-                        <div class="shared-features-title">
-                          <VIcon class="orbit-icon">mdi-orbit</VIcon>
-                          <h4>{{ t('pages.apps.register.orbit.pricing.sharedFeatures.title') }}</h4>
-                        </div>
-                        <p class="shared-features-subtitle">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.subtitle') }}</p>
-                      </div>
-
-                      <div class="shared-features-grid">
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-infinity</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.unlimitedBuilds') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.unlimitedBuildsDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-memory</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.dedicatedResources') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.dedicatedResourcesDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-code-tags</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.frameworks') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.frameworksDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-auto-fix</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.zeroConfig') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.zeroConfigDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-pipe</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.cicd') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.cicdDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-web</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.customDomain') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.customDomainDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-earth</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.geolocation') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.geolocationDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-source-branch</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.branchPreviews') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.branchPreviewsDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-backup-restore</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.autoRollback') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.autoRollbackDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-folder-multiple</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.monorepo') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.monorepoDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-heart-pulse</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.healthChecks') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.healthChecksDetail') }}</span>
-                          </div>
-                        </div>
-                        <div class="shared-feature-item">
-                          <VIcon color="success">mdi-shield-check</VIcon>
-                          <div class="feature-text">
-                            <span class="feature-name">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.security') }}</span>
-                            <span class="feature-detail">{{ t('pages.apps.register.orbit.pricing.sharedFeatures.securityDetail') }}</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <!-- How Orbit Compares Section -->
-                    <div class="orbit-comparison-card">
-                      <h4 class="comparison-title">
-                        <VIcon size="22" color="primary" class="mr-2">mdi-chart-bar</VIcon>
-                        {{ t('pages.apps.register.orbit.comparison.title') }}
-                      </h4>
-                      <p class="comparison-subtitle">{{ t('pages.apps.register.orbit.comparison.subtitle') }}</p>
-
-                      <div class="orbit-comparison-table-wrapper">
-                        <table class="orbit-comparison-table">
-                          <thead>
-                            <tr>
-                              <th class="provider-col">{{ t('pages.apps.register.orbit.comparison.provider') }}</th>
-                              <th class="plan-col">{{ t('pages.apps.register.orbit.comparison.plan') }}</th>
-                              <th class="price-col">{{ t('pages.apps.register.orbit.comparison.price') }}</th>
-                              <th class="cpu-col">{{ t('pages.apps.register.orbit.comparison.cpu') }}</th>
-                              <th class="ram-col">{{ t('pages.apps.register.orbit.comparison.ram') }}</th>
-                              <th class="builds-col">{{ t('pages.apps.register.orbit.comparison.builds') }}</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <!-- Orbit Row - Highlighted -->
-                            <tr class="orbit-row highlight-row">
-                              <td class="provider-col">
-                                <div class="provider-cell-inner">
-                                  <VIcon size="20" color="primary">mdi-rocket-launch</VIcon>
-                                  <span class="provider-name">FluxCloud Git</span>
-                                  <VChip size="x-small" color="success" variant="flat" class="ml-1">{{ t('pages.apps.register.orbit.comparison.best') }}</VChip>
-                                </div>
-                              </td>
-                              <td class="plan-col">Standard</td>
-                              <td class="price-col highlight-price">$2.49/{{ t('common.labels.monthly') }}</td>
-                              <td class="cpu-col">1.5 {{ t('pages.apps.register.orbit.comparison.cores') }}</td>
-                              <td class="ram-col">4 GB</td>
-                              <td class="builds-col">
-                                <VIcon size="16" color="success" class="mr-1">mdi-infinity</VIcon>
-                                {{ t('pages.apps.register.orbit.comparison.unlimited') }}
-                              </td>
-                            </tr>
-                            <!-- Vercel Row -->
-                            <tr>
-                              <td class="provider-col">
-                                <div class="provider-cell-inner">
-                                  <VIcon size="20">mdi-triangle</VIcon>
-                                  <span class="provider-name">Vercel</span>
-                                </div>
-                              </td>
-                              <td class="plan-col">Pro</td>
-                              <td class="price-col competitor-price">$20/{{ t('common.labels.monthly') }}</td>
-                              <td class="cpu-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
-                              <td class="ram-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
-                              <td class="builds-col">{{ t('pages.apps.register.orbit.comparison.limited') }}</td>
-                            </tr>
-                            <!-- Netlify Row -->
-                            <tr>
-                              <td class="provider-col">
-                                <div class="provider-cell-inner">
-                                  <VIcon size="20">mdi-web</VIcon>
-                                  <span class="provider-name">Netlify</span>
-                                </div>
-                              </td>
-                              <td class="plan-col">Pro</td>
-                              <td class="price-col competitor-price">$19/{{ t('common.labels.monthly') }}</td>
-                              <td class="cpu-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
-                              <td class="ram-col">{{ t('pages.apps.register.orbit.comparison.shared') }}</td>
-                              <td class="builds-col">{{ t('pages.apps.register.orbit.comparison.creditBased') }}</td>
-                            </tr>
-                            <!-- Render Row -->
-                            <tr>
-                              <td class="provider-col">
-                                <div class="provider-cell-inner">
-                                  <VIcon size="20">mdi-server</VIcon>
-                                  <span class="provider-name">Render</span>
-                                </div>
-                              </td>
-                              <td class="plan-col">Standard</td>
-                              <td class="price-col competitor-price">$25/{{ t('common.labels.monthly') }}</td>
-                              <td class="cpu-col">1 {{ t('pages.apps.register.orbit.comparison.core') }}</td>
-                              <td class="ram-col">2 GB</td>
-                              <td class="builds-col">500 {{ t('pages.apps.register.orbit.comparison.minutes') }}</td>
-                            </tr>
-                            <!-- Railway Row -->
-                            <tr>
-                              <td class="provider-col">
-                                <div class="provider-cell-inner">
-                                  <VIcon size="20">mdi-train</VIcon>
-                                  <span class="provider-name">Railway</span>
-                                </div>
-                              </td>
-                              <td class="plan-col">Hobby</td>
-                              <td class="price-col competitor-price">$5/{{ t('common.labels.monthly') }}</td>
-                              <td class="cpu-col">{{ t('pages.apps.register.orbit.comparison.usageBased') }}</td>
-                              <td class="ram-col">{{ t('pages.apps.register.orbit.comparison.usageBased') }}</td>
-                              <td class="builds-col">{{ t('pages.apps.register.orbit.comparison.usageBased') }}</td>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-
-                      <div class="orbit-comparison-hint">
-                        <VIcon size="18" color="primary" class="mr-2">mdi-information-outline</VIcon>
-                        <span>{{ t('pages.apps.register.orbit.choice.comparisonHint') }}</span>
-                      </div>
-                    </div>
-                  </div>
-                </template>
-
-                <!-- Step 2: Plan Selection -->
-                <template #item.2>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.pricing.stepTitle') }}</h3>
                     <p class="step-description">
@@ -1615,8 +1407,8 @@
                   </div>
                 </template>
 
-                <!-- Step 5: Review -->
-                <template #item.5>
+                <!-- Step 4: Review -->
+                <template #item.4>
                   <div class="step-content">
                     <h3 class="step-title">{{ t('pages.apps.register.orbit.review.stepTitle') }}</h3>
                     <p class="step-description">
@@ -1838,8 +1630,8 @@
                   </div>
                 </template>
 
-                <!-- Step 6: Register -->
-                <template #item.6>
+                <!-- Step 5: Register -->
+                <template #item.5>
                   <div class="step-content register-step">
                     <!-- Registration Phase -->
                     <div v-if="!registrationHash" class="registration-phase">
@@ -1906,8 +1698,8 @@
                   </div>
                 </template>
 
-                <!-- Step 7: Payment -->
-                <template #item.7>
+                <!-- Step 6: Payment -->
+                <template #item.6>
                   <div class="step-content payment-step">
 
                     <!-- Payment Processing Phase -->
@@ -2098,7 +1890,7 @@
                   <div class="step-content stepper-actions-wrapper">
                     <div class="stepper-actions">
                       <VBtn
-                        v-if="currentStep > 1 && currentStep <= 5"
+                        v-if="currentStep > 1 && currentStep <= 4"
                         variant="text"
                         @click="currentStep--"
                         :disabled="deploying"
@@ -2108,16 +1900,16 @@
                       </VBtn>
                       <VSpacer />
                       <VBtn
-                        v-if="currentStep < 5"
+                        v-if="currentStep < 4"
                         color="primary"
-                        :disabled="currentStep === 2 && !selectedPlan"
+                        :disabled="currentStep === 1 && !selectedPlan"
                         @click="nextStep"
                       >
                         {{ t('pages.apps.register.orbit.navigation.continue') }}
                         <VIcon end>mdi-arrow-right</VIcon>
                       </VBtn>
                       <VBtn
-                        v-else-if="currentStep === 5"
+                        v-else-if="currentStep === 4"
                         color="primary"
                         :loading="deploying"
                         :disabled="!acceptedTerms"
@@ -2126,7 +1918,7 @@
                         <VIcon start>mdi-rocket-launch</VIcon>
                         {{ t('pages.apps.register.orbit.config.registerApplication') }}
                       </VBtn>
-                    <!-- No action buttons on steps 6 and 7 - handled within the step content -->
+                    <!-- No action buttons on steps 5 and 6 - handled within the step content -->
                     </div>
                   </div>
                 </template>
@@ -2331,13 +2123,12 @@ watch(isLoggedIn, newValue => {
 // Stepper
 const currentStep = ref(1)
 const stepItems = computed(() => [
-  { title: t('pages.apps.register.orbit.stepper.overview'), value: 1 },
-  { title: t('pages.apps.register.orbit.stepper.plan'), value: 2 },
-  { title: t('pages.apps.register.orbit.stepper.repository'), value: 3 },
-  { title: t('pages.apps.register.orbit.stepper.configure'), value: 4 },
-  { title: t('pages.apps.register.orbit.stepper.review'), value: 5 },
-  { title: t('pages.apps.register.orbit.stepper.register'), value: 6 },
-  { title: t('pages.apps.register.orbit.stepper.payment'), value: 7 },
+  { title: t('pages.apps.register.orbit.stepper.plan'), value: 1 },
+  { title: t('pages.apps.register.orbit.stepper.repository'), value: 2 },
+  { title: t('pages.apps.register.orbit.stepper.configure'), value: 3 },
+  { title: t('pages.apps.register.orbit.stepper.review'), value: 4 },
+  { title: t('pages.apps.register.orbit.stepper.register'), value: 5 },
+  { title: t('pages.apps.register.orbit.stepper.payment'), value: 6 },
 ])
 
 // Scroll to top when step changes
@@ -4604,14 +4395,13 @@ const rules = {
 
 // Step navigation
 const nextStep = async () => {
-  // Step 1: Overview - no validation needed
-  // Step 2: Plan Selection - no validation needed
-  if (currentStep.value === 3) {
-    // Step 3: Repository - validate repo form
+  // Step 1: Plan Selection - no validation needed
+  if (currentStep.value === 2) {
+    // Step 2: Repository - validate repo form
     const { valid } = await repoForm.value.validate()
     if (!valid) return
-  } else if (currentStep.value === 4) {
-    // Step 4: Configuration - validate config form
+  } else if (currentStep.value === 3) {
+    // Step 3: Configuration - validate config form
     const { valid } = await configForm.value.validate()
     if (!valid) return
   }
@@ -4627,8 +4417,8 @@ const proceedToPayment = async () => {
   deploying.value = true
 
   try {
-    // Go to Step 6 - Register
-    currentStep.value = 6
+    // Go to Step 5 - Register
+    currentStep.value = 5
 
     // Start registration process
     await startRegistration()
@@ -4700,7 +4490,7 @@ const cancelSigning = () => {
   registrationError.value = ''
   registrationMessage.value = ''
   deploying.value = false
-  currentStep.value = 5 // Go back to Review step
+  currentStep.value = 4 // Go back to Review step
 
   showToast('info', 'Signing cancelled')
 }
@@ -4996,7 +4786,7 @@ const propagateSignedMessage = async () => {
 
     // Auto-advance to Payment step after a brief delay
     setTimeout(() => {
-      currentStep.value = 7
+      currentStep.value = 6
 
       // Start monitoring for app registration on the network
       startPaymentMonitoring()
@@ -5027,7 +4817,7 @@ const goBackToConfigureStep = () => {
   registrationHash.value = null
   registrationError.value = ''
   deploying.value = false
-  currentStep.value = 4 // Configure step
+  currentStep.value = 3 // Configure step
 }
 
 // Payment monitoring - Two-phase detection:
