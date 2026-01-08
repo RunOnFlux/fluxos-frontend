@@ -2102,7 +2102,9 @@ import geolocations from '@/utils/geolocation'
 import AppsService from '@/services/AppsService'
 import StorageService from '@/services/StorageService'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
-import fluxLogo from '@images/fluxcloud_symbol.svg'
+
+// Use the same logo as the initial loading screen
+const fluxLogo = '/images/logo.png'
 import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import {
