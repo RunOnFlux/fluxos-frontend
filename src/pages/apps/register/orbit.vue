@@ -511,9 +511,9 @@
                         persistent-hint
                       >
                         <template #details>
-                          <div class="d-flex align-center flex-wrap gap-2">
-                            <span class="text-caption">{{ t('pages.apps.register.orbit.config.portListensOn') }}</span>
-                            <VChip v-if="portAutoDetected" color="success" size="x-small" variant="flat">
+                          <div class="v-messages app-port-hint">
+                            <span class="v-messages__message">{{ t('pages.apps.register.orbit.config.portListensOn') }}</span>
+                            <VChip v-if="portAutoDetected" color="success" size="x-small" variant="flat" class="ml-2">
                               <VIcon start size="12">mdi-auto-fix</VIcon>
                               {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
                             </VChip>
@@ -7105,5 +7105,17 @@ onMounted(() => {
   .orbit-env-description {
     font-size: 0.75rem;
   }
+}
+
+/* App port hint styling to match other field hints */
+.app-port-hint {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-top: 4px;
+}
+
+.app-port-hint .v-messages__message {
+  line-height: 1.2;
 }
 </style>
