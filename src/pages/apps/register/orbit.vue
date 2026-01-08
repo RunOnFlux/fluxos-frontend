@@ -2103,7 +2103,7 @@ import AppsService from '@/services/AppsService'
 import StorageService from '@/services/StorageService'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import fluxLogo from '@images/fluxcloud_symbol.svg'
-import { signWithSSP, signWithZelcore } from '@/utils/walletService'
+import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import {
   encryptAesKeyWithRsaKey,
@@ -4586,25 +4586,20 @@ const proceedToPayment = async () => {
   }
 }
 
-// Detect login type from zelidauth
+// Detect login type from localStorage (same as SubscriptionManager)
 const detectLoginType = () => {
+  // Read loginType directly from localStorage - this is set during login
+  const storedLoginType = localStorage.getItem('loginType')
+  if (storedLoginType) {
+    return storedLoginType
+  }
+
+  // Fallback: check if logged in at all
   const zelidauth = localStorage.getItem('zelidauth')
   if (!zelidauth) return 'manual'
 
-  try {
-    // Check for SSO (single sign-on via Firebase)
-    const storedLoginType = localStorage.getItem('loginType')
-    if (storedLoginType === 'sso') return 'sso'
-
-    // Check for SSP
-    const sspSession = localStorage.getItem('sspWalletSession')
-    if (sspSession) return 'ssp'
-
-    // Default to zelcore
-    return 'zelcore'
-  } catch {
-    return 'zelcore'
-  }
+  // Default to zelcore if no loginType is stored
+  return 'zelcore'
 }
 
 // Get callback URL for WebSocket signing
@@ -4795,44 +4790,90 @@ const startRegistration = async () => {
     // Detect login type
     loginType.value = detectLoginType()
 
-    if (loginType.value === 'sso') {
+    // Handle signing based on login type (same as SubscriptionManager)
+    switch (loginType.value) {
+    case 'sso':
       // SSO signing - automatic via backend API (no user interaction needed)
       registrationMessage.value = 'Signing message...'
-      const firebaseUser = getUser()
-      if (!firebaseUser) {
-        throw new Error('Not logged in as SSO')
+      {
+        const firebaseUser = getUser()
+        if (!firebaseUser) {
+          throw new Error('Not logged in as SSO')
+        }
+        const token = firebaseUser.auth.currentUser.accessToken
+        const headers = {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        }
+        const res = await axios.post('https://service.fluxcore.ai/api/signMessage', { message: dataToSign.value }, { headers })
+        if (res.data?.status !== 'success' || !res.data?.signature) {
+          throw new Error('SSO signing failed')
+        }
+        signature.value = res.data.signature
       }
-      const token = firebaseUser.auth.currentUser.accessToken
-      const headers = {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      }
-      const res = await axios.post('https://service.fluxcore.ai/api/signMessage', { message: dataToSign.value }, { headers })
-      if (res.data?.status !== 'success' || !res.data?.signature) {
-        throw new Error('SSO signing failed')
-      }
-      signature.value = res.data.signature
-    } else if (loginType.value === 'ssp') {
+      break
+
+    case 'ssp':
       // SSP signing
       registrationMessage.value = 'Waiting for signature from wallet...'
-      const signResult = await signWithSSP(dataToSign.value)
-      signature.value = signResult.signature
-    } else {
+      {
+        const signResult = await signWithSSP(dataToSign.value)
+        signature.value = signResult.signature
+      }
+      break
+
+    case 'walletconnect':
+      // WalletConnect signing
+      registrationMessage.value = 'Waiting for signature from wallet...'
+      {
+        const account = await getConnectedAccount()
+        if (!account) {
+          throw new Error('WalletConnect not connected. Please log into FluxOS first.')
+        }
+        const result = await signWithWalletConnect(dataToSign.value)
+        signature.value = result
+      }
+      break
+
+    case 'metamask':
+      // MetaMask signing
+      registrationMessage.value = 'Waiting for signature from wallet...'
+      {
+        const ethereum = window.ethereum
+        if (!ethereum) {
+          throw new Error('MetaMask not found')
+        }
+        const account = ethereum.selectedAddress || (await ethereum.request({ method: 'eth_requestAccounts' }))[0]
+        const msg = `0x${Buffer.from(dataToSign.value, 'utf8').toString('hex')}`
+        const sign = await ethereum.request({
+          method: 'personal_sign',
+          params: [msg, account],
+        })
+        signature.value = sign
+      }
+      break
+
+    case 'zelcore':
+    case 'manual':
+    default:
       // Zelcore signing - set up WebSocket first
       registrationMessage.value = 'Waiting for signature from wallet...'
-      let wsURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
-      wsURL = wsURL.replace('https://', 'wss://').replace('http://', 'ws://')
+      {
+        let wsURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+        wsURL = wsURL.replace('https://', 'wss://').replace('http://', 'ws://')
 
-      const sigMsg = `${currentZelid}${timestamp.value}`
-      const uri = `${wsURL}/ws/sign/${sigMsg}`
+        const sigMsg = `${currentZelid}${timestamp.value}`
+        const uri = `${wsURL}/ws/sign/${sigMsg}`
 
-      websocket.value = new WebSocket(uri)
+        websocket.value = new WebSocket(uri)
 
-      websocket.value.onerror = onWSError
-      websocket.value.onmessage = onWSMessage
+        websocket.value.onerror = onWSError
+        websocket.value.onmessage = onWSMessage
 
-      // Now trigger ZelCore signing (skip internal WebSocket since we handle it)
-      await signWithZelcore(dataToSign.value, currentZelid, getCallbackUrl(), undefined, true)
+        // Now trigger ZelCore signing (skip internal WebSocket since we handle it)
+        await signWithZelcore(dataToSign.value, currentZelid, getCallbackUrl(), undefined, true)
+      }
+      break
     }
   } catch (error) {
     console.error('Registration error:', error)
