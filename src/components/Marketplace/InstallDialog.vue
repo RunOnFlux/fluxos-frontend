@@ -1879,6 +1879,15 @@ onMounted(async () => {
   checkAuthentication()
   fetchDeploymentInfo()
 
+  // Auto-fill contact email for SSO users
+  const loginType = localStorage.getItem('loginType')
+  if (loginType === 'sso' && !emailNotifications.value.email) {
+    const firebaseUser = getUser()
+    if (firebaseUser?.email) {
+      emailNotifications.value.email = firebaseUser.email
+    }
+  }
+
   // No automatic polling or AppKit initialization on page load
   // AppKit will only initialize when user clicks sign button
   // This prevents stale relay errors from appearing on page load

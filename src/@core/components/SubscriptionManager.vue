@@ -3962,7 +3962,7 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
 onMounted(() => {
   console.log('SubscriptionManager onMounted - props.appSpec:', props.appSpec)
   console.log('SubscriptionManager onMounted - props.appSpec.owner:', props.appSpec?.owner)
-  
+
   // Set default owner from logged-in user's zelid if not already set
   if (!appDetails.value.owner) {
     const zelidauth = localStorage.getItem('zelidauth')
@@ -3978,7 +3978,18 @@ onMounted(() => {
       }
     }
   }
-  
+
+  // Auto-fill contact email for SSO users (only for new apps without existing contacts)
+  if (props.newApp && (!appDetails.value.contacts || appDetails.value.contacts.length === 0)) {
+    const loginTypeValue = loginType.value
+    if (loginTypeValue === 'sso') {
+      const firebaseUser = getUser()
+      if (firebaseUser?.email) {
+        appDetails.value.contacts = [firebaseUser.email]
+      }
+    }
+  }
+
   getGeolocationData()
 
   if (!props.appSpec?.compose) {

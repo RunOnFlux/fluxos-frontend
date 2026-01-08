@@ -5280,6 +5280,14 @@ onMounted(() => {
     }
   }
 
+  // Auto-fill contact email for SSO users
+  const loginType = localStorage.getItem('loginType')
+  if (loginType === 'sso') {
+    const firebaseUser = getUser()
+    if (firebaseUser?.email) {
+      contactEmail.value = firebaseUser.email
+    }
+  }
 })
 </script>
 
