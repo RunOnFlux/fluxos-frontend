@@ -499,27 +499,32 @@
                         </VCol>
                       </VRow>
 
-                      <VTextField
-                        v-model="appPort"
-                        :label="t('pages.apps.register.orbit.config.appPortLabel')"
-                        :placeholder="t('pages.apps.register.orbit.config.appPortPlaceholder')"
-                        prepend-inner-icon="mdi-lan-connect"
-                        type="number"
-                        :rules="[rules.required, rules.port]"
-                        variant="outlined"
-                        class="mb-4 app-port-field"
-                        persistent-hint
-                      >
-                        <template #details>
-                          <div class="v-messages app-port-hint">
-                            <span class="v-messages__message">{{ t('pages.apps.register.orbit.config.portListensOn') }}</span>
-                            <VChip v-if="portAutoDetected" color="success" size="x-small" variant="flat" class="ml-2">
-                              <VIcon start size="12">mdi-auto-fix</VIcon>
-                              {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
-                            </VChip>
-                          </div>
-                        </template>
-                      </VTextField>
+                      <VRow class="mb-4">
+                        <VCol cols="12" md="6">
+                          <VTextField
+                            v-model="appPort"
+                            :label="t('pages.apps.register.orbit.config.appPortLabel')"
+                            :placeholder="t('pages.apps.register.orbit.config.appPortPlaceholder')"
+                            prepend-inner-icon="mdi-lan-connect"
+                            type="number"
+                            :rules="[rules.required, rules.port]"
+                            variant="outlined"
+                            :hint="t('pages.apps.register.orbit.config.portListensOn')"
+                            persistent-hint
+                          />
+                        </VCol>
+                        <VCol cols="12" md="6">
+                          <VTextField
+                            v-model="customDomain"
+                            :label="`${t('pages.apps.register.orbit.config.customDomainLabel')} (${t('common.labels.optional')})`"
+                            :placeholder="t('pages.apps.register.orbit.config.customDomainPlaceholder')"
+                            prepend-inner-icon="mdi-web"
+                            variant="outlined"
+                            :hint="t('pages.apps.register.orbit.config.customDomainHint')"
+                            persistent-hint
+                          />
+                        </VCol>
+                      </VRow>
 
                       <!-- Custom Plan Resources Configuration -->
                       <div v-if="selectedPlan === 'custom'" class="custom-resources-section mb-4">
@@ -835,12 +840,12 @@
                               {{ t('pages.apps.register.orbit.config.deploymentLocationTitle') }}
                               <span class="text-medium-emphasis text-body-2 ml-1">({{ t('common.labels.optional') }})</span>
                               <VChip
-                                v-if="selectedGeo.continent !== 'ALL' || customDomain"
+                                v-if="selectedGeo.continent !== 'ALL'"
                                 size="x-small"
                                 color="primary"
                                 class="ml-2"
                               >
-                                {{ (selectedGeo.continent !== 'ALL' ? 1 : 0) + (customDomain ? 1 : 0) }}
+                                1
                               </VChip>
                             </VExpansionPanelTitle>
                             <VExpansionPanelText>
@@ -1107,26 +1112,6 @@
                                 </p>
                               </div>
 
-                              <VDivider class="my-4" />
-
-                              <!-- Custom Domain -->
-                              <div>
-                                <p class="text-subtitle-2 font-weight-medium mb-2">
-                                  <VIcon start size="18">mdi-web</VIcon>
-                                  {{ t('pages.apps.register.orbit.config.customDomainTitle') }}
-                                </p>
-
-                                <VTextField
-                                  v-model="customDomain"
-                                  :label="t('pages.apps.register.orbit.config.customDomainLabel')"
-                                  :placeholder="t('pages.apps.register.orbit.config.customDomainPlaceholder')"
-                                  prepend-inner-icon="mdi-link-variant"
-                                  variant="outlined"
-                                  density="compact"
-                                  :hint="t('pages.apps.register.orbit.config.customDomainHint')"
-                                  persistent-hint
-                                />
-                              </div>
                             </VExpansionPanelText>
                           </VExpansionPanel>
                         </VExpansionPanels>
@@ -6905,21 +6890,4 @@ onMounted(() => {
   }
 }
 
-/* App port hint styling to match other field hints */
-.app-port-field :deep(.v-input__details) {
-  justify-content: flex-start;
-  padding-inline-start: 16px;
-}
-
-.app-port-hint {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-.app-port-hint .v-messages__message {
-  line-height: 1.2;
-  color: rgba(var(--v-theme-on-surface), 0.6);
-}
 </style>
