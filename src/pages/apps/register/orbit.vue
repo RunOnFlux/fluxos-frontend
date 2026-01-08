@@ -1702,185 +1702,153 @@
                 <template #item.6>
                   <div class="step-content payment-step">
 
-                    <!-- Payment Processing Phase -->
-                    <div v-if="!paymentConfirmed" class="payment-phase">
-                      <!-- Free Month Info -->
-                      <div class="text-center mb-6">
-                        <VAvatar size="80" color="success" variant="tonal" class="mb-4">
-                          <VIcon size="48">mdi-gift-outline</VIcon>
-                        </VAvatar>
-                        <h3 class="text-h4 font-weight-bold mb-2">{{ t('pages.apps.register.orbit.deploy.freeMonthTitle') }}</h3>
-                        <p class="text-body-1 text-medium-emphasis mb-2">
-                          {{ t('pages.apps.register.orbit.deploy.freeMonthDescription') }}
-                        </p>
-                        <VChip color="primary" variant="tonal" size="small">
-                          <VIcon start size="16">mdi-domain</VIcon>
-                          {{ t('pages.apps.register.orbit.deploy.sponsoredBy') }}
-                        </VChip>
-                      </div>
+                    <!-- Deployment Success -->
+                    <div v-if="paymentConfirmed" class="payment-monitoring-container">
+                      <VRow no-gutters class="justify-center">
+                        <VCol cols="12" class="pa-3">
+                          <VCard elevation="2" class="deployment-success-card">
+                            <VCardText class="pa-8 text-center">
+                              <VIcon icon="mdi-check-circle" size="80" color="success" class="mb-4" />
+                              <h2 class="text-h4 font-weight-bold mb-3 text-success">
+                                {{ t('pages.apps.register.orbit.deploy.registrationCompleteTitle') }}
+                              </h2>
+                              <p class="text-body-1 mb-6 text-medium-emphasis">
+                                {{ t('pages.apps.register.orbit.deploy.registrationCompleteDescription') }}
+                              </p>
 
-                      <!-- Payment Submission Info -->
-                      <VCard variant="outlined" class="mb-6">
-                        <VCardText class="text-center py-4">
-                          <VIcon color="info" size="24" class="mb-2">mdi-information-outline</VIcon>
-                          <p class="text-body-2 text-medium-emphasis mb-0">
-                            {{ t('pages.apps.register.orbit.deploy.paymentSubmissionInfo') }}
-                          </p>
-                        </VCardText>
-                      </VCard>
+                              <!-- Orbit-specific Access Information -->
+                              <VCard variant="outlined" class="mb-4 text-left">
+                                <VCardText>
+                                  <div class="d-flex align-center justify-center gap-2 mb-2">
+                                    <VIcon color="primary">mdi-application</VIcon>
+                                    <span class="text-h6">{{ appName }}</span>
+                                  </div>
+                                  <VDivider class="my-3" />
+                                  <p class="text-subtitle-2 font-weight-medium mb-2">
+                                    <VIcon size="18" class="mr-1">mdi-information-outline</VIcon>
+                                    {{ t('pages.apps.register.orbit.register.firstInstallInfo') }}
+                                  </p>
+                                  <div class="access-info-list">
+                                    <div class="d-flex align-center gap-2 mb-2">
+                                      <VIcon size="16" color="primary">mdi-web</VIcon>
+                                      <span class="text-body-2">
+                                        <strong>{{ t('pages.apps.register.orbit.register.appUrl') }}</strong>
+                                        <a
+                                          :href="`https://${appName}.app.runonflux.io`"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          class="ml-1"
+                                        >
+                                          https://{{ appName }}.app.runonflux.io
+                                          <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                        </a>
+                                      </span>
+                                    </div>
+                                    <div class="d-flex align-center gap-2 mb-2">
+                                      <VIcon size="16" color="success">mdi-api</VIcon>
+                                      <span class="text-body-2">
+                                        <strong>{{ t('pages.apps.register.orbit.register.orbitApi') }}</strong>
+                                        <a
+                                          :href="`https://${appName}_${orbitManagementPort}.app.runonflux.io`"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          class="ml-1"
+                                        >
+                                          https://{{ appName }}_{{ orbitManagementPort }}.app.runonflux.io
+                                          <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                        </a>
+                                      </span>
+                                    </div>
+                                    <div class="d-flex align-center gap-2">
+                                      <VIcon size="16" color="info">mdi-book-open-variant</VIcon>
+                                      <span class="text-body-2">
+                                        <strong>{{ t('pages.apps.register.orbit.register.orbitDocumentation') }}</strong>
+                                        <a
+                                          href="https://orbit.app.runonflux.io/docs/intro"
+                                          target="_blank"
+                                          rel="noopener noreferrer"
+                                          class="ml-1"
+                                        >
+                                          https://orbit.app.runonflux.io/docs/intro
+                                          <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                        </a>
+                                      </span>
+                                    </div>
+                                  </div>
+                                </VCardText>
+                              </VCard>
 
-                      <!-- Two-Phase Monitoring -->
-                      <div class="payment-monitoring">
-                        <LoadingSpinner
-                          :message="paymentMonitoringPhase === 'blockchain'
-                            ? t('pages.apps.register.orbit.deploy.checkingRegistration')
-                            : t('pages.apps.register.orbit.deploy.waitingForInstance')"
-                          :image-src="fluxLogo"
-                          image-alt="Flux Logo"
-                          :image-size="100"
-                          loading
-                        />
-
-                        <!-- Phase Message Box -->
-                        <div class="d-flex justify-center mt-6">
-                          <div class="deployment-message-box">
-                            <!-- Phase 1: Blockchain confirmation -->
-                            <template v-if="paymentMonitoringPhase === 'blockchain'">
-                              <div class="d-flex align-center">
-                                <VIcon color="success" size="20" class="mr-2">mdi-gift-outline</VIcon>
-                                <span>{{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}</span>
-                              </div>
-                              <div class="d-flex align-center">
-                                <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
-                                <span>{{ t('pages.apps.register.orbit.deploy.checkingPaymentOnBlockchain') }}</span>
-                              </div>
-                              <div class="d-flex align-center">
-                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
-                                <span>{{ t('pages.apps.register.orbit.deploy.blockchainConfirmationTime') }}</span>
-                              </div>
-                            </template>
-                            <!-- Phase 2: Node deployment -->
-                            <template v-else>
-                              <div class="d-flex align-center">
-                                <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
-                                <span>{{ t('pages.apps.register.orbit.deploy.paymentConfirmedWaitingNodes') }}</span>
-                              </div>
-                              <div class="d-flex align-center">
-                                <VIcon color="info" size="20" class="mr-2">mdi-server</VIcon>
-                                <span>{{ t('pages.apps.register.orbit.deploy.waitingForNodesPickup') }}</span>
-                              </div>
-                              <div class="d-flex align-center">
-                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
-                                <span>{{ t('pages.apps.register.orbit.deploy.nodeDeploymentTime') }}</span>
-                              </div>
-                            </template>
-                          </div>
-                        </div>
-                      </div>
+                              <VBtn
+                                color="primary"
+                                size="large"
+                                :to="`/apps/manage/${appName}`"
+                              >
+                                <VIcon start>mdi-cog</VIcon>
+                                {{ t('pages.apps.register.orbit.deploy.manageApplication') }}
+                              </VBtn>
+                            </VCardText>
+                          </VCard>
+                        </VCol>
+                      </VRow>
                     </div>
 
-                    <!-- Deployment Success -->
-                    <div v-else class="deployment-success">
-                      <div class="text-center">
-                        <VIcon size="80" color="success" class="mb-4">mdi-check-circle</VIcon>
-                        <h3 class="text-h4 font-weight-bold mb-2">{{ t('pages.apps.register.orbit.deploy.registrationCompleteTitle') }}</h3>
-                        <p class="text-body-1 text-medium-emphasis mb-4">
-                          {{ t('pages.apps.register.orbit.deploy.registrationCompleteDescription') }}
-                        </p>
-
-                        <VCard variant="outlined" class="mb-4">
-                          <VCardText>
-                            <div class="d-flex align-center justify-center gap-2 mb-2">
-                              <VIcon color="primary">mdi-application</VIcon>
-                              <span class="text-h6">{{ appName }}</span>
-                            </div>
-                            <VDivider class="my-3" />
-                            <div class="d-flex align-center justify-center gap-2">
-                              <VIcon color="info" size="20">mdi-server</VIcon>
-                              <p class="text-body-2 text-medium-emphasis mb-0">
-                                {{ t('pages.apps.register.orbit.deploy.nodesSpawning') }}
-                              </p>
-                            </div>
-
-                            <VDivider class="my-3" />
-
-                            <!-- Access Information -->
-                            <div class="text-left">
-                              <p class="text-subtitle-2 font-weight-medium mb-2">
-                                <VIcon size="18" class="mr-1">mdi-information-outline</VIcon>
-                                {{ t('pages.apps.register.orbit.register.firstInstallInfo') }}
-                              </p>
-                              <div class="access-info-list">
-                                <div class="d-flex align-center gap-2 mb-2">
-                                  <VIcon size="16" color="primary">mdi-web</VIcon>
-                                  <span class="text-body-2">
-                                    <strong>{{ t('pages.apps.register.orbit.register.appUrl') }}</strong>
-                                    <a
-                                      :href="`https://${appName}.app.runonflux.io`"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      class="ml-1"
-                                    >
-                                      https://{{ appName }}.app.runonflux.io
-                                      <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
-                                    </a>
-                                  </span>
-                                </div>
-                                <div class="d-flex align-center gap-2 mb-2">
-                                  <VIcon size="16" color="success">mdi-api</VIcon>
-                                  <span class="text-body-2">
-                                    <strong>{{ t('pages.apps.register.orbit.register.orbitApi') }}</strong>
-                                    <a
-                                      :href="`https://${appName}_${orbitManagementPort}.app.runonflux.io`"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      class="ml-1"
-                                    >
-                                      https://{{ appName }}_{{ orbitManagementPort }}.app.runonflux.io
-                                      <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
-                                    </a>
-                                  </span>
-                                </div>
-                                <div class="d-flex align-center gap-2">
-                                  <VIcon size="16" color="info">mdi-book-open-variant</VIcon>
-                                  <span class="text-body-2">
-                                    <strong>{{ t('pages.apps.register.orbit.register.orbitDocumentation') }}</strong>
-                                    <a
-                                      href="https://orbit.app.runonflux.io/docs/intro"
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      class="ml-1"
-                                    >
-                                      https://orbit.app.runonflux.io/docs/intro
-                                      <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
-                                    </a>
-                                  </span>
+                    <!-- Payment Monitoring Spinner -->
+                    <div v-if="!paymentConfirmed" class="payment-monitoring-container">
+                      <VRow no-gutters class="justify-center">
+                        <VCol cols="12" class="pa-3">
+                          <VCard elevation="2" class="payment-monitoring-card">
+                            <VCardText class="pa-6">
+                              <LoadingSpinner
+                                :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : 'mdi-rocket-launch'"
+                                :icon-size="48"
+                                :title="paymentMonitoringPhase === 'blockchain'
+                                  ? t('pages.apps.register.orbit.deploy.checkingRegistration')
+                                  : t('pages.apps.register.orbit.deploy.waitingForInstance')"
+                                message=""
+                              />
+                              <!-- First month sponsor message -->
+                              <div class="text-center mb-3">
+                                <VChip color="success" variant="tonal" size="small">
+                                  <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
+                                  {{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}
+                                </VChip>
+                              </div>
+                              <div class="d-flex justify-center">
+                                <div class="deployment-monitoring-wrapper">
+                                  <div class="deployment-message-box">
+                                    <!-- Phase 1: Blockchain confirmation -->
+                                    <template v-if="paymentMonitoringPhase === 'blockchain'">
+                                      <div class="d-flex align-center">
+                                        <VIcon color="info" size="20" class="mr-2">mdi-magnify</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.checkingPaymentOnBlockchain') }}</span>
+                                      </div>
+                                      <div class="d-flex align-center">
+                                        <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.blockchainConfirmationTime') }}</span>
+                                      </div>
+                                    </template>
+                                    <!-- Phase 2: Node deployment -->
+                                    <template v-else>
+                                      <div class="d-flex align-center">
+                                        <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.paymentConfirmedWaitingNodes') }}</span>
+                                      </div>
+                                      <div class="d-flex align-center">
+                                        <VIcon color="info" size="20" class="mr-2">mdi-server</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.waitingForNodesPickup') }}</span>
+                                      </div>
+                                      <div class="d-flex align-center">
+                                        <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.nodeDeploymentTime') }}</span>
+                                      </div>
+                                    </template>
+                                  </div>
                                 </div>
                               </div>
-                            </div>
-                          </VCardText>
-                        </VCard>
-
-                        <div class="d-flex flex-column flex-sm-row justify-center gap-3">
-                          <VBtn
-                            color="primary"
-                            size="large"
-                            :to="`/apps/manage/${appName}`"
-                          >
-                            <VIcon start>mdi-cog</VIcon>
-                            {{ t('pages.apps.register.orbit.deploy.manageApplication') }}
-                          </VBtn>
-                          <VBtn
-                            variant="outlined"
-                            size="large"
-                            :to="{ name: 'apps-register-orbit' }"
-                            @click="resetForm"
-                          >
-                            <VIcon start>mdi-plus</VIcon>
-                            {{ t('pages.apps.register.orbit.deploy.deployAnother') }}
-                          </VBtn>
-                        </div>
-                      </div>
+                            </VCardText>
+                          </VCard>
+                        </VCol>
+                      </VRow>
                     </div>
                   </div>
                 </template>
@@ -1945,9 +1913,6 @@ import geolocations from '@/utils/geolocation'
 import AppsService from '@/services/AppsService'
 import StorageService from '@/services/StorageService'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
-
-// Use the same logo as the initial loading screen
-const fluxLogo = '/images/logo.png'
 import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import {
@@ -6481,6 +6446,48 @@ onMounted(() => {
   margin-top: 0 !important;
 }
 
+.payment-monitoring-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+  border: 2px solid rgba(var(--v-theme-primary), 0.3) !important;
+}
+
+.deployment-success-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+  border: 2px solid rgba(var(--v-theme-success), 0.5) !important;
+  background: linear-gradient(135deg, rgba(var(--v-theme-success), 0.05) 0%, rgba(var(--v-theme-success), 0.1) 100%);
+}
+
+.payment-monitoring-card .loading-container {
+  min-height: auto !important;
+  padding: 0 24px 24px 24px !important;
+  margin-top: 0 !important;
+}
+
+.payment-monitoring-card .loading-container h2 {
+  white-space: nowrap !important;
+  text-align: center !important;
+  display: inline-block !important;
+  width: 100% !important;
+}
+
+.payment-monitoring-card .loading-container h2 span {
+  white-space: nowrap !important;
+}
+
+.payment-monitoring-card .loading-container p {
+  text-align: center !important;
+  width: 100% !important;
+  margin: 0 auto !important;
+}
+
+.deployment-monitoring-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .deployment-message-box {
   display: flex;
   flex-direction: column;
@@ -6489,6 +6496,7 @@ onMounted(() => {
   border-radius: 8px;
   background: rgba(var(--v-theme-warning), 0.1);
   max-width: 400px;
+  margin-top: -1.5rem;
 }
 
 .deployment-message-box span {
