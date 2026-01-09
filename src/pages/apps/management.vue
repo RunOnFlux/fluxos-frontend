@@ -402,7 +402,9 @@ async function getApps() {
   if (privilege.value === 'fluxteam') {
     await getAllApps()
   } else {
-    await Promise.all([getActiveApps(), getExpiredApps()])
+    // Must run sequentially: getExpiredApps filters based on activeApps.value
+    await getActiveApps()
+    await getExpiredApps()
   }
 }
 
