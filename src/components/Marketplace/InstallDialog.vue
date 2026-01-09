@@ -178,10 +178,12 @@
                         <div class="hardware-value-display">
                           <input
                             v-model="config.ram"
-                            type="text"
+                            type="number"
                             class="hardware-custom-input"
                             :disabled="isRamLocked"
-                            @input="config.ram = $event.target.value"
+                            min="100"
+                            step="100"
+                            @blur="config.ram = Math.max(100, Math.round(config.ram / 100) * 100)"
                           />
                         </div>
                         <VBtn
@@ -305,9 +307,12 @@
                             <div class="hardware-value-display">
                               <input
                                 v-model="entry.ram"
-                                type="text"
+                                type="number"
                                 class="hardware-custom-input"
+                                min="100"
+                                step="100"
                                 @input="updateComposeTotal"
+                                @blur="entry.ram = Math.max(100, Math.round(entry.ram / 100) * 100); updateComposeTotal()"
                               />
                             </div>
                             <VBtn

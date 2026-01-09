@@ -1686,11 +1686,13 @@
                           v-model.number="component.ram"
                           type="number"
                           min="100"
+                          step="100"
                           dense
                           hide-details
                           density="compact"
                           variant="outlined"
                           class="text-field-fixed"
+                          @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
                         />
                       </div>
                     </VCol>
@@ -1760,11 +1762,13 @@
                         v-model.number="component.ram"
                         type="number"
                         min="100"
+                        step="100"
                         dense
                         hide-details
                         density="compact"
                         variant="outlined"
                         class="hardware-input"
+                        @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
                       />
                     </div>
                     <div class="hardware-box-with-input">
