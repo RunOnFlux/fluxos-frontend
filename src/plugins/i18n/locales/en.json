@@ -321,7 +321,7 @@
     }
   },
   "myApps": {
-    "fluxCloudTitle": "Flux Cloud",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "Decentralized Application Management",
     "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
   },
@@ -1432,12 +1432,12 @@
           "startingAt": "Starting at"
         },
         "whyFluxPanel": {
-          "title": "Why Host on Flux Cloud",
+          "title": "Why Host on FluxCloud",
           "subtitle": "Experience the benefits of decentralized cloud infrastructure powered by Web3 technology"
         },
         "genericFAQPanel": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Common questions about hosting on Flux Cloud"
+          "subtitle": "Common questions about hosting on FluxCloud"
         }
       },
       "installDialog": {
@@ -3157,7 +3157,7 @@
       },
       "common": {
         "whyFlux": {
-          "title": "Why Host on Flux Cloud",
+          "title": "Why Host on FluxCloud",
           "subtitle": "Experience the power of decentralized cloud infrastructure built on Web3 technology",
           "benefits": [
             {
@@ -3204,11 +3204,11 @@
         },
         "genericFAQ": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Everything you need to know about hosting on Flux Cloud",
+          "subtitle": "Everything you need to know about hosting on FluxCloud",
           "questions": [
             {
-              "q": "What is Flux Cloud?",
-              "a": "Flux Cloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
+              "q": "What is FluxCloud?",
+              "a": "FluxCloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
             },
             {
               "q": "How do I get started?",
@@ -3245,9 +3245,9 @@
           ]
         },
         "appSpecificFAQ": {
-          "pricingQuestion": "How much does it cost to host {appName} on Flux Cloud?",
-          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on Flux Cloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
-          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on Flux Cloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
+          "pricingQuestion": "How much does it cost to host {appName} on FluxCloud?",
+          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on FluxCloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
+          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on FluxCloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
         }
       },
       "games": {
@@ -4611,7 +4611,7 @@
     "explore": "Explore",
     "services": {
       "fluxCloud": {
-        "name": "Flux Cloud",
+        "name": "FluxCloud",
         "description": "Deploy and scale your applications on a decentralized cloud infrastructure",
         "category": "Infrastructure"
       },

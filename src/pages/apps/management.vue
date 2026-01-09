@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Flux Cloud Info Card -->
+    <!-- FluxCloud Info Card -->
     <VCard class="mb-4 management-intro-card">
       <VCardText>
         <div class="d-flex align-center mb-3">

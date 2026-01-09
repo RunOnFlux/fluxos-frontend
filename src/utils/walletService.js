@@ -97,7 +97,7 @@ const isLocalhost = typeof window !== 'undefined' && window.location.hostname ==
 const projectId = "df787edc6839c7de49d527bba9199eaa"
 
 const metadata = {
-  name: "Flux Cloud",
+  name: "FluxCloud",
   description: "Flux, Your Gateway to a Decentralized World",
   url: isLocalhost ? (typeof window !== 'undefined' ? window.location.origin : '') : "https://cloud.runonflux.com",
   icons: ["https://cloud.runonflux.com/images/logo.png"],
@@ -728,7 +728,7 @@ async function getMMSDK() {
       preferDesktop: true,
       useDeeplink: false,
       dappMetadata: {
-        name: 'Flux Cloud',
+        name: 'FluxCloud',
         url: isLocalhost ? (typeof window !== 'undefined' ? window.location.origin : '') : 'https://cloud.runonflux.com',
       },
     })
