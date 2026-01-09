@@ -4616,7 +4616,7 @@
         "category": "Infrastructure"
       },
       "fluxAI": {
-        "name": "Flux AI",
+        "name": "FluxAI",
         "description": "Harness the power of distributed AI computing for your machine learning needs",
         "category": "AI & ML"
       },
