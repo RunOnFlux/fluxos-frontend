@@ -231,7 +231,7 @@
       "title": "Help"
     },
     "fluxDrive": {
-      "title": "Flux Drive"
+      "title": "FluxDrive"
     }
   },
   "sections": {
@@ -1674,8 +1674,8 @@
         "starter": "Starter",
         "standard": "Standard",
         "pro": "Elite",
-        "enterprise": "Flux Drive Pro",
-        "fluxDrivePro": "Flux Drive Pro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "Payment successful! Redirecting..."
@@ -1825,7 +1825,7 @@
           "starter": "Starter",
           "standard": "Standard",
           "elite": "Elite",
-          "fluxDrivePro": "Flux Drive Pro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Most Popular",

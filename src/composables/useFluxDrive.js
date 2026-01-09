@@ -670,7 +670,7 @@ export function useFluxDrive() {
 
   // API Methods
   const selectPlan = async planId => {
-    // Handle Enterprise/Flux Drive Pro plan differently - contact us
+    // Handle Enterprise/FluxDrive Pro plan differently - contact us
     if (planId === 'enterprise') {
       const supportUrl = 'https://support.runonflux.io'
       window.open(supportUrl, '_blank', 'noopener,noreferrer')

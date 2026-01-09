@@ -317,7 +317,7 @@
       "title": "Help"
     },
     "fluxDrive": {
-      "title": "Flux Drive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
@@ -1922,8 +1922,8 @@
         "starter": "Starter",
         "standard": "Standard",
         "pro": "Elite",
-        "enterprise": "Flux Drive Pro",
-        "fluxDrivePro": "Flux Drive Pro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "Payment successful! Redirecting..."
@@ -2085,7 +2085,7 @@
           "starter": "Starter",
           "standard": "Standard",
           "elite": "Elite",
-          "fluxDrivePro": "Flux Drive Pro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Most Popular",
@@ -4474,7 +4474,7 @@
       "price": "Price",
       "perMonth": "per month",
       "header": {
-        "title": "Flux Drive",
+        "title": "FluxDrive",
         "subtitle": "Complete your subscription to unlock decentralized storage"
       },
       "fluxPay": {
@@ -4512,7 +4512,7 @@
         "cryptoComInitFailed": "Crypto.com payment initialization failed. Please try again.",
         "cryptoComPaymentFailed": "Failed to initialize Crypto.com payment",
         "paymentFailedRetry": "Payment failed. Please try again.",
-        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to Flux Drive...",
+        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to FluxDrive...",
         "pleaseLoginToContinue": "Please login to continue with your purchase",
         "sessionExpired": "Session expired. Please login again."
       }
@@ -4621,7 +4621,7 @@
         "category": "AI & ML"
       },
       "fluxDrive": {
-        "name": "Flux Drive",
+        "name": "FluxDrive",
         "description": "Secure, decentralized storage solution for your data",
         "category": "Storage"
       },
