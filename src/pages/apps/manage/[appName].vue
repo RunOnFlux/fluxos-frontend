@@ -962,7 +962,7 @@
               />
             </div>
 
-            <div v-else-if="appSpecification?.compose && tab.value === '8' && privilege !== 'fluxteam'">
+            <div v-else-if="appSpecification?.compose && tab.value === '8'">
               <BackupAndRestore
                 :key="currentTab" 
                 :app-spec="appSpecification"
@@ -1211,7 +1211,6 @@ const InstalledLoading = ref(false)
 const InstalledApiError = ref(false)
 const apiError = ref(false)
 const runningInstancesKey = ref(0)
-const { privilege } = storeToRefs(fluxStore)
 const alertMessageText = ref(t('pages.apps.manage.messages.dataRetrievalError'))
 
 const zelidauthOwner = ref([])
@@ -1305,7 +1304,7 @@ const allTabs = computed(() => [
   { label: t('pages.apps.manage.tabs.logs'), value: "5", requiresInstance: true },
   { label: t('pages.apps.manage.tabs.terminal'), value: "6", requiresInstance: true },
   { label: t('pages.apps.manage.tabs.control'), value: "7", requiresInstance: true },
-  (privilege.value !== 'fluxteam' && isComposeApp.value) && {
+  isComposeApp.value && {
     label: t('pages.apps.manage.tabs.backupRestore'),
     value: "8",
     requiresInstance: true,
