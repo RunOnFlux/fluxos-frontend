@@ -1540,6 +1540,14 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+function getFdmIndex(appName) {
+  const firstLetter = appName.charAt(0).toLowerCase()
+  if (firstLetter >= 'a' && firstLetter <= 'g') return 1
+  if (firstLetter >= 'h' && firstLetter <= 'n') return 2
+  if (firstLetter >= 'o' && firstLetter <= 'u') return 3
+  return 4 // v-z and any other characters
+}
+
 function getAlertColor(state, status) {
   if (!state) return "primary"
   const normalizedState = state.toLowerCase()
@@ -1729,40 +1737,32 @@ async function getInstancesForDropDown() {
   if (masterSlaveApp.value) {
     masterIP.value = null
 
-    const url = `https://${appName.value}.app.runonflux.io/fluxstatistics?scope=${appName.value}apprunonfluxio;json;norefresh`
+    const fdmIndex = getFdmIndex(appName.value)
+    const url = `https://fdm-fn-1-${fdmIndex}.runonflux.io/api/appips/${appName.value}`
     let errorFdm = false
 
-    let fdmData = await axios.get(url).catch(error => {
+    let fdmData = await axios.get(url, { timeout: 20000 }).catch(error => {
       errorFdm = true
       masterIP.value = t('pages.apps.manage.messages.failedToCheck')
       console.error(`UImasterSlave: Failed to reach FDM:`, error)
     })
 
-    if (!errorFdm && fdmData?.data?.length) {
-      for (const fdmServer of fdmData.data) {
-        const serviceName = fdmServer.find(
-          el =>
-            el.id === 1 &&
-            el.objType === "Server" &&
-            el.field.name === "pxname" &&
-            el.value.value
-              .toLowerCase()
-              .startsWith(`${appName.value.toLowerCase()}apprunonfluxio`),
-        )
+    if (!errorFdm && fdmData?.data?.status === 'success' && fdmData?.data?.data?.ips?.length) {
+      const primaryIpWithPort = fdmData.data.data.ips[0]
+      const [primaryIp] = primaryIpWithPort.split(':')
 
-        if (serviceName) {
-          const ipElement = fdmServer.find(
-            el => el.id === 1 && el.objType === "Server" && el.field.name === "svname",
-          )
+      masterIP.value = primaryIp
 
-          if (ipElement) {
-            const [ip, port] = ipElement.value.value.split(":")
+      // Find the matching instance in the dropdown by comparing IPs without port
+      const matchingInstance = instances.value.data.find(inst => {
+        const [instIp] = inst.ip.split(':')
+        return instIp === primaryIp
+      })
 
-            masterIP.value = ip
-            selectedIp.value = port === "16127" ? ip : ipElement.value.value
-            break
-          }
-        }
+      if (matchingInstance) {
+        selectedIp.value = matchingInstance.ip
+      } else {
+        selectedIp.value = primaryIp
       }
     }
 
