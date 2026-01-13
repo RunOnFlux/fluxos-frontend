@@ -47,6 +47,11 @@ import sanitizeHtml from '@/utils/sanitizeHtml'
 import '@core/scss/template/index.scss'
 import '@styles/styles.scss'
 
+// Third-party component styles - imported directly to prevent build issues with code splitting
+import 'vue-json-pretty/lib/styles.css'
+import 'draggable-resizable-vue3/src/components/draggable-resizable-vue3/css/DraggableResizableVue3Borders.css'
+import 'draggable-resizable-vue3/src/components/draggable-resizable-vue3/css/DraggableResizableVue3Handles.css'
+
 // Element Plus - only import styles for components we use (ElTree)
 import 'element-plus/es/components/tree/style/css'
 

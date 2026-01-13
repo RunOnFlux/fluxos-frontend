@@ -3,7 +3,6 @@ import { ref, onMounted, onBeforeUnmount, nextTick, reactive } from "vue"
 import { storeToRefs } from "pinia"
 import ClipboardJS from "clipboard"
 import VueJsonPretty from "vue-json-pretty"
-import "vue-json-pretty/lib/styles.css"
 import { useConfigStore } from "@core/stores/config"
 
 const props = defineProps({

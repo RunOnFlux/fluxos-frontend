@@ -17,46 +17,8 @@ import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 import compression from 'vite-plugin-compression';
 import purgecss from 'vite-plugin-purgecss';
 import { VitePWA } from 'vite-plugin-pwa';
+import { beasties } from 'vite-plugin-beasties';
 import { aliases } from './aliases.mjs';
-
-// Critical CSS plugin using critters
-function criticalCssPlugin() {
-  return {
-    name: 'vite-plugin-critical-css',
-    apply: 'build',
-    enforce: 'post',
-    async transformIndexHtml(html, ctx) {
-      // Only process in build mode
-      if (!ctx.bundle) return html;
-
-      try {
-        const Critters = (await import('critters')).default;
-        const critters = new Critters({
-          // Inline critical CSS
-          inlineFonts: false,
-          // Preload external stylesheets
-          preload: 'swap',
-          // Don't remove original stylesheets (let browser load them async)
-          pruneSource: false,
-          // Reduce unused CSS rules in inlined styles
-          reduceInlineStyles: true,
-          // Use media="print" trick for async loading
-          noscriptFallback: true,
-          // Merge inlined styles
-          mergeStylesheets: true,
-        });
-
-        // Process HTML with critters
-        const result = await critters.process(html);
-        console.log('✅ Critical CSS extracted and inlined');
-        return result;
-      } catch (error) {
-        console.warn('⚠️ Critical CSS extraction failed:', error.message);
-        return html;
-      }
-    },
-  };
-}
 
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
@@ -253,6 +215,8 @@ export default defineConfig(({ mode }) => {
             /^xterm/, // xterm classes
             /^monaco/, // Monaco editor classes
             /^shepherd/, // Shepherd.js tour classes
+            /^vjs-/, // vue-json-pretty classes
+            /^drv-/, // draggable-resizable-vue3 classes
             /data-v-/, // Vue scoped styles
           ],
           deep: [
@@ -444,8 +408,23 @@ export default defineConfig(({ mode }) => {
           enabled: false, // Disable in development
         },
       }),
-      // Critical CSS extraction (production only)
-      !isDev && criticalCssPlugin(),
+      // Critical CSS extraction (production only) using Beasties
+      !isDev && beasties({
+        options: {
+          // Inline critical CSS
+          inlineFonts: false,
+          // Preload external stylesheets with swap strategy
+          preload: 'swap',
+          // Don't remove original stylesheets (let browser load them async)
+          pruneSource: false,
+          // Reduce unused CSS rules in inlined styles
+          reduceInlineStyles: true,
+          // Use media="print" trick for async loading
+          noscriptFallback: true,
+          // Merge inlined styles
+          mergeStylesheets: true,
+        },
+      }),
     ],
     define: {
       'process.env': {},
