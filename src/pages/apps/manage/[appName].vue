@@ -1544,6 +1544,7 @@ function getFdmIndex(appName) {
   if (firstLetter >= 'a' && firstLetter <= 'g') return 1
   if (firstLetter >= 'h' && firstLetter <= 'n') return 2
   if (firstLetter >= 'o' && firstLetter <= 'u') return 3
+  
   return 4 // v-z and any other characters
 }
 
@@ -1755,6 +1756,7 @@ async function getInstancesForDropDown() {
       // Find the matching instance in the dropdown by comparing IPs without port
       const matchingInstance = instances.value.data.find(inst => {
         const [instIp] = inst.ip.split(':')
+        
         return instIp === primaryIp
       })
 
