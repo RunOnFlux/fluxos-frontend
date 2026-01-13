@@ -2597,33 +2597,82 @@ const calculateAppPrice = async () => {
   try {
     const containerPort = parseInt(appPort.value, 10) || 3000
 
+    // Build compose array for price calculation
+    const composeArray = [{
+      name: 'cloudgit',
+      description: 'cloudgit',
+      repotag: 'runonflux/orbit:latest',
+      ports: [30000],
+      containerPorts: [containerPort],
+      domains: [''],
+      environmentParameters: [''],
+      commands: [],
+      containerData: '/app',
+      cpu: Number(planResources.value.cpu).toString(),
+      ram: (Number(planResources.value.ram) * 1000).toString(), // Convert GB to MB
+      hdd: Number(planResources.value.storage).toString(),
+      tiered: false,
+    }]
+
+    let enterpriseValue = ''
+    let composeData = composeArray
+    let contactsData = ['']
+
+    // Handle enterprise encryption for private repos (like cost calculator)
+    if (isEnterpriseApp.value) {
+      try {
+        // Get the RSA public key for enterprise encryption
+        const zelidauth = localStorage.getItem('zelidauth')
+        const pubKeyResponse = await AppsService.getAppPublicKey(zelidauth, {
+          name: appName.value || 'orbit-price-calc',
+          owner: zelid.value || '176iuPFBqD4yg3Fd7oPVhB3d4NXWxvQyxx',
+        })
+
+        if (pubKeyResponse.data.status === 'success') {
+          const pubKeyB64 = pubKeyResponse.data.data.trim().replace(/\s+/g, '')
+          const rsaPubKey = await importRsaPublicKey(pubKeyB64)
+
+          // Generate AES key and encrypt enterprise data
+          const aesKey = crypto.getRandomValues(new Uint8Array(32))
+          const encryptedAesKey = await encryptAesKeyWithRsaKey(aesKey, rsaPubKey)
+
+          // Create enterprise specs (contacts + compose to be encrypted)
+          const enterpriseSpecs = {
+            contacts: [''],
+            compose: composeArray,
+          }
+
+          enterpriseValue = await encryptEnterpriseWithAes(
+            JSON.stringify(enterpriseSpecs),
+            aesKey,
+            encryptedAesKey,
+          )
+
+          // For enterprise, compose and contacts are empty in payload (encrypted in enterprise field)
+          composeData = []
+          contactsData = []
+        } else {
+          console.warn('[orbit] Failed to get public key for enterprise pricing, using standard pricing')
+        }
+      } catch (encryptError) {
+        console.warn('[orbit] Enterprise encryption failed for price calc, using standard pricing:', encryptError.message)
+        // Continue with standard pricing if encryption fails
+      }
+    }
+
     // Build the app spec payload for price calculation
     const payloadObj = {
       version: 8,
       name: appName.value || 'orbit-app',
       description: 'Price calculation',
       owner: zelid.value || '176iuPFBqD4yg3Fd7oPVhB3d4NXWxvQyxx',
-      compose: [{
-        name: 'cloudgit',
-        description: 'cloudgit',
-        repotag: 'runonflux/orbit:latest',
-        ports: [30000],
-        containerPorts: [containerPort],
-        domains: [''],
-        environmentParameters: [''],
-        commands: [],
-        containerData: '/app',
-        cpu: Number(planResources.value.cpu).toString(),
-        ram: (Number(planResources.value.ram) * 1000).toString(), // Convert GB to MB
-        hdd: Number(planResources.value.storage).toString(),
-        tiered: false,
-      }],
+      compose: composeData,
       instances: planResources.value.instances,
       nodes: [],
-      contacts: [''],
+      contacts: contactsData,
       geolocation: [''],
       expire: 88000, // 1 month
-      enterprise: isEnterpriseApp.value ? 'true' : '',
+      enterprise: enterpriseValue,
       staticip: false,
     }
 
