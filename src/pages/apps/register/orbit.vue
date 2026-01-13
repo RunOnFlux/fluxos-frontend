@@ -2094,7 +2094,7 @@
                       <VBtn
                         v-if="currentStep < 4"
                         color="primary"
-                        :disabled="currentStep === 1 && !selectedPlan"
+                        :disabled="(currentStep === 1 && !selectedPlan) || (currentStep === 2 && repoCheckStatus === 'private' && authTestStatus !== 'success')"
                         @click="nextStep"
                       >
                         {{ t('pages.apps.register.orbit.navigation.continue') }}
@@ -4751,6 +4751,18 @@ const nextStep = async () => {
     // Step 2: Repository - validate repo form
     const { valid } = await repoForm.value.validate()
     if (!valid) return
+
+    // For private repos, require successful auth test before continuing
+    if (repoCheckStatus.value === 'private') {
+      if (!repoToken.value) {
+        // Token is required for private repos
+        return
+      }
+      if (authTestStatus.value !== 'success') {
+        // Must test connection successfully before continuing
+        return
+      }
+    }
 
     // Start background check for duplicate git repo when moving from step 2 to step 3
     checkDuplicateGitRepo()
