@@ -6197,7 +6197,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-card {
   flex: 1;
-  min-width: 140px;
+  min-width: 200px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6297,7 +6297,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-value-display {
   flex: 1;
-  max-width: 70px;
+  min-width: 80px;
   height: 32px;
   display: flex;
   align-items: center;
@@ -6320,10 +6320,24 @@ watch(isLoggedIn, (newValue, oldValue) => {
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hardware-custom-input:focus {
   outline: none;
+}
+
+/* Hide increment/decrement arrows for number inputs */
+.hardware-custom-input::-webkit-outer-spin-button,
+.hardware-custom-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hardware-custom-input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /* Dark theme support */

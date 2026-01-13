@@ -265,7 +265,6 @@
               density="compact"
               class="mt-3"
             >
-              <VIcon size="18" class="mr-2">mdi-information-outline</VIcon>
               {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
             </VAlert>
           </div>
