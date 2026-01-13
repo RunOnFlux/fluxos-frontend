@@ -2945,7 +2945,7 @@
               "cpu": "0.1 - 15 rdzeni",
               "ram": "100 MB - 59 GB",
               "storage": "1 - 820 GB",
-              "instances": "1 - 100 instancji"
+              "instances": "1 - 3 instancji"
             },
             "buildLimitWarning": "Po osiągnięciu limitu darmowego planu następny build automatycznie uaktualni do planu Pro",
             "currentPlan": "Aktualny plan",

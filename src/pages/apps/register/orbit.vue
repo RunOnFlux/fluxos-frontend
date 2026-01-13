@@ -610,7 +610,7 @@
                               <VSlider
                                 v-model="customPlanResources.instances"
                                 :min="1"
-                                :max="100"
+                                :max="3"
                                 :step="1"
                                 hide-details
                                 color="info"
