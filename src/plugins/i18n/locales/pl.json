@@ -2966,6 +2966,9 @@
           "review": {
             "stepTitle": "Przegląd i wdrożenie",
             "stepDescription": "Przejrzyj konfigurację przed wdrożeniem w sieci Flux.",
+            "checkingEligibility": "Sprawdzanie uprawnienia do pierwszego miesiąca za darmo...",
+            "notEligibleTitle": "Ten FluxCloud Git nie kwalifikuje się do pierwszego miesiąca za darmo",
+            "notEligibleDescription": "Wymagana jest płatność, aby kontynuować.",
             "repository": "Repozytorium",
             "url": "URL",
             "branch": "Gałąź",
@@ -3068,6 +3071,17 @@
             "continue": "Kontynuuj",
             "next": "Dalej",
             "previous": "Poprzedni"
+          },
+          "payment": {
+            "payWithCard": "Zapłać kartą",
+            "securePayment": "Bezpieczna i natychmiastowa płatność",
+            "payWithFlux": "Zapłać FLUX",
+            "cryptoPayment": "Płatność kryptowalutą",
+            "notEligibleInfo": "Ta rejestracja wymaga płatności. Wybierz metodę płatności, aby kontynuować.",
+            "secureProcessing": "Bezpieczne przetwarzanie płatności",
+            "instantConfirmation": "Natychmiastowe potwierdzenie płatności",
+            "sendTo": "Wyślij do",
+            "message": "Wiadomość"
           },
           "features": {
             "title": "Wdrożenie z Git w kilka minut",

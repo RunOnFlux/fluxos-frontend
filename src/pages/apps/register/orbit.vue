@@ -1398,12 +1398,33 @@
                 <!-- Step 4: Review -->
                 <template #item.4>
                   <div class="step-content">
-                    <h3 class="step-title">{{ t('pages.apps.register.orbit.review.stepTitle') }}</h3>
-                    <p class="step-description">
-                      {{ t('pages.apps.register.orbit.review.stepDescription') }}
-                    </p>
+                    <!-- Loading spinner while checking eligibility -->
+                    <div v-if="duplicateGitRepoCheckStatus === 'checking'" class="text-center py-8">
+                      <VProgressCircular indeterminate color="primary" size="48" />
+                      <p class="text-body-1 mt-4">{{ t('pages.apps.register.orbit.review.checkingEligibility') }}</p>
+                    </div>
 
-                    <div class="review-summary">
+                    <template v-else>
+                      <h3 class="step-title">{{ t('pages.apps.register.orbit.review.stepTitle') }}</h3>
+                      <p class="step-description">
+                        {{ t('pages.apps.register.orbit.review.stepDescription') }}
+                      </p>
+
+                      <!-- Warning: Not eligible for first month free -->
+                      <VAlert
+                        v-if="hasDuplicateGitRepo"
+                        type="warning"
+                        variant="tonal"
+                        class="mb-4"
+                        icon="mdi-alert-circle"
+                      >
+                        <strong>{{ t('pages.apps.register.orbit.review.notEligibleTitle') }}</strong>
+                        <p class="mb-0 mt-1">
+                          {{ t('pages.apps.register.orbit.review.notEligibleDescription', { appName: existingOrbitAppName }) }}
+                        </p>
+                      </VAlert>
+
+                      <div class="review-summary">
                       <!-- Repository Section -->
                       <div class="review-section">
                         <h4 class="review-section-title">
@@ -1576,11 +1597,20 @@
                         <div class="review-item highlight-price">
                           <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
                           <span class="review-value price">
-                            <VChip color="success" size="small" variant="flat" class="mr-2">
+                            <VChip v-if="eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
                               <VIcon start size="14">mdi-gift-outline</VIcon>
                               {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
                             </VChip>
-                            {{ formattedTotalPrice }}
+                            <template v-if="!eligibleForFirstMonthFree && calculatedAppPriceLoading">
+                              <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
+                              Calculating...
+                            </template>
+                            <template v-else-if="!eligibleForFirstMonthFree && calculatedAppPrice">
+                              ${{ calculatedAppPrice.usd.toFixed(2) }}/month
+                            </template>
+                            <template v-else>
+                              {{ formattedTotalPrice }}
+                            </template>
                           </span>
                         </div>
                       </div>
@@ -1615,6 +1645,7 @@
                         </template>
                       </VCheckbox>
                     </div>
+                    </template>
                   </div>
                 </template>
 
@@ -1780,8 +1811,213 @@
                       </VRow>
                     </div>
 
+                    <!-- Payment Options - for users not eligible for first month free -->
+                    <div v-if="!paymentConfirmed && !eligibleForFirstMonthFree && !fiatPaymentInitiated" class="payment-options-container">
+                      <!-- Warning about not eligible -->
+                      <VAlert
+                        type="info"
+                        variant="tonal"
+                        class="mb-4"
+                        icon="mdi-information"
+                      >
+                        {{ t('pages.apps.register.orbit.payment.notEligibleInfo') }}
+                      </VAlert>
+
+                      <VRow no-gutters class="justify-center">
+                        <!-- Fiat Payment -->
+                        <VCol cols="12" sm="6" md="6" lg="5" xl="4" class="pa-3">
+                          <VCard elevation="2" class="payment-method-card h-100">
+                            <VCardTitle class="payment-header bg-gradient-primary">
+                              <div class="d-flex align-center">
+                                <VAvatar size="40" color="white" variant="tonal" class="me-3">
+                                  <VIcon color="primary" size="24">mdi-credit-card</VIcon>
+                                </VAvatar>
+                                <div class="text-white">
+                                  <div class="text-h6 font-weight-bold">{{ t('pages.apps.register.orbit.payment.payWithCard') }}</div>
+                                  <div class="text-subtitle-2 opacity-90">{{ t('pages.apps.register.orbit.payment.securePayment') }}</div>
+                                </div>
+                              </div>
+                            </VCardTitle>
+
+                            <VCardText class="pa-6">
+                              <div class="text-center">
+                                <!-- Payment Icons -->
+                                <div class="payment-icons-grid mb-4">
+                                  <VCard
+                                    variant="outlined"
+                                    class="payment-icon-card"
+                                    @click="initStripePay"
+                                    :loading="checkoutLoading && paymentMethod === 'stripe'"
+                                    hover
+                                  >
+                                    <VCardText class="d-flex align-center justify-center pa-6">
+                                      <img
+                                        class="payment-brand-icon-small"
+                                        :src="StripeImg"
+                                        alt="Stripe"
+                                      />
+                                    </VCardText>
+                                  </VCard>
+
+                                  <VCard
+                                    variant="outlined"
+                                    class="payment-icon-card"
+                                    @click="initPaypalPay"
+                                    :loading="checkoutLoading && paymentMethod === 'paypal'"
+                                    hover
+                                  >
+                                    <VCardText class="d-flex align-center justify-center pa-6">
+                                      <img
+                                        class="payment-brand-icon-small"
+                                        :src="PayPalImg"
+                                        alt="PayPal"
+                                      />
+                                    </VCardText>
+                                  </VCard>
+                                </div>
+
+                                <!-- USD Price Display -->
+                                <div class="mt-4 mb-4">
+                                  <VChip v-if="calculatedAppPriceLoading" color="grey" variant="flat" size="large">
+                                    <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
+                                    Calculating...
+                                  </VChip>
+                                  <VChip v-else-if="calculatedAppPrice" color="success" variant="flat" size="large">
+                                    ${{ calculatedAppPrice.usd.toFixed(2) }} + VAT
+                                  </VChip>
+                                  <VChip v-else color="success" variant="flat" size="large">
+                                    {{ formattedTotalPrice }} + VAT
+                                  </VChip>
+                                </div>
+
+                                <!-- Payment Advantages -->
+                                <div class="mb-4">
+                                  <div class="payment-field-container mb-2">
+                                    <div class="payment-field-label">
+                                      <VIcon color="success">mdi-shield-check</VIcon>
+                                    </div>
+                                    <div class="payment-field-value">
+                                      {{ t('pages.apps.register.orbit.payment.secureProcessing') }}
+                                    </div>
+                                  </div>
+                                  <div class="payment-field-container mb-2">
+                                    <div class="payment-field-label">
+                                      <VIcon color="success">mdi-clock-fast</VIcon>
+                                    </div>
+                                    <div class="payment-field-value">
+                                      {{ t('pages.apps.register.orbit.payment.instantConfirmation') }}
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </VCardText>
+                          </VCard>
+                        </VCol>
+
+                        <!-- Crypto Payment -->
+                        <VCol cols="12" sm="6" md="6" lg="5" xl="4" class="pa-3">
+                          <VCard elevation="2" class="payment-method-card h-100">
+                            <VCardTitle class="payment-header bg-gradient-warning">
+                              <div class="d-flex align-center">
+                                <VAvatar size="40" color="white" variant="tonal" class="me-3">
+                                  <VIcon color="warning" size="24">mdi-lightning-bolt</VIcon>
+                                </VAvatar>
+                                <div class="text-white">
+                                  <div class="text-h6 font-weight-bold">{{ t('pages.apps.register.orbit.payment.payWithFlux') }}</div>
+                                  <div class="text-subtitle-2 opacity-90">{{ t('pages.apps.register.orbit.payment.cryptoPayment') }}</div>
+                                </div>
+                              </div>
+                            </VCardTitle>
+
+                            <VCardText class="pa-6">
+                              <div class="text-center">
+                                <!-- Wallet Options -->
+                                <div class="payment-icons-grid mb-4">
+                                  <VCard
+                                    variant="outlined"
+                                    class="payment-icon-card"
+                                    @click="initZelcorePay"
+                                    :loading="checkoutLoading && paymentMethod === 'zelcore'"
+                                    hover
+                                  >
+                                    <VCardText class="d-flex align-center justify-center pa-6">
+                                      <img
+                                        class="wallet-brand-icon mr-2"
+                                        :src="FluxIDImg"
+                                        alt="Zelcore"
+                                      />
+                                      <span class="text-subtitle-1 font-weight-medium">Zelcore</span>
+                                    </VCardText>
+                                  </VCard>
+
+                                  <VCard
+                                    variant="outlined"
+                                    class="payment-icon-card"
+                                    @click="initSSPPay"
+                                    :loading="checkoutLoading && paymentMethod === 'ssp'"
+                                    hover
+                                  >
+                                    <VCardText class="d-flex align-center justify-center pa-6">
+                                      <img
+                                        class="wallet-brand-icon mr-2"
+                                        :src="SSPLogoThemeImg"
+                                        alt="SSP"
+                                      />
+                                      <span class="text-subtitle-1 font-weight-medium">SSP</span>
+                                    </VCardText>
+                                  </VCard>
+                                </div>
+
+                                <!-- FLUX Price Display -->
+                                <div class="text-center mb-4">
+                                  <VChip v-if="calculatedAppPriceLoading" color="grey" variant="flat" size="large">
+                                    <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
+                                    Calculating...
+                                  </VChip>
+                                  <VChip v-else-if="calculatedAppPrice" color="primary" variant="flat" size="large">
+                                    <VIcon start size="16">mdi-lightning-bolt</VIcon>
+                                    {{ calculatedAppPrice.flux.toFixed(2) }} FLUX
+                                  </VChip>
+                                  <VChip v-else color="primary" variant="flat" size="large">
+                                    <VIcon start size="16">mdi-lightning-bolt</VIcon>
+                                    {{ customPlanPrice?.flux || monthlyPriceDisplay * 10 }} FLUX
+                                  </VChip>
+                                </div>
+
+                                <!-- Payment Details -->
+                                <VCard variant="flat" class="bg-grey-lighten-5">
+                                  <VCardText class="pa-3">
+                                    <!-- Address Field -->
+                                    <div class="mb-2">
+                                      <div class="payment-detail-row">
+                                        <VIcon size="16" class="mr-1" color="grey">mdi-wallet</VIcon>
+                                        <span class="text-caption text-grey">{{ t('pages.apps.register.orbit.payment.sendTo') }}</span>
+                                      </div>
+                                      <div class="text-caption text-truncate" style="max-width: 200px; margin: 0 auto;">
+                                        {{ deploymentAddress || t('common.status.loading') }}
+                                      </div>
+                                    </div>
+                                    <!-- Message Field -->
+                                    <div>
+                                      <div class="payment-detail-row">
+                                        <VIcon size="16" class="mr-1" color="grey">mdi-message-text</VIcon>
+                                        <span class="text-caption text-grey">{{ t('pages.apps.register.orbit.payment.message') }}</span>
+                                      </div>
+                                      <div class="text-caption text-truncate" style="max-width: 200px; margin: 0 auto;">
+                                        {{ registrationHash || t('common.status.loading') }}
+                                      </div>
+                                    </div>
+                                  </VCardText>
+                                </VCard>
+                              </div>
+                            </VCardText>
+                          </VCard>
+                        </VCol>
+                      </VRow>
+                    </div>
+
                     <!-- Payment Monitoring Spinner -->
-                    <div v-if="!paymentConfirmed" class="payment-monitoring-container">
+                    <div v-if="!paymentConfirmed && (eligibleForFirstMonthFree || fiatPaymentInitiated)" class="payment-monitoring-container">
                       <VRow no-gutters class="justify-center">
                         <VCol cols="12" class="pa-3">
                           <VCard elevation="2" class="payment-monitoring-card">
@@ -1794,8 +2030,8 @@
                                   : t('pages.apps.register.orbit.deploy.waitingForInstance')"
                                 message=""
                               />
-                              <!-- First month sponsor message -->
-                              <div class="text-center mb-3">
+                              <!-- First month sponsor message - only show when eligible -->
+                              <div v-if="eligibleForFirstMonthFree" class="text-center mb-3">
                                 <VChip color="success" variant="tonal" size="small">
                                   <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
                                   {{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}
@@ -1899,7 +2135,13 @@ import axios from 'axios'
 import Api from '@/services/ApiClient'
 import geolocations from '@/utils/geolocation'
 import AppsService from '@/services/AppsService'
+import StripeImg from '@images/Stripe.svg?url'
+import PayPalImg from '@images/PayPal.png?url'
+import FluxIDImg from '@images/FLUXID.svg?url'
+import SSPLogoBlackImg from '@images/ssp-logo-black.svg?url'
+import SSPLogoWhiteImg from '@images/ssp-logo-white.svg?url'
 import StorageService from '@/services/StorageService'
+import { useTheme } from 'vuetify'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
@@ -2063,6 +2305,12 @@ const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
 const fluxStore = useFluxStore()
 const { privilege, zelid } = storeToRefs(fluxStore)
 
+// Theme for SSP logo
+const theme = useTheme()
+const SSPLogoThemeImg = computed(() => {
+  return theme.global.name.value === 'dark' ? SSPLogoWhiteImg : SSPLogoBlackImg
+})
+
 // Auth state
 const isLoggedIn = computed(() => privilege.value !== 'none')
 
@@ -2088,6 +2336,17 @@ const stepItems = computed(() => [
 watch(currentStep, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
+
+// Calculate price when duplicate check completes and user is not eligible
+watch(
+  () => [duplicateGitRepoCheckStatus.value, hasDuplicateGitRepo.value, currentStep.value],
+  ([checkStatus, hasDuplicate, step]) => {
+    // When on step 4 (review) or later, duplicate check is done, and user has duplicate (not eligible)
+    if (step >= 4 && checkStatus === 'checked' && hasDuplicate && !calculatedAppPrice.value && !calculatedAppPriceLoading.value) {
+      calculateAppPrice()
+    }
+  },
+)
 
 // Form refs
 const repoForm = ref(null)
@@ -2243,6 +2502,131 @@ const checkRepoAccess = async () => {
     console.error('Error checking repo:', error)
     repoCheckStatus.value = 'error'
     repoCheckError.value = 'Network error while checking repository'
+  }
+}
+
+// Check if owner has already registered an orbit app with the same git repo
+const checkDuplicateGitRepo = async () => {
+  if (!zelid.value || !repoUrl.value) {
+    duplicateGitRepoCheckStatus.value = 'checked'
+    return
+  }
+
+  duplicateGitRepoCheckStatus.value = 'checking'
+  hasDuplicateGitRepo.value = false
+  existingOrbitAppName.value = null
+
+  try {
+    // Fetch permanent messages for the app owner
+    const url = `https://api.runonflux.io/apps/permanentmessages?appowner=${zelid.value}`
+    const response = await axios.get(url, { timeout: 30000 })
+
+    if (response.data.status !== 'success' || !Array.isArray(response.data.data)) {
+      console.warn('[orbit] Failed to fetch permanent messages for owner:', zelid.value)
+      duplicateGitRepoCheckStatus.value = 'checked'
+      return
+    }
+
+    const permanentMessages = response.data.data
+    const registerMessages = permanentMessages.filter(message => message.type === 'fluxappregister')
+
+    // Check fluxappregister messages for duplicate git repos
+    for (const message of registerMessages) {
+      const appSpecs = message.appSpecifications
+      if (!appSpecs) continue
+
+      // Only check orbit apps (repotag must be runonflux/orbit:latest)
+      if (!appSpecs.compose || !Array.isArray(appSpecs.compose) || appSpecs.compose.length === 0) continue
+      const component = appSpecs.compose[0]
+      if (!component.repotag || component.repotag !== 'runonflux/orbit:latest') continue
+
+      // Extract GIT_REPO_URL from environment parameters
+      if (component.environmentParameters && Array.isArray(component.environmentParameters)) {
+        for (const envParam of component.environmentParameters) {
+          if (typeof envParam === 'string' && envParam.startsWith('GIT_REPO_URL=')) {
+            const existingRepoUrl = envParam.substring('GIT_REPO_URL='.length)
+            if (existingRepoUrl === repoUrl.value) {
+              hasDuplicateGitRepo.value = true
+              existingOrbitAppName.value = appSpecs.name
+              duplicateGitRepoCheckStatus.value = 'checked'
+              return
+            }
+          }
+        }
+      }
+    }
+
+    duplicateGitRepoCheckStatus.value = 'checked'
+  } catch (error) {
+    console.error('[orbit] Error checking owner git repos:', error)
+    // On error, allow the flow to proceed (fail open)
+    duplicateGitRepoCheckStatus.value = 'checked'
+  }
+}
+
+// Calculate actual app price for non-eligible users
+const calculateAppPrice = async () => {
+  calculatedAppPriceLoading.value = true
+  calculatedAppPriceError.value = null
+  calculatedAppPrice.value = null
+
+  try {
+    const containerPort = parseInt(appPort.value, 10) || 3000
+
+    // Build the app spec payload for price calculation
+    const payloadObj = {
+      version: 8,
+      name: appName.value || 'orbit-app',
+      description: 'Price calculation',
+      owner: zelid.value || '176iuPFBqD4yg3Fd7oPVhB3d4NXWxvQyxx',
+      compose: [{
+        name: 'cloudgit',
+        description: 'cloudgit',
+        repotag: 'runonflux/orbit:latest',
+        ports: [30000],
+        containerPorts: [containerPort],
+        domains: [''],
+        environmentParameters: [''],
+        commands: [],
+        containerData: '/app',
+        cpu: Number(planResources.value.cpu).toString(),
+        ram: (Number(planResources.value.ram) * 1000).toString(), // Convert GB to MB
+        hdd: Number(planResources.value.storage).toString(),
+        tiered: false,
+      }],
+      instances: planResources.value.instances,
+      nodes: [],
+      contacts: [''],
+      geolocation: [''],
+      expire: 88000, // 1 month
+      enterprise: isEnterpriseApp.value ? 'true' : '',
+      staticip: false,
+    }
+
+    const response = await Api().post(
+      '/apps/calculatefiatandfluxprice',
+      JSON.stringify(payloadObj),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        timeout: 15000,
+      },
+    )
+
+    if (response.data.status !== 'error' && response.data.data) {
+      calculatedAppPrice.value = {
+        usd: parseFloat(response.data.data.usd) || 0,
+        flux: parseFloat(response.data.data.flux) || 0,
+      }
+    } else {
+      calculatedAppPriceError.value = 'Failed to calculate price'
+    }
+  } catch (error) {
+    console.error('[orbit] Error calculating app price:', error)
+    calculatedAppPriceError.value = 'Error calculating price'
+  } finally {
+    calculatedAppPriceLoading.value = false
   }
 }
 
@@ -3904,6 +4288,24 @@ const paymentMonitoringPhase = ref('blockchain') // 'blockchain' or 'deployment'
 const checkoutLoading = ref(false)
 const showFiatOptions = ref(false)
 const showCryptoOptions = ref(false)
+const fiatPaymentInitiated = ref(false)
+
+// Duplicate git repo check state
+const duplicateGitRepoCheckStatus = ref('idle') // 'idle', 'checking', 'checked'
+const hasDuplicateGitRepo = ref(false)
+const existingOrbitAppName = ref(null)
+
+// Calculated price for non-eligible users
+const calculatedAppPrice = ref(null) // { usd: number, flux: number }
+const calculatedAppPriceLoading = ref(false)
+const calculatedAppPriceError = ref(null)
+
+// Computed: Whether user is eligible for first month free
+const eligibleForFirstMonthFree = computed(() => {
+  // Not eligible if they already have an orbit app with same git repo
+  if (hasDuplicateGitRepo.value) return false
+  return true
+})
 
 // Plan resources
 const planResources = computed(() => {
@@ -4349,6 +4751,9 @@ const nextStep = async () => {
     // Step 2: Repository - validate repo form
     const { valid } = await repoForm.value.validate()
     if (!valid) return
+
+    // Start background check for duplicate git repo when moving from step 2 to step 3
+    checkDuplicateGitRepo()
   } else if (currentStep.value === 3) {
     // Step 3: Configuration - validate config form
     const { valid } = await configForm.value.validate()
@@ -4884,6 +5289,9 @@ const initStripePay = async () => {
     popup.location.href = response.data.data
     popup.focus()
 
+    // Mark fiat payment as initiated to show monitoring spinner
+    fiatPaymentInitiated.value = true
+
     // Start monitoring
     startPaymentMonitoring()
   } catch (error) {
@@ -4920,6 +5328,9 @@ const initPaypalPay = async () => {
     popup.location.href = response.data.data
     popup.focus()
 
+    // Mark fiat payment as initiated to show monitoring spinner
+    fiatPaymentInitiated.value = true
+
     // Start monitoring
     startPaymentMonitoring()
   } catch (error) {
@@ -4949,6 +5360,9 @@ const initZelcorePay = async () => {
     // Open Zelcore
     const zelcoreUrl = `zel:?action=pay&coin=flux&address=${paymentInfo.address}&amount=${paymentInfo.amount}&message=${encodeURIComponent('Orbit Pro Plan')}`
     window.location.href = zelcoreUrl
+
+    // Mark payment as initiated to show monitoring spinner
+    fiatPaymentInitiated.value = true
 
     // Start payment monitoring
     startPaymentMonitoring()
@@ -4984,6 +5398,9 @@ const initSSPPay = async () => {
     })
 
     if (sspResult.status === 'success') {
+      // Mark payment as initiated to show monitoring spinner
+      fiatPaymentInitiated.value = true
+
       // Start payment monitoring
       startPaymentMonitoring()
     } else {
@@ -6435,6 +6852,92 @@ onMounted(() => {
   border-radius: 16px !important;
   overflow: hidden;
   border: 2px solid rgba(var(--v-theme-primary), 0.3) !important;
+}
+
+/* Fiat payment styles */
+.fiat-payment-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+  border: 2px solid rgba(var(--v-theme-primary), 0.3) !important;
+}
+
+.fiat-payment-card .payment-header {
+  padding: 1.25rem 1.5rem;
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgba(var(--v-theme-primary), 0.85) 100%);
+}
+
+.payment-icons-grid {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.payment-icon-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-width: 120px;
+}
+
+.payment-icon-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.payment-brand-icon-small {
+  height: 32px;
+  width: auto;
+}
+
+.payment-field-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.payment-field-label {
+  display: flex;
+  align-items: center;
+}
+
+.payment-field-value {
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.8);
+}
+
+.bg-gradient-primary {
+  background: linear-gradient(135deg, rgb(var(--v-theme-primary)) 0%, rgba(var(--v-theme-primary), 0.85) 100%);
+}
+
+.bg-gradient-warning {
+  background: linear-gradient(135deg, rgb(var(--v-theme-warning)) 0%, rgba(var(--v-theme-warning), 0.85) 100%);
+}
+
+.payment-method-card {
+  border-radius: 16px !important;
+  overflow: hidden;
+  border: 1px solid rgba(var(--v-border-color), 0.1) !important;
+}
+
+.payment-method-card .payment-header {
+  padding: 1.25rem 1.5rem;
+}
+
+.wallet-brand-icon {
+  height: 28px;
+  width: auto;
+}
+
+.payment-detail-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.payment-options-container {
+  padding: 0 1rem;
 }
 
 .deployment-success-card {

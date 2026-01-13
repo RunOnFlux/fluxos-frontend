@@ -2966,6 +2966,9 @@
           "review": {
             "stepTitle": "Review & Deploy",
             "stepDescription": "Review your configuration before deploying to the Flux network.",
+            "checkingEligibility": "Checking eligibility for first month free...",
+            "notEligibleTitle": "This FluxCloud Git doesn't qualify for first month free",
+            "notEligibleDescription": "Payment will be required to proceed.",
             "repository": "Repository",
             "url": "URL",
             "branch": "Branch",
@@ -3068,6 +3071,17 @@
             "continue": "Continue",
             "next": "Next",
             "previous": "Previous"
+          },
+          "payment": {
+            "payWithCard": "Pay with Card",
+            "securePayment": "Secure & instant payment",
+            "payWithFlux": "Pay with FLUX",
+            "cryptoPayment": "Cryptocurrency payment",
+            "notEligibleInfo": "This registration requires payment. Select a payment method to continue.",
+            "secureProcessing": "Secure payment processing",
+            "instantConfirmation": "Instant payment confirmation",
+            "sendTo": "Send to",
+            "message": "Message"
           },
           "features": {
             "title": "Deploy from Git in Minutes",
