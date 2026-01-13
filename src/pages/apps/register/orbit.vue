@@ -1823,91 +1823,96 @@
                         {{ t('pages.apps.register.orbit.payment.notEligibleInfo') }}
                       </VAlert>
 
+                      <!-- Payment Method Selection Label -->
+                      <div class="payment-method-selection-label mb-4">
+                        <VAvatar size="48" color="primary" variant="flat" class="mr-3">
+                          <VIcon size="28" color="white">mdi-credit-card-outline</VIcon>
+                        </VAvatar>
+                        <span class="text-h6">{{ t('pages.apps.register.orbit.payment.selectPaymentMethod') }}</span>
+                      </div>
+
                       <VRow no-gutters class="justify-center">
                         <!-- Fiat Payment -->
-                        <VCol cols="12" sm="6" md="6" lg="5" xl="4" class="pa-3">
-                          <VCard elevation="2" class="payment-method-card h-100">
-                            <VCardTitle class="payment-header bg-gradient-primary">
-                              <div class="d-flex align-center">
-                                <VAvatar size="40" color="white" variant="tonal" class="me-3">
-                                  <VIcon color="primary" size="24">mdi-credit-card</VIcon>
+                        <VCol cols="12" md="6" class="pa-3">
+                          <VCard
+                            class="payment-method-card h-100"
+                            elevation="0"
+                            variant="outlined"
+                          >
+                            <VCardText class="pa-4">
+                              <!-- Header -->
+                              <div class="d-flex align-center mb-4">
+                                <VAvatar size="36" color="primary" variant="tonal" class="me-3">
+                                  <VIcon color="primary" size="20">mdi-credit-card</VIcon>
                                 </VAvatar>
-                                <div class="text-white">
-                                  <div class="text-h6 font-weight-bold">{{ t('pages.apps.register.orbit.payment.payWithCard') }}</div>
-                                  <div class="text-subtitle-2 opacity-90">{{ t('pages.apps.register.orbit.payment.securePayment') }}</div>
+                                <div>
+                                  <div class="text-subtitle-1 font-weight-bold">{{ t('pages.apps.register.orbit.payment.payWithCard') }}</div>
+                                  <div class="text-caption text-medium-emphasis">{{ t('pages.apps.register.orbit.payment.securePayment') }}</div>
                                 </div>
                               </div>
-                            </VCardTitle>
 
-                            <VCardText class="pa-6">
-                              <div class="text-center">
-                                <!-- Payment Icons -->
-                                <div class="payment-icons-grid mb-4">
-                                  <VCard
-                                    variant="outlined"
-                                    class="payment-icon-card"
-                                    @click="initStripePay"
-                                    :loading="checkoutLoading && paymentMethod === 'stripe'"
-                                    hover
-                                  >
-                                    <VCardText class="d-flex align-center justify-center pa-6">
-                                      <img
-                                        class="payment-brand-icon-small"
-                                        :src="StripeImg"
-                                        alt="Stripe"
-                                      />
-                                    </VCardText>
-                                  </VCard>
+                              <!-- Payment Icons - Horizontal Grid -->
+                              <div class="payment-icons-row mb-4">
+                                <VCard
+                                  variant="outlined"
+                                  class="payment-icon-card-horizontal"
+                                  @click="initStripePay"
+                                  :loading="checkoutLoading && paymentMethod === 'stripe'"
+                                  hover
+                                >
+                                  <VCardText class="d-flex align-center justify-center pa-4">
+                                    <img
+                                      class="payment-brand-icon-small"
+                                      :src="StripeImg"
+                                      alt="Stripe"
+                                    />
+                                  </VCardText>
+                                </VCard>
 
-                                  <VCard
-                                    variant="outlined"
-                                    class="payment-icon-card"
-                                    @click="initPaypalPay"
-                                    :loading="checkoutLoading && paymentMethod === 'paypal'"
-                                    hover
-                                  >
-                                    <VCardText class="d-flex align-center justify-center pa-6">
-                                      <img
-                                        class="payment-brand-icon-small"
-                                        :src="PayPalImg"
-                                        alt="PayPal"
-                                      />
-                                    </VCardText>
-                                  </VCard>
+                                <VCard
+                                  variant="outlined"
+                                  class="payment-icon-card-horizontal"
+                                  @click="initPaypalPay"
+                                  :loading="checkoutLoading && paymentMethod === 'paypal'"
+                                  hover
+                                >
+                                  <VCardText class="d-flex align-center justify-center pa-4">
+                                    <img
+                                      class="payment-brand-icon-small"
+                                      :src="PayPalImg"
+                                      alt="PayPal"
+                                    />
+                                  </VCardText>
+                                </VCard>
+                              </div>
+
+                              <!-- USD Price Display -->
+                              <div class="text-center mb-4">
+                                <VChip v-if="calculatedAppPriceLoading" color="grey" variant="flat" size="large">
+                                  <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
+                                  Calculating...
+                                </VChip>
+                                <VChip v-else-if="calculatedAppPrice" color="success" variant="flat" size="large">
+                                  ${{ calculatedAppPrice.usd.toFixed(2) }} USD + VAT
+                                </VChip>
+                                <VChip v-else color="success" variant="flat" size="large">
+                                  {{ formattedTotalPrice }} + VAT
+                                </VChip>
+                              </div>
+
+                              <!-- Payment Advantages -->
+                              <div class="payment-advantages">
+                                <div class="payment-advantage-row">
+                                  <VIcon color="success" size="18">mdi-shield-check</VIcon>
+                                  <span>{{ t('pages.apps.register.orbit.payment.secureProcessing') }}</span>
                                 </div>
-
-                                <!-- USD Price Display -->
-                                <div class="mt-4 mb-4">
-                                  <VChip v-if="calculatedAppPriceLoading" color="grey" variant="flat" size="large">
-                                    <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
-                                    Calculating...
-                                  </VChip>
-                                  <VChip v-else-if="calculatedAppPrice" color="success" variant="flat" size="large">
-                                    ${{ calculatedAppPrice.usd.toFixed(2) }} + VAT
-                                  </VChip>
-                                  <VChip v-else color="success" variant="flat" size="large">
-                                    {{ formattedTotalPrice }} + VAT
-                                  </VChip>
+                                <div class="payment-advantage-row">
+                                  <VIcon color="success" size="18">mdi-clock-fast</VIcon>
+                                  <span>{{ t('pages.apps.register.orbit.payment.instantConfirmation') }}</span>
                                 </div>
-
-                                <!-- Payment Advantages -->
-                                <div class="mb-4">
-                                  <div class="payment-field-container mb-2">
-                                    <div class="payment-field-label">
-                                      <VIcon color="success">mdi-shield-check</VIcon>
-                                    </div>
-                                    <div class="payment-field-value">
-                                      {{ t('pages.apps.register.orbit.payment.secureProcessing') }}
-                                    </div>
-                                  </div>
-                                  <div class="payment-field-container mb-2">
-                                    <div class="payment-field-label">
-                                      <VIcon color="success">mdi-clock-fast</VIcon>
-                                    </div>
-                                    <div class="payment-field-value">
-                                      {{ t('pages.apps.register.orbit.payment.instantConfirmation') }}
-                                    </div>
-                                  </div>
+                                <div class="payment-advantage-row">
+                                  <VIcon color="success" size="18">mdi-currency-usd</VIcon>
+                                  <span>{{ t('pages.apps.register.orbit.payment.multipleCurrency') }}</span>
                                 </div>
                               </div>
                             </VCardText>
@@ -1915,101 +1920,131 @@
                         </VCol>
 
                         <!-- Crypto Payment -->
-                        <VCol cols="12" sm="6" md="6" lg="5" xl="4" class="pa-3">
-                          <VCard elevation="2" class="payment-method-card h-100">
-                            <VCardTitle class="payment-header bg-gradient-warning">
-                              <div class="d-flex align-center">
-                                <VAvatar size="40" color="white" variant="tonal" class="me-3">
-                                  <VIcon color="warning" size="24">mdi-lightning-bolt</VIcon>
+                        <VCol cols="12" md="6" class="pa-3">
+                          <VCard
+                            class="payment-method-card h-100"
+                            elevation="0"
+                            variant="outlined"
+                          >
+                            <VCardText class="pa-4">
+                              <!-- Header -->
+                              <div class="d-flex align-center mb-4">
+                                <VAvatar size="36" color="warning" variant="tonal" class="me-3">
+                                  <VIcon color="warning" size="20">mdi-lightning-bolt</VIcon>
                                 </VAvatar>
-                                <div class="text-white">
-                                  <div class="text-h6 font-weight-bold">{{ t('pages.apps.register.orbit.payment.payWithFlux') }}</div>
-                                  <div class="text-subtitle-2 opacity-90">{{ t('pages.apps.register.orbit.payment.cryptoPayment') }}</div>
+                                <div>
+                                  <div class="text-subtitle-1 font-weight-bold">{{ t('pages.apps.register.orbit.payment.payWithFlux') }}</div>
+                                  <div class="text-caption text-medium-emphasis">{{ t('pages.apps.register.orbit.payment.cryptoPayment') }}</div>
                                 </div>
                               </div>
-                            </VCardTitle>
 
-                            <VCardText class="pa-6">
-                              <div class="text-center">
-                                <!-- Wallet Options -->
-                                <div class="payment-icons-grid mb-4">
-                                  <VCard
-                                    variant="outlined"
-                                    class="payment-icon-card"
-                                    @click="initZelcorePay"
-                                    :loading="checkoutLoading && paymentMethod === 'zelcore'"
-                                    hover
-                                  >
-                                    <VCardText class="d-flex align-center justify-center pa-6">
-                                      <img
-                                        class="wallet-brand-icon mr-2"
-                                        :src="FluxIDImg"
-                                        alt="Zelcore"
-                                      />
-                                      <span class="text-subtitle-1 font-weight-medium">Zelcore</span>
-                                    </VCardText>
-                                  </VCard>
+                              <!-- Wallet Options - Horizontal Grid -->
+                              <div class="payment-icons-row mb-4">
+                                <VCard
+                                  variant="outlined"
+                                  class="payment-icon-card-horizontal"
+                                  @click="initZelcorePay"
+                                  :loading="checkoutLoading && paymentMethod === 'zelcore'"
+                                  hover
+                                >
+                                  <VCardText class="d-flex align-center justify-center pa-4">
+                                    <img
+                                      class="wallet-brand-icon mr-2"
+                                      :src="FluxIDImg"
+                                      alt="Zelcore"
+                                    />
+                                    <span class="text-subtitle-2 font-weight-medium">Zelcore</span>
+                                  </VCardText>
+                                </VCard>
 
-                                  <VCard
-                                    variant="outlined"
-                                    class="payment-icon-card"
-                                    @click="initSSPPay"
-                                    :loading="checkoutLoading && paymentMethod === 'ssp'"
-                                    hover
-                                  >
-                                    <VCardText class="d-flex align-center justify-center pa-6">
-                                      <img
-                                        class="wallet-brand-icon mr-2"
-                                        :src="SSPLogoThemeImg"
-                                        alt="SSP"
-                                      />
-                                      <span class="text-subtitle-1 font-weight-medium">SSP</span>
-                                    </VCardText>
-                                  </VCard>
-                                </div>
-
-                                <!-- FLUX Price Display -->
-                                <div class="text-center mb-4">
-                                  <VChip v-if="calculatedAppPriceLoading" color="grey" variant="flat" size="large">
-                                    <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
-                                    Calculating...
-                                  </VChip>
-                                  <VChip v-else-if="calculatedAppPrice" color="primary" variant="flat" size="large">
-                                    <VIcon start size="16">mdi-lightning-bolt</VIcon>
-                                    {{ calculatedAppPrice.flux.toFixed(2) }} FLUX
-                                  </VChip>
-                                  <VChip v-else color="primary" variant="flat" size="large">
-                                    <VIcon start size="16">mdi-lightning-bolt</VIcon>
-                                    {{ customPlanPrice?.flux || monthlyPriceDisplay * 10 }} FLUX
-                                  </VChip>
-                                </div>
-
-                                <!-- Payment Details -->
-                                <VCard variant="flat" class="bg-grey-lighten-5">
-                                  <VCardText class="pa-3">
-                                    <!-- Address Field -->
-                                    <div class="mb-2">
-                                      <div class="payment-detail-row">
-                                        <VIcon size="16" class="mr-1" color="grey">mdi-wallet</VIcon>
-                                        <span class="text-caption text-grey">{{ t('pages.apps.register.orbit.payment.sendTo') }}</span>
-                                      </div>
-                                      <div class="text-caption text-truncate" style="max-width: 200px; margin: 0 auto;">
-                                        {{ deploymentAddress || t('common.status.loading') }}
-                                      </div>
-                                    </div>
-                                    <!-- Message Field -->
-                                    <div>
-                                      <div class="payment-detail-row">
-                                        <VIcon size="16" class="mr-1" color="grey">mdi-message-text</VIcon>
-                                        <span class="text-caption text-grey">{{ t('pages.apps.register.orbit.payment.message') }}</span>
-                                      </div>
-                                      <div class="text-caption text-truncate" style="max-width: 200px; margin: 0 auto;">
-                                        {{ registrationHash || t('common.status.loading') }}
-                                      </div>
-                                    </div>
+                                <VCard
+                                  variant="outlined"
+                                  class="payment-icon-card-horizontal"
+                                  @click="initSSPPay"
+                                  :loading="checkoutLoading && paymentMethod === 'ssp'"
+                                  hover
+                                >
+                                  <VCardText class="d-flex align-center justify-center pa-4">
+                                    <img
+                                      class="wallet-brand-icon mr-2"
+                                      :src="SSPLogoThemeImg"
+                                      alt="SSP"
+                                    />
+                                    <span class="text-subtitle-2 font-weight-medium">SSP</span>
                                   </VCardText>
                                 </VCard>
                               </div>
+
+                              <!-- FLUX Price Display -->
+                              <div class="text-center mb-4">
+                                <VChip v-if="calculatedAppPriceLoading" color="grey" variant="flat" size="large">
+                                  <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
+                                  Calculating...
+                                </VChip>
+                                <template v-else-if="calculatedAppPrice">
+                                  <VChip color="primary" variant="flat" size="large">
+                                    <VIcon start size="16">mdi-lightning-bolt</VIcon>
+                                    {{ calculatedAppPrice.flux.toFixed(2) }} FLUX
+                                  </VChip>
+                                  <VChip
+                                    v-if="calculatedAppPrice.fluxDiscount > 0"
+                                    color="success"
+                                    variant="flat"
+                                    size="small"
+                                    class="ml-2"
+                                  >
+                                    -{{ calculatedAppPrice.fluxDiscount }}%
+                                  </VChip>
+                                </template>
+                                <VChip v-else color="primary" variant="flat" size="large">
+                                  <VIcon start size="16">mdi-lightning-bolt</VIcon>
+                                  {{ customPlanPrice?.flux || monthlyPriceDisplay * 10 }} FLUX
+                                </VChip>
+                              </div>
+
+                              <!-- Payment Details -->
+                              <VCard variant="flat" class="crypto-payment-details">
+                                <VCardText class="pa-3">
+                                  <!-- Address Field -->
+                                  <div class="crypto-detail-row mb-2">
+                                    <div class="crypto-detail-label">
+                                      <VIcon size="16" class="mr-1">mdi-wallet</VIcon>
+                                      {{ t('pages.apps.register.orbit.payment.sendTo') }}
+                                    </div>
+                                    <div class="crypto-detail-value">
+                                      {{ deploymentAddress || t('common.status.loading') }}
+                                    </div>
+                                    <VBtn
+                                      icon
+                                      variant="text"
+                                      size="x-small"
+                                      class="crypto-copy-btn"
+                                      @click="copyToClipboard(deploymentAddress)"
+                                    >
+                                      <VIcon size="14">mdi-content-copy</VIcon>
+                                    </VBtn>
+                                  </div>
+                                  <!-- Message Field -->
+                                  <div class="crypto-detail-row">
+                                    <div class="crypto-detail-label">
+                                      <VIcon size="16" class="mr-1">mdi-message-text</VIcon>
+                                      {{ t('pages.apps.register.orbit.payment.message') }}
+                                    </div>
+                                    <div class="crypto-detail-value">
+                                      {{ registrationHash || t('common.status.loading') }}
+                                    </div>
+                                    <VBtn
+                                      icon
+                                      variant="text"
+                                      size="x-small"
+                                      class="crypto-copy-btn"
+                                      @click="copyToClipboard(registrationHash)"
+                                    >
+                                      <VIcon size="14">mdi-content-copy</VIcon>
+                                    </VBtn>
+                                  </div>
+                                </VCardText>
+                              </VCard>
                             </VCardText>
                           </VCard>
                         </VCol>
@@ -2137,13 +2172,13 @@ import geolocations from '@/utils/geolocation'
 import AppsService from '@/services/AppsService'
 import StripeImg from '@images/Stripe.svg?url'
 import PayPalImg from '@images/PayPal.png?url'
-import FluxIDImg from '@images/FLUXID.svg?url'
+import FluxIDImg from '@images/FluxID.svg?url'
 import SSPLogoBlackImg from '@images/ssp-logo-black.svg?url'
 import SSPLogoWhiteImg from '@images/ssp-logo-white.svg?url'
 import StorageService from '@/services/StorageService'
 import { useTheme } from 'vuetify'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
-import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount } from '@/utils/walletService'
+import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount, payWithSSP, payWithZelcore } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import {
   encryptAesKeyWithRsaKey,
@@ -2336,17 +2371,6 @@ const stepItems = computed(() => [
 watch(currentStep, () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 })
-
-// Calculate price when duplicate check completes and user is not eligible
-watch(
-  () => [duplicateGitRepoCheckStatus.value, hasDuplicateGitRepo.value, currentStep.value],
-  ([checkStatus, hasDuplicate, step]) => {
-    // When on step 4 (review) or later, duplicate check is done, and user has duplicate (not eligible)
-    if (step >= 4 && checkStatus === 'checked' && hasDuplicate && !calculatedAppPrice.value && !calculatedAppPriceLoading.value) {
-      calculateAppPrice()
-    }
-  },
-)
 
 // Form refs
 const repoForm = ref(null)
@@ -2618,6 +2642,7 @@ const calculateAppPrice = async () => {
       calculatedAppPrice.value = {
         usd: parseFloat(response.data.data.usd) || 0,
         flux: parseFloat(response.data.data.flux) || 0,
+        fluxDiscount: response.data.data.fluxDiscount || 0,
       }
     } else {
       calculatedAppPriceError.value = 'Failed to calculate price'
@@ -4307,6 +4332,17 @@ const eligibleForFirstMonthFree = computed(() => {
   return true
 })
 
+// Calculate price when duplicate check completes and user is not eligible
+watch(
+  () => [duplicateGitRepoCheckStatus.value, hasDuplicateGitRepo.value, currentStep.value],
+  ([checkStatus, hasDuplicate, step]) => {
+    // When on step 4 (review) or later, duplicate check is done, and user has duplicate (not eligible)
+    if (step >= 4 && checkStatus === 'checked' && hasDuplicate && !calculatedAppPrice.value && !calculatedAppPriceLoading.value) {
+      calculateAppPrice()
+    }
+  },
+)
+
 // Plan resources
 const planResources = computed(() => {
   if (selectedPlan.value === 'free') {
@@ -5354,29 +5390,40 @@ const initPaypalPay = async () => {
 
 // Initialize Zelcore payment
 const initZelcorePay = async () => {
-  checkoutLoading.value = true
-  paymentMethod.value = 'zelcore'
-
   try {
-    const zelidauth = localStorage.getItem('zelidauth')
-
-    // Get payment info
-    const response = await AppsService.getAppPaymentInfo(registrationHash.value, zelidauth)
-
-    if (response.data.status === 'error') {
-      throw new Error(response.data.data?.message || 'Failed to get payment info')
+    // Validate price is available and greater than 0
+    const amount = calculatedAppPrice.value?.flux
+    if (!amount || amount <= 0) {
+      console.error('Invalid payment amount. Please wait for price calculation.')
+      return
     }
 
-    const paymentInfo = response.data.data
+    // Validate required fields
+    if (!deploymentAddress.value) {
+      console.error('Deployment address not available')
+      return
+    }
 
-    // Open Zelcore
-    const zelcoreUrl = `zel:?action=pay&coin=flux&address=${paymentInfo.address}&amount=${paymentInfo.amount}&message=${encodeURIComponent('Orbit Pro Plan')}`
-    window.location.href = zelcoreUrl
+    if (!registrationHash.value) {
+      console.error('Registration hash not available')
+      return
+    }
+
+    // Track payment attempt
+    paymentMethod.value = 'zelcore'
+    checkoutLoading.value = true
+
+    await payWithZelcore({
+      address: deploymentAddress.value,
+      amount: amount,
+      message: registrationHash.value,
+      coin: 'zelcash',
+    })
 
     // Mark payment as initiated to show monitoring spinner
     fiatPaymentInitiated.value = true
 
-    // Start payment monitoring
+    // Start payment monitoring for crypto payment
     startPaymentMonitoring()
   } catch (error) {
     console.error('Zelcore payment error:', error)
@@ -5387,41 +5434,60 @@ const initZelcorePay = async () => {
 
 // Initialize SSP payment
 const initSSPPay = async () => {
-  checkoutLoading.value = true
-  paymentMethod.value = 'ssp'
-
   try {
-    const zelidauth = localStorage.getItem('zelidauth')
-
-    // Get payment info
-    const response = await AppsService.getAppPaymentInfo(registrationHash.value, zelidauth)
-
-    if (response.data.status === 'error') {
-      throw new Error(response.data.data?.message || 'Failed to get payment info')
+    // Validate price is available and greater than 0
+    const amount = calculatedAppPrice.value?.flux
+    if (!amount || amount <= 0) {
+      console.error('Invalid payment amount. Please wait for price calculation.')
+      return
     }
 
-    const paymentInfo = response.data.data
+    // Validate required fields
+    if (!deploymentAddress.value) {
+      console.error('Deployment address not available')
+      return
+    }
 
-    // Use SSP wallet - this is handled by the signMessage function
-    const sspResult = await fluxStore.signPaymentSSP({
-      address: paymentInfo.address,
-      amount: paymentInfo.amount,
-      message: 'Orbit Pro Plan',
-    })
+    if (!registrationHash.value) {
+      console.error('Registration hash not available')
+      return
+    }
 
-    if (sspResult.status === 'success') {
+    // Track payment attempt
+    paymentMethod.value = 'ssp'
+    checkoutLoading.value = true
+
+    const data = {
+      message: registrationHash.value,
+      amount: amount.toString(),
+      address: deploymentAddress.value,
+      chain: 'flux',
+    }
+
+    // Wait for user to confirm payment in SSP wallet
+    const response = await payWithSSP(data)
+
+    if (response && response.txid) {
       // Mark payment as initiated to show monitoring spinner
       fiatPaymentInitiated.value = true
 
       // Start payment monitoring
       startPaymentMonitoring()
-    } else {
-      throw new Error(sspResult.message || 'SSP payment failed')
     }
   } catch (error) {
     console.error('SSP payment error:', error)
   } finally {
     checkoutLoading.value = false
+  }
+}
+
+// Copy text to clipboard
+const copyToClipboard = async text => {
+  if (!text) return
+  try {
+    await navigator.clipboard.writeText(text)
+  } catch (error) {
+    console.error('Failed to copy to clipboard:', error)
   }
 }
 
@@ -6950,6 +7016,108 @@ onMounted(() => {
 
 .payment-options-container {
   padding: 0 1rem;
+}
+
+/* Payment Method Selection Label */
+.payment-method-selection-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 1.5rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  background: rgba(var(--v-theme-surface), 0.5);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  width: 100%;
+}
+
+.v-theme--dark .payment-method-selection-label {
+  border-color: #4b5563;
+}
+
+.payment-method-selection-label span {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: rgba(var(--v-theme-on-surface), 0.95);
+  line-height: 1.4;
+}
+
+/* Payment Icons Row - Horizontal Layout */
+.payment-icons-row {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.payment-icon-card-horizontal {
+  flex: 1;
+  max-width: 200px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.payment-icon-card-horizontal:hover {
+  border-color: rgb(var(--v-theme-primary));
+  transform: translateY(-2px);
+}
+
+/* Payment Advantages */
+.payment-advantages {
+  background: rgba(var(--v-theme-surface-variant), 0.3);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.payment-advantage-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 0;
+}
+
+.payment-advantage-row span {
+  font-size: 0.875rem;
+  color: rgba(var(--v-theme-on-surface), 0.8);
+}
+
+/* Crypto Payment Details */
+.crypto-payment-details {
+  background: rgba(var(--v-theme-surface-variant), 0.3);
+  border-radius: 8px;
+}
+
+.crypto-detail-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+
+.crypto-detail-label {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+  white-space: nowrap;
+}
+
+.crypto-detail-value {
+  flex: 1;
+  font-size: 0.75rem;
+  color: rgba(var(--v-theme-on-surface), 0.9);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.crypto-copy-btn {
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+.crypto-copy-btn:hover {
+  opacity: 1;
 }
 
 .deployment-success-card {

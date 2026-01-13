@@ -3078,8 +3078,10 @@
             "payWithFlux": "Zapłać FLUX",
             "cryptoPayment": "Płatność kryptowalutą",
             "notEligibleInfo": "Ta rejestracja wymaga płatności. Wybierz metodę płatności, aby kontynuować.",
+            "selectPaymentMethod": "Wybierz metodę płatności",
             "secureProcessing": "Bezpieczne przetwarzanie płatności",
             "instantConfirmation": "Natychmiastowe potwierdzenie płatności",
+            "multipleCurrency": "Obsługa wielu walut",
             "sendTo": "Wyślij do",
             "message": "Wiadomość"
           },
