@@ -1377,6 +1377,10 @@
                     <div class="plan-disclaimer">
                       <p class="disclaimer-text">
                         <span class="disclaimer-asterisk">*</span>
+                        {{ t('pages.apps.register.orbit.pricing.freeTrialDisclaimer') }}
+                      </p>
+                      <p class="disclaimer-text">
+                        <span class="disclaimer-asterisk">*</span>
                         {{ t('pages.apps.register.orbit.pricing.beginnerDisclaimer') }}
                       </p>
                       <p class="disclaimer-text disclaimer-note">
