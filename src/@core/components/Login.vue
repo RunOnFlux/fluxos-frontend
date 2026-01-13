@@ -1203,7 +1203,7 @@ onMounted(async () => {
   // MMSDK = new MetaMaskSDK({
   //   enableAnalytics: true,
   //   dappMetadata: {
-  //     name: "Flux Cloud",
+  //     name: "FluxCloud",
   //     url: isLocalhost ? window.location.origin : "https://cloud.runonflux.com",
   //   },
   // })

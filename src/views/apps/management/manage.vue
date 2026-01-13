@@ -8,13 +8,13 @@
       <template #activator="{ props: manageBtnProps }">
         <VBtn
           v-bind="manageBtnProps"
-          :id="`manage-installed-app-${row.item.name}`"
           size="small"
           icon
           variant="tonal"
           color="default"
           rounded="true"
           class="mr-2"
+          @click="openAppManagement(row.item.name)"
         >
           <VIcon size="24">
             mdi-cog-outline
@@ -79,13 +79,6 @@
         />
       </template>
     </VTooltip>
-
-    <!-- Confirmation Dialog -->
-    <ConfirmCustomDialog
-      :target="`manage-installed-app-${row.item.name}`"
-      :confirm-button="t('pages.apps.manage.confirmButton')"
-      @confirm="openAppManagement(row.item.name)"
-    />
 
     <!-- Snackbar -->
     <VSnackbar

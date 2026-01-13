@@ -178,10 +178,12 @@
                         <div class="hardware-value-display">
                           <input
                             v-model="config.ram"
-                            type="text"
+                            type="number"
                             class="hardware-custom-input"
                             :disabled="isRamLocked"
-                            @input="config.ram = $event.target.value"
+                            min="100"
+                            step="100"
+                            @blur="config.ram = Math.max(100, Math.round(config.ram / 100) * 100)"
                           />
                         </div>
                         <VBtn
@@ -305,9 +307,12 @@
                             <div class="hardware-value-display">
                               <input
                                 v-model="entry.ram"
-                                type="text"
+                                type="number"
                                 class="hardware-custom-input"
+                                min="100"
+                                step="100"
                                 @input="updateComposeTotal"
+                                @blur="entry.ram = Math.max(100, Math.round(entry.ram / 100) * 100); updateComposeTotal()"
                               />
                             </div>
                             <VBtn
@@ -6192,7 +6197,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-card {
   flex: 1;
-  min-width: 140px;
+  min-width: 200px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6292,7 +6297,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-value-display {
   flex: 1;
-  max-width: 70px;
+  min-width: 80px;
   height: 32px;
   display: flex;
   align-items: center;
@@ -6315,10 +6320,24 @@ watch(isLoggedIn, (newValue, oldValue) => {
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hardware-custom-input:focus {
   outline: none;
+}
+
+/* Hide increment/decrement arrows for number inputs */
+.hardware-custom-input::-webkit-outer-spin-button,
+.hardware-custom-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hardware-custom-input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /* Dark theme support */

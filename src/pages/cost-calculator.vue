@@ -226,6 +226,7 @@
                     hide-details
                     style="max-width: 85px;"
                     @update:model-value="calculateCost"
+                    @blur="formData.memory = Math.max(100, Math.min(59000, Math.round(formData.memory / 100) * 100)); calculateCost()"
                   />
                 </div>
               </div>

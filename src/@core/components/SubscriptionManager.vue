@@ -265,7 +265,6 @@
               density="compact"
               class="mt-3"
             >
-              <VIcon size="18" class="mr-2">mdi-information-outline</VIcon>
               {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
             </VAlert>
           </div>
@@ -787,7 +786,17 @@
                 outlined
                 dense
                 class="mb-4 mt-4"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="success" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
               <!-- Country Selector -->
               <VSelect
                 v-model="selectedAllowed.country"
@@ -795,11 +804,21 @@
                 :label="t('core.subscriptionManager.country')"
                 item-title="text"
                 item-value="value"
-                outlined 
-                dense 
+                outlined
+                dense
                 class="mb-4"
                 :disabled="!selectedAllowed.continent || selectedAllowed.continent === 'ALL'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="success" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
               <!-- Region Selector -->
               <VSelect
                 v-model="selectedAllowed.region"
@@ -811,7 +830,17 @@
                 dense
                 class="mb-4"
                 :disabled="!selectedAllowed.country || selectedAllowed.country === 'ALL'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="success" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Add Button -->
               <div class="d-flex justify-center mt-2 mb-2">
@@ -865,7 +894,17 @@
                 outlined
                 dense
                 class="mb-4 mt-4"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="error" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Country Selector -->
               <VSelect
@@ -875,10 +914,20 @@
                 item-title="text"
                 item-value="value"
                 outlined
-                dense 
+                dense
                 class="mb-4"
                 :disabled="!selectedForbidden.continent || selectedForbidden.continent === 'NONE'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="error" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Region Selector -->
               <VSelect
@@ -891,7 +940,17 @@
                 dense
                 class="mb-4"
                 :disabled="!selectedForbidden.country || selectedForbidden.country === 'ALL'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="error" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Add Button -->
               <div class="d-flex justify-center mt-2 mb-2">
@@ -1686,11 +1745,13 @@
                           v-model.number="component.ram"
                           type="number"
                           min="100"
+                          step="100"
                           dense
                           hide-details
                           density="compact"
                           variant="outlined"
                           class="text-field-fixed"
+                          @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
                         />
                       </div>
                     </VCol>
@@ -1760,11 +1821,13 @@
                         v-model.number="component.ram"
                         type="number"
                         min="100"
+                        step="100"
                         dense
                         hide-details
                         density="compact"
                         variant="outlined"
                         class="hardware-input"
+                        @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
                       />
                     </div>
                     <div class="hardware-box-with-input">
@@ -5151,48 +5214,66 @@ async function getGeolocationData() {
 function getContinents(isForbidden = false) {
   const defaultLabel = isForbidden ? 'NONE' : 'ALL'
   const defaultText = isForbidden ? 'None' : 'Global'
-  const options = [{ value: defaultLabel, text: defaultText }]
+  const options = [{ value: defaultLabel, text: defaultText, instances: null }]
 
-  const seen = new Set()
+  const continentInstances = {}
   possibleLocations.value.forEach(loc => {
-    const cont = loc.value.split('_')[0]
-    if (!seen.has(cont)) {
-      seen.add(cont)
-      const name = geolocations.continents.find(c => c.code === cont)?.name || cont
-      options.push({ value: cont, text: name })
+    const parts = loc.value.split('_')
+
+    // Only count continent-level entries (no underscores)
+    if (parts.length === 1) {
+      const cont = parts[0]
+      continentInstances[cont] = (continentInstances[cont] || 0) + loc.instances
     }
+  })
+
+  Object.entries(continentInstances).forEach(([cont, instances]) => {
+    const name = geolocations.continents.find(c => c.code === cont)?.name || cont
+    options.push({ value: cont, text: name, instances })
   })
 
   return options
 }
 
 function getCountries(continentCode) {
-  if (!continentCode || continentCode === 'ALL' || continentCode === 'NONE') return [{ value: 'ALL', text: 'All Countries' }]
-  const seen = new Set()
-  const countries = [{ value: 'ALL', text: 'All Countries' }]
+  if (!continentCode || continentCode === 'ALL' || continentCode === 'NONE') return [{ value: 'ALL', text: 'All Countries', instances: null }]
+  const countryInstances = {}
+
   possibleLocations.value.forEach(loc => {
-    const [cont, count] = loc.value.split('_')
-    if (cont === continentCode && count && !seen.has(count)) {
-      seen.add(count)
-      const name = geolocations.countries.find(c => c.code === count)?.name || count
-      countries.push({ value: count, text: name })
+    const parts = loc.value.split('_')
+    if (parts.length === 2 && parts[0] === continentCode) {
+      const count = parts[1]
+      countryInstances[count] = (countryInstances[count] || 0) + loc.instances
     }
   })
-  
+
+  const countries = [{ value: 'ALL', text: 'All Countries', instances: null }]
+  Object.entries(countryInstances).forEach(([count, instances]) => {
+    const name = geolocations.countries.find(c => c.code === count)?.name || count
+    countries.push({ value: count, text: name, instances })
+  })
+
   return countries
 }
 
 function getRegions(continentCode, countryCode) {
-  if (!continentCode || !countryCode || countryCode === 'ALL') return [{ value: 'ALL', text: 'All Regions' }]
-  const regions = new Set()
+  if (!continentCode || !countryCode || countryCode === 'ALL') return [{ value: 'ALL', text: 'All Regions', instances: null }]
+  const regionInstances = {}
+
   possibleLocations.value.forEach(loc => {
-    const [cont, count, region] = loc.value.split('_')
-    if (cont === continentCode && count === countryCode && region) {
-      regions.add(region)
+    const parts = loc.value.split('_')
+    if (parts.length === 3 && parts[0] === continentCode && parts[1] === countryCode) {
+      const region = parts[2]
+      regionInstances[region] = (regionInstances[region] || 0) + loc.instances
     }
   })
-  
-  return [{ value: 'ALL', text: 'All Regions' }, ...[...regions].map(r => ({ value: r, text: r }))]  
+
+  const regions = [{ value: 'ALL', text: 'All Regions', instances: null }]
+  Object.entries(regionInstances).forEach(([region, instances]) => {
+    regions.push({ value: region, text: region, instances })
+  })
+
+  return regions
 }
 
 function getGeolocationLabel(code) {

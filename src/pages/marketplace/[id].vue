@@ -294,7 +294,7 @@
         </div>
       </div>
 
-      <!-- Why Host on Flux Cloud Section -->
+      <!-- Why Host on FluxCloud Section -->
       <FeatureShowcase
         :title="t('pages.apps.register.landing.benefits.title')"
         :items="whyFluxBenefits"
@@ -841,15 +841,15 @@ watch(() => route.params.id, loadAppDetails, { immediate: true })
 
 // Dynamic SEO meta tags and structured data using computed
 const seoTitle = computed(() => {
-  if (!app.value) return 'Flux Cloud Marketplace'
+  if (!app.value) return 'FluxCloud Marketplace'
   
-  return `${app.value.displayName || app.value.name} - Flux Cloud Marketplace`
+  return `${app.value.displayName || app.value.name} - FluxCloud Marketplace`
 })
 
 const seoDescription = computed(() => {
-  if (!app.value) return 'Flux Cloud Marketplace - Decentralized cloud hosting'
+  if (!app.value) return 'FluxCloud Marketplace - Decentralized cloud hosting'
   
-  return app.value.description || `Deploy ${app.value.displayName || app.value.name} on Flux Cloud. Decentralized cloud hosting with global infrastructure, 99.9% uptime, and affordable pricing.`
+  return app.value.description || `Deploy ${app.value.displayName || app.value.name} on FluxCloud. Decentralized cloud hosting with global infrastructure, 99.9% uptime, and affordable pricing.`
 })
 
 const seoImage = computed(() => {
