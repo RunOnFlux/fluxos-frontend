@@ -1970,7 +1970,7 @@ const getDaemonIcon = key => {
     blocks: 'mdi-cube-outline',
     timeoffset: 'mdi-clock-outline',
     connections: 'mdi-lan',
-    proxy: 'mdi-shield-network',
+    proxy: 'mdi-shield-check',
     difficulty: 'mdi-chart-line',
     testnet: 'mdi-test-tube',
     keypoololdest: 'mdi-key',
@@ -2046,7 +2046,7 @@ const getBenchmarkIcon = key => {
     time: 'mdi-clock',
     speed: 'mdi-speedometer',
     error: 'mdi-alert',
-    eps: 'mdi-flash-circle',
+    eps: 'mdi-flash',
   }
   
   return iconMap[key.toLowerCase()] || 'mdi-chart-box'

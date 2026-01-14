@@ -17,6 +17,7 @@
                 :src="banner.image"
                 :alt="banner.name"
                 class="feature-image"
+                loading="lazy"
               />
             </div>
             <div class="feature-content">

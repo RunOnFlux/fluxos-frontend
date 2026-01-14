@@ -82,7 +82,8 @@
     },
     "theme": {
       "light": "Jasny",
-      "dark": "Ciemny"
+      "dark": "Ciemny",
+      "switchTheme": "Zmień motyw"
     },
     "status": {
       "loading": "Ładowanie...",

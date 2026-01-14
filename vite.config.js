@@ -14,6 +14,10 @@ import svgLoader from 'vite-svg-loader';
 import { visualizer } from 'rollup-plugin-visualizer';
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer';
 import monacoEditorPlugin from 'vite-plugin-monaco-editor';
+import compression from 'vite-plugin-compression';
+import purgecss from 'vite-plugin-purgecss';
+import { VitePWA } from 'vite-plugin-pwa';
+import { beasties } from 'vite-plugin-beasties';
 import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
@@ -88,21 +92,43 @@ export default defineConfig(({ mode }) => {
       monacoEditorPlugin.default({}),
       // Image optimization for production builds
       ViteImageOptimizer({
-        // PNG optimization
-        png: {
-          quality: 80,
+        // Test patterns for which images to include
+        test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
+        // Exclude patterns
+        exclude: undefined,
+        // Include patterns
+        include: undefined,
+        // Include assets from public folder
+        includePublic: true,
+        // Log stats
+        logStats: true,
+        // AVIF - best compression for modern browsers
+        avif: {
+          quality: 70,
         },
-        // JPEG optimization
+        // PNG optimization - more aggressive compression
+        png: {
+          quality: 75,
+          compressionLevel: 9,
+        },
+        // JPEG optimization - more aggressive
         jpeg: {
-          quality: 80,
+          quality: 75,
+          progressive: true,
         },
         // JPG optimization
         jpg: {
-          quality: 80,
+          quality: 75,
+          progressive: true,
         },
-        // WebP conversion
+        // WebP conversion - excellent compression
         webp: {
-          quality: 80,
+          quality: 75,
+          alphaQuality: 80,
+        },
+        // GIF optimization
+        gif: {
+          interlaced: true,
         },
         // SVG optimization
         svg: {
@@ -113,13 +139,16 @@ export default defineConfig(({ mode }) => {
               params: {
                 overrides: {
                   cleanupNumericValues: false,
-                  // Removed removeViewBox from overrides - moved to separate plugin below
                 },
               },
             },
             {
               name: 'removeViewBox',
-              active: false, // Disable removeViewBox to preserve viewBox attributes
+              active: false, // Preserve viewBox attributes
+            },
+            {
+              name: 'removeDimensions',
+              active: true, // Remove width/height, use viewBox instead
             },
           ],
         },
@@ -131,6 +160,270 @@ export default defineConfig(({ mode }) => {
         gzipSize: true,
         brotliSize: true,
         template: 'treemap', // 'sunburst', 'treemap', 'network'
+      }),
+      // Gzip compression for production builds
+      !isDev && compression({
+        algorithm: 'gzip',
+        ext: '.gz',
+        threshold: 1024, // Only compress files > 1KB
+        deleteOriginFile: false, // Keep original files for fallback
+      }),
+      // Brotli compression for production builds (better compression than gzip)
+      !isDev && compression({
+        algorithm: 'brotliCompress',
+        ext: '.br',
+        threshold: 1024,
+        deleteOriginFile: false,
+      }),
+      // PurgeCSS to remove unused CSS (production only)
+      !isDev && purgecss({
+        content: [
+          './index.html',
+          './src/**/*.vue',
+          './src/**/*.js',
+          './src/**/*.ts',
+          './src/**/*.jsx',
+          './src/**/*.tsx',
+        ],
+        safelist: {
+          // Vuetify uses dynamic classes extensively
+          standard: [
+            /^v-/, // All Vuetify classes
+            /^mdi-/, // MDI icons
+            /^tabler-/, // Tabler icons
+            /^theme--/, // Theme classes
+            /^elevation-/, // Elevation utilities
+            /^rounded-/, // Border radius utilities
+            /^text-/, // Text utilities
+            /^bg-/, // Background utilities
+            /^d-/, // Display utilities
+            /^flex-/, // Flex utilities
+            /^justify-/, // Justify utilities
+            /^align-/, // Align utilities
+            /^ma-/, /^mt-/, /^mb-/, /^ml-/, /^mr-/, /^mx-/, /^my-/, // Margin utilities
+            /^pa-/, /^pt-/, /^pb-/, /^pl-/, /^pr-/, /^px-/, /^py-/, // Padding utilities
+            /^ga-/, /^gt-/, /^gb-/, /^gl-/, /^gr-/, /^gx-/, /^gy-/, // Gap utilities
+            /^w-/, /^h-/, // Width/height utilities
+            /^font-/, // Font utilities
+            /^opacity-/, // Opacity utilities
+            /^overflow-/, // Overflow utilities
+            /^position-/, // Position utilities
+            /^cursor-/, // Cursor utilities
+            /^el-/, // Element Plus classes
+            /^leaflet-/, // Leaflet map classes
+            /^apexcharts/, // ApexCharts classes
+            /^xterm/, // xterm classes
+            /^monaco/, // Monaco editor classes
+            /^shepherd/, // Shepherd.js tour classes
+            /^vjs-/, // vue-json-pretty classes
+            /^drv-/, // draggable-resizable-vue3 classes
+            /data-v-/, // Vue scoped styles
+          ],
+          deep: [
+            /v-application/,
+            /v-theme/,
+            /v-locale/,
+            /v-overlay/,
+            /v-menu/,
+            /v-dialog/,
+            /v-snackbar/,
+            /v-tooltip/,
+            /v-card/,
+            /v-btn/,
+            /v-chip/,
+            /v-alert/,
+            /v-table/,
+            /v-data-table/,
+            /v-select/,
+            /v-autocomplete/,
+            /v-text-field/,
+            /v-textarea/,
+            /v-checkbox/,
+            /v-radio/,
+            /v-switch/,
+            /v-slider/,
+            /v-tabs/,
+            /v-expansion/,
+            /v-list/,
+            /v-navigation/,
+            /v-app-bar/,
+            /v-footer/,
+            /v-img/,
+            /v-avatar/,
+            /v-icon/,
+            /v-badge/,
+            /v-progress/,
+            /v-skeleton/,
+            /v-divider/,
+            /v-timeline/,
+            /v-stepper/,
+            /v-form/,
+            /v-file/,
+            /v-color/,
+            /v-date/,
+            /v-time/,
+            /v-pagination/,
+            /v-breadcrumbs/,
+            /v-rating/,
+            /v-carousel/,
+            /v-window/,
+            /v-sheet/,
+            /v-responsive/,
+            /v-container/,
+            /v-row/,
+            /v-col/,
+            /v-spacer/,
+          ],
+          greedy: [
+            /transition/,
+            /animate/,
+            /fade/,
+            /slide/,
+            /scale/,
+            /scroll/,
+          ],
+        },
+        // Don't remove CSS variables
+        variables: false,
+      }),
+      // PWA for offline caching and performance (production only)
+      !isDev && VitePWA({
+        registerType: 'autoUpdate',
+        includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
+        workbox: {
+          // Precache static assets (excluding large files)
+          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          // Exclude large files and dev tools from precaching
+          globIgnores: [
+            'stats.html', // Bundle analyzer (4MB+)
+            '**/monacoeditorwork/**', // Monaco workers (12MB+)
+            '**/crypto-walletconnect*', // WalletConnect (4MB+)
+            '**/crypto-viem*', // Viem (1MB+)
+            '**/syntax-highlight*', // Syntax highlighting (1MB+)
+          ],
+          // Increase limit to 5MB for remaining large chunks (CSS)
+          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          // Runtime caching for API requests and images
+          runtimeCaching: [
+            {
+              // Cache Google Fonts
+              urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'google-fonts-cache',
+                expiration: {
+                  maxEntries: 20,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              // Cache Google Font files
+              urlPattern: /^https:\/\/fonts\.gstatic\.com\/.*/i,
+              handler: 'CacheFirst',
+              options: {
+                cacheName: 'gstatic-fonts-cache',
+                expiration: {
+                  maxEntries: 20,
+                  maxAgeSeconds: 60 * 60 * 24 * 365, // 1 year
+                },
+                cacheableResponse: {
+                  statuses: [0, 200],
+                },
+              },
+            },
+            {
+              // Cache images with stale-while-revalidate
+              urlPattern: /\.(?:png|gif|jpg|jpeg|webp|avif|svg)$/i,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'images-cache',
+                expiration: {
+                  maxEntries: 100,
+                  maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+                },
+              },
+            },
+            {
+              // Cache API responses with network-first
+              urlPattern: /^https:\/\/api\.runonflux\.io\/.*/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'api-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 5, // 5 minutes
+                },
+                networkTimeoutSeconds: 10,
+              },
+            },
+            {
+              // Cache stats API responses
+              urlPattern: /^https:\/\/stats\.runonflux\.io\/.*/i,
+              handler: 'NetworkFirst',
+              options: {
+                cacheName: 'stats-api-cache',
+                expiration: {
+                  maxEntries: 50,
+                  maxAgeSeconds: 60 * 5, // 5 minutes
+                },
+                networkTimeoutSeconds: 10,
+              },
+            },
+          ],
+        },
+        manifest: {
+          name: 'FluxCloud - Decentralized Web3 Cloud',
+          short_name: 'FluxCloud',
+          description: 'Deploy applications on FluxCloud\'s decentralized Web3 infrastructure',
+          theme_color: '#7367F0',
+          background_color: '#FFFFFF',
+          display: 'standalone',
+          orientation: 'portrait-primary',
+          start_url: '/',
+          scope: '/',
+          icons: [
+            {
+              src: '/images/logo.png',
+              sizes: '192x192',
+              type: 'image/png',
+            },
+            {
+              src: '/images/logo.png',
+              sizes: '512x512',
+              type: 'image/png',
+            },
+            {
+              src: '/images/logo.png',
+              sizes: '512x512',
+              type: 'image/png',
+              purpose: 'maskable',
+            },
+          ],
+        },
+        devOptions: {
+          enabled: false, // Disable in development
+        },
+      }),
+      // Critical CSS extraction (production only) using Beasties
+      !isDev && beasties({
+        options: {
+          // Inline critical CSS
+          inlineFonts: false,
+          // Preload external stylesheets with swap strategy
+          preload: 'swap',
+          // Don't remove original stylesheets (let browser load them async)
+          pruneSource: false,
+          // Reduce unused CSS rules in inlined styles
+          reduceInlineStyles: true,
+          // Use media="print" trick for async loading
+          noscriptFallback: true,
+          // Merge inlined styles
+          mergeStylesheets: true,
+        },
       }),
     ],
     define: {
@@ -185,9 +478,13 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      // Target modern browsers to avoid legacy polyfills (~11KB savings)
+      // Supports: Chrome 87+, Firefox 78+, Safari 14+, Edge 88+
+      target: 'esnext',
       chunkSizeWarningLimit: 1800, // Warn about chunks larger than 1800KB
       reportCompressedSize: true, // Report gzip sizes
       minify: 'esbuild', // Use esbuild for fast builds
+      cssMinify: 'esbuild', // Also minify CSS with esbuild
       commonjsOptions: {
         include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
       },

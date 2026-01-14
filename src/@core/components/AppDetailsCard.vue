@@ -145,7 +145,7 @@
       v-if="app.hash && app.hash.length === 64 && adjustedExpiryBlockHeight"
       :title="t('core.appDetailsCard.expiresOnBlockheight')"
       :data="adjustedExpiryBlockHeight"
-      title-icon="mdi-hourglass"
+      title-icon="mdi-timer-sand"
       title-icon-scale="1.2"
       kbd-variant="success"
     />

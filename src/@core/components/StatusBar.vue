@@ -14,6 +14,7 @@
           color="error"
           class="position-absolute close-btn-hover" :class="[windowWidth < 745 ? 'mobile-small' : 'desktop-small']"
           style="top: -4px; right: -4px;"
+          :aria-label="t('core.statusBar.hideStatusBar')"
           @click="toggleVisibility"
           v-bind="props"
         />
