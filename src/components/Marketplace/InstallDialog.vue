@@ -2535,14 +2535,9 @@ const fetchDeploymentInfo = async () => {
 }
 
 const estimatedFluxPrice = computed(() => {
-  // Calculate FLUX using the ratio and the computed monthlyPrice (with instance multiplier)
-  if (apiPricing.value.fluxPerUsd > 0) {
-    const usdPrice = monthlyPrice.value || 0
-    const fluxPrice = usdPrice * apiPricing.value.fluxPerUsd
-    const months = config.value.subscriptionMonths || 1
-    const totalFlux = fluxPrice * months
-
-    return totalFlux.toFixed(2)
+  // If we have API flux pricing, use it directly - backend already calculated total for full subscription period
+  if (apiPricing.value.flux > 0) {
+    return Number(apiPricing.value.flux).toFixed(2)
   }
 
   // Fallback: if API hasn't responded yet
@@ -2687,7 +2682,16 @@ const estimatedCost = computed(() => {
 
 // Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // Use computed monthlyPrice which includes instance multiplier
+  // If we have API pricing, use it directly - backend already calculated total for full subscription period
+  // (includes duration multiplier, discounts, credits for existing subscriptions, etc.)
+  if (apiPricing.value.usd > 0) {
+    const apiTotal = Number(apiPricing.value.usd)
+    if (!isNaN(apiTotal)) {
+      return `$${apiTotal.toFixed(2)}`
+    }
+  }
+
+  // Fallback: multiply monthly price by months (for non-API pricing scenarios)
   const monthly = parseFloat(estimatedCost.value) || 0
   const months = config.value.subscriptionMonths || 1
   const total = monthly * months
