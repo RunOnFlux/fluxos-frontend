@@ -19,6 +19,7 @@ const props = defineProps({
     size="30"
     :ripple="false"
     class="v-dialog-close-btn"
+    aria-label="Close dialog"
   >
     <VIcon
       :icon="props.icon"

@@ -47,12 +47,20 @@ import sanitizeHtml from '@/utils/sanitizeHtml'
 import '@core/scss/template/index.scss'
 import '@styles/styles.scss'
 
+// Third-party component styles - imported directly to prevent build issues with code splitting
+import 'vue-json-pretty/lib/styles.css'
+import 'draggable-resizable-vue3/src/components/draggable-resizable-vue3/css/DraggableResizableVue3Borders.css'
+import 'draggable-resizable-vue3/src/components/draggable-resizable-vue3/css/DraggableResizableVue3Handles.css'
+
 // Element Plus - only import styles for components we use (ElTree)
 import 'element-plus/es/components/tree/style/css'
 
-// Fonts
-import '@fontsource/montserrat/700.css' // Bold
-import '@fontsource/montserrat/600.css' // Semi-bold
+// Fonts - Latin subset only (smaller than full font files)
+// Using latin + latin-ext for Polish language support
+import '@fontsource/montserrat/latin-700.css' // Bold - Latin
+import '@fontsource/montserrat/latin-600.css' // Semi-bold - Latin
+import '@fontsource/montserrat/latin-ext-700.css' // Bold - Latin Extended (Polish)
+import '@fontsource/montserrat/latin-ext-600.css' // Semi-bold - Latin Extended (Polish)
 
 // Handle chunk load failures after deployment (stale cache)
 window.addEventListener('error', event => {

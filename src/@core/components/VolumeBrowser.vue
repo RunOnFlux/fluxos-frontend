@@ -161,7 +161,7 @@
               v-if="item.symLink"
               class="mr-1"
             >
-              mdi-folder-symlink
+              mdi-folder-network
             </VIcon>
             <VIcon
               v-if="item.isDirectory"

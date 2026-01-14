@@ -265,7 +265,6 @@
               density="compact"
               class="mt-3"
             >
-              <VIcon size="18" class="mr-2">mdi-information-outline</VIcon>
               {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
             </VAlert>
           </div>
@@ -787,7 +786,17 @@
                 outlined
                 dense
                 class="mb-4 mt-4"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="success" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
               <!-- Country Selector -->
               <VSelect
                 v-model="selectedAllowed.country"
@@ -795,11 +804,21 @@
                 :label="t('core.subscriptionManager.country')"
                 item-title="text"
                 item-value="value"
-                outlined 
-                dense 
+                outlined
+                dense
                 class="mb-4"
                 :disabled="!selectedAllowed.continent || selectedAllowed.continent === 'ALL'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="success" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
               <!-- Region Selector -->
               <VSelect
                 v-model="selectedAllowed.region"
@@ -811,7 +830,17 @@
                 dense
                 class="mb-4"
                 :disabled="!selectedAllowed.country || selectedAllowed.country === 'ALL'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="success" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Add Button -->
               <div class="d-flex justify-center mt-2 mb-2">
@@ -865,7 +894,17 @@
                 outlined
                 dense
                 class="mb-4 mt-4"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="error" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Country Selector -->
               <VSelect
@@ -875,10 +914,20 @@
                 item-title="text"
                 item-value="value"
                 outlined
-                dense 
+                dense
                 class="mb-4"
                 :disabled="!selectedForbidden.continent || selectedForbidden.continent === 'NONE'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="error" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Region Selector -->
               <VSelect
@@ -891,7 +940,17 @@
                 dense
                 class="mb-4"
                 :disabled="!selectedForbidden.country || selectedForbidden.country === 'ALL'"
-              />
+              >
+                <template #item="{ props, item }">
+                  <VListItem v-bind="props">
+                    <template v-if="item.raw.instances" #append>
+                      <VChip size="x-small" color="error" variant="tonal">
+                        {{ item.raw.instances }}
+                      </VChip>
+                    </template>
+                  </VListItem>
+                </template>
+              </VSelect>
 
               <!-- Add Button -->
               <div class="d-flex justify-center mt-2 mb-2">
@@ -1686,11 +1745,13 @@
                           v-model.number="component.ram"
                           type="number"
                           min="100"
+                          step="100"
                           dense
                           hide-details
                           density="compact"
                           variant="outlined"
                           class="text-field-fixed"
+                          @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
                         />
                       </div>
                     </VCol>
@@ -1760,11 +1821,13 @@
                         v-model.number="component.ram"
                         type="number"
                         min="100"
+                        step="100"
                         dense
                         hide-details
                         density="compact"
                         variant="outlined"
                         class="hardware-input"
+                        @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
                       />
                     </div>
                     <div class="hardware-box-with-input">
@@ -2380,7 +2443,7 @@
               type="warning" 
               variant="tonal" 
               class="mb-4"
-              icon="mdi-alert-triangle"
+              icon="mdi-alert"
             >
               <strong>{{ t('core.subscriptionManager.testWarningsTitle') }}</strong> {{ t('core.subscriptionManager.testWarningsMessage') }}
             </VAlert>
@@ -4571,13 +4634,14 @@ const originalExpireBlocks = computed(() => {
 
 // Base renewal periods in blocks (before adding currentExpire)
 // These represent the duration being added, not the total
+// Discount: 3% for 3 months, 6% for 6 months, 12% for 12 months
 const BASE_RENEWAL_PERIODS = [
-  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 4)), labelKey: 'renewal1Week', fallback: '1 Week' },       // ~1 week (22,000 blocks)
-  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 2)), labelKey: 'renewal2Weeks', fallback: '2 Weeks' },    // ~2 weeks (44,000 blocks)
-  { blocks: BLOCKS_PER_MONTH, labelKey: 'renewal1Month', fallback: '1 Month' },                           // 1 month (88,000 blocks)
-  { blocks: BLOCKS_PER_MONTH * 3, labelKey: 'renewal3Months', fallback: '3 Months' },                    // 3 months (264,000 blocks)
-  { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months' },                    // 6 months (528,000 blocks)
-  { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year' },                       // 1 year (1,056,000 blocks)
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 4)), labelKey: 'renewal1Week', fallback: '1 Week', discount: 0 },       // ~1 week (22,000 blocks)
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 2)), labelKey: 'renewal2Weeks', fallback: '2 Weeks', discount: 0 },    // ~2 weeks (44,000 blocks)
+  { blocks: BLOCKS_PER_MONTH, labelKey: 'renewal1Month', fallback: '1 Month', discount: 0 },                           // 1 month (88,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 3, labelKey: 'renewal3Months', fallback: '3 Months', discount: 3 },                    // 3 months (264,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months', discount: 6 },                    // 6 months (528,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year', discount: 12 },                       // 1 year (1,056,000 blocks)
 ]
 
 // Helper to format blocks as human-readable duration with months and days
@@ -4670,6 +4734,7 @@ const renewalValues = computed(() => {
 
 // Computed labels that dynamically show actual extension duration
 // When capped, shows the actual duration being added (e.g., "7 Months 15 Days" instead of "1 Year")
+// Includes discount info for 3, 6, and 12 month periods
 const renewalOptionLabels = computed(() => {
   let currentExpire = originalExpireBlocks.value
   if (currentExpire == null || isNaN(currentExpire)) {
@@ -4679,15 +4744,22 @@ const renewalOptionLabels = computed(() => {
   const availableBlocks = Math.max(0, MAX_SUBSCRIPTION_BLOCKS - currentExpire)
   const labels = []
   const maxPeriodBlocks = BASE_RENEWAL_PERIODS[BASE_RENEWAL_PERIODS.length - 1].blocks // 1 year
+  const offText = t('common.off')
 
   for (const period of BASE_RENEWAL_PERIODS) {
     if (period.blocks <= availableBlocks) {
-      // Full period available - use standard label
+      // Full period available - use standard label with discount if applicable
+      let label
       try {
-        labels.push(t(`core.subscriptionManager.${period.labelKey}`))
+        label = t(`core.subscriptionManager.${period.labelKey}`)
       } catch {
-        labels.push(period.fallback)
+        label = period.fallback
       }
+      // Add discount info for periods with discount
+      if (period.discount > 0) {
+        label = `${label} (${period.discount}% ${offText})`
+      }
+      labels.push(label)
     }
   }
 
@@ -5151,48 +5223,66 @@ async function getGeolocationData() {
 function getContinents(isForbidden = false) {
   const defaultLabel = isForbidden ? 'NONE' : 'ALL'
   const defaultText = isForbidden ? 'None' : 'Global'
-  const options = [{ value: defaultLabel, text: defaultText }]
+  const options = [{ value: defaultLabel, text: defaultText, instances: null }]
 
-  const seen = new Set()
+  const continentInstances = {}
   possibleLocations.value.forEach(loc => {
-    const cont = loc.value.split('_')[0]
-    if (!seen.has(cont)) {
-      seen.add(cont)
-      const name = geolocations.continents.find(c => c.code === cont)?.name || cont
-      options.push({ value: cont, text: name })
+    const parts = loc.value.split('_')
+
+    // Only count continent-level entries (no underscores)
+    if (parts.length === 1) {
+      const cont = parts[0]
+      continentInstances[cont] = (continentInstances[cont] || 0) + loc.instances
     }
+  })
+
+  Object.entries(continentInstances).forEach(([cont, instances]) => {
+    const name = geolocations.continents.find(c => c.code === cont)?.name || cont
+    options.push({ value: cont, text: name, instances })
   })
 
   return options
 }
 
 function getCountries(continentCode) {
-  if (!continentCode || continentCode === 'ALL' || continentCode === 'NONE') return [{ value: 'ALL', text: 'All Countries' }]
-  const seen = new Set()
-  const countries = [{ value: 'ALL', text: 'All Countries' }]
+  if (!continentCode || continentCode === 'ALL' || continentCode === 'NONE') return [{ value: 'ALL', text: 'All Countries', instances: null }]
+  const countryInstances = {}
+
   possibleLocations.value.forEach(loc => {
-    const [cont, count] = loc.value.split('_')
-    if (cont === continentCode && count && !seen.has(count)) {
-      seen.add(count)
-      const name = geolocations.countries.find(c => c.code === count)?.name || count
-      countries.push({ value: count, text: name })
+    const parts = loc.value.split('_')
+    if (parts.length === 2 && parts[0] === continentCode) {
+      const count = parts[1]
+      countryInstances[count] = (countryInstances[count] || 0) + loc.instances
     }
   })
-  
+
+  const countries = [{ value: 'ALL', text: 'All Countries', instances: null }]
+  Object.entries(countryInstances).forEach(([count, instances]) => {
+    const name = geolocations.countries.find(c => c.code === count)?.name || count
+    countries.push({ value: count, text: name, instances })
+  })
+
   return countries
 }
 
 function getRegions(continentCode, countryCode) {
-  if (!continentCode || !countryCode || countryCode === 'ALL') return [{ value: 'ALL', text: 'All Regions' }]
-  const regions = new Set()
+  if (!continentCode || !countryCode || countryCode === 'ALL') return [{ value: 'ALL', text: 'All Regions', instances: null }]
+  const regionInstances = {}
+
   possibleLocations.value.forEach(loc => {
-    const [cont, count, region] = loc.value.split('_')
-    if (cont === continentCode && count === countryCode && region) {
-      regions.add(region)
+    const parts = loc.value.split('_')
+    if (parts.length === 3 && parts[0] === continentCode && parts[1] === countryCode) {
+      const region = parts[2]
+      regionInstances[region] = (regionInstances[region] || 0) + loc.instances
     }
   })
-  
-  return [{ value: 'ALL', text: 'All Regions' }, ...[...regions].map(r => ({ value: r, text: r }))]  
+
+  const regions = [{ value: 'ALL', text: 'All Regions', instances: null }]
+  Object.entries(regionInstances).forEach(([region, instances]) => {
+    regions.push({ value: region, text: region, instances })
+  })
+
+  return regions
 }
 
 function getGeolocationLabel(code) {
@@ -7206,7 +7296,7 @@ async function verifyAppSpec() {
           console.warn('WebCrypto not available, cannot use enterprise features')
           
           // Show user-friendly toast instead of blocking error
-          showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert-triangle', 6000)
+          showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert', 6000)
           
           // Reset enterprise mode and return gracefully
           appSpec.value.enterprise = ''
@@ -7958,7 +8048,7 @@ function getStatusIcon(status) {
   switch (status) {
   case 'success': return 'mdi-check-circle'
   case 'error': return 'mdi-alert-circle'
-  case 'warning': return 'mdi-alert-triangle'
+  case 'warning': return 'mdi-alert'
   case 'info': return 'mdi-information'
   default: return 'mdi-circle-outline'
   }

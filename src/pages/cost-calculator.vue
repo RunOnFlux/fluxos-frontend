@@ -226,6 +226,7 @@
                     hide-details
                     style="max-width: 85px;"
                     @update:model-value="calculateCost"
+                    @blur="formData.memory = Math.max(100, Math.min(59000, Math.round(formData.memory / 100) * 100)); calculateCost()"
                   />
                 </div>
               </div>
@@ -964,14 +965,14 @@ const handlePortInputKeypress = event => {
   }
 }
 
-// Renewal period options
+// Renewal period options with discount info
 const renewalOptions = computed(() => [
   { title: t('pages.costCalculator.renewalOptions.oneWeek'), value: 7 },
   { title: t('pages.costCalculator.renewalOptions.twoWeeks'), value: 14 },
   { title: t('pages.costCalculator.renewalOptions.oneMonth'), value: 30 },
-  { title: t('pages.costCalculator.renewalOptions.threeMonths'), value: 90 },
-  { title: t('pages.costCalculator.renewalOptions.sixMonths'), value: 180 },
-  { title: t('pages.costCalculator.renewalOptions.twelveMonths'), value: 360 },
+  { title: `${t('pages.costCalculator.renewalOptions.threeMonths')} (3% ${t('common.off')})`, value: 90 },
+  { title: `${t('pages.costCalculator.renewalOptions.sixMonths')} (6% ${t('common.off')})`, value: 180 },
+  { title: `${t('pages.costCalculator.renewalOptions.twelveMonths')} (12% ${t('common.off')})`, value: 360 },
 ])
 
 // Preset configurations
@@ -1258,7 +1259,7 @@ function showToast(type, message) {
   const iconMap = {
     success: 'mdi-check-circle',
     error: 'mdi-alert-circle',
-    warning: 'mdi-alert-triangle',
+    warning: 'mdi-alert',
     info: 'mdi-information',
     danger: 'mdi-alert-circle',
   }

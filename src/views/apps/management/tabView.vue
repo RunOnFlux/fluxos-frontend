@@ -401,7 +401,7 @@
                   { icon: 'mdi-speedometer', value: getServiceUsageValue(1, item.name, item), color: 'success' },
                   { icon: 'mdi-memory', value: getServiceUsageValue(0, item.name, item), color: 'success' },
                   { icon: 'mdi-harddisk', value: getServiceUsageValue(2, item.name, item), color: 'success' },
-                  { icon: 'mdi-map-marker', value: item.instances | 3, color: 'warning' }
+                  { icon: 'mdi-map-marker', value: item.instances || 3, color: 'warning' }
                 ].filter(chip => chip.value > 0)"
               />
               <small style="font-size: 12px">

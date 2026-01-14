@@ -1,5 +1,6 @@
 {
   "common": {
+    "off": "taniej",
     "buttons": {
       "cancel": "Anuluj",
       "close": "Zamknij",
@@ -82,7 +83,8 @@
     },
     "theme": {
       "light": "Jasny",
-      "dark": "Ciemny"
+      "dark": "Ciemny",
+      "switchTheme": "Zmień motyw"
     },
     "status": {
       "loading": "Ładowanie...",
@@ -317,11 +319,11 @@
       "title": "Pomoc"
     },
     "fluxDrive": {
-      "title": "Flux Drive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "Flux Cloud - Zdecentralizowane Zarządzanie Aplikacjami",
+    "fluxCloudTitle": "FluxCloud - Zdecentralizowane Zarządzanie Aplikacjami",
     "fluxCloudDescription": "Monitoruj i zarządzaj wszystkimi swoimi aplikacjami w kontenerach Docker działającymi w zdecentralizowanej sieci chmurowej Flux. Przeglądaj status w czasie rzeczywistym, zużycie zasobów i metryki wydajności swoich rozproszonych aplikacji wdrożonych w naszej globalnej infrastrukturze opartej na blockchain. Kliknij dowolną aplikację, aby uzyskać dostęp do szczegółowych kontroli zarządzania i analiz.",
     "fluxCloudSubtitle": "Zdecentralizowane Zarządzanie Aplikacjami"
   },
@@ -1419,12 +1421,12 @@
           "startingAt": "Począwszy od"
         },
         "genericFAQPanel": {
-          "subtitle": "Najczęściej zadawane pytania dotyczące hostingu w Flux Cloud",
+          "subtitle": "Najczęściej zadawane pytania dotyczące hostingu w FluxCloud",
           "title": "Najczęściej Zadawane Pytania"
         },
         "whyFluxPanel": {
           "subtitle": "Odkryj zalety zdecentralizowanej infrastruktury chmurowej opartej na technologii Web3",
-          "title": "Dlaczego Hostować w Flux Cloud"
+          "title": "Dlaczego Hostować w FluxCloud"
         }
       },
       "installDialog": {
@@ -1908,8 +1910,8 @@
         "starter": "Starter",
         "standard": "Standardowy",
         "pro": "Elite",
-        "enterprise": "Flux Drive Pro",
-        "fluxDrivePro": "Flux Drive Pro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "Płatność pomyślna! Przekierowywanie..."
@@ -2071,7 +2073,7 @@
           "starter": "Starter",
           "standard": "Standard",
           "elite": "Elite",
-          "fluxDrivePro": "Flux Drive Pro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Najpopularniejszy",
@@ -4259,7 +4261,7 @@
       },
       "common": {
         "whyFlux": {
-          "title": "Dlaczego Hostować na Flux Cloud",
+          "title": "Dlaczego Hostować na FluxCloud",
           "subtitle": "Doświadcz mocy zdecentralizowanej infrastruktury chmurowej zbudowanej na technologii Web3",
           "benefits": [
             {
@@ -4306,19 +4308,19 @@
         },
         "genericFAQ": {
           "title": "Często Zadawane Pytania",
-          "subtitle": "Wszystko, co musisz wiedzieć o hostingu na Flux Cloud",
+          "subtitle": "Wszystko, co musisz wiedzieć o hostingu na FluxCloud",
           "questions": [
             {
-              "q": "Czym jest Flux Cloud?",
-              "a": "Flux Cloud to <strong>zdecentralizowana sieć chmurowa Web3</strong> zasilana przez ponad <strong>2600 FluxNodes</strong> działających w <strong>62+ krajach</strong>. W przeciwieństwie do tradycyjnych dostawców chmury, Twoje aplikacje działają na naprawdę zdecentralizowanej infrastrukturze z wbudowaną redundancją, brakiem pojedynczego punktu awarii oraz globalnym przyspieszeniem brzegowym. To połączenie bezpieczeństwa, wydajności i niezawodności—bez uzależnienia od dostawcy."
+              "q": "Czym jest FluxCloud?",
+              "a": "FluxCloud to <strong>zdecentralizowana sieć chmurowa Web3</strong> zasilana przez ponad <strong>2600 FluxNodes</strong> działających w <strong>62+ krajach</strong>. W przeciwieństwie do tradycyjnych dostawców chmury, Twoje aplikacje działają na naprawdę zdecentralizowanej infrastrukturze z wbudowaną redundancją, brakiem pojedynczego punktu awarii oraz globalnym przyspieszeniem brzegowym. To połączenie bezpieczeństwa, wydajności i niezawodności—bez uzależnienia od dostawcy."
             },
             {
-              "q": "Jak rozpocząć wdrażanie na Flux Cloud?",
-              "a": "Wdrażanie na Flux Cloud jest proste: <strong>wybierz aplikację</strong> z marketplace lub podaj własne specyfikacje Docker, <strong>wybierz konfigurację zasobów</strong> (CPU, RAM, dysk), i <strong>wdróż jednym kliknięciem</strong>. Twoja aplikacja jest automatycznie dystrybuowana na globalną sieć FluxNode z wbudowanymi kopiami zapasowymi, certyfikatami SSL i monitorowaniem uptime. Żadnej konfiguracji serwera ani wiedzy DevOps nie jest wymagane."
+              "q": "Jak rozpocząć wdrażanie na FluxCloud?",
+              "a": "Wdrażanie na FluxCloud jest proste: <strong>wybierz aplikację</strong> z marketplace lub podaj własne specyfikacje Docker, <strong>wybierz konfigurację zasobów</strong> (CPU, RAM, dysk), i <strong>wdróż jednym kliknięciem</strong>. Twoja aplikacja jest automatycznie dystrybuowana na globalną sieć FluxNode z wbudowanymi kopiami zapasowymi, certyfikatami SSL i monitorowaniem uptime. Żadnej konfiguracji serwera ani wiedzy DevOps nie jest wymagane."
             },
             {
-              "q": "Czy mogę przenieść istniejące aplikacje Docker na Flux Cloud?",
-              "a": "Tak! Jeśli Twoja aplikacja działa w Docker, może działać na Flux Cloud. Wystarczy <strong>podać obraz Docker, zmienne środowiskowe i porty</strong>—nie musisz przepisywać kodu. Flux obsługuje zarówno <strong>aplikacje bezstanowe, jak i stanowe</strong> z trwałą pamięcią. W przypadku <strong>aplikacji wielokontenerowych</strong>, Flux obsługuje Docker Compose, umożliwiając wdrażanie całych stosów (np. aplikacja + baza danych) jako pojedynczej jednostki."
+              "q": "Czy mogę przenieść istniejące aplikacje Docker na FluxCloud?",
+              "a": "Tak! Jeśli Twoja aplikacja działa w Docker, może działać na FluxCloud. Wystarczy <strong>podać obraz Docker, zmienne środowiskowe i porty</strong>—nie musisz przepisywać kodu. Flux obsługuje zarówno <strong>aplikacje bezstanowe, jak i stanowe</strong> z trwałą pamięcią. W przypadku <strong>aplikacji wielokontenerowych</strong>, Flux obsługuje Docker Compose, umożliwiając wdrażanie całych stosów (np. aplikacja + baza danych) jako pojedynczej jednostki."
             },
             {
               "q": "Jak działa ceny i rozliczenia?",
@@ -4326,7 +4328,7 @@
             },
             {
               "q": "Jaką otrzymuję gwarancję uptime?",
-              "a": "Flux Cloud oferuje <strong>gwarancję uptime 99.9%</strong> wspieraną przez naszą zdecentralizowaną sieć. Jeśli pojedynczy FluxNode ulegnie awarii, ruch jest automatycznie kierowany do zdrowych węzłów—<strong>bez przestojów</strong>. Ta redundancja w połączeniu z monitorowaniem w czasie rzeczywistym zapewnia, że Twoje aplikacje pozostają dostępne, nawet podczas awarii sprzętu lub ataków DDoS."
+              "a": "FluxCloud oferuje <strong>gwarancję uptime 99.9%</strong> wspieraną przez naszą zdecentralizowaną sieć. Jeśli pojedynczy FluxNode ulegnie awarii, ruch jest automatycznie kierowany do zdrowych węzłów—<strong>bez przestojów</strong>. Ta redundancja w połączeniu z monitorowaniem w czasie rzeczywistym zapewnia, że Twoje aplikacje pozostają dostępne, nawet podczas awarii sprzętu lub ataków DDoS."
             },
             {
               "q": "Czy otrzymuję wsparcie techniczne?",
@@ -4335,9 +4337,9 @@
           ]
         },
         "appSpecificFAQ": {
-          "pricingQuestion": "Ile kosztuje hosting {appName} na Flux Cloud?",
-          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> na Flux Cloud zaczyna się od <strong>{priceText}/miesiąc</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych.",
-          "pricingAnswerFree": "Hosting <strong>{appName}</strong> na Flux Cloud jest <strong>bezpłatny</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych."
+          "pricingQuestion": "Ile kosztuje hosting {appName} na FluxCloud?",
+          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> na FluxCloud zaczyna się od <strong>{priceText}/miesiąc</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych.",
+          "pricingAnswerFree": "Hosting <strong>{appName}</strong> na FluxCloud jest <strong>bezpłatny</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych."
         }
       }
     },
@@ -4446,7 +4448,7 @@
       "price": "Cena",
       "perMonth": "miesięcznie",
       "header": {
-        "title": "Flux Drive",
+        "title": "FluxDrive",
         "subtitle": "Dokończ subskrypcję, aby odblokować zdecentralizowaną pamięć masową"
       },
       "fluxPay": {
@@ -4484,7 +4486,7 @@
         "cryptoComInitFailed": "Inicjalizacja płatności Crypto.com nie powiodła się. Spróbuj ponownie.",
         "cryptoComPaymentFailed": "Nie udało się zainicjować płatności Crypto.com",
         "paymentFailedRetry": "Płatność nie powiodła się. Spróbuj ponownie.",
-        "paymentSuccessfulRedirecting": "Płatność zakończona pomyślnie! Przekierowywanie do Flux Drive...",
+        "paymentSuccessfulRedirecting": "Płatność zakończona pomyślnie! Przekierowywanie do FluxDrive...",
         "pleaseLoginToContinue": "Zaloguj się, aby kontynuować zakup",
         "sessionExpired": "Sesja wygasła. Zaloguj się ponownie."
       }
@@ -4583,22 +4585,22 @@
     "explore": "Eksploruj",
     "services": {
       "fluxCloud": {
-        "name": "Flux Cloud",
+        "name": "FluxCloud",
         "description": "Wdrażaj i skaluj swoje aplikacje na zdecentralizowanej infrastrukturze chmurowej",
         "category": "Infrastruktura"
       },
       "fluxAI": {
-        "name": "Flux AI",
+        "name": "FluxAI",
         "description": "Wykorzystaj moc rozproszonego przetwarzania AI dla swoich potrzeb uczenia maszynowego",
         "category": "AI i ML"
       },
       "fluxDrive": {
-        "name": "Flux Drive",
+        "name": "FluxDrive",
         "description": "Bezpieczne, zdecentralizowane rozwiązanie do przechowywania danych",
         "category": "Przechowywanie"
       },
       "fluxEdge": {
-        "name": "Flux Edge",
+        "name": "FluxEdge",
         "description": "Przetwarzanie brzegowe na dużą skalę z siecią Flux",
         "category": "Sieć"
       },

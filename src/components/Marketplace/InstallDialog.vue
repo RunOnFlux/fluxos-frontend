@@ -178,10 +178,12 @@
                         <div class="hardware-value-display">
                           <input
                             v-model="config.ram"
-                            type="text"
+                            type="number"
                             class="hardware-custom-input"
                             :disabled="isRamLocked"
-                            @input="config.ram = $event.target.value"
+                            min="100"
+                            step="100"
+                            @blur="config.ram = Math.max(100, Math.round(config.ram / 100) * 100)"
                           />
                         </div>
                         <VBtn
@@ -305,9 +307,12 @@
                             <div class="hardware-value-display">
                               <input
                                 v-model="entry.ram"
-                                type="text"
+                                type="number"
                                 class="hardware-custom-input"
+                                min="100"
+                                step="100"
                                 @input="updateComposeTotal"
+                                @blur="entry.ram = Math.max(100, Math.round(entry.ram / 100) * 100); updateComposeTotal()"
                               />
                             </div>
                             <VBtn
@@ -1947,7 +1952,7 @@ const creditCard = ref({
 })
 
 // Marketplace subscription duration options (from FluxCloud marketplace)
-const subscriptionOptionsDiscounts = ref([0, 0, 0, 0]) // Store discounts separately
+const subscriptionOptionsDiscounts = ref([0, 3, 6, 12]) // Store discounts: 0%, 3%, 6%, 12%
 
 const subscriptionOptions = computed(() => [
   {
@@ -1957,18 +1962,18 @@ const subscriptionOptions = computed(() => [
   },
   {
     months: 3,
-    label: t('components.marketplace.installDialog.threeMonths'),
-    discount: subscriptionOptionsDiscounts.value[1], // Will be fetched from app.discounts.threeMonths
+    label: `${t('components.marketplace.installDialog.threeMonths')} (3% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[1],
   },
   {
     months: 6,
-    label: t('components.marketplace.installDialog.sixMonths'),
-    discount: subscriptionOptionsDiscounts.value[2], // Will be fetched from app.discounts.sixMonths
+    label: `${t('components.marketplace.installDialog.sixMonths')} (6% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[2],
   },
   {
     months: 12,
-    label: t('components.marketplace.installDialog.twelveMonths'),
-    discount: subscriptionOptionsDiscounts.value[3], // Will be fetched from app.discounts.twelveMonths
+    label: `${t('components.marketplace.installDialog.twelveMonths')} (12% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[3],
   },
 ])
 
@@ -1976,14 +1981,14 @@ const subscriptionOptions = computed(() => [
 const initializeDiscounts = () => {
   if (props.app.discounts) {
     // Use app-specific discounts if available
-    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 0
-    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 0
-    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 0
+    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 3
+    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 6
+    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 12
   } else {
-    // Fallback to typical marketplace discounts if app doesn't specify
-    subscriptionOptionsDiscounts.value[1] = 5  // 3 months: 5% discount
-    subscriptionOptionsDiscounts.value[2] = 10 // 6 months: 10% discount
-    subscriptionOptionsDiscounts.value[3] = 20 // 12 months: 20% discount
+    // Default discounts: 3%, 6%, 12% for 3, 6, 12 months respectively
+    subscriptionOptionsDiscounts.value[1] = 3
+    subscriptionOptionsDiscounts.value[2] = 6
+    subscriptionOptionsDiscounts.value[3] = 12
   }
 }
 
@@ -2530,14 +2535,9 @@ const fetchDeploymentInfo = async () => {
 }
 
 const estimatedFluxPrice = computed(() => {
-  // Calculate FLUX using the ratio and the computed monthlyPrice (with instance multiplier)
-  if (apiPricing.value.fluxPerUsd > 0) {
-    const usdPrice = monthlyPrice.value || 0
-    const fluxPrice = usdPrice * apiPricing.value.fluxPerUsd
-    const months = config.value.subscriptionMonths || 1
-    const totalFlux = fluxPrice * months
-
-    return totalFlux.toFixed(2)
+  // If we have API flux pricing, use it directly - backend already calculated total for full subscription period
+  if (apiPricing.value.flux > 0) {
+    return Number(apiPricing.value.flux).toFixed(2)
   }
 
   // Fallback: if API hasn't responded yet
@@ -2682,7 +2682,16 @@ const estimatedCost = computed(() => {
 
 // Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // Use computed monthlyPrice which includes instance multiplier
+  // If we have API pricing, use it directly - backend already calculated total for full subscription period
+  // (includes duration multiplier, discounts, credits for existing subscriptions, etc.)
+  if (apiPricing.value.usd > 0) {
+    const apiTotal = Number(apiPricing.value.usd)
+    if (!isNaN(apiTotal)) {
+      return `$${apiTotal.toFixed(2)}`
+    }
+  }
+
+  // Fallback: multiply monthly price by months (for non-API pricing scenarios)
   const monthly = parseFloat(estimatedCost.value) || 0
   const months = config.value.subscriptionMonths || 1
   const total = monthly * months
@@ -6192,7 +6201,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-card {
   flex: 1;
-  min-width: 140px;
+  min-width: 200px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6292,7 +6301,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-value-display {
   flex: 1;
-  max-width: 70px;
+  min-width: 80px;
   height: 32px;
   display: flex;
   align-items: center;
@@ -6315,10 +6324,24 @@ watch(isLoggedIn, (newValue, oldValue) => {
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hardware-custom-input:focus {
   outline: none;
+}
+
+/* Hide increment/decrement arrows for number inputs */
+.hardware-custom-input::-webkit-outer-spin-button,
+.hardware-custom-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hardware-custom-input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /* Dark theme support */

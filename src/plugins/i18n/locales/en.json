@@ -1,5 +1,6 @@
 {
   "common": {
+    "off": "off",
     "buttons": {
       "cancel": "Cancel",
       "close": "Close",
@@ -82,7 +83,8 @@
     },
     "theme": {
       "light": "Light",
-      "dark": "Dark"
+      "dark": "Dark",
+      "switchTheme": "Switch theme"
     },
     "status": {
       "loading": "Loading...",
@@ -317,11 +319,11 @@
       "title": "Help"
     },
     "fluxDrive": {
-      "title": "Flux Drive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "Flux Cloud",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "Decentralized Application Management",
     "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
   },
@@ -1432,12 +1434,12 @@
           "startingAt": "Starting at"
         },
         "whyFluxPanel": {
-          "title": "Why Host on Flux Cloud",
+          "title": "Why Host on FluxCloud",
           "subtitle": "Experience the benefits of decentralized cloud infrastructure powered by Web3 technology"
         },
         "genericFAQPanel": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Common questions about hosting on Flux Cloud"
+          "subtitle": "Common questions about hosting on FluxCloud"
         }
       },
       "installDialog": {
@@ -1922,8 +1924,8 @@
         "starter": "Starter",
         "standard": "Standard",
         "pro": "Elite",
-        "enterprise": "Flux Drive Pro",
-        "fluxDrivePro": "Flux Drive Pro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "Payment successful! Redirecting..."
@@ -2085,7 +2087,7 @@
           "starter": "Starter",
           "standard": "Standard",
           "elite": "Elite",
-          "fluxDrivePro": "Flux Drive Pro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Most Popular",
@@ -3157,7 +3159,7 @@
       },
       "common": {
         "whyFlux": {
-          "title": "Why Host on Flux Cloud",
+          "title": "Why Host on FluxCloud",
           "subtitle": "Experience the power of decentralized cloud infrastructure built on Web3 technology",
           "benefits": [
             {
@@ -3204,11 +3206,11 @@
         },
         "genericFAQ": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Everything you need to know about hosting on Flux Cloud",
+          "subtitle": "Everything you need to know about hosting on FluxCloud",
           "questions": [
             {
-              "q": "What is Flux Cloud?",
-              "a": "Flux Cloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
+              "q": "What is FluxCloud?",
+              "a": "FluxCloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
             },
             {
               "q": "How do I get started?",
@@ -3245,9 +3247,9 @@
           ]
         },
         "appSpecificFAQ": {
-          "pricingQuestion": "How much does it cost to host {appName} on Flux Cloud?",
-          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on Flux Cloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
-          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on Flux Cloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
+          "pricingQuestion": "How much does it cost to host {appName} on FluxCloud?",
+          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on FluxCloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
+          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on FluxCloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
         }
       },
       "games": {
@@ -4474,7 +4476,7 @@
       "price": "Price",
       "perMonth": "per month",
       "header": {
-        "title": "Flux Drive",
+        "title": "FluxDrive",
         "subtitle": "Complete your subscription to unlock decentralized storage"
       },
       "fluxPay": {
@@ -4512,7 +4514,7 @@
         "cryptoComInitFailed": "Crypto.com payment initialization failed. Please try again.",
         "cryptoComPaymentFailed": "Failed to initialize Crypto.com payment",
         "paymentFailedRetry": "Payment failed. Please try again.",
-        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to Flux Drive...",
+        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to FluxDrive...",
         "pleaseLoginToContinue": "Please login to continue with your purchase",
         "sessionExpired": "Session expired. Please login again."
       }
@@ -4611,22 +4613,22 @@
     "explore": "Explore",
     "services": {
       "fluxCloud": {
-        "name": "Flux Cloud",
+        "name": "FluxCloud",
         "description": "Deploy and scale your applications on a decentralized cloud infrastructure",
         "category": "Infrastructure"
       },
       "fluxAI": {
-        "name": "Flux AI",
+        "name": "FluxAI",
         "description": "Harness the power of distributed AI computing for your machine learning needs",
         "category": "AI & ML"
       },
       "fluxDrive": {
-        "name": "Flux Drive",
+        "name": "FluxDrive",
         "description": "Secure, decentralized storage solution for your data",
         "category": "Storage"
       },
       "fluxEdge": {
-        "name": "Flux Edge",
+        "name": "FluxEdge",
         "description": "Edge computing at scale with Flux network",
         "category": "Network"
       },
