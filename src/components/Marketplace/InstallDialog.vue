@@ -1952,7 +1952,7 @@ const creditCard = ref({
 })
 
 // Marketplace subscription duration options (from FluxCloud marketplace)
-const subscriptionOptionsDiscounts = ref([0, 0, 0, 0]) // Store discounts separately
+const subscriptionOptionsDiscounts = ref([0, 3, 6, 12]) // Store discounts: 0%, 3%, 6%, 12%
 
 const subscriptionOptions = computed(() => [
   {
@@ -1962,18 +1962,18 @@ const subscriptionOptions = computed(() => [
   },
   {
     months: 3,
-    label: t('components.marketplace.installDialog.threeMonths'),
-    discount: subscriptionOptionsDiscounts.value[1], // Will be fetched from app.discounts.threeMonths
+    label: `${t('components.marketplace.installDialog.threeMonths')} (3% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[1],
   },
   {
     months: 6,
-    label: t('components.marketplace.installDialog.sixMonths'),
-    discount: subscriptionOptionsDiscounts.value[2], // Will be fetched from app.discounts.sixMonths
+    label: `${t('components.marketplace.installDialog.sixMonths')} (6% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[2],
   },
   {
     months: 12,
-    label: t('components.marketplace.installDialog.twelveMonths'),
-    discount: subscriptionOptionsDiscounts.value[3], // Will be fetched from app.discounts.twelveMonths
+    label: `${t('components.marketplace.installDialog.twelveMonths')} (12% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[3],
   },
 ])
 
@@ -1981,14 +1981,14 @@ const subscriptionOptions = computed(() => [
 const initializeDiscounts = () => {
   if (props.app.discounts) {
     // Use app-specific discounts if available
-    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 0
-    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 0
-    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 0
+    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 3
+    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 6
+    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 12
   } else {
-    // Fallback to typical marketplace discounts if app doesn't specify
-    subscriptionOptionsDiscounts.value[1] = 5  // 3 months: 5% discount
-    subscriptionOptionsDiscounts.value[2] = 10 // 6 months: 10% discount
-    subscriptionOptionsDiscounts.value[3] = 20 // 12 months: 20% discount
+    // Default discounts: 3%, 6%, 12% for 3, 6, 12 months respectively
+    subscriptionOptionsDiscounts.value[1] = 3
+    subscriptionOptionsDiscounts.value[2] = 6
+    subscriptionOptionsDiscounts.value[3] = 12
   }
 }
 
@@ -2535,14 +2535,9 @@ const fetchDeploymentInfo = async () => {
 }
 
 const estimatedFluxPrice = computed(() => {
-  // Calculate FLUX using the ratio and the computed monthlyPrice (with instance multiplier)
-  if (apiPricing.value.fluxPerUsd > 0) {
-    const usdPrice = monthlyPrice.value || 0
-    const fluxPrice = usdPrice * apiPricing.value.fluxPerUsd
-    const months = config.value.subscriptionMonths || 1
-    const totalFlux = fluxPrice * months
-
-    return totalFlux.toFixed(2)
+  // If we have API flux pricing, use it directly - backend already calculated total for full subscription period
+  if (apiPricing.value.flux > 0) {
+    return Number(apiPricing.value.flux).toFixed(2)
   }
 
   // Fallback: if API hasn't responded yet
@@ -2687,7 +2682,16 @@ const estimatedCost = computed(() => {
 
 // Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // Use computed monthlyPrice which includes instance multiplier
+  // If we have API pricing, use it directly - backend already calculated total for full subscription period
+  // (includes duration multiplier, discounts, credits for existing subscriptions, etc.)
+  if (apiPricing.value.usd > 0) {
+    const apiTotal = Number(apiPricing.value.usd)
+    if (!isNaN(apiTotal)) {
+      return `$${apiTotal.toFixed(2)}`
+    }
+  }
+
+  // Fallback: multiply monthly price by months (for non-API pricing scenarios)
   const monthly = parseFloat(estimatedCost.value) || 0
   const months = config.value.subscriptionMonths || 1
   const total = monthly * months

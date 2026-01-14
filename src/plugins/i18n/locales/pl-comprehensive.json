@@ -1,5 +1,6 @@
 {
   "common": {
+    "off": "taniej",
     "loading": "Ładowanie...",
     "close": "Zamknij",
     "cancel": "Anuluj",

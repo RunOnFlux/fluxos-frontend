@@ -4634,13 +4634,14 @@ const originalExpireBlocks = computed(() => {
 
 // Base renewal periods in blocks (before adding currentExpire)
 // These represent the duration being added, not the total
+// Discount: 3% for 3 months, 6% for 6 months, 12% for 12 months
 const BASE_RENEWAL_PERIODS = [
-  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 4)), labelKey: 'renewal1Week', fallback: '1 Week' },       // ~1 week (22,000 blocks)
-  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 2)), labelKey: 'renewal2Weeks', fallback: '2 Weeks' },    // ~2 weeks (44,000 blocks)
-  { blocks: BLOCKS_PER_MONTH, labelKey: 'renewal1Month', fallback: '1 Month' },                           // 1 month (88,000 blocks)
-  { blocks: BLOCKS_PER_MONTH * 3, labelKey: 'renewal3Months', fallback: '3 Months' },                    // 3 months (264,000 blocks)
-  { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months' },                    // 6 months (528,000 blocks)
-  { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year' },                       // 1 year (1,056,000 blocks)
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 4)), labelKey: 'renewal1Week', fallback: '1 Week', discount: 0 },       // ~1 week (22,000 blocks)
+  { blocks: Math.round(BLOCKS_PER_MONTH * (1 / 2)), labelKey: 'renewal2Weeks', fallback: '2 Weeks', discount: 0 },    // ~2 weeks (44,000 blocks)
+  { blocks: BLOCKS_PER_MONTH, labelKey: 'renewal1Month', fallback: '1 Month', discount: 0 },                           // 1 month (88,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 3, labelKey: 'renewal3Months', fallback: '3 Months', discount: 3 },                    // 3 months (264,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months', discount: 6 },                    // 6 months (528,000 blocks)
+  { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year', discount: 12 },                       // 1 year (1,056,000 blocks)
 ]
 
 // Helper to format blocks as human-readable duration with months and days
@@ -4733,6 +4734,7 @@ const renewalValues = computed(() => {
 
 // Computed labels that dynamically show actual extension duration
 // When capped, shows the actual duration being added (e.g., "7 Months 15 Days" instead of "1 Year")
+// Includes discount info for 3, 6, and 12 month periods
 const renewalOptionLabels = computed(() => {
   let currentExpire = originalExpireBlocks.value
   if (currentExpire == null || isNaN(currentExpire)) {
@@ -4742,15 +4744,22 @@ const renewalOptionLabels = computed(() => {
   const availableBlocks = Math.max(0, MAX_SUBSCRIPTION_BLOCKS - currentExpire)
   const labels = []
   const maxPeriodBlocks = BASE_RENEWAL_PERIODS[BASE_RENEWAL_PERIODS.length - 1].blocks // 1 year
+  const offText = t('common.off')
 
   for (const period of BASE_RENEWAL_PERIODS) {
     if (period.blocks <= availableBlocks) {
-      // Full period available - use standard label
+      // Full period available - use standard label with discount if applicable
+      let label
       try {
-        labels.push(t(`core.subscriptionManager.${period.labelKey}`))
+        label = t(`core.subscriptionManager.${period.labelKey}`)
       } catch {
-        labels.push(period.fallback)
+        label = period.fallback
       }
+      // Add discount info for periods with discount
+      if (period.discount > 0) {
+        label = `${label} (${period.discount}% ${offText})`
+      }
+      labels.push(label)
     }
   }
 
