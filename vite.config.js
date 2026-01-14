@@ -94,8 +94,8 @@ export default defineConfig(({ mode }) => {
       ViteImageOptimizer({
         // Test patterns for which images to include
         test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
-        // Exclude patterns
-        exclude: undefined,
+        // Exclude patterns - exclude PWA manifest icons to avoid cache conflicts
+        exclude: /images\/(logo\.png|logo\.svg|favicon\.ico)/,
         // Include patterns
         include: undefined,
         // Include assets from public folder
