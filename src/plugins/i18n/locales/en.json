@@ -3255,7 +3255,11 @@
             "selectProject": "Select the project to deploy:",
             "projectPathLabel": "Project Path (Monorepo)",
             "projectPathPlaceholder": "/",
-            "projectPathHint": "For monorepos, specify the folder containing your app (e.g., /apps/frontend)"
+            "projectPathHint": "For monorepos, specify the folder containing your app (e.g., /apps/frontend)",
+            "enterCredentialsHint": "Enter your username and access token above to continue",
+            "enterTokenHint": "Enter your access token above to continue",
+            "testConnectionHint": "Click 'Test Connection' above to verify access before continuing",
+            "testingConnectionHint": "Verifying repository access..."
           },
           "config": {
             "stepTitle": "Application Configuration",

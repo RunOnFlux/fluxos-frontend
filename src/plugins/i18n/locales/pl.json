@@ -3255,7 +3255,11 @@
             "selectProject": "Wybierz projekt do wdrożenia:",
             "projectPathLabel": "Ścieżka projektu (Monorepo)",
             "projectPathPlaceholder": "/",
-            "projectPathHint": "Dla monorepo, określ folder zawierający Twoją aplikację (np. /apps/frontend)"
+            "projectPathHint": "Dla monorepo, określ folder zawierający Twoją aplikację (np. /apps/frontend)",
+            "enterCredentialsHint": "Wprowadź nazwę użytkownika i token dostępu powyżej, aby kontynuować",
+            "enterTokenHint": "Wprowadź token dostępu powyżej, aby kontynuować",
+            "testConnectionHint": "Kliknij 'Testuj połączenie' powyżej, aby zweryfikować dostęp przed kontynuowaniem",
+            "testingConnectionHint": "Weryfikowanie dostępu do repozytorium..."
           },
           "config": {
             "stepTitle": "Konfiguracja aplikacji",

@@ -249,6 +249,7 @@
                               variant="outlined"
                               :loading="authTestStatus === 'testing'"
                               :disabled="!repoToken"
+                              :class="{ 'test-connection-highlight': showTestConnectionHighlight }"
                               @click="testAuthConnection"
                             >
                               <VIcon start>mdi-connection</VIcon>
@@ -1425,226 +1426,226 @@
                       </VAlert>
 
                       <div class="review-summary">
-                      <!-- Repository Section -->
-                      <div class="review-section">
-                        <h4 class="review-section-title">
-                          <VIcon start size="20">mdi-source-repository</VIcon>
-                          {{ t('pages.apps.register.orbit.review.repository') }}
-                        </h4>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.url') }}:</span>
-                          <span class="review-value">
-                            <VChip :color="providerColor" size="x-small" class="mr-1">
-                              <VIcon start :icon="providerIcon" size="12" />
-                              {{ detectedProvider || 'Git' }}
-                            </VChip>
-                            {{ repoUrl }}
-                          </span>
-                        </div>
-                        <div v-if="projectPath && projectPath !== '/'" class="review-item-row">
+                        <!-- Repository Section -->
+                        <div class="review-section">
+                          <h4 class="review-section-title">
+                            <VIcon start size="20">mdi-source-repository</VIcon>
+                            {{ t('pages.apps.register.orbit.review.repository') }}
+                          </h4>
                           <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.url') }}:</span>
+                            <span class="review-value">
+                              <VChip :color="providerColor" size="x-small" class="mr-1">
+                                <VIcon start :icon="providerIcon" size="12" />
+                                {{ detectedProvider || 'Git' }}
+                              </VChip>
+                              {{ repoUrl }}
+                            </span>
+                          </div>
+                          <div v-if="projectPath && projectPath !== '/'" class="review-item-row">
+                            <div class="review-item">
+                              <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
+                              <span class="review-value">{{ branch || 'main' }}</span>
+                            </div>
+                            <div class="review-item">
+                              <span class="review-label">{{ t('pages.apps.register.orbit.review.projectPath') }}:</span>
+                              <span class="review-value">{{ projectPath }}</span>
+                            </div>
+                          </div>
+                          <div v-else class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
                             <span class="review-value">{{ branch || 'main' }}</span>
                           </div>
-                          <div class="review-item">
-                            <span class="review-label">{{ t('pages.apps.register.orbit.review.projectPath') }}:</span>
-                            <span class="review-value">{{ projectPath }}</span>
+                          <div v-if="repoToken" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.accessToken') }}:</span>
+                            <span class="review-value">
+                              <VChip size="x-small" color="success">
+                                <VIcon start size="12">mdi-lock</VIcon>
+                                {{ t('pages.apps.register.orbit.review.configured') }}
+                              </VChip>
+                            </span>
+                          </div>
+                          <div v-if="isEnterpriseApp" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.appType') }}:</span>
+                            <span class="review-value">
+                              <VChip size="x-small" color="warning">
+                                <VIcon start size="12">mdi-shield-lock</VIcon>
+                                {{ t('pages.apps.register.orbit.review.enterprisePrivate') }}
+                              </VChip>
+                            </span>
                           </div>
                         </div>
-                        <div v-else class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.branch') }}:</span>
-                          <span class="review-value">{{ branch || 'main' }}</span>
+
+                        <!-- Configuration Section -->
+                        <div class="review-section">
+                          <h4 class="review-section-title">
+                            <VIcon start size="20">mdi-cog</VIcon>
+                            {{ t('pages.apps.register.orbit.review.configuration') }}
+                          </h4>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.appName') }}:</span>
+                            <span class="review-value"><code>{{ appName }}</code></span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.appPort') }}:</span>
+                            <span class="review-value">{{ appPort }}</span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.exposedPort') }}:</span>
+                            <span class="review-value">{{ exposedPort }}</span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.contact') }}:</span>
+                            <span class="review-value">{{ contactEmail }}</span>
+                          </div>
+                          <div v-if="selectedRuntime" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.runtime') }}:</span>
+                            <span class="review-value">{{ selectedRuntime }} {{ runtimeVersion }}</span>
+                          </div>
+                          <div v-if="customEnvVars.length > 0" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.envVariables') }}:</span>
+                            <span class="review-value">{{ customEnvVars.length }} {{ t('pages.apps.register.orbit.review.configured') }}</span>
+                          </div>
                         </div>
-                        <div v-if="repoToken" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.accessToken') }}:</span>
-                          <span class="review-value">
-                            <VChip size="x-small" color="success">
-                              <VIcon start size="12">mdi-lock</VIcon>
-                              {{ t('pages.apps.register.orbit.review.configured') }}
-                            </VChip>
-                          </span>
+
+                        <!-- Plan Section -->
+                        <div class="review-section">
+                          <h4 class="review-section-title">
+                            <VIcon start size="20">mdi-tag</VIcon>
+                            {{ t('pages.apps.register.orbit.review.planAndResources') }}
+                          </h4>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.plan') }}:</span>
+                            <span class="review-value">
+                              <VChip color="primary" size="small">
+                                {{ selectedPlanDisplayName }}
+                              </VChip>
+                            </span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.resources') }}:</span>
+                            <span class="review-value">
+                              {{ planResources.cpu }} vCPU, {{ planResources.ram }} GB RAM, {{ planResources.storage }} GB Storage
+                            </span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}:</span>
+                            <span class="review-value">
+                              {{ planResources.instances }} {{ planResources.instances === 1 ? 'instance' : 'instances' }}
+                            </span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.activeDeployments') }}:</span>
+                            <span class="review-value">
+                              {{ t('pages.apps.register.orbit.review.unlimited') }}
+                            </span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.builds') }}:</span>
+                            <span class="review-value">
+                              {{ t('pages.apps.register.orbit.review.unlimited') }}
+                            </span>
+                          </div>
+                          <div class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.branchPreviews') }}:</span>
+                            <span class="review-value">{{ t('pages.apps.register.orbit.review.enabled') }}</span>
+                          </div>
+                          <div v-if="allowedGeolocations.length > 0" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.config.allowedLocations') }}:</span>
+                            <span class="review-value">
+                              <VChip
+                                v-for="(geo, index) in allowedGeolocations"
+                                :key="'review-allowed-' + index"
+                                size="x-small"
+                                color="success"
+                                class="mr-1 mb-1"
+                                label
+                              >
+                                <VIcon start size="12">mdi-map-marker</VIcon>
+                                {{ getGeolocationLabel(geo) }}
+                              </VChip>
+                            </span>
+                          </div>
+                          <div v-if="forbiddenGeolocations.length > 0" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.config.forbiddenLocations') }}:</span>
+                            <span class="review-value">
+                              <VChip
+                                v-for="(geo, index) in forbiddenGeolocations"
+                                :key="'review-forbidden-' + index"
+                                size="x-small"
+                                color="error"
+                                class="mr-1 mb-1"
+                                label
+                              >
+                                <VIcon start size="12">mdi-map-marker-off</VIcon>
+                                {{ getGeolocationLabel(geo) }}
+                              </VChip>
+                            </span>
+                          </div>
+                          <div v-if="customDomain" class="review-item">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.config.customDomainLabel') }}:</span>
+                            <span class="review-value">
+                              <VChip
+                                size="x-small"
+                                color="primary"
+                                label
+                              >
+                                <VIcon start size="12">mdi-web</VIcon>
+                                {{ customDomain }}
+                              </VChip>
+                            </span>
+                          </div>
+                          <div class="review-item highlight-price">
+                            <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
+                            <span class="review-value price">
+                              <VChip v-if="eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
+                                <VIcon start size="14">mdi-gift-outline</VIcon>
+                                {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
+                              </VChip>
+                              <template v-if="!eligibleForFirstMonthFree && calculatedAppPriceLoading">
+                                <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
+                                Calculating...
+                              </template>
+                              <template v-else-if="!eligibleForFirstMonthFree && calculatedAppPrice">
+                                ${{ calculatedAppPrice.usd.toFixed(2) }}/month
+                              </template>
+                              <template v-else>
+                                {{ formattedTotalPrice }}
+                              </template>
+                            </span>
+                          </div>
                         </div>
-                        <div v-if="isEnterpriseApp" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.appType') }}:</span>
-                          <span class="review-value">
-                            <VChip size="x-small" color="warning">
-                              <VIcon start size="12">mdi-shield-lock</VIcon>
-                              {{ t('pages.apps.register.orbit.review.enterprisePrivate') }}
-                            </VChip>
-                          </span>
-                        </div>
+
+                        <!-- Generated Spec Preview -->
+                        <VExpansionPanels class="mt-4">
+                          <VExpansionPanel>
+                            <VExpansionPanelTitle>
+                              <VIcon start size="20">mdi-code-json</VIcon>
+                              {{ t('pages.apps.register.orbit.review.generatedSpec') }}
+                            </VExpansionPanelTitle>
+                            <VExpansionPanelText>
+                              <pre class="spec-preview">{{ JSON.stringify(generatedAppSpec, null, 2) }}</pre>
+                            </VExpansionPanelText>
+                          </VExpansionPanel>
+                        </VExpansionPanels>
                       </div>
 
-                      <!-- Configuration Section -->
-                      <div class="review-section">
-                        <h4 class="review-section-title">
-                          <VIcon start size="20">mdi-cog</VIcon>
-                          {{ t('pages.apps.register.orbit.review.configuration') }}
-                        </h4>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.appName') }}:</span>
-                          <span class="review-value"><code>{{ appName }}</code></span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.appPort') }}:</span>
-                          <span class="review-value">{{ appPort }}</span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.exposedPort') }}:</span>
-                          <span class="review-value">{{ exposedPort }}</span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.contact') }}:</span>
-                          <span class="review-value">{{ contactEmail }}</span>
-                        </div>
-                        <div v-if="selectedRuntime" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.runtime') }}:</span>
-                          <span class="review-value">{{ selectedRuntime }} {{ runtimeVersion }}</span>
-                        </div>
-                        <div v-if="customEnvVars.length > 0" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.envVariables') }}:</span>
-                          <span class="review-value">{{ customEnvVars.length }} {{ t('pages.apps.register.orbit.review.configured') }}</span>
-                        </div>
+                      <!-- Terms acceptance -->
+                      <div class="terms-section mt-6">
+                        <VCheckbox
+                          v-model="acceptedTerms"
+                          :rules="[rules.required]"
+                        >
+                          <template #label>
+                            <span class="text-body-2">
+                              {{ t('pages.apps.register.orbit.review.termsLabel') }}
+                              <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank" rel="noopener noreferrer" class="text-primary">
+                                {{ t('pages.apps.register.orbit.review.termsOfService') }}
+                              </a>
+                            </span>
+                          </template>
+                        </VCheckbox>
                       </div>
-
-                      <!-- Plan Section -->
-                      <div class="review-section">
-                        <h4 class="review-section-title">
-                          <VIcon start size="20">mdi-tag</VIcon>
-                          {{ t('pages.apps.register.orbit.review.planAndResources') }}
-                        </h4>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.plan') }}:</span>
-                          <span class="review-value">
-                            <VChip color="primary" size="small">
-                              {{ selectedPlanDisplayName }}
-                            </VChip>
-                          </span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.resources') }}:</span>
-                          <span class="review-value">
-                            {{ planResources.cpu }} vCPU, {{ planResources.ram }} GB RAM, {{ planResources.storage }} GB Storage
-                          </span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.config.instancesLabel') }}:</span>
-                          <span class="review-value">
-                            {{ planResources.instances }} {{ planResources.instances === 1 ? 'instance' : 'instances' }}
-                          </span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.activeDeployments') }}:</span>
-                          <span class="review-value">
-                            {{ t('pages.apps.register.orbit.review.unlimited') }}
-                          </span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.builds') }}:</span>
-                          <span class="review-value">
-                            {{ t('pages.apps.register.orbit.review.unlimited') }}
-                          </span>
-                        </div>
-                        <div class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.branchPreviews') }}:</span>
-                          <span class="review-value">{{ t('pages.apps.register.orbit.review.enabled') }}</span>
-                        </div>
-                        <div v-if="allowedGeolocations.length > 0" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.config.allowedLocations') }}:</span>
-                          <span class="review-value">
-                            <VChip
-                              v-for="(geo, index) in allowedGeolocations"
-                              :key="'review-allowed-' + index"
-                              size="x-small"
-                              color="success"
-                              class="mr-1 mb-1"
-                              label
-                            >
-                              <VIcon start size="12">mdi-map-marker</VIcon>
-                              {{ getGeolocationLabel(geo) }}
-                            </VChip>
-                          </span>
-                        </div>
-                        <div v-if="forbiddenGeolocations.length > 0" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.config.forbiddenLocations') }}:</span>
-                          <span class="review-value">
-                            <VChip
-                              v-for="(geo, index) in forbiddenGeolocations"
-                              :key="'review-forbidden-' + index"
-                              size="x-small"
-                              color="error"
-                              class="mr-1 mb-1"
-                              label
-                            >
-                              <VIcon start size="12">mdi-map-marker-off</VIcon>
-                              {{ getGeolocationLabel(geo) }}
-                            </VChip>
-                          </span>
-                        </div>
-                        <div v-if="customDomain" class="review-item">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.config.customDomainLabel') }}:</span>
-                          <span class="review-value">
-                            <VChip
-                              size="x-small"
-                              color="primary"
-                              label
-                            >
-                              <VIcon start size="12">mdi-web</VIcon>
-                              {{ customDomain }}
-                            </VChip>
-                          </span>
-                        </div>
-                        <div class="review-item highlight-price">
-                          <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
-                          <span class="review-value price">
-                            <VChip v-if="eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
-                              <VIcon start size="14">mdi-gift-outline</VIcon>
-                              {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
-                            </VChip>
-                            <template v-if="!eligibleForFirstMonthFree && calculatedAppPriceLoading">
-                              <VProgressCircular indeterminate size="16" width="2" class="mr-2" />
-                              Calculating...
-                            </template>
-                            <template v-else-if="!eligibleForFirstMonthFree && calculatedAppPrice">
-                              ${{ calculatedAppPrice.usd.toFixed(2) }}/month
-                            </template>
-                            <template v-else>
-                              {{ formattedTotalPrice }}
-                            </template>
-                          </span>
-                        </div>
-                      </div>
-
-                      <!-- Generated Spec Preview -->
-                      <VExpansionPanels class="mt-4">
-                        <VExpansionPanel>
-                          <VExpansionPanelTitle>
-                            <VIcon start size="20">mdi-code-json</VIcon>
-                            {{ t('pages.apps.register.orbit.review.generatedSpec') }}
-                          </VExpansionPanelTitle>
-                          <VExpansionPanelText>
-                            <pre class="spec-preview">{{ JSON.stringify(generatedAppSpec, null, 2) }}</pre>
-                          </VExpansionPanelText>
-                        </VExpansionPanel>
-                      </VExpansionPanels>
-                    </div>
-
-                    <!-- Terms acceptance -->
-                    <div class="terms-section mt-6">
-                      <VCheckbox
-                        v-model="acceptedTerms"
-                        :rules="[rules.required]"
-                      >
-                        <template #label>
-                          <span class="text-body-2">
-                            {{ t('pages.apps.register.orbit.review.termsLabel') }}
-                            <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank" rel="noopener noreferrer" class="text-primary">
-                              {{ t('pages.apps.register.orbit.review.termsOfService') }}
-                            </a>
-                          </span>
-                        </template>
-                      </VCheckbox>
-                    </div>
                     </template>
                   </div>
                 </template>
@@ -2115,6 +2116,11 @@
                 <!-- Actions -->
                 <template #actions>
                   <div class="step-content stepper-actions-wrapper">
+                    <!-- Hint for disabled Continue button -->
+                    <div v-if="continueButtonDisabledReason" class="continue-button-hint">
+                      <VIcon size="16" color="warning" class="mr-2">mdi-information</VIcon>
+                      <span>{{ continueButtonDisabledReason.message }}</span>
+                    </div>
                     <div class="stepper-actions">
                       <VBtn
                         v-if="currentStep > 1 && currentStep <= 4"
@@ -2428,8 +2434,53 @@ const showBranchAndProjectFields = computed(() => {
   if (repoCheckStatus.value === 'private' && authTestStatus.value === 'success') {
     return true
   }
-  
+
   return false
+})
+
+// Computed: Reason why Continue button is disabled on step 2 (for user guidance)
+const continueButtonDisabledReason = computed(() => {
+  if (currentStep.value !== 2) return null
+  if (repoCheckStatus.value !== 'private') return null
+  if (authTestStatus.value === 'success') return null
+
+  // Private repo detected, need to test connection
+  if (!repoUsername.value && !repoToken.value) {
+    return {
+      message: t('pages.apps.register.orbit.repository.enterCredentialsHint'),
+      action: 'credentials',
+    }
+  }
+
+  if (!repoToken.value) {
+    return {
+      message: t('pages.apps.register.orbit.repository.enterTokenHint'),
+      action: 'token',
+    }
+  }
+
+  if (authTestStatus.value === 'idle' || authTestStatus.value === 'error') {
+    return {
+      message: t('pages.apps.register.orbit.repository.testConnectionHint'),
+      action: 'test',
+    }
+  }
+
+  if (authTestStatus.value === 'testing') {
+    return {
+      message: t('pages.apps.register.orbit.repository.testingConnectionHint'),
+      action: 'testing',
+    }
+  }
+
+  return null
+})
+
+// Computed: Whether to highlight the Test Connection button
+const showTestConnectionHighlight = computed(() => {
+  return repoCheckStatus.value === 'private'
+    && repoToken.value
+    && authTestStatus.value === 'idle'
 })
 
 // Monorepo detection
@@ -2533,6 +2584,7 @@ const checkRepoAccess = async () => {
 const checkDuplicateGitRepo = async () => {
   if (!zelid.value || !repoUrl.value) {
     duplicateGitRepoCheckStatus.value = 'checked'
+    
     return
   }
 
@@ -2548,6 +2600,7 @@ const checkDuplicateGitRepo = async () => {
     if (response.data.status !== 'success' || !Array.isArray(response.data.data)) {
       console.warn('[orbit] Failed to fetch permanent messages for owner:', zelid.value)
       duplicateGitRepoCheckStatus.value = 'checked'
+      
       return
     }
 
@@ -2573,6 +2626,7 @@ const checkDuplicateGitRepo = async () => {
               hasDuplicateGitRepo.value = true
               existingOrbitAppName.value = appSpecs.name
               duplicateGitRepoCheckStatus.value = 'checked'
+              
               return
             }
           }
@@ -2583,6 +2637,7 @@ const checkDuplicateGitRepo = async () => {
     duplicateGitRepoCheckStatus.value = 'checked'
   } catch (error) {
     console.error('[orbit] Error checking owner git repos:', error)
+
     // On error, allow the flow to proceed (fail open)
     duplicateGitRepoCheckStatus.value = 'checked'
   }
@@ -2656,6 +2711,7 @@ const calculateAppPrice = async () => {
         }
       } catch (encryptError) {
         console.warn('[orbit] Enterprise encryption failed for price calc, using standard pricing:', encryptError.message)
+
         // Continue with standard pricing if encryption fails
       }
     }
@@ -4378,6 +4434,7 @@ const calculatedAppPriceError = ref(null)
 const eligibleForFirstMonthFree = computed(() => {
   // Not eligible if they already have an orbit app with same git repo
   if (hasDuplicateGitRepo.value) return false
+  
   return true
 })
 
@@ -5444,17 +5501,20 @@ const initZelcorePay = async () => {
     const amount = calculatedAppPrice.value?.flux
     if (!amount || amount <= 0) {
       console.error('Invalid payment amount. Please wait for price calculation.')
+      
       return
     }
 
     // Validate required fields
     if (!deploymentAddress.value) {
       console.error('Deployment address not available')
+      
       return
     }
 
     if (!registrationHash.value) {
       console.error('Registration hash not available')
+      
       return
     }
 
@@ -5488,17 +5548,20 @@ const initSSPPay = async () => {
     const amount = calculatedAppPrice.value?.flux
     if (!amount || amount <= 0) {
       console.error('Invalid payment amount. Please wait for price calculation.')
+      
       return
     }
 
     // Validate required fields
     if (!deploymentAddress.value) {
       console.error('Deployment address not available')
+      
       return
     }
 
     if (!registrationHash.value) {
       console.error('Registration hash not available')
+      
       return
     }
 
@@ -7622,4 +7685,43 @@ onMounted(() => {
   }
 }
 
+/* Continue button hint message */
+.continue-button-hint {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: rgb(var(--v-theme-warning));
+  animation: fadeSlideIn 0.3s ease;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Test Connection button highlight/pulse animation */
+.test-connection-highlight {
+  animation: pulseHighlight 2s ease-in-out infinite;
+  box-shadow: 0 0 0 0 rgba(var(--v-theme-primary), 0.4);
+}
+
+@keyframes pulseHighlight {
+  0% {
+    box-shadow: 0 0 0 0 rgba(var(--v-theme-primary), 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 8px rgba(var(--v-theme-primary), 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(var(--v-theme-primary), 0);
+  }
+}
 </style>
