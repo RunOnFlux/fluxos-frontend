@@ -4628,7 +4628,7 @@
         "category": "Storage"
       },
       "fluxEdge": {
-        "name": "Flux Edge",
+        "name": "FluxEdge",
         "description": "Edge computing at scale with Flux network",
         "category": "Network"
       },

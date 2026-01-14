@@ -4600,7 +4600,7 @@
         "category": "Przechowywanie"
       },
       "fluxEdge": {
-        "name": "Flux Edge",
+        "name": "FluxEdge",
         "description": "Przetwarzanie brzegowe na dużą skalę z siecią Flux",
         "category": "Sieć"
       },
