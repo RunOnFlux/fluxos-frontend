@@ -1,5 +1,6 @@
 {
   "common": {
+    "off": "off",
     "buttons": {
       "cancel": "Cancel",
       "close": "Close",

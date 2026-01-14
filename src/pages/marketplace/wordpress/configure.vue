@@ -663,13 +663,13 @@ const loadingPricing = ref(false)
 // Plans
 const plans = ref([])
 
-// Payment durations
+// Payment durations with discount info
 const paymentDurations = computed(() => [
   { title: t('pages.marketplace.wordpress.durations.oneMonth'), months: 1 },
   { title: t('pages.marketplace.wordpress.durations.twoMonths'), months: 2 },
-  { title: t('pages.marketplace.wordpress.durations.threeMonths'), months: 3 },
-  { title: t('pages.marketplace.wordpress.durations.sixMonths'), months: 6 },
-  { title: t('pages.marketplace.wordpress.durations.twelveMonths'), months: 12 },
+  { title: `${t('pages.marketplace.wordpress.durations.threeMonths')} (3% ${t('common.off')})`, months: 3 },
+  { title: `${t('pages.marketplace.wordpress.durations.sixMonths')} (6% ${t('common.off')})`, months: 6 },
+  { title: `${t('pages.marketplace.wordpress.durations.twelveMonths')} (12% ${t('common.off')})`, months: 12 },
 ])
 
 // Deployment locations

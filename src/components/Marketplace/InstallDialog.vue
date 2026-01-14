@@ -1952,7 +1952,7 @@ const creditCard = ref({
 })
 
 // Marketplace subscription duration options (from FluxCloud marketplace)
-const subscriptionOptionsDiscounts = ref([0, 0, 0, 0]) // Store discounts separately
+const subscriptionOptionsDiscounts = ref([0, 3, 6, 12]) // Store discounts: 0%, 3%, 6%, 12%
 
 const subscriptionOptions = computed(() => [
   {
@@ -1962,18 +1962,18 @@ const subscriptionOptions = computed(() => [
   },
   {
     months: 3,
-    label: t('components.marketplace.installDialog.threeMonths'),
-    discount: subscriptionOptionsDiscounts.value[1], // Will be fetched from app.discounts.threeMonths
+    label: `${t('components.marketplace.installDialog.threeMonths')} (3% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[1],
   },
   {
     months: 6,
-    label: t('components.marketplace.installDialog.sixMonths'),
-    discount: subscriptionOptionsDiscounts.value[2], // Will be fetched from app.discounts.sixMonths
+    label: `${t('components.marketplace.installDialog.sixMonths')} (6% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[2],
   },
   {
     months: 12,
-    label: t('components.marketplace.installDialog.twelveMonths'),
-    discount: subscriptionOptionsDiscounts.value[3], // Will be fetched from app.discounts.twelveMonths
+    label: `${t('components.marketplace.installDialog.twelveMonths')} (12% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[3],
   },
 ])
 
@@ -1981,14 +1981,14 @@ const subscriptionOptions = computed(() => [
 const initializeDiscounts = () => {
   if (props.app.discounts) {
     // Use app-specific discounts if available
-    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 0
-    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 0
-    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 0
+    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 3
+    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 6
+    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 12
   } else {
-    // Fallback to typical marketplace discounts if app doesn't specify
-    subscriptionOptionsDiscounts.value[1] = 5  // 3 months: 5% discount
-    subscriptionOptionsDiscounts.value[2] = 10 // 6 months: 10% discount
-    subscriptionOptionsDiscounts.value[3] = 20 // 12 months: 20% discount
+    // Default discounts: 3%, 6%, 12% for 3, 6, 12 months respectively
+    subscriptionOptionsDiscounts.value[1] = 3
+    subscriptionOptionsDiscounts.value[2] = 6
+    subscriptionOptionsDiscounts.value[3] = 12
   }
 }
 
