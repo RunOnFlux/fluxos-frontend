@@ -337,6 +337,7 @@
               />
               <!-- Update/Renew Subscription Buttons -->
               <div
+                v-if="canManageSubscription"
                 :style="{
                   display: 'grid',
                   gridTemplateColumns: appSpecification?.version >= 6 ? '1fr 1fr 1fr' : '1fr 1fr',
@@ -1293,6 +1294,33 @@ const isComposeApp = computed(() =>
 
 const isOwnerZelidauth = computed(() => zelidauthOwner.value.includes(appSpecificationGlobal.value?.owner))
 
+// Get current user's zelid from the stored zelidauth
+const currentUserZelid = computed(() => {
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (zelidauth) {
+      const auth = qs.parse(zelidauth)
+
+      return auth?.zelid || ''
+    }
+  } catch (error) {
+    console.error('Error parsing zelidauth:', error)
+  }
+
+  return ''
+})
+
+// Check if current user is a flux support team member
+const isFluxSupportTeam = computed(() => {
+  const supportTeamIds = fluxStore.config.fluxSupportTeamFluxID || ''
+  const userZelid = currentUserZelid.value
+
+  return userZelid && supportTeamIds.includes(userZelid)
+})
+
+// Check if user can manage subscription (owner OR support team member)
+const canManageSubscription = computed(() => isOwnerZelidauth.value || isFluxSupportTeam.value)
+
 // Tabs that require running instances to function
 const instanceDependentTabs = ['2', '3', '4', '5', '6', '7', '8']
 
@@ -1310,7 +1338,7 @@ const allTabs = computed(() => [
     requiresInstance: true,
   },
   { label: t('pages.apps.manage.tabs.instances'), value: "9", requiresInstance: true },
-  isOwnerZelidauth.value && { label: t('pages.apps.manage.tabs.subscription'), value: "10" },
+  canManageSubscription.value && { label: t('pages.apps.manage.tabs.subscription'), value: "10" },
 ].filter(Boolean)) // removes `false` if condition fails
 
 // Filter tabs based on instance availability
