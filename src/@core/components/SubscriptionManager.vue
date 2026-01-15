@@ -4755,6 +4755,7 @@ const renewalOptionLabels = computed(() => {
       } catch {
         label = period.fallback
       }
+
       // Add discount info for periods with discount
       if (period.discount > 0) {
         label = `${label} (${period.discount}% ${offText})`
