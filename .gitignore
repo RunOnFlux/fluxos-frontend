@@ -37,6 +37,7 @@ package-lock.json
 
 # iconify dist files
 src/plugins/iconify/icons.css
+src/plugins/vuetify/icons-optimized.js
 
 # Ignore MSW script
 public/mockServiceWorker.js
