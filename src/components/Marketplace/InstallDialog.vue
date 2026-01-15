@@ -2478,7 +2478,7 @@ const fetchPricingFromAPI = async () => {
       owner: props.app.owner || 'marketplace',
       compose: appSpecCompose,
       instances: config.value.instances,
-      expire: defaultExpireBlocks * config.value.subscriptionMonths,
+      expire: defaultExpireBlocks, // Always 1 month - total calculated client-side
       contacts: props.app.contacts || [],
       geolocation: isWordPress.value ? (props.app.geolocation || []) : (getGeolocationCodes() || []),
       nodes: props.app.nodes || [],
@@ -2534,10 +2534,27 @@ const fetchDeploymentInfo = async () => {
   }
 }
 
+// Get current subscription discount (Flux payments only)
+const currentDiscount = computed(() => {
+  const selectedOption = subscriptionOptions.value.find(option => option.months === config.value.subscriptionMonths)
+
+  return selectedOption ? selectedOption.discount : 0
+})
+
 const estimatedFluxPrice = computed(() => {
-  // If we have API flux pricing, use it directly - backend already calculated total for full subscription period
-  if (apiPricing.value.flux > 0) {
-    return Number(apiPricing.value.flux).toFixed(2)
+  // Calculate Flux price client-side using monthly USD price and Flux/USD ratio
+  const monthly = monthlyPrice.value || 0
+  const months = config.value.subscriptionMonths || 1
+  const fluxPerUsd = apiPricing.value.fluxPerUsd || 0
+  const discount = currentDiscount.value || 0
+
+  if (fluxPerUsd > 0 && monthly > 0) {
+    // Monthly Flux = monthly USD × fluxPerUsd
+    // Total Flux = monthly Flux × months × (1 - discount/100)
+    const monthlyFlux = monthly * fluxPerUsd
+    const totalFlux = monthlyFlux * months * (1 - discount / 100)
+
+    return totalFlux.toFixed(2)
   }
 
   // Fallback: if API hasn't responded yet
@@ -2551,13 +2568,6 @@ const totalFluxPrice = computed(() => {
 })
 const insufficientBalance = computed(() => {
   return userFluxBalance.value < parseFloat(estimatedFluxPrice.value)
-})
-
-// Get current subscription discount
-const currentDiscount = computed(() => {
-  const selectedOption = subscriptionOptions.value.find(option => option.months === config.value.subscriptionMonths)
-  
-  return selectedOption ? selectedOption.discount : 0
 })
 
 // Remove old infrastructureCost - now using marketplace pricing calculation
@@ -2631,9 +2641,9 @@ const monthlyPrice = computed(() => {
     return props.app.price || 0
   }
 
-  // For marketplace apps with custom hardware: Use API-calculated price if available
+  // For marketplace apps with custom hardware: Use API-calculated monthly price if available
   if (apiPricing.value.usd > 0) {
-    // API price is already calculated based on actual hardware and instances
+    // API returns monthly price based on actual hardware and instances
     const apiPrice = Number(apiPricing.value.usd.toFixed(2))
     const configPrice = props.app.price || 0
 
@@ -2682,28 +2692,17 @@ const estimatedCost = computed(() => {
 
 // Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // If we have API pricing, use it directly - backend already calculated total for full subscription period
-  // (includes duration multiplier, discounts, credits for existing subscriptions, etc.)
-  if (apiPricing.value.usd > 0) {
-    const apiTotal = Number(apiPricing.value.usd)
-    if (!isNaN(apiTotal)) {
-      return `$${apiTotal.toFixed(2)}`
-    }
-  }
-
-  // Fallback: multiply monthly price by months (for non-API pricing scenarios)
-  const monthly = parseFloat(estimatedCost.value) || 0
+  // Calculate client-side: monthly price × months × (1 - discount/100)
+  const monthly = monthlyPrice.value || 0
   const months = config.value.subscriptionMonths || 1
-  const total = monthly * months
+  const discount = currentDiscount.value || 0
+  const total = monthly * months * (1 - discount / 100)
 
   if (isNaN(total)) {
     return '$0.00'
   }
 
-  // Ensure we always return a properly formatted price string
-  const formattedTotal = total.toFixed(2)
-
-  return `$${formattedTotal}`
+  return `$${total.toFixed(2)}`
 })
 
 // Payment information (FluxCloud-style)
