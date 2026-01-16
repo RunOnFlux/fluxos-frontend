@@ -2894,9 +2894,9 @@
             "freeFeatures": {
               "deployments": "1 active deployment",
               "builds": "Unlimited",
-              "cpu": "1.0 Cores",
-              "ram": "2 GB",
-              "storage": "10 GB SSD/NVMe",
+              "cpu": "0.5 Cores",
+              "ram": "1 GB",
+              "storage": "5 GB SSD/NVMe",
               "support": "Community support",
               "frameworks": "100+ frameworks supported"
             },

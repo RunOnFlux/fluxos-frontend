@@ -4452,7 +4452,7 @@ watch(
 // Plan resources
 const planResources = computed(() => {
   if (selectedPlan.value === 'free') {
-    return { cpu: 1, ram: 2, storage: 10, instances: 1 }
+    return { cpu: 0.5, ram: 1, storage: 5, instances: 1 }
   }
 
   if (selectedPlan.value === 'developer') {
