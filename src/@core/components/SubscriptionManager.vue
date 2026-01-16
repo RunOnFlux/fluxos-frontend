@@ -4463,7 +4463,7 @@ const testableFieldsHaveChanged = computed(() => {
   }
 })
 
-// Computed to check if test section should show (with logging)
+// Computed to check if test section should show
 const shouldShowTestSection = computed(() => {
   const result = !testFinished.value &&
                  testableFieldsHaveChanged.value &&
@@ -4473,19 +4473,6 @@ const shouldShowTestSection = computed(() => {
                  (props.newApp || managementAction.value !== 'cancel')
 
   // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
-
-  console.log('🧪 Test Section Visibility Check:', {
-    shouldShow: result,
-    testFinished: testFinished.value,
-    specsHaveChanged: specsHaveChanged.value,
-    testableFieldsHaveChanged: testableFieldsHaveChanged.value,
-    isNewApp: props.newApp,
-    fluxPrice: appSpecPrice.value?.flux,
-    paymentProcessing: paymentProcessing.value,
-    paymentConfirmed: paymentConfirmed.value,
-    managementAction: managementAction.value,
-    renewalEnabled: renewalEnabled.value,
-  })
 
   return result
 })
