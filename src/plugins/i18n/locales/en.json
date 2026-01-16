@@ -3067,7 +3067,8 @@
             "nodeDeploymentTime": "This can take a few minutes.",
             "registrationCompleteTitle": "Registration/Payment Complete!",
             "registrationCompleteDescription": "Your application has been successfully paid/registered on the Flux network.",
-            "nodesSpawning": "Network nodes are now spawning your application. It will be available shortly."
+            "nodesSpawning": "Network nodes are now spawning your application. It will be available shortly.",
+            "cancelPayment": "Cancel and go back"
           },
           "navigation": {
             "back": "Back",

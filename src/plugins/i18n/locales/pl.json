@@ -3067,7 +3067,8 @@
             "nodeDeploymentTime": "To może potrwać kilka minut.",
             "registrationCompleteTitle": "Rejestracja/Płatność zakończona!",
             "registrationCompleteDescription": "Twoja aplikacja została pomyślnie opłacona/zarejestrowana w sieci Flux.",
-            "nodesSpawning": "Węzły sieci uruchamiają teraz Twoją aplikację. Będzie dostępna wkrótce."
+            "nodesSpawning": "Węzły sieci uruchamiają teraz Twoją aplikację. Będzie dostępna wkrótce.",
+            "cancelPayment": "Anuluj i wróć"
           },
           "navigation": {
             "back": "Wstecz",

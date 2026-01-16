@@ -2105,6 +2105,17 @@
                                   </div>
                                 </div>
                               </div>
+                              <!-- Cancel button for crypto payments - only show during blockchain phase -->
+                              <div v-if="fiatPaymentInitiated && paymentMonitoringPhase === 'blockchain'" class="d-flex justify-center mt-4">
+                                <VBtn
+                                  variant="outlined"
+                                  color="secondary"
+                                  @click="cancelPaymentMonitoring"
+                                >
+                                  <VIcon start>mdi-arrow-left</VIcon>
+                                  {{ t('pages.apps.register.orbit.deploy.cancelPayment') }}
+                                </VBtn>
+                              </div>
                             </VCardText>
                           </VCard>
                         </VCol>
@@ -5420,6 +5431,7 @@ const cancelPaymentMonitoring = () => {
   paymentConfirmed.value = false
   paymentMonitoringPhase.value = 'blockchain'
   paymentMethod.value = ''
+  fiatPaymentInitiated.value = false
 }
 
 // Initialize Stripe payment
