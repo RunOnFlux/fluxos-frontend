@@ -1142,7 +1142,7 @@
 
                         <div class="first-month-free-badge">
                           <VIcon size="14">mdi-gift-outline</VIcon>
-                          {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
+                          {{ t('pages.apps.register.orbit.pricing.freeForever') }}
                         </div>
 
                         <div class="plan-header">

@@ -2862,7 +2862,7 @@
               "dedicatedResources": "Dedicated Resources",
               "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
-            "free": "Basic",
+            "free": "Free",
             "developer": "Standard",
             "pro": "Pro",
             "beta": "Beta",
@@ -2952,7 +2952,8 @@
             "selectPlan": "Select Plan",
             "recommended": "Recommended",
             "mostPopular": "Most Popular",
-            "firstMonthFree": "Free forever",
+            "firstMonthFree": "First month free*",
+            "freeForever": "Free forever*",
             "startDeploying": "Start Deploying",
             "startFreeTrial": "Start a free trial",
             "freeTrialDisclaimer": "Restrictions may apply to prevent abuse.",
@@ -4596,7 +4597,7 @@
           "instance": "instance",
           "perMonth": "/month",
           "planDescriptions": {
-            "Basic": "Suitable for Individuals and Small Businesses, Perfect for a simple Website or Blog",
+            "Free": "Suitable for Individuals and Small Businesses, Perfect for a simple Website or Blog",
             "Standard": "Ideal for growing businesses, good for a site with more content",
             "Pro": "Great for a larger site with higher traffic demands",
             "Ultra": "The ultimate powerhouse for resource-intensive projects that can't afford to slow down",

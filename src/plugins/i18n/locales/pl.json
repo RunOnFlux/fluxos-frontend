@@ -2952,7 +2952,8 @@
             "selectPlan": "Wybierz plan",
             "recommended": "Polecany",
             "mostPopular": "Najpopularniejszy",
-            "firstMonthFree": "Darmowy na zawsze",
+            "firstMonthFree": "Pierwszy miesiąc gratis*",
+            "freeForever": "Darmowy na zawsze*",
             "startDeploying": "Zacznij wdrażać",
             "startFreeTrial": "Rozpocznij darmowy okres próbny",
             "freeTrialDisclaimer": "Mogą obowiązywać ograniczenia w celu zapobiegania nadużyciom.",
@@ -4501,7 +4502,7 @@
           "instance": "instancja",
           "perMonth": "/miesiąc",
           "planDescriptions": {
-            "Basic": "Odpowiedni dla osób fizycznych i małych firm, idealny dla prostej strony internetowej lub bloga",
+            "Free": "Odpowiedni dla osób fizycznych i małych firm, idealny dla prostej strony internetowej lub bloga",
             "Standard": "Idealny dla rozwijających się firm, dobry dla strony z większą ilością treści",
             "Pro": "Świetny dla większej strony o wyższym ruchu",
             "Ultra": "Najwyższa wydajność dla wymagających projektów",
