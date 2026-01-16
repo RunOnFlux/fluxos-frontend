@@ -2953,6 +2953,8 @@
             "recommended": "Polecany",
             "mostPopular": "Najpopularniejszy",
             "firstMonthFree": "Darmowy na zawsze",
+            "startDeploying": "Zacznij wdrażać",
+            "startFreeTrial": "Rozpocznij darmowy okres próbny",
             "freeTrialDisclaimer": "Mogą obowiązywać ograniczenia w celu zapobiegania nadużyciom.",
             "beginnerDisclaimer": "Plan Free jest darmowy i automatycznie odnawiany przez InFlux Technologies, o ile masz tylko jedną aplikację Git działającą w sieci. Jeśli wdrożysz dodatkowe aplikacje Git, każda aplikacja na planie Free będzie kosztować 0,99$/miesiąc.",
             "beginnerDowntimeNote": "Plan Free działa na pojedynczej instancji. Ponieważ Flux to sieć zdecentralizowana, mogą wystąpić krótkie przestoje (zwykle kilka minut), gdy węzeł hostujący zostanie zrestartowany lub przejdzie offline. Dla aplikacji wymagających wysokiej dostępności zalecamy plany Standard lub Pro, które działają na wielu instancjach.",

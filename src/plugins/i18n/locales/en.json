@@ -2953,6 +2953,8 @@
             "recommended": "Recommended",
             "mostPopular": "Most Popular",
             "firstMonthFree": "Free forever",
+            "startDeploying": "Start Deploying",
+            "startFreeTrial": "Start a free trial",
             "freeTrialDisclaimer": "Restrictions may apply to prevent abuse.",
             "beginnerDisclaimer": "The Free plan is free and automatically renewed by InFlux Technologies as long as you have only one Git app running on the network. If you deploy additional Git apps, each Free plan app will be charged $0.99/month.",
             "beginnerDowntimeNote": "The Free plan runs on a single instance. Since Flux is a decentralized network, brief downtime (typically a few minutes) may occur if the hosting node restarts or goes offline. For high-availability applications, we recommend the Standard or Pro plans which run on multiple instances.",

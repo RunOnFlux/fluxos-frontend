@@ -1182,8 +1182,8 @@
                             class="plan-btn"
                             @click.stop="selectPlanAndContinue('free')"
                           >
-                            <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'free' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
+                            <VIcon start>mdi-rocket-launch</VIcon>
+                            {{ t('pages.apps.register.orbit.pricing.startDeploying') }}
                           </VBtn>
                         </div>
                       </div>
@@ -1245,8 +1245,8 @@
                             class="plan-btn"
                             @click.stop="selectPlanAndContinue('developer')"
                           >
-                            <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'developer' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
+                            <VIcon start>mdi-gift-outline</VIcon>
+                            {{ t('pages.apps.register.orbit.pricing.startFreeTrial') }}
                           </VBtn>
                         </div>
                       </div>
@@ -1304,8 +1304,8 @@
                             class="plan-btn"
                             @click.stop="selectPlanAndContinue('pro')"
                           >
-                            <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'pro' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
+                            <VIcon start>mdi-gift-outline</VIcon>
+                            {{ t('pages.apps.register.orbit.pricing.startFreeTrial') }}
                           </VBtn>
                         </div>
                       </div>
@@ -1367,8 +1367,8 @@
                             class="plan-btn"
                             @click.stop="selectPlanAndContinue('custom')"
                           >
-                            <VIcon start>mdi-check-circle</VIcon>
-                            {{ selectedPlan === 'custom' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
+                            <VIcon start>mdi-gift-outline</VIcon>
+                            {{ t('pages.apps.register.orbit.pricing.startFreeTrial') }}
                           </VBtn>
                         </div>
                       </div>
