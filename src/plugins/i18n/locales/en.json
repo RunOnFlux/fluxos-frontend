@@ -2954,6 +2954,7 @@
             "mostPopular": "Most Popular",
             "firstMonthFree": "First month free*",
             "freeForever": "Free forever*",
+            "freePlanExplainer": "Free plan auto-renews with 1 Git app. Adding more apps is billed at $0.99/month.",
             "startDeploying": "Start Deploying",
             "startFreeTrial": "Start a free trial",
             "freeTrialDisclaimer": "Restrictions may apply to prevent abuse.",

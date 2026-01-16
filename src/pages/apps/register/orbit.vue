@@ -1598,7 +1598,13 @@
                           <div class="review-item highlight-price">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
                             <span class="review-value price">
-                              <VChip v-if="eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
+                              <!-- Free plan: show "Free Forever" -->
+                              <VChip v-if="selectedPlan === 'free'" color="success" size="small" variant="flat" class="mr-2">
+                                <VIcon start size="14">mdi-infinity</VIcon>
+                                {{ t('pages.apps.register.orbit.pricing.freeForever') }}
+                              </VChip>
+                              <!-- Other plans with first month free -->
+                              <VChip v-else-if="eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
                                 <VIcon start size="14">mdi-gift-outline</VIcon>
                                 {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
                               </VChip>
@@ -1609,9 +1615,16 @@
                               <template v-else-if="!eligibleForFirstMonthFree && calculatedAppPrice">
                                 ${{ calculatedAppPrice.usd.toFixed(2) }}/month
                               </template>
-                              <template v-else>
+                              <template v-else-if="selectedPlan !== 'free'">
                                 {{ formattedTotalPrice }}
                               </template>
+                            </span>
+                          </div>
+                          <!-- Free plan explainer -->
+                          <div v-if="selectedPlan === 'free'" class="free-plan-explainer mt-2">
+                            <span class="text-caption text-medium-emphasis">
+                              <VIcon size="14" class="mr-1">mdi-information-outline</VIcon>
+                              {{ t('pages.apps.register.orbit.pricing.freePlanExplainer') }}
                             </span>
                           </div>
                         </div>
