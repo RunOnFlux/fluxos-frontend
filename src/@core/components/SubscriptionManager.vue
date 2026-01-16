@@ -7264,6 +7264,9 @@ async function verifyAppSpec() {
           owner: appSpecTemp.owner,
         }
         const responseGetPublicKey = await AppsService.getAppPublicKey(zelidauth, appPubKeyData)
+        if (!responseGetPublicKey?.data) {
+          throw new Error('Failed to get app public key: No response from server')
+        }
         if (responseGetPublicKey.data.status === 'error') {
           const errorData = responseGetPublicKey.data.data
           let errorMsg = 'Failed to get app public key'
@@ -7279,6 +7282,9 @@ async function verifyAppSpec() {
           throw new Error(errorMsg)
         }
         const pubkey = responseGetPublicKey.data.data
+        if (!pubkey) {
+          throw new Error('Failed to get app public key: Invalid response data')
+        }
 
         // Check if WebCrypto is available before proceeding
         if (!isWebCryptoAvailable()) {

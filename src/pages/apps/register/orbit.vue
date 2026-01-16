@@ -2720,7 +2720,7 @@ const calculateAppPrice = async () => {
           owner: zelid.value || '176iuPFBqD4yg3Fd7oPVhB3d4NXWxvQyxx',
         })
 
-        if (pubKeyResponse.data.status === 'success') {
+        if (pubKeyResponse?.data?.status === 'success' && pubKeyResponse.data.data) {
           const pubKeyB64 = pubKeyResponse.data.data.trim().replace(/\s+/g, '')
           const rsaPubKey = await importRsaPublicKey(pubKeyB64)
 
@@ -5108,6 +5108,9 @@ const startRegistration = async () => {
 
       const responseGetPublicKey = await AppsService.getAppPublicKey(zelidauth, appPubKeyData)
 
+      if (!responseGetPublicKey?.data) {
+        throw new Error('Failed to get app public key: No response from server')
+      }
       if (responseGetPublicKey.data.status === 'error') {
         const errorData = responseGetPublicKey.data.data
         let errorMsg = 'Failed to get app public key'
@@ -5118,6 +5121,9 @@ const startRegistration = async () => {
       }
 
       const pubkey = responseGetPublicKey.data.data
+      if (!pubkey) {
+        throw new Error('Failed to get app public key: Invalid response data')
+      }
 
       // Generate AES key
       const aesKey = window.crypto.getRandomValues(new Uint8Array(32))
