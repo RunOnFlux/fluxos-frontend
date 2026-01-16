@@ -4550,7 +4550,7 @@ const monthlyPriceDisplay = computed(() => {
 
 const selectedPlanDisplayName = computed(() => {
   const planNames = {
-    free: 'Basic',
+    free: 'Free',
     developer: 'Standard',
     pro: 'Pro',
     custom: 'Custom',
