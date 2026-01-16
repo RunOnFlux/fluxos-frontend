@@ -5715,6 +5715,10 @@ const resetForm = () => {
 
 // Cleanup on unmount
 onUnmounted(() => {
+  // Clear sensitive authentication data from memory
+  repoToken.value = ''
+  repoUsername.value = ''
+
   if (paymentMonitoringInterval.value) {
     clearInterval(paymentMonitoringInterval.value)
   }
