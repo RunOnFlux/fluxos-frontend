@@ -7297,27 +7297,34 @@ async function verifyAppSpec() {
           return
         }
 
-        const rsaPubKey = await importRsaPublicKey(pubkey)
-        const aesKey = crypto.getRandomValues(new Uint8Array(32))
+        // Wrap encryption operations in try-catch for proper state reset on failure
+        try {
+          const rsaPubKey = await importRsaPublicKey(pubkey)
+          const aesKey = crypto.getRandomValues(new Uint8Array(32))
 
-        const encryptedEnterpriseKey = await encryptAesKeyWithRsaKey(
-          aesKey,
-          rsaPubKey,
-        )
-        const enterpriseSpecs = {
-          contacts: appSpecTemp.contacts,
-          compose: appSpecTemp.compose,
+          const encryptedEnterpriseKey = await encryptAesKeyWithRsaKey(
+            aesKey,
+            rsaPubKey,
+          )
+          const enterpriseSpecs = {
+            contacts: appSpecTemp.contacts,
+            compose: appSpecTemp.compose,
+          }
+
+          const encryptedEnterprise = await encryptEnterpriseWithAes(
+            JSON.stringify(enterpriseSpecs),
+            aesKey,
+            encryptedEnterpriseKey,
+          )
+
+          appSpecTemp.enterprise = encryptedEnterprise
+          appSpecTemp.contacts = []
+          appSpecTemp.compose = []
+        } catch (encryptionError) {
+          // Reset enterprise state on encryption failure
+          appSpecTemp.enterprise = ''
+          throw new Error(`Enterprise encryption failed: ${encryptionError.message || 'Unknown encryption error'}`)
         }
-
-        const encryptedEnterprise = await encryptEnterpriseWithAes(
-          JSON.stringify(enterpriseSpecs),
-          aesKey,
-          encryptedEnterpriseKey,
-        )
-
-        appSpecTemp.enterprise = encryptedEnterprise
-        appSpecTemp.contacts = []
-        appSpecTemp.compose = []
       }
     } else if (appSpecTemp.version === 7) {
       // Handle v7 encryption

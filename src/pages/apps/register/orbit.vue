@@ -5125,32 +5125,39 @@ const startRegistration = async () => {
         throw new Error('Failed to get app public key: Invalid response data')
       }
 
-      // Generate AES key
-      const aesKey = window.crypto.getRandomValues(new Uint8Array(32))
+      // Wrap encryption operations in try-catch for proper state reset on failure
+      try {
+        // Generate AES key
+        const aesKey = window.crypto.getRandomValues(new Uint8Array(32))
 
-      // Import RSA public key and encrypt AES key
-      const rsaPubKey = await importRsaPublicKey(pubkey)
-      const encryptedAesKey = await encryptAesKeyWithRsaKey(aesKey, rsaPubKey)
+        // Import RSA public key and encrypt AES key
+        const rsaPubKey = await importRsaPublicKey(pubkey)
+        const encryptedAesKey = await encryptAesKeyWithRsaKey(aesKey, rsaPubKey)
 
-      // Create enterprise specs (contacts + compose to be encrypted)
-      const enterpriseSpecs = {
-        contacts: specWithContacts.contacts,
-        compose: specWithContacts.compose,
-      }
+        // Create enterprise specs (contacts + compose to be encrypted)
+        const enterpriseSpecs = {
+          contacts: specWithContacts.contacts,
+          compose: specWithContacts.compose,
+        }
 
-      // Encrypt enterprise data
-      const encryptedEnterprise = await encryptEnterpriseWithAes(
-        JSON.stringify(enterpriseSpecs),
-        aesKey,
-        encryptedAesKey,
-      )
+        // Encrypt enterprise data
+        const encryptedEnterprise = await encryptEnterpriseWithAes(
+          JSON.stringify(enterpriseSpecs),
+          aesKey,
+          encryptedAesKey,
+        )
 
-      // Update spec with encrypted enterprise data
-      specWithContacts = {
-        ...specWithContacts,
-        enterprise: encryptedEnterprise,
-        contacts: [],
-        compose: [],
+        // Update spec with encrypted enterprise data
+        specWithContacts = {
+          ...specWithContacts,
+          enterprise: encryptedEnterprise,
+          contacts: [],
+          compose: [],
+        }
+      } catch (encryptionError) {
+        // Reset enterprise state on encryption failure
+        specWithContacts.enterprise = ''
+        throw new Error(`Enterprise encryption failed: ${encryptionError.message || 'Unknown encryption error'}`)
       }
     }
 
