@@ -1784,12 +1784,12 @@
                                       <span class="text-body-2">
                                         <strong>{{ t('pages.apps.register.orbit.register.orbitDocumentation') }}</strong>
                                         <a
-                                          href="https://orbit.app.runonflux.io/docs/intro"
+                                          href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
                                           target="_blank"
                                           rel="noopener noreferrer"
                                           class="ml-1"
                                         >
-                                          https://orbit.app.runonflux.io/docs/intro
+                                          https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/
                                           <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
                                         </a>
                                       </span>
