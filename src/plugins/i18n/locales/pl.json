@@ -3061,6 +3061,7 @@
             "checkingRegistration": "Sprawdzanie potwierdzenia płatności...",
             "waitingForInstance": "Oczekiwanie na wdrożenie na węzłach...",
             "firstMonthSponsoredBy": "Pierwszy miesiąc hostingu jest oferowany przez InFlux Technologies.",
+            "freePlanSponsoredBy": "Plan Free jest oferowany przez InFlux Technologies.",
             "checkingPaymentOnBlockchain": "Sprawdzanie potwierdzenia płatności w blockchain.",
             "blockchainConfirmationTime": "To może potrwać kilka minut.",
             "paymentConfirmedWaitingNodes": "Płatność potwierdzona w sieci.",

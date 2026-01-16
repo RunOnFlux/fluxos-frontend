@@ -2079,12 +2079,25 @@
                                   : t('pages.apps.register.orbit.deploy.waitingForInstance')"
                                 message=""
                               />
-                              <!-- First month sponsor message - only show when eligible -->
+                              <!-- Sponsor message - different for FREE plan vs other plans -->
                               <div v-if="eligibleForFirstMonthFree" class="text-center mb-3">
-                                <VChip color="success" variant="tonal" size="small">
-                                  <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
-                                  {{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}
-                                </VChip>
+                                <!-- FREE plan message -->
+                                <template v-if="selectedPlan === 'free'">
+                                  <VChip color="success" variant="tonal" size="small">
+                                    <VIcon size="16" class="mr-1">mdi-infinity</VIcon>
+                                    {{ t('pages.apps.register.orbit.deploy.freePlanSponsoredBy') }}
+                                  </VChip>
+                                  <div class="text-caption text-medium-emphasis mt-2">
+                                    {{ t('pages.apps.register.orbit.pricing.freePlanExplainer') }}
+                                  </div>
+                                </template>
+                                <!-- Other plans: first month free -->
+                                <template v-else>
+                                  <VChip color="success" variant="tonal" size="small">
+                                    <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
+                                    {{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}
+                                  </VChip>
+                                </template>
                               </div>
                               <div class="d-flex justify-center">
                                 <div class="deployment-monitoring-wrapper">

@@ -3061,6 +3061,7 @@
             "checkingRegistration": "Checking payment confirmation...",
             "waitingForInstance": "Waiting for node deployment...",
             "firstMonthSponsoredBy": "First month of hosting is offered by InFlux Technologies.",
+            "freePlanSponsoredBy": "Free plan is offered by InFlux Technologies.",
             "checkingPaymentOnBlockchain": "Checking for payment confirmation on the blockchain.",
             "blockchainConfirmationTime": "This can take a few minutes.",
             "paymentConfirmedWaitingNodes": "Payment confirmed on the network.",
