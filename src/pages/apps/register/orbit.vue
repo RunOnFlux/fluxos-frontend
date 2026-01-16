@@ -1133,7 +1133,7 @@
                       <div
                         class="plan-card"
                         :class="{ 'selected': selectedPlan === 'free' }"
-                        @click="selectedPlan = 'free'"
+                        @click="selectPlanAndContinue('free')"
                       >
                         <div class="plan-price-badge">
                           <span class="price-amount">$0<span class="price-asterisk">*</span></span>
@@ -1180,7 +1180,7 @@
                             size="large"
                             variant="elevated"
                             class="plan-btn"
-                            @click.stop="selectedPlan = 'free'"
+                            @click.stop="selectPlanAndContinue('free')"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
                             {{ selectedPlan === 'free' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
@@ -1192,7 +1192,7 @@
                       <div
                         class="plan-card recommended"
                         :class="{ 'selected': selectedPlan === 'developer' }"
-                        @click="selectedPlan = 'developer'"
+                        @click="selectPlanAndContinue('developer')"
                       >
                         <div class="recommended-badge">
                           {{ t('pages.apps.register.orbit.pricing.mostPopular') }}
@@ -1243,7 +1243,7 @@
                             size="large"
                             variant="elevated"
                             class="plan-btn"
-                            @click.stop="selectedPlan = 'developer'"
+                            @click.stop="selectPlanAndContinue('developer')"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
                             {{ selectedPlan === 'developer' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
@@ -1255,7 +1255,7 @@
                       <div
                         class="plan-card"
                         :class="{ 'selected': selectedPlan === 'pro' }"
-                        @click="selectedPlan = 'pro'"
+                        @click="selectPlanAndContinue('pro')"
                       >
                         <div class="plan-price-badge">
                           <span class="price-amount">$3.99</span>
@@ -1302,7 +1302,7 @@
                             size="large"
                             variant="elevated"
                             class="plan-btn"
-                            @click.stop="selectedPlan = 'pro'"
+                            @click.stop="selectPlanAndContinue('pro')"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
                             {{ selectedPlan === 'pro' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
@@ -1314,7 +1314,7 @@
                       <div
                         class="plan-card custom-plan"
                         :class="{ 'selected': selectedPlan === 'custom' }"
-                        @click="selectedPlan = 'custom'"
+                        @click="selectPlanAndContinue('custom')"
                       >
                         <div class="custom-badge">
                           {{ t('pages.apps.register.orbit.pricing.customizable') }}
@@ -1365,7 +1365,7 @@
                             size="large"
                             variant="elevated"
                             class="plan-btn"
-                            @click.stop="selectedPlan = 'custom'"
+                            @click.stop="selectPlanAndContinue('custom')"
                           >
                             <VIcon start>mdi-check-circle</VIcon>
                             {{ selectedPlan === 'custom' ? t('pages.apps.register.orbit.config.selected') : t('pages.apps.register.orbit.config.selectPlan') }}
@@ -2133,9 +2133,9 @@
                       </VBtn>
                       <VSpacer />
                       <VBtn
-                        v-if="currentStep < 4"
+                        v-if="currentStep > 1 && currentStep < 4"
                         color="primary"
-                        :disabled="(currentStep === 1 && !selectedPlan) || (currentStep === 2 && repoCheckStatus === 'private' && authTestStatus !== 'success')"
+                        :disabled="currentStep === 2 && repoCheckStatus === 'private' && authTestStatus !== 'success'"
                         @click="nextStep"
                       >
                         {{ t('pages.apps.register.orbit.navigation.continue') }}
@@ -4884,6 +4884,12 @@ const rules = {
     
     return pattern.test(v) || 'Please enter a valid email address'
   },
+}
+
+// Select plan and continue to next step
+const selectPlanAndContinue = (plan) => {
+  selectedPlan.value = plan
+  currentStep.value++
 }
 
 // Step navigation
