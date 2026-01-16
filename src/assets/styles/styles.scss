@@ -1,5 +1,10 @@
 // Write your overrides
 
+// Ensure all fonts use font-display: swap to prevent render-blocking
+@font-face {
+  font-display: swap !important;
+}
+
 // ApexCharts tooltip marker vertical alignment for all charts
 .apexcharts-tooltip-marker {
   margin-top: -6px !important;

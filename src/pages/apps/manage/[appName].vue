@@ -337,6 +337,7 @@
               />
               <!-- Update/Renew Subscription Buttons -->
               <div
+                v-if="canManageSubscription"
                 :style="{
                   display: 'grid',
                   gridTemplateColumns: appSpecification?.version >= 6 ? '1fr 1fr 1fr' : '1fr 1fr',
@@ -962,7 +963,7 @@
               />
             </div>
 
-            <div v-else-if="appSpecification?.compose && tab.value === '8' && privilege !== 'fluxteam'">
+            <div v-else-if="appSpecification?.compose && tab.value === '8'">
               <BackupAndRestore
                 :key="currentTab" 
                 :app-spec="appSpecification"
@@ -1211,7 +1212,6 @@ const InstalledLoading = ref(false)
 const InstalledApiError = ref(false)
 const apiError = ref(false)
 const runningInstancesKey = ref(0)
-const { privilege } = storeToRefs(fluxStore)
 const alertMessageText = ref(t('pages.apps.manage.messages.dataRetrievalError'))
 
 const zelidauthOwner = ref([])
@@ -1294,6 +1294,33 @@ const isComposeApp = computed(() =>
 
 const isOwnerZelidauth = computed(() => zelidauthOwner.value.includes(appSpecificationGlobal.value?.owner))
 
+// Get current user's zelid from the stored zelidauth
+const currentUserZelid = computed(() => {
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (zelidauth) {
+      const auth = qs.parse(zelidauth)
+
+      return auth?.zelid || ''
+    }
+  } catch (error) {
+    console.error('Error parsing zelidauth:', error)
+  }
+
+  return ''
+})
+
+// Check if current user is a flux support team member
+const isFluxSupportTeam = computed(() => {
+  const supportTeamIds = fluxStore.config.fluxSupportTeamFluxID || ''
+  const userZelid = currentUserZelid.value
+
+  return userZelid && supportTeamIds.includes(userZelid)
+})
+
+// Check if user can manage subscription (owner OR support team member)
+const canManageSubscription = computed(() => isOwnerZelidauth.value || isFluxSupportTeam.value)
+
 // Tabs that require running instances to function
 const instanceDependentTabs = ['2', '3', '4', '5', '6', '7', '8']
 
@@ -1305,13 +1332,13 @@ const allTabs = computed(() => [
   { label: t('pages.apps.manage.tabs.logs'), value: "5", requiresInstance: true },
   { label: t('pages.apps.manage.tabs.terminal'), value: "6", requiresInstance: true },
   { label: t('pages.apps.manage.tabs.control'), value: "7", requiresInstance: true },
-  (privilege.value !== 'fluxteam' && isComposeApp.value) && {
+  isComposeApp.value && {
     label: t('pages.apps.manage.tabs.backupRestore'),
     value: "8",
     requiresInstance: true,
   },
   { label: t('pages.apps.manage.tabs.instances'), value: "9", requiresInstance: true },
-  isOwnerZelidauth.value && { label: t('pages.apps.manage.tabs.subscription'), value: "10" },
+  canManageSubscription.value && { label: t('pages.apps.manage.tabs.subscription'), value: "10" },
 ].filter(Boolean)) // removes `false` if condition fails
 
 // Filter tabs based on instance availability
@@ -1540,6 +1567,15 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+function getFdmIndex(appName) {
+  const firstLetter = appName.charAt(0).toLowerCase()
+  if (firstLetter >= 'a' && firstLetter <= 'g') return 1
+  if (firstLetter >= 'h' && firstLetter <= 'n') return 2
+  if (firstLetter >= 'o' && firstLetter <= 'u') return 3
+  
+  return 4 // v-z and any other characters
+}
+
 function getAlertColor(state, status) {
   if (!state) return "primary"
   const normalizedState = state.toLowerCase()
@@ -1729,40 +1765,33 @@ async function getInstancesForDropDown() {
   if (masterSlaveApp.value) {
     masterIP.value = null
 
-    const url = `https://${appName.value}.app.runonflux.io/fluxstatistics?scope=${appName.value}apprunonfluxio;json;norefresh`
+    const fdmIndex = getFdmIndex(appName.value)
+    const url = `https://fdm-fn-1-${fdmIndex}.runonflux.io/api/appips/${appName.value}`
     let errorFdm = false
 
-    let fdmData = await axios.get(url).catch(error => {
+    let fdmData = await axios.get(url, { timeout: 20000 }).catch(error => {
       errorFdm = true
       masterIP.value = t('pages.apps.manage.messages.failedToCheck')
       console.error(`UImasterSlave: Failed to reach FDM:`, error)
     })
 
-    if (!errorFdm && fdmData?.data?.length) {
-      for (const fdmServer of fdmData.data) {
-        const serviceName = fdmServer.find(
-          el =>
-            el.id === 1 &&
-            el.objType === "Server" &&
-            el.field.name === "pxname" &&
-            el.value.value
-              .toLowerCase()
-              .startsWith(`${appName.value.toLowerCase()}apprunonfluxio`),
-        )
+    if (!errorFdm && fdmData?.data?.status === 'success' && fdmData?.data?.data?.ips?.length) {
+      const primaryIpWithPort = fdmData.data.data.ips[0]
+      const [primaryIp] = primaryIpWithPort.split(':')
 
-        if (serviceName) {
-          const ipElement = fdmServer.find(
-            el => el.id === 1 && el.objType === "Server" && el.field.name === "svname",
-          )
+      masterIP.value = primaryIp
 
-          if (ipElement) {
-            const [ip, port] = ipElement.value.value.split(":")
+      // Find the matching instance in the dropdown by comparing IPs without port
+      const matchingInstance = instances.value.data.find(inst => {
+        const [instIp] = inst.ip.split(':')
+        
+        return instIp === primaryIp
+      })
 
-            masterIP.value = ip
-            selectedIp.value = port === "16127" ? ip : ipElement.value.value
-            break
-          }
-        }
+      if (matchingInstance) {
+        selectedIp.value = matchingInstance.ip
+      } else {
+        selectedIp.value = primaryIp
       }
     }
 

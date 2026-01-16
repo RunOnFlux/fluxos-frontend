@@ -178,10 +178,12 @@
                         <div class="hardware-value-display">
                           <input
                             v-model="config.ram"
-                            type="text"
+                            type="number"
                             class="hardware-custom-input"
                             :disabled="isRamLocked"
-                            @input="config.ram = $event.target.value"
+                            min="100"
+                            step="100"
+                            @blur="config.ram = Math.max(100, Math.round(config.ram / 100) * 100)"
                           />
                         </div>
                         <VBtn
@@ -305,9 +307,12 @@
                             <div class="hardware-value-display">
                               <input
                                 v-model="entry.ram"
-                                type="text"
+                                type="number"
                                 class="hardware-custom-input"
+                                min="100"
+                                step="100"
                                 @input="updateComposeTotal"
+                                @blur="entry.ram = Math.max(100, Math.round(entry.ram / 100) * 100); updateComposeTotal()"
                               />
                             </div>
                             <VBtn
@@ -1222,14 +1227,51 @@
                           class="mb-4"
                         />
                         <VIcon v-else icon="mdi-check-circle" size="64" color="success" class="mb-4" />
-                        <div class="text-h6 mb-2">{{ paymentConfirmed ? t('components.marketplace.installDialog.paymentConfirmed') : t('components.marketplace.installDialog.waitingForPayment') }}</div>
-                        <div class="text-body-2 text-center mb-4 text-medium-emphasis">
-                          <span v-if="!paymentConfirmed" v-html="t('components.marketplace.installDialog.completePaymentInWallet', { wallet: paymentMethod === 'flux' ? 'ZelCore' : 'SSP' })">
-                          </span>
-                          <span v-else-if="redirectCountdown > 0" class="text-success">
-                            {{ t('components.marketplace.installDialog.advancingToDeployment', { seconds: redirectCountdown }) }}
-                          </span>
+
+                        <!-- Phase-specific title -->
+                        <div class="text-h6 mb-2">
+                          <template v-if="paymentConfirmed">{{ t('components.marketplace.installDialog.paymentConfirmed') }}</template>
+                          <template v-else-if="paymentMonitoringPhase === 'blockchain'">{{ t('core.subscriptionManager.checkingBlockchainConfirmation') }}</template>
+                          <template v-else>{{ t('core.subscriptionManager.waitingForNodeDeployment') }}</template>
                         </div>
+
+                        <!-- Phase-specific messages -->
+                        <div class="text-body-2 text-center mb-4 text-medium-emphasis">
+                          <template v-if="paymentConfirmed && redirectCountdown > 0">
+                            <span class="text-success">
+                              {{ t('components.marketplace.installDialog.advancingToDeployment', { seconds: redirectCountdown }) }}
+                            </span>
+                          </template>
+                          <template v-else-if="paymentMonitoringPhase === 'blockchain'">
+                            <div class="d-flex flex-column align-center gap-1">
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="18" class="mr-2">mdi-magnify</VIcon>
+                                <span>{{ t('core.subscriptionManager.checkingPaymentOnBlockchain') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="18" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </div>
+                          </template>
+                          <template v-else-if="paymentMonitoringPhase === 'deployment'">
+                            <div class="d-flex flex-column align-center gap-1">
+                              <div class="d-flex align-center">
+                                <VIcon color="success" size="18" class="mr-2">mdi-check-circle</VIcon>
+                                <span>{{ t('core.subscriptionManager.paymentConfirmedWaitingNodes') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="18" class="mr-2">mdi-server</VIcon>
+                                <span>{{ t('core.subscriptionManager.waitingForNodesPickup') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="18" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.nodeDeploymentTime') }}</span>
+                              </div>
+                            </div>
+                          </template>
+                        </div>
+
                         <VBtn
                           v-if="!paymentConfirmed"
                           variant="outlined"
@@ -1910,7 +1952,7 @@ const creditCard = ref({
 })
 
 // Marketplace subscription duration options (from FluxCloud marketplace)
-const subscriptionOptionsDiscounts = ref([0, 0, 0, 0]) // Store discounts separately
+const subscriptionOptionsDiscounts = ref([0, 3, 6, 12]) // Store discounts: 0%, 3%, 6%, 12%
 
 const subscriptionOptions = computed(() => [
   {
@@ -1920,18 +1962,18 @@ const subscriptionOptions = computed(() => [
   },
   {
     months: 3,
-    label: t('components.marketplace.installDialog.threeMonths'),
-    discount: subscriptionOptionsDiscounts.value[1], // Will be fetched from app.discounts.threeMonths
+    label: `${t('components.marketplace.installDialog.threeMonths')} (3% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[1],
   },
   {
     months: 6,
-    label: t('components.marketplace.installDialog.sixMonths'),
-    discount: subscriptionOptionsDiscounts.value[2], // Will be fetched from app.discounts.sixMonths
+    label: `${t('components.marketplace.installDialog.sixMonths')} (6% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[2],
   },
   {
     months: 12,
-    label: t('components.marketplace.installDialog.twelveMonths'),
-    discount: subscriptionOptionsDiscounts.value[3], // Will be fetched from app.discounts.twelveMonths
+    label: `${t('components.marketplace.installDialog.twelveMonths')} (12% ${t('common.off')})`,
+    discount: subscriptionOptionsDiscounts.value[3],
   },
 ])
 
@@ -1939,14 +1981,14 @@ const subscriptionOptions = computed(() => [
 const initializeDiscounts = () => {
   if (props.app.discounts) {
     // Use app-specific discounts if available
-    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 0
-    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 0
-    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 0
+    subscriptionOptionsDiscounts.value[1] = props.app.discounts.threeMonths || 3
+    subscriptionOptionsDiscounts.value[2] = props.app.discounts.sixMonths || 6
+    subscriptionOptionsDiscounts.value[3] = props.app.discounts.twelveMonths || 12
   } else {
-    // Fallback to typical marketplace discounts if app doesn't specify
-    subscriptionOptionsDiscounts.value[1] = 5  // 3 months: 5% discount
-    subscriptionOptionsDiscounts.value[2] = 10 // 6 months: 10% discount
-    subscriptionOptionsDiscounts.value[3] = 20 // 12 months: 20% discount
+    // Default discounts: 3%, 6%, 12% for 3, 6, 12 months respectively
+    subscriptionOptionsDiscounts.value[1] = 3
+    subscriptionOptionsDiscounts.value[2] = 6
+    subscriptionOptionsDiscounts.value[3] = 12
   }
 }
 
@@ -2436,7 +2478,7 @@ const fetchPricingFromAPI = async () => {
       owner: props.app.owner || 'marketplace',
       compose: appSpecCompose,
       instances: config.value.instances,
-      expire: defaultExpireBlocks * config.value.subscriptionMonths,
+      expire: defaultExpireBlocks, // Always 1 month - total calculated client-side
       contacts: props.app.contacts || [],
       geolocation: isWordPress.value ? (props.app.geolocation || []) : (getGeolocationCodes() || []),
       nodes: props.app.nodes || [],
@@ -2492,13 +2534,25 @@ const fetchDeploymentInfo = async () => {
   }
 }
 
+// Get current subscription discount (Flux payments only)
+const currentDiscount = computed(() => {
+  const selectedOption = subscriptionOptions.value.find(option => option.months === config.value.subscriptionMonths)
+
+  return selectedOption ? selectedOption.discount : 0
+})
+
 const estimatedFluxPrice = computed(() => {
-  // Calculate FLUX using the ratio and the computed monthlyPrice (with instance multiplier)
-  if (apiPricing.value.fluxPerUsd > 0) {
-    const usdPrice = monthlyPrice.value || 0
-    const fluxPrice = usdPrice * apiPricing.value.fluxPerUsd
-    const months = config.value.subscriptionMonths || 1
-    const totalFlux = fluxPrice * months
+  // Calculate Flux price client-side using monthly USD price and Flux/USD ratio
+  const monthly = monthlyPrice.value || 0
+  const months = config.value.subscriptionMonths || 1
+  const fluxPerUsd = apiPricing.value.fluxPerUsd || 0
+  const discount = currentDiscount.value || 0
+
+  if (fluxPerUsd > 0 && monthly > 0) {
+    // Monthly Flux = monthly USD × fluxPerUsd
+    // Total Flux = monthly Flux × months × (1 - discount/100)
+    const monthlyFlux = monthly * fluxPerUsd
+    const totalFlux = monthlyFlux * months * (1 - discount / 100)
 
     return totalFlux.toFixed(2)
   }
@@ -2514,13 +2568,6 @@ const totalFluxPrice = computed(() => {
 })
 const insufficientBalance = computed(() => {
   return userFluxBalance.value < parseFloat(estimatedFluxPrice.value)
-})
-
-// Get current subscription discount
-const currentDiscount = computed(() => {
-  const selectedOption = subscriptionOptions.value.find(option => option.months === config.value.subscriptionMonths)
-  
-  return selectedOption ? selectedOption.discount : 0
 })
 
 // Remove old infrastructureCost - now using marketplace pricing calculation
@@ -2594,9 +2641,9 @@ const monthlyPrice = computed(() => {
     return props.app.price || 0
   }
 
-  // For marketplace apps with custom hardware: Use API-calculated price if available
+  // For marketplace apps with custom hardware: Use API-calculated monthly price if available
   if (apiPricing.value.usd > 0) {
-    // API price is already calculated based on actual hardware and instances
+    // API returns monthly price based on actual hardware and instances
     const apiPrice = Number(apiPricing.value.usd.toFixed(2))
     const configPrice = props.app.price || 0
 
@@ -2645,19 +2692,17 @@ const estimatedCost = computed(() => {
 
 // Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // Use computed monthlyPrice which includes instance multiplier
-  const monthly = parseFloat(estimatedCost.value) || 0
+  // Calculate client-side: monthly price × months × (1 - discount/100)
+  const monthly = monthlyPrice.value || 0
   const months = config.value.subscriptionMonths || 1
-  const total = monthly * months
+  const discount = currentDiscount.value || 0
+  const total = monthly * months * (1 - discount / 100)
 
   if (isNaN(total)) {
     return '$0.00'
   }
 
-  // Ensure we always return a properly formatted price string
-  const formattedTotal = total.toFixed(2)
-
-  return `$${formattedTotal}`
+  return `$${total.toFixed(2)}`
 })
 
 // Payment information (FluxCloud-style)
@@ -2675,6 +2720,9 @@ const paymentHash = ref('') // Will be generated after signing/registration
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentConfirmed = ref(false)
+
+// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'deployment' = waiting for nodes to pick up app
+const paymentMonitoringPhase = ref('blockchain')
 const paymentBridgeMaintenance = ref(false)
 const popupBlockedDialog = ref(false)
 const blockedPaymentUrl = ref('')
@@ -4227,7 +4275,9 @@ const resetDialog = () => {
   }
 }
 
-// Payment monitoring function
+// Payment monitoring function - Two-phase detection:
+// Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
+// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
 
   // Clear any existing monitoring
@@ -4237,6 +4287,8 @@ const startPaymentMonitoring = async () => {
   if (paymentMonitoringTimeout.value) {
     clearTimeout(paymentMonitoringTimeout.value)
   }
+
+  paymentMonitoringPhase.value = 'blockchain' // Start with blockchain confirmation phase
 
   // Set a 30-minute timeout (payment validity period)
   paymentMonitoringTimeout.value = setTimeout(() => {
@@ -4250,58 +4302,72 @@ const startPaymentMonitoring = async () => {
     }
   }, 30 * 60 * 1000) // 30 minutes
 
-  // Poll for payment status every 2 minutes (crypto payments)
+  // Poll for payment status every 30 seconds
   paymentMonitoringInterval.value = setInterval(async () => {
     try {
-      // Check if app is deployed on the Flux network by getting its location
-      // getAppLocation returns the nodes where the app is running
       // The app name includes the timestamp from deployment
       const deployedAppName = deploymentTimestamp.value ?
         `${props.app.name}${deploymentTimestamp.value}` :
         props.app.name
 
+      if (paymentMonitoringPhase.value === 'blockchain') {
+        // Phase 1: Check if app spec exists on blockchain (payment confirmed)
+        const specResponse = await AppsService.getAppSpecifics(deployedAppName)
 
-      const response = await AppsService.getAppLocation(deployedAppName)
+        if (specResponse.data && specResponse.data.status === 'success') {
+          const currentAppSpec = specResponse.data.data
 
-      if (response.data && response.data.status === 'success') {
-        const appLocation = response.data.data
-
-        // If app location exists and has running instances, deployment was successful!
-        if (appLocation && appLocation.length > 0) {
-
-          // Clear monitoring
-          clearInterval(paymentMonitoringInterval.value)
-          clearTimeout(paymentMonitoringTimeout.value)
-          paymentMonitoringInterval.value = null
-          paymentMonitoringTimeout.value = null
-          paymentConfirmed.value = true
-          paymentProcessing.value = false
-
-          // Show success message
-          showSnackbar(t('components.marketplace.installDialog.messages.paymentConfirmedActive'), 'success', 8000)
-
-          // Clear any existing countdown before starting new one
-          if (redirectCountdownInterval.value) {
-            clearInterval(redirectCountdownInterval.value)
-            redirectCountdownInterval.value = null
+          // If app spec exists, payment is confirmed on blockchain
+          if (currentAppSpec?.name) {
+            console.log('✅ BLOCKCHAIN CONFIRMED - Moving to deployment phase')
+            paymentMonitoringPhase.value = 'deployment'
+            showSnackbar(t('core.subscriptionManager.paymentConfirmedOnNetwork'), 'success', 5000)
           }
+        }
+      } else if (paymentMonitoringPhase.value === 'deployment') {
+        // Phase 2: Check if app is running on nodes
+        const response = await AppsService.getAppLocation(deployedAppName)
 
-          // Start countdown and auto-advance to deployment step
-          redirectCountdown.value = 5
-          redirectCountdownInterval.value = setInterval(() => {
-            redirectCountdown.value--
-            if (redirectCountdown.value <= 0) {
+        if (response.data && response.data.status === 'success') {
+          const appLocation = response.data.data
+
+          // If app location exists and has running instances, deployment was successful!
+          if (appLocation && appLocation.length > 0) {
+
+            // Clear monitoring
+            clearInterval(paymentMonitoringInterval.value)
+            clearTimeout(paymentMonitoringTimeout.value)
+            paymentMonitoringInterval.value = null
+            paymentMonitoringTimeout.value = null
+            paymentConfirmed.value = true
+            paymentProcessing.value = false
+
+            // Show success message
+            showSnackbar(t('components.marketplace.installDialog.messages.paymentConfirmedActive'), 'success', 8000)
+
+            // Clear any existing countdown before starting new one
+            if (redirectCountdownInterval.value) {
               clearInterval(redirectCountdownInterval.value)
               redirectCountdownInterval.value = null
-              currentStep.value = totalSteps.value - 1
             }
-          }, 1000)
+
+            // Start countdown and auto-advance to deployment step
+            redirectCountdown.value = 5
+            redirectCountdownInterval.value = setInterval(() => {
+              redirectCountdown.value--
+              if (redirectCountdown.value <= 0) {
+                clearInterval(redirectCountdownInterval.value)
+                redirectCountdownInterval.value = null
+                currentStep.value = totalSteps.value - 1
+              }
+            }, 1000)
+          }
         }
       }
     } catch (error) {
       console.error('Error checking payment status:', error)
     }
-  }, 240000) // Check every 4 minutes (240 seconds)
+  }, 30000) // Check every 30 seconds
 }
 
 const processFluxPayment = async () => {
@@ -6143,7 +6209,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-card {
   flex: 1;
-  min-width: 140px;
+  min-width: 200px;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -6243,7 +6309,7 @@ watch(isLoggedIn, (newValue, oldValue) => {
 
 .hardware-value-display {
   flex: 1;
-  max-width: 70px;
+  min-width: 80px;
   height: 32px;
   display: flex;
   align-items: center;
@@ -6266,10 +6332,24 @@ watch(isLoggedIn, (newValue, oldValue) => {
   background: transparent;
   color: rgb(var(--v-theme-on-surface));
   border-radius: 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hardware-custom-input:focus {
   outline: none;
+}
+
+/* Hide increment/decrement arrows for number inputs */
+.hardware-custom-input::-webkit-outer-spin-button,
+.hardware-custom-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.hardware-custom-input[type=number] {
+  -moz-appearance: textfield;
 }
 
 /* Dark theme support */

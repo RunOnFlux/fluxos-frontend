@@ -1,5 +1,6 @@
 {
   "common": {
+    "off": "taniej",
     "buttons": {
       "cancel": "Anuluj",
       "close": "Zamknij",
@@ -83,7 +84,8 @@
     },
     "theme": {
       "light": "Jasny",
-      "dark": "Ciemny"
+      "dark": "Ciemny",
+      "switchTheme": "Zmień motyw"
     },
     "status": {
       "loading": "Ładowanie...",
@@ -318,11 +320,11 @@
       "title": "Pomoc"
     },
     "fluxDrive": {
-      "title": "Flux Drive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "Flux Cloud - Zdecentralizowane Zarządzanie Aplikacjami",
+    "fluxCloudTitle": "FluxCloud - Zdecentralizowane Zarządzanie Aplikacjami",
     "fluxCloudDescription": "Monitoruj i zarządzaj wszystkimi swoimi aplikacjami w kontenerach Docker działającymi w zdecentralizowanej sieci chmurowej Flux. Przeglądaj status w czasie rzeczywistym, zużycie zasobów i metryki wydajności swoich rozproszonych aplikacji wdrożonych w naszej globalnej infrastrukturze opartej na blockchain. Kliknij dowolną aplikację, aby uzyskać dostęp do szczegółowych kontroli zarządzania i analiz.",
     "fluxCloudSubtitle": "Zdecentralizowane Zarządzanie Aplikacjami"
   },
@@ -808,6 +810,15 @@
       "rightToLeft": "Od prawej do lewej"
     },
     "volumePathBuilder": {
+      "syncTitle": "Synchronizacja Danych Między Instancjami",
+      "syncDescription": "Włącz tę opcję, jeśli chcesz, aby Twoje dane były synchronizowane między wieloma instancjami aplikacji działającymi na różnych węzłach Flux.",
+      "syncEnableLabel": "Synchronizuj dane między instancjami",
+      "syncEnabledHint": "Twoje dane będą synchronizowane między wszystkimi instancjami",
+      "syncDisabledHint": "Każda instancja będzie miała swoje własne trwałe dane",
+      "syncModeLabel": "Strategia Synchronizacji",
+      "modePhasedMasterMasterDesc": "Wszystkie instancje mogą odczytywać i zapisywać, z kontrolowaną fazową synchronizacją",
+      "modePrimaryStandbyDesc": "Jedna główna instancja obsługuje zapisy, pozostałe są kopiami zapasowymi tylko do odczytu",
+      "modeMasterMasterDesc": "Wszystkie instancje mogą odczytywać i zapisywać jednocześnie",
       "modeNone": "Brak",
       "modePhasedMasterMaster": "Phased Master-Master (r)",
       "modePrimaryStandby": "Primary-Standby (g)",
@@ -964,6 +975,10 @@
       "contactRequired": "Wymagany jest co najmniej jeden adres e-mail kontaktowy",
       "instances": "Instancje",
       "instancesCount": "{count} instancja | {count} instancje | {count} instancji",
+      "instancesWarningTwo": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3.",
+      "instancesWarningOne": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3. Przy tylko 1 instancji, Twoja aplikacja może doświadczyć kilku minut przestoju, jeśli węzeł uruchamiający aplikację zostanie zrestartowany lub wyłączony.",
+      "instancesWarningSyncthing": "Minimalna liczba instancji dla aplikacji z zdecentralizowanym trwałym przechowywaniem danych to 3. Aby użyć mniejszej liczby instancji, wyłącz synchronizację danych w ustawieniach ścieżki woluminu.",
+      "instancesWarningLegacy": "Zmniejszenie liczby instancji poniżej 3 jest dostępne tylko dla aplikacji ze specyfikacją w wersji 8 lub wyższej. Zaktualizuj specyfikację aplikacji, aby włączyć tę funkcję.",
       "period": "Okres",
       "renewal": "Odnowienie",
       "subscriptionNotExtended": "Włącz Odnowienie, aby przedłużyć okres subskrypcji.",
@@ -1079,6 +1094,7 @@
       "priorityNodesTabDescription": "Wybierz w razie potrzeby węzły priorytetowe do uruchomienia aplikacji. Aplikacja może nadal zostać wdrożona na innych węzłach w sieci.",
       "priorityNodesDescription": "Wybierz w razie potrzeby węzły priorytetowe do uruchomienia aplikacji. Aplikacja może nadal zostać wdrożona na innych węzłach w sieci.",
       "subscriptionPeriodDecreaseWarning": "Wybrany okres subskrypcji zmniejszy aktualny czas subskrypcji!",
+      "maxSubscriptionInfo": "Maksymalny czas subskrypcji to 1 rok. Opcje odnowienia są dostosowane do pozostałego czasu subskrypcji.",
       "currentSubscriptionUntil": "Obecna subskrypcja do:",
       "timeLeft": "Pozostały czas:",
       "renewalPeriod": "Okres odnowienia",
@@ -1220,7 +1236,17 @@
       "autoDetectDeployment": "Potwierdzenie płatności i wdrożenie zostaną wykryte automatycznie.",
       "autoDetectUpdate": "Aktualizacja zostanie wykryta automatycznie.",
       "autoDetectPaymentUpdate": "Potwierdzenie płatności i aktualizacja zostaną wykryte automatycznie.",
-      "detectionTimeEstimate": "Może to potrwać do 45 minut.",
+      "detectionTimeEstimate": "Może to potrwać kilka minut.",
+      "checkingBlockchainConfirmation": "Sprawdzanie potwierdzenia płatności...",
+      "waitingForNodeDeployment": "Oczekiwanie na wdrożenie na węzłach...",
+      "checkingPaymentOnBlockchain": "Sprawdzanie potwierdzenia płatności w blockchainie.",
+      "blockchainConfirmationTime": "Może to potrwać kilka minut.",
+      "paymentConfirmedOnNetwork": "Płatność potwierdzona w sieci!",
+      "paymentConfirmedWaitingNodes": "Płatność potwierdzona w sieci.",
+      "waitingForNodesPickup": "Oczekiwanie na pobranie i instalację aplikacji przez węzły.",
+      "nodeDeploymentTime": "Może to potrwać kilka minut.",
+      "updateConfirmedNodesWillUpdate": "Aktualizacja potwierdzona! Węzły uruchamiające Twoją aplikację zaktualizują się do najnowszych specyfikacji w ciągu kilku minut.",
+      "freeUpdateSponsoredBy": "Bezpłatne aktualizacje w sieci oferowane są przez Influx Technologies",
       "noNodesMatch": "Brak węzłów pasujących do wyszukiwania",
       "popupBlocked": "Popup Zablokowany",
       "popupBlockedMessage": "Twoja przeglądarka zablokowała okno płatności {type}.",
@@ -1250,7 +1276,7 @@
       "loadingPayPalCheckout": "Ładowanie płatności PayPal...",
       "cardPaymentCompletedSuccessfully": "Płatność kartą zakończona pomyślnie!",
       "deploymentSuccessfulRunning": "Wdrożenie zakończone sukcesem! Twoja aplikacja jest teraz uruchomiona.",
-      "paymentConfirmedActive": "Płatność potwierdzona! Twoja aplikacja jest teraz aktywna i działa.",
+      "paymentConfirmedActive": "Płatność potwierdzona! Twoja aplikacja jest teraz aktywna i działa w sieci.",
       "updateDeployedSuccessfully": "Aktualizacja wdrożona pomyślnie!",
       "paymentConfirmedSpecUpdated": "Płatność potwierdzona! Specyfikacja Twojej aplikacji została zaktualizowana.",
       "testPaymentConfirmed": "TEST: Płatność potwierdzona! Twoja aplikacja jest teraz aktywna i działa.",
@@ -1418,12 +1444,12 @@
           "startingAt": "Począwszy od"
         },
         "genericFAQPanel": {
-          "subtitle": "Najczęściej zadawane pytania dotyczące hostingu w Flux Cloud",
+          "subtitle": "Najczęściej zadawane pytania dotyczące hostingu w FluxCloud",
           "title": "Najczęściej Zadawane Pytania"
         },
         "whyFluxPanel": {
           "subtitle": "Odkryj zalety zdecentralizowanej infrastruktury chmurowej opartej na technologii Web3",
-          "title": "Dlaczego Hostować w Flux Cloud"
+          "title": "Dlaczego Hostować w FluxCloud"
         }
       },
       "installDialog": {
@@ -1556,7 +1582,7 @@
           "usingGlobalDeployment": "Używam globalnego wdrożenia - dane geolokalizacyjne niedostępne",
           "failedToCopyToClipboard": "Nie udało się skopiować do schowka",
           "paymentMonitoringTimedOut": "Przekroczono czas monitorowania płatności. Sprawdź status swojej aplikacji.",
-          "paymentConfirmedActive": "Płatność potwierdzona! Twoja aplikacja jest teraz aktywna i działa.",
+          "paymentConfirmedActive": "Płatność potwierdzona! Twoja aplikacja jest teraz aktywna i działa w sieci.",
           "openingZelCoreWallet": "Otwieranie portfela ZelCore do płatności...",
           "failedToOpenZelCoreWallet": "Nie udało się otworzyć portfela ZelCore",
           "pleaseLoginToMakePayments": "Zaloguj się do Flux Gravity aby dokonać płatności",
@@ -1908,8 +1934,8 @@
         "starter": "Starter",
         "standard": "Standardowy",
         "pro": "Elite",
-        "enterprise": "Flux Drive Pro",
-        "fluxDrivePro": "Flux Drive Pro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "Płatność pomyślna! Przekierowywanie..."
@@ -2071,7 +2097,7 @@
           "starter": "Starter",
           "standard": "Standard",
           "elite": "Elite",
-          "fluxDrivePro": "Flux Drive Pro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Najpopularniejszy",
@@ -2766,7 +2792,7 @@
           "getStarted": "Rozpocznij Wdrażanie",
           "pricing": {
             "cpu": "CPU",
-            "note": "Ceny są przybliżone i oparte na publicznie dostępnych cenach dla podobnych konfiguracji. FluxCloud oferuje do 70% oszczędności w porównaniu do tradycyjnych dostawców chmury.",
+            "note": "Ceny są przybliżone i oparte na publicznie dostępnych cenach dla podobnych konfiguracji. *Akash Network używa rynku licytacyjnego, więc rzeczywiste ceny mogą się różnić. Cena FluxCloud jest obliczana w czasie rzeczywistym z naszego API cenowego.",
             "pricePerMonth": "Cena/Miesiąc",
             "provider": "Dostawca",
             "ram": "RAM",
@@ -3355,7 +3381,7 @@
       "learnMore": "Dowiedz się więcej o hostingu Flux",
       "configuration": "Konfiguracja",
       "instancesQuestion": "Ile instancji będziesz uruchamiać?",
-      "instancesHint": "(min 3 / maks 100) 1 Instancja = 1 Węzeł",
+      "instancesHint": "(min 1 / maks 100) 1 Instancja = 1 Węzeł",
       "instancesPlaceholder": "3",
       "renewalPeriod": "Okres odnowienia",
       "renewalHint": "(Wymagane ręczne odnowienie)",
@@ -3400,7 +3426,11 @@
       "gotIt": "Rozumiem",
       "validation": {
         "instancesRequired": "Instancje są wymagane",
-        "instancesMin": "Wymagane minimum 3 instancje",
+        "instancesMin": "Wymagana minimum 1 instancja",
+        "instancesMinSync": "Wymagane minimum 3 instancje gdy synchronizacja danych jest włączona",
+        "instancesMinSyncInfo": "Minimalna liczba instancji dla aplikacji z zdecentralizowanym trwałym przechowywaniem danych to 3. Aby użyć mniejszej liczby instancji, wyłącz synchronizację danych.",
+        "instancesWarningOne": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3. Przy tylko 1 instancji, Twoja aplikacja może doświadczyć kilku minut przestoju, jeśli węzeł uruchamiający aplikację zostanie zrestartowany lub wyłączony.",
+        "instancesWarningTwo": "Minimalna zalecana liczba instancji dla sieci zdecentralizowanej to 3.",
         "instancesMax": "Maksymalnie 100 instancji dozwolone"
       },
       "renewalOptions": {
@@ -4812,7 +4842,7 @@
       },
       "common": {
         "whyFlux": {
-          "title": "Dlaczego Hostować na Flux Cloud",
+          "title": "Dlaczego Hostować na FluxCloud",
           "subtitle": "Doświadcz mocy zdecentralizowanej infrastruktury chmurowej zbudowanej na technologii Web3",
           "benefits": [
             {
@@ -4859,19 +4889,19 @@
         },
         "genericFAQ": {
           "title": "Często Zadawane Pytania",
-          "subtitle": "Wszystko, co musisz wiedzieć o hostingu na Flux Cloud",
+          "subtitle": "Wszystko, co musisz wiedzieć o hostingu na FluxCloud",
           "questions": [
             {
-              "q": "Czym jest Flux Cloud?",
-              "a": "Flux Cloud to <strong>zdecentralizowana sieć chmurowa Web3</strong> zasilana przez ponad <strong>2600 FluxNodes</strong> działających w <strong>62+ krajach</strong>. W przeciwieństwie do tradycyjnych dostawców chmury, Twoje aplikacje działają na naprawdę zdecentralizowanej infrastrukturze z wbudowaną redundancją, brakiem pojedynczego punktu awarii oraz globalnym przyspieszeniem brzegowym. To połączenie bezpieczeństwa, wydajności i niezawodności—bez uzależnienia od dostawcy."
+              "q": "Czym jest FluxCloud?",
+              "a": "FluxCloud to <strong>zdecentralizowana sieć chmurowa Web3</strong> zasilana przez ponad <strong>2600 FluxNodes</strong> działających w <strong>62+ krajach</strong>. W przeciwieństwie do tradycyjnych dostawców chmury, Twoje aplikacje działają na naprawdę zdecentralizowanej infrastrukturze z wbudowaną redundancją, brakiem pojedynczego punktu awarii oraz globalnym przyspieszeniem brzegowym. To połączenie bezpieczeństwa, wydajności i niezawodności—bez uzależnienia od dostawcy."
             },
             {
-              "q": "Jak rozpocząć wdrażanie na Flux Cloud?",
-              "a": "Wdrażanie na Flux Cloud jest proste: <strong>wybierz aplikację</strong> z marketplace lub podaj własne specyfikacje Docker, <strong>wybierz konfigurację zasobów</strong> (CPU, RAM, dysk), i <strong>wdróż jednym kliknięciem</strong>. Twoja aplikacja jest automatycznie dystrybuowana na globalną sieć FluxNode z wbudowanymi kopiami zapasowymi, certyfikatami SSL i monitorowaniem uptime. Żadnej konfiguracji serwera ani wiedzy DevOps nie jest wymagane."
+              "q": "Jak rozpocząć wdrażanie na FluxCloud?",
+              "a": "Wdrażanie na FluxCloud jest proste: <strong>wybierz aplikację</strong> z marketplace lub podaj własne specyfikacje Docker, <strong>wybierz konfigurację zasobów</strong> (CPU, RAM, dysk), i <strong>wdróż jednym kliknięciem</strong>. Twoja aplikacja jest automatycznie dystrybuowana na globalną sieć FluxNode z wbudowanymi kopiami zapasowymi, certyfikatami SSL i monitorowaniem uptime. Żadnej konfiguracji serwera ani wiedzy DevOps nie jest wymagane."
             },
             {
-              "q": "Czy mogę przenieść istniejące aplikacje Docker na Flux Cloud?",
-              "a": "Tak! Jeśli Twoja aplikacja działa w Docker, może działać na Flux Cloud. Wystarczy <strong>podać obraz Docker, zmienne środowiskowe i porty</strong>—nie musisz przepisywać kodu. Flux obsługuje zarówno <strong>aplikacje bezstanowe, jak i stanowe</strong> z trwałą pamięcią. W przypadku <strong>aplikacji wielokontenerowych</strong>, Flux obsługuje Docker Compose, umożliwiając wdrażanie całych stosów (np. aplikacja + baza danych) jako pojedynczej jednostki."
+              "q": "Czy mogę przenieść istniejące aplikacje Docker na FluxCloud?",
+              "a": "Tak! Jeśli Twoja aplikacja działa w Docker, może działać na FluxCloud. Wystarczy <strong>podać obraz Docker, zmienne środowiskowe i porty</strong>—nie musisz przepisywać kodu. Flux obsługuje zarówno <strong>aplikacje bezstanowe, jak i stanowe</strong> z trwałą pamięcią. W przypadku <strong>aplikacji wielokontenerowych</strong>, Flux obsługuje Docker Compose, umożliwiając wdrażanie całych stosów (np. aplikacja + baza danych) jako pojedynczej jednostki."
             },
             {
               "q": "Jak działa ceny i rozliczenia?",
@@ -4879,7 +4909,7 @@
             },
             {
               "q": "Jaką otrzymuję gwarancję uptime?",
-              "a": "Flux Cloud oferuje <strong>gwarancję uptime 99.9%</strong> wspieraną przez naszą zdecentralizowaną sieć. Jeśli pojedynczy FluxNode ulegnie awarii, ruch jest automatycznie kierowany do zdrowych węzłów—<strong>bez przestojów</strong>. Ta redundancja w połączeniu z monitorowaniem w czasie rzeczywistym zapewnia, że Twoje aplikacje pozostają dostępne, nawet podczas awarii sprzętu lub ataków DDoS."
+              "a": "FluxCloud oferuje <strong>gwarancję uptime 99.9%</strong> wspieraną przez naszą zdecentralizowaną sieć. Jeśli pojedynczy FluxNode ulegnie awarii, ruch jest automatycznie kierowany do zdrowych węzłów—<strong>bez przestojów</strong>. Ta redundancja w połączeniu z monitorowaniem w czasie rzeczywistym zapewnia, że Twoje aplikacje pozostają dostępne, nawet podczas awarii sprzętu lub ataków DDoS."
             },
             {
               "q": "Czy otrzymuję wsparcie techniczne?",
@@ -4888,9 +4918,9 @@
           ]
         },
         "appSpecificFAQ": {
-          "pricingQuestion": "Ile kosztuje hosting {appName} na Flux Cloud?",
-          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> na Flux Cloud zaczyna się od <strong>{priceText}/miesiąc</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych.",
-          "pricingAnswerFree": "Hosting <strong>{appName}</strong> na Flux Cloud jest <strong>bezpłatny</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych."
+          "pricingQuestion": "Ile kosztuje hosting {appName} na FluxCloud?",
+          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> na FluxCloud zaczyna się od <strong>{priceText}/miesiąc</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych.",
+          "pricingAnswerFree": "Hosting <strong>{appName}</strong> na FluxCloud jest <strong>bezpłatny</strong>. Obejmuje to zdecentralizowaną infrastrukturę w globalnej sieci węzłów, automatyczne kopie zapasowe, wbudowaną ochronę DDoS, gwarancję uptime 99,9% i wsparcie 24/7. Możesz w dowolnym momencie skalować zasoby w górę lub w dół dzięki naszym elastycznym opcjom cenowym. Brak ukrytych opłat ani umów długoterminowych."
         }
       }
     },
@@ -4999,7 +5029,7 @@
       "price": "Cena",
       "perMonth": "miesięcznie",
       "header": {
-        "title": "Flux Drive",
+        "title": "FluxDrive",
         "subtitle": "Dokończ subskrypcję, aby odblokować zdecentralizowaną pamięć masową"
       },
       "fluxPay": {
@@ -5037,7 +5067,7 @@
         "cryptoComInitFailed": "Inicjalizacja płatności Crypto.com nie powiodła się. Spróbuj ponownie.",
         "cryptoComPaymentFailed": "Nie udało się zainicjować płatności Crypto.com",
         "paymentFailedRetry": "Płatność nie powiodła się. Spróbuj ponownie.",
-        "paymentSuccessfulRedirecting": "Płatność zakończona pomyślnie! Przekierowywanie do Flux Drive...",
+        "paymentSuccessfulRedirecting": "Płatność zakończona pomyślnie! Przekierowywanie do FluxDrive...",
         "pleaseLoginToContinue": "Zaloguj się, aby kontynuować zakup",
         "sessionExpired": "Sesja wygasła. Zaloguj się ponownie."
       }
@@ -5136,22 +5166,22 @@
     "explore": "Eksploruj",
     "services": {
       "fluxCloud": {
-        "name": "Flux Cloud",
+        "name": "FluxCloud",
         "description": "Wdrażaj i skaluj swoje aplikacje na zdecentralizowanej infrastrukturze chmurowej",
         "category": "Infrastruktura"
       },
       "fluxAI": {
-        "name": "Flux AI",
+        "name": "FluxAI",
         "description": "Wykorzystaj moc rozproszonego przetwarzania AI dla swoich potrzeb uczenia maszynowego",
         "category": "AI i ML"
       },
       "fluxDrive": {
-        "name": "Flux Drive",
+        "name": "FluxDrive",
         "description": "Bezpieczne, zdecentralizowane rozwiązanie do przechowywania danych",
         "category": "Przechowywanie"
       },
       "fluxEdge": {
-        "name": "Flux Edge",
+        "name": "FluxEdge",
         "description": "Przetwarzanie brzegowe na dużą skalę z siecią Flux",
         "category": "Sieć"
       },

@@ -55,7 +55,7 @@ const removeAllNotifications = () => {
     color="error"
     bordered
   >
-    <IconBtn id="notification-btn">
+    <IconBtn id="notification-btn" :aria-label="t('core.notifications.notifications')">
       <VIcon icon="tabler-bell" />
 
       <VMenu
@@ -84,6 +84,7 @@ const removeAllNotifications = () => {
               <IconBtn
                 v-show="props.notifications.length"
                 size="34"
+                :aria-label="!isAllMarkRead ? t('core.notifications.markAllAsUnread') : t('core.notifications.markAllAsRead')"
                 @click="markAllReadOrUnread"
               >
                 <VIcon

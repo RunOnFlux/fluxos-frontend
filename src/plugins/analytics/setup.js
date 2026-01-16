@@ -131,6 +131,90 @@ export function getResolutionCategory() {
   }
 }
 
+// Track if analytics script has been loaded
+let analyticsScriptLoaded = false
+
+/**
+ * Load the gtag.js script (called only when consent is granted)
+ */
+function loadGtagScript() {
+  if (analyticsScriptLoaded) return Promise.resolve()
+
+  const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID
+  if (!measurementId) return Promise.resolve()
+
+  return new Promise((resolve, reject) => {
+    try {
+      const script = document.createElement('script')
+      script.async = true
+      script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
+
+      const loadTimeout = 10000
+      let timeoutId = null
+
+      const handleScriptLoad = () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+          timeoutId = null
+        }
+        analyticsScriptLoaded = true
+
+        // Configure Google Analytics after script loads
+        window.gtag('js', new Date())
+        window.gtag('config', measurementId, {
+          send_page_view: false, // We handle page views manually
+          anonymize_ip: true, // GDPR: Anonymize IP addresses
+          cookie_flags: 'SameSite=None;Secure', // Modern cookie settings
+          app_version: import.meta.env.VITE_APP_VERSION || 'unknown',
+        })
+
+        // Get device info for custom dimensions (single call)
+        const deviceType = detectDeviceType()
+        const deviceCategory = deviceType === 'desktop' ? 'desktop' : 'mobile'
+        const { browserName, browserVersion } = getBrowserInfo()
+        const resolutionCategory = getResolutionCategory()
+
+        // Set custom user properties (these persist across events)
+        window.gtag('set', 'user_properties', {
+          device_category: deviceCategory,
+          device_type: deviceType,
+          browser_name: browserName,
+          browser_version: browserVersion,
+          resolution_category: resolutionCategory,
+        })
+
+        // Grant consent now that script is loaded
+        window.gtag('consent', 'update', {
+          analytics_storage: 'granted',
+        })
+
+        resolve()
+      }
+
+      const handleScriptError = () => {
+        if (timeoutId) {
+          clearTimeout(timeoutId)
+          timeoutId = null
+        }
+        console.warn('⚠️ Google Analytics: Failed to load gtag.js script')
+        reject(new Error('Failed to load gtag.js'))
+      }
+
+      script.onload = handleScriptLoad
+      script.onerror = handleScriptError
+
+      timeoutId = setTimeout(() => {
+        console.warn('⚠️ Google Analytics: Script load timed out')
+        reject(new Error('Script load timeout'))
+      }, loadTimeout)
+
+      document.head.appendChild(script)
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
 /**
  * Initialize Google Analytics 4
  * @param {object} app - Vue app instance
@@ -138,7 +222,6 @@ export function getResolutionCategory() {
 export function setupAnalytics(app) {
   const measurementId = import.meta.env.VITE_GA_MEASUREMENT_ID
   const analyticsEnabled = import.meta.env.VITE_ENABLE_ANALYTICS === 'true'
-  const isProduction = import.meta.env.PROD
   const isDevelopment = import.meta.env.DEV
 
   // Don't initialize if no measurement ID
@@ -146,107 +229,60 @@ export function setupAnalytics(app) {
     if (isDevelopment) {
       console.warn('⚠️ Google Analytics: VITE_GA_MEASUREMENT_ID not configured')
     }
-
+    
     return
   }
 
   // Don't send analytics in development to avoid polluting production data
   if (isDevelopment) {
     console.log('📊 Analytics: Development mode - tracking disabled')
-
-    // Create mock gtag for development (silent - avoids duplicate logging with main plugin)
     window.gtag = function() {}
-
+    
     return
   }
 
   // Check if analytics is explicitly enabled (production safety check)
   if (!analyticsEnabled) {
     console.log('📊 Analytics: Disabled (VITE_ENABLE_ANALYTICS=false)')
-
-    // Create mock gtag for disabled state (silent)
     window.gtag = function() {}
-
+    
     return
   }
 
-  // Initialize gtag function early so tracking calls don't fail during script load
+  // Initialize gtag function as no-op until consent is granted
+  // This prevents errors if tracking calls are made before consent
   window.dataLayer = window.dataLayer || []
   window.gtag = function() {
     window.dataLayer.push(arguments)
   }
 
-  // Set default consent to denied (GDPR compliance) before script loads
+  // Set default consent to denied (GDPR compliance)
+  // Script is NOT loaded yet - saves ~143KB until consent is granted
   window.gtag('consent', 'default', {
     analytics_storage: 'denied',
     ad_storage: 'denied',
-    wait_for_update: 500,
   })
 
-  try {
-    // Load gtag.js script with error handling and timeout
-    const script = document.createElement('script')
-    script.async = true
-    script.src = `https://www.googletagmanager.com/gtag/js?id=${measurementId}`
-
-    // Script load timeout (10 seconds)
-    const loadTimeout = 10000
-    let timeoutId = null
-
-    const handleScriptLoad = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        timeoutId = null
-      }
-
-      // Configure Google Analytics after script loads
-      window.gtag('js', new Date())
-      window.gtag('config', measurementId, {
-        send_page_view: false, // We handle page views manually
-        anonymize_ip: true, // GDPR: Anonymize IP addresses
-        cookie_flags: 'SameSite=None;Secure', // Modern cookie settings
-        app_version: import.meta.env.VITE_APP_VERSION || 'unknown',
-      })
-
-      // Get device info for custom dimensions (single call)
-      const deviceType = detectDeviceType()
-      const deviceCategory = deviceType === 'desktop' ? 'desktop' : 'mobile'
-      const { browserName, browserVersion } = getBrowserInfo()
-      const resolutionCategory = getResolutionCategory()
-
-      // Set custom user properties (these persist across events)
-      window.gtag('set', 'user_properties', {
-        device_category: deviceCategory,
-        device_type: deviceType,
-        browser_name: browserName,
-        browser_version: browserVersion,
-        resolution_category: resolutionCategory,
+  // Check if user has already consented (from previous session)
+  // Import dynamically to avoid circular dependency
+  import('@/composables/useCookieConsent').then(({ hasAnalyticsConsent }) => {
+    if (hasAnalyticsConsent()) {
+      // User already consented - load the script now
+      loadGtagScript().catch(err => {
+        console.warn('Failed to load analytics:', err.message)
       })
     }
+  })
 
-    const handleScriptError = () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId)
-        timeoutId = null
+  // Listen for consent updates to load script when consent is granted
+  window.addEventListener('consentUpdate', async event => {
+    if (event.detail?.analytics && !analyticsScriptLoaded) {
+      try {
+        await loadGtagScript()
+        console.log('📊 Analytics: Script loaded after consent')
+      } catch (err) {
+        console.warn('Failed to load analytics after consent:', err.message)
       }
-      console.warn('⚠️ Google Analytics: Failed to load gtag.js script')
-
-      // gtag function already exists as a no-op, so tracking calls won't throw
     }
-
-    script.onload = handleScriptLoad
-    script.onerror = handleScriptError
-
-    // Set timeout for slow networks
-    timeoutId = setTimeout(() => {
-      if (!script.onload) return // Already handled
-      console.warn('⚠️ Google Analytics: Script load timed out')
-      script.onload = null
-      script.onerror = null
-    }, loadTimeout)
-
-    document.head.appendChild(script)
-  } catch (error) {
-    console.error('Error initializing Google Analytics:', error)
-  }
+  })
 }

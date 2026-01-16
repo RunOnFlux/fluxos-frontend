@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- Flux Cloud Info Card -->
+    <!-- FluxCloud Info Card -->
     <VCard class="mb-4 management-intro-card">
       <VCardText>
         <div class="d-flex align-center mb-3">
@@ -402,7 +402,9 @@ async function getApps() {
   if (privilege.value === 'fluxteam') {
     await getAllApps()
   } else {
-    await Promise.all([getActiveApps(), getExpiredApps()])
+    // Must run sequentially: getExpiredApps filters based on activeApps.value
+    await getActiveApps()
+    await getExpiredApps()
   }
 }
 

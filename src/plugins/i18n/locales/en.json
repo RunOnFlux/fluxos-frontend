@@ -1,5 +1,6 @@
 {
   "common": {
+    "off": "off",
     "buttons": {
       "cancel": "Cancel",
       "close": "Close",
@@ -83,7 +84,8 @@
     },
     "theme": {
       "light": "Light",
-      "dark": "Dark"
+      "dark": "Dark",
+      "switchTheme": "Switch theme"
     },
     "status": {
       "loading": "Loading...",
@@ -318,11 +320,11 @@
       "title": "Help"
     },
     "fluxDrive": {
-      "title": "Flux Drive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "Flux Cloud",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "Decentralized Application Management",
     "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
   },
@@ -964,6 +966,10 @@
       "contactRequired": "At least one contact email is required",
       "instances": "Instances",
       "instancesCount": "{count} instance | {count} instances",
+      "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
+      "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
+      "instancesWarningSyncthing": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization in the volume path settings.",
+      "instancesWarningLegacy": "Reducing instances below 3 is only available for apps with specification version 8 or higher. Update your app specification to enable this feature.",
       "period": "Period",
       "renewal": "Renewal",
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
@@ -1079,6 +1085,7 @@
       "priorityNodesTabDescription": "Select if needed priority nodes to run your app. The app can still deploy on other nodes on the network.",
       "priorityNodesDescription": "Select if needed priority nodes to run your app. The app can still deploy on other nodes on the network.",
       "subscriptionPeriodDecreaseWarning": "Your selected subscription period will decrease the current subscription time!",
+      "maxSubscriptionInfo": "Maximum subscription duration is 1 year. Renewal options are adjusted based on your current remaining time.",
       "currentSubscriptionUntil": "Current subscription until:",
       "timeLeft": "Time left:",
       "renewalPeriod": "Renewal period",
@@ -1222,7 +1229,17 @@
       "autoDetectDeployment": "Payment confirmation and deployment will be detected automatically.",
       "autoDetectUpdate": "Update will be detected automatically.",
       "autoDetectPaymentUpdate": "Payment confirmation and update will be detected automatically.",
-      "detectionTimeEstimate": "This can take up to 45 minutes.",
+      "detectionTimeEstimate": "This can take a few minutes.",
+      "checkingBlockchainConfirmation": "Checking payment confirmation...",
+      "waitingForNodeDeployment": "Waiting for node deployment...",
+      "checkingPaymentOnBlockchain": "Checking for payment confirmation on the blockchain.",
+      "blockchainConfirmationTime": "This can take a few minutes.",
+      "paymentConfirmedOnNetwork": "Payment confirmed on the network!",
+      "paymentConfirmedWaitingNodes": "Payment confirmed on the network.",
+      "waitingForNodesPickup": "Waiting for nodes to pick up and install your app.",
+      "nodeDeploymentTime": "This can take a few minutes.",
+      "updateConfirmedNodesWillUpdate": "Update confirmed! It will take a few minutes for the nodes running your app to update to the latest specifications.",
+      "freeUpdateSponsoredBy": "Free updates on the network are offered by Influx Technologies",
       "noNodesMatch": "No nodes match your search",
       "popupBlocked": "Popup Blocked",
       "popupBlockedMessage": "Your browser blocked the {type} checkout window.",
@@ -1252,7 +1269,7 @@
       "loadingPayPalCheckout": "Loading PayPal Checkout...",
       "cardPaymentCompletedSuccessfully": "Card payment completed successfully!",
       "deploymentSuccessfulRunning": "Deployment successful! Your application is now running.",
-      "paymentConfirmedActive": "Payment confirmed! Your application is now active and running.",
+      "paymentConfirmedActive": "Payment confirmed! Your application is now active and running on the network.",
       "updateDeployedSuccessfully": "Update deployed successfully!",
       "paymentConfirmedSpecUpdated": "Payment confirmed! Your application spec has been updated.",
       "testPaymentConfirmed": "TEST: Payment confirmed! Your application is now active and running.",
@@ -1418,12 +1435,12 @@
           "startingAt": "Starting at"
         },
         "whyFluxPanel": {
-          "title": "Why Host on Flux Cloud",
+          "title": "Why Host on FluxCloud",
           "subtitle": "Experience the benefits of decentralized cloud infrastructure powered by Web3 technology"
         },
         "genericFAQPanel": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Common questions about hosting on Flux Cloud"
+          "subtitle": "Common questions about hosting on FluxCloud"
         }
       },
       "installDialog": {
@@ -1557,7 +1574,7 @@
           "usingGlobalDeployment": "Using global deployment - geolocation data unavailable",
           "failedToCopyToClipboard": "Failed to copy to clipboard",
           "paymentMonitoringTimedOut": "Payment monitoring timed out. Please check your application status.",
-          "paymentConfirmedActive": "Payment confirmed! Your application is now active and running.",
+          "paymentConfirmedActive": "Payment confirmed! Your application is now active and running on the network.",
           "openingZelCoreWallet": "Opening ZelCore wallet for payment...",
           "failedToOpenZelCoreWallet": "Failed to open ZelCore wallet",
           "pleaseLoginToMakePayments": "Please login to Flux Gravity to make payments",
@@ -1908,8 +1925,8 @@
         "starter": "Starter",
         "standard": "Standard",
         "pro": "Elite",
-        "enterprise": "Flux Drive Pro",
-        "fluxDrivePro": "Flux Drive Pro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "Payment successful! Redirecting..."
@@ -2071,7 +2088,7 @@
           "starter": "Starter",
           "standard": "Standard",
           "elite": "Elite",
-          "fluxDrivePro": "Flux Drive Pro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Most Popular",
@@ -2711,7 +2728,7 @@
             "ram": "RAM",
             "storage": "Storage",
             "pricePerMonth": "Price/Month",
-            "note": "Prices are approximate and based on publicly available pricing for similar configurations. FluxCloud offers up to 70% savings compared to traditional cloud providers."
+            "note": "Prices are approximate and based on publicly available pricing for similar configurations. *Akash Network uses a bidding marketplace, so actual prices may vary. FluxCloud price is calculated in real-time from our pricing API."
           },
           "serverNetwork": {
             "title": "Global Server Network",
@@ -3355,7 +3372,7 @@
       "learnMore": "Learn More",
       "configuration": "Configuration",
       "instancesQuestion": "How many instances will you be running?",
-      "instancesHint": "(min 3 / max 100) 1 Instance = 1 Node",
+      "instancesHint": "(min 1 / max 100) 1 Instance = 1 Node",
       "instancesPlaceholder": "3",
       "renewalPeriod": "Renewal period",
       "renewalHint": "(Manual renewal required)",
@@ -3400,7 +3417,11 @@
       "gotIt": "Got it",
       "validation": {
         "instancesRequired": "Instances is required",
-        "instancesMin": "Minimum 3 instances required",
+        "instancesMin": "Minimum 1 instance required",
+        "instancesMinSync": "Minimum 3 instances required when data synchronization is enabled",
+        "instancesMinSyncInfo": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization.",
+        "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
+        "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
         "instancesMax": "Maximum 100 instances allowed"
       },
       "renewalOptions": {
@@ -3694,7 +3715,7 @@
       },
       "common": {
         "whyFlux": {
-          "title": "Why Host on Flux Cloud",
+          "title": "Why Host on FluxCloud",
           "subtitle": "Experience the power of decentralized cloud infrastructure built on Web3 technology",
           "benefits": [
             {
@@ -3741,11 +3762,11 @@
         },
         "genericFAQ": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Everything you need to know about hosting on Flux Cloud",
+          "subtitle": "Everything you need to know about hosting on FluxCloud",
           "questions": [
             {
-              "q": "What is Flux Cloud?",
-              "a": "Flux Cloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
+              "q": "What is FluxCloud?",
+              "a": "FluxCloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
             },
             {
               "q": "How do I get started?",
@@ -3782,9 +3803,9 @@
           ]
         },
         "appSpecificFAQ": {
-          "pricingQuestion": "How much does it cost to host {appName} on Flux Cloud?",
-          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on Flux Cloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
-          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on Flux Cloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
+          "pricingQuestion": "How much does it cost to host {appName} on FluxCloud?",
+          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on FluxCloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
+          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on FluxCloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
         }
       },
       "games": {
@@ -5011,7 +5032,7 @@
       "price": "Price",
       "perMonth": "per month",
       "header": {
-        "title": "Flux Drive",
+        "title": "FluxDrive",
         "subtitle": "Complete your subscription to unlock decentralized storage"
       },
       "fluxPay": {
@@ -5049,7 +5070,7 @@
         "cryptoComInitFailed": "Crypto.com payment initialization failed. Please try again.",
         "cryptoComPaymentFailed": "Failed to initialize Crypto.com payment",
         "paymentFailedRetry": "Payment failed. Please try again.",
-        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to Flux Drive...",
+        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to FluxDrive...",
         "pleaseLoginToContinue": "Please login to continue with your purchase",
         "sessionExpired": "Session expired. Please login again."
       }
@@ -5148,22 +5169,22 @@
     "explore": "Explore",
     "services": {
       "fluxCloud": {
-        "name": "Flux Cloud",
+        "name": "FluxCloud",
         "description": "Deploy and scale your applications on a decentralized cloud infrastructure",
         "category": "Infrastructure"
       },
       "fluxAI": {
-        "name": "Flux AI",
+        "name": "FluxAI",
         "description": "Harness the power of distributed AI computing for your machine learning needs",
         "category": "AI & ML"
       },
       "fluxDrive": {
-        "name": "Flux Drive",
+        "name": "FluxDrive",
         "description": "Secure, decentralized storage solution for your data",
         "category": "Storage"
       },
       "fluxEdge": {
-        "name": "Flux Edge",
+        "name": "FluxEdge",
         "description": "Edge computing at scale with Flux network",
         "category": "Network"
       },

@@ -664,13 +664,13 @@ const loadingPricing = ref(false)
 // Plans
 const plans = ref([])
 
-// Payment durations
+// Payment durations with discount info
 const paymentDurations = computed(() => [
   { title: t('pages.marketplace.wordpress.durations.oneMonth'), months: 1 },
   { title: t('pages.marketplace.wordpress.durations.twoMonths'), months: 2 },
-  { title: t('pages.marketplace.wordpress.durations.threeMonths'), months: 3 },
-  { title: t('pages.marketplace.wordpress.durations.sixMonths'), months: 6 },
-  { title: t('pages.marketplace.wordpress.durations.twelveMonths'), months: 12 },
+  { title: `${t('pages.marketplace.wordpress.durations.threeMonths')} (3% ${t('common.off')})`, months: 3 },
+  { title: `${t('pages.marketplace.wordpress.durations.sixMonths')} (6% ${t('common.off')})`, months: 6 },
+  { title: `${t('pages.marketplace.wordpress.durations.twelveMonths')} (12% ${t('common.off')})`, months: 12 },
 ])
 
 // Deployment locations
@@ -691,16 +691,11 @@ const apiPricing = ref({
   fluxDiscount: 0,
 })
 
-// Computed pricing values
+// Computed pricing values - API already returns total for full subscription period
 const pricing = computed(() => {
-  const monthlyUSD = apiPricing.value.usd || 0
-  const monthlyFlux = apiPricing.value.flux || 0
-  const totalUSD = monthlyUSD * formData.value.paymentDuration
-  const totalFlux = monthlyFlux * formData.value.paymentDuration
-
   return {
-    usd: totalUSD,
-    flux: totalFlux,
+    usd: apiPricing.value.usd || 0,
+    flux: apiPricing.value.flux || 0,
     fluxDiscount: apiPricing.value.fluxDiscount || 0,
   }
 })
@@ -856,9 +851,9 @@ const wordpressApp = computed(() => {
     tiered: false,
     expire: 88000 * formData.value.paymentDuration, // Expire based on subscription months (post-fork: 88000 blocks/month)
     contacts: formData.value.email ? [formData.value.email] : [],
-    price: plan.usd || 0, // Monthly plan price in USD
-    subscriptionMonths: formData.value.paymentDuration, // Add subscription months for InstallDialog
-    fluxPrice: apiPricing.value.flux || 0, // Monthly Flux price from API
+    price: plan.usd || 0, // Monthly plan price in USD (for reference)
+    subscriptionMonths: formData.value.paymentDuration, // Subscription duration for InstallDialog
+    fluxPrice: apiPricing.value.flux || 0, // Total Flux price for full subscription period
     fluxDiscount: apiPricing.value.fluxDiscount || 0, // Flux discount percentage
     planName: plan.name || 'Standard', // Plan name for header title
     uploadEnvToStorage: true, // Flag to indicate env vars should be uploaded to Flux Storage
@@ -942,6 +937,9 @@ const updatePrice = async () => {
     const timestamp = Date.now()
     const wpName = `wordpress${timestamp}`
 
+    // Calculate expire based on payment duration (backend applies subscription discounts)
+    const expireBlocks = 88000 * formData.value.paymentDuration // Post-fork: 88000 blocks = 1 month
+
     // Simple app spec for pricing calculation (same structure as cost calculator)
     const appSpec = {
       version: 8,
@@ -964,7 +962,7 @@ const updatePrice = async () => {
         tiered: false,
       }],
       instances: plan.instances,
-      expire: 88000, // Post-fork: 88000 blocks = 1 month
+      expire: expireBlocks,
       contacts: [''],
       geolocation: formData.value.deploymentLocation ? [`ac${formData.value.deploymentLocation}`] : [''],
       nodes: [],
@@ -975,28 +973,19 @@ const updatePrice = async () => {
     const response = await AppsService.appPriceUSDandFlux(appSpec)
 
     if (response.data && response.data.status === 'success') {
-      // Calculate Flux price based on plan's fixed USD price (matching FluxCloud)
-      // FluxCloud: multiplier = plan.usd / apiUsd; flux = apiFlux * multiplier
-      const apiCalculatedUsd = response.data.data.usd || 0
-      const apiFlux = response.data.data.flux || 0
-
-      // Calculate multiplier to adjust API's Flux to match our fixed USD price
-      const multiplier = apiCalculatedUsd > 0 ? (plan.usd / apiCalculatedUsd) : 0
-
-      // Apply multiplier to API's Flux price
-      const correctedFlux = apiFlux * multiplier
-
+      // Use API response directly - backend already calculated total for full subscription period
+      // (includes duration multiplier, subscription discounts, etc.)
       apiPricing.value = {
-        usd: plan.usd, // Always use plan's fixed USD price
-        flux: correctedFlux, // Flux adjusted with multiplier
+        usd: response.data.data.usd || 0,
+        flux: response.data.data.flux || 0,
         fluxDiscount: response.data.data.fluxDiscount || 0,
       }
     } else {
       console.error('API pricing request failed:', response.data)
 
-      // Fallback
+      // Fallback: multiply plan price by duration
       apiPricing.value = {
-        usd: plan.usd,
+        usd: plan.usd * formData.value.paymentDuration,
         flux: 0,
         fluxDiscount: 0,
       }
@@ -1004,10 +993,10 @@ const updatePrice = async () => {
   } catch (error) {
     console.error('Error fetching API pricing:', error)
 
-    // Fallback
+    // Fallback: multiply plan price by duration
     const plan = formData.value.selectedPlan
     apiPricing.value = {
-      usd: plan.usd,
+      usd: plan.usd * formData.value.paymentDuration,
       flux: 0,
       fluxDiscount: 0,
     }

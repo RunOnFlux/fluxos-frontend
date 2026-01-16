@@ -69,16 +69,46 @@
               <VTextField
                 v-model.number="formData.instances"
                 type="number"
-                :min="3"
+                :min="minInstances"
                 :max="100"
                 :rules="[
                   v => !!v || t('pages.costCalculator.validation.instancesRequired'),
-                  v => v >= 3 || t('pages.costCalculator.validation.instancesMin'),
+                  v => v >= minInstances || (syncEnabled ? t('pages.costCalculator.validation.instancesMinSync') : t('pages.costCalculator.validation.instancesMin')),
                   v => v <= 100 || t('pages.costCalculator.validation.instancesMax')
                 ]"
                 :placeholder="t('pages.costCalculator.instancesPlaceholder')"
                 @input="calculateCost"
               />
+
+              <!-- Warning for syncthing minimum instances -->
+              <VAlert
+                v-if="syncEnabled"
+                type="info"
+                variant="tonal"
+                density="compact"
+                class="mt-2"
+              >
+                {{ t('pages.costCalculator.validation.instancesMinSyncInfo') }}
+              </VAlert>
+              <!-- Warning for low instance count (only when sync is not enabled) -->
+              <VAlert
+                v-else-if="formData.instances === 1"
+                type="warning"
+                variant="tonal"
+                density="compact"
+                class="mt-2"
+              >
+                {{ t('pages.costCalculator.validation.instancesWarningOne') }}
+              </VAlert>
+              <VAlert
+                v-else-if="formData.instances === 2"
+                type="warning"
+                variant="tonal"
+                density="compact"
+                class="mt-2"
+              >
+                {{ t('pages.costCalculator.validation.instancesWarningTwo') }}
+              </VAlert>
             </div>
 
             <!-- Renewal Period -->
@@ -196,6 +226,7 @@
                     hide-details
                     style="max-width: 85px;"
                     @update:model-value="calculateCost"
+                    @blur="formData.memory = Math.max(100, Math.min(59000, Math.round(formData.memory / 100) * 100)); calculateCost()"
                   />
                 </div>
               </div>
@@ -799,6 +830,16 @@ const formData = reactive({
 // Synchronization switch
 const syncEnabled = ref(false)
 
+// Minimum instances: 3 if sync is enabled, 1 otherwise
+const minInstances = computed(() => syncEnabled.value ? 3 : 1)
+
+// Watch sync status - auto-adjust instances to minimum 3 when sync is enabled
+watch(syncEnabled, newValue => {
+  if (newValue && formData.instances < 3) {
+    formData.instances = 3
+  }
+})
+
 // Port input for adding new ports
 const newPortInput = ref('')
 
@@ -924,14 +965,14 @@ const handlePortInputKeypress = event => {
   }
 }
 
-// Renewal period options
+// Renewal period options with discount info
 const renewalOptions = computed(() => [
   { title: t('pages.costCalculator.renewalOptions.oneWeek'), value: 7 },
   { title: t('pages.costCalculator.renewalOptions.twoWeeks'), value: 14 },
   { title: t('pages.costCalculator.renewalOptions.oneMonth'), value: 30 },
-  { title: t('pages.costCalculator.renewalOptions.threeMonths'), value: 90 },
-  { title: t('pages.costCalculator.renewalOptions.sixMonths'), value: 180 },
-  { title: t('pages.costCalculator.renewalOptions.twelveMonths'), value: 360 },
+  { title: `${t('pages.costCalculator.renewalOptions.threeMonths')} (3% ${t('common.off')})`, value: 90 },
+  { title: `${t('pages.costCalculator.renewalOptions.sixMonths')} (6% ${t('common.off')})`, value: 180 },
+  { title: `${t('pages.costCalculator.renewalOptions.twelveMonths')} (12% ${t('common.off')})`, value: 360 },
 ])
 
 // Preset configurations
@@ -1218,7 +1259,7 @@ function showToast(type, message) {
   const iconMap = {
     success: 'mdi-check-circle',
     error: 'mdi-alert-circle',
-    warning: 'mdi-alert-triangle',
+    warning: 'mdi-alert',
     info: 'mdi-information',
     danger: 'mdi-alert-circle',
   }
