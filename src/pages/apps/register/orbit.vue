@@ -5030,6 +5030,15 @@ const proceedToPayment = async () => {
     return
   }
 
+  // If we already have a valid signature and registrationHash from a previous attempt,
+  // skip the signing process and go directly to the payment step
+  if (signature.value && registrationHash.value && testFinished.value) {
+    currentStep.value = 6
+    startPaymentMonitoring()
+
+    return
+  }
+
   deploying.value = true
 
   try {
@@ -5451,6 +5460,7 @@ const goBackToConfigureStep = () => {
 
 // Go back to review step from payment step
 const goBackToReviewStep = () => {
+  deploying.value = false // Reset deploying state to unblock UI
   currentStep.value = 4 // Review step
 }
 
