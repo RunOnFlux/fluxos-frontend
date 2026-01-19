@@ -2090,18 +2090,6 @@
                           </VCard>
                         </VCol>
                       </VRow>
-
-                      <!-- Back Button -->
-                      <div class="d-flex justify-center mt-4">
-                        <VBtn
-                          variant="text"
-                          color="secondary"
-                          @click="goBackToReviewStep"
-                        >
-                          <VIcon start size="20">mdi-arrow-left</VIcon>
-                          {{ t('common.buttons.back') }}
-                        </VBtn>
-                      </div>
                     </div>
 
                     <!-- Payment Monitoring Spinner -->
@@ -2174,7 +2162,7 @@
                               <div v-if="fiatPaymentInitiated && paymentMonitoringPhase === 'blockchain'" class="d-flex justify-center mt-4">
                                 <VBtn
                                   variant="outlined"
-                                  color="secondary"
+                                  color="error"
                                   @click="cancelPaymentMonitoring"
                                 >
                                   <VIcon start>mdi-arrow-left</VIcon>
@@ -2207,6 +2195,14 @@
                         <VIcon start>mdi-arrow-left</VIcon>
                         {{ t('pages.apps.register.orbit.navigation.back') }}
                       </VBtn>
+                      <VBtn
+                        v-else-if="currentStep === 6 && !paymentConfirmed && !eligibleForFirstMonthFree && !fiatPaymentInitiated"
+                        variant="text"
+                        @click="goBackToReviewStep"
+                      >
+                        <VIcon start>mdi-arrow-left</VIcon>
+                        {{ t('common.buttons.back') }}
+                      </VBtn>
                       <VSpacer />
                       <VBtn
                         v-if="currentStep > 1 && currentStep < 4"
@@ -2227,7 +2223,6 @@
                         <VIcon start>mdi-rocket-launch</VIcon>
                         {{ t('pages.apps.register.orbit.config.registerApplication') }}
                       </VBtn>
-                    <!-- No action buttons on steps 5 and 6 - handled within the step content -->
                     </div>
                   </div>
                 </template>
@@ -5066,6 +5061,13 @@ const proceedToPayment = async () => {
     startPaymentMonitoring()
 
     return
+  }
+
+  // If spec has changed and we have a previous signature/registration, clear old data to force re-signing
+  if (hasSpecChanged() && (signature.value || registrationHash.value)) {
+    signature.value = ''
+    registrationHash.value = null
+    testFinished.value = false
   }
 
   deploying.value = true
