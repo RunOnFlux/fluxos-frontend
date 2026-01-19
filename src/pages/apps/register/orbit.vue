@@ -2491,6 +2491,47 @@ const SSPLogoThemeImg = computed(() => {
 // Auth state
 const isLoggedIn = computed(() => privilege.value !== 'none')
 
+// Toast notification state
+const snackbar = ref({
+  model: false,
+  text: '',
+  color: 'info',
+  icon: 'mdi-information',
+  timeout: 4000,
+})
+let snackbarTimeout = null
+
+// Show toast notification
+const showToast = (type, message, icon = null, timeout = 4000) => {
+  // Clear previous timeout if any
+  if (snackbarTimeout) clearTimeout(snackbarTimeout)
+
+  // Update snackbar content
+  snackbar.value = {
+    model: false, // force reset
+    text: message,
+    icon: icon || {
+      success: 'mdi-check-circle',
+      error: 'mdi-alert-circle',
+      warning: 'mdi-alert',
+      info: 'mdi-information',
+      danger: 'mdi-alert-circle',
+    }[type] || 'mdi-information',
+    color: type === 'danger' ? 'error' : type,
+    timeout,
+  }
+
+  // Show it slightly delayed to retrigger animation if needed
+  requestAnimationFrame(() => {
+    snackbar.value.model = true
+  })
+
+  // Auto-close
+  snackbarTimeout = setTimeout(() => {
+    snackbar.value.model = false
+  }, timeout)
+}
+
 // Watch for login
 watch(isLoggedIn, newValue => {
   if (newValue) {
@@ -4574,47 +4615,6 @@ const existingOrbitAppName = ref(null)
 const calculatedAppPrice = ref(null) // { usd: number, flux: number }
 const calculatedAppPriceLoading = ref(false)
 const calculatedAppPriceError = ref(null)
-
-// Toast notification state
-const snackbar = ref({
-  model: false,
-  text: '',
-  color: 'info',
-  icon: 'mdi-information',
-  timeout: 4000,
-})
-let snackbarTimeout = null
-
-// Show toast notification
-const showToast = (type, message, icon = null, timeout = 4000) => {
-  // Clear previous timeout if any
-  if (snackbarTimeout) clearTimeout(snackbarTimeout)
-
-  // Update snackbar content
-  snackbar.value = {
-    model: false, // force reset
-    text: message,
-    icon: icon || {
-      success: 'mdi-check-circle',
-      error: 'mdi-alert-circle',
-      warning: 'mdi-alert',
-      info: 'mdi-information',
-      danger: 'mdi-alert-circle',
-    }[type] || 'mdi-information',
-    color: type === 'danger' ? 'error' : type,
-    timeout,
-  }
-
-  // Show it slightly delayed to retrigger animation if needed
-  requestAnimationFrame(() => {
-    snackbar.value.model = true
-  })
-
-  // Auto-close
-  snackbarTimeout = setTimeout(() => {
-    snackbar.value.model = false
-  }, timeout)
-}
 
 // Computed: Whether user is eligible for first month free
 const eligibleForFirstMonthFree = computed(() => {
