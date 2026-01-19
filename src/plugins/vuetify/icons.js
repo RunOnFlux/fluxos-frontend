@@ -16,6 +16,8 @@ import checkboxIndeterminate from '@images/svg/checkbox-indeterminate.svg'
 import checkboxUnchecked from '@images/svg/checkbox-unchecked.svg'
 import radioChecked from '@images/svg/radio-checked.svg'
 import radioUnchecked from '@images/svg/radio-unchecked.svg'
+import rustLogo from '@images/rust-logo.svg'
+import bunLogo from '@images/bun-logo.svg'
 
 
 // Custom SVG icon overrides (checkboxes and radios)
@@ -34,6 +36,8 @@ const customPngIcons = {
 
 // Custom SVG icon
 const customSvgIcons = {
+  'rust-logo': rustLogo,
+  'bun-logo': bunLogo,
 }
 
 const aliases = {

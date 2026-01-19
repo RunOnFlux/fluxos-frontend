@@ -696,11 +696,27 @@
                                 v-model="selectedRuntime"
                                 :items="runtimeOptions"
                                 :label="t('pages.apps.register.orbit.config.runtimeLabel')"
-                                prepend-inner-icon="mdi-code-tags"
                                 variant="outlined"
                                 class="mb-3"
                                 clearable
-                              />
+                              >
+                                <template #item="{ props, item }">
+                                  <VListItem v-bind="props">
+                                    <template #prepend>
+                                      <VIcon :icon="item.raw.icon" class="mr-2" />
+                                    </template>
+                                  </VListItem>
+                                </template>
+                                <template #selection="{ item }">
+                                  <div v-if="item" class="d-flex align-center">
+                                    <VIcon :icon="item.raw.icon" size="18" class="mr-2" />
+                                    {{ item.title }}
+                                  </div>
+                                </template>
+                                <template #prepend-inner>
+                                  <VIcon v-if="!selectedRuntime" size="20">mdi-code-tags</VIcon>
+                                </template>
+                              </VSelect>
 
                               <VTextField
                                 v-if="selectedRuntime"
@@ -744,7 +760,10 @@
                                     @click="addOrbitEnvVar(orbitVar)"
                                   >
                                     <div class="orbit-env-header">
-                                      <code class="orbit-env-key">{{ orbitVar.key }}</code>
+                                      <code class="orbit-env-key">
+                                        <VIcon size="12" class="mr-1">{{ getEnvVarIcon(orbitVar.key) }}</VIcon>
+                                        {{ orbitVar.key }}
+                                      </code>
                                       <VChip
                                         v-if="isEnvVarAdded(orbitVar.key)"
                                         size="x-small"
@@ -758,7 +777,7 @@
                                         v-else
                                         size="x-small"
                                         color="primary"
-                                        variant="tonal"
+                                        variant="flat"
                                         @click.stop="addOrbitEnvVar(orbitVar)"
                                       >
                                         <VIcon start size="14">mdi-plus</VIcon>
@@ -820,7 +839,7 @@
                               </div>
 
                               <VBtn
-                                variant="tonal"
+                                variant="flat"
                                 color="primary"
                                 size="small"
                                 @click="addEnvVar"
@@ -2032,10 +2051,11 @@
                                       icon
                                       variant="text"
                                       size="x-small"
+                                      :color="copiedAddress ? 'success' : 'grey'"
                                       class="crypto-copy-btn"
-                                      @click="copyToClipboard(deploymentAddress)"
+                                      @click="copyToClipboard(deploymentAddress, 'address')"
                                     >
-                                      <VIcon size="14">mdi-content-copy</VIcon>
+                                      <VIcon size="14">{{ copiedAddress ? 'mdi-check' : 'mdi-content-copy' }}</VIcon>
                                     </VBtn>
                                   </div>
                                   <!-- Message Field -->
@@ -2051,10 +2071,11 @@
                                       icon
                                       variant="text"
                                       size="x-small"
+                                      :color="copiedMessage ? 'success' : 'grey'"
                                       class="crypto-copy-btn"
-                                      @click="copyToClipboard(registrationHash)"
+                                      @click="copyToClipboard(registrationHash, 'message')"
                                     >
-                                      <VIcon size="14">mdi-content-copy</VIcon>
+                                      <VIcon size="14">{{ copiedMessage ? 'mdi-check' : 'mdi-content-copy' }}</VIcon>
                                     </VBtn>
                                   </div>
                                 </VCardText>
@@ -3882,15 +3903,15 @@ watch(repoToken, () => {
 
 // Runtime options
 const runtimeOptions = [
-  { title: 'Node.js', value: 'Node.js' },
-  { title: 'Python', value: 'Python' },
-  { title: 'Rust', value: 'Rust' },
-  { title: 'Go', value: 'Go' },
-  { title: 'Java', value: 'Java' },
-  { title: '.NET', value: '.NET' },
-  { title: 'Bun', value: 'Bun' },
-  { title: 'Ruby', value: 'Ruby' },
-  { title: 'PHP', value: 'PHP' },
+  { title: 'Node.js', value: 'Node.js', icon: 'mdi-nodejs' },
+  { title: 'Python', value: 'Python', icon: 'mdi-language-python' },
+  { title: 'Rust', value: 'Rust', icon: 'rust-logo' },
+  { title: 'Go', value: 'Go', icon: 'mdi-language-go' },
+  { title: 'Java', value: 'Java', icon: 'mdi-language-java' },
+  { title: '.NET', value: '.NET', icon: 'mdi-dot-net' },
+  { title: 'Bun', value: 'Bun', icon: 'bun-logo' },
+  { title: 'Ruby', value: 'Ruby', icon: 'mdi-language-ruby' },
+  { title: 'PHP', value: 'PHP', icon: 'mdi-language-php' },
 ]
 
 // Runtime version placeholders and hints
@@ -4442,6 +4463,10 @@ const loginType = ref('zelcore') // Default to zelcore
 const websocket = ref(null)
 const finalAppSpec = ref(null) // Spec with uploaded contacts
 
+// Copy state
+const copiedAddress = ref(false)
+const copiedMessage = ref(false)
+
 // Registration success state
 const testFinished = ref(false)
 
@@ -4774,6 +4799,27 @@ const removeEnvVar = index => {
 // Check if an Orbit env var is already added
 const isEnvVarAdded = key => {
   return customEnvVars.value.some(env => env.key === key)
+}
+
+// Get icon for environment variable based on key
+const getEnvVarIcon = key => {
+  const iconMap = {
+    'NODE_VERSION': 'mdi-nodejs',
+    'PYTHON_VERSION': 'mdi-language-python',
+    'RUST_VERSION': 'rust-logo',
+    'GO_VERSION': 'mdi-language-go',
+    'JAVA_VERSION': 'mdi-language-java',
+    'DOTNET_VERSION': 'mdi-dot-net',
+    'BUN_VERSION': 'bun-logo',
+    'RUBY_VERSION': 'mdi-language-ruby',
+    'PHP_VERSION': 'mdi-language-php',
+    'PORT': 'mdi-network',
+    'BUILD_COMMAND': 'mdi-hammer-wrench',
+    'START_COMMAND': 'mdi-play-circle',
+    'INSTALL_COMMAND': 'mdi-download',
+    'OUTPUT_DIR': 'mdi-folder-open',
+  }
+  return iconMap[key] || 'mdi-code-braces'
 }
 
 // Add an Orbit environment variable
@@ -5651,10 +5697,23 @@ const initSSPPay = async () => {
 }
 
 // Copy text to clipboard
-const copyToClipboard = async text => {
+const copyToClipboard = async (text, type) => {
   if (!text) return
   try {
     await navigator.clipboard.writeText(text)
+
+    // Update the appropriate copied state
+    if (type === 'address') {
+      copiedAddress.value = true
+      setTimeout(() => {
+        copiedAddress.value = false
+      }, 2000)
+    } else if (type === 'message') {
+      copiedMessage.value = true
+      setTimeout(() => {
+        copiedMessage.value = false
+      }, 2000)
+    }
   } catch (error) {
     console.error('Failed to copy to clipboard:', error)
   }
@@ -6079,10 +6138,12 @@ onMounted(() => {
 }
 
 .orbit-env-key {
+  display: inline-flex;
+  align-items: center;
   font-size: 0.8125rem;
   font-weight: 600;
-  color: rgb(var(--v-theme-primary));
-  background: rgba(var(--v-theme-primary), 0.15);
+  color: rgba(var(--v-theme-on-surface), 0.7);
+  background: rgba(var(--v-theme-on-surface), 0.08);
   padding: 0.125rem 0.5rem;
   border-radius: 4px;
 }
@@ -7226,6 +7287,7 @@ onMounted(() => {
 .payment-icon-card-horizontal {
   flex: 1;
   max-width: 200px;
+  min-height: 64px;
   cursor: pointer;
   transition: all 0.2s ease;
 }
@@ -7237,7 +7299,7 @@ onMounted(() => {
 
 /* Payment Advantages */
 .payment-advantages {
-  background: rgba(var(--v-theme-surface-variant), 0.3);
+  background: rgba(var(--v-theme-surface-variant), 0.15);
   border-radius: 8px;
   padding: 12px;
 }
@@ -7256,7 +7318,7 @@ onMounted(() => {
 
 /* Crypto Payment Details */
 .crypto-payment-details {
-  background: rgba(var(--v-theme-surface-variant), 0.3);
+  background: rgba(var(--v-theme-surface-variant), 0.15);
   border-radius: 8px;
 }
 
