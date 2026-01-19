@@ -1656,7 +1656,13 @@
                               {{ t('pages.apps.register.orbit.review.generatedSpec') }}
                             </VExpansionPanelTitle>
                             <VExpansionPanelText>
-                              <pre class="spec-preview">{{ JSON.stringify(generatedAppSpec, null, 2) }}</pre>
+                              <JsonViewer
+                                :data="[{ name: 'Specification', callData: generatedAppSpec }]"
+                                hide-header
+                                hide-tabs
+                                hide-copy-button
+                                :deep="Infinity"
+                              />
                             </VExpansionPanelText>
                           </VExpansionPanel>
                         </VExpansionPanels>
@@ -1671,7 +1677,7 @@
                           <template #label>
                             <span class="text-body-2">
                               {{ t('pages.apps.register.orbit.review.termsLabel') }}
-                              <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank" rel="noopener noreferrer" class="text-primary">
+                              <a href="https://cdn.runonflux.io/Flux_Terms_of_Service.pdf" target="_blank" rel="noopener noreferrer" class="terms-link">
                                 {{ t('pages.apps.register.orbit.review.termsOfService') }}
                               </a>
                             </span>
@@ -2242,6 +2248,7 @@ import SSPLogoWhiteImg from '@images/ssp-logo-white.svg?url'
 import StorageService from '@/services/StorageService'
 import { useTheme } from 'vuetify'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
+import JsonViewer from '@/@core/components/JsonViewer.vue'
 import { signWithSSP, signWithZelcore, signWithWalletConnect, getConnectedAccount, payWithSSP, payWithZelcore } from '@/utils/walletService'
 import { getDetectedBackendURL } from '@/utils/backend'
 import {
@@ -7846,5 +7853,16 @@ onMounted(() => {
   100% {
     box-shadow: 0 0 0 0 rgba(var(--v-theme-primary), 0);
   }
+}
+
+/* Terms of Service link - white on dark, black on light */
+.terms-link {
+  color: rgb(var(--v-theme-on-surface));
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.terms-link:hover {
+  text-decoration: underline;
 }
 </style>
