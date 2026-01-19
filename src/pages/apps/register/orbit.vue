@@ -4586,7 +4586,7 @@ const snackbar = ref({
 let snackbarTimeout = null
 
 // Show toast notification
-function showToast(type, message, icon = null, timeout = 4000) {
+const showToast = (type, message, icon = null, timeout = 4000) => {
   // Clear previous timeout if any
   if (snackbarTimeout) clearTimeout(snackbarTimeout)
 
