@@ -2233,6 +2233,26 @@
       </VCol>
     </VRow>
   </div>
+
+  <!-- Toast Notification -->
+  <VSnackbar
+    v-model="snackbar.model"
+    :timeout="snackbar.timeout"
+    :color="snackbar.color"
+    location="top"
+    :elevation="4"
+    variant="flat"
+    class="mb-2"
+  >
+    <div class="d-flex align-center">
+      <VIcon
+        :icon="snackbar.icon"
+        class="mr-2"
+        size="20"
+      />
+      <span>{{ snackbar.text }}</span>
+    </div>
+  </VSnackbar>
 </template>
 
 <script setup>
@@ -4506,6 +4526,47 @@ const calculatedAppPrice = ref(null) // { usd: number, flux: number }
 const calculatedAppPriceLoading = ref(false)
 const calculatedAppPriceError = ref(null)
 
+// Toast notification state
+const snackbar = ref({
+  model: false,
+  text: '',
+  color: 'info',
+  icon: 'mdi-information',
+  timeout: 4000,
+})
+let snackbarTimeout = null
+
+// Show toast notification
+function showToast(type, message, icon = null, timeout = 4000) {
+  // Clear previous timeout if any
+  if (snackbarTimeout) clearTimeout(snackbarTimeout)
+
+  // Update snackbar content
+  snackbar.value = {
+    model: false, // force reset
+    text: message,
+    icon: icon || {
+      success: 'mdi-check-circle',
+      error: 'mdi-alert-circle',
+      warning: 'mdi-alert',
+      info: 'mdi-information',
+      danger: 'mdi-alert-circle',
+    }[type] || 'mdi-information',
+    color: type === 'danger' ? 'error' : type,
+    timeout,
+  }
+
+  // Show it slightly delayed to retrigger animation if needed
+  requestAnimationFrame(() => {
+    snackbar.value.model = true
+  })
+
+  // Auto-close
+  snackbarTimeout = setTimeout(() => {
+    snackbar.value.model = false
+  }, timeout)
+}
+
 // Computed: Whether user is eligible for first month free
 const eligibleForFirstMonthFree = computed(() => {
   // Not eligible if they already have an orbit app with same git repo
@@ -5848,6 +5909,9 @@ onUnmounted(() => {
   }
   if (paymentMonitoringTimeout.value) {
     clearTimeout(paymentMonitoringTimeout.value)
+  }
+  if (snackbarTimeout) {
+    clearTimeout(snackbarTimeout)
   }
   if (websocket.value) {
     websocket.value.close()
