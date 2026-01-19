@@ -1617,8 +1617,8 @@
                           <div class="review-item highlight-price">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
                             <span class="review-value price">
-                              <!-- Free plan: show "Free Forever" -->
-                              <VChip v-if="selectedPlan === 'free'" color="success" size="small" variant="flat" class="mr-2">
+                              <!-- Free plan: show "Free Forever" only if eligible -->
+                              <VChip v-if="selectedPlan === 'free' && eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
                                 <VIcon start size="14">mdi-infinity</VIcon>
                                 {{ t('pages.apps.register.orbit.pricing.freeForever') }}
                               </VChip>
@@ -2090,6 +2090,18 @@
                           </VCard>
                         </VCol>
                       </VRow>
+
+                      <!-- Back Button -->
+                      <div class="d-flex justify-center mt-4">
+                        <VBtn
+                          variant="text"
+                          color="secondary"
+                          @click="goBackToReviewStep"
+                        >
+                          <VIcon start size="20">mdi-arrow-left</VIcon>
+                          {{ t('common.buttons.back') }}
+                        </VBtn>
+                      </div>
                     </div>
 
                     <!-- Payment Monitoring Spinner -->
@@ -2199,7 +2211,7 @@
                       <VBtn
                         v-if="currentStep > 1 && currentStep < 4"
                         color="primary"
-                        :disabled="currentStep === 2 && repoCheckStatus === 'private' && authTestStatus !== 'success'"
+                        :disabled="currentStep === 2 && (repoCheckStatus === 'checking' || branchesLoading || (repoCheckStatus === 'private' && authTestStatus !== 'success'))"
                         @click="nextStep"
                       >
                         {{ t('pages.apps.register.orbit.navigation.continue') }}
@@ -5435,6 +5447,11 @@ const goBackToConfigureStep = () => {
   registrationError.value = ''
   deploying.value = false
   currentStep.value = 3 // Configure step
+}
+
+// Go back to review step from payment step
+const goBackToReviewStep = () => {
+  currentStep.value = 4 // Review step
 }
 
 // Payment monitoring - Two-phase detection:
