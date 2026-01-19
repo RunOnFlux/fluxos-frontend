@@ -5024,6 +5024,35 @@ const nextStep = async () => {
   currentStep.value++
 }
 
+// Check if the app spec has changed compared to the previously signed spec
+const hasSpecChanged = () => {
+  if (!finalAppSpec.value) return true
+
+  const current = generatedAppSpec.value
+  const signed = finalAppSpec.value
+
+  // Compare key fields that affect the signature (excluding contacts which are uploaded separately)
+  if (current.name !== signed.name) return true
+  if (current.description !== signed.description) return true
+  if (current.instances !== signed.instances) return true
+  if (current.expire !== signed.expire) return true
+  if (JSON.stringify(current.geolocation) !== JSON.stringify(signed.geolocation)) return true
+
+  // Compare compose specs (first component)
+  const currentCompose = current.compose?.[0]
+  const signedCompose = signed.compose?.[0]
+
+  if (!currentCompose || !signedCompose) return true
+  if (currentCompose.cpu !== signedCompose.cpu) return true
+  if (currentCompose.ram !== signedCompose.ram) return true
+  if (currentCompose.hdd !== signedCompose.hdd) return true
+  if (JSON.stringify(currentCompose.containerPorts) !== JSON.stringify(signedCompose.containerPorts)) return true
+  if (JSON.stringify(currentCompose.domains) !== JSON.stringify(signedCompose.domains)) return true
+  if (JSON.stringify(currentCompose.environmentParameters) !== JSON.stringify(signedCompose.environmentParameters)) return true
+
+  return false
+}
+
 // Proceed to registration
 const proceedToPayment = async () => {
   if (!acceptedTerms.value) {
@@ -5031,8 +5060,8 @@ const proceedToPayment = async () => {
   }
 
   // If we already have a valid signature and registrationHash from a previous attempt,
-  // skip the signing process and go directly to the payment step
-  if (signature.value && registrationHash.value && testFinished.value) {
+  // and the spec hasn't changed, skip the signing process and go directly to the payment step
+  if (signature.value && registrationHash.value && testFinished.value && !hasSpecChanged()) {
     currentStep.value = 6
     startPaymentMonitoring()
 
