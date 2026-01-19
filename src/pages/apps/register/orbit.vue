@@ -1623,7 +1623,7 @@
                                 {{ t('pages.apps.register.orbit.pricing.freeForever') }}
                               </VChip>
                               <!-- Other plans with first month free -->
-                              <VChip v-else-if="eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
+                              <VChip v-if="selectedPlan !== 'free' && eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
                                 <VIcon start size="14">mdi-gift-outline</VIcon>
                                 {{ t('pages.apps.register.orbit.pricing.firstMonthFree') }}
                               </VChip>
