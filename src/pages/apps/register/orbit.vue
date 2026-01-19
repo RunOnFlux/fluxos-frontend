@@ -2253,6 +2253,49 @@
       <span>{{ snackbar.text }}</span>
     </div>
   </VSnackbar>
+
+  <!-- Popup Blocked Dialog -->
+  <VDialog v-model="popupBlockedDialog" max-width="500">
+    <VCard rounded="xl" class="overflow-hidden">
+      <VCardTitle class="d-flex align-center gap-3 bg-primary text-white" style="height: 52px; padding-inline: 16px;">
+        <VIcon icon="mdi-alert-circle" color="orange" size="28" />
+        <span class="text-h6">Popup Blocked</span>
+      </VCardTitle>
+      <VCardText class="py-8 px-6 text-center">
+        <VIcon icon="mdi-block-helper" color="orange" size="64" class="mb-4" />
+        <p class="text-body-1 mb-3">
+          Your browser blocked the {{ blockedPaymentType }} checkout window.
+        </p>
+        <p class="text-body-2 text-medium-emphasis">
+          Click the button below to open the payment page manually.
+        </p>
+      </VCardText>
+      <VCardActions class="pa-0 d-flex ga-0">
+        <VBtn
+          color="error"
+          variant="flat"
+          size="large"
+          class="rounded-0 rounded-bl-xl"
+          style="flex: 1; max-width: 50%;"
+          @click="() => { popupBlockedDialog = false; cancelPaymentMonitoring(); }"
+        >
+          <VIcon start icon="mdi-close-circle" />
+          Cancel
+        </VBtn>
+        <VBtn
+          color="primary"
+          variant="flat"
+          size="large"
+          class="rounded-0 rounded-br-xl"
+          style="flex: 1; max-width: 50%;"
+          @click="openBlockedPayment"
+        >
+          <VIcon start icon="mdi-open-in-new" />
+          Open {{ blockedPaymentType }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>
 
 <script setup>
@@ -2286,6 +2329,7 @@ import {
 } from '@/utils/enterpriseCrypto'
 import qs from 'qs'
 import { getUser } from '@/utils/firebase'
+import { paymentBridge } from '@/utils/fiatGateways'
 
 const { t } = useI18n()
 
@@ -4516,6 +4560,11 @@ const showFiatOptions = ref(false)
 const showCryptoOptions = ref(false)
 const fiatPaymentInitiated = ref(false)
 
+// Popup blocked dialog state
+const popupBlockedDialog = ref(false)
+const blockedPaymentUrl = ref('')
+const blockedPaymentType = ref('')
+
 // Duplicate git repo check state
 const duplicateGitRepoCheckStatus = ref('idle') // 'idle', 'checking', 'checked'
 const hasDuplicateGitRepo = ref(false)
@@ -5645,40 +5694,84 @@ const cancelPaymentMonitoring = () => {
   fiatPaymentInitiated.value = false
 }
 
+// Open blocked payment URL
+const openBlockedPayment = () => {
+  if (blockedPaymentUrl.value) {
+    window.open(blockedPaymentUrl.value, '_blank')
+    popupBlockedDialog.value = false
+  }
+}
+
 // Initialize Stripe payment
 const initStripePay = async () => {
   checkoutLoading.value = true
   paymentMethod.value = 'stripe'
 
   try {
-    const zelidauth = localStorage.getItem('zelidauth')
-
-    // Open a popup window first (to avoid popup blocker)
-    const popup = window.open('about:blank', '_blank', 'width=600,height=700')
-
-    if (!popup) {
-      throw new Error('Please allow popups for this site to complete payment')
+    // Check authentication
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showToast('error', 'Please login to FluxOS to make payments')
+      checkoutLoading.value = false
+      return
     }
 
-    // Get Stripe checkout URL
-    const response = await AppsService.initiateStripePayment(registrationHash.value, zelidauth)
+    // Parse authentication data
+    const authData = qs.parse(zelidauthData)
 
-    if (response.data.status === 'error') {
-      popup.close()
-      throw new Error(response.data.data?.message || 'Failed to create Stripe checkout')
+    // Validate required authentication fields
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+      return
     }
 
-    // Navigate popup to Stripe checkout URL
-    popup.location.href = response.data.data
-    popup.focus()
+    // Create Stripe checkout session
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        name: appName.value.toLowerCase(),
+        description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
+        hash: registrationHash.value,
+        price: parseFloat(calculatedAppPrice.value.usd),
+        productName: appName.value.toLowerCase(),
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
 
-    // Mark fiat payment as initiated to show monitoring spinner
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/checkout/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create Stripe checkout')
+    }
+
+    // Mark fiat payment as initiated and start monitoring first
     fiatPaymentInitiated.value = true
-
-    // Start monitoring
     startPaymentMonitoring()
+
+    // Open Stripe checkout in popup window
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      // Popup blocked - show dialog
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'Stripe'
+    } else {
+      win.focus()
+      showToast('info', 'Stripe checkout opened - please complete payment in the new window', null, 5000)
+    }
   } catch (error) {
     console.error('Stripe payment error:', error)
+    showToast('error', error.message || 'Failed to initiate Stripe payment')
   } finally {
     checkoutLoading.value = false
   }
@@ -5690,34 +5783,70 @@ const initPaypalPay = async () => {
   paymentMethod.value = 'paypal'
 
   try {
-    const zelidauth = localStorage.getItem('zelidauth')
-
-    // Open a popup window first
-    const popup = window.open('about:blank', '_blank', 'width=600,height=700')
-
-    if (!popup) {
-      throw new Error('Please allow popups for this site to complete payment')
+    // Check authentication
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showToast('error', 'Please login to FluxOS to make payments')
+      checkoutLoading.value = false
+      return
     }
 
-    // Get PayPal checkout URL
-    const response = await AppsService.initiatePaypalPayment(registrationHash.value, zelidauth)
+    // Parse authentication data
+    const authData = qs.parse(zelidauthData)
 
-    if (response.data.status === 'error') {
-      popup.close()
-      throw new Error(response.data.data?.message || 'Failed to create PayPal checkout')
+    // Validate required authentication fields
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+      return
     }
 
-    // Navigate popup to PayPal checkout URL
-    popup.location.href = response.data.data
-    popup.focus()
+    // Create PayPal order
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        name: appName.value.toLowerCase(),
+        description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
+        hash: registrationHash.value,
+        price: parseFloat(calculatedAppPrice.value.usd),
+        productName: appName.value.toLowerCase(),
+        return_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
 
-    // Mark fiat payment as initiated to show monitoring spinner
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/paypal/checkout/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create PayPal order')
+    }
+
+    // Mark fiat payment as initiated and start monitoring first
     fiatPaymentInitiated.value = true
-
-    // Start monitoring
     startPaymentMonitoring()
+
+    // Open PayPal checkout in popup window
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      // Popup blocked - show dialog
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'PayPal'
+    } else {
+      win.focus()
+      showToast('info', 'PayPal checkout opened - please complete payment in the new window', null, 5000)
+    }
   } catch (error) {
     console.error('PayPal payment error:', error)
+    showToast('error', error.message || 'Failed to initiate PayPal payment')
   } finally {
     checkoutLoading.value = false
   }
