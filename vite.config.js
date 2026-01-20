@@ -310,6 +310,7 @@ export default defineConfig(({ mode }) => {
             '**/crypto-viem*', // Viem (1MB+)
             '**/syntax-highlight*', // Syntax highlighting (1MB+)
             '**/leaflet-cluster*.css', // Leaflet MarkerCluster CSS - exclude from PWA cache
+            '**/index*.js', // Main entry point - exclude to prevent module init errors
           ],
           // Increase limit to 5MB for remaining large chunks (CSS)
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
