@@ -294,8 +294,9 @@ export default defineConfig(({ mode }) => {
       }),
       // PWA for offline caching and performance (production only)
       !isDev && VitePWA({
-        registerType: 'autoUpdate',
-        injectRegister: 'auto',
+        strategies: 'generateSW',
+        filename: 'sw.js',
+        injectRegister: false, // Manual registration in main.js with auto-reload
         includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
         workbox: {
           clientsClaim: true,
