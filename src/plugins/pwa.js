@@ -17,22 +17,15 @@ export function registerSW() {
           registration.update()
         }, 60 * 60 * 1000)
 
-        // Listen for service worker updates
-        registration.addEventListener('updatefound', () => {
-          const newWorker = registration.installing
-
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'activated' && navigator.serviceWorker.controller) {
-              // New service worker activated, reload the page to avoid init errors
-              console.log('🔄 New version available, reloading...')
-              window.location.reload()
-            }
-          })
-        })
-
         // Handle controller change (when skipWaiting is used)
+        // This ensures we reload IMMEDIATELY when new SW takes control
+        let refreshing = false
         navigator.serviceWorker.addEventListener('controllerchange', () => {
-          console.log('🔄 Service Worker controller changed, reloading...')
+          if (refreshing) return
+          refreshing = true
+          console.log('🔄 Service Worker updated, reloading to prevent version conflicts...')
+
+          // Reload immediately to prevent any lazy-loaded chunks from mixing versions
           window.location.reload()
         })
       }).catch(error => {

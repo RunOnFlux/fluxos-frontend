@@ -301,20 +301,17 @@ export default defineConfig(({ mode }) => {
         workbox: {
           clientsClaim: true,
           skipWaiting: true,
-          // Precache static assets (excluding large files)
+          // Precache ALL static assets (no exclusions to prevent version mixing)
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
-          // Exclude large files and dev tools from precaching
+          // Only exclude large dev tools that aren't needed for app functionality
           globIgnores: [
-            'stats.html', // Bundle analyzer (4MB+)
-            '**/monacoeditorwork/**', // Monaco workers (12MB+)
-            '**/crypto-walletconnect*', // WalletConnect (4MB+)
-            '**/crypto-viem*', // Viem (1MB+)
-            '**/syntax-highlight*', // Syntax highlighting (1MB+)
-            '**/leaflet-cluster*.css', // Leaflet MarkerCluster CSS - exclude from PWA cache
-            '**/index*.js', // Main entry point - exclude to prevent module init errors
+            'stats.html', // Bundle analyzer (4MB+, dev tool only)
+            '**/monacoeditorwork/**', // Monaco workers (12MB+, loaded separately)
+            '**/syntax-highlight*', // Syntax highlighting (1MB+, lazy loaded)
+            '**/leaflet-cluster*.css', // Leaflet MarkerCluster CSS - excluded for PurgeCSS compatibility
           ],
-          // Increase limit to 5MB for remaining large chunks (CSS)
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
+          // Increase limit to 15MB to cache everything including crypto libraries
+          maximumFileSizeToCacheInBytes: 15 * 1024 * 1024,
           // Runtime caching for API requests and images
           runtimeCaching: [
             {
@@ -844,6 +841,10 @@ export default defineConfig(({ mode }) => {
         '@intlify/core-base',
         '@intlify/vue-i18n-bridge',
         '@intlify/unplugin-vue-i18n',
+        '@reown/appkit',
+        '@reown/appkit-adapter-wagmi',
+        'viem',
+        'wagmi',
       ],
       entries: ['./src/**/*.vue'],
       esbuildOptions: {
