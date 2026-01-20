@@ -295,8 +295,11 @@ export default defineConfig(({ mode }) => {
       // PWA for offline caching and performance (production only)
       !isDev && VitePWA({
         registerType: 'autoUpdate',
+        injectRegister: 'auto',
         includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
         workbox: {
+          clientsClaim: true,
+          skipWaiting: true,
           // Precache static assets (excluding large files)
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
           // Exclude large files and dev tools from precaching
@@ -355,19 +358,6 @@ export default defineConfig(({ mode }) => {
               },
             },
             {
-              // Cache API responses with network-first
-              urlPattern: /^https:\/\/api\.runonflux\.io\/.*/i,
-              handler: 'NetworkFirst',
-              options: {
-                cacheName: 'api-cache',
-                expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 60 * 5, // 5 minutes
-                },
-                networkTimeoutSeconds: 10,
-              },
-            },
-            {
               // Cache stats API responses
               urlPattern: /^https:\/\/stats\.runonflux\.io\/.*/i,
               handler: 'NetworkFirst',
@@ -377,7 +367,7 @@ export default defineConfig(({ mode }) => {
                   maxEntries: 50,
                   maxAgeSeconds: 60 * 5, // 5 minutes
                 },
-                networkTimeoutSeconds: 10,
+                networkTimeoutSeconds: 15,
               },
             },
           ],
