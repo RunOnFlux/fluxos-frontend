@@ -2572,7 +2572,13 @@ const repoCheckStatus = ref('idle') // idle, checking, public, private, error
 const repoCheckError = ref('')
 const detectedPort = ref(null)
 const detectedFramework = ref(null)
-const isEnterpriseApp = computed(() => repoCheckStatus.value === 'private' && repoToken.value)
+const isEnterpriseApp = computed(() => {
+  const isPrivateRepo = repoCheckStatus.value === 'private' && repoToken.value
+  const hasWebhookSecret = customEnvVars.value.some(env => env.key === 'WEBHOOK_SECRET' && env.value)
+  const hasApiKey = customEnvVars.value.some(env => env.key === 'API_KEY' && env.value)
+
+  return isPrivateRepo || hasWebhookSecret || hasApiKey
+})
 
 // Auth test state
 const authTestStatus = ref('idle') // idle, testing, success, error
@@ -4869,7 +4875,7 @@ const availableOrbitEnvVars = [
   },
   {
     key: 'WEBHOOK_SECRET',
-    description: 'Secret for GitHub webhook deployments (for instant deploys on push)',
+    description: 'Secret for GitHub webhook deployments (enables Enterprise features)',
     example: 'your-webhook-secret',
     placeholder: 'your-secret-here',
     autoValue: 'Disabled. Set to enable webhook-triggered deployments',
@@ -4908,6 +4914,20 @@ const availableOrbitEnvVars = [
     example: '21',
     placeholder: '21',
     autoValue: 'Auto-detected from pom.xml or build.gradle. Falls back to latest LTS (21)',
+  },
+  {
+    key: 'API_KEY',
+    description: 'API key to protect status, logs, and preview endpoints (enables Enterprise features)',
+    example: 'your-api-key-here',
+    placeholder: 'your-api-key',
+    autoValue: 'Disabled. Set to enable API authentication for protected endpoints',
+  },
+  {
+    key: 'PR_PREVIEW_ENABLED',
+    description: 'Enable preview deployments for pull requests on static sites',
+    example: 'true',
+    placeholder: 'true',
+    autoValue: 'Disabled. Set to "true" to enable PR preview deployments',
   },
 ]
 
