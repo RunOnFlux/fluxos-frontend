@@ -148,12 +148,24 @@ const minPrice = computed(() => {
   return getMinimumPrice(game.value)
 })
 
-// Reorder panels: Header > Groups > Description > Features > ServerLocations > Screenshots > FAQ > RelatedGames
+// Reorder panels: Header > Groups > Videos > Description > Features > ServerLocations > Screenshots > FAQ > RelatedGames
 const orderedPanels = computed(() => {
   if (!game.value?.panels) return []
 
-  const panels = [...game.value.panels]
-  const panelOrder = ['Header', 'Groups', 'Description', 'Features', 'ServerLocations', 'Screenshots', 'FAQ', 'RelatedGames', 'NodeMap', 'Subscription']
+  let panels = [...game.value.panels]
+
+  // Add Videos panel if the game has videos
+  if (game.value.videos && game.value.videos.length > 0) {
+    const hasVideosPanel = panels.some(p => p.type === 'Videos')
+    if (!hasVideosPanel) {
+      panels.push({
+        type: 'Videos',
+        enabled: true,
+      })
+    }
+  }
+
+  const panelOrder = ['Header', 'Groups', 'Videos', 'Description', 'Features', 'ServerLocations', 'Screenshots', 'FAQ', 'RelatedGames', 'NodeMap', 'Subscription']
 
   return panels.sort((a, b) => {
     const aIndex = panelOrder.indexOf(a.type)

@@ -94,6 +94,13 @@
         </div>
       </div>
 
+      <!-- Videos Section -->
+      <VideosPanel
+        v-if="videos.length > 0"
+        :videos="videos"
+        :title="t('components.marketplace.panels.videosPanel.title')"
+      />
+
       <!-- Description Section -->
       <VCard class="section-card description-section">
         <VCardText>
@@ -148,8 +155,10 @@ import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema } from '@/composables/useSEO'
 import { useWordPress } from '@/composables/useWordPress'
+import { useMarketplace } from '@/composables/useMarketplace'
 import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
+import VideosPanel from '@/components/Marketplace/Panels/VideosPanel.vue'
 import MaintenanceCard from '@/components/Marketplace/MaintenanceCard.vue'
 import ServerLocationsPanel from '@/components/Marketplace/Panels/ServerLocationsPanel.vue'
 import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
@@ -164,10 +173,25 @@ const { t, tm, locale, te } = useI18n()
 const analytics = useAnalytics()
 const router = useRouter()
 const { fetchPlans } = useWordPress()
+const { fetchAppDetails } = useMarketplace()
 
 const plans = ref([])
 const loadingPlans = ref(false)
 const apiError = ref(false)
+const videos = ref([])
+
+// Fetch WordPress app videos from marketplace
+const fetchWordPressVideos = async () => {
+  try {
+    const app = await fetchAppDetails('wordpress')
+    if (app?.videos && app.videos.length > 0) {
+      videos.value = app.videos
+    }
+  } catch (error) {
+    // WordPress app may not exist in marketplace, ignore error
+    console.log('WordPress app not found in marketplace or has no videos')
+  }
+}
 
 // Server Locations Panel Configuration
 const serverLocationsPanel = {
@@ -498,6 +522,7 @@ onMounted(() => {
   })
 
   loadPlans()
+  fetchWordPressVideos()
 })
 </script>
 
