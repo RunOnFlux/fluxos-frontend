@@ -1,0 +1,16 @@
+name: Deploy to FluxOrbit
+
+on:
+  push:
+    branches: [development]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Deployment
+        run: |
+          curl -X POST "${{ secrets.FLUX_WEBHOOK_URL }}/webhook" \
+            -H "Content-Type: application/json" \
+            -H "X-API-Key: ${{ secrets.FLUX_API_KEY }}" \
+            -d '{"ref": "refs/heads/${{ github.ref_name }}", "after": "${{ github.sha }}"}'
