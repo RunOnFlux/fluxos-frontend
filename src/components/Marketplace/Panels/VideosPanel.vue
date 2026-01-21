@@ -30,8 +30,11 @@
             </template>
           </VImg>
           <div class="video-overlay">
-            <VIcon icon="mdi-play-circle" size="48" color="white" class="play-icon" />
+            <VIcon icon="mdi-play-circle" size="56" color="white" class="play-icon" />
           </div>
+        </div>
+        <div class="video-title">
+          <span class="video-title-text">{{ getVideoTitle(video, index) }}</span>
         </div>
         <VBtn
           icon
@@ -92,7 +95,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 const props = defineProps({
@@ -118,6 +121,7 @@ const { t, te } = useI18n()
 
 const showVideoDialog = ref(false)
 const selectedVideo = ref(null)
+const videoTitles = ref({})
 
 // Resolve title from props or i18n
 const title = computed(() => {
@@ -208,6 +212,43 @@ const openOnYouTube = url => {
     window.open(`https://www.youtube.com/watch?v=${videoId}`, '_blank', 'noopener,noreferrer')
   }
 }
+
+// Get video title (from cache or fallback)
+const getVideoTitle = (url, index) => {
+  const videoId = getYouTubeVideoId(url)
+  if (videoId && videoTitles.value[videoId]) {
+    return videoTitles.value[videoId]
+  }
+
+  return t('components.marketplace.panels.videosPanel.videoLabel', { number: index + 1 })
+}
+
+// Fetch video title from YouTube oEmbed API
+const fetchVideoTitle = async url => {
+  const videoId = getYouTubeVideoId(url)
+  if (!videoId || videoTitles.value[videoId]) return
+
+  try {
+    const response = await fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
+    )
+    if (response.ok) {
+      const data = await response.json()
+      videoTitles.value[videoId] = data.title
+    }
+  } catch {
+    // Silently fail - will use fallback title
+  }
+}
+
+// Fetch all video titles
+const fetchAllVideoTitles = () => {
+  validVideos.value.forEach(url => fetchVideoTitle(url))
+}
+
+// Fetch titles on mount and when videos change
+onMounted(fetchAllVideoTitles)
+watch(validVideos, fetchAllVideoTitles, { deep: true })
 </script>
 
 <style scoped>
@@ -269,11 +310,12 @@ const openOnYouTube = url => {
 .video-item {
   position: relative;
   flex-shrink: 0;
-  width: 200px;
+  width: 320px;
   cursor: pointer;
   border-radius: 12px;
   overflow: hidden;
   transition: all 0.3s ease;
+  background: rgba(var(--v-theme-on-surface), 0.04);
 }
 
 .video-item:hover {
@@ -285,7 +327,25 @@ const openOnYouTube = url => {
   position: relative;
   aspect-ratio: 16 / 9;
   overflow: hidden;
-  border-radius: 12px;
+  border-radius: 12px 12px 0 0;
+}
+
+.video-title {
+  padding: 10px 12px;
+  background: rgba(var(--v-theme-on-surface), 0.06);
+  border-radius: 0 0 12px 12px;
+}
+
+.video-title-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgba(var(--v-theme-on-surface), 0.9);
 }
 
 .video-thumbnail {
@@ -382,11 +442,19 @@ const openOnYouTube = url => {
 /* Responsive */
 @media (max-width: 600px) {
   .video-item {
-    width: 160px;
+    width: 260px;
   }
 
   .play-icon {
-    font-size: 36px !important;
+    font-size: 40px !important;
+  }
+
+  .video-title {
+    padding: 8px 10px;
+  }
+
+  .video-title-text {
+    font-size: 0.75rem;
   }
 }
 </style>

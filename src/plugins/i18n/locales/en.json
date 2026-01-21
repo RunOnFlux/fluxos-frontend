@@ -1444,7 +1444,8 @@
         "videosPanel": {
           "title": "Videos",
           "watchOnYouTube": "Watch on YouTube",
-          "openOnYouTube": "Open on YouTube"
+          "openOnYouTube": "Open on YouTube",
+          "videoLabel": "Video {number}"
         }
       },
       "installDialog": {
