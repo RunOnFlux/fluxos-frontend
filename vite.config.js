@@ -297,6 +297,8 @@ export default defineConfig(({ mode }) => {
         registerType: 'autoUpdate',
         includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
         workbox: {
+          clientsClaim: true,  // Take control of all clients immediately
+          skipWaiting: true,   // Activate new service worker immediately
           // Precache static assets (excluding large files)
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
           // Exclude large files and dev tools from precaching
