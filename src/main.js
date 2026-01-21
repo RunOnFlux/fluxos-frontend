@@ -231,10 +231,3 @@ app.directive('sanitize-html', sanitizeHtml)
 
 // Mount vue app
 app.mount('#app')
-
-// Register PWA service worker with auto-reload on update
-if (import.meta.env.PROD) {
-  import('./plugins/pwa').then(({ registerSW }) => {
-    registerSW()
-  })
-}
