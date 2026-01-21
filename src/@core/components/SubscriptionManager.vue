@@ -3866,6 +3866,7 @@ const isExpiryValid = ref(false)
 const appSpecFormated = ref(null)
 const blocksToExpire = ref(null)
 const registrationHash = ref(null)
+const signedSpecSnapshot = ref(null) // Snapshot of spec when signed, used to detect changes
 const isPropagating = ref(false)
 const testError = ref(false)
 const testFinished = ref(false)
@@ -4561,6 +4562,7 @@ watch(() => props.appSpec, newSpec => {
       registrationHash.value = null
       signature.value = null
       signedSpecState.value = null
+      signedSpecSnapshot.value = null
 
       // Only clear test results if testable fields changed (not just instances)
       if (testableFieldsChanged) {
@@ -6034,6 +6036,7 @@ watch(tab, (newTab, oldTab) => {
     // This allows user to register again if they change specs later
     if (wasSuccessful) {
       registrationHash.value = null
+      signedSpecSnapshot.value = null
       signature.value = null
       deploymentAddress.value = null
       console.log('🧹 Cleared registration states after leaving successful deployment screen')
@@ -6603,9 +6606,19 @@ watch(tab, async newVal => {
       isNewApp: props.newApp,
     })
 
-    // If already registered, don't reset states - just show what we have
+    // If already registered, check if specs changed since signing
+    // If specs changed, we need to recalculate price and re-sign
+    const specsChangedSinceSignature = signedSpecSnapshot.value &&
+      JSON.stringify(props.appSpec) !== signedSpecSnapshot.value
+
+    if (specsChangedSinceSignature) {
+      console.log('⚠️ Specs changed since signing - clearing registration hash for recalculation')
+      registrationHash.value = null
+      signedSpecSnapshot.value = null
+    }
+
+    // If already registered and specs haven't changed, don't reset states - just show what we have
     // Once you have a registrationHash, it means you signed the current spec state
-    // We preserve it regardless of whether specs changed from the snapshot
     if (registrationHash.value) {
       console.log('✅ Already registered - keeping existing states', {
         hasHash: !!registrationHash.value,
@@ -6670,6 +6683,7 @@ watch(tab, async newVal => {
     appSpecFormated.value = null
     signature.value = null
     registrationHash.value = null
+    signedSpecSnapshot.value = null
     verifyAppSpecResponse.value = null
     verifyAppSpecError.value = null
     appSpecPrice.value = null
@@ -7679,6 +7693,9 @@ async function propagateSignedMessage() {
 
     if (response.data?.status === 'success') {
       registrationHash.value = response.data.data
+
+      // Save snapshot of spec at signing time to detect changes if user goes back
+      signedSpecSnapshot.value = JSON.stringify(props.appSpec)
       showToast('success', 'Application registered successfully! Redirecting to Test & Pay...')
 
       // Fetch deployment information

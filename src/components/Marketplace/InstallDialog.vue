@@ -1683,12 +1683,13 @@ const isOpen = computed({
 const isLoggedIn = computed(() => privilege.value !== 'none')
 
 // Compute the full deployed app name with timestamp
+// IMPORTANT: Use lowercase to match the actual deployed app name format (see signMessage function)
 const deployedAppName = computed(() => {
   if (deploymentTimestamp.value) {
-    return `${props.app.name}${deploymentTimestamp.value}`
+    return `${props.app.name.toLowerCase()}${deploymentTimestamp.value}`
   }
-  
-  return props.app.name
+
+  return props.app.name.toLowerCase()
 })
 
 // Wizard state
@@ -4305,10 +4306,7 @@ const startPaymentMonitoring = async () => {
   // Poll for payment status every 30 seconds
   paymentMonitoringInterval.value = setInterval(async () => {
     try {
-      // The app name includes the timestamp from deployment
-      const deployedAppName = deploymentTimestamp.value ?
-        `${props.app.name}${deploymentTimestamp.value}` :
-        props.app.name
+      // Use the computed deployedAppName which already handles lowercase + timestamp correctly
 
       if (paymentMonitoringPhase.value === 'blockchain') {
         // Phase 1: Check if app spec exists on blockchain (payment confirmed)

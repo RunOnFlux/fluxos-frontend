@@ -295,11 +295,10 @@ export default defineConfig(({ mode }) => {
       // PWA for offline caching and performance (production only)
       !isDev && VitePWA({
         registerType: 'autoUpdate',
-        injectRegister: 'auto',
         includeAssets: ['images/logo.png', 'images/logo.svg', 'favicon.ico'],
         workbox: {
-          clientsClaim: true,
-          skipWaiting: true,
+          clientsClaim: true,  // Take control of all clients immediately
+          skipWaiting: true,   // Activate new service worker immediately
           // Precache static assets (excluding large files)
           globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
           // Exclude large files and dev tools from precaching
@@ -511,20 +510,21 @@ export default defineConfig(({ mode }) => {
               return 'crypto-metamask'
             }
 
-            // Crypto - WalletConnect/Reown + wallet dependencies + shared crypto primitives
-            // Bundle @noble/@scure WITH walletconnect to avoid circular deps
-            // WalletConnect is the primary user of these crypto primitives
+            // Crypto - WalletConnect/Reown + wallet dependencies + shared crypto primitives + viem
+            // Bundle @noble/@scure AND viem WITH walletconnect to avoid circular deps
+            // viem and WalletConnect have circular imports, must be in same chunk
             if (id.includes('@reown') || id.includes('@walletconnect') ||
                 id.includes('@solana') || id.includes('porto') || id.includes('@coinbase') ||
                 id.includes('@base-org') || id.includes('coinbase') ||
                 id.includes('@gemini-wallet') || id.includes('@safe-global') || id.includes('@msgpack') ||
-                id.includes('@noble') || id.includes('@scure')) {
+                id.includes('@noble') || id.includes('@scure') ||
+                id.includes('viem')) {
               return 'crypto-walletconnect'
             }
 
-            // Crypto - Wagmi/Viem (including @wagmi scoped packages)
-            if (id.includes('wagmi') || id.includes('viem') || id.includes('@wagmi')) {
-              return 'crypto-viem'
+            // Crypto - Wagmi only (viem moved to crypto-walletconnect to fix circular dependency)
+            if (id.includes('wagmi') || id.includes('@wagmi')) {
+              return 'crypto-wagmi'
             }
 
             // Crypto - React Query (wagmi dependency) - separate from crypto
