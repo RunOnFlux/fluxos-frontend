@@ -4851,85 +4851,85 @@ const customPlanMonthlyPrice = computed(() => {
 })
 
 // Available Orbit environment variables
-const availableOrbitEnvVars = [
+const availableOrbitEnvVars = computed(() => [
   {
     key: 'BUILD_COMMAND',
-    description: 'Custom build command if auto-detection fails or you need a specific build script',
+    description: t('pages.apps.register.orbit.config.envVars.buildCommand.description'),
     example: 'npm run build:production',
     placeholder: 'npm run build',
-    autoValue: 'Auto-detected from package.json scripts (build, build:prod) or framework conventions',
+    autoValue: t('pages.apps.register.orbit.config.envVars.buildCommand.autoValue'),
   },
   {
     key: 'RUN_COMMAND',
-    description: 'Custom startup command to run your application',
+    description: t('pages.apps.register.orbit.config.envVars.runCommand.description'),
     example: 'npm run start:prod',
     placeholder: 'npm start',
-    autoValue: 'Auto-detected from package.json scripts (start, serve) or framework conventions',
+    autoValue: t('pages.apps.register.orbit.config.envVars.runCommand.autoValue'),
   },
   {
     key: 'INSTALL_COMMAND',
-    description: 'Custom dependency installation command',
+    description: t('pages.apps.register.orbit.config.envVars.installCommand.description'),
     example: 'pnpm install --frozen-lockfile',
     placeholder: 'npm install',
-    autoValue: 'Auto-detected: npm install, yarn install, or pnpm install based on lockfile',
+    autoValue: t('pages.apps.register.orbit.config.envVars.installCommand.autoValue'),
   },
   {
     key: 'WEBHOOK_SECRET',
-    description: 'Secret for GitHub webhook deployments (enables Enterprise features)',
+    description: t('pages.apps.register.orbit.config.envVars.webhookSecret.description'),
     example: 'your-webhook-secret',
     placeholder: 'your-secret-here',
-    autoValue: 'Disabled. Set to enable webhook-triggered deployments',
+    autoValue: t('pages.apps.register.orbit.config.envVars.webhookSecret.autoValue'),
   },
   {
     key: 'NODE_VERSION',
-    description: 'Specify Node.js runtime version (overrides auto-detection)',
+    description: t('pages.apps.register.orbit.config.envVars.nodeVersion.description'),
     example: '20',
     placeholder: '20',
-    autoValue: 'Auto-detected from .nvmrc, .node-version, or package.json engines field. Falls back to latest LTS',
+    autoValue: t('pages.apps.register.orbit.config.envVars.nodeVersion.autoValue'),
   },
   {
     key: 'PYTHON_VERSION',
-    description: 'Specify Python runtime version',
+    description: t('pages.apps.register.orbit.config.envVars.pythonVersion.description'),
     example: '3.12',
     placeholder: '3.12',
-    autoValue: 'Auto-detected from runtime.txt, .python-version, or Pipfile. Falls back to latest stable',
+    autoValue: t('pages.apps.register.orbit.config.envVars.pythonVersion.autoValue'),
   },
   {
     key: 'RUBY_VERSION',
-    description: 'Specify Ruby runtime version',
+    description: t('pages.apps.register.orbit.config.envVars.rubyVersion.description'),
     example: '3.3',
     placeholder: '3.3',
-    autoValue: 'Auto-detected from .ruby-version or Gemfile. Falls back to latest stable',
+    autoValue: t('pages.apps.register.orbit.config.envVars.rubyVersion.autoValue'),
   },
   {
     key: 'GO_VERSION',
-    description: 'Specify Go runtime version',
+    description: t('pages.apps.register.orbit.config.envVars.goVersion.description'),
     example: '1.22',
     placeholder: '1.22',
-    autoValue: 'Auto-detected from go.mod. Falls back to latest stable',
+    autoValue: t('pages.apps.register.orbit.config.envVars.goVersion.autoValue'),
   },
   {
     key: 'JAVA_VERSION',
-    description: 'Specify Java runtime version',
+    description: t('pages.apps.register.orbit.config.envVars.javaVersion.description'),
     example: '21',
     placeholder: '21',
-    autoValue: 'Auto-detected from pom.xml or build.gradle. Falls back to latest LTS (21)',
+    autoValue: t('pages.apps.register.orbit.config.envVars.javaVersion.autoValue'),
   },
   {
     key: 'API_KEY',
-    description: 'API key to protect status, logs, and preview endpoints (enables Enterprise features)',
+    description: t('pages.apps.register.orbit.config.envVars.apiKey.description'),
     example: 'your-api-key-here',
     placeholder: 'your-api-key',
-    autoValue: 'Disabled. Set to enable API authentication for protected endpoints',
+    autoValue: t('pages.apps.register.orbit.config.envVars.apiKey.autoValue'),
   },
   {
     key: 'PR_PREVIEW_ENABLED',
-    description: 'Enable preview deployments for pull requests on static sites',
+    description: t('pages.apps.register.orbit.config.envVars.prPreviewEnabled.description'),
     example: 'true',
     placeholder: 'true',
-    autoValue: 'Disabled. Set to "true" to enable PR preview deployments',
+    autoValue: t('pages.apps.register.orbit.config.envVars.prPreviewEnabled.autoValue'),
   },
-]
+])
 
 // Environment variable management
 const addEnvVar = () => {

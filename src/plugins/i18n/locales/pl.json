@@ -3353,7 +3353,53 @@
             "instancesLabel": "Instancje",
             "selected": "Wybrano",
             "selectPlan": "Wybierz plan",
-            "registerApplication": "Zarejestruj aplikację"
+            "registerApplication": "Zarejestruj aplikację",
+            "envVars": {
+              "buildCommand": {
+                "description": "Niestandardowe polecenie budowania, jeśli automatyczne wykrywanie zawiedzie lub potrzebujesz określonego skryptu",
+                "autoValue": "Automatycznie wykrywane ze skryptów package.json (build, build:prod) lub konwencji frameworka"
+              },
+              "runCommand": {
+                "description": "Niestandardowe polecenie uruchamiania aplikacji",
+                "autoValue": "Automatycznie wykrywane ze skryptów package.json (start, serve) lub konwencji frameworka"
+              },
+              "installCommand": {
+                "description": "Niestandardowe polecenie instalacji zależności",
+                "autoValue": "Automatycznie wykrywane: npm install, yarn install lub pnpm install na podstawie pliku lockfile"
+              },
+              "webhookSecret": {
+                "description": "Sekret dla webhooków GitHub (włącza funkcje Enterprise)",
+                "autoValue": "Wyłączone. Ustaw, aby włączyć wdrożenia wyzwalane przez webhook"
+              },
+              "nodeVersion": {
+                "description": "Określ wersję środowiska Node.js (nadpisuje automatyczne wykrywanie)",
+                "autoValue": "Automatycznie wykrywane z .nvmrc, .node-version lub pola engines w package.json. Domyślnie najnowsza wersja LTS"
+              },
+              "pythonVersion": {
+                "description": "Określ wersję środowiska Python",
+                "autoValue": "Automatycznie wykrywane z runtime.txt, .python-version lub Pipfile. Domyślnie najnowsza stabilna wersja"
+              },
+              "rubyVersion": {
+                "description": "Określ wersję środowiska Ruby",
+                "autoValue": "Automatycznie wykrywane z .ruby-version lub Gemfile. Domyślnie najnowsza stabilna wersja"
+              },
+              "goVersion": {
+                "description": "Określ wersję środowiska Go",
+                "autoValue": "Automatycznie wykrywane z go.mod. Domyślnie najnowsza stabilna wersja"
+              },
+              "javaVersion": {
+                "description": "Określ wersję środowiska Java",
+                "autoValue": "Automatycznie wykrywane z pom.xml lub build.gradle. Domyślnie najnowsza wersja LTS (21)"
+              },
+              "apiKey": {
+                "description": "Klucz API do ochrony punktów końcowych status, logs i preview (włącza funkcje Enterprise)",
+                "autoValue": "Wyłączone. Ustaw, aby włączyć uwierzytelnianie API dla chronionych punktów końcowych"
+              },
+              "prPreviewEnabled": {
+                "description": "Włącz podgląd wdrożeń dla pull requestów na stronach statycznych",
+                "autoValue": "Wyłączone. Ustaw na \"true\", aby włączyć podgląd wdrożeń PR"
+              }
+            }
           },
           "register": {
             "registrationComplete": "Rejestracja zakończona",

@@ -3344,7 +3344,53 @@
             "instancesLabel": "Instances",
             "selected": "Selected",
             "selectPlan": "Select Plan",
-            "registerApplication": "Register Application"
+            "registerApplication": "Register Application",
+            "envVars": {
+              "buildCommand": {
+                "description": "Custom build command if auto-detection fails or you need a specific build script",
+                "autoValue": "Auto-detected from package.json scripts (build, build:prod) or framework conventions"
+              },
+              "runCommand": {
+                "description": "Custom startup command to run your application",
+                "autoValue": "Auto-detected from package.json scripts (start, serve) or framework conventions"
+              },
+              "installCommand": {
+                "description": "Custom dependency installation command",
+                "autoValue": "Auto-detected: npm install, yarn install, or pnpm install based on lockfile"
+              },
+              "webhookSecret": {
+                "description": "Secret for GitHub webhook deployments (enables Enterprise features)",
+                "autoValue": "Disabled. Set to enable webhook-triggered deployments"
+              },
+              "nodeVersion": {
+                "description": "Specify Node.js runtime version (overrides auto-detection)",
+                "autoValue": "Auto-detected from .nvmrc, .node-version, or package.json engines field. Falls back to latest LTS"
+              },
+              "pythonVersion": {
+                "description": "Specify Python runtime version",
+                "autoValue": "Auto-detected from runtime.txt, .python-version, or Pipfile. Falls back to latest stable"
+              },
+              "rubyVersion": {
+                "description": "Specify Ruby runtime version",
+                "autoValue": "Auto-detected from .ruby-version or Gemfile. Falls back to latest stable"
+              },
+              "goVersion": {
+                "description": "Specify Go runtime version",
+                "autoValue": "Auto-detected from go.mod. Falls back to latest stable"
+              },
+              "javaVersion": {
+                "description": "Specify Java runtime version",
+                "autoValue": "Auto-detected from pom.xml or build.gradle. Falls back to latest LTS (21)"
+              },
+              "apiKey": {
+                "description": "API key to protect status, logs, and preview endpoints (enables Enterprise features)",
+                "autoValue": "Disabled. Set to enable API authentication for protected endpoints"
+              },
+              "prPreviewEnabled": {
+                "description": "Enable preview deployments for pull requests on static sites",
+                "autoValue": "Disabled. Set to \"true\" to enable PR preview deployments"
+              }
+            }
           },
           "register": {
             "registrationComplete": "Registration Complete",
