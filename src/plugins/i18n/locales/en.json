@@ -1440,6 +1440,11 @@
         "genericFAQPanel": {
           "title": "Frequently Asked Questions",
           "subtitle": "Common questions about hosting on FluxCloud"
+        },
+        "videosPanel": {
+          "title": "Videos",
+          "watchOnYouTube": "Watch on YouTube",
+          "openOnYouTube": "Open on YouTube"
         }
       },
       "installDialog": {

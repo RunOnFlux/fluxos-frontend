@@ -55,3 +55,4 @@ CLAUDE.md
 docs/claude-notes/
 .claude/
 
+src/plugins/vuetify/icons-optimized.js

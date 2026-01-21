@@ -120,6 +120,7 @@ declare module 'vue' {
     UpgradeSpecDialog: typeof import('./components/dialogs/UpgradeSpecDialog.vue')['default']
     UsageChips: typeof import('./@core/components/UsageChips.vue')['default']
     VersionsDialog: typeof import('./components/FluxDrive/VersionsDialog.vue')['default']
+    VideosPanel: typeof import('./components/Marketplace/Panels/VideosPanel.vue')['default']
     VolumeBrowser: typeof import('./@core/components/VolumeBrowser.vue')['default']
     VolumePathBuilder: typeof import('./@core/components/VolumePathBuilder.vue')['default']
     VueApexCharts: typeof import('vue3-apexcharts')['default']
