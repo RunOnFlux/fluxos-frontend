@@ -1427,6 +1427,12 @@
         "whyFluxPanel": {
           "subtitle": "Odkryj zalety zdecentralizowanej infrastruktury chmurowej opartej na technologii Web3",
           "title": "Dlaczego Hostować w FluxCloud"
+        },
+        "videosPanel": {
+          "title": "Filmy",
+          "watchOnYouTube": "Oglądaj na YouTube",
+          "openOnYouTube": "Otwórz na YouTube",
+          "videoLabel": "Film {number}"
         }
       },
       "installDialog": {
@@ -3987,6 +3993,7 @@
           "subscriptionPeriod": "Okres subskrypcji",
           "month": "miesiąc",
           "months": "miesięcy",
+          "subscription": "subskrypcja",
           "pricing": "Ceny",
           "subtotal": "Suma częściowa",
           "discount": "Rabat",

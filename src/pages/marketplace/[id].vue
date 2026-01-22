@@ -294,6 +294,13 @@
         </div>
       </div>
 
+      <!-- Videos Section -->
+      <VideosPanel
+        v-if="app.videos && app.videos.length > 0"
+        :videos="app.videos"
+        :title="t('components.marketplace.panels.videosPanel.title')"
+      />
+
       <!-- Why Host on FluxCloud Section -->
       <FeatureShowcase
         :title="t('pages.apps.register.landing.benefits.title')"
@@ -399,6 +406,7 @@ import InstallDialog from '@/components/Marketplace/InstallDialog.vue'
 import FeatureShowcase from '@/components/FeatureShowcase.vue'
 import ServerLocationsPanel from '@/components/Marketplace/Panels/ServerLocationsPanel.vue'
 import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
+import VideosPanel from '@/components/Marketplace/Panels/VideosPanel.vue'
 
 const analytics = useAnalytics()
 

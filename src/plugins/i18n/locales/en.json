@@ -1440,6 +1440,12 @@
         "genericFAQPanel": {
           "title": "Frequently Asked Questions",
           "subtitle": "Common questions about hosting on FluxCloud"
+        },
+        "videosPanel": {
+          "title": "Videos",
+          "watchOnYouTube": "Watch on YouTube",
+          "openOnYouTube": "Open on YouTube",
+          "videoLabel": "Video {number}"
         }
       },
       "installDialog": {
@@ -4096,6 +4102,7 @@
           "subscriptionPeriod": "Subscription Period",
           "month": "month",
           "months": "months",
+          "subscription": "subscription",
           "pricing": "Pricing",
           "subtotal": "Subtotal",
           "discount": "Discount",

@@ -2432,7 +2432,7 @@ const fetchPricingFromAPI = async () => {
         name: 'wordpress',
         description: 'WordPress on Flux',
         repotag: 'runonflux/wp-nginx:latest',
-        ports: [80],
+        ports: [3000], // Use non-enterprise port for pricing (avoids $2 enterprise port fee)
         containerPorts: [80],
         domains: [''],
         environmentParameters: [''],
@@ -2494,12 +2494,22 @@ const fetchPricingFromAPI = async () => {
       const apiCalculatedUsd = response.data.data.usd || 0
       const apiFlux = response.data.data.flux || 0
 
+      // For WordPress, use the higher of locally calculated USD or API-returned USD
+      let finalUsd = apiCalculatedUsd
+      if (isWordPress.value) {
+        // Calculate local discounted USD for WordPress
+        const months = config.value.subscriptionMonths || 1
+        const discount = currentDiscount.value || 0
+        const localDiscountedUsd = monthlyPrice * months * (1 - discount / 100)
+        finalUsd = Math.max(localDiscountedUsd, apiCalculatedUsd)
+      }
+
       // Calculate the ratio/multiplier from API (how much FLUX per 1 USD)
-      const fluxPerUsd = apiCalculatedUsd > 0 ? (apiFlux / apiCalculatedUsd) : 0
+      const fluxPerUsd = finalUsd > 0 ? (apiFlux / apiCalculatedUsd) : 0
 
       // Store the FLUX ratio for later use
       apiPricing.value = {
-        usd: apiCalculatedUsd, // Store backend calculated price for reference
+        usd: finalUsd, // Use higher of local or API price
         flux: apiFlux, // Store backend calculated flux
         fluxDiscount: response.data.data.fluxDiscount || 0,
         fluxPerUsd: fluxPerUsd, // Store the ratio for calculating FLUX from USD

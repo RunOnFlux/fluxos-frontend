@@ -100,7 +100,7 @@ export function useMarketplace() {
       
       return response.data
     } catch (err) {
-      if (err.response?.status !== 404) { console.error('Failed to fetch app details:', err) }
+      if (err.response?.status !== 404 && err.message !== 'App not found') { console.error('Failed to fetch app details:', err) }
       error.value = err.message
       throw err
     } finally {
