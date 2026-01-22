@@ -308,24 +308,58 @@
           <VDivider />
 
           <VCardText class="pa-6">
-            <!-- App Price -->
-            <div class="text-center mb-6">
-              <div class="text-h4 font-weight-bold mb-2">
-                {{ formattedPrice }}
+            <!-- Monthly Price -->
+            <div class="text-center mb-4">
+              <div v-if="!formData.selectedPlan" class="text-h5 text-medium-emphasis">
+                {{ t('pages.marketplace.wordpress.summary.selectPlan') }}
               </div>
-              <div v-if="pricing.flux && !loadingPricing" class="d-flex align-center justify-center gap-2">
-                <VChip color="primary" variant="flat" size="small">
-                  <VIcon start icon="mdi-lightning-bolt" size="16" />
-                  {{ pricing.flux.toFixed(2) }} FLUX
-                </VChip>
-                <VChip v-if="pricing.fluxDiscount > 0" color="success" variant="tonal" size="small">
-                  <VIcon start icon="mdi-tag" size="14" />
-                  -{{ pricing.fluxDiscount }}%
-                </VChip>
-              </div>
-              <div v-if="loadingPricing" class="text-body-2 text-medium-emphasis">
-                {{ t('pages.marketplace.wordpress.actions.calculatingPricing') }}
-              </div>
+              <template v-else>
+                <!-- Monthly Price Display -->
+                <div class="d-flex align-center justify-center gap-2 mb-1">
+                  <span v-if="subscriptionDiscount > 0" class="text-h6 text-decoration-line-through text-medium-emphasis">
+                    ${{ baseMonthlyPrice.toFixed(2) }}
+                  </span>
+                  <span class="text-h4 font-weight-bold text-primary">
+                    ${{ effectiveMonthlyPrice.toFixed(2) }}
+                  </span>
+                  <span class="text-body-1 text-medium-emphasis">/{{ t('pages.marketplace.wordpress.summary.month') }}</span>
+                </div>
+
+                <!-- Discount Badge -->
+                <div v-if="subscriptionDiscount > 0" class="mb-3">
+                  <VChip color="success" variant="tonal" size="small">
+                    <VIcon start icon="mdi-tag" size="14" />
+                    {{ subscriptionDiscount }}% {{ t('common.off') }}
+                  </VChip>
+                </div>
+
+                <VDivider class="my-3" />
+
+                <!-- Subscription Summary -->
+                <div class="text-body-2 text-medium-emphasis mb-2">
+                  {{ formData.paymentDuration }} {{ formData.paymentDuration === 1 ? t('pages.marketplace.wordpress.summary.month') : t('pages.marketplace.wordpress.summary.months') }} {{ t('pages.marketplace.wordpress.summary.subscription') }}
+                </div>
+
+                <!-- Total Price -->
+                <div class="text-h5 font-weight-medium mb-2">
+                  {{ t('pages.marketplace.wordpress.summary.total') }}: ${{ totalPrice.toFixed(2) }} USD
+                </div>
+
+                <!-- Flux Price -->
+                <div v-if="pricing.flux && !loadingPricing" class="d-flex align-center justify-center gap-2">
+                  <VChip color="primary" variant="flat" size="small">
+                    <VIcon start icon="mdi-lightning-bolt" size="16" />
+                    {{ pricing.flux.toFixed(2) }} FLUX
+                  </VChip>
+                  <VChip v-if="pricing.fluxDiscount > 0" color="success" variant="tonal" size="small">
+                    <VIcon start icon="mdi-percent" size="14" />
+                    -{{ pricing.fluxDiscount }}% FLUX
+                  </VChip>
+                </div>
+                <div v-if="loadingPricing" class="text-body-2 text-medium-emphasis">
+                  {{ t('pages.marketplace.wordpress.actions.calculatingPricing') }}
+                </div>
+              </template>
             </div>
 
             <VDivider class="my-4" />
@@ -697,6 +731,45 @@ const pricing = computed(() => {
     flux: apiPricing.value.flux || 0,
     fluxDiscount: apiPricing.value.fluxDiscount || 0,
   }
+})
+
+// Subscription discount map based on duration
+const subscriptionDiscountMap = {
+  1: 0,
+  2: 0,
+  3: 3,
+  6: 6,
+  12: 12,
+}
+
+// Get the current subscription discount percentage
+const subscriptionDiscount = computed(() => {
+  return subscriptionDiscountMap[formData.value.paymentDuration] || 0
+})
+
+// Base monthly price from the selected plan (without any discount)
+const baseMonthlyPrice = computed(() => {
+  if (!formData.value.selectedPlan) return 0
+
+  return formData.value.selectedPlan.usd
+})
+
+// Effective monthly price (with subscription discount applied)
+const effectiveMonthlyPrice = computed(() => {
+  if (!baseMonthlyPrice.value) return 0
+  const discount = subscriptionDiscount.value / 100
+
+  return baseMonthlyPrice.value * (1 - discount)
+})
+
+// Monthly savings compared to base price
+const monthlySavings = computed(() => {
+  return baseMonthlyPrice.value - effectiveMonthlyPrice.value
+})
+
+// Total price for the subscription period
+const totalPrice = computed(() => {
+  return effectiveMonthlyPrice.value * formData.value.paymentDuration
 })
 
 const formattedPrice = computed(() => {
