@@ -1012,7 +1012,12 @@ const updatePrice = async () => {
     // Calculate expire based on payment duration (backend applies subscription discounts)
     const expireBlocks = 88000 * formData.value.paymentDuration // Post-fork: 88000 blocks = 1 month
 
-    // Simple app spec for pricing calculation (same structure as cost calculator)
+    // Calculate discounted USD locally (plan price * duration * subscription discount)
+    const discount = subscriptionDiscountMap[formData.value.paymentDuration] || 0
+    const discountedUSD = plan.usd * formData.value.paymentDuration * (1 - discount / 100)
+
+    // Simple app spec for pricing calculation
+    // Use port 3000 (non-enterprise) to avoid $2 enterprise port fee that would override priceUSD
     const appSpec = {
       version: 8,
       name: wpName,
@@ -1022,7 +1027,7 @@ const updatePrice = async () => {
         name: 'wp',
         description: 'WordPress',
         repotag: 'runonflux/wp-nginx:latest',
-        ports: [80],
+        ports: [3000],
         containerPorts: [80],
         domains: [''],
         environmentParameters: [''],
@@ -1045,19 +1050,17 @@ const updatePrice = async () => {
     const response = await AppsService.appPriceUSDandFlux(appSpec)
 
     if (response.data && response.data.status === 'success') {
-      // Use API response directly - backend already calculated total for full subscription period
-      // (includes duration multiplier, subscription discounts, etc.)
+      // Use locally calculated USD, only get flux and fluxDiscount from API
       apiPricing.value = {
-        usd: response.data.data.usd || 0,
+        usd: discountedUSD,
         flux: response.data.data.flux || 0,
         fluxDiscount: response.data.data.fluxDiscount || 0,
       }
     } else {
       console.error('API pricing request failed:', response.data)
 
-      // Fallback: multiply plan price by duration
       apiPricing.value = {
-        usd: plan.usd * formData.value.paymentDuration,
+        usd: discountedUSD,
         flux: 0,
         fluxDiscount: 0,
       }
@@ -1065,10 +1068,12 @@ const updatePrice = async () => {
   } catch (error) {
     console.error('Error fetching API pricing:', error)
 
-    // Fallback: multiply plan price by duration
+    // Fallback: use locally calculated USD
     const plan = formData.value.selectedPlan
+    const discount = subscriptionDiscountMap[formData.value.paymentDuration] || 0
+    const discountedUSD = plan.usd * formData.value.paymentDuration * (1 - discount / 100)
     apiPricing.value = {
-      usd: plan.usd * formData.value.paymentDuration,
+      usd: discountedUSD,
       flux: 0,
       fluxDiscount: 0,
     }

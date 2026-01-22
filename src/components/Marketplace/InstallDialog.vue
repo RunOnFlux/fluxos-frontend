@@ -2432,7 +2432,7 @@ const fetchPricingFromAPI = async () => {
         name: 'wordpress',
         description: 'WordPress on Flux',
         repotag: 'runonflux/wp-nginx:latest',
-        ports: [80],
+        ports: [3000], // Use non-enterprise port for pricing (avoids $2 enterprise port fee)
         containerPorts: [80],
         domains: [''],
         environmentParameters: [''],
