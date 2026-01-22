@@ -1050,9 +1050,12 @@ const updatePrice = async () => {
     const response = await AppsService.appPriceUSDandFlux(appSpec)
 
     if (response.data && response.data.status === 'success') {
-      // Use locally calculated USD, only get flux and fluxDiscount from API
+      // Use the higher of locally calculated USD or API-returned USD
+      const apiUsd = response.data.data.usd || 0
+      const finalUsd = Math.max(discountedUSD, apiUsd)
+
       apiPricing.value = {
-        usd: discountedUSD,
+        usd: finalUsd,
         flux: response.data.data.flux || 0,
         fluxDiscount: response.data.data.fluxDiscount || 0,
       }
