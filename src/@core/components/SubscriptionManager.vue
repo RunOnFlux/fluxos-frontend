@@ -4160,7 +4160,7 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
 onMounted(() => {
   console.log('SubscriptionManager onMounted - props.appSpec:', props.appSpec)
   console.log('SubscriptionManager onMounted - props.appSpec.owner:', props.appSpec?.owner)
-  
+
   // Set default owner from logged-in user's zelid if not already set
   if (!appDetails.value.owner) {
     const zelidauth = localStorage.getItem('zelidauth')
@@ -4176,7 +4176,18 @@ onMounted(() => {
       }
     }
   }
-  
+
+  // Auto-fill contact email for SSO users (only for new apps without existing contacts)
+  if (props.newApp && (!appDetails.value.contacts || appDetails.value.contacts.length === 0)) {
+    const loginTypeValue = loginType.value
+    if (loginTypeValue === 'sso') {
+      const firebaseUser = getUser()
+      if (firebaseUser?.email) {
+        appDetails.value.contacts = [firebaseUser.email]
+      }
+    }
+  }
+
   getGeolocationData()
 
   if (!props.appSpec?.compose) {
@@ -4453,7 +4464,7 @@ const testableFieldsHaveChanged = computed(() => {
   }
 })
 
-// Computed to check if test section should show (with logging)
+// Computed to check if test section should show
 const shouldShowTestSection = computed(() => {
   const result = !testFinished.value &&
                  testableFieldsHaveChanged.value &&
@@ -4463,19 +4474,6 @@ const shouldShowTestSection = computed(() => {
                  (props.newApp || managementAction.value !== 'cancel')
 
   // Renewal mode removed: testableFieldsHaveChanged now controls test visibility for renewals
-
-  console.log('🧪 Test Section Visibility Check:', {
-    shouldShow: result,
-    testFinished: testFinished.value,
-    specsHaveChanged: specsHaveChanged.value,
-    testableFieldsHaveChanged: testableFieldsHaveChanged.value,
-    isNewApp: props.newApp,
-    fluxPrice: appSpecPrice.value?.flux,
-    paymentProcessing: paymentProcessing.value,
-    paymentConfirmed: paymentConfirmed.value,
-    managementAction: managementAction.value,
-    renewalEnabled: renewalEnabled.value,
-  })
 
   return result
 })
@@ -7269,18 +7267,10 @@ async function verifyAppSpec() {
     }
 
     if (appSpecTemp.version >= 8) {
-      console.log('Version 8+ app - checking enterprise mode')
-      console.log('UI isPrivateApp state:', isPrivateApp.value)
-      console.log('AppSpec enterprise field:', appSpecTemp.enterprise)
-
       // For v8+: Use UI state (isPrivateApp.value) to determine if encryption should happen
       // The UI state is set based on the enterprise checkbox or existing enterprise data
       if (isPrivateApp.value) {
-        console.log('Enterprise v8+ encryption process starting...')
-        console.log('Original appSpecTemp before encryption:', JSON.stringify(appSpecTemp, null, 2))
-        
         const zelidauth = localStorage.getItem('zelidauth')
-        console.log('Using current owner for encryption:', appSpecTemp.owner)
 
         // call api to get RSA public key
         const appPubKeyData = {
@@ -7288,7 +7278,9 @@ async function verifyAppSpec() {
           owner: appSpecTemp.owner,
         }
         const responseGetPublicKey = await AppsService.getAppPublicKey(zelidauth, appPubKeyData)
-        console.log('getAppPublicKey response:', responseGetPublicKey.data)
+        if (!responseGetPublicKey?.data) {
+          throw new Error('Failed to get app public key: No response from server')
+        }
         if (responseGetPublicKey.data.status === 'error') {
           const errorData = responseGetPublicKey.data.data
           let errorMsg = 'Failed to get app public key'
@@ -7304,46 +7296,49 @@ async function verifyAppSpec() {
           throw new Error(errorMsg)
         }
         const pubkey = responseGetPublicKey.data.data
-        console.log('Retrieved public key length:', pubkey.length)
+        if (!pubkey) {
+          throw new Error('Failed to get app public key: Invalid response data')
+        }
 
         // Check if WebCrypto is available before proceeding
         if (!isWebCryptoAvailable()) {
-          console.warn('WebCrypto not available, cannot use enterprise features')
-          
           // Show user-friendly toast instead of blocking error
           showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert', 6000)
           
           // Reset enterprise mode and return gracefully
           appSpec.value.enterprise = ''
-          
+
           return
         }
 
-        const rsaPubKey = await importRsaPublicKey(pubkey)
-        const aesKey = crypto.getRandomValues(new Uint8Array(32))
+        // Wrap encryption operations in try-catch for proper state reset on failure
+        try {
+          const rsaPubKey = await importRsaPublicKey(pubkey)
+          const aesKey = crypto.getRandomValues(new Uint8Array(32))
 
-        const encryptedEnterpriseKey = await encryptAesKeyWithRsaKey(
-          aesKey,
-          rsaPubKey,
-        )
-        const enterpriseSpecs = {
-          contacts: appSpecTemp.contacts,
-          compose: appSpecTemp.compose,
+          const encryptedEnterpriseKey = await encryptAesKeyWithRsaKey(
+            aesKey,
+            rsaPubKey,
+          )
+          const enterpriseSpecs = {
+            contacts: appSpecTemp.contacts,
+            compose: appSpecTemp.compose,
+          }
+
+          const encryptedEnterprise = await encryptEnterpriseWithAes(
+            JSON.stringify(enterpriseSpecs),
+            aesKey,
+            encryptedEnterpriseKey,
+          )
+
+          appSpecTemp.enterprise = encryptedEnterprise
+          appSpecTemp.contacts = []
+          appSpecTemp.compose = []
+        } catch (encryptionError) {
+          // Reset enterprise state on encryption failure
+          appSpecTemp.enterprise = ''
+          throw new Error(`Enterprise encryption failed: ${encryptionError.message || 'Unknown encryption error'}`)
         }
-        console.log('Enterprise specs to encrypt:', JSON.stringify(enterpriseSpecs, null, 2))
-        
-        const encryptedEnterprise = await encryptEnterpriseWithAes(
-          JSON.stringify(enterpriseSpecs),
-          aesKey,
-          encryptedEnterpriseKey,
-        )
-        console.log('Encrypted enterprise data length:', encryptedEnterprise.length)
-        
-        appSpecTemp.enterprise = encryptedEnterprise
-        appSpecTemp.contacts = []
-        appSpecTemp.compose = []
-        
-        console.log('AppSpecTemp after encryption:', JSON.stringify(appSpecTemp, null, 2))
       }
     } else if (appSpecTemp.version === 7) {
       // Handle v7 encryption
@@ -9624,7 +9619,7 @@ async function signMethod() {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-top: -1.5rem;
+  margin-top: 0.5rem;
   padding: 0.75rem 1rem;
   border: 2px solid rgba(var(--v-theme-warning), 0.5);
   border-radius: 8px;

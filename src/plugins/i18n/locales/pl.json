@@ -79,7 +79,8 @@
       "billing": "Rozliczenia",
       "monthly": "Miesięcznie",
       "scrollLeft": "Przewiń w lewo",
-      "scrollRight": "Przewiń w prawo"
+      "scrollRight": "Przewiń w prawo",
+      "optional": "Opcjonalne"
     },
     "theme": {
       "light": "Jasny",
@@ -925,7 +926,28 @@
       "ruleOtherMountsReferPrevious": "Odniesienia do komponentów muszą wskazywać na wcześniejsze komponenty (komponent 2 może odwoływać się do 0 lub 1, ale nie do 3)",
       "ruleNoDuplicatePaths": "Każda ścieżka kontenera musi być unikalna (bez duplikatów)",
       "ruleSubdirsUnique": "Każdy podkatalog/nazwa pliku musi być unikalna w obrębie komponentu",
-      "ruleAllPathsStartSlash": "Wszystkie ścieżki kontenerów muszą zaczynać się od / i nie mogą zawierać nieprawidłowych znaków"
+      "ruleAllPathsStartSlash": "Wszystkie ścieżki kontenerów muszą zaczynać się od / i nie mogą zawierać nieprawidłowych znaków",
+      "syncTitle": "Synchronizacja danych między instancjami",
+      "syncDescription": "Włącz, jeśli chcesz, aby dane były synchronizowane między wieloma instancjami aplikacji działającymi na różnych węzłach Flux.",
+      "syncEnableLabel": "Synchronizuj dane między instancjami",
+      "syncEnabledHint": "Twoje dane będą synchronizowane między wszystkimi instancjami",
+      "syncDisabledHint": "Każda instancja będzie miała własne trwałe dane",
+      "syncModeLabel": "Strategia synchronizacji",
+      "modePhasedMasterMasterDesc": "Wszystkie instancje mogą odczytywać i zapisywać, z kontrolowaną synchronizacją fazową",
+      "modePrimaryStandbyDesc": "Jedna instancja główna obsługuje zapisy, pozostałe są kopiami tylko do odczytu",
+      "modeMasterMasterDesc": "Wszystkie instancje mogą jednocześnie odczytywać i zapisywać",
+      "typePrimaryDesc": "Główna trwała pamięć masowa dla Twojej aplikacji",
+      "typeDirectoryDesc": "Zamontuj określony folder hosta do ścieżki kontenera",
+      "typeFileDesc": "Zamontuj określony plik hosta do ścieżki kontenera",
+      "typeComponentPrimaryDesc": "Odwołaj się do głównej pamięci masowej z innego komponentu",
+      "typeComponentDirectoryDesc": "Odwołaj się do katalogu z innego komponentu",
+      "typeComponentFileDesc": "Odwołaj się do pliku z innego komponentu",
+      "validationFilenameTooLong": "Nazwa pliku przekracza limit 255 znaków",
+      "validationSubdirTooLong": "Nazwa podkatalogu przekracza limit 255 znaków",
+      "validationContainerDataTooLong": "Całkowita konfiguracja montowania jest zbyt długa ({current} znaków, maks. {max}) - zmniejsz liczbę montowań lub użyj krótszych nazw/ścieżek",
+      "generalInfoTitle": "Często zadawane pytania (FAQ)",
+      "syncModesTitle": "Tryby synchronizacji",
+      "ruleSyncFoldersSharedParent": "Wszystkie foldery synchronizacji muszą mieć ten sam katalog nadrzędny"
     },
     "subscriptionManager": {
       "title": "Menedżer Subskrypcji",
@@ -1354,7 +1376,8 @@
         "install": "Instaluj",
         "view": "Zobacz",
         "viewDetails": "Zobacz Szczegóły",
-        "noSponsoredApps": "Brak sponsorowanych aplikacji"
+        "noSponsoredApps": "Brak sponsorowanych aplikacji",
+        "free": "Darmowe"
       },
       "newListedCard": {
         "title": "NOWO DODANE APLIKACJE",
@@ -1581,7 +1604,8 @@
           "addedForbiddenLocation": "Dodano zabronioną lokalizację: {location}",
           "removedAllowedLocation": "Usunięto dozwoloną lokalizację: {location}",
           "removedForbiddenLocation": "Usunięto zabronioną lokalizację: {location}"
-        }
+        },
+        "containers": "Kontenery"
       }
     },
     "xdao": {
@@ -2679,6 +2703,10 @@
               "description": "Brak pojedynczego punktu awarii. Twoje aplikacje działają na tysiącach niezależnie zarządzanych węzłów na całym świecie.",
               "title": "Prawdziwie Zdecentralizowany"
             },
+            "dedicatedResources": {
+              "description": "Gwarantowane CPU, RAM i pamięć masowa. Bez współdzielonej infrastruktury czy zimnych startów.",
+              "title": "Dedykowane Zasoby"
+            },
             "freeDomain": {
               "description": "Automatyczne zarządzanie domenami i certyfikaty SSL w cenie. Wskaż swoją domenę, a my zajmiemy się resztą bez konfiguracji.",
               "title": "Bezpłatna Usługa Zarządzania Domeną"
@@ -2700,7 +2728,7 @@
               "title": "Bez Uzależnienia od Dostawcy"
             },
             "scalable": {
-              "description": "Skaluj od 3 do ponad 100 instancji natychmiast. Płać tylko za to, czego używasz, z elastyczną alokacją zasobów.",
+              "description": "Skaluj od 1 do 100 instancji natychmiast. Płać tylko za to, czego używasz, z elastyczną alokacją zasobów.",
               "title": "Natychmiast Skalowalny"
             },
             "title": "Dlaczego Wybrać FluxCloud?"
@@ -2797,6 +2825,603 @@
             "noData": "Dane mapy serwerów są obecnie niedostępne",
             "subtitle": "Twoje aplikacje wdrożone w globalnej zdecentralizowanej infrastrukturze z węzłami na każdym kontynencie.",
             "title": "Globalna Sieć Serwerów"
+          }
+        },
+        "orbit": {
+          "choice": {
+            "title": "Jak chcesz wdrożyć?",
+            "subtitle": "Wybierz metodę wdrożenia najlepiej dopasowaną do Twojego przepływu pracy",
+            "newBadge": "NOWOŚĆ",
+            "betaBadge": "BETA",
+            "orbitSubtitle": "Wdrożenie oparte na Git",
+            "orbitDescription": "Po prostu podłącz repozytorium, a my zajmiemy się resztą. Nie wymagana znajomość Dockera.",
+            "orbitFeature1": "Nie wymaga znajomości Dockera",
+            "orbitFeature2": "Automatyczne wykrywanie 100+ frameworków",
+            "orbitFeature3": "Wbudowany potok CI/CD",
+            "orbitFeature4": "Automatyczne wycofywanie zmian",
+            "orbitFeature5": "Wsparcie GitHub/GitLab/Bitbucket",
+            "orbitCta": "Wdróż z Git",
+            "dockerSubtitle": "Wdrożenie oparte na kontenerach",
+            "dockerDescription": "Pełna kontrola z niestandardowymi kontenerami Docker. Idealne do złożonych wdrożeń.",
+            "dockerFeature1": "Dowolny obraz Docker",
+            "dockerFeature2": "Prywatne rejestry",
+            "dockerFeature3": "Wielokontenerowe compose",
+            "dockerFeature4": "Pełna kontrola zasobów",
+            "dockerFeature5": "Funkcje enterprise",
+            "dockerCta": "Wdróż z Docker",
+            "startingAt": "Od",
+            "dockerPriceDetail": "3 instancje, 2 vCPU, 4GB RAM",
+            "comparisonHint": "Nie wiesz, co wybrać? Git jest idealny dla większości aplikacji webowych. Docker daje maksymalną kontrolę.",
+            "deployment": "wdrożenie",
+            "deployments": "wdrożenia"
+          },
+          "overview": {
+            "stepTitle": "Przegląd FluxCloud Git",
+            "stepDescription": "Odkryj, co oferuje FluxCloud Git i jak wypada w porównaniu z innymi platformami."
+          },
+          "pricing": {
+            "title": "Plany Git",
+            "subtitle": "Proste ceny dla wdrożeń opartych na Git",
+            "stepTitle": "Wybierz swój plan",
+            "stepDescription": "Wybierz plan w zależności od Twoich potrzeb zasobowych.",
+            "allPlansInclude": "Wybierz swoje zasoby",
+            "poweredByFluxCloud": "Napędzane przez FluxCloud",
+            "sharedFeatures": {
+              "title": "Funkcje FluxCloud Git",
+              "subtitle": "Twój kod. Nasza magia. Zero problemów z Dockerem.",
+              "unlimitedBuilds": "Nieograniczone buildy",
+              "frameworks": "100+ frameworków",
+              "frameworksDetail": "Node.js, Python, Rust, Go, Java, .NET, PHP i więcej",
+              "zeroConfig": "Zero konfiguracji",
+              "zeroConfigDetail": "Automatyczne wykrywanie typu projektu, instalacja zależności, automatyczne budowanie",
+              "cicd": "Wbudowane CI/CD",
+              "cicdDetail": "Webhooki GitHub, GitLab, Bitbucket + tryb polling",
+              "customDomain": "Własna domena",
+              "customDomainDetail": "Podłącz własną domenę z SSL",
+              "geolocation": "Wybór geolokalizacji",
+              "geolocationDetail": "Wdrażaj w określonych regionach na całym świecie",
+              "branchPreviews": "Podglądy wdrożeń",
+              "branchPreviewsDetail": "Podgląd wdrożeń dla gałęzi i PR-ów",
+              "autoRollback": "Automatyczne wycofywanie",
+              "autoRollbackDetail": "Nieudane wdrożenia wracają do ostatniej działającej wersji",
+              "monorepo": "Wsparcie dla monorepo",
+              "monorepoDetail": "Wdrażaj określone foldery używając PROJECT_PATH",
+              "healthChecks": "Monitoring zdrowia",
+              "healthChecksDetail": "Wbudowane kontrole zdrowia i nadzór nad procesami",
+              "security": "Zwiększone bezpieczeństwo",
+              "securityDetail": "Wykonywanie bez uprawnień root i automatyczna rotacja logów",
+              "unlimitedBuildsDetail": "Bez limitu liczby buildów ani czasu ich trwania",
+              "dedicatedResources": "Dedykowane zasoby",
+              "dedicatedResourcesDetail": "Brak współdzielonego sprzętu - wynajęte zasoby są wyłącznie dla Twojej aplikacji"
+            },
+            "free": "Free",
+            "developer": "Standard",
+            "pro": "Pro",
+            "beta": "Beta",
+            "comingSoon": "Wkrótce",
+            "freeBuilds": "50 buildów/miesiąc",
+            "developerBuilds": "Nieograniczone buildy",
+            "proBuilds": "Nieograniczone buildy",
+            "freePriceDetail": "Idealne dla projektów pobocznych i nauki",
+            "developerPriceDetail": "Dla rozwijających się projektów i małych aplikacji",
+            "proPriceDetail": "Dla aktywnego rozwoju i aplikacji produkcyjnych",
+            "betaPriceDetail": "Pełny dostęp w okresie beta",
+            "perMonth": "/miesiąc",
+            "billingOptions": "Opcje rozliczeń",
+            "billingPeriod": "Okres rozliczeniowy",
+            "billingMonthly": "Miesięcznie",
+            "billing1Month": "1 miesiąc",
+            "billing3Months": "3 miesiące",
+            "billing6Months": "6 miesięcy",
+            "billing12Months": "12 miesięcy",
+            "savings": "Oszczędź {percent}%",
+            "total": "Razem",
+            "customDomain": "Własna domena",
+            "customDomainPlaceholder": "app.twojadomena.pl",
+            "customDomainHint": "Skieruj rekord CNAME swojej domeny na URL aplikacji Flux",
+            "preferredGeolocation": "Preferowana geolokalizacja",
+            "geolocationHint": "Wybierz regiony, gdzie aplikacja powinna być wdrożona. Zostaw jako \"Globalnie\" dla najlepszej dostępności.",
+            "addLocation": "Dodaj lokalizację",
+            "noLocationsSelected": "Nie wybrano konkretnych lokalizacji. Aplikacja zostanie wdrożona globalnie.",
+            "freeFeatures": {
+              "deployments": "1 aktywne wdrożenie",
+              "builds": "Nieograniczone",
+              "cpu": "0.5 rdzeni",
+              "ram": "1 GB",
+              "storage": "5 GB SSD/NVMe",
+              "support": "Wsparcie społeczności",
+              "frameworks": "Wsparcie dla 100+ frameworków"
+            },
+            "developerFeatures": {
+              "deployments": "3 aktywne wdrożenia",
+              "builds": "Nieograniczone",
+              "cpu": "1.5 rdzeni",
+              "ram": "4 GB",
+              "storage": "15 GB SSD/NVMe",
+              "support": "Priorytetowe wsparcie",
+              "frameworks": "Wsparcie dla 100+ frameworków"
+            },
+            "proFeatures": {
+              "deployments": "5 aktywnych wdrożeń",
+              "deploymentsExtra": "+$3/dodatkowe",
+              "builds": "Nieograniczone",
+              "cpu": "2.0 rdzeni",
+              "ram": "6 GB",
+              "storage": "20 GB SSD/NVMe",
+              "support": "Priorytetowe wsparcie",
+              "frameworks": "Wsparcie dla 100+ frameworków",
+              "branchPreviews": "Podglądy wdrożeń dla gałęzi",
+              "customDomain": "Wsparcie własnej domeny",
+              "geolocation": "Wybór geolokalizacji",
+              "cicd": "Pełny potok CI/CD"
+            },
+            "betaFeatures": {
+              "deployments": "Nieograniczone aktywne wdrożenia",
+              "builds": "Nieograniczone buildy",
+              "cpu": "2.0 rdzeni",
+              "ram": "6 GB",
+              "storage": "40 GB SSD/NVMe",
+              "support": "Priorytetowe wsparcie",
+              "frameworks": "Wsparcie dla 100+ frameworków",
+              "branchPreviews": "Podglądy wdrożeń dla gałęzi",
+              "customDomain": "Wsparcie własnej domeny",
+              "geolocation": "Wybór geolokalizacji",
+              "cicd": "Pełny potok CI/CD"
+            },
+            "custom": "Własny",
+            "customizable": "Konfigurowalny",
+            "customPriceDetail": "Skonfiguruj własne zasoby i cenę",
+            "startingAt": "Od",
+            "priceAfterFirstMonth": "Cena po pierwszym miesiącu",
+            "customFeatures": {
+              "cpu": "0.1 - 15 rdzeni",
+              "ram": "100 MB - 59 GB",
+              "storage": "1 - 820 GB",
+              "instances": "1 - 3 instancji"
+            },
+            "buildLimitWarning": "Po osiągnięciu limitu darmowego planu następny build automatycznie uaktualni do planu Pro",
+            "currentPlan": "Aktualny plan",
+            "selectPlan": "Wybierz plan",
+            "recommended": "Polecany",
+            "mostPopular": "Najpopularniejszy",
+            "firstMonthFree": "Pierwszy miesiąc gratis*",
+            "freeForever": "Darmowy na zawsze*",
+            "freePlanExplainer": "Plan Free automatycznie się odnawia z 1 aplikacją Git. Dodatkowe aplikacje są rozliczane po 0,99$/miesiąc.",
+            "startDeploying": "Zacznij wdrażać",
+            "startFreeTrial": "Rozpocznij darmowy okres próbny",
+            "freeTrialDisclaimer": "Mogą obowiązywać ograniczenia w celu zapobiegania nadużyciom.",
+            "beginnerDisclaimer": "Plan Free jest darmowy i automatycznie odnawiany przez InFlux Technologies, o ile masz tylko jedną aplikację Git działającą w sieci. Jeśli wdrożysz dodatkowe aplikacje Git, każda aplikacja na planie Free będzie kosztować 0,99$/miesiąc.",
+            "beginnerDowntimeNote": "Plan Free działa na pojedynczej instancji. Ponieważ Flux to sieć zdecentralizowana, mogą wystąpić krótkie przestoje (zwykle kilka minut), gdy węzeł hostujący zostanie zrestartowany lub przejdzie offline. Dla aplikacji wymagających wysokiej dostępności zalecamy plany Standard lub Pro, które działają na wielu instancjach.",
+            "privateRepoDisclaimer": "Prywatne repozytoria GitHub są automatycznie wdrażane jako aplikacje Enterprise, działające wyłącznie na węzłach ArcaneOS z pełnym szyfrowaniem kodu źródłowego i danych. Enterprise dodaje 1,33$/miesiąc dla planu Free lub 2,66$/miesiąc dla planów Standard, Pro i Custom.",
+            "competitive": {
+              "savings": "Do 85% taniej niż Vercel/Render",
+              "dedicated": "Dedykowane zasoby, nie współdzielone",
+              "unlimitedBuilds": "Nieograniczone buildy w cenie"
+            }
+          },
+          "review": {
+            "stepTitle": "Przegląd i wdrożenie",
+            "stepDescription": "Przejrzyj konfigurację przed wdrożeniem w sieci Flux.",
+            "checkingEligibility": "Sprawdzanie uprawnienia do pierwszego miesiąca za darmo...",
+            "notEligibleTitle": "Ten FluxCloud Git nie kwalifikuje się do pierwszego miesiąca za darmo",
+            "notEligibleDescription": "Wymagana jest płatność, aby kontynuować.",
+            "repository": "Repozytorium",
+            "url": "URL",
+            "branch": "Gałąź",
+            "projectPath": "Ścieżka projektu",
+            "accessToken": "Uwierzytelnianie",
+            "configured": "Skonfigurowane",
+            "appType": "Typ aplikacji",
+            "enterprisePrivate": "Enterprise (Prywatne repozytorium)",
+            "configuration": "Konfiguracja",
+            "appName": "Nazwa aplikacji",
+            "description": "Opis",
+            "appPort": "Port aplikacji",
+            "exposedPort": "Port zewnętrzny",
+            "contact": "Kontakt",
+            "runtime": "Środowisko uruchomieniowe",
+            "envVariables": "Zmienne środowiskowe",
+            "planAndResources": "Plan i zasoby",
+            "plan": "Plan",
+            "resources": "Zasoby",
+            "activeDeployments": "Aktywne wdrożenia",
+            "builds": "Buildy",
+            "branchPreviews": "Podglądy gałęzi",
+            "enabled": "Włączone",
+            "billing": "Rozliczenia",
+            "geolocation": "Geolokalizacja",
+            "totalPrice": "Cena całkowita",
+            "unlimited": "Nieograniczone",
+            "generatedSpec": "Wygenerowana specyfikacja aplikacji",
+            "termsLabel": "Akceptuję",
+            "termsOfService": "Regulamin",
+            "termsAnd": "i",
+            "privacyPolicy": "Politykę prywatności",
+            "deployNow": "Wdróż teraz",
+            "proceedToPayment": "Przejdź do płatności"
+          },
+          "deploy": {
+            "stepTitle": "Wdrożenie",
+            "registering": "Rejestrowanie Twojej aplikacji",
+            "waitingSignature": "Oczekiwanie na podpis...",
+            "signMessage": "Podpisywanie i rejestrowanie aplikacji w sieci Flux...",
+            "propagating": "Propagowanie do sieci...",
+            "registrationFailed": "Rejestracja nie powiodła się",
+            "retry": "Ponów",
+            "testingInstallation": "Testowanie instalacji",
+            "verifyingDeployment": "Weryfikowanie, czy aplikacja może być wdrożona w sieci Flux...",
+            "runningTest": "Uruchamianie testu instalacji...",
+            "startTest": "Rozpocznij test",
+            "testOutput": "Wynik testu",
+            "testFailed": "Test instalacji nie powiódł się",
+            "retryTest": "Ponów test",
+            "editConfiguration": "Edytuj konfigurację",
+            "paymentTitle": "Dokończ płatność",
+            "paymentDescription": "Wybierz preferowaną metodę płatności, aby aktywować plan Pro.",
+            "processingPayment": "Przetwarzanie płatności...",
+            "waitingConfirmation": "Oczekiwanie na potwierdzenie płatności...",
+            "cancel": "Anuluj",
+            "paymentSummary": "Podsumowanie płatności",
+            "discountApplied": "Zastosowano zniżkę {percent}%",
+            "fiatPayment": "Płatność Fiat",
+            "fiatDescription": "Karta kredytowa, PayPal",
+            "cryptoPayment": "Płatność krypto",
+            "cryptoDescription": "FLUX, BTC, ETH i więcej",
+            "payWithStripe": "Zapłać przez Stripe",
+            "payWithPaypal": "Zapłać przez PayPal",
+            "stripeNote": "Bezpieczna płatność przez Stripe",
+            "payWithFlux": "Zapłać FLUX",
+            "payWithZelcore": "Zapłać przez Zelcore",
+            "payWithSSP": "Zapłać przez SSP Wallet",
+            "scanQR": "Zeskanuj kod QR lub skopiuj adres",
+            "sendExactAmount": "Wyślij dokładnie",
+            "toAddress": "na adres",
+            "copyAddress": "Kopiuj adres",
+            "copiedAddress": "Adres skopiowany!",
+            "successTitle": "Wdrożenie zakończone sukcesem!",
+            "successDescription": "Twoja aplikacja jest teraz wdrażana w sieci Flux.",
+            "appAvailableSoon": "Twoja aplikacja będzie wkrótce dostępna pod przypisanym URL Flux.",
+            "appName": "Nazwa aplikacji",
+            "appUrl": "URL aplikacji",
+            "openApp": "Otwórz aplikację",
+            "manageApplication": "Zarządzaj aplikacją",
+            "deployAnother": "Wdróż kolejną",
+            "freeMonthTitle": "Pierwszy miesiąc za darmo!",
+            "freeMonthDescription": "Twój pierwszy miesiąc hostingu jest całkowicie bezpłatny, sponsorowany przez InFlux Technologies.",
+            "sponsoredBy": "Sponsorowane przez InFlux Technologies",
+            "paymentSubmissionInfo": "Płatność za Twoją aplikację zostanie przesłana do sieci w ciągu kilku najbliższych minut.",
+            "checkingRegistration": "Sprawdzanie potwierdzenia płatności...",
+            "waitingForInstance": "Oczekiwanie na wdrożenie na węzłach...",
+            "firstMonthSponsoredBy": "Pierwszy miesiąc hostingu jest oferowany przez InFlux Technologies.",
+            "freePlanSponsoredBy": "Plan Free jest oferowany przez InFlux Technologies.",
+            "checkingPaymentOnBlockchain": "Sprawdzanie potwierdzenia płatności w blockchain.",
+            "blockchainConfirmationTime": "To może potrwać kilka minut.",
+            "paymentConfirmedWaitingNodes": "Płatność potwierdzona w sieci.",
+            "waitingForNodesPickup": "Oczekiwanie na pobranie i instalację aplikacji przez węzły.",
+            "nodeDeploymentTime": "To może potrwać kilka minut.",
+            "registrationCompleteTitle": "Rejestracja/Płatność zakończona!",
+            "registrationCompleteDescription": "Twoja aplikacja została pomyślnie opłacona/zarejestrowana w sieci Flux.",
+            "nodesSpawning": "Węzły sieci uruchamiają teraz Twoją aplikację. Będzie dostępna wkrótce.",
+            "cancelPayment": "Anuluj i wróć"
+          },
+          "navigation": {
+            "back": "Wstecz",
+            "continue": "Kontynuuj",
+            "next": "Dalej",
+            "previous": "Poprzedni"
+          },
+          "payment": {
+            "payWithCard": "Zapłać kartą",
+            "securePayment": "Bezpieczna i natychmiastowa płatność",
+            "payWithFlux": "Zapłać FLUX",
+            "cryptoPayment": "Płatność kryptowalutą",
+            "notEligibleInfo": "Ta rejestracja wymaga płatności. Wybierz metodę płatności, aby kontynuować.",
+            "selectPaymentMethod": "Wybierz metodę płatności",
+            "secureProcessing": "Bezpieczne przetwarzanie płatności",
+            "instantConfirmation": "Natychmiastowe potwierdzenie płatności",
+            "multipleCurrency": "Obsługa wielu walut",
+            "sendTo": "Wyślij do",
+            "message": "Wiadomość"
+          },
+          "features": {
+            "title": "Wdrożenie z Git w kilka minut",
+            "subtitle": "Wypchnij kod, my zajmiemy się resztą",
+            "howItWorks": {
+              "title": "Jak działa wdrożenie Git",
+              "step1": {
+                "title": "Połącz repozytorium",
+                "description": "Połącz swoje repozytorium GitHub, GitLab lub Bitbucket"
+              },
+              "step2": {
+                "title": "Automatyczne wykrywanie",
+                "description": "Wdrożenie Git automatycznie wykrywa Twój framework i zależności"
+              },
+              "step3": {
+                "title": "Budowanie i wdrażanie",
+                "description": "Twoja aplikacja jest budowana i wdrażana w sieci Flux"
+              },
+              "step4": {
+                "title": "Bądź na bieżąco",
+                "description": "Commity wywołują automatyczne przebudowy przez webhooki"
+              }
+            },
+            "supported": {
+              "title": "Wsparcie dla 100+ frameworków",
+              "javascript": "Node.js / JavaScript",
+              "javascriptFrameworks": "Next.js, Nuxt, Remix, Astro, Express, NestJS, Vite",
+              "python": "Python",
+              "pythonFrameworks": "Django, FastAPI, Flask, Streamlit",
+              "rust": "Rust",
+              "rustFrameworks": "Actix, Axum, Rocket",
+              "go": "Go",
+              "goFrameworks": "Gin, Echo, Fiber",
+              "java": "Java",
+              "javaFrameworks": "Spring Boot, Quarkus",
+              "dotnet": ".NET",
+              "dotnetFrameworks": "ASP.NET Core, Blazor",
+              "ruby": "Ruby",
+              "rubyFrameworks": "Rails, Sinatra",
+              "php": "PHP",
+              "phpFrameworks": "Laravel, Symfony",
+              "static": "Strony statyczne",
+              "staticFrameworks": "HTML/CSS/JS, Hugo, Jekyll, Gatsby"
+            },
+            "benefits": {
+              "zeroDockertitle": "Zero problemów z Dockerem",
+              "zeroDockerDesc": "Dockerfile nie jest potrzebny. Wdrożenie Git obsługuje konteneryzację automatycznie.",
+              "autoRollbackTitle": "Automatyczne wycofywanie",
+              "autoRollbackDesc": "Nieudane wdrożenia automatycznie wracają do ostatniej działającej wersji.",
+              "monorepoTitle": "Wsparcie dla monorepo",
+              "monorepoDesc": "Wdrażaj określone foldery z monorepo używając PROJECT_PATH.",
+              "productionTitle": "Gotowe do produkcji",
+              "productionDesc": "Kontrole zdrowia, zarządzanie supervisorem, rotacja logów, wykonywanie bez uprawnień root."
+            }
+          },
+          "faq": {
+            "title": "FAQ wdrożenia Git",
+            "whatIsOrbit": {
+              "question": "Czym jest wdrożenie Git?",
+              "answer": "Wdrożenie Git to platforma wdrożeniowa Flux oparta na Git, która automatycznie buduje i wdraża aplikacje bez wymagania znajomości Dockera. Wystarczy połączyć repozytorium, a wdrożenie Git zajmie się resztą — wykrywaniem frameworka, instalacją zależności, budowaniem i wdrażaniem w sieci Flux."
+            },
+            "whatFrameworks": {
+              "question": "Jakie frameworki są wspierane?",
+              "answer": "Wdrożenie Git wspiera 100+ frameworków, w tym Next.js, Django, FastAPI, Rails, Spring Boot, ASP.NET Core i wiele innych. Automatycznie wykrywa projekty Node.js, Python, Rust, Go, Java, .NET, Ruby, PHP oraz strony statyczne."
+            },
+            "howBuildsWork": {
+              "question": "Jak działają buildy?",
+              "answer": "Build jest wyzwalany za każdym razem, gdy wypychasz nowe commity do repozytorium. Wdrożenie Git wykrywa zmiany przez webhooki, pobiera kod, buduje go używając wykrytego frameworka i wdraża w sieci. Darmowy plan obejmuje 50 buildów miesięcznie."
+            },
+            "exceedLimit": {
+              "question": "Co się stanie, gdy przekroczę limit buildów?",
+              "answer": "Gdy osiągniesz limit darmowego planu (50 buildów/miesiąc), otrzymasz powiadomienie e-mail. Następny build automatycznie uaktualni aplikację do planu Pro (15$/miesiąc) i Twoja karta kredytowa zostanie obciążona."
+            },
+            "switchPlans": {
+              "question": "Czy mogę zmienić plan z Free na Pro?",
+              "answer": "Tak! Możesz w każdej chwili uaktualnić do Pro z pulpitu aplikacji. Możesz też zapłacić z góry za 3, 6 lub 12 miesięcy podczas rejestracji nowej aplikacji."
+            },
+            "privateRepos": {
+              "question": "Czy prywatne repozytoria są wspierane?",
+              "answer": "Tak, wdrożenie Git wspiera prywatne repozytoria. Musisz autoryzować wdrożenie Git do dostępu do repozytorium podczas procesu konfiguracji."
+            }
+          },
+          "landing": {
+            "badge": "NOWOŚĆ: Wdrażaj z Git",
+            "heroTitle": "Twój kod. Nasza magia.",
+            "heroSubtitle": "Zero problemów z Dockerem.",
+            "heroDescription": "Wdrażaj dowolną aplikację webową bezpośrednio z GitHub, GitLab lub Bitbucket. Wdrożenie Git automatycznie wykrywa Twój framework i zajmuje się resztą.",
+            "getStartedFree": "Zacznij za darmo",
+            "viewPricing": "Zobacz cennik"
+          },
+          "comparison": {
+            "title": "Porównanie z konkurencją",
+            "subtitle": "Zobacz jak wdrożenie Git wypada na tle innych platform do wdrażania z Git",
+            "provider": "Dostawca",
+            "plan": "Plan",
+            "price": "Cena",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "builds": "Buildy",
+            "best": "Najlepsza oferta",
+            "cores": "Rdzeni",
+            "core": "Rdzeń",
+            "unlimited": "Bez limitu",
+            "shared": "Współdzielone",
+            "limited": "Ograniczone",
+            "creditBased": "Na kredyty",
+            "usageBased": "Wg użycia",
+            "minutes": "min/mies"
+          },
+          "signIn": {
+            "description": "Zaloguj się, aby wdrożyć swoją aplikację z Git.",
+            "noDockerNeeded": "Nie wymaga znajomości Dockera",
+            "frameworksSupported": "Obsługa ponad 100 frameworków",
+            "builtInCicd": "Wbudowane CI/CD",
+            "freeTierAvailable": "Dostępny darmowy plan",
+            "backToOptions": "Powrót do opcji"
+          },
+          "header": {
+            "backToDeploymentOptions": "Powrót do opcji wdrożenia",
+            "deployWithOrbit": "Wdrażaj z Git",
+            "connectAndDeploy": "Połącz swoje repozytorium Git i wdróż w kilka minut"
+          },
+          "stepper": {
+            "overview": "Przegląd",
+            "plan": "Plan",
+            "repository": "Repozytorium",
+            "configure": "Konfiguracja",
+            "review": "Podsumowanie",
+            "register": "Rejestracja",
+            "payment": "Płatność"
+          },
+          "repository": {
+            "stepTitle": "Połącz swoje repozytorium",
+            "stepDescription": "Wprowadź URL repozytorium Git. Obsługujemy GitHub, GitLab i Bitbucket.",
+            "repoUrlLabel": "URL repozytorium *",
+            "repoUrlPlaceholder": "https://github.com/uzytkownik/repo",
+            "repoUrlHint": "Publiczne lub prywatne repozytorium URL",
+            "checkingRepository": "Sprawdzanie repozytorium...",
+            "publicRepository": "Publiczne repozytorium",
+            "privateRepoAuth": "Prywatne repozytorium - wymagana autoryzacja",
+            "errorCheckingRepo": "Błąd sprawdzania repozytorium",
+            "detected": "wykryto",
+            "privateRepoDetected": "Wykryto prywatne repozytorium",
+            "privateRepoMessage": "To repozytorium wymaga autoryzacji. Twoja aplikacja zostanie automatycznie zarejestrowana jako aplikacja enterprise.",
+            "enterpriseFeatures": "Korzyści aplikacji Enterprise",
+            "enterpriseFeature1": "Działa wyłącznie na węzłach ArcaneOS z szyfrowaniem sprzętowym",
+            "enterpriseFeature2": "Twój kod źródłowy i dane są w pełni zaszyfrowane i chronione",
+            "enterpriseFeature3": "Zwiększone bezpieczeństwo dla aplikacji własnościowych i wrażliwych",
+            "enterprisePricing": "Enterprise dodaje $1.33/miesiąc dla planu Free lub $2.66/miesiąc dla planów Standard, Pro i Custom.",
+            "usernameLabel": "Nazwa użytkownika / Token",
+            "usernamePlaceholder": "github-uzytkownik lub token",
+            "usernameHint": "Dla GitHub, użyj nazwy użytkownika lub 'token'",
+            "tokenLabel": "Personal Access Token *",
+            "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
+            "tokenHint": "Wygeneruj token z dostępem do repozytorium w ustawieniach dostawcy Git",
+            "testConnection": "Testuj połączenie",
+            "connectionSuccess": "Połączenie udane!",
+            "connectionVerified": "Dostęp do repozytorium zweryfikowany.",
+            "branchLabel": "Gałąź",
+            "branchPlaceholder": "Wybierz gałąź",
+            "loadingBranches": "Ładowanie gałęzi...",
+            "noBranchesFound": "Nie znaleziono gałęzi",
+            "default": "Domyślna",
+            "branchesAvailable": "dostępnych gałęzi",
+            "defaultMain": "Domyślna: main",
+            "detectingMonorepo": "Wykrywanie struktury monorepo...",
+            "monorepoDetected": "Wykryto monorepo!",
+            "projectsFound": "znalezionych projektów",
+            "selectProject": "Wybierz projekt do wdrożenia:",
+            "projectPathLabel": "Ścieżka projektu (Monorepo)",
+            "projectPathPlaceholder": "/",
+            "projectPathHint": "Dla monorepo, określ folder zawierający Twoją aplikację (np. /apps/frontend)",
+            "enterCredentialsHint": "Wprowadź nazwę użytkownika i token dostępu powyżej, aby kontynuować",
+            "enterTokenHint": "Wprowadź token dostępu powyżej, aby kontynuować",
+            "testConnectionHint": "Kliknij 'Testuj połączenie' powyżej, aby zweryfikować dostęp przed kontynuowaniem",
+            "testingConnectionHint": "Weryfikowanie dostępu do repozytorium..."
+          },
+          "config": {
+            "stepTitle": "Konfiguracja aplikacji",
+            "stepDescription": "Skonfiguruj ustawienia aplikacji. Wdrożenie Git automatycznie wykryje Twój framework.",
+            "appNameLabel": "Nazwa aplikacji *",
+            "appNamePlaceholder": "moja-super-aplikacja",
+            "appNameHint": "Tylko małe litery, cyfry i myślniki (3-32 znaki)",
+            "appPortLabel": "Port aplikacji *",
+            "appPortPlaceholder": "3000",
+            "portListensOn": "Port, na którym nasłuchuje aplikacja",
+            "autoDetected": "Automatycznie wykryto",
+            "autoDetectedFrom": "Automatycznie wykryto z {framework}",
+            "contactEmailLabel": "E-mail kontaktowy *",
+            "contactEmailPlaceholder": "ty{'@'}przyklad.com",
+            "contactEmailHint": "Do powiadomień o wdrożeniu i alertów",
+            "showAdvancedOptions": "Opcje zaawansowane",
+            "pollingIntervalLabel": "Interwał automatycznej aktualizacji",
+            "pollingIntervalHint": "Jak często wdrożenie Git sprawdza repozytorium w poszukiwaniu nowych commitów. Dla natychmiastowego odpytywania, dodaj zmienną środowiskową WEBHOOK_SECRET",
+            "runtimeVersionTitle": "Wersja runtime (opcjonalnie)",
+            "runtimeAutoDetect": "Wdrożenie Git automatycznie wykrywa runtime. Określ tylko jeśli potrzebujesz konkretnej wersji.",
+            "runtimeLabel": "Runtime",
+            "envVariablesTitle": "Zmienne środowiskowe",
+            "envVariablesInfo": "Skonfiguruj zmienne środowiskowe dla swojej aplikacji. Kliknij na dowolną zmienną Git poniżej, aby ją dodać.",
+            "availableOrbitVars": "Dostępne zmienne Git",
+            "added": "Dodano",
+            "add": "Dodaj",
+            "ifNotSet": "Jeśli nie ustawiono:",
+            "example": "Przykład:",
+            "yourEnvVariables": "Twoje zmienne środowiskowe",
+            "noneAddedYet": "(jeszcze nie dodano)",
+            "keyLabel": "Klucz",
+            "valueLabel": "Wartość",
+            "addCustomVariable": "Dodaj zmienną niestandardową",
+            "deploymentLocationTitle": "Lokalizacja wdrożenia",
+            "deploymentLocationInfo": "Wybierz, gdzie będzie wdrożona Twoja aplikacja.",
+            "serverLocation": "Lokalizacja serwera",
+            "continentLabel": "Kontynent",
+            "countryLabel": "Kraj",
+            "regionLabel": "Region",
+            "selectRegionInfo": "Dodaj dozwolone lokalizacje, gdzie aplikacja MOŻE działać, lub zabronione lokalizacje, gdzie NIE MOŻE działać. Pozostaw puste dla globalnego wdrożenia.",
+            "allowedLocations": "Dozwolone lokalizacje",
+            "forbiddenLocations": "Zabronione lokalizacje",
+            "addAllowed": "Dodaj dozwoloną",
+            "addForbidden": "Dodaj zabronioną",
+            "currentRules": "Aktualne reguły geolokalizacji",
+            "allowedLocationsColon": "Dozwolone:",
+            "forbiddenLocationsColon": "Zabronione:",
+            "customDomainTitle": "Własna domena",
+            "customDomainLabel": "Własna domena",
+            "customDomainPlaceholder": "mojaaplikacja.przyklad.com",
+            "customDomainHint": "Wprowadź własną domenę (musisz skonfigurować DNS osobno)",
+            "autoDetectionEnabled": "Automatyczne wykrywanie włączone",
+            "autoDetectionDescription": "Wdrożenie Git automatycznie wykrywa Twój framework (Next.js, Django, Rails, Spring Boot, itp.) i konfiguruje proces budowania. Dockerfile nie jest potrzebny!",
+            "customResourcesTitle": "Własne zasoby",
+            "customResourcesInfo": "Skonfiguruj CPU, RAM i dysk dla własnego planu. Cena zostanie obliczona na podstawie wybranych zasobów.",
+            "cpuLabel": "CPU",
+            "ramLabel": "RAM",
+            "storageLabel": "Dysk",
+            "instancesLabel": "Instancje",
+            "selected": "Wybrano",
+            "selectPlan": "Wybierz plan",
+            "registerApplication": "Zarejestruj aplikację",
+            "envVars": {
+              "buildCommand": {
+                "description": "Niestandardowe polecenie budowania, jeśli automatyczne wykrywanie zawiedzie lub potrzebujesz określonego skryptu",
+                "autoValue": "Automatycznie wykrywane ze skryptów package.json (build, build:prod) lub konwencji frameworka"
+              },
+              "runCommand": {
+                "description": "Niestandardowe polecenie uruchamiania aplikacji",
+                "autoValue": "Automatycznie wykrywane ze skryptów package.json (start, serve) lub konwencji frameworka"
+              },
+              "installCommand": {
+                "description": "Niestandardowe polecenie instalacji zależności",
+                "autoValue": "Automatycznie wykrywane: npm install, yarn install lub pnpm install na podstawie pliku lockfile"
+              },
+              "webhookSecret": {
+                "description": "Sekret dla webhooków GitHub (włącza funkcje Enterprise)",
+                "autoValue": "Wyłączone. Ustaw, aby włączyć wdrożenia wyzwalane przez webhook"
+              },
+              "nodeVersion": {
+                "description": "Określ wersję środowiska Node.js (nadpisuje automatyczne wykrywanie)",
+                "autoValue": "Automatycznie wykrywane z .nvmrc, .node-version lub pola engines w package.json. Domyślnie najnowsza wersja LTS"
+              },
+              "pythonVersion": {
+                "description": "Określ wersję środowiska Python",
+                "autoValue": "Automatycznie wykrywane z runtime.txt, .python-version lub Pipfile. Domyślnie najnowsza stabilna wersja"
+              },
+              "rubyVersion": {
+                "description": "Określ wersję środowiska Ruby",
+                "autoValue": "Automatycznie wykrywane z .ruby-version lub Gemfile. Domyślnie najnowsza stabilna wersja"
+              },
+              "goVersion": {
+                "description": "Określ wersję środowiska Go",
+                "autoValue": "Automatycznie wykrywane z go.mod. Domyślnie najnowsza stabilna wersja"
+              },
+              "javaVersion": {
+                "description": "Określ wersję środowiska Java",
+                "autoValue": "Automatycznie wykrywane z pom.xml lub build.gradle. Domyślnie najnowsza wersja LTS (21)"
+              },
+              "apiKey": {
+                "description": "Klucz API do ochrony punktów końcowych status, logs i preview (włącza funkcje Enterprise)",
+                "autoValue": "Wyłączone. Ustaw, aby włączyć uwierzytelnianie API dla chronionych punktów końcowych"
+              },
+              "prPreviewEnabled": {
+                "description": "Włącz podgląd wdrożeń dla pull requestów na stronach statycznych",
+                "autoValue": "Wyłączone. Ustaw na \"true\", aby włączyć podgląd wdrożeń PR"
+              }
+            }
+          },
+          "register": {
+            "registrationComplete": "Rejestracja zakończona",
+            "registrationCompleteMessage": "Twoja aplikacja została pomyślnie zarejestrowana w sieci Flux.",
+            "proceedingToPayment": "Przechodzenie do płatności...",
+            "firstInstallInfo": "Pierwsza instalacja może chwilę potrwać w zależności od projektu, ponieważ należy pobrać i zainstalować wszystkie zależności. Możesz to sprawdzić w sekcji logów zarządzania aplikacjami. Po zainstalowaniu aplikacji na węźle, możesz uzyskać do niej dostęp pod adresem:",
+            "appUrl": "URL aplikacji:",
+            "orbitApi": "API GIT:",
+            "orbitDocumentation": "Dokumentacja GIT:"
+          }
+        },
+        "docker": {
+          "header": {
+            "backToDeploymentOptions": "Powrót do opcji wdrożenia",
+            "deployWithDocker": "Wdrażaj z Docker",
+            "fullControlDeployment": "Pełna kontrola z niestandardowymi kontenerami Docker"
           }
         }
       }
@@ -3962,7 +4587,7 @@
           "instance": "instancja",
           "perMonth": "/miesiąc",
           "planDescriptions": {
-            "Basic": "Odpowiedni dla osób fizycznych i małych firm, idealny dla prostej strony internetowej lub bloga",
+            "Free": "Odpowiedni dla osób fizycznych i małych firm, idealny dla prostej strony internetowej lub bloga",
             "Standard": "Idealny dla rozwijających się firm, dobry dla strony z większą ilością treści",
             "Pro": "Świetny dla większej strony o wyższym ruchu",
             "Ultra": "Najwyższa wydajność dla wymagających projektów",
@@ -4050,7 +4675,9 @@
           "title": "Regulamin",
           "agreement": "Przeczytałem i akceptuję",
           "link": "Regulamin",
-          "loadError": "Nie udało się załadować Regulaminu. Odwiedź <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a>"
+          "loadError": "Nie udało się załadować Regulaminu. Odwiedź <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a>",
+          "agree": "Zgadzam się",
+          "disagree": "Nie zgadzam się"
         },
         "games": {
           "index": {

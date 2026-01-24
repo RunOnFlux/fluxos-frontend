@@ -7,15 +7,15 @@
         :title="t('pages.apps.register.landing.title')"
         :subtitle="heroSubtitle"
         background-image="/banner/FluxDeploy.webp"
-        overlay-gradient="linear-gradient(135deg, rgba(var(--v-theme-primary), 0.5) 0%, rgba(var(--v-theme-secondary), 0.5) 100%)"
+        overlay-gradient="linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.4) 100%)"
         icon="mdi-cloud-upload"
-        icon-aria-label="FluxCloud Logo"
-        show-cta
-        :cta-text="t('pages.apps.register.landing.getStarted')"
-        cta-icon="mdi-rocket-launch"
-        cta-color="primary"
-        :cta-to="{ name: 'apps-register-configure' }"
+        icon-aria-label="Flux Cloud Logo"
+        :badge-text="t('pages.apps.register.orbit.landing.badge')"
+        badge-color="success"
       />
+
+      <!-- Deployment Method Choice Section -->
+      <OrbitDeploymentChoice />
 
       <!-- App Types Section -->
       <VCard class="section-card app-types-section">
@@ -95,6 +95,9 @@
         </VCardText>
       </VCard>
 
+      <!-- Git Deployment Features Section -->
+      <GitDeploymentFeatures />
+
       <!-- Trustpilot Reviews Section -->
       <TrustpilotPanel :star-size="32" show-rating-label use-live-data />
 
@@ -125,8 +128,8 @@
         card-variant="flat"
         button-icon="mdi-plus-circle"
         button-icon-position="start"
-        :button-to="{ name: 'apps-register-configure' }"
         padding-class="text-center"
+        @button-click="scrollToDeploymentChoice"
       />
 
       <!-- Related Links Section -->
@@ -152,8 +155,18 @@ import RelatedLinksGrid from '@/components/RelatedLinksGrid.vue'
 import HeroSection from '@/components/HeroSection.vue'
 import BreadcrumbNav from '@/components/BreadcrumbNav.vue'
 import CtaSection from '@/components/CtaSection.vue'
+import OrbitDeploymentChoice from '@/components/OrbitDeploymentChoice.vue'
+import GitDeploymentFeatures from '@/components/GitDeploymentFeatures.vue'
 
 const { t } = useI18n()
+
+// Scroll to deployment choice section
+const scrollToDeploymentChoice = () => {
+  const element = document.getElementById('deployment-choice')
+  if (element) {
+    element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+}
 
 // Server Locations Panel Configuration
 const serverLocationsPanel = {
@@ -284,6 +297,12 @@ const benefits = computed(() => [
     color: 'primary',
     title: t('pages.apps.register.landing.benefits.loadBalancer.title'),
     description: t('pages.apps.register.landing.benefits.loadBalancer.description'),
+  },
+  {
+    icon: 'mdi-memory',
+    color: 'warning',
+    title: t('pages.apps.register.landing.benefits.dedicatedResources.title'),
+    description: t('pages.apps.register.landing.benefits.dedicatedResources.description'),
   },
 ])
 
@@ -1130,7 +1149,18 @@ onMounted(async () => {
 }
 
 /* Responsive adjustments */
+@media (max-width: 1200px) {
+  .advantages-grid.four-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 @media (max-width: 960px) {
+  .advantages-grid,
+  .advantages-grid.four-cards {
+    grid-template-columns: 1fr;
+  }
+
   .comparison-row {
     grid-template-columns: 1fr;
     gap: 0.5rem;
