@@ -2,47 +2,47 @@
   "common": {
     "off": "off",
     "buttons": {
-      "cancel": "Cancel",
-      "close": "Close",
-      "save": "Save",
-      "delete": "Delete",
-      "submit": "Submit",
-      "update": "Update",
-      "install": "Install",
-      "start": "Start",
-      "stop": "Stop",
-      "remove": "Remove",
-      "download": "Download",
-      "upload": "Upload",
-      "copy": "Copy",
-      "paste": "Paste",
-      "export": "Export",
-      "import": "Import",
-      "edit": "Edit",
-      "view": "View",
-      "refresh": "Refresh",
-      "reload": "Reload",
-      "back": "Back",
-      "next": "Next",
-      "previous": "Previous",
-      "confirm": "Confirm",
-      "apply": "Apply",
-      "reset": "Reset",
-      "clear": "Clear",
-      "search": "Search",
-      "filter": "Filter",
-      "yes": "Yes",
-      "no": "No",
-      "ok": "OK",
-      "login": "Login"
+      "cancel": "إلغاء",
+      "close": "إغلاق",
+      "save": "حفظ",
+      "delete": "حذف",
+      "submit": "إرسال",
+      "update": "تحديث",
+      "install": "تثبيت",
+      "start": "بدء",
+      "stop": "إيقاف",
+      "remove": "إزالة",
+      "download": "تنزيل",
+      "upload": "رفع",
+      "copy": "نسخ",
+      "paste": "لصق",
+      "export": "تصدير",
+      "import": "استيراد",
+      "edit": "تحرير",
+      "view": "عرض",
+      "refresh": "تحديث",
+      "reload": "إعادة تحميل",
+      "back": "رجوع",
+      "next": "التالي",
+      "previous": "السابق",
+      "confirm": "تأكيد",
+      "apply": "تطبيق",
+      "reset": "إعادة تعيين",
+      "clear": "مسح",
+      "search": "بحث",
+      "filter": "تصفية",
+      "yes": "نعم",
+      "no": "لا",
+      "ok": "حسناً",
+      "login": "تسجيل الدخول"
     },
     "labels": {
-      "name": "Name",
-      "title": "Title",
-      "description": "Description",
-      "status": "Status",
-      "type": "Type",
-      "version": "Version",
+      "name": "الاسم",
+      "title": "العنوان",
+      "description": "الوصف",
+      "status": "الحالة",
+      "type": "النوع",
+      "version": "الإصدار",
       "size": "Size",
       "value": "Value",
       "url": "URL",
@@ -217,7 +217,7 @@
       "accept": "Accept",
       "acceptAll": "Accept All",
       "onlyNecessary": "Only Necessary",
-      "close": "Close",
+      "close": "إغلاق",
       "customize": "Customize",
       "manageCookies": "Manage Cookies",
       "settingsTitle": "Cookie Preferences",
@@ -249,19 +249,19 @@
       "registerNewApp": "Register New App",
       "marketplace": "App Marketplace",
       "marketplaceApps": "Applications",
-      "marketplaceGames": "Games",
+      "marketplaceGames": "ألعاب",
       "marketplaceWordPress": "WordPress",
       "composition": "Composition",
       "locations": "Locations",
       "perPage": "Per Page",
-      "filter": "Filter",
+      "filter": "تصفية",
       "typeToSearch": "Type to Search",
       "openAdvancedFilter": "Open advanced filter options",
       "appType": "App Type",
       "all": "All",
       "marketplaceOnly": "Marketplace",
       "marketplaceExcluded": "Marketplace Excluded",
-      "version": "Version",
+      "version": "الإصدار",
       "allVersions": "All Versions",
       "minHdd": "Min HDD (GB)",
       "minRam": "Min RAM (MB)",
@@ -280,12 +280,12 @@
       "controlDeployments": "Control deployments",
       "deployDistributedApps": "Deploy distributed apps",
       "scaleGlobally": "Scale globally",
-      "signIn": "Login",
+      "signIn": "تسجيل الدخول",
       "learnMore": "Learn More",
       "newToFlux": "New to Flux?",
       "checkDocumentation": "Check our documentation",
       "toGetStarted": "to get started.",
-      "status": "Status",
+      "status": "الحالة",
       "checking": "checking...",
       "loading": "Loading...",
       "unableToConnect": "Unable to connect to the server. Please check your internet or try again later.",
@@ -350,11 +350,11 @@
     "appDetailsCard": {
       "general": "General",
       "copySpecification": "Copy Specification",
-      "updateSubscription": "Update",
+      "updateSubscription": "تحديث",
       "renewSubscription": "Renew",
-      "cancelSubscription": "Cancel",
-      "name": "Name",
-      "description": "Description",
+      "cancelSubscription": "إلغاء",
+      "name": "الاسم",
+      "description": "الوصف",
       "owner": "Owner",
       "hash": "Hash",
       "contacts": "Contacts",
@@ -382,8 +382,8 @@
       "applicationExpired": "Application Expired"
     },
     "componentDetails": {
-      "name": "Name",
-      "description": "Description",
+      "name": "الاسم",
+      "description": "الوصف",
       "repository": "Repository",
       "repositoryAuthentication": "Repository Authentication",
       "private": "Private",
@@ -409,8 +409,8 @@
     "confirmCustomDialog": {
       "confirmation": "Confirmation",
       "areYouSure": "Are you sure?",
-      "cancel": "Cancel",
-      "confirm": "Confirm"
+      "cancel": "إلغاء",
+      "confirm": "تأكيد"
     },
     "manualSignDialog": {
       "title": "Manual Signing",
@@ -418,8 +418,8 @@
       "messageToSign": "Message to sign:",
       "pasteSignature": "Paste signature:",
       "signaturePlaceholder": "Enter signature here",
-      "cancel": "Cancel",
-      "submit": "Submit"
+      "cancel": "إلغاء",
+      "submit": "إرسال"
     },
     "fileUpload": {
       "dropFilesHere": "Drop files here or",
@@ -452,7 +452,7 @@
     },
     "locations": {
       "perPage": "Per page",
-      "filter": "Filter",
+      "filter": "تصفية",
       "typeToSearch": "Type to Search",
       "selectActiveInstance": "Select active instance",
       "noInstancesFound": "No instances found...",
@@ -478,19 +478,19 @@
       "folderName": "Folder Name",
       "create": "Create",
       "uploadFiles": "Upload Files",
-      "close": "Close",
+      "close": "إغلاق",
       "rename": "Rename",
       "newName": "New Name",
       "editing": "Editing: {file}",
       "saving": "Saving...",
-      "save": "Save",
-      "name": "Name",
+      "save": "حفظ",
+      "name": "الاسم",
       "size": "Size",
       "modifiedAt": "Modified At",
       "downloadFolderAsArchive": "Download Folder as Archive",
       "downloadFile": "Download File",
-      "edit": "Edit",
-      "delete": "Delete",
+      "edit": "تحرير",
+      "delete": "حذف",
       "fileTooLarge": "The file exceeds the maximum size for browser-based editing. Please use a terminal-based editor.",
       "initializing": "Initializing...",
       "loadingFile": "Loading {file}... ",
@@ -561,9 +561,9 @@
       "lineSelection": "Line Selection Mode",
       "autoScroll": "Auto Scroll",
       "copied": "Copied",
-      "copy": "Copy",
+      "copy": "نسخ",
       "unselect": "Unselect",
-      "download": "Download",
+      "download": "تنزيل",
       "noMatchingLogs": "No matching logs found for '{keyword}'",
       "noLogsFound": "No logs found",
       "errors": {
@@ -607,7 +607,7 @@
       "created": "Created",
       "expires": "Expires",
       "actions": "Actions",
-      "name": "Name",
+      "name": "الاسم",
       "time": "Time",
       "url": "URL",
       "timestamp": "Timestamp",
@@ -649,7 +649,7 @@
       "privacyPolicy": "Privacy Policy",
       "email": "Email",
       "password": "Password",
-      "login": "Login",
+      "login": "تسجيل الدخول",
       "signUp": "Sign Up",
       "dontHaveAccount": "Don't have an account?",
       "or": "OR",
@@ -675,8 +675,8 @@
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
-      "cancel": "Cancel",
-      "ok": "OK",
+      "cancel": "إلغاء",
+      "ok": "حسناً",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
       "passwordRequired": "Password is required",
@@ -849,7 +849,7 @@
       "validationSubdirContainsPipe": "Remove {'|'} from subdirectory name",
       "validationModeConflictsWithPrefix": "Choose a different Mode - m, f, c, cf are not allowed",
       "labelMode": "Mode",
-      "labelMountType": "Type",
+      "labelMountType": "النوع",
       "labelPath": "Path",
       "typePrimary": "Primary",
       "typePrimaryDesc": "Main persistent storage for your application",
@@ -952,7 +952,7 @@
       "reviewTooltip": "Review application configuration before signing",
       "name": "Application Name",
       "nameTooltip": "The name of your application",
-      "description": "Description",
+      "description": "الوصف",
       "descriptionTooltip": "A brief description of your application",
       "owner": "Owner",
       "ownerTooltip": "The owner of the application",
@@ -975,8 +975,8 @@
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
       "managementAction": "Management Action",
       "renewalAction": "Renewal",
-      "updateAction": "Update",
-      "cancelAction": "Cancel",
+      "updateAction": "تحديث",
+      "cancelAction": "إلغاء",
       "cancelSubscription": "Cancel Subscription",
       "cancelWarning": "This will expire your application.",
       "currentlySubscribedUntil": "Currently your application is subscribed until",
@@ -998,8 +998,8 @@
       "tabEnterpriseNodes": "Enterprise Nodes",
       "tabPriorityNodes": "Priority Nodes",
       "region": "Region",
-      "componentName": "Name",
-      "componentDescription": "Description",
+      "componentName": "الاسم",
+      "componentDescription": "الوصف",
       "repositoryTag": "Repository Tag",
       "repositoryAuthentication": "Repository Authentication",
       "secrets": "Secrets",
@@ -1046,7 +1046,7 @@
       "publicKeyScore": "Public Key Score:",
       "publicKeyScoreLabel": "Public Key Score:",
       "appsAssigned": "Apps Assigned:",
-      "status": "Status",
+      "status": "الحالة",
       "statusLabel": "Status:",
       "sendTo": "Send to",
       "message": "Message",
@@ -1090,8 +1090,8 @@
       "timeLeft": "Time left:",
       "renewalPeriod": "Renewal period",
       "afterRenewalSubscriptionUntil": "After renewal subscription until:",
-      "cancel": "Cancel",
-      "save": "Save",
+      "cancel": "إلغاء",
+      "save": "حفظ",
       "autoSelect": "Auto Select",
       "chooseEnterpriseNodes": "Choose Enterprise Nodes",
       "choosePriorityNodes": "Choose Priority Nodes",
@@ -1297,7 +1297,7 @@
       "connected": "Connected",
       "updateAvailable": "Update Available",
       "upToDate": "Up to date",
-      "statusMessage": "Status",
+      "statusMessage": "الحالة",
       "unreachable": "Unreachable",
       "connecting": "Connecting...",
       "disconnected": "Disconnected",
@@ -1325,15 +1325,15 @@
         "subtitle": "Web3 Marketplace"
       },
       "appCard": {
-        "install": "Install",
-        "view": "View",
+        "install": "تثبيت",
+        "view": "عرض",
         "viewDetails": "View Details",
         "defaultCategory": "Apps",
         "noDescription": "No description available"
       },
       "fluxCloudAppCard": {
         "unknownDeveloper": "Unknown Developer",
-        "install": "Install",
+        "install": "تثبيت",
         "viewApp": "View App",
         "sponsored": "Sponsored"
       },
@@ -1344,7 +1344,7 @@
       "marketplaceAppCard": {
         "unknown": "Unknown",
         "free": "Free",
-        "install": "Install",
+        "install": "تثبيت",
         "viewDetails": "View Details",
         "noDescription": "No description available",
         "other": "Other"
@@ -1364,8 +1364,8 @@
       },
       "sponsoredCard": {
         "sponsored": "Sponsored",
-        "install": "Install",
-        "view": "View",
+        "install": "تثبيت",
+        "view": "عرض",
         "viewDetails": "View Details",
         "noSponsoredApps": "No sponsored apps available",
         "free": "Free"
@@ -1375,13 +1375,13 @@
         "noNewApps": "No new apps available",
         "unknownApp": "Unknown App",
         "noDescription": "No description available",
-        "view": "View"
+        "view": "عرض"
       },
       "maintenanceCard": {
         "defaultTitle": "Under Maintenance",
         "defaultSubtitle": "We're currently experiencing technical difficulties. Our team is working to resolve this issue as quickly as possible.",
         "defaultDescription": "Please check back later or contact support if you need immediate assistance.",
-        "refresh": "Refresh"
+        "refresh": "تحديث"
       },
       "appConfigCard": {
         "cpu": "CPU",
@@ -1405,12 +1405,12 @@
         "resetFilters": "Reset Filters",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
-        "refresh": "Refresh",
-        "previous": "Previous",
-        "next": "Next",
+        "refresh": "تحديث",
+        "previous": "السابق",
+        "next": "التالي",
         "sortDefault": "Default",
         "sortDate": "Date",
-        "sortName": "Name"
+        "sortName": "الاسم"
       },
       "panels": {
         "screenshotsPanel": {
@@ -1516,7 +1516,7 @@
         "noCompatibleWallets": "No compatible wallets detected. Please install ZelCore, SSP, MetaMask, ensure you're logged in via SSO, or login manually.",
         "signingApp": "Signing App...",
         "registeringApp": "Registering App...",
-        "cancel": "Cancel",
+        "cancel": "إلغاء",
         "manualSigningCancelled": "Manual signing cancelled",
         "signingAndRegistrationComplete": "Signing and Registration Complete",
         "redirectIn": "You will be redirected in {seconds} seconds...",
@@ -1668,7 +1668,7 @@
         "anonymous": "Anonymous",
         "submitted": "Submitted",
         "endDate": "End Date",
-        "description": "Description",
+        "description": "الوصف",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
           "voteProgress": "Vote Progress",
@@ -1715,7 +1715,7 @@
         "technicalDetails": {
           "title": "Technical Details",
           "proposalHash": "Proposal Hash",
-          "copy": "Copy",
+          "copy": "نسخ",
           "submitDate": "Submit Date",
           "voteEndDate": "Vote End Date",
           "currentStatus": "Current Status"
@@ -1746,8 +1746,8 @@
         "fileTypeHint": "Application specification or Docker Compose (JSON/YAML)",
         "pasteHint": "Paste application specification or Docker Compose (JSON/YAML)",
         "reviewAndEdit": "Review and edit before importing",
-        "import": "Import",
-        "cancel": "Cancel",
+        "import": "استيراد",
+        "cancel": "إلغاء",
         "loadSpecification": "Load Specification",
         "pasteFromClipboard": "Paste from Clipboard",
         "contentPasted": "Content pasted from clipboard!",
@@ -1886,7 +1886,7 @@
       "canTakeUpTo20Minutes": "This can take up to 20 minutes",
       "cancelMonitoring": "Cancel Monitoring",
       "pendingPayment": "Pending Payment",
-      "cancel": "Cancel",
+      "cancel": "إلغاء",
       "sspPaymentInitiated": "SSP payment initiated, monitoring for confirmation...",
       "sspPaymentFailed": "SSP payment failed: {error}",
       "zelcorePaymentFailed": "Zelcore payment failed: {error}",
@@ -1946,11 +1946,11 @@
         "searchPlaceholder": "Search files and folders...",
         "listView": "List View",
         "gridView": "Grid View",
-        "columnName": "Name",
+        "columnName": "الاسم",
         "columnUpdated": "Updated",
         "columnSize": "Size",
         "newFolder": "New Folder",
-        "upload": "Upload",
+        "upload": "رفع",
         "uploadFiles": "Upload Files",
         "uploadFolder": "Upload Folder",
         "goToRoot": "Go to Root",
@@ -1965,16 +1965,16 @@
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
         "preview": "Preview",
-        "download": "Download",
+        "download": "تنزيل",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
         "rename": "Rename",
         "moveTo": "Move To",
         "copyLink": "Copy Link",
-        "delete": "Delete",
+        "delete": "حذف",
         "paginationInfo": "Showing {start}-{end} of {total}",
-        "edit": "Edit",
+        "edit": "تحرير",
         "browserNoVideoSupport": "Your browser does not support the video tag.",
         "browserNoAudioSupport": "Your browser does not support the audio element.",
         "previewNotAvailable": "Preview not available for this file type",
@@ -1994,7 +1994,7 @@
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
         "folder": "folder",
         "file": "file",
-        "cancel": "Cancel",
+        "cancel": "إلغاء",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
         "newName": "New Name",
@@ -2008,7 +2008,7 @@
         "latest": "Latest",
         "versionNumber": "Version {number}",
         "noPreviousVersions": "No Previous Versions",
-        "close": "Close",
+        "close": "إغلاق",
         "createNewFolder": "Create New Folder",
         "folderName": "Folder Name",
         "createFolder": "Create Folder",
@@ -2051,11 +2051,11 @@
         "title": "File Versions",
         "current": "Current",
         "currentVersion": "Current Version (Last Updated)",
-        "previous": "Previous",
+        "previous": "السابق",
         "original": "Original",
         "versionNumber": "Version {number}",
         "preview": "Preview",
-        "download": "Download",
+        "download": "تنزيل",
         "copyLink": "Copy Link",
         "noPreviousVersions": "No Previous Versions",
         "noPreviousVersionsMessage": "This file has no previous versions",
@@ -2073,7 +2073,7 @@
         "subtitle": "Choose your perfect storage plan.",
         "storage": "Storage",
         "contactUs": "Contact Us",
-        "signIn": "Login",
+        "signIn": "تسجيل الدخول",
         "current": "Current",
         "renew": "Renew",
         "upgrade": "Upgrade",
@@ -2153,25 +2153,25 @@
         "used": "used",
         "available": "Available",
         "fileManager": "File Manager",
-        "upload": "Upload",
+        "upload": "رفع",
         "newFolder": "New Folder",
         "emptyFolder": "This folder is empty",
         "folder": "Folder",
         "file": "File",
         "columns": {
-          "name": "Name",
+          "name": "الاسم",
           "modified": "Modified",
-          "type": "Type",
+          "type": "النوع",
           "size": "Size",
           "actions": "Actions"
         },
-        "download": "Download",
+        "download": "تنزيل",
         "downloadZip": "Download as ZIP",
         "rename": "Rename",
         "share": "Share",
         "unshare": "Unshare",
         "copyLink": "Copy Share Link",
-        "delete": "Delete",
+        "delete": "حذف",
         "createFolder": "Create Folder",
         "folderName": "Folder Name",
         "renameItem": "Rename",
@@ -2218,14 +2218,14 @@
         "title": "Manage Users",
         "subtitle": "View and manage logged users and active sessions",
         "searchUsers": "Search users",
-        "refresh": "Refresh",
+        "refresh": "تحديث",
         "logOut": "Log Out",
         "logOutAll": "Log Out All",
         "logOutAllUsers": "Log Out All Users",
         "current": "Current",
         "yourCurrentSession": "Your current session",
         "activeSessions": "Active Sessions",
-        "cancel": "Cancel",
+        "cancel": "إلغاء",
         "areYouSureProceed": "Are you sure you want to proceed?",
         "confirmLogoutUser": "Confirm Logout User",
         "confirmLogoutAllUsers": "Confirm Logout All Users",
@@ -2305,15 +2305,15 @@
           "flux": "Flux Logs",
           "daemon": "Daemon Logs",
           "benchmark": "Benchmark Logs",
-          "download": "Download",
-          "refresh": "Refresh",
+          "download": "تنزيل",
+          "refresh": "تحديث",
           "loading": "Loading logs..."
         },
         "daemon": {
           "control": {
             "title": "Daemon Control",
             "start": {
-              "title": "Start",
+              "title": "بدء",
               "subtitle": "Start daemon",
               "button": "Start Daemon"
             },
@@ -2323,14 +2323,14 @@
               "button": "Restart Daemon"
             },
             "stop": {
-              "title": "Stop",
+              "title": "إيقاف",
               "subtitle": "Stop daemon",
               "button": "Stop Daemon"
             }
           },
           "info": {
             "title": "Daemon Information",
-            "refresh": "Refresh",
+            "refresh": "تحديث",
             "loadingMessage": "Loading daemon info...",
             "versionInfo": "Version Information",
             "networkStatus": "Network Status",
@@ -2352,7 +2352,7 @@
           "control": {
             "title": "Benchmark Control",
             "start": {
-              "title": "Start",
+              "title": "بدء",
               "subtitle": "Start benchmark",
               "button": "Start Benchmark"
             },
@@ -2362,14 +2362,14 @@
               "button": "Restart Benchmark"
             },
             "stop": {
-              "title": "Stop",
+              "title": "إيقاف",
               "subtitle": "Stop benchmark",
               "button": "Stop Benchmark"
             }
           },
           "info": {
             "title": "Benchmark Information",
-            "refresh": "Refresh",
+            "refresh": "تحديث",
             "loadingMessage": "Loading benchmark info...",
             "thunder": "Thunder",
             "runningWarning": "Benchmark is currently running. Please try again later.",
@@ -2385,7 +2385,7 @@
           "apiPort": "API Port",
           "blockedPorts": "Blocked Ports",
           "blockedRepositories": "Blocked Repositories",
-          "type": "Type"
+          "type": "النوع"
         },
         "placeholders": {
           "routerIpPlaceholder": "192.168.1.1",
@@ -2408,11 +2408,11 @@
           "errorLoadingBenchmarkInfo": "Error loading benchmark info"
         },
         "dialogs": {
-          "cancel": "Cancel",
-          "update": "Update",
+          "cancel": "إلغاء",
+          "update": "تحديث",
           "restart": "Restart",
-          "start": "Start",
-          "stop": "Stop",
+          "start": "بدء",
+          "stop": "إيقاف",
           "confirmProceed": "Are you sure you want to proceed?",
           "updateFlux": {
             "title": "Confirm Flux Gravity Update",
@@ -2422,22 +2422,22 @@
           "updateRouterIp": {
             "title": "Update Router IP",
             "message": "Are you sure you want to update the router IP address?",
-            "button": "Update"
+            "button": "تحديث"
           },
           "updateBlockedPorts": {
             "title": "Update Blocked Ports",
             "message": "Are you sure you want to update the blocked ports?",
-            "button": "Update"
+            "button": "تحديث"
           },
           "updateApiPort": {
             "title": "Update API Port",
             "message": "Are you sure you want to update the API port?",
-            "button": "Update"
+            "button": "تحديث"
           },
           "updateBlockedRepos": {
             "title": "Update Blocked Repositories",
             "message": "Are you sure you want to update the blocked repositories?",
-            "button": "Update"
+            "button": "تحديث"
           },
           "restartFluxOs": {
             "title": "Confirm Restart",
@@ -2499,8 +2499,8 @@
         },
         "tooltips": {
           "manage": "Manage",
-          "install": "Install",
-          "remove": "Remove",
+          "install": "تثبيت",
+          "remove": "إزالة",
           "visit": "Visit"
         },
         "searchIpPlaceholder": "Search IP...",
@@ -2518,7 +2518,7 @@
           "fullLogs": "Full Logs",
           "showLogs": "Show Logs",
           "hideLogs": "Hide Logs",
-          "close": "Close"
+          "close": "إغلاق"
         },
         "specification": {
           "local": "Local Specification",
@@ -2596,11 +2596,11 @@
       },
       "table": {
         "perPage": "Per Page",
-        "filter": "Filter",
+        "filter": "تصفية",
         "filterPlaceholder": "Type to Search",
         "advancedFilterTooltip": "Open advanced filter options",
         "appType": "App Type",
-        "version": "Version",
+        "version": "الإصدار",
         "minHdd": "Min HDD (GB)",
         "minRam": "Min RAM (MB)",
         "minCpu": "Min CPU (Cores)",
@@ -2618,7 +2618,7 @@
           "monitorPerformance": "Monitor performance",
           "controlDeployments": "Control deployments"
         },
-        "signIn": "Login",
+        "signIn": "تسجيل الدخول",
         "learnMore": "Learn More",
         "noMatchingApps": "No matching apps found.",
         "connectionError": "Unable to connect to the server. Please check your internet or try again later.",
@@ -2644,9 +2644,9 @@
           "v8": "Version 8"
         },
         "headers": {
-          "name": "Name",
-          "status": "Status",
-          "description": "Description"
+          "name": "الاسم",
+          "status": "الحالة",
+          "description": "الوصف"
         }
       },
       "register": {
@@ -3006,7 +3006,7 @@
             "enterprisePrivate": "Enterprise (Private Repo)",
             "configuration": "Configuration",
             "appName": "App Name",
-            "description": "Description",
+            "description": "الوصف",
             "appPort": "App Port",
             "exposedPort": "Exposed Port",
             "contact": "Contact",
@@ -3051,7 +3051,7 @@
             "paymentDescription": "Choose your preferred payment method to activate your Pro plan.",
             "processingPayment": "Processing payment...",
             "waitingConfirmation": "Waiting for payment confirmation...",
-            "cancel": "Cancel",
+            "cancel": "إلغاء",
             "paymentSummary": "Payment Summary",
             "discountApplied": "{percent}% discount applied",
             "fiatPayment": "Fiat Payment",
@@ -3096,10 +3096,10 @@
             "cancelPayment": "Cancel and go back"
           },
           "navigation": {
-            "back": "Back",
+            "back": "رجوع",
             "continue": "Continue",
-            "next": "Next",
-            "previous": "Previous"
+            "next": "التالي",
+            "previous": "السابق"
           },
           "payment": {
             "payWithCard": "Pay with Card",
@@ -3608,7 +3608,7 @@
       },
       "list": {
         "perPage": "Per page",
-        "filter": "Filter",
+        "filter": "تصفية",
         "filterPlaceholder": "Type to Search",
         "notAvailable": "N/A",
         "unknown": "Unknown",
@@ -3646,7 +3646,7 @@
         "tierNimbus": "Nimbus",
         "tierStratus": "Stratus",
         "errorFetchHistory": "Unable to fetch history stats",
-        "close": "Close"
+        "close": "إغلاق"
       },
       "rewards": {
         "intro": {
@@ -3665,7 +3665,7 @@
         "usd": "USD",
         "historicalPriceChart": "Historical Price Chart",
         "price": "Price",
-        "close": "Close",
+        "close": "إغلاق",
         "errors": {
           "failedToFetchData": "Failed to fetch data",
           "failedToFetchRates": "Failed to fetch rates",
@@ -3690,7 +3690,7 @@
       "renewalSuccess": "Subscription renewed successfully!",
       "renewalFailed": "Renewal failed: ",
       "upgradeFailed": "Upgrade failed: ",
-      "cancel": "Cancel",
+      "cancel": "إلغاء",
       "features": {
         "title": "Why Choose FluxDrive",
         "encryption": {
@@ -3758,7 +3758,7 @@
         "about": "About",
         "developer": "Developer",
         "lastUpdate": "Last Update",
-        "version": "Version",
+        "version": "الإصدار",
         "downloads": "Downloads",
         "links": "Links",
         "website": "Website",
@@ -4986,7 +4986,7 @@
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
       "loggedIn": "Logged in",
-      "login": "Login",
+      "login": "تسجيل الدخول",
       "loginToVote": "Login to Vote",
       "filters": "Filters",
       "addProposal": "Add Proposal",
@@ -5020,8 +5020,8 @@
       "end": "End",
       "required": "Required",
       "total": "Total",
-      "yes": "Yes",
-      "no": "No",
+      "yes": "نعم",
+      "no": "لا",
       "loginRequiredForVoting": "Login Required for Voting",
       "loginRequiredMessage": "You need to be logged in to participate in xDAO voting. Please choose your preferred login method below.",
       "debugInfo": "Debug Info:",
@@ -5072,7 +5072,7 @@
         "monthly": "Monthly",
         "total": "Total",
         "currentPlan": "Current Plan",
-        "status": "Status"
+        "status": "الحالة"
       },
       "subscriptionDetails": "Subscription Details",
       "billingCycle": "Billing Cycle",
@@ -5137,7 +5137,7 @@
       "noResultsText": "No matching records found.",
       "noDataText": "No data available."
     },
-    "close": "Close",
+    "close": "إغلاق",
     "open": "open",
     "loading": "loading",
     "carousel": {
@@ -5193,7 +5193,7 @@
     "trend": "Trend",
     "used": "used",
     "limit": "limit",
-    "refresh": "Refresh",
+    "refresh": "تحديث",
     "forceGC": "Force GC",
     "clearHistory": "Clear History",
     "notAvailable": "Performance Memory API not available in this browser.",

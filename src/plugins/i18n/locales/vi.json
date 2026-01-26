@@ -2,85 +2,85 @@
   "common": {
     "off": "off",
     "buttons": {
-      "cancel": "Cancel",
-      "close": "Close",
-      "save": "Save",
-      "delete": "Delete",
-      "submit": "Submit",
-      "update": "Update",
-      "install": "Install",
-      "start": "Start",
-      "stop": "Stop",
-      "remove": "Remove",
-      "download": "Download",
-      "upload": "Upload",
-      "copy": "Copy",
-      "paste": "Paste",
-      "export": "Export",
-      "import": "Import",
-      "edit": "Edit",
-      "view": "View",
-      "refresh": "Refresh",
-      "reload": "Reload",
-      "back": "Back",
-      "next": "Next",
-      "previous": "Previous",
-      "confirm": "Confirm",
-      "apply": "Apply",
-      "reset": "Reset",
-      "clear": "Clear",
-      "search": "Search",
-      "filter": "Filter",
-      "yes": "Yes",
-      "no": "No",
+      "cancel": "Hủy",
+      "close": "Đóng",
+      "save": "Lưu",
+      "delete": "Xóa",
+      "submit": "Gửi",
+      "update": "Cập nhật",
+      "install": "Cài đặt",
+      "start": "Bắt đầu",
+      "stop": "Dừng",
+      "remove": "Xóa",
+      "download": "Tải xuống",
+      "upload": "Tải lên",
+      "copy": "Sao chép",
+      "paste": "Dán",
+      "export": "Xuất",
+      "import": "Nhập",
+      "edit": "Chỉnh sửa",
+      "view": "Xem",
+      "refresh": "Làm mới",
+      "reload": "Tải lại",
+      "back": "Quay lại",
+      "next": "Tiếp theo",
+      "previous": "Trước đó",
+      "confirm": "Xác nhận",
+      "apply": "Áp dụng",
+      "reset": "Đặt lại",
+      "clear": "Xóa",
+      "search": "Tìm kiếm",
+      "filter": "Lọc",
+      "yes": "Có",
+      "no": "Không",
       "ok": "OK",
-      "login": "Login"
+      "login": "Đăng nhập"
     },
     "labels": {
-      "name": "Name",
-      "title": "Title",
-      "description": "Description",
-      "status": "Status",
-      "type": "Type",
-      "version": "Version",
-      "size": "Size",
+      "name": "Tên",
+      "title": "Tiêu đề",
+      "description": "Mô tả",
+      "status": "Trạng thái",
+      "type": "Loại",
+      "version": "Phiên bản",
+      "size": "Kích thước",
       "value": "Value",
       "url": "URL",
-      "message": "Message",
-      "owner": "Owner",
-      "date": "Date",
-      "time": "Time",
-      "location": "Location",
-      "country": "Country",
-      "city": "City",
+      "message": "Thông báo",
+      "owner": "Chủ sở hữu",
+      "date": "Ngày",
+      "time": "Thời gian",
+      "location": "Vị trí",
+      "country": "Quốc gia",
+      "city": "Thành phố",
       "email": "Email",
-      "password": "Password",
-      "username": "Username",
-      "address": "Address",
-      "port": "Port",
-      "ip": "IP Address",
+      "password": "Mật khẩu",
+      "username": "Tên người dùng",
+      "address": "Địa chỉ",
+      "port": "Cổng",
+      "ip": "Địa chỉ IP",
       "tier": "Tier",
-      "price": "Price",
-      "total": "Total",
-      "amount": "Amount",
-      "free": "Free",
-      "memory": "Memory",
-      "storage": "Storage",
-      "screenshots": "Screenshots",
-      "about": "About",
-      "developer": "Developer",
+      "price": "Giá",
+      "total": "Tổng",
+      "amount": "Số tiền",
+      "free": "Miễn phí",
+      "memory": "Bộ nhớ",
+      "storage": "Lưu trữ",
+      "screenshots": "Ảnh chụp màn hình",
+      "about": "Về",
+      "developer": "Nhà phát triển",
       "lastUpdate": "Last Update",
-      "downloads": "Downloads",
-      "links": "Links",
-      "website": "Website",
+      "downloads": "Tải xuống",
+      "links": "Liên kết",
+      "website": "Trang web",
       "sourceCode": "Source Code",
-      "support": "Support",
-      "plan": "Plan",
-      "billing": "Billing",
-      "monthly": "Monthly",
+      "support": "Hỗ trợ",
+      "plan": "Gói",
+      "billing": "Thanh toán",
+      "monthly": "Hàng tháng",
       "scrollLeft": "Scroll left",
       "scrollRight": "Scroll right",
-      "optional": "Optional"
+      "optional": "Tùy chọn"
     },
     "theme": {
       "light": "Light",
@@ -88,26 +88,26 @@
       "switchTheme": "Switch theme"
     },
     "status": {
-      "loading": "Loading...",
-      "success": "Success",
-      "error": "Error",
-      "warning": "Warning",
-      "info": "Info",
-      "active": "Active",
-      "inactive": "Inactive",
-      "enabled": "Enabled",
-      "disabled": "Disabled",
-      "online": "Online",
-      "offline": "Offline",
-      "available": "Available",
-      "unavailable": "Unavailable",
-      "running": "Running",
-      "stopped": "Stopped",
-      "pending": "Pending",
-      "processing": "Processing",
-      "completed": "Completed",
-      "failed": "Failed",
-      "unknown": "Unknown"
+      "loading": "Đang tải...",
+      "success": "Thành công",
+      "error": "Lỗi",
+      "warning": "Cảnh báo",
+      "info": "Thông tin",
+      "active": "Hoạt động",
+      "inactive": "Không hoạt động",
+      "enabled": "Bật",
+      "disabled": "Tắt",
+      "online": "Trực tuyến",
+      "offline": "Ngoại tuyến",
+      "available": "Có sẵn",
+      "unavailable": "Không có sẵn",
+      "running": "Đang chạy",
+      "stopped": "Đã dừng",
+      "pending": "Chờ xử lý",
+      "processing": "Đang xử lý",
+      "completed": "Hoàn thành",
+      "failed": "Thất bại",
+      "unknown": "Không xác định"
     },
     "messages": {
       "pleaseWait": "Please wait...",
@@ -125,9 +125,9 @@
       "unauthorized": "Unauthorized access",
       "notFound": "Not found",
       "serverError": "Server error. Please try again later.",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "Đã sao chép vào clipboard!",
       "failedToCopy": "Failed to copy to clipboard",
-      "loginRequired": "Login Required",
+      "loginRequired": "Cần đăng nhập",
       "loggedOutSuccessfully": "Logged out successfully"
     },
     "itemsPerPage": "Items per page",
@@ -178,8 +178,8 @@
     "resources": {
       "cpu": "CPU",
       "ram": "RAM",
-      "memory": "Memory",
-      "storage": "Storage",
+      "memory": "Bộ nhớ",
+      "storage": "Lưu trữ",
       "disk": "Disk",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
@@ -188,36 +188,36 @@
       "threads": "Threads"
     },
     "time": {
-      "second": "second",
-      "seconds": "seconds",
-      "minute": "minute",
-      "minutes": "minutes",
-      "hour": "hour",
-      "hours": "hours",
-      "day": "day",
-      "days": "days",
-      "week": "week",
-      "weeks": "weeks",
-      "month": "month",
-      "months": "months",
-      "year": "year",
-      "years": "years",
-      "ago": "ago",
+      "second": "giây",
+      "seconds": "giây",
+      "minute": "phút",
+      "minutes": "phút",
+      "hour": "giờ",
+      "hours": "giờ",
+      "day": "ngày",
+      "days": "ngày",
+      "week": "tuần",
+      "weeks": "tuần",
+      "month": "tháng",
+      "months": "tháng",
+      "year": "năm",
+      "years": "năm",
+      "ago": "trước đó",
       "now": "now"
     },
     "units": {
-      "vCores": "vCores",
+      "vCores": "vCore",
       "mb": "MB",
       "gb": "GB"
     },
     "cookieConsent": {
       "title": "We value your privacy",
       "description": "We use cookies to enhance your browsing experience and analyze our traffic. By clicking Accept All, you consent to our use of cookies.",
-      "learnMore": "Learn more",
+      "learnMore": "Tìm hiểu thêm",
       "accept": "Accept",
       "acceptAll": "Accept All",
       "onlyNecessary": "Only Necessary",
-      "close": "Close",
+      "close": "Đóng",
       "customize": "Customize",
       "manageCookies": "Manage Cookies",
       "settingsTitle": "Cookie Preferences",
@@ -230,38 +230,38 @@
   },
   "menu": {
     "home": {
-      "title": "Home"
+      "title": "Trang chủ"
     },
     "dashboard": {
       "title": "Flux Network",
-      "overview": "Overview",
+      "overview": "Tổng quan",
       "resources": "Resources",
       "map": "Map",
       "rewards": "Rewards",
       "nodeList": "Node List"
     },
     "application": {
-      "title": "Applications",
-      "myApplications": "My Applications",
-      "management": "Management",
+      "title": "Ứng dụng",
+      "myApplications": "Ứng dụng của tôi",
+      "management": "Quản lý",
       "globalApps": "Global Apps",
       "localApps": "Local Apps",
       "registerNewApp": "Register New App",
       "marketplace": "App Marketplace",
-      "marketplaceApps": "Applications",
-      "marketplaceGames": "Games",
+      "marketplaceApps": "Ứng dụng",
+      "marketplaceGames": "Trò chơi",
       "marketplaceWordPress": "WordPress",
       "composition": "Composition",
       "locations": "Locations",
       "perPage": "Per Page",
-      "filter": "Filter",
-      "typeToSearch": "Type to Search",
+      "filter": "Lọc",
+      "typeToSearch": "Gõ để tìm kiếm",
       "openAdvancedFilter": "Open advanced filter options",
       "appType": "App Type",
       "all": "All",
-      "marketplaceOnly": "Marketplace",
+      "marketplaceOnly": "Thị trường",
       "marketplaceExcluded": "Marketplace Excluded",
-      "version": "Version",
+      "version": "Phiên bản",
       "allVersions": "All Versions",
       "minHdd": "Min HDD (GB)",
       "minRam": "Min RAM (MB)",
@@ -272,7 +272,7 @@
       "clearAllFilters": "Clear All Filters",
       "noMatchingApps": "No matching apps found.",
       "noApps": "You don't have any apps.",
-      "signInRequired": "Login Required",
+      "signInRequired": "Cần đăng nhập",
       "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",
       "viewYourApps": "View your apps",
       "manageResources": "Manage resources",
@@ -280,14 +280,14 @@
       "controlDeployments": "Control deployments",
       "deployDistributedApps": "Deploy distributed apps",
       "scaleGlobally": "Scale globally",
-      "signIn": "Login",
-      "learnMore": "Learn More",
+      "signIn": "Đăng nhập",
+      "learnMore": "Tìm hiểu thêm",
       "newToFlux": "New to Flux?",
       "checkDocumentation": "Check our documentation",
       "toGetStarted": "to get started.",
-      "status": "Status",
+      "status": "Trạng thái",
       "checking": "checking...",
-      "loading": "Loading...",
+      "loading": "Đang tải...",
       "unableToConnect": "Unable to connect to the server. Please check your internet or try again later.",
       "myActiveApps": "My Active Apps",
       "activeApps": "Active Apps",
@@ -314,7 +314,7 @@
       "title": "Flux XDAO"
     },
     "costCalculator": {
-      "title": "Cost Calculator"
+      "title": "Máy tính chi phí"
     },
     "apiReference": {
       "title": "Help"
@@ -334,7 +334,7 @@
       "description": "Check Flux network information, resources available, or a map with server locations."
     },
     "application": {
-      "title": "Applications",
+      "title": "Ứng dụng",
       "description": "Buy on marketplace, register your own app, manage your active apps."
     },
     "administration": {
@@ -348,19 +348,19 @@
   },
   "core": {
     "appDetailsCard": {
-      "general": "General",
+      "general": "Chung",
       "copySpecification": "Copy Specification",
-      "updateSubscription": "Update",
+      "updateSubscription": "Cập nhật",
       "renewSubscription": "Renew",
-      "cancelSubscription": "Cancel",
-      "name": "Name",
-      "description": "Description",
-      "owner": "Owner",
+      "cancelSubscription": "Hủy",
+      "name": "Tên",
+      "description": "Mô tả",
+      "owner": "Chủ sở hữu",
       "hash": "Hash",
       "contacts": "Contacts",
       "geolocation": "Geolocation",
       "worldwide": "Worldwide",
-      "instances": "Instances",
+      "instances": "Instanc",
       "specificationsVersion": "Specifications version",
       "registeredOnBlockheight": "Registered on Blockheight",
       "expiresOnBlockheight": "Expires on Blockheight",
@@ -372,7 +372,7 @@
       "staticIpNo": "No, Running on all nodes",
       "specificationCopied": "Application specification copied to clipboard!",
       "specificationCopyFailed": "Failed to copy specification",
-      "unknown": "Unknown",
+      "unknown": "Không xác định",
       "continent": "Continent: {name}",
       "country": ", Country: {name}",
       "region": ", Region: {name}",
@@ -382,8 +382,8 @@
       "applicationExpired": "Application Expired"
     },
     "componentDetails": {
-      "name": "Name",
-      "description": "Description",
+      "name": "Tên",
+      "description": "Mô tả",
       "repository": "Repository",
       "repositoryAuthentication": "Repository Authentication",
       "private": "Private",
@@ -402,15 +402,15 @@
       "ram": "RAM",
       "ssd": "SSD/NVMe",
       "vCore": "vCore",
-      "vCores": "vCores",
+      "vCores": "vCore",
       "ramValue": "{value} MB",
       "ssdValue": "{value} GB"
     },
     "confirmCustomDialog": {
       "confirmation": "Confirmation",
       "areYouSure": "Are you sure?",
-      "cancel": "Cancel",
-      "confirm": "Confirm"
+      "cancel": "Hủy",
+      "confirm": "Xác nhận"
     },
     "manualSignDialog": {
       "title": "Manual Signing",
@@ -418,14 +418,14 @@
       "messageToSign": "Message to sign:",
       "pasteSignature": "Paste signature:",
       "signaturePlaceholder": "Enter signature here",
-      "cancel": "Cancel",
-      "submit": "Submit"
+      "cancel": "Hủy",
+      "submit": "Gửi"
     },
     "fileUpload": {
       "dropFilesHere": "Drop files here or",
       "clickToUpload": "click to upload",
       "fileSizeLimit": "(File size is limited to 5 GB)",
-      "uploadFiles": "Upload Files",
+      "uploadFiles": "Tải lên tệp",
       "alreadyInQueue": "'{fileName}' is already in the upload queue",
       "uploadSuccess": "'{fileName}' has been uploaded",
       "uploadError": "Error uploading '{fileName}': status {status}",
@@ -452,19 +452,19 @@
     },
     "locations": {
       "perPage": "Per page",
-      "filter": "Filter",
-      "typeToSearch": "Type to Search",
+      "filter": "Lọc",
+      "typeToSearch": "Gõ để tìm kiếm",
       "selectActiveInstance": "Select active instance",
       "noInstancesFound": "No instances found...",
       "systemUptimeTooltip": "System uptime since last reboot",
       "timeElapsedTooltip": "Time elapsed since installation",
       "visitApp": "Visit App",
       "visitFluxNode": "Visit FluxNode",
-      "ipAddress": "IP Address",
+      "ipAddress": "Địa chỉ IP",
       "uptime": "Uptime",
-      "running": "Running",
-      "continent": "Continent",
-      "country": "Country",
+      "running": "Đang chạy",
+      "continent": "Châu lục",
+      "country": "Quốc gia",
       "region": "Region",
       "notAvailable": "N/A"
     },
@@ -476,21 +476,21 @@
       "path": "Path",
       "createFolder": "Create Folder",
       "folderName": "Folder Name",
-      "create": "Create",
-      "uploadFiles": "Upload Files",
-      "close": "Close",
-      "rename": "Rename",
+      "create": "Tạo",
+      "uploadFiles": "Tải lên tệp",
+      "close": "Đóng",
+      "rename": "Đổi tên",
       "newName": "New Name",
       "editing": "Editing: {file}",
       "saving": "Saving...",
-      "save": "Save",
-      "name": "Name",
-      "size": "Size",
+      "save": "Lưu",
+      "name": "Tên",
+      "size": "Kích thước",
       "modifiedAt": "Modified At",
       "downloadFolderAsArchive": "Download Folder as Archive",
       "downloadFile": "Download File",
-      "edit": "Edit",
-      "delete": "Delete",
+      "edit": "Chỉnh sửa",
+      "delete": "Xóa",
       "fileTooLarge": "The file exceeds the maximum size for browser-based editing. Please use a terminal-based editor.",
       "initializing": "Initializing...",
       "loadingFile": "Loading {file}... ",
@@ -521,7 +521,7 @@
       "customCommand": "Custom Command",
       "userUid": "User UID",
       "environmentVariables": "Environment Variables (e.g., VAR1=value1,VAR2=value2)",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "Đã sao chép vào clipboard!",
       "manager": {
         "title": "Terminal Manager",
         "layoutGrid": "Grid",
@@ -548,7 +548,7 @@
     },
     "logViewer": {
       "title": "Log Viewer",
-      "component": "Component",
+      "component": "Thành phần",
       "selectComponent": "Select Component",
       "lineCount": "Line Count",
       "logsSince": "Logs Since",
@@ -561,9 +561,9 @@
       "lineSelection": "Line Selection Mode",
       "autoScroll": "Auto Scroll",
       "copied": "Copied",
-      "copy": "Copy",
+      "copy": "Sao chép",
       "unselect": "Unselect",
-      "download": "Download",
+      "download": "Tải xuống",
       "noMatchingLogs": "No matching logs found for '{keyword}'",
       "noLogsFound": "No logs found",
       "errors": {
@@ -572,7 +572,7 @@
     },
     "backupAndRestore": {
       "backup": "Backup",
-      "restore": "Restore",
+      "restore": "Khôi phục",
       "backupContainerData": "Backup Container Data",
       "selectComponentsToBackup": "Select component(s) to backup",
       "selectAll": "Select all",
@@ -602,16 +602,16 @@
       "removeRestoreJob": "Remove restore job",
       "selectComponent": "Select component",
       "enterRemoteBackupUrl": "Enter the URL for your remote backup archive",
-      "component": "Component",
-      "size": "Size",
+      "component": "Thành phần",
+      "size": "Kích thước",
       "created": "Created",
       "expires": "Expires",
       "actions": "Actions",
-      "name": "Name",
-      "time": "Time",
+      "name": "Tên",
+      "time": "Thời gian",
       "url": "URL",
       "timestamp": "Timestamp",
-      "file": "File",
+      "file": "Tệp",
       "googleDrive": "GoogleDrive",
       "as3Storage": "AS3Storage",
       "checkpointBackupRemovedSuccessfully": "Checkpoint backup removed successfully.",
@@ -644,12 +644,12 @@
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
       "bySigningIn": "By signing in, you agree to our",
-      "termsOfService": "Terms of Service",
+      "termsOfService": "Điều khoản dịch vụ",
       "and": "and",
       "privacyPolicy": "Privacy Policy",
       "email": "Email",
-      "password": "Password",
-      "login": "Login",
+      "password": "Mật khẩu",
+      "login": "Đăng nhập",
       "signUp": "Sign Up",
       "dontHaveAccount": "Don't have an account?",
       "or": "OR",
@@ -662,20 +662,20 @@
       "loginWithWalletConnect": "Login with WalletConnect",
       "loginWithMetamask": "Login with Metamask",
       "signWithWallet": "Sign message with your wallet",
-      "message": "Message",
+      "message": "Thông báo",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
       "getNewLoginPhrase": "Get new login phrase",
       "copyLoginPhrase": "Copy login phrase",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "Đã sao chép vào clipboard!",
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
-      "address": "Address",
+      "address": "Địa chỉ",
       "insertAddress": "Insert address",
       "signature": "Signature",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
-      "cancel": "Cancel",
+      "cancel": "Hủy",
       "ok": "OK",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
@@ -705,7 +705,7 @@
       "signMessageFailed": "Failed to sign message, please try again"
     },
     "mapComponent": {
-      "loading": "Loading..."
+      "loading": "Đang tải..."
     },
     "backendSelector": {
       "customBackend": "Custom Backend"
@@ -714,11 +714,11 @@
       "title": "Application Control",
       "control": "Control",
       "manual": "Manual",
-      "component": "Component",
+      "component": "Thành phần",
       "local": "Local",
-      "global": "Global",
+      "global": "Toàn cầu",
       "manualSelection": "Manual Selection",
-      "available": "Available",
+      "available": "Có sẵn",
       "selected": "Selected",
       "monitoring": "Monitoring",
       "showLogs": "Show Logs",
@@ -849,13 +849,13 @@
       "validationSubdirContainsPipe": "Remove {'|'} from subdirectory name",
       "validationModeConflictsWithPrefix": "Choose a different Mode - m, f, c, cf are not allowed",
       "labelMode": "Mode",
-      "labelMountType": "Type",
+      "labelMountType": "Loại",
       "labelPath": "Path",
       "typePrimary": "Primary",
       "typePrimaryDesc": "Main persistent storage for your application",
       "typeDirectory": "Directory",
       "typeDirectoryDesc": "Mount a specific host folder to container path",
-      "typeFile": "File",
+      "typeFile": "Tệp",
       "typeFileDesc": "Mount a specific host file to container path",
       "typeComponentPrimary": "Component Primary",
       "typeComponentPrimaryDesc": "Reference primary storage from another component",
@@ -947,14 +947,14 @@
       "importSpec": "Import Specification",
       "exportSpec": "Export Specification",
       "reviewAndSign": "Review and Sign",
-      "component": "Component",
+      "component": "Thành phần",
       "review": "Review",
       "reviewTooltip": "Review application configuration before signing",
       "name": "Application Name",
       "nameTooltip": "The name of your application",
-      "description": "Description",
+      "description": "Mô tả",
       "descriptionTooltip": "A brief description of your application",
-      "owner": "Owner",
+      "owner": "Chủ sở hữu",
       "ownerTooltip": "The owner of the application",
       "specVersion": "Specification Version",
       "usingLatestSpec": "Using latest specification version",
@@ -964,19 +964,19 @@
       "contactTooltip": "Contact email addresses for notifications",
       "uploadContactsTooltip": "Upload contact information",
       "contactRequired": "At least one contact email is required",
-      "instances": "Instances",
+      "instances": "Instanc",
       "instancesCount": "{count} instance | {count} instances",
       "instancesWarningTwo": "The minimum recommended for a decentralized network is 3 instances.",
       "instancesWarningOne": "The minimum recommended for a decentralized network is 3 instances. With only 1 instance, your app may experience some minutes of downtime if the node running the app is rebooted or shutdown.",
       "instancesWarningSyncthing": "The minimum instances for apps with decentralized persistent storage is 3. To use fewer instances, disable data synchronization in the volume path settings.",
       "instancesWarningLegacy": "Reducing instances below 3 is only available for apps with specification version 8 or higher. Update your app specification to enable this feature.",
       "period": "Period",
-      "renewal": "Renewal",
+      "renewal": "Gia hạn",
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
       "managementAction": "Management Action",
-      "renewalAction": "Renewal",
-      "updateAction": "Update",
-      "cancelAction": "Cancel",
+      "renewalAction": "Gia hạn",
+      "updateAction": "Cập nhật",
+      "cancelAction": "Hủy",
       "cancelSubscription": "Cancel Subscription",
       "cancelWarning": "This will expire your application.",
       "currentlySubscribedUntil": "Currently your application is subscribed until",
@@ -988,18 +988,18 @@
       "enterprise": "Enterprise",
       "enterpriseTooltip": "Enable enterprise features for your application",
       "allowedGeolocation": "Allowed Geolocation",
-      "continent": "Continent",
-      "country": "Country",
+      "continent": "Châu lục",
+      "country": "Quốc gia",
       "addAllowed": "Add Allowed Location",
       "addForbidden": "Add Forbidden Location",
-      "tabGeneral": "General",
+      "tabGeneral": "Chung",
       "tabGeolocation": "Geolocation",
       "tabComponents": "Components",
       "tabEnterpriseNodes": "Enterprise Nodes",
       "tabPriorityNodes": "Priority Nodes",
       "region": "Region",
-      "componentName": "Name",
-      "componentDescription": "Description",
+      "componentName": "Tên",
+      "componentDescription": "Mô tả",
       "repositoryTag": "Repository Tag",
       "repositoryAuthentication": "Repository Authentication",
       "secrets": "Secrets",
@@ -1012,9 +1012,9 @@
       "customDomains": "Custom Domains",
       "portDomainConfiguration": "Port & Domain Configuration",
       "enterDomainForPort": "Enter domain for this port",
-      "key": "Key",
+      "key": "Khóa",
       "value": "Value",
-      "keyPlaceholder": "KEY",
+      "keyPlaceholder": "Khóa",
       "valuePlaceholder": "VALUE",
       "newCommand": "New Command",
       "command": "Command",
@@ -1029,7 +1029,7 @@
       "searchNodes": "Search nodes",
       "searchNodesPlaceholder": "IP, address, tier...",
       "perPage": "Per page",
-      "ipAddress": "IP Address",
+      "ipAddress": "Địa chỉ IP",
       "ipAddressLabel": "IP Address:",
       "publicKey": "Public Key",
       "publicKeyLabel": "Public Key:",
@@ -1046,17 +1046,17 @@
       "publicKeyScore": "Public Key Score:",
       "publicKeyScoreLabel": "Public Key Score:",
       "appsAssigned": "Apps Assigned:",
-      "status": "Status",
+      "status": "Trạng thái",
       "statusLabel": "Status:",
       "sendTo": "Send to",
-      "message": "Message",
+      "message": "Thông báo",
       "selected": "selected",
       "nodesSelected": "{count} selected",
       "pageOf": "Page {current} of {total}",
       "autoSelectedNodes": "Auto-selected {count} high-quality enterprise nodes",
       "additionalOptions": "Additional Options",
       "forbiddenGeolocation": "Forbidden Geolocation",
-      "general": "General",
+      "general": "Chung",
       "dataPathBuilder": "Data Path Builder",
       "environment": "Environment",
       "containerCommands": "Container Commands",
@@ -1072,7 +1072,7 @@
       "selectPaymentMethod": "Select payment method",
       "payWithCard": "Pay with Card",
       "secureInstantPayment": "Secure & instant payment",
-      "payWithFlux": "Pay with FLUX",
+      "payWithFlux": "Thanh toán bằng FLUX",
       "cryptocurrencyPayment": "Cryptocurrency payment",
       "selectEnterpriseNodes": "Select Enterprise Nodes",
       "selectPriorityNodes": "Select Priority Nodes",
@@ -1090,8 +1090,8 @@
       "timeLeft": "Time left:",
       "renewalPeriod": "Renewal period",
       "afterRenewalSubscriptionUntil": "After renewal subscription until:",
-      "cancel": "Cancel",
-      "save": "Save",
+      "cancel": "Hủy",
+      "save": "Lưu",
       "autoSelect": "Auto Select",
       "chooseEnterpriseNodes": "Choose Enterprise Nodes",
       "choosePriorityNodes": "Choose Priority Nodes",
@@ -1171,7 +1171,7 @@
       "instantPaymentConfirmation": "Instant payment confirmation",
       "multipleCurrencySupport": "Multiple currency support",
       "fiatGatewaysUnavailable": "Fiat payment gateways are temporarily unavailable",
-      "loading": "Loading...",
+      "loading": "Đang tải...",
       "searchNodesIpAddressTier": "Search nodes (IP, address, tier)",
       "noNodesMatchSearch": "No nodes match your search",
       "noNodesAvailable": "No nodes available",
@@ -1191,7 +1191,7 @@
       "noContactsToUpload": "No contacts to upload",
       "contactsAlreadyInStorage": "Contacts are already in Flux Storage",
       "none": "None",
-      "global": "Global",
+      "global": "Toàn cầu",
       "allCountries": "All Countries",
       "allRegions": "All Regions",
       "confirmed": "confirmed",
@@ -1202,7 +1202,7 @@
       "paymentUpdateDetection": "Payment confirmation and update will be detected automatically.",
       "detectionTime": "This can take up to 45 minutes.",
       "cancelMonitoring": "Cancel Monitoring",
-      "select": "Select",
+      "select": "Chọn",
       "dockerAuthPlaceholder": "Docker authentication username:apikey",
       "secretsPlaceholder": "Enter secrets (will be encrypted)",
       "yourApplicationWillBeSubscribedUntil": "Your application will be subscribed until",
@@ -1229,15 +1229,15 @@
       "autoDetectDeployment": "Payment confirmation and deployment will be detected automatically.",
       "autoDetectUpdate": "Update will be detected automatically.",
       "autoDetectPaymentUpdate": "Payment confirmation and update will be detected automatically.",
-      "detectionTimeEstimate": "This can take a few minutes.",
+      "detectionTimeEstimate": "Điều này có thể mất vài phút.",
       "checkingBlockchainConfirmation": "Checking payment confirmation...",
       "waitingForNodeDeployment": "Waiting for node deployment...",
       "checkingPaymentOnBlockchain": "Checking for payment confirmation on the blockchain.",
-      "blockchainConfirmationTime": "This can take a few minutes.",
+      "blockchainConfirmationTime": "Điều này có thể mất vài phút.",
       "paymentConfirmedOnNetwork": "Payment confirmed on the network!",
       "paymentConfirmedWaitingNodes": "Payment confirmed on the network.",
       "waitingForNodesPickup": "Waiting for nodes to pick up and install your app.",
-      "nodeDeploymentTime": "This can take a few minutes.",
+      "nodeDeploymentTime": "Điều này có thể mất vài phút.",
       "updateConfirmedNodesWillUpdate": "Update confirmed! It will take a few minutes for the nodes running your app to update to the latest specifications.",
       "freeUpdateSponsoredBy": "Free updates on the network are offered by Influx Technologies",
       "noNodesMatch": "No nodes match your search",
@@ -1279,7 +1279,7 @@
         "dialogTitle": "Flux Terms of Service",
         "description": "Before registering your application, you must read and accept our Terms of Service. This ensures you understand the guidelines and responsibilities for using our platform.",
         "agreement": "I have read and accept the",
-        "link": "Terms of Service",
+        "link": "Điều khoản dịch vụ",
         "agree": "I Agree",
         "disagree": "I Disagree",
         "errorMessage": "Please read and accept the Terms of Service before proceeding to other tabs.",
@@ -1297,7 +1297,7 @@
       "connected": "Connected",
       "updateAvailable": "Update Available",
       "upToDate": "Up to date",
-      "statusMessage": "Status",
+      "statusMessage": "Trạng thái",
       "unreachable": "Unreachable",
       "connecting": "Connecting...",
       "disconnected": "Disconnected",
@@ -1317,7 +1317,7 @@
   },
   "components": {
     "loginDialog": {
-      "title": "Login Required"
+      "title": "Cần đăng nhập"
     },
     "marketplace": {
       "discoverCard": {
@@ -1325,73 +1325,73 @@
         "subtitle": "Web3 Marketplace"
       },
       "appCard": {
-        "install": "Install",
-        "view": "View",
-        "viewDetails": "View Details",
-        "defaultCategory": "Apps",
+        "install": "Cài đặt",
+        "view": "Xem",
+        "viewDetails": "Xem chi tiết",
+        "defaultCategory": "Ứng dụng",
         "noDescription": "No description available"
       },
       "fluxCloudAppCard": {
         "unknownDeveloper": "Unknown Developer",
-        "install": "Install",
+        "install": "Cài đặt",
         "viewApp": "View App",
         "sponsored": "Sponsored"
       },
       "gameCard": {
         "startingAt": "Starting at ${price} / month",
-        "viewDetails": "View Details"
+        "viewDetails": "Xem chi tiết"
       },
       "marketplaceAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
-        "install": "Install",
-        "viewDetails": "View Details",
+        "unknown": "Không xác định",
+        "free": "Miễn phí",
+        "install": "Cài đặt",
+        "viewDetails": "Xem chi tiết",
         "noDescription": "No description available",
         "other": "Other"
       },
       "appList": {
         "featured": "Featured",
         "by": "by",
-        "free": "Free",
+        "free": "Miễn phí",
         "purchase": "Purchase",
-        "deploy": "Deploy",
+        "deploy": "Triển khai",
         "details": "Details"
       },
       "sponsoredAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
+        "unknown": "Không xác định",
+        "free": "Miễn phí",
         "other": "Other"
       },
       "sponsoredCard": {
         "sponsored": "Sponsored",
-        "install": "Install",
-        "view": "View",
-        "viewDetails": "View Details",
+        "install": "Cài đặt",
+        "view": "Xem",
+        "viewDetails": "Xem chi tiết",
         "noSponsoredApps": "No sponsored apps available",
-        "free": "Free"
+        "free": "Miễn phí"
       },
       "newListedCard": {
         "title": "NEW LISTED APPLICATIONS",
         "noNewApps": "No new apps available",
         "unknownApp": "Unknown App",
         "noDescription": "No description available",
-        "view": "View"
+        "view": "Xem"
       },
       "maintenanceCard": {
         "defaultTitle": "Under Maintenance",
         "defaultSubtitle": "We're currently experiencing technical difficulties. Our team is working to resolve this issue as quickly as possible.",
         "defaultDescription": "Please check back later or contact support if you need immediate assistance.",
-        "refresh": "Refresh"
+        "refresh": "Làm mới"
       },
       "appConfigCard": {
         "cpu": "CPU",
         "ram": "RAM",
-        "storage": "Storage",
+        "storage": "Lưu trữ",
         "installNow": "Buy Now",
         "perMonth": "/mo",
         "core": "Core",
         "cores": "Cores",
-        "mostPopular": "Most Popular"
+        "mostPopular": "Phổ biến nhất"
       },
       "appsGrid": {
         "title": "Flux Applications",
@@ -1405,12 +1405,12 @@
         "resetFilters": "Reset Filters",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
-        "refresh": "Refresh",
-        "previous": "Previous",
-        "next": "Next",
+        "refresh": "Làm mới",
+        "previous": "Trước đó",
+        "next": "Tiếp theo",
         "sortDefault": "Default",
-        "sortDate": "Date",
-        "sortName": "Name"
+        "sortDate": "Ngày",
+        "sortName": "Tên"
       },
       "panels": {
         "screenshotsPanel": {
@@ -1424,9 +1424,9 @@
         },
         "serverLocationsPanel": {
           "noData": "No server data available",
-          "activeServers": "Active Servers",
-          "countries": "Countries",
-          "global": "Global",
+          "activeServers": "Máy chủ hoạt động",
+          "countries": "Quốc gia",
+          "global": "Toàn cầu",
           "coverage": "Coverage"
         },
         "relatedGamesPanel": {
@@ -1439,7 +1439,7 @@
           "subtitle": "Experience the benefits of decentralized cloud infrastructure powered by Web3 technology"
         },
         "genericFAQPanel": {
-          "title": "Frequently Asked Questions",
+          "title": "Các câu hỏi thường gặp",
           "subtitle": "Common questions about hosting on FluxCloud"
         },
         "videosPanel": {
@@ -1460,7 +1460,7 @@
         "deploymentOptions": "Deployment Options",
         "instances": "{count} Instance | {count} Instances",
         "estimatedPricing": "Estimated Pricing",
-        "loading": "Loading...",
+        "loading": "Đang tải...",
         "wordPressPlanTitle": "WordPress {planName}",
         "walletAltZelcore": "Flux ID (ZelCore)",
         "walletAltSSP": "SSP",
@@ -1476,12 +1476,12 @@
         "containers": "Containers",
         "allSet": "All Set!",
         "noAdditionalConfig": "No additional configuration required",
-        "deploymentLocation": "Deployment Location",
+        "deploymentLocation": "Vị trí triển khai",
         "allowedLocations": "Allowed Locations",
         "forbiddenLocations": "Forbidden Locations",
-        "continent": "Continent",
-        "country": "Country",
-        "global": "Global",
+        "continent": "Châu lục",
+        "country": "Quốc gia",
+        "global": "Toàn cầu",
         "globalAllContinents": "Global (All Continents)",
         "allCountries": "All Countries",
         "noContinentsForbidden": "No Continents Forbidden",
@@ -1496,7 +1496,7 @@
         "allowedGeoInfo": "Your app will only be deployed on nodes in the selected locations",
         "forbiddenColon": "Forbidden",
         "forbiddenGeoInfo": "Your app will avoid deployment on nodes in the selected locations",
-        "globalColon": "Global",
+        "globalColon": "Toàn cầu",
         "globalGeoInfo": "No geographic restrictions (recommended for best availability)",
         "emailNotifications": "Email Notifications",
         "notificationSettings": "Notification Settings",
@@ -1516,7 +1516,7 @@
         "noCompatibleWallets": "No compatible wallets detected. Please install ZelCore, SSP, MetaMask, ensure you're logged in via SSO, or login manually.",
         "signingApp": "Signing App...",
         "registeringApp": "Registering App...",
-        "cancel": "Cancel",
+        "cancel": "Hủy",
         "manualSigningCancelled": "Manual signing cancelled",
         "signingAndRegistrationComplete": "Signing and Registration Complete",
         "redirectIn": "You will be redirected in {seconds} seconds...",
@@ -1532,14 +1532,14 @@
         "choosePaymentMethod": "Choose Payment Method",
         "payWithCreditCard": "Pay with Credit Card",
         "payWithPayPal": "Pay with PayPal",
-        "payWithFlux": "Pay with FLUX",
+        "payWithFlux": "Thanh toán bằng FLUX",
         "vat": "VAT",
         "paymentAddress": "Payment Address",
         "paymentMessage": "Payment Message",
         "generating": "Generating...",
         "paymentInstructionsZelCore": "ZelCore Payment Instructions",
         "paymentInstructionsSSP": "SSP Payment Instructions",
-        "copiedToClipboard": "Copied to clipboard!",
+        "copiedToClipboard": "Đã sao chép vào clipboard!",
         "openWallet": "Open {wallet}",
         "paymentConfirmed": "Payment Confirmed!",
         "waitingForPayment": "Waiting for Payment",
@@ -1570,10 +1570,10 @@
         "openPaymentType": "Open {type}",
         "signing": "Signing",
         "payment": "Payment",
-        "deploy": "Deploy",
+        "deploy": "Triển khai",
         "config": "Config",
         "params": "Params",
-        "location": "Location",
+        "location": "Vị trí",
         "alerts": "Alerts",
         "sign": "Sign",
         "messages": {
@@ -1659,7 +1659,7 @@
           "sspWalletNotInstalled": "SSP Wallet not installed",
           "sspPaymentInitiated": "SSP payment initiated",
           "failedToInitiateSSP": "Failed to initiate SSP payment: {error}",
-          "copiedToClipboard": "Copied to clipboard!",
+          "copiedToClipboard": "Đã sao chép vào clipboard!",
           "failedToCopy": "Failed to copy to clipboard"
         }
       },
@@ -1668,12 +1668,12 @@
         "anonymous": "Anonymous",
         "submitted": "Submitted",
         "endDate": "End Date",
-        "description": "Description",
+        "description": "Mô tả",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
           "voteProgress": "Vote Progress",
           "voteSplit": "Vote Split",
-          "required": "Required",
+          "required": "Bắt buộc",
           "received": "Received",
           "yesVotes": "Yes Votes",
           "noVotes": "No Votes",
@@ -1681,7 +1681,7 @@
           "votingCompleteRejected": "Voting Complete - Rejected",
           "percentageOfVotesReceived": "{percentage}% of required votes received",
           "status": {
-            "open": "OPEN",
+            "open": "Mở",
             "passed": "PASSED",
             "rejected": "REJECTED",
             "unpaid": "UNPAID",
@@ -1692,7 +1692,7 @@
         "voting": {
           "castYourVote": "Cast Your Vote",
           "makeYourVoiceHeard": "Make your voice heard",
-          "loginRequired": "Login Required",
+          "loginRequired": "Cần đăng nhập",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
@@ -1700,8 +1700,8 @@
           "voteYes": "Vote YES",
           "voteNo": "Vote NO",
           "youHaveVoted": "You have voted",
-          "yes": "YES",
-          "no": "NO",
+          "yes": "Có",
+          "no": "Không",
           "voteCount": "{count} vote(s)",
           "votingEnds": "Voting ends"
         },
@@ -1715,13 +1715,13 @@
         "technicalDetails": {
           "title": "Technical Details",
           "proposalHash": "Proposal Hash",
-          "copy": "Copy",
+          "copy": "Sao chép",
           "submitDate": "Submit Date",
           "voteEndDate": "Vote End Date",
           "currentStatus": "Current Status"
         },
         "messages": {
-          "copiedToClipboard": "Copied to clipboard!",
+          "copiedToClipboard": "Đã sao chép vào clipboard!",
           "successfullySignedWithSSP": "Successfully signed with SSP",
           "failedToSignWithSSP": "Failed to sign with SSP",
           "failedToInitiateZelcore": "Failed to initiate Zelcore signing",
@@ -1746,8 +1746,8 @@
         "fileTypeHint": "Application specification or Docker Compose (JSON/YAML)",
         "pasteHint": "Paste application specification or Docker Compose (JSON/YAML)",
         "reviewAndEdit": "Review and edit before importing",
-        "import": "Import",
-        "cancel": "Cancel",
+        "import": "Nhập",
+        "cancel": "Hủy",
         "loadSpecification": "Load Specification",
         "pasteFromClipboard": "Paste from Clipboard",
         "contentPasted": "Content pasted from clipboard!",
@@ -1778,7 +1778,7 @@
         "step1": "Specification format will be updated to v{targetVersion}",
         "step2": "You can review and modify the upgraded specification",
         "step3": "You must validate and sign the updated specification",
-        "upgrade": "Upgrade",
+        "upgrade": "Nâng cấp",
         "warnings": {
           "tieredPricing": "Tiered pricing configurations (tiered field)",
           "customContacts": "Custom contacts (reset to empty)",
@@ -1792,15 +1792,15 @@
       "title": "Pricing Plans",
       "subtitle1": "All plans include 40+ advanced tools and features to boost your product.",
       "subtitle2": "Choose the best plan to fit your needs.",
-      "monthly": "Monthly",
+      "monthly": "Hàng tháng",
       "annually": "Annually",
       "saveUpTo": "Save up to 10%",
       "popular": "Popular",
       "perMonth": "/month",
-      "free": "free",
+      "free": "Miễn phí",
       "yearlyPrice": "USD {price}/Year",
       "currentPlan": "Your Current Plan",
-      "upgrade": "Upgrade",
+      "upgrade": "Nâng cấp",
       "plans": {
         "basic": {
           "name": "Basic",
@@ -1814,7 +1814,7 @@
           }
         },
         "standard": {
-          "name": "Standard",
+          "name": "Tiêu chuẩn",
           "tagLine": "For small to medium businesses",
           "features": {
             "0": "Unlimited responses",
@@ -1847,19 +1847,19 @@
       "unableToLoadPlan": "Unable to load plan details",
       "tryAgainOrContactSupport": "Please try again or contact support if the problem persists.",
       "tryAgain": "Try Again",
-      "renewal": "Renewal",
-      "upgrade": "Upgrade",
+      "renewal": "Gia hạn",
+      "upgrade": "Nâng cấp",
       "downgrade": "Downgrade",
       "order": "Order",
       "summary": "Summary",
       "planComparison": "Plan Comparison",
       "yourCurrentPlan": "Your Current Plan",
       "newPlan": "New Plan",
-      "storage": "Storage",
-      "plan": "Plan",
+      "storage": "Lưu trữ",
+      "plan": "Gói",
       "duration": "Duration",
       "oneMonth": "1 Month",
-      "total": "Total",
+      "total": "Tổng",
       "downgradeTo": "Downgrade to",
       "upgradeTo": "Upgrade to",
       "renewingYourCurrentPlan": "Renewing your current plan",
@@ -1872,9 +1872,9 @@
       "fluxPay": "Flux Pay",
       "calculatingFlux": "Calculating FLUX...",
       "manualPaymentDetails": "Manual Payment Details",
-      "address": "Address",
-      "amount": "Amount",
-      "message": "Message",
+      "address": "Địa chỉ",
+      "amount": "Số tiền",
+      "message": "Thông báo",
       "loadingPaymentDetails": "Loading payment details...",
       "paymentDetailsWillAppear": "Payment details will appear here",
       "fluxPriceEstimated": "*FLUX price is estimated and will be finalized in ZelCore",
@@ -1886,7 +1886,7 @@
       "canTakeUpTo20Minutes": "This can take up to 20 minutes",
       "cancelMonitoring": "Cancel Monitoring",
       "pendingPayment": "Pending Payment",
-      "cancel": "Cancel",
+      "cancel": "Hủy",
       "sspPaymentInitiated": "SSP payment initiated, monitoring for confirmation...",
       "sspPaymentFailed": "SSP payment failed: {error}",
       "zelcorePaymentFailed": "Zelcore payment failed: {error}",
@@ -1894,7 +1894,7 @@
       "redirectedToCryptoCom": "Redirected to Crypto.com for payment. Complete the payment and return here.",
       "cryptoComPaymentCancelled": "Crypto.com payment cancelled",
       "paymentMonitoringCancelledCanPayManually": "Payment monitoring cancelled. You can still pay manually using the details above.",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "Đã sao chép vào clipboard!",
       "noLoginCredentials": "No login credentials found",
       "failedToPrepareManualSigning": "Failed to prepare manual signing: {error}",
       "pleaseEnterSignature": "Please enter a signature",
@@ -1924,12 +1924,12 @@
       "zelcore": "Zelcore",
       "ssp": "SSP",
       "currentSubscription": "Current Subscription",
-      "currentPlanFallback": "Current Plan",
+      "currentPlanFallback": "Gói hiện tại",
       "currentStorage": "Current Storage",
-      "general": "General",
+      "general": "Chung",
       "planNames": {
         "starter": "Starter",
-        "standard": "Standard",
+        "standard": "Tiêu chuẩn",
         "pro": "Elite",
         "enterprise": "FluxDrive Pro",
         "fluxDrivePro": "FluxDrive Pro"
@@ -1946,12 +1946,12 @@
         "searchPlaceholder": "Search files and folders...",
         "listView": "List View",
         "gridView": "Grid View",
-        "columnName": "Name",
+        "columnName": "Tên",
         "columnUpdated": "Updated",
-        "columnSize": "Size",
+        "columnSize": "Kích thước",
         "newFolder": "New Folder",
-        "upload": "Upload",
-        "uploadFiles": "Upload Files",
+        "upload": "Tải lên",
+        "uploadFiles": "Tải lên tệp",
         "uploadFolder": "Upload Folder",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
@@ -1965,16 +1965,16 @@
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
         "preview": "Preview",
-        "download": "Download",
+        "download": "Tải xuống",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
-        "rename": "Rename",
+        "rename": "Đổi tên",
         "moveTo": "Move To",
         "copyLink": "Copy Link",
-        "delete": "Delete",
+        "delete": "Xóa",
         "paginationInfo": "Showing {start}-{end} of {total}",
-        "edit": "Edit",
+        "edit": "Chỉnh sửa",
         "browserNoVideoSupport": "Your browser does not support the video tag.",
         "browserNoAudioSupport": "Your browser does not support the audio element.",
         "previewNotAvailable": "Preview not available for this file type",
@@ -1992,23 +1992,23 @@
         "downloadProgress": "Download progress: {progress}%",
         "confirmDelete": "Confirm Delete",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "folder",
-        "file": "file",
-        "cancel": "Cancel",
+        "folder": "Thư mục",
+        "file": "Tệp",
+        "cancel": "Hủy",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
         "newName": "New Name",
         "moveItem": "Move {type}",
         "destinationFolder": "Destination Folder",
         "destinationPlaceholder": "Enter destination path",
-        "move": "Move",
+        "move": "Di chuyển",
         "fileVersionsTitle": "File Versions: {name}",
         "fileVersionsDescription": "{count} version(s) available",
         "currentVersion": "Current Version",
         "latest": "Latest",
         "versionNumber": "Version {number}",
         "noPreviousVersions": "No Previous Versions",
-        "close": "Close",
+        "close": "Đóng",
         "createNewFolder": "Create New Folder",
         "folderName": "Folder Name",
         "createFolder": "Create Folder",
@@ -2040,8 +2040,8 @@
         "title": "Storage Usage",
         "usedOf": "{used} of {total} used",
         "usedSpace": "Used Space",
-        "available": "Available",
-        "total": "Total",
+        "available": "Có sẵn",
+        "total": "Tổng",
         "almostFull": "Storage Almost Full",
         "almostFullMessage": "Your storage is {percentage}% full. Consider upgrading your plan or removing unused files.",
         "statusTitle": "Storage Status",
@@ -2051,11 +2051,11 @@
         "title": "File Versions",
         "current": "Current",
         "currentVersion": "Current Version (Last Updated)",
-        "previous": "Previous",
+        "previous": "Trước đó",
         "original": "Original",
         "versionNumber": "Version {number}",
         "preview": "Preview",
-        "download": "Download",
+        "download": "Tải xuống",
         "copyLink": "Copy Link",
         "noPreviousVersions": "No Previous Versions",
         "noPreviousVersionsMessage": "This file has no previous versions",
@@ -2071,12 +2071,12 @@
       "pricingPlans": {
         "title": "FluxDrive Storage Plans",
         "subtitle": "Choose your perfect storage plan.",
-        "storage": "Storage",
+        "storage": "Lưu trữ",
         "contactUs": "Contact Us",
-        "signIn": "Login",
+        "signIn": "Đăng nhập",
         "current": "Current",
         "renew": "Renew",
-        "upgrade": "Upgrade",
+        "upgrade": "Nâng cấp",
         "downgrade": "Downgrade",
         "signUp": "Sign Up",
         "perDay": "/ day",
@@ -2087,17 +2087,17 @@
         "pricing": "Pricing",
         "dailyCost": "Daily Cost",
         "dailyCostValue": "$0.0017 per GB",
-        "currentPlan": "Current Plan",
+        "currentPlan": "Gói hiện tại",
         "getStarted": "Get Started",
         "downgradeBlocked": "Downgrade Unavailable",
         "plans": {
           "starter": "Starter",
-          "standard": "Standard",
+          "standard": "Tiêu chuẩn",
           "elite": "Elite",
           "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
-          "mostPopular": "Most Popular",
+          "mostPopular": "Phổ biến nhất",
           "bestValue": "Best Value",
           "enterprise": "Enterprise"
         },
@@ -2121,7 +2121,7 @@
         "title": "System Information",
         "subtitle": "View system resources and component versions",
         "resourcesAllocated": "Resources Allocated",
-        "storage": "Storage",
+        "storage": "Lưu trữ",
         "storageUsed": "{used} GB",
         "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
@@ -2130,7 +2130,7 @@
         "ram": "RAM",
         "ramUsed": "{used} GB",
         "ramTotal": "of {total} GB",
-        "applications": "Applications",
+        "applications": "Ứng dụng",
         "installedApps": "Installed Apps",
         "installedAppsCount": "{count} application(s)",
         "appsHashes": "Apps Hashes",
@@ -2151,37 +2151,37 @@
         "subtitle": "Manage your files and share them with others",
         "storageUsage": "Storage Usage",
         "used": "used",
-        "available": "Available",
+        "available": "Có sẵn",
         "fileManager": "File Manager",
-        "upload": "Upload",
+        "upload": "Tải lên",
         "newFolder": "New Folder",
         "emptyFolder": "This folder is empty",
-        "folder": "Folder",
-        "file": "File",
+        "folder": "Thư mục",
+        "file": "Tệp",
         "columns": {
-          "name": "Name",
+          "name": "Tên",
           "modified": "Modified",
-          "type": "Type",
-          "size": "Size",
+          "type": "Loại",
+          "size": "Kích thước",
           "actions": "Actions"
         },
-        "download": "Download",
+        "download": "Tải xuống",
         "downloadZip": "Download as ZIP",
-        "rename": "Rename",
+        "rename": "Đổi tên",
         "share": "Share",
         "unshare": "Unshare",
         "copyLink": "Copy Share Link",
-        "delete": "Delete",
+        "delete": "Xóa",
         "createFolder": "Create Folder",
         "folderName": "Folder Name",
-        "renameItem": "Rename",
+        "renameItem": "Đổi tên",
         "newName": "New Name",
         "confirmDelete": "Confirm Delete",
         "deleteConfirmMessage": "Are you sure you want to delete \"{name}\"?",
         "confirmDownload": "Confirm Download",
         "downloadFileConfirm": "Download file \"{name}\"?",
         "downloadFolderConfirm": "Download folder \"{name}\" as ZIP?",
-        "uploadFiles": "Upload Files",
+        "uploadFiles": "Tải lên tệp",
         "dropFilesHere": "Drop files here",
         "clickToUpload": "or click to upload",
         "maxFileSize": "Maximum file size: 5GB",
@@ -2218,14 +2218,14 @@
         "title": "Manage Users",
         "subtitle": "View and manage logged users and active sessions",
         "searchUsers": "Search users",
-        "refresh": "Refresh",
+        "refresh": "Làm mới",
         "logOut": "Log Out",
         "logOutAll": "Log Out All",
         "logOutAllUsers": "Log Out All Users",
         "current": "Current",
         "yourCurrentSession": "Your current session",
         "activeSessions": "Active Sessions",
-        "cancel": "Cancel",
+        "cancel": "Hủy",
         "areYouSureProceed": "Are you sure you want to proceed?",
         "confirmLogoutUser": "Confirm Logout User",
         "confirmLogoutAllUsers": "Confirm Logout All Users",
@@ -2245,7 +2245,7 @@
         "title": "Manage Flux Gravity",
         "subtitle": "Configure and manage your Flux node settings",
         "tabs": {
-          "settings": "Settings",
+          "settings": "Cài đặt",
           "logs": "Logs",
           "daemon": "Daemon",
           "benchmark": "Benchmark"
@@ -2305,32 +2305,32 @@
           "flux": "Flux Logs",
           "daemon": "Daemon Logs",
           "benchmark": "Benchmark Logs",
-          "download": "Download",
-          "refresh": "Refresh",
+          "download": "Tải xuống",
+          "refresh": "Làm mới",
           "loading": "Loading logs..."
         },
         "daemon": {
           "control": {
             "title": "Daemon Control",
             "start": {
-              "title": "Start",
+              "title": "Bắt đầu",
               "subtitle": "Start daemon",
               "button": "Start Daemon"
             },
             "restart": {
-              "title": "Restart",
+              "title": "Khởi động lại",
               "subtitle": "Restart daemon",
               "button": "Restart Daemon"
             },
             "stop": {
-              "title": "Stop",
+              "title": "Dừng",
               "subtitle": "Stop daemon",
               "button": "Stop Daemon"
             }
           },
           "info": {
             "title": "Daemon Information",
-            "refresh": "Refresh",
+            "refresh": "Làm mới",
             "loadingMessage": "Loading daemon info...",
             "versionInfo": "Version Information",
             "networkStatus": "Network Status",
@@ -2352,24 +2352,24 @@
           "control": {
             "title": "Benchmark Control",
             "start": {
-              "title": "Start",
+              "title": "Bắt đầu",
               "subtitle": "Start benchmark",
               "button": "Start Benchmark"
             },
             "restart": {
-              "title": "Restart",
+              "title": "Khởi động lại",
               "subtitle": "Restart benchmark",
               "button": "Restart Benchmark"
             },
             "stop": {
-              "title": "Stop",
+              "title": "Dừng",
               "subtitle": "Stop benchmark",
               "button": "Stop Benchmark"
             }
           },
           "info": {
             "title": "Benchmark Information",
-            "refresh": "Refresh",
+            "refresh": "Làm mới",
             "loadingMessage": "Loading benchmark info...",
             "thunder": "Thunder",
             "runningWarning": "Benchmark is currently running. Please try again later.",
@@ -2385,7 +2385,7 @@
           "apiPort": "API Port",
           "blockedPorts": "Blocked Ports",
           "blockedRepositories": "Blocked Repositories",
-          "type": "Type"
+          "type": "Loại"
         },
         "placeholders": {
           "routerIpPlaceholder": "192.168.1.1",
@@ -2408,11 +2408,11 @@
           "errorLoadingBenchmarkInfo": "Error loading benchmark info"
         },
         "dialogs": {
-          "cancel": "Cancel",
-          "update": "Update",
-          "restart": "Restart",
-          "start": "Start",
-          "stop": "Stop",
+          "cancel": "Hủy",
+          "update": "Cập nhật",
+          "restart": "Khởi động lại",
+          "start": "Bắt đầu",
+          "stop": "Dừng",
           "confirmProceed": "Are you sure you want to proceed?",
           "updateFlux": {
             "title": "Confirm Flux Gravity Update",
@@ -2422,27 +2422,27 @@
           "updateRouterIp": {
             "title": "Update Router IP",
             "message": "Are you sure you want to update the router IP address?",
-            "button": "Update"
+            "button": "Cập nhật"
           },
           "updateBlockedPorts": {
             "title": "Update Blocked Ports",
             "message": "Are you sure you want to update the blocked ports?",
-            "button": "Update"
+            "button": "Cập nhật"
           },
           "updateApiPort": {
             "title": "Update API Port",
             "message": "Are you sure you want to update the API port?",
-            "button": "Update"
+            "button": "Cập nhật"
           },
           "updateBlockedRepos": {
             "title": "Update Blocked Repositories",
             "message": "Are you sure you want to update the blocked repositories?",
-            "button": "Update"
+            "button": "Cập nhật"
           },
           "restartFluxOs": {
             "title": "Confirm Restart",
             "message": "Are you sure you want to restart Flux Gravity? This will temporarily interrupt all services.",
-            "button": "Restart"
+            "button": "Khởi động lại"
           },
           "updateProgress": {
             "title": "Update in Progress",
@@ -2494,13 +2494,13 @@
           "terminal": "Secure Shell",
           "control": "Control",
           "backupRestore": "Backup & Restore",
-          "instances": "Instances",
-          "subscription": "Subscription"
+          "instances": "Instanc",
+          "subscription": "Đăng ký"
         },
         "tooltips": {
           "manage": "Manage",
-          "install": "Install",
-          "remove": "Remove",
+          "install": "Cài đặt",
+          "remove": "Xóa",
           "visit": "Visit"
         },
         "searchIpPlaceholder": "Search IP...",
@@ -2518,7 +2518,7 @@
           "fullLogs": "Full Logs",
           "showLogs": "Show Logs",
           "hideLogs": "Hide Logs",
-          "close": "Close"
+          "close": "Đóng"
         },
         "specification": {
           "local": "Local Specification",
@@ -2539,7 +2539,7 @@
           "noInstancesAvailableTitle": "No Instances Available",
           "noInstancesAvailableMessage": "This application has no running instances. The app may be deploying, redeploying, not yet deployed, or all instances are offline.",
           "retry": "Retry",
-          "loadingTitle": "Loading...",
+          "loadingTitle": "Đang tải...",
           "loadingMessage": "Retrieving application information...",
           "noInstancesWarningTitle": "Limited Functionality - No Running Instances",
           "noInstancesWarningMessage": "This app has no active instances. Some features are unavailable. You can still manage subscriptions and view specifications.",
@@ -2560,7 +2560,7 @@
           "points": "Points",
           "refreshRate": "Refresh Rate",
           "timeRange": "Time Range",
-          "component": "Component",
+          "component": "Thành phần",
           "selectComponent": "Select component",
           "itemsPerPage": "Items per page"
         },
@@ -2596,11 +2596,11 @@
       },
       "table": {
         "perPage": "Per Page",
-        "filter": "Filter",
-        "filterPlaceholder": "Type to Search",
+        "filter": "Lọc",
+        "filterPlaceholder": "Gõ để tìm kiếm",
         "advancedFilterTooltip": "Open advanced filter options",
         "appType": "App Type",
-        "version": "Version",
+        "version": "Phiên bản",
         "minHdd": "Min HDD (GB)",
         "minRam": "Min RAM (MB)",
         "minCpu": "Min CPU (Cores)",
@@ -2609,8 +2609,8 @@
         "repotagsPlaceholder": "Type and press enter",
         "matchAllTags": "Include all tags (match all)",
         "clearFilters": "Clear All Filters",
-        "loading": "Loading...",
-        "signInRequired": "Login Required",
+        "loading": "Đang tải...",
+        "signInRequired": "Cần đăng nhập",
         "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",
         "features": {
           "viewApps": "View your apps",
@@ -2618,20 +2618,20 @@
           "monitorPerformance": "Monitor performance",
           "controlDeployments": "Control deployments"
         },
-        "signIn": "Login",
-        "learnMore": "Learn More",
+        "signIn": "Đăng nhập",
+        "learnMore": "Tìm hiểu thêm",
         "noMatchingApps": "No matching apps found.",
         "connectionError": "Unable to connect to the server. Please check your internet or try again later.",
         "noApps": "You don't have any apps.",
         "checking": "checking...",
         "composition": "Composition",
         "locations": "Locations",
-        "loginRequired": "Login Required",
+        "loginRequired": "Cần đăng nhập",
         "applicationExpired": "Application Expired",
         "cannotCalculateExpiration": "Not possible to calculate expiration",
         "modeOptions": {
           "all": "All",
-          "marketplace": "Marketplace",
+          "marketplace": "Thị trường",
           "marketplaceExcluded": "Marketplace Excluded"
         },
         "versionOptions": {
@@ -2644,9 +2644,9 @@
           "v8": "Version 8"
         },
         "headers": {
-          "name": "Name",
-          "status": "Status",
-          "description": "Description"
+          "name": "Tên",
+          "status": "Trạng thái",
+          "description": "Mô tả"
         }
       },
       "register": {
@@ -2732,16 +2732,16 @@
             "provider": "Provider",
             "cpu": "CPU",
             "ram": "RAM",
-            "storage": "Storage",
+            "storage": "Lưu trữ",
             "pricePerMonth": "Price/Month",
             "note": "Prices are approximate and based on publicly available pricing for similar configurations. *Akash Network uses a bidding marketplace, so actual prices may vary. FluxCloud price is calculated in real-time from our pricing API."
           },
           "serverNetwork": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your applications deployed across a worldwide decentralized infrastructure with nodes on every continent.",
-            "activeServers": "Active Servers",
-            "countries": "Countries",
-            "global": "Global",
+            "activeServers": "Máy chủ hoạt động",
+            "countries": "Quốc gia",
+            "global": "Toàn cầu",
             "coverage": "Coverage",
             "noData": "Server map data is currently unavailable"
           },
@@ -2773,7 +2773,7 @@
             }
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "questions": {
               "whatIsFlux": {
                 "question": "What is FluxCloud?",
@@ -2808,13 +2808,13 @@
           },
           "relatedLinks": {
             "title": "Explore More on FluxCloud",
-            "marketplace": "Marketplace",
+            "marketplace": "Thị trường",
             "marketplaceDesc": "Browse pre-configured applications",
             "wordpress": "WordPress Hosting",
             "wordpressDesc": "Deploy WordPress sites on FluxCloud",
             "gaming": "Game Servers",
             "gamingDesc": "Host your favorite game servers",
-            "calculator": "Cost Calculator",
+            "calculator": "Máy tính chi phí",
             "calculatorDesc": "Estimate your hosting costs"
           }
         },
@@ -2843,8 +2843,8 @@
             "startingAt": "Starting at",
             "dockerPriceDetail": "3 instances, 2 vCPU, 4GB RAM",
             "comparisonHint": "Not sure which to choose? Git is perfect for most web apps. Docker gives you maximum control.",
-            "deployment": "deployment",
-            "deployments": "deployments"
+            "deployment": "Triển khai",
+            "deployments": "Triển khai"
           },
           "overview": {
             "stepTitle": "FluxCloud Git Overview",
@@ -2885,8 +2885,8 @@
               "dedicatedResources": "Dedicated Resources",
               "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
-            "free": "Free",
-            "developer": "Standard",
+            "free": "Miễn phí",
+            "developer": "Tiêu chuẩn",
             "pro": "Pro",
             "beta": "Beta",
             "comingSoon": "Coming Soon",
@@ -2900,13 +2900,13 @@
             "perMonth": "/month",
             "billingOptions": "Billing Options",
             "billingPeriod": "Billing Period",
-            "billingMonthly": "Monthly",
+            "billingMonthly": "Hàng tháng",
             "billing1Month": "1 Month",
             "billing3Months": "3 Months",
             "billing6Months": "6 Months",
             "billing12Months": "12 Months",
             "savings": "Save {percent}%",
-            "total": "Total",
+            "total": "Tổng",
             "customDomain": "Custom Domain",
             "customDomainPlaceholder": "app.yourdomain.com",
             "customDomainHint": "Point your domain's CNAME record to your Flux app URL",
@@ -2916,7 +2916,7 @@
             "noLocationsSelected": "No specific locations selected. App will deploy globally.",
             "freeFeatures": {
               "deployments": "1 active deployment",
-              "builds": "Unlimited",
+              "builds": "Không giới hạn",
               "cpu": "0.5 Cores",
               "ram": "1 GB",
               "storage": "5 GB SSD/NVMe",
@@ -2925,7 +2925,7 @@
             },
             "developerFeatures": {
               "deployments": "3 active deployments",
-              "builds": "Unlimited",
+              "builds": "Không giới hạn",
               "cpu": "1.5 Cores",
               "ram": "4 GB",
               "storage": "15 GB SSD/NVMe",
@@ -2935,7 +2935,7 @@
             "proFeatures": {
               "deployments": "5 active deployments",
               "deploymentsExtra": "+$3/extra",
-              "builds": "Unlimited",
+              "builds": "Không giới hạn",
               "cpu": "2.0 Cores",
               "ram": "6 GB",
               "storage": "20 GB SSD/NVMe",
@@ -2971,10 +2971,10 @@
               "instances": "1 - 3 instances"
             },
             "buildLimitWarning": "When free tier limit is reached, the next build will automatically upgrade to Pro",
-            "currentPlan": "Current Plan",
+            "currentPlan": "Gói hiện tại",
             "selectPlan": "Select Plan",
             "recommended": "Recommended",
-            "mostPopular": "Most Popular",
+            "mostPopular": "Phổ biến nhất",
             "firstMonthFree": "First month free*",
             "freeForever": "Free forever*",
             "freePlanExplainer": "Free plan auto-renews with 1 Git app. Adding more apps is billed at $0.99/month.",
@@ -3006,33 +3006,33 @@
             "enterprisePrivate": "Enterprise (Private Repo)",
             "configuration": "Configuration",
             "appName": "App Name",
-            "description": "Description",
+            "description": "Mô tả",
             "appPort": "App Port",
             "exposedPort": "Exposed Port",
             "contact": "Contact",
             "runtime": "Runtime",
             "envVariables": "Env Variables",
             "planAndResources": "Plan & Resources",
-            "plan": "Plan",
+            "plan": "Gói",
             "resources": "Resources",
             "activeDeployments": "Active Deployments",
             "builds": "Builds",
             "branchPreviews": "Branch Previews",
-            "enabled": "Enabled",
-            "billing": "Billing",
+            "enabled": "Bật",
+            "billing": "Thanh toán",
             "geolocation": "Geolocation",
             "totalPrice": "Total Price",
-            "unlimited": "Unlimited",
+            "unlimited": "Không giới hạn",
             "generatedSpec": "Generated App Specification",
             "termsLabel": "I accept the",
-            "termsOfService": "Terms of Service",
+            "termsOfService": "Điều khoản dịch vụ",
             "termsAnd": "and",
             "privacyPolicy": "Privacy Policy",
             "deployNow": "Deploy Now",
             "proceedToPayment": "Proceed to Payment"
           },
           "deploy": {
-            "stepTitle": "Deploy",
+            "stepTitle": "Triển khai",
             "registering": "Registering Your Application",
             "waitingSignature": "Waiting for signature...",
             "signMessage": "Signing and registering your application on the Flux network...",
@@ -3051,7 +3051,7 @@
             "paymentDescription": "Choose your preferred payment method to activate your Pro plan.",
             "processingPayment": "Processing payment...",
             "waitingConfirmation": "Waiting for payment confirmation...",
-            "cancel": "Cancel",
+            "cancel": "Hủy",
             "paymentSummary": "Payment Summary",
             "discountApplied": "{percent}% discount applied",
             "fiatPayment": "Fiat Payment",
@@ -3061,7 +3061,7 @@
             "payWithStripe": "Pay with Stripe",
             "payWithPaypal": "Pay with PayPal",
             "stripeNote": "Secure payment via Stripe",
-            "payWithFlux": "Pay with FLUX",
+            "payWithFlux": "Thanh toán bằng FLUX",
             "payWithZelcore": "Pay with Zelcore",
             "payWithSSP": "Pay with SSP Wallet",
             "scanQR": "Scan QR code or copy address",
@@ -3086,25 +3086,25 @@
             "firstMonthSponsoredBy": "First month of hosting is offered by InFlux Technologies.",
             "freePlanSponsoredBy": "Free plan is offered by InFlux Technologies.",
             "checkingPaymentOnBlockchain": "Checking for payment confirmation on the blockchain.",
-            "blockchainConfirmationTime": "This can take a few minutes.",
+            "blockchainConfirmationTime": "Điều này có thể mất vài phút.",
             "paymentConfirmedWaitingNodes": "Payment confirmed on the network.",
             "waitingForNodesPickup": "Waiting for nodes to pick up and install your app.",
-            "nodeDeploymentTime": "This can take a few minutes.",
+            "nodeDeploymentTime": "Điều này có thể mất vài phút.",
             "registrationCompleteTitle": "Registration/Payment Complete!",
             "registrationCompleteDescription": "Your application has been successfully paid/registered on the Flux network.",
             "nodesSpawning": "Network nodes are now spawning your application. It will be available shortly.",
             "cancelPayment": "Cancel and go back"
           },
           "navigation": {
-            "back": "Back",
+            "back": "Quay lại",
             "continue": "Continue",
-            "next": "Next",
-            "previous": "Previous"
+            "next": "Tiếp theo",
+            "previous": "Trước đó"
           },
           "payment": {
             "payWithCard": "Pay with Card",
             "securePayment": "Secure & instant payment",
-            "payWithFlux": "Pay with FLUX",
+            "payWithFlux": "Thanh toán bằng FLUX",
             "cryptoPayment": "Cryptocurrency payment",
             "notEligibleInfo": "This registration requires payment. Select a payment method to continue.",
             "selectPaymentMethod": "Select a payment method",
@@ -3112,7 +3112,7 @@
             "instantConfirmation": "Instant payment confirmation",
             "multipleCurrency": "Multiple currency support",
             "sendTo": "Send to",
-            "message": "Message"
+            "message": "Thông báo"
           },
           "features": {
             "title": "Deploy from Git in Minutes",
@@ -3207,15 +3207,15 @@
             "title": "How Git Deployment Compares",
             "subtitle": "See how Git deployment stacks up against other Git deployment platforms",
             "provider": "Provider",
-            "plan": "Plan",
-            "price": "Price",
+            "plan": "Gói",
+            "price": "Giá",
             "cpu": "CPU",
             "ram": "RAM",
             "builds": "Builds",
             "best": "Best Value",
             "cores": "Cores",
             "core": "Core",
-            "unlimited": "Unlimited",
+            "unlimited": "Không giới hạn",
             "shared": "Shared",
             "limited": "Limited",
             "creditBased": "Credit-based",
@@ -3236,12 +3236,12 @@
             "connectAndDeploy": "Connect your Git repository and deploy in minutes"
           },
           "stepper": {
-            "overview": "Overview",
-            "plan": "Plan",
+            "overview": "Tổng quan",
+            "plan": "Gói",
             "repository": "Repository",
             "configure": "Configure",
             "review": "Review",
-            "register": "Register",
+            "register": "Đăng ký",
             "payment": "Payment"
           },
           "repository": {
@@ -3314,19 +3314,19 @@
             "envVariablesInfo": "Configure environment variables for your application. Click on any Git variable below to add it.",
             "availableOrbitVars": "Available Git Variables",
             "added": "Added",
-            "add": "Add",
+            "add": "Thêm",
             "ifNotSet": "If not set:",
             "example": "Example:",
             "yourEnvVariables": "Your Environment Variables",
             "noneAddedYet": "(none added yet)",
-            "keyLabel": "Key",
+            "keyLabel": "Khóa",
             "valueLabel": "Value",
             "addCustomVariable": "Add Custom Variable",
-            "deploymentLocationTitle": "Deployment Location",
+            "deploymentLocationTitle": "Vị trí triển khai",
             "deploymentLocationInfo": "Choose where your application will be deployed.",
             "serverLocation": "Server Location",
-            "continentLabel": "Continent",
-            "countryLabel": "Country",
+            "continentLabel": "Châu lục",
+            "countryLabel": "Quốc gia",
             "regionLabel": "Region",
             "selectRegionInfo": "Add allowed locations where your app CAN run, or forbidden locations where it CANNOT run. Leave empty for global deployment.",
             "allowedLocations": "Allowed Locations",
@@ -3346,8 +3346,8 @@
             "customResourcesInfo": "Configure the CPU, RAM, and storage for your custom plan. The price will be calculated based on your selections.",
             "cpuLabel": "CPU",
             "ramLabel": "RAM",
-            "storageLabel": "Storage",
-            "instancesLabel": "Instances",
+            "storageLabel": "Lưu trữ",
+            "instancesLabel": "Instanc",
             "selected": "Selected",
             "selectPlan": "Select Plan",
             "registerApplication": "Register Application",
@@ -3421,7 +3421,7 @@
       "title": "App Hosting Cost Calculator",
       "subtitle": "Affordable decentralized hosting starting at $0.99/month - Calculate your exact costs",
       "description": "Deploy your applications on the Flux decentralized cloud network with transparent, pay-as-you-go pricing. Choose your compute resources (CPU, RAM, storage), select the number of instances, and get instant pricing. No hidden fees, no vendor lock-in. Perfect for Docker containers, web apps, APIs, databases, and microservices. Starting at just $0.99/month for basic configurations.",
-      "learnMore": "Learn More",
+      "learnMore": "Tìm hiểu thêm",
       "configuration": "Configuration",
       "instancesQuestion": "How many instances will you be running?",
       "instancesHint": "(min 1 / max 100) 1 Instance = 1 Node",
@@ -3463,8 +3463,8 @@
       "cpu": "CPU",
       "ram": "RAM",
       "ssd": "SSD/NVMe",
-      "cost": "Cost",
-      "select": "Select",
+      "cost": "Chi phí",
+      "select": "Chọn",
       "estimatedRate": "*Estimated 1 Flux = ${rate} USD",
       "gotIt": "Got it",
       "validation": {
@@ -3577,7 +3577,7 @@
             "title": "FluxCloud Network",
             "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
           },
-          "learnMore": "Learn More"
+          "learnMore": "Tìm hiểu thêm"
         },
         "totalNodes": "Total Nodes",
         "nodeHistory": "Node History",
@@ -3604,19 +3604,19 @@
         "providersTitle": "Providers",
         "noGeographicData": "No geographic data available.",
         "noProviderData": "No provider data available.",
-        "unknown": "Unknown"
+        "unknown": "Không xác định"
       },
       "list": {
         "perPage": "Per page",
-        "filter": "Filter",
-        "filterPlaceholder": "Type to Search",
+        "filter": "Lọc",
+        "filterPlaceholder": "Gõ để tìm kiếm",
         "notAvailable": "N/A",
-        "unknown": "Unknown",
+        "unknown": "Không xác định",
         "errorLoading": "Error loading flux list:",
         "columns": {
-          "ip": "IP Address",
-          "paymentAddress": "Address",
-          "locationCountry": "Country",
+          "ip": "Địa chỉ IP",
+          "paymentAddress": "Địa chỉ",
+          "locationCountry": "Quốc gia",
           "locationOrg": "Provider",
           "lastpaid": "Last Paid",
           "tier": "Tier"
@@ -3631,7 +3631,7 @@
         "summary": {
           "title": "Total Network Capacity"
         },
-        "vCores": "vCores",
+        "vCores": "vCore",
         "ram": "RAM",
         "ssd": "SSD/NVMe",
         "hdd": "HDD",
@@ -3646,7 +3646,7 @@
         "tierNimbus": "Nimbus",
         "tierStratus": "Stratus",
         "errorFetchHistory": "Unable to fetch history stats",
-        "close": "Close"
+        "close": "Đóng"
       },
       "rewards": {
         "intro": {
@@ -3664,8 +3664,8 @@
         "perMonth": "Per Month",
         "usd": "USD",
         "historicalPriceChart": "Historical Price Chart",
-        "price": "Price",
-        "close": "Close",
+        "price": "Giá",
+        "close": "Đóng",
         "errors": {
           "failedToFetchData": "Failed to fetch data",
           "failedToFetchRates": "Failed to fetch rates",
@@ -3684,13 +3684,13 @@
       },
       "loading": "Loading FluxDrive...",
       "checkout": "Checkout",
-      "renewal": "Renewal",
-      "upgrade": "Upgrade",
+      "renewal": "Gia hạn",
+      "upgrade": "Nâng cấp",
       "downgrade": "Downgrade",
       "renewalSuccess": "Subscription renewed successfully!",
       "renewalFailed": "Renewal failed: ",
       "upgradeFailed": "Upgrade failed: ",
-      "cancel": "Cancel",
+      "cancel": "Hủy",
       "features": {
         "title": "Why Choose FluxDrive",
         "encryption": {
@@ -3743,27 +3743,27 @@
       "detail": {
         "loadingTitle": "Loading Application...",
         "errorMessage": "Failed to load application details: {error}",
-        "priceLabel": "Price",
-        "priceFree": "Free",
+        "priceLabel": "Giá",
+        "priceFree": "Miễn phí",
         "install": "Buy Now",
         "minimumRequirements": "Minimum Requirements",
-        "unitCores": "vCores",
+        "unitCores": "vCore",
         "unitMB": "MB",
         "unitGB": "GB",
         "cpuPower": "CPU Power",
-        "memory": "Memory",
-        "storage": "Storage",
-        "screenshots": "Screenshots",
+        "memory": "Bộ nhớ",
+        "storage": "Lưu trữ",
+        "screenshots": "Ảnh chụp màn hình",
         "screenshotAlt": "Screenshot {number}",
-        "about": "About",
-        "developer": "Developer",
+        "about": "Về",
+        "developer": "Nhà phát triển",
         "lastUpdate": "Last Update",
-        "version": "Version",
-        "downloads": "Downloads",
-        "links": "Links",
-        "website": "Website",
+        "version": "Phiên bản",
+        "downloads": "Tải xuống",
+        "links": "Liên kết",
+        "website": "Trang web",
         "sourceCode": "Source Code",
-        "support": "Support"
+        "support": "Hỗ trợ"
       },
       "common": {
         "whyFlux": {
@@ -3813,7 +3813,7 @@
           ]
         },
         "genericFAQ": {
-          "title": "Frequently Asked Questions",
+          "title": "Các câu hỏi thường gặp",
           "subtitle": "Everything you need to know about hosting on FluxCloud",
           "questions": [
             {
@@ -3872,16 +3872,16 @@
             "subtitle": "Deploy your favorite game servers in seconds with global distribution, DDoS protection, and pay-as-you-go pricing powered by blockchain technology.",
             "cta": "Browse Game Servers",
             "benefits": {
-              "instant": "Instant Deployment",
+              "instant": "Triển khai ngay lập tức",
               "global": "Global Servers",
-              "ddos": "DDoS Protection",
+              "ddos": "Bảo vệ DDoS",
               "pricing": "Transparent Pricing"
             }
           },
           "trust": {
             "servers": {
               "value": "1000+",
-              "label": "Active Servers"
+              "label": "Máy chủ hoạt động"
             },
             "uptime": {
               "value": "99.9%",
@@ -3889,7 +3889,7 @@
             },
             "locations": {
               "value": "50+",
-              "label": "Countries"
+              "label": "Quốc gia"
             },
             "deployment": {
               "value": "< 30s",
@@ -3900,15 +3900,15 @@
             "title": "Why Choose FluxPlay for Game Hosting?",
             "items": {
               "instant": {
-                "title": "Instant Deployment",
+                "title": "Triển khai ngay lập tức",
                 "description": "Launch your game server in under 30 seconds with our automated deployment system. No technical knowledge required."
               },
               "ddos": {
-                "title": "DDoS Protection Included",
+                "title": "Bao gồm bảo vệ DDoS",
                 "description": "Enterprise-grade DDoS protection keeps your server online and your players connected, even during attacks."
               },
               "global": {
-                "title": "Global Server Network",
+                "title": "Mạng máy chủ toàn cầu",
                 "description": "Choose from 50+ countries worldwide to minimize latency and provide the best gaming experience for your players."
               },
               "monitoring": {
@@ -3952,7 +3952,7 @@
             }
           },
           "serverLocations": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Our decentralized infrastructure spans across the globe, ensuring low latency and high availability for your game servers wherever your players are."
           },
           "gamesTitle": "Available Game Servers",
@@ -3965,7 +3965,7 @@
             "rows": {
               "setup": "Setup Time",
               "pricing": "Pricing Model",
-              "ddos": "DDoS Protection",
+              "ddos": "Bảo vệ DDoS",
               "decentralized": "Decentralized",
               "locations": "Server Locations",
               "scaling": "Scaling Speed"
@@ -3982,7 +3982,7 @@
             }
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "items": {
               "what": {
                 "question": "What is FluxPlay game server hosting?",
@@ -4043,41 +4043,41 @@
               "Persistent world saves",
               "Mod support ready",
               "Automatic backups",
-              "DDoS protection included"
+              "Bao gồm bảo vệ DDoS"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
-            "subtitle": "Decentralized infrastructure built for gaming performance",
+            "title": "Tại sao Lưu trữ trên FluxCloud?",
+            "subtitle": "Cơ sở hạ tầng phi tập trung được xây dựng cho hiệu suất trò chơi",
             "items": [
               {
                 "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
+                "title": "Bảo vệ DDoS",
                 "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
               },
               {
                 "icon": "mdi-flash",
-                "title": "Instant Deployment",
+                "title": "Triển khai ngay lập tức",
                 "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
               },
               {
                 "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
+                "title": "Độ trễ thấp trên toàn thế giới",
                 "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
               },
               {
                 "icon": "mdi-server-network",
-                "title": "Decentralized Network",
+                "title": "Mạng phi tập trung",
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
                 "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
+                "title": "Giá cả hợp lý",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
               {
                 "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
+                "title": "Tài nguyên có thể mở rộng",
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
@@ -4093,11 +4093,11 @@
             ]
           },
           "serverLocations": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your game hosted on a worldwide decentralized infrastructure with servers across multiple continents, ensuring low latency and high availability for players everywhere."
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "subtitle": "Everything you need to know about hosting Palworld on FluxCloud",
             "questions": [
               {
@@ -4136,42 +4136,42 @@
               "Mod and plugin support (Bukkit, Spigot, Paper, Forge, Fabric)",
               "Regular automated backups",
               "24/7 server uptime guarantee",
-              "DDoS protection included",
+              "Bao gồm bảo vệ DDoS",
               "Easy world management"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
-            "subtitle": "Decentralized infrastructure built for gaming performance",
+            "title": "Tại sao Lưu trữ trên FluxCloud?",
+            "subtitle": "Cơ sở hạ tầng phi tập trung được xây dựng cho hiệu suất trò chơi",
             "items": [
               {
                 "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
+                "title": "Bảo vệ DDoS",
                 "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
               },
               {
                 "icon": "mdi-flash",
-                "title": "Instant Deployment",
+                "title": "Triển khai ngay lập tức",
                 "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
               },
               {
                 "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
+                "title": "Độ trễ thấp trên toàn thế giới",
                 "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
               },
               {
                 "icon": "mdi-server-network",
-                "title": "Decentralized Network",
+                "title": "Mạng phi tập trung",
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
                 "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
+                "title": "Giá cả hợp lý",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
               {
                 "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
+                "title": "Tài nguyên có thể mở rộng",
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
@@ -4187,11 +4187,11 @@
             ]
           },
           "serverLocations": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your game hosted on a worldwide decentralized infrastructure with servers across multiple continents, ensuring low latency and high availability for players everywhere."
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "subtitle": "Everything you need to know about hosting Minecraft on FluxCloud",
             "questions": [
               {
@@ -4262,7 +4262,7 @@
                 "value": "Weekly automatic + manual on-demand"
               },
               {
-                "label": "DDoS Protection",
+                "label": "Bảo vệ DDoS",
                 "value": "Enterprise-grade, included free"
               },
               {
@@ -4290,41 +4290,41 @@
               "Auto-save functionality every 5 minutes",
               "Ultra-low latency connections",
               "Easy server configuration",
-              "DDoS protection included"
+              "Bao gồm bảo vệ DDoS"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
-            "subtitle": "Decentralized infrastructure built for gaming performance",
+            "title": "Tại sao Lưu trữ trên FluxCloud?",
+            "subtitle": "Cơ sở hạ tầng phi tập trung được xây dựng cho hiệu suất trò chơi",
             "items": [
               {
                 "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
+                "title": "Bảo vệ DDoS",
                 "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
               },
               {
                 "icon": "mdi-flash",
-                "title": "Instant Deployment",
+                "title": "Triển khai ngay lập tức",
                 "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
               },
               {
                 "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
+                "title": "Độ trễ thấp trên toàn thế giới",
                 "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
               },
               {
                 "icon": "mdi-server-network",
-                "title": "Decentralized Network",
+                "title": "Mạng phi tập trung",
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
                 "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
+                "title": "Giá cả hợp lý",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
               {
                 "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
+                "title": "Tài nguyên có thể mở rộng",
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
@@ -4340,11 +4340,11 @@
             ]
           },
           "serverLocations": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your game hosted on a worldwide decentralized infrastructure with servers across multiple continents, ensuring low latency and high availability for players everywhere."
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "subtitle": "Everything you need to know about hosting Factorio on FluxCloud",
             "questions": [
               {
@@ -4384,41 +4384,41 @@
               "Regular auto-saves every 5 minutes",
               "High-performance hosting for mega-factories",
               "Easy session management",
-              "DDoS protection included"
+              "Bao gồm bảo vệ DDoS"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
-            "subtitle": "Decentralized infrastructure built for gaming performance",
+            "title": "Tại sao Lưu trữ trên FluxCloud?",
+            "subtitle": "Cơ sở hạ tầng phi tập trung được xây dựng cho hiệu suất trò chơi",
             "items": [
               {
                 "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
+                "title": "Bảo vệ DDoS",
                 "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
               },
               {
                 "icon": "mdi-flash",
-                "title": "Instant Deployment",
+                "title": "Triển khai ngay lập tức",
                 "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
               },
               {
                 "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
+                "title": "Độ trễ thấp trên toàn thế giới",
                 "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
               },
               {
                 "icon": "mdi-server-network",
-                "title": "Decentralized Network",
+                "title": "Mạng phi tập trung",
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
                 "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
+                "title": "Giá cả hợp lý",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
               {
                 "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
+                "title": "Tài nguyên có thể mở rộng",
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
@@ -4434,11 +4434,11 @@
             ]
           },
           "serverLocations": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your game hosted on a worldwide decentralized infrastructure with servers across multiple continents, ensuring low latency and high availability for players everywhere."
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "subtitle": "Everything you need to know about hosting Satisfactory on FluxCloud",
             "questions": [
               {
@@ -4478,41 +4478,41 @@
               "Custom server settings and difficulty",
               "Automated backups every 30 minutes",
               "High-performance servers for voxel worlds",
-              "DDoS protection included"
+              "Bao gồm bảo vệ DDoS"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
-            "subtitle": "Decentralized infrastructure built for gaming performance",
+            "title": "Tại sao Lưu trữ trên FluxCloud?",
+            "subtitle": "Cơ sở hạ tầng phi tập trung được xây dựng cho hiệu suất trò chơi",
             "items": [
               {
                 "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
+                "title": "Bảo vệ DDoS",
                 "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
               },
               {
                 "icon": "mdi-flash",
-                "title": "Instant Deployment",
+                "title": "Triển khai ngay lập tức",
                 "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
               },
               {
                 "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
+                "title": "Độ trễ thấp trên toàn thế giới",
                 "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
               },
               {
                 "icon": "mdi-server-network",
-                "title": "Decentralized Network",
+                "title": "Mạng phi tập trung",
                 "description": "Hosted across the global Flux network for maximum uptime and resilience."
               },
               {
                 "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
+                "title": "Giá cả hợp lý",
                 "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
               },
               {
                 "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
+                "title": "Tài nguyên có thể mở rộng",
                 "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
               },
               {
@@ -4528,11 +4528,11 @@
             ]
           },
           "serverLocations": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your game hosted on a worldwide decentralized infrastructure with servers across multiple continents, ensuring low latency and high availability for players everywhere."
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "Các câu hỏi thường gặp",
             "subtitle": "Everything you need to know about hosting Enshrouded on FluxCloud",
             "questions": [
               {
@@ -4597,12 +4597,12 @@
           "plans": {
             "title": "Choose Your WordPress Plan",
             "subtitle": "Select the perfect plan for your website's needs. All plans include MySQL database, SSL certificates, and full WordPress functionality.",
-            "recommended": "Most Popular",
+            "recommended": "Phổ biến nhất",
             "buyNow": "Buy Now",
             "perMonth": "/mo",
             "cpu": "CPU",
             "ram": "RAM",
-            "storage": "Storage",
+            "storage": "Lưu trữ",
             "instances": "Nodes",
             "getStarted": "Get Started"
           },
@@ -4622,7 +4622,7 @@
                 "description": "Automatic SSL certificate provisioning and renewal for secure HTTPS connections."
               },
               "scalable": {
-                "title": "Scalable Resources",
+                "title": "Tài nguyên có thể mở rộng",
                 "description": "Easily upgrade your plan as your website grows to handle increased traffic."
               },
               "backup": {
@@ -4640,12 +4640,12 @@
             }
           },
           "serverNetwork": {
-            "title": "Global Server Network",
+            "title": "Mạng máy chủ toàn cầu",
             "subtitle": "Your WordPress site is hosted on the FluxCloud decentralized network, distributed across thousands of nodes worldwide for maximum reliability and performance.",
             "noData": "No server data available",
-            "activeServers": "Active Servers",
-            "countries": "Countries",
-            "global": "Global",
+            "activeServers": "Máy chủ hoạt động",
+            "countries": "Quốc gia",
+            "global": "Toàn cầu",
             "coverage": "Coverage"
           }
         },
@@ -4659,18 +4659,18 @@
           "domainName": "Domain Name",
           "domainNameTooltip": "Custom domain for your WordPress site (optional)",
           "domainNamePlaceholder": "yourdomain.com",
-          "subscription": "Subscription",
+          "subscription": "Đăng ký",
           "subscriptionTooltip": "Select the billing period for your WordPress hosting",
           "whitelistIp": "Whitelist IP",
           "whitelistIpLabel": "Whitelist IP for Backup/Restore (Optional)",
           "whitelistIpPlaceholder": "Enter IP address",
           "performancePlan": "Performance Plan",
           "performancePlanTooltip": "Choose server resources (CPU, RAM, SSD) for your WordPress site",
-          "deploymentLocation": "Deployment Location",
+          "deploymentLocation": "Vị trí triển khai",
           "deploymentLocationTooltip": "Select a geographic region to deploy your WordPress site. Choose Global for automatic selection.",
-          "instances": "Instances",
-          "instancesPlural": "instances",
-          "instance": "instance",
+          "instances": "Instanc",
+          "instancesPlural": "Instanc",
+          "instance": "Instanc",
           "perMonth": "/month",
           "planDescriptions": {
             "Free": "Suitable for Individuals and Small Businesses, Perfect for a simple Website or Blog",
@@ -4688,7 +4688,7 @@
           "twelveMonths": "12 Months"
         },
         "locations": {
-          "global": "Global",
+          "global": "Toàn cầu",
           "northAmerica": "North America",
           "europe": "Europe",
           "asia": "Asia",
@@ -4700,17 +4700,17 @@
           "title": "Order Summary",
           "planDetails": "Plan Details",
           "performancePlan": "Performance Plan",
-          "deployment": "Deployment",
+          "deployment": "Triển khai",
           "subscriptionPeriod": "Subscription Period",
-          "month": "month",
-          "months": "months",
-          "subscription": "subscription",
+          "month": "tháng",
+          "months": "tháng",
+          "subscription": "Đăng ký",
           "pricing": "Pricing",
-          "subtotal": "Subtotal",
-          "discount": "Discount",
-          "total": "Total",
+          "subtotal": "Tổng cộng",
+          "discount": "Giảm giá",
+          "total": "Tổng",
           "install": "Install WordPress",
-          "loginRequired": "Login Required",
+          "loginRequired": "Cần đăng nhập",
           "loginToInstall": "Please log in to install WordPress",
           "dappNameTitle": "WordPress Dapp Name",
           "dappNameHelp": "Internal nick name, not used externally.",
@@ -4722,7 +4722,7 @@
           "whitelistIpHelp": "Explicitly set your IP address as the only device that can access your WordPress database. Advanced users only.",
           "performanceTitle": "Performance",
           "performanceHelp": "Standard spec offers the best performance and ensures good stability.",
-          "deploymentLocationTitle": "Deployment Location",
+          "deploymentLocationTitle": "Vị trí triển khai",
           "deploymentLocationHelp": "Geographic region the WordPress site will be deployed in. For optimum performance, all nodes must be in the same region.",
           "selectPlan": "Select a plan"
         },
@@ -4741,7 +4741,7 @@
           "title": "Best Practices"
         },
         "faq": {
-          "title": "Frequently Asked Questions"
+          "title": "Các câu hỏi thường gặp"
         },
         "errors": {
           "dappNameRequired": "Dapp name is required",
@@ -4754,13 +4754,13 @@
           "tosLoadFailed": "Failed to load Terms of Service. Please visit"
         },
         "actions": {
-          "add": "Add",
+          "add": "Thêm",
           "calculatingPricing": "Calculating pricing..."
         },
         "termsOfService": {
-          "title": "Terms of Service",
+          "title": "Điều khoản dịch vụ",
           "agreement": "I have read and agree to the",
-          "link": "Terms of Service",
+          "link": "Điều khoản dịch vụ",
           "agree": "I Agree",
           "disagree": "I Disagree",
           "loadError": "Failed to load Terms of Service. Please visit <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a>"
@@ -4777,16 +4777,16 @@
               "subtitle": "Deploy your favorite game servers in seconds with global distribution, DDoS protection, and pay-as-you-go pricing powered by blockchain technology.",
               "cta": "Browse Game Servers",
               "benefits": {
-                "instant": "Instant Deployment",
+                "instant": "Triển khai ngay lập tức",
                 "global": "Global Servers",
-                "ddos": "DDoS Protection",
+                "ddos": "Bảo vệ DDoS",
                 "pricing": "Transparent Pricing"
               }
             },
             "trust": {
               "servers": {
                 "value": "1000+",
-                "label": "Active Servers"
+                "label": "Máy chủ hoạt động"
               },
               "uptime": {
                 "value": "99.9%",
@@ -4794,7 +4794,7 @@
               },
               "locations": {
                 "value": "50+",
-                "label": "Countries"
+                "label": "Quốc gia"
               },
               "deployment": {
                 "value": "< 30s",
@@ -4805,15 +4805,15 @@
               "title": "Why Choose FluxPlay for Game Hosting?",
               "items": {
                 "instant": {
-                  "title": "Instant Deployment",
+                  "title": "Triển khai ngay lập tức",
                   "description": "Launch your game server in under 30 seconds with our automated deployment system. No technical knowledge required."
                 },
                 "ddos": {
-                  "title": "DDoS Protection Included",
+                  "title": "Bao gồm bảo vệ DDoS",
                   "description": "Enterprise-grade DDoS protection keeps your server online and your players connected, even during attacks."
                 },
                 "global": {
-                  "title": "Global Server Network",
+                  "title": "Mạng máy chủ toàn cầu",
                   "description": "Choose from 50+ countries worldwide to minimize latency and provide the best gaming experience for your players."
                 },
                 "monitoring": {
@@ -4844,7 +4844,7 @@
               "rows": {
                 "setup": "Setup Time",
                 "pricing": "Pricing Model",
-                "ddos": "DDoS Protection",
+                "ddos": "Bảo vệ DDoS",
                 "decentralized": "Decentralized",
                 "locations": "Server Locations",
                 "scaling": "Scaling Speed"
@@ -4861,7 +4861,7 @@
               }
             },
             "faq": {
-              "title": "Frequently Asked Questions",
+              "title": "Các câu hỏi thường gặp",
               "items": {
                 "what": {
                   "question": "What is FluxPlay game server hosting?",
@@ -4907,7 +4907,7 @@
               "subtitle": "Discover other ways to leverage decentralized infrastructure",
               "links": [
                 {
-                  "title": "Cost Calculator",
+                  "title": "Máy tính chi phí",
                   "description": "Calculate exact hosting costs for your applications with transparent pricing",
                   "url": "/cost-calculator",
                   "icon": "mdi-calculator"
@@ -4949,8 +4949,8 @@
               "perMonth": "/month",
               "cpu": "CPU",
               "ram": "RAM",
-              "storage": "Storage",
-              "instances": "Instances",
+              "storage": "Lưu trữ",
+              "instances": "Instanc",
               "getStarted": "Get Started"
             },
             "description": {
@@ -4960,7 +4960,7 @@
             "relatedLinks": {
               "sectionTitle": "Explore More on FluxCloud",
               "marketplace": {
-                "title": "Marketplace",
+                "title": "Thị trường",
                 "description": "Browse all available applications"
               },
               "gameServers": {
@@ -4972,7 +4972,7 @@
                 "description": "Decentralized file storage"
               },
               "costCalculator": {
-                "title": "Cost Calculator",
+                "title": "Máy tính chi phí",
                 "description": "Estimate your hosting costs"
               }
             }
@@ -4986,13 +4986,13 @@
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
       "loggedIn": "Logged in",
-      "login": "Login",
+      "login": "Đăng nhập",
       "loginToVote": "Login to Vote",
       "filters": "Filters",
       "addProposal": "Add Proposal",
       "filterProposals": "Filter Proposals",
       "allProposals": "All Proposals",
-      "open": "Open",
+      "open": "Mở",
       "passed": "Passed",
       "unpaid": "Unpaid",
       "rejected": "Rejected",
@@ -5018,10 +5018,10 @@
       "tryDifferentFilter": "Try selecting a different filter.",
       "anonymous": "Anonymous",
       "end": "End",
-      "required": "Required",
-      "total": "Total",
-      "yes": "Yes",
-      "no": "No",
+      "required": "Bắt buộc",
+      "total": "Tổng",
+      "yes": "Có",
+      "no": "Không",
       "loginRequiredForVoting": "Login Required for Voting",
       "loginRequiredMessage": "You need to be logged in to participate in xDAO voting. Please choose your preferred login method below.",
       "debugInfo": "Debug Info:",
@@ -5066,30 +5066,30 @@
       },
       "orderSummary": {
         "title": "Order Summary",
-        "plan": "Plan",
-        "storage": "Storage",
-        "billing": "Billing",
-        "monthly": "Monthly",
-        "total": "Total",
-        "currentPlan": "Current Plan",
-        "status": "Status"
+        "plan": "Gói",
+        "storage": "Lưu trữ",
+        "billing": "Thanh toán",
+        "monthly": "Hàng tháng",
+        "total": "Tổng",
+        "currentPlan": "Gói hiện tại",
+        "status": "Trạng thái"
       },
       "subscriptionDetails": "Subscription Details",
       "billingCycle": "Billing Cycle",
-      "monthly": "Monthly",
-      "total": "Total",
+      "monthly": "Hàng tháng",
+      "total": "Tổng",
       "proceedToPayment": "Proceed to Payment",
       "paymentProcessing": "Processing Payment",
       "secureCheckout": "Secure Checkout",
-      "plan": "Plan",
-      "price": "Price",
+      "plan": "Gói",
+      "price": "Giá",
       "perMonth": "per month",
       "header": {
         "title": "FluxDrive",
         "subtitle": "Complete your subscription to unlock decentralized storage"
       },
       "fluxPay": {
-        "title": "Pay with Flux",
+        "title": "Thanh toán bằng FLUX",
         "subtitle": "Secure payment using your Zelcore wallet",
         "amount": "Amount:",
         "usdValue": "USD Value:",
@@ -5137,8 +5137,8 @@
       "noResultsText": "No matching records found.",
       "noDataText": "No data available."
     },
-    "close": "Close",
-    "open": "open",
+    "close": "Đóng",
+    "open": "Mở",
     "loading": "loading",
     "carousel": {
       "ariaLabel": {
@@ -5157,16 +5157,16 @@
     "pagination": {
       "ariaLabel": {
         "root": "root",
-        "previous": "previous",
+        "previous": "Trước đó",
         "first": "first",
         "last": "last",
-        "next": "next",
+        "next": "Tiếp theo",
         "currentPage": "currentPage",
         "page": "page"
       }
     },
     "input": {
-      "clear": "clear",
+      "clear": "Xóa",
       "appendAction": "appendAction",
       "prependAction": "prependAction",
       "counterSize": "counterSize",
@@ -5184,7 +5184,7 @@
   "memoryMonitor": {
     "title": "Memory Monitor",
     "currentUsage": "Current Usage",
-    "statistics": "Statistics",
+    "statistics": "Thống kê",
     "breakdown": "Memory Breakdown",
     "minimum": "Minimum",
     "maximum": "Maximum",
@@ -5193,7 +5193,7 @@
     "trend": "Trend",
     "used": "used",
     "limit": "limit",
-    "refresh": "Refresh",
+    "refresh": "Làm mới",
     "forceGC": "Force GC",
     "clearHistory": "Clear History",
     "notAvailable": "Performance Memory API not available in this browser.",
@@ -5207,7 +5207,7 @@
       "usedHeapDesc": "Memory actively used by JavaScript objects",
       "freeHeap": "Free Heap",
       "freeHeapDesc": "Allocated but unused heap space",
-      "available": "Available",
+      "available": "Có sẵn",
       "availableDesc": "Heap space not yet allocated",
       "domNodes": "DOM Nodes (est.)",
       "domNodesDesc": "Approximately {count} DOM elements",
@@ -5234,7 +5234,7 @@
       "fluxDrive": {
         "name": "FluxDrive",
         "description": "Secure, decentralized storage solution for your data",
-        "category": "Storage"
+        "category": "Lưu trữ"
       },
       "fluxEdge": {
         "name": "FluxEdge",
@@ -5244,7 +5244,7 @@
       "fluxMarketplace": {
         "name": "Flux Marketplace",
         "description": "Discover and deploy applications from our marketplace",
-        "category": "Apps"
+        "category": "Ứng dụng"
       },
       "wordPressOnFlux": {
         "name": "WordPress on Flux",

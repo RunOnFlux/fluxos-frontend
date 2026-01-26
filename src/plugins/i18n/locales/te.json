@@ -1,149 +1,149 @@
 {
   "common": {
-    "off": "off",
+    "off": "ఆఫ్",
     "buttons": {
-      "cancel": "Cancel",
-      "close": "Close",
-      "save": "Save",
-      "delete": "Delete",
-      "submit": "Submit",
-      "update": "Update",
-      "install": "Install",
-      "start": "Start",
-      "stop": "Stop",
-      "remove": "Remove",
-      "download": "Download",
-      "upload": "Upload",
-      "copy": "Copy",
-      "paste": "Paste",
-      "export": "Export",
-      "import": "Import",
-      "edit": "Edit",
-      "view": "View",
-      "refresh": "Refresh",
-      "reload": "Reload",
-      "back": "Back",
-      "next": "Next",
-      "previous": "Previous",
-      "confirm": "Confirm",
-      "apply": "Apply",
-      "reset": "Reset",
-      "clear": "Clear",
-      "search": "Search",
-      "filter": "Filter",
-      "yes": "Yes",
-      "no": "No",
-      "ok": "OK",
-      "login": "Login"
+      "cancel": "రద్దు",
+      "close": "మూసివేయి",
+      "save": "సేవ్ చేయి",
+      "delete": "తొలగించు",
+      "submit": "సమర్పించు",
+      "update": "నవీకరణ చేయి",
+      "install": "ఇన్‌స్టాల్ చేయి",
+      "start": "ప్రారంభించు",
+      "stop": "ఆపివేయి",
+      "remove": "తీసివేయి",
+      "download": "డౌన్‌లోడ్ చేయి",
+      "upload": "అప్‌లోడ్ చేయి",
+      "copy": "కాపీ చేయి",
+      "paste": "అతికించు",
+      "export": "ఎగుమతి చేయి",
+      "import": "దిగుమతి చేయి",
+      "edit": "సవరించు",
+      "view": "వీక్షించు",
+      "refresh": "రిఫ్రెష్ చేయి",
+      "reload": "తిరిగి లోడ్ చేయి",
+      "back": "వెనుకకు",
+      "next": "తరువాత",
+      "previous": "గత",
+      "confirm": "నిర్ధారించు",
+      "apply": "వర్తించు",
+      "reset": "రీసెట్ చేయి",
+      "clear": "క్లియర్ చేయి",
+      "search": "వెతకండి",
+      "filter": "ఫిల్టర్",
+      "yes": "అవును",
+      "no": "లేదు",
+      "ok": "సరే",
+      "login": "లాగిన్"
     },
     "labels": {
-      "name": "Name",
-      "title": "Title",
-      "description": "Description",
-      "status": "Status",
-      "type": "Type",
-      "version": "Version",
-      "size": "Size",
-      "value": "Value",
+      "name": "పేరు",
+      "title": "శీర్షిక",
+      "description": "వివరణ",
+      "status": "స్థితి",
+      "type": "రకం",
+      "version": "సంస్కరణ",
+      "size": "పరిమాణం",
+      "value": "విలువ",
       "url": "URL",
-      "message": "Message",
-      "owner": "Owner",
-      "date": "Date",
-      "time": "Time",
-      "location": "Location",
-      "country": "Country",
-      "city": "City",
-      "email": "Email",
-      "password": "Password",
-      "username": "Username",
-      "address": "Address",
-      "port": "Port",
+      "message": "సందేశం",
+      "owner": "యజమాని",
+      "date": "తేదీ",
+      "time": "సమయం",
+      "location": "ప్రదేశం",
+      "country": "దేశం",
+      "city": "నగరం",
+      "email": "ఇమెయిల్",
+      "password": "పాస్‌వర్డ్",
+      "username": "వినియోగదారు పేరు",
+      "address": "చిరునామా",
+      "port": "పోర్ట్",
       "ip": "IP Address",
-      "tier": "Tier",
-      "price": "Price",
-      "total": "Total",
-      "amount": "Amount",
-      "free": "Free",
-      "memory": "Memory",
-      "storage": "Storage",
-      "screenshots": "Screenshots",
-      "about": "About",
-      "developer": "Developer",
+      "tier": "స్థాయి",
+      "price": "ధర",
+      "total": "మొత్తం",
+      "amount": "మొత్తం",
+      "free": "ఉచితం",
+      "memory": "మెమరీ",
+      "storage": "నిల్వ",
+      "screenshots": "స్క్రీన్‌షాట్‌లు",
+      "about": "గురించి",
+      "developer": "డెవలపర్",
       "lastUpdate": "Last Update",
-      "downloads": "Downloads",
-      "links": "Links",
-      "website": "Website",
+      "downloads": "డౌన్‌లోడ్‌లు",
+      "links": "లింకులు",
+      "website": "వెబ్‌సైట్",
       "sourceCode": "Source Code",
-      "support": "Support",
-      "plan": "Plan",
-      "billing": "Billing",
-      "monthly": "Monthly",
+      "support": "సపోర్టు",
+      "plan": "ప్లాన్",
+      "billing": "బిలింగ్",
+      "monthly": "నెలవారీ",
       "scrollLeft": "Scroll left",
       "scrollRight": "Scroll right",
-      "optional": "Optional"
+      "optional": "ఐచ్ఛికం"
     },
     "theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "switchTheme": "Switch theme"
+      "light": "లైట్",
+      "dark": "డార్క్",
+      "switchTheme": "థీమ్‌ను మార్చండి"
     },
     "status": {
-      "loading": "Loading...",
-      "success": "Success",
-      "error": "Error",
-      "warning": "Warning",
-      "info": "Info",
-      "active": "Active",
-      "inactive": "Inactive",
-      "enabled": "Enabled",
-      "disabled": "Disabled",
-      "online": "Online",
-      "offline": "Offline",
-      "available": "Available",
-      "unavailable": "Unavailable",
-      "running": "Running",
-      "stopped": "Stopped",
-      "pending": "Pending",
-      "processing": "Processing",
-      "completed": "Completed",
-      "failed": "Failed",
-      "unknown": "Unknown"
+      "loading": "లోడ్ చేస్తున్నారు...",
+      "success": "విజయం",
+      "error": "లోపం",
+      "warning": "హెచ్చరిక",
+      "info": "సమాచారం",
+      "active": "క్రియాశీల",
+      "inactive": "క్రియాహీన",
+      "enabled": "ప్రారంభించారు",
+      "disabled": "నిలిపివేసారు",
+      "online": "ఆన్‌లైన్",
+      "offline": "ఆఫ్‌లైన్",
+      "available": "అందుబాటులో",
+      "unavailable": "అందుబాటులో లేనిది",
+      "running": "నడుస్తుంది",
+      "stopped": "ఆపివేసారు",
+      "pending": "పట్టుకోవడానికి వేచుండు",
+      "processing": "ప్రక్రియ చేస్తున్నారు",
+      "completed": "పూర్ణం",
+      "failed": "విఫలమైంది",
+      "unknown": "తెలియనిది"
     },
     "messages": {
-      "pleaseWait": "Please wait...",
-      "loadingData": "Loading data...",
-      "noData": "No data available",
-      "noResults": "No results found",
-      "errorOccurred": "An error occurred",
-      "operationSuccess": "Operation completed successfully",
-      "operationFailed": "Operation failed",
-      "confirmDelete": "Are you sure you want to delete?",
-      "unsavedChanges": "You have unsaved changes",
-      "invalidInput": "Invalid input",
-      "required": "This field is required",
-      "connectionError": "Connection error. Please try again.",
-      "unauthorized": "Unauthorized access",
-      "notFound": "Not found",
-      "serverError": "Server error. Please try again later.",
-      "copiedToClipboard": "Copied to clipboard!",
-      "failedToCopy": "Failed to copy to clipboard",
-      "loginRequired": "Login Required",
-      "loggedOutSuccessfully": "Logged out successfully"
+      "pleaseWait": "దయచేసి ఆపండి...",
+      "loadingData": "డేటా లోడ్ చేస్తున్నారు...",
+      "noData": "డేటా అందుబాటులో లేనిది",
+      "noResults": "ఫలితాలు దొరకలేదు",
+      "errorOccurred": "ఒక లోపం సంభవించింది",
+      "operationSuccess": "ఆపరేషన్ విజయవంతంగా పూర్ణమైంది",
+      "operationFailed": "ఆపరేషన్ విఫలమైంది",
+      "confirmDelete": "మీరు నిజంగా తొలగించాలనుకుంటున్నారా?",
+      "unsavedChanges": "మీకు సేవ్ చేయని మార్పులు ఉన్నాయి",
+      "invalidInput": "చెల్లని ఇన్‌పుట్",
+      "required": "ఈ ఫీల్డ్ అవసరం",
+      "connectionError": "కనెక్షన్ లోపం. దయచేసి మళ్లీ ప్రయత్నించండి.",
+      "unauthorized": "అననుమతిపూర్వక ప్రాప్తి",
+      "notFound": "దొరకలేదు",
+      "serverError": "సర్వర్ లోపం. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.",
+      "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
+      "failedToCopy": "క్లిప్‌బోర్డ్‌కు కాపీ చేయడం విఫలమైంది",
+      "loginRequired": "లాగిన్ అవసరం",
+      "loggedOutSuccessfully": "విజయవంతంగా లాగ్ అవుట్ చేయబడింది"
     },
-    "itemsPerPage": "Items per page",
-    "of": "of",
+    "itemsPerPage": "పేజీకు అంశాలు",
+    "of": "యొక్క",
     "selectServerConfiguration": "Select Server Configuration",
     "groups": {
-      "smallServers": "Small Servers",
-      "mediumServers": "Medium Servers",
-      "largeServers": "Large Servers"
+      "smallServers": "చిన్న సర్వర్‌లు",
+      "mediumServers": "మీడియం సర్వర్‌లు",
+      "largeServers": "పెద్ద సర్వర్‌లు"
     },
     "guarantee": {
-      "title": "30-Day Money-Back Guarantee",
+      "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
       "description": "Try our service risk-free. If you're not completely satisfied within the first 30 days, we'll refund your payment—no questions asked.",
       "shortTitle": "Money-Back Guarantee",
       "badge": "30-Day Guarantee",
-      "trustMessage": "Your satisfaction is our priority"
+      "trustMessage": "మీ సంతృప్తి మాకు ప్రాధాన్యం"
     },
     "trustpilot": {
       "title": "Trusted by Thousands",
@@ -178,32 +178,32 @@
     "resources": {
       "cpu": "CPU",
       "ram": "RAM",
-      "memory": "Memory",
-      "storage": "Storage",
-      "disk": "Disk",
+      "memory": "మెమరీ",
+      "storage": "నిల్వ",
+      "disk": "డిస్క్",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
-      "bandwidth": "Bandwidth",
-      "cores": "Cores",
-      "threads": "Threads"
+      "bandwidth": "బ్యాండ్‌విడ్‌థ్",
+      "cores": "కోర్లు",
+      "threads": "థ్రెడ్‌లు"
     },
     "time": {
-      "second": "second",
-      "seconds": "seconds",
-      "minute": "minute",
-      "minutes": "minutes",
-      "hour": "hour",
-      "hours": "hours",
-      "day": "day",
-      "days": "days",
-      "week": "week",
-      "weeks": "weeks",
-      "month": "month",
-      "months": "months",
-      "year": "year",
-      "years": "years",
-      "ago": "ago",
-      "now": "now"
+      "second": "సెకను",
+      "seconds": "సెకన్లు",
+      "minute": "నిమిషం",
+      "minutes": "నిమిషాలు",
+      "hour": "గంట",
+      "hours": "గంటలు",
+      "day": "రోజు",
+      "days": "రోజులు",
+      "week": "వారం",
+      "weeks": "వారాలు",
+      "month": "నెల",
+      "months": "నెలలు",
+      "year": "సంవత్సరం",
+      "years": "సంవత్సరాలు",
+      "ago": "క్రితం",
+      "now": "ఇప్పుడు"
     },
     "units": {
       "vCores": "vCores",
@@ -217,7 +217,7 @@
       "accept": "Accept",
       "acceptAll": "Accept All",
       "onlyNecessary": "Only Necessary",
-      "close": "Close",
+      "close": "మూసివేయి",
       "customize": "Customize",
       "manageCookies": "Manage Cookies",
       "settingsTitle": "Cookie Preferences",
@@ -230,7 +230,7 @@
   },
   "menu": {
     "home": {
-      "title": "Home"
+      "title": "హోమ్"
     },
     "dashboard": {
       "title": "Flux Network",
@@ -241,27 +241,27 @@
       "nodeList": "Node List"
     },
     "application": {
-      "title": "Applications",
+      "title": "అనువర్తనాలు",
       "myApplications": "My Applications",
       "management": "Management",
       "globalApps": "Global Apps",
       "localApps": "Local Apps",
       "registerNewApp": "Register New App",
       "marketplace": "App Marketplace",
-      "marketplaceApps": "Applications",
-      "marketplaceGames": "Games",
+      "marketplaceApps": "అనువర్తనాలు",
+      "marketplaceGames": "ఆటలు",
       "marketplaceWordPress": "WordPress",
       "composition": "Composition",
       "locations": "Locations",
       "perPage": "Per Page",
-      "filter": "Filter",
+      "filter": "ఫిల్టర్",
       "typeToSearch": "Type to Search",
       "openAdvancedFilter": "Open advanced filter options",
       "appType": "App Type",
-      "all": "All",
+      "all": "అన్నీ",
       "marketplaceOnly": "Marketplace",
       "marketplaceExcluded": "Marketplace Excluded",
-      "version": "Version",
+      "version": "సంస్కరణ",
       "allVersions": "All Versions",
       "minHdd": "Min HDD (GB)",
       "minRam": "Min RAM (MB)",
@@ -272,7 +272,7 @@
       "clearAllFilters": "Clear All Filters",
       "noMatchingApps": "No matching apps found.",
       "noApps": "You don't have any apps.",
-      "signInRequired": "Login Required",
+      "signInRequired": "లాగిన్ అవసరం",
       "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",
       "viewYourApps": "View your apps",
       "manageResources": "Manage resources",
@@ -280,14 +280,14 @@
       "controlDeployments": "Control deployments",
       "deployDistributedApps": "Deploy distributed apps",
       "scaleGlobally": "Scale globally",
-      "signIn": "Login",
+      "signIn": "లాగిన్",
       "learnMore": "Learn More",
       "newToFlux": "New to Flux?",
       "checkDocumentation": "Check our documentation",
       "toGetStarted": "to get started.",
-      "status": "Status",
+      "status": "స్థితి",
       "checking": "checking...",
-      "loading": "Loading...",
+      "loading": "లోడ్ చేస్తున్నారు...",
       "unableToConnect": "Unable to connect to the server. Please check your internet or try again later.",
       "myActiveApps": "My Active Apps",
       "activeApps": "Active Apps",
@@ -299,7 +299,7 @@
       "marketplaceAppsTab": "Marketplace Apps"
     },
     "administration": {
-      "title": "Administration",
+      "title": "నిర్వహణ",
       "systemInfo": "Information",
       "dockerEvents": "Docker Events",
       "manageFlux": "Manage Flux Gravity",
@@ -317,7 +317,7 @@
       "title": "Cost Calculator"
     },
     "apiReference": {
-      "title": "Help"
+      "title": "సహాయం"
     },
     "fluxDrive": {
       "title": "FluxDrive"
@@ -334,11 +334,11 @@
       "description": "Check Flux network information, resources available, or a map with server locations."
     },
     "application": {
-      "title": "Applications",
+      "title": "అనువర్తనాలు",
       "description": "Buy on marketplace, register your own app, manage your active apps."
     },
     "administration": {
-      "title": "Administration",
+      "title": "నిర్వహణ",
       "description": "Tools for infrastructure administrators and node operators allow for managing Flux Gravity."
     },
     "fluxXdao": {
@@ -350,12 +350,12 @@
     "appDetailsCard": {
       "general": "General",
       "copySpecification": "Copy Specification",
-      "updateSubscription": "Update",
+      "updateSubscription": "నవీకరణ చేయి",
       "renewSubscription": "Renew",
-      "cancelSubscription": "Cancel",
-      "name": "Name",
-      "description": "Description",
-      "owner": "Owner",
+      "cancelSubscription": "రద్దు",
+      "name": "పేరు",
+      "description": "వివరణ",
+      "owner": "యజమాని",
       "hash": "Hash",
       "contacts": "Contacts",
       "geolocation": "Geolocation",
@@ -372,7 +372,7 @@
       "staticIpNo": "No, Running on all nodes",
       "specificationCopied": "Application specification copied to clipboard!",
       "specificationCopyFailed": "Failed to copy specification",
-      "unknown": "Unknown",
+      "unknown": "తెలియనిది",
       "continent": "Continent: {name}",
       "country": ", Country: {name}",
       "region": ", Region: {name}",
@@ -382,8 +382,8 @@
       "applicationExpired": "Application Expired"
     },
     "componentDetails": {
-      "name": "Name",
-      "description": "Description",
+      "name": "పేరు",
+      "description": "వివరణ",
       "repository": "Repository",
       "repositoryAuthentication": "Repository Authentication",
       "private": "Private",
@@ -409,8 +409,8 @@
     "confirmCustomDialog": {
       "confirmation": "Confirmation",
       "areYouSure": "Are you sure?",
-      "cancel": "Cancel",
-      "confirm": "Confirm"
+      "cancel": "రద్దు",
+      "confirm": "నిర్ధారించు"
     },
     "manualSignDialog": {
       "title": "Manual Signing",
@@ -418,8 +418,8 @@
       "messageToSign": "Message to sign:",
       "pasteSignature": "Paste signature:",
       "signaturePlaceholder": "Enter signature here",
-      "cancel": "Cancel",
-      "submit": "Submit"
+      "cancel": "రద్దు",
+      "submit": "సమర్పించు"
     },
     "fileUpload": {
       "dropFilesHere": "Drop files here or",
@@ -439,7 +439,7 @@
       "removeFile": "Remove File"
     },
     "notifications": {
-      "notifications": "Notifications",
+      "notifications": "నోటిఫికేషన్‌లు",
       "newCount": "{count} New",
       "markAllAsUnread": "Mark all as unread",
       "markAllAsRead": "Mark all as read",
@@ -452,7 +452,7 @@
     },
     "locations": {
       "perPage": "Per page",
-      "filter": "Filter",
+      "filter": "ఫిల్టర్",
       "typeToSearch": "Type to Search",
       "selectActiveInstance": "Select active instance",
       "noInstancesFound": "No instances found...",
@@ -462,9 +462,9 @@
       "visitFluxNode": "Visit FluxNode",
       "ipAddress": "IP Address",
       "uptime": "Uptime",
-      "running": "Running",
+      "running": "నడుస్తుంది",
       "continent": "Continent",
-      "country": "Country",
+      "country": "దేశం",
       "region": "Region",
       "notAvailable": "N/A"
     },
@@ -478,19 +478,19 @@
       "folderName": "Folder Name",
       "create": "Create",
       "uploadFiles": "Upload Files",
-      "close": "Close",
+      "close": "మూసివేయి",
       "rename": "Rename",
       "newName": "New Name",
       "editing": "Editing: {file}",
       "saving": "Saving...",
-      "save": "Save",
-      "name": "Name",
-      "size": "Size",
+      "save": "సేవ్ చేయి",
+      "name": "పేరు",
+      "size": "పరిమాణం",
       "modifiedAt": "Modified At",
       "downloadFolderAsArchive": "Download Folder as Archive",
       "downloadFile": "Download File",
-      "edit": "Edit",
-      "delete": "Delete",
+      "edit": "సవరించు",
+      "delete": "తొలగించు",
       "fileTooLarge": "The file exceeds the maximum size for browser-based editing. Please use a terminal-based editor.",
       "initializing": "Initializing...",
       "loadingFile": "Loading {file}... ",
@@ -521,7 +521,7 @@
       "customCommand": "Custom Command",
       "userUid": "User UID",
       "environmentVariables": "Environment Variables (e.g., VAR1=value1,VAR2=value2)",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
       "manager": {
         "title": "Terminal Manager",
         "layoutGrid": "Grid",
@@ -561,9 +561,9 @@
       "lineSelection": "Line Selection Mode",
       "autoScroll": "Auto Scroll",
       "copied": "Copied",
-      "copy": "Copy",
+      "copy": "కాపీ చేయి",
       "unselect": "Unselect",
-      "download": "Download",
+      "download": "డౌన్‌లోడ్ చేయి",
       "noMatchingLogs": "No matching logs found for '{keyword}'",
       "noLogsFound": "No logs found",
       "errors": {
@@ -603,12 +603,12 @@
       "selectComponent": "Select component",
       "enterRemoteBackupUrl": "Enter the URL for your remote backup archive",
       "component": "Component",
-      "size": "Size",
+      "size": "పరిమాణం",
       "created": "Created",
       "expires": "Expires",
       "actions": "Actions",
-      "name": "Name",
-      "time": "Time",
+      "name": "పేరు",
+      "time": "సమయం",
       "url": "URL",
       "timestamp": "Timestamp",
       "file": "File",
@@ -637,7 +637,7 @@
       "thirdPartyLogin": "3rd Party Login",
       "emailPassword": "Email/Password",
       "finishingLogin": "Finishing Login",
-      "pleaseWait": "Please wait...",
+      "pleaseWait": "దయచేసి ఆపండి...",
       "cancelVerification": "Cancel Verification",
       "finishingVerification": "Finishing verification",
       "checkEmail": "Check your email",
@@ -647,9 +647,9 @@
       "termsOfService": "Terms of Service",
       "and": "and",
       "privacyPolicy": "Privacy Policy",
-      "email": "Email",
-      "password": "Password",
-      "login": "Login",
+      "email": "ఇమెయిల్",
+      "password": "పాస్‌వర్డ్",
+      "login": "లాగిన్",
       "signUp": "Sign Up",
       "dontHaveAccount": "Don't have an account?",
       "or": "OR",
@@ -662,21 +662,21 @@
       "loginWithWalletConnect": "Login with WalletConnect",
       "loginWithMetamask": "Login with Metamask",
       "signWithWallet": "Sign message with your wallet",
-      "message": "Message",
+      "message": "సందేశం",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
       "getNewLoginPhrase": "Get new login phrase",
       "copyLoginPhrase": "Copy login phrase",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
-      "address": "Address",
+      "address": "చిరునామా",
       "insertAddress": "Insert address",
       "signature": "Signature",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
-      "cancel": "Cancel",
-      "ok": "OK",
+      "cancel": "రద్దు",
+      "ok": "సరే",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
       "passwordRequired": "Password is required",
@@ -705,7 +705,7 @@
       "signMessageFailed": "Failed to sign message, please try again"
     },
     "mapComponent": {
-      "loading": "Loading..."
+      "loading": "లోడ్ చేస్తున్నారు..."
     },
     "backendSelector": {
       "customBackend": "Custom Backend"
@@ -718,7 +718,7 @@
       "local": "Local",
       "global": "Global",
       "manualSelection": "Manual Selection",
-      "available": "Available",
+      "available": "అందుబాటులో",
       "selected": "Selected",
       "monitoring": "Monitoring",
       "showLogs": "Show Logs",
@@ -784,30 +784,30 @@
       }
     },
     "theCustomizer": {
-      "title": "Theme Customizer",
-      "subtitle": "Customize & Preview in Real Time",
-      "theming": "Theming",
-      "primaryColor": "Primary Color",
+      "title": "థీమ్ కస్టమైజర్",
+      "subtitle": "కస్టమైజ్ చేయి & రియల్ టైమ్‌లో ప్రివ్యూ చేయి",
+      "theming": "థీమింగ్",
+      "primaryColor": "ప్రాథమిక రంగు",
       "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
-      "skins": "Skins",
-      "default": "Default",
-      "bordered": "Bordered",
-      "semiDarkMenu": "Semi Dark Menu",
-      "layout": "Layout",
+      "light": "లైట్",
+      "dark": "డార్క్",
+      "skins": "స్కిన్‌లు",
+      "default": "డిఫాల్ట్",
+      "bordered": "సరిహద్దు",
+      "semiDarkMenu": "సెమీ డార్క్ మెనూ",
+      "layout": "లేఅవుట్",
       "menuNavigation": "Menu (Navigation)",
-      "vertical": "Vertical",
-      "collapsed": "Collapsed",
-      "horizontal": "Horizontal",
-      "navbarType": "Navbar Type",
-      "sticky": "Sticky",
-      "static": "Static",
-      "content": "Content",
-      "compact": "Compact",
-      "wide": "Wide",
-      "leftToRight": "Left to right",
-      "rightToLeft": "Right to left"
+      "vertical": "నిలువు",
+      "collapsed": "కుదించారు",
+      "horizontal": "సమక్ష",
+      "navbarType": "నేవిబార్ రకం",
+      "sticky": "జిగటైన",
+      "static": "స్టాటిక్",
+      "content": "విషయం",
+      "compact": "కాంపాక్ట్",
+      "wide": "విస్తృతమైన",
+      "leftToRight": "ఎడమ నుండి కుడికి",
+      "rightToLeft": "కుడి నుండి ఎడమకు"
     },
     "volumePathBuilder": {
       "syncTitle": "Data Synchronization Across Instances",
@@ -849,7 +849,7 @@
       "validationSubdirContainsPipe": "Remove {'|'} from subdirectory name",
       "validationModeConflictsWithPrefix": "Choose a different Mode - m, f, c, cf are not allowed",
       "labelMode": "Mode",
-      "labelMountType": "Type",
+      "labelMountType": "రకం",
       "labelPath": "Path",
       "typePrimary": "Primary",
       "typePrimaryDesc": "Main persistent storage for your application",
@@ -952,9 +952,9 @@
       "reviewTooltip": "Review application configuration before signing",
       "name": "Application Name",
       "nameTooltip": "The name of your application",
-      "description": "Description",
+      "description": "వివరణ",
       "descriptionTooltip": "A brief description of your application",
-      "owner": "Owner",
+      "owner": "యజమాని",
       "ownerTooltip": "The owner of the application",
       "specVersion": "Specification Version",
       "usingLatestSpec": "Using latest specification version",
@@ -975,8 +975,8 @@
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
       "managementAction": "Management Action",
       "renewalAction": "Renewal",
-      "updateAction": "Update",
-      "cancelAction": "Cancel",
+      "updateAction": "నవీకరణ చేయి",
+      "cancelAction": "రద్దు",
       "cancelSubscription": "Cancel Subscription",
       "cancelWarning": "This will expire your application.",
       "currentlySubscribedUntil": "Currently your application is subscribed until",
@@ -989,7 +989,7 @@
       "enterpriseTooltip": "Enable enterprise features for your application",
       "allowedGeolocation": "Allowed Geolocation",
       "continent": "Continent",
-      "country": "Country",
+      "country": "దేశం",
       "addAllowed": "Add Allowed Location",
       "addForbidden": "Add Forbidden Location",
       "tabGeneral": "General",
@@ -998,8 +998,8 @@
       "tabEnterpriseNodes": "Enterprise Nodes",
       "tabPriorityNodes": "Priority Nodes",
       "region": "Region",
-      "componentName": "Name",
-      "componentDescription": "Description",
+      "componentName": "పేరు",
+      "componentDescription": "వివరణ",
       "repositoryTag": "Repository Tag",
       "repositoryAuthentication": "Repository Authentication",
       "secrets": "Secrets",
@@ -1013,9 +1013,9 @@
       "portDomainConfiguration": "Port & Domain Configuration",
       "enterDomainForPort": "Enter domain for this port",
       "key": "Key",
-      "value": "Value",
+      "value": "విలువ",
       "keyPlaceholder": "KEY",
-      "valuePlaceholder": "VALUE",
+      "valuePlaceholder": "విలువ",
       "newCommand": "New Command",
       "command": "Command",
       "enterCommand": "Enter command",
@@ -1037,7 +1037,7 @@
       "nodeAddressLabel": "Node Address:",
       "collateral": "Collateral",
       "collateralLabel": "Collateral:",
-      "tier": "Tier",
+      "tier": "స్థాయి",
       "tierLabel": "Tier:",
       "overallScore": "Overall Score",
       "collateralScore": "Collateral Score:",
@@ -1046,10 +1046,10 @@
       "publicKeyScore": "Public Key Score:",
       "publicKeyScoreLabel": "Public Key Score:",
       "appsAssigned": "Apps Assigned:",
-      "status": "Status",
+      "status": "స్థితి",
       "statusLabel": "Status:",
       "sendTo": "Send to",
-      "message": "Message",
+      "message": "సందేశం",
       "selected": "selected",
       "nodesSelected": "{count} selected",
       "pageOf": "Page {current} of {total}",
@@ -1090,8 +1090,8 @@
       "timeLeft": "Time left:",
       "renewalPeriod": "Renewal period",
       "afterRenewalSubscriptionUntil": "After renewal subscription until:",
-      "cancel": "Cancel",
-      "save": "Save",
+      "cancel": "రద్దు",
+      "save": "సేవ్ చేయి",
       "autoSelect": "Auto Select",
       "chooseEnterpriseNodes": "Choose Enterprise Nodes",
       "choosePriorityNodes": "Choose Priority Nodes",
@@ -1132,8 +1132,8 @@
       "applicationSubscribedUntil": "Your application will be subscribed until",
       "newSubscriptionEndsOn": "Your new adjusted subscription ends on",
       "noNodesSelected": "No nodes selected",
-      "page": "Page",
-      "of": "of",
+      "page": "పేజీ",
+      "of": "యొక్క",
       "validationError": "Validation Error:",
       "freeUpdate": "Free update",
       "failedToCalculatePrice": "Failed to calculate price",
@@ -1171,7 +1171,7 @@
       "instantPaymentConfirmation": "Instant payment confirmation",
       "multipleCurrencySupport": "Multiple currency support",
       "fiatGatewaysUnavailable": "Fiat payment gateways are temporarily unavailable",
-      "loading": "Loading...",
+      "loading": "లోడ్ చేస్తున్నారు...",
       "searchNodesIpAddressTier": "Search nodes (IP, address, tier)",
       "noNodesMatchSearch": "No nodes match your search",
       "noNodesAvailable": "No nodes available",
@@ -1297,7 +1297,7 @@
       "connected": "Connected",
       "updateAvailable": "Update Available",
       "upToDate": "Up to date",
-      "statusMessage": "Status",
+      "statusMessage": "స్థితి",
       "unreachable": "Unreachable",
       "connecting": "Connecting...",
       "disconnected": "Disconnected",
@@ -1317,7 +1317,7 @@
   },
   "components": {
     "loginDialog": {
-      "title": "Login Required"
+      "title": "లాగిన్ అవసరం"
     },
     "marketplace": {
       "discoverCard": {
@@ -1325,15 +1325,15 @@
         "subtitle": "Web3 Marketplace"
       },
       "appCard": {
-        "install": "Install",
-        "view": "View",
+        "install": "ఇన్‌స్టాల్ చేయి",
+        "view": "వీక్షించు",
         "viewDetails": "View Details",
         "defaultCategory": "Apps",
         "noDescription": "No description available"
       },
       "fluxCloudAppCard": {
         "unknownDeveloper": "Unknown Developer",
-        "install": "Install",
+        "install": "ఇన్‌స్టాల్ చేయి",
         "viewApp": "View App",
         "sponsored": "Sponsored"
       },
@@ -1342,9 +1342,9 @@
         "viewDetails": "View Details"
       },
       "marketplaceAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
-        "install": "Install",
+        "unknown": "తెలియనిది",
+        "free": "ఉచితం",
+        "install": "ఇన్‌స్టాల్ చేయి",
         "viewDetails": "View Details",
         "noDescription": "No description available",
         "other": "Other"
@@ -1352,45 +1352,45 @@
       "appList": {
         "featured": "Featured",
         "by": "by",
-        "free": "Free",
+        "free": "ఉచితం",
         "purchase": "Purchase",
         "deploy": "Deploy",
         "details": "Details"
       },
       "sponsoredAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
+        "unknown": "తెలియనిది",
+        "free": "ఉచితం",
         "other": "Other"
       },
       "sponsoredCard": {
         "sponsored": "Sponsored",
-        "install": "Install",
-        "view": "View",
+        "install": "ఇన్‌స్టాల్ చేయి",
+        "view": "వీక్షించు",
         "viewDetails": "View Details",
         "noSponsoredApps": "No sponsored apps available",
-        "free": "Free"
+        "free": "ఉచితం"
       },
       "newListedCard": {
         "title": "NEW LISTED APPLICATIONS",
         "noNewApps": "No new apps available",
         "unknownApp": "Unknown App",
         "noDescription": "No description available",
-        "view": "View"
+        "view": "వీక్షించు"
       },
       "maintenanceCard": {
         "defaultTitle": "Under Maintenance",
         "defaultSubtitle": "We're currently experiencing technical difficulties. Our team is working to resolve this issue as quickly as possible.",
         "defaultDescription": "Please check back later or contact support if you need immediate assistance.",
-        "refresh": "Refresh"
+        "refresh": "రిఫ్రెష్ చేయి"
       },
       "appConfigCard": {
         "cpu": "CPU",
         "ram": "RAM",
-        "storage": "Storage",
+        "storage": "నిల్వ",
         "installNow": "Buy Now",
         "perMonth": "/mo",
         "core": "Core",
-        "cores": "Cores",
+        "cores": "కోర్లు",
         "mostPopular": "Most Popular"
       },
       "appsGrid": {
@@ -1405,12 +1405,12 @@
         "resetFilters": "Reset Filters",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
-        "refresh": "Refresh",
-        "previous": "Previous",
-        "next": "Next",
-        "sortDefault": "Default",
-        "sortDate": "Date",
-        "sortName": "Name"
+        "refresh": "రిఫ్రెష్ చేయి",
+        "previous": "గత",
+        "next": "తరువాత",
+        "sortDefault": "డిఫాల్ట్",
+        "sortDate": "తేదీ",
+        "sortName": "పేరు"
       },
       "panels": {
         "screenshotsPanel": {
@@ -1460,7 +1460,7 @@
         "deploymentOptions": "Deployment Options",
         "instances": "{count} Instance | {count} Instances",
         "estimatedPricing": "Estimated Pricing",
-        "loading": "Loading...",
+        "loading": "లోడ్ చేస్తున్నారు...",
         "wordPressPlanTitle": "WordPress {planName}",
         "walletAltZelcore": "Flux ID (ZelCore)",
         "walletAltSSP": "SSP",
@@ -1480,7 +1480,7 @@
         "allowedLocations": "Allowed Locations",
         "forbiddenLocations": "Forbidden Locations",
         "continent": "Continent",
-        "country": "Country",
+        "country": "దేశం",
         "global": "Global",
         "globalAllContinents": "Global (All Continents)",
         "allCountries": "All Countries",
@@ -1516,7 +1516,7 @@
         "noCompatibleWallets": "No compatible wallets detected. Please install ZelCore, SSP, MetaMask, ensure you're logged in via SSO, or login manually.",
         "signingApp": "Signing App...",
         "registeringApp": "Registering App...",
-        "cancel": "Cancel",
+        "cancel": "రద్దు",
         "manualSigningCancelled": "Manual signing cancelled",
         "signingAndRegistrationComplete": "Signing and Registration Complete",
         "redirectIn": "You will be redirected in {seconds} seconds...",
@@ -1539,7 +1539,7 @@
         "generating": "Generating...",
         "paymentInstructionsZelCore": "ZelCore Payment Instructions",
         "paymentInstructionsSSP": "SSP Payment Instructions",
-        "copiedToClipboard": "Copied to clipboard!",
+        "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
         "openWallet": "Open {wallet}",
         "paymentConfirmed": "Payment Confirmed!",
         "waitingForPayment": "Waiting for Payment",
@@ -1573,12 +1573,12 @@
         "deploy": "Deploy",
         "config": "Config",
         "params": "Params",
-        "location": "Location",
+        "location": "ప్రదేశం",
         "alerts": "Alerts",
         "sign": "Sign",
         "messages": {
           "usingGlobalDeployment": "Using global deployment - geolocation data unavailable",
-          "failedToCopyToClipboard": "Failed to copy to clipboard",
+          "failedToCopyToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయడం విఫలమైంది",
           "paymentMonitoringTimedOut": "Payment monitoring timed out. Please check your application status.",
           "paymentConfirmedActive": "Payment confirmed! Your application is now active and running on the network.",
           "openingZelCoreWallet": "Opening ZelCore wallet for payment...",
@@ -1631,7 +1631,7 @@
           }
         },
         "validation": {
-          "fieldRequired": "This field is required",
+          "fieldRequired": "ఈ ఫీల్డ్ అవసరం",
           "minCharactersRequired": "Minimum {min} characters required",
           "grantMustBeWholeNumber": "Grant amount must be a whole number",
           "addressNoSpaces": "Address cannot contain spaces"
@@ -1659,8 +1659,8 @@
           "sspWalletNotInstalled": "SSP Wallet not installed",
           "sspPaymentInitiated": "SSP payment initiated",
           "failedToInitiateSSP": "Failed to initiate SSP payment: {error}",
-          "copiedToClipboard": "Copied to clipboard!",
-          "failedToCopy": "Failed to copy to clipboard"
+          "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
+          "failedToCopy": "క్లిప్‌బోర్డ్‌కు కాపీ చేయడం విఫలమైంది"
         }
       },
       "proposalDetail": {
@@ -1668,12 +1668,12 @@
         "anonymous": "Anonymous",
         "submitted": "Submitted",
         "endDate": "End Date",
-        "description": "Description",
+        "description": "వివరణ",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
           "voteProgress": "Vote Progress",
           "voteSplit": "Vote Split",
-          "required": "Required",
+          "required": "ఈ ఫీల్డ్ అవసరం",
           "received": "Received",
           "yesVotes": "Yes Votes",
           "noVotes": "No Votes",
@@ -1692,7 +1692,7 @@
         "voting": {
           "castYourVote": "Cast Your Vote",
           "makeYourVoiceHeard": "Make your voice heard",
-          "loginRequired": "Login Required",
+          "loginRequired": "లాగిన్ అవసరం",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
@@ -1700,8 +1700,8 @@
           "voteYes": "Vote YES",
           "voteNo": "Vote NO",
           "youHaveVoted": "You have voted",
-          "yes": "YES",
-          "no": "NO",
+          "yes": "అవును",
+          "no": "లేదు",
           "voteCount": "{count} vote(s)",
           "votingEnds": "Voting ends"
         },
@@ -1715,13 +1715,13 @@
         "technicalDetails": {
           "title": "Technical Details",
           "proposalHash": "Proposal Hash",
-          "copy": "Copy",
+          "copy": "కాపీ చేయి",
           "submitDate": "Submit Date",
           "voteEndDate": "Vote End Date",
           "currentStatus": "Current Status"
         },
         "messages": {
-          "copiedToClipboard": "Copied to clipboard!",
+          "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
           "successfullySignedWithSSP": "Successfully signed with SSP",
           "failedToSignWithSSP": "Failed to sign with SSP",
           "failedToInitiateZelcore": "Failed to initiate Zelcore signing",
@@ -1746,8 +1746,8 @@
         "fileTypeHint": "Application specification or Docker Compose (JSON/YAML)",
         "pasteHint": "Paste application specification or Docker Compose (JSON/YAML)",
         "reviewAndEdit": "Review and edit before importing",
-        "import": "Import",
-        "cancel": "Cancel",
+        "import": "దిగుమతి చేయి",
+        "cancel": "రద్దు",
         "loadSpecification": "Load Specification",
         "pasteFromClipboard": "Paste from Clipboard",
         "contentPasted": "Content pasted from clipboard!",
@@ -1792,12 +1792,12 @@
       "title": "Pricing Plans",
       "subtitle1": "All plans include 40+ advanced tools and features to boost your product.",
       "subtitle2": "Choose the best plan to fit your needs.",
-      "monthly": "Monthly",
+      "monthly": "నెలవారీ",
       "annually": "Annually",
       "saveUpTo": "Save up to 10%",
       "popular": "Popular",
       "perMonth": "/month",
-      "free": "free",
+      "free": "ఉచితం",
       "yearlyPrice": "USD {price}/Year",
       "currentPlan": "Your Current Plan",
       "upgrade": "Upgrade",
@@ -1855,11 +1855,11 @@
       "planComparison": "Plan Comparison",
       "yourCurrentPlan": "Your Current Plan",
       "newPlan": "New Plan",
-      "storage": "Storage",
-      "plan": "Plan",
+      "storage": "నిల్వ",
+      "plan": "ప్లాన్",
       "duration": "Duration",
       "oneMonth": "1 Month",
-      "total": "Total",
+      "total": "మొత్తం",
       "downgradeTo": "Downgrade to",
       "upgradeTo": "Upgrade to",
       "renewingYourCurrentPlan": "Renewing your current plan",
@@ -1872,9 +1872,9 @@
       "fluxPay": "Flux Pay",
       "calculatingFlux": "Calculating FLUX...",
       "manualPaymentDetails": "Manual Payment Details",
-      "address": "Address",
-      "amount": "Amount",
-      "message": "Message",
+      "address": "చిరునామా",
+      "amount": "మొత్తం",
+      "message": "సందేశం",
       "loadingPaymentDetails": "Loading payment details...",
       "paymentDetailsWillAppear": "Payment details will appear here",
       "fluxPriceEstimated": "*FLUX price is estimated and will be finalized in ZelCore",
@@ -1886,7 +1886,7 @@
       "canTakeUpTo20Minutes": "This can take up to 20 minutes",
       "cancelMonitoring": "Cancel Monitoring",
       "pendingPayment": "Pending Payment",
-      "cancel": "Cancel",
+      "cancel": "రద్దు",
       "sspPaymentInitiated": "SSP payment initiated, monitoring for confirmation...",
       "sspPaymentFailed": "SSP payment failed: {error}",
       "zelcorePaymentFailed": "Zelcore payment failed: {error}",
@@ -1894,7 +1894,7 @@
       "redirectedToCryptoCom": "Redirected to Crypto.com for payment. Complete the payment and return here.",
       "cryptoComPaymentCancelled": "Crypto.com payment cancelled",
       "paymentMonitoringCancelledCanPayManually": "Payment monitoring cancelled. You can still pay manually using the details above.",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "క్లిప్‌బోర్డ్‌కు కాపీ చేయబడింది!",
       "noLoginCredentials": "No login credentials found",
       "failedToPrepareManualSigning": "Failed to prepare manual signing: {error}",
       "pleaseEnterSignature": "Please enter a signature",
@@ -1946,11 +1946,11 @@
         "searchPlaceholder": "Search files and folders...",
         "listView": "List View",
         "gridView": "Grid View",
-        "columnName": "Name",
+        "columnName": "పేరు",
         "columnUpdated": "Updated",
-        "columnSize": "Size",
+        "columnSize": "పరిమాణం",
         "newFolder": "New Folder",
-        "upload": "Upload",
+        "upload": "అప్‌లోడ్ చేయి",
         "uploadFiles": "Upload Files",
         "uploadFolder": "Upload Folder",
         "goToRoot": "Go to Root",
@@ -1965,23 +1965,23 @@
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
         "preview": "Preview",
-        "download": "Download",
+        "download": "డౌన్‌లోడ్ చేయి",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
         "rename": "Rename",
         "moveTo": "Move To",
         "copyLink": "Copy Link",
-        "delete": "Delete",
+        "delete": "తొలగించు",
         "paginationInfo": "Showing {start}-{end} of {total}",
-        "edit": "Edit",
+        "edit": "సవరించు",
         "browserNoVideoSupport": "Your browser does not support the video tag.",
         "browserNoAudioSupport": "Your browser does not support the audio element.",
         "previewNotAvailable": "Preview not available for this file type",
         "downloadFile": "Download File",
         "uploadingFiles": "Uploading {current} of {total} files",
         "uploadingFile": "Uploading file",
-        "uploadWait": "Please wait...",
+        "uploadWait": "దయచేసి ఆపండి...",
         "uploadProgress": "Upload progress: {progress}%",
         "fileOfTotal": "File {current} of {total}",
         "debugInfo": "Debug Info:",
@@ -1994,7 +1994,7 @@
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
         "folder": "folder",
         "file": "file",
-        "cancel": "Cancel",
+        "cancel": "రద్దు",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
         "newName": "New Name",
@@ -2008,7 +2008,7 @@
         "latest": "Latest",
         "versionNumber": "Version {number}",
         "noPreviousVersions": "No Previous Versions",
-        "close": "Close",
+        "close": "మూసివేయి",
         "createNewFolder": "Create New Folder",
         "folderName": "Folder Name",
         "createFolder": "Create Folder",
@@ -2040,8 +2040,8 @@
         "title": "Storage Usage",
         "usedOf": "{used} of {total} used",
         "usedSpace": "Used Space",
-        "available": "Available",
-        "total": "Total",
+        "available": "అందుబాటులో",
+        "total": "మొత్తం",
         "almostFull": "Storage Almost Full",
         "almostFullMessage": "Your storage is {percentage}% full. Consider upgrading your plan or removing unused files.",
         "statusTitle": "Storage Status",
@@ -2051,11 +2051,11 @@
         "title": "File Versions",
         "current": "Current",
         "currentVersion": "Current Version (Last Updated)",
-        "previous": "Previous",
+        "previous": "గత",
         "original": "Original",
         "versionNumber": "Version {number}",
         "preview": "Preview",
-        "download": "Download",
+        "download": "డౌన్‌లోడ్ చేయి",
         "copyLink": "Copy Link",
         "noPreviousVersions": "No Previous Versions",
         "noPreviousVersionsMessage": "This file has no previous versions",
@@ -2071,9 +2071,9 @@
       "pricingPlans": {
         "title": "FluxDrive Storage Plans",
         "subtitle": "Choose your perfect storage plan.",
-        "storage": "Storage",
+        "storage": "నిల్వ",
         "contactUs": "Contact Us",
-        "signIn": "Login",
+        "signIn": "లాగిన్",
         "current": "Current",
         "renew": "Renew",
         "upgrade": "Upgrade",
@@ -2121,7 +2121,7 @@
         "title": "System Information",
         "subtitle": "View system resources and component versions",
         "resourcesAllocated": "Resources Allocated",
-        "storage": "Storage",
+        "storage": "నిల్వ",
         "storageUsed": "{used} GB",
         "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
@@ -2130,7 +2130,7 @@
         "ram": "RAM",
         "ramUsed": "{used} GB",
         "ramTotal": "of {total} GB",
-        "applications": "Applications",
+        "applications": "అనువర్తనాలు",
         "installedApps": "Installed Apps",
         "installedAppsCount": "{count} application(s)",
         "appsHashes": "Apps Hashes",
@@ -2151,27 +2151,27 @@
         "subtitle": "Manage your files and share them with others",
         "storageUsage": "Storage Usage",
         "used": "used",
-        "available": "Available",
+        "available": "అందుబాటులో",
         "fileManager": "File Manager",
-        "upload": "Upload",
+        "upload": "అప్‌లోడ్ చేయి",
         "newFolder": "New Folder",
         "emptyFolder": "This folder is empty",
         "folder": "Folder",
         "file": "File",
         "columns": {
-          "name": "Name",
+          "name": "పేరు",
           "modified": "Modified",
-          "type": "Type",
-          "size": "Size",
+          "type": "రకం",
+          "size": "పరిమాణం",
           "actions": "Actions"
         },
-        "download": "Download",
+        "download": "డౌన్‌లోడ్ చేయి",
         "downloadZip": "Download as ZIP",
         "rename": "Rename",
         "share": "Share",
         "unshare": "Unshare",
         "copyLink": "Copy Share Link",
-        "delete": "Delete",
+        "delete": "తొలగించు",
         "createFolder": "Create Folder",
         "folderName": "Folder Name",
         "renameItem": "Rename",
@@ -2218,14 +2218,14 @@
         "title": "Manage Users",
         "subtitle": "View and manage logged users and active sessions",
         "searchUsers": "Search users",
-        "refresh": "Refresh",
+        "refresh": "రిఫ్రెష్ చేయి",
         "logOut": "Log Out",
         "logOutAll": "Log Out All",
         "logOutAllUsers": "Log Out All Users",
         "current": "Current",
         "yourCurrentSession": "Your current session",
         "activeSessions": "Active Sessions",
-        "cancel": "Cancel",
+        "cancel": "రద్దు",
         "areYouSureProceed": "Are you sure you want to proceed?",
         "confirmLogoutUser": "Confirm Logout User",
         "confirmLogoutAllUsers": "Confirm Logout All Users",
@@ -2245,7 +2245,7 @@
         "title": "Manage Flux Gravity",
         "subtitle": "Configure and manage your Flux node settings",
         "tabs": {
-          "settings": "Settings",
+          "settings": "సెట్టింగ్‌లు",
           "logs": "Logs",
           "daemon": "Daemon",
           "benchmark": "Benchmark"
@@ -2305,15 +2305,15 @@
           "flux": "Flux Logs",
           "daemon": "Daemon Logs",
           "benchmark": "Benchmark Logs",
-          "download": "Download",
-          "refresh": "Refresh",
+          "download": "డౌన్‌లోడ్ చేయి",
+          "refresh": "రిఫ్రెష్ చేయి",
           "loading": "Loading logs..."
         },
         "daemon": {
           "control": {
             "title": "Daemon Control",
             "start": {
-              "title": "Start",
+              "title": "ప్రారంభించు",
               "subtitle": "Start daemon",
               "button": "Start Daemon"
             },
@@ -2323,14 +2323,14 @@
               "button": "Restart Daemon"
             },
             "stop": {
-              "title": "Stop",
+              "title": "ఆపివేయి",
               "subtitle": "Stop daemon",
               "button": "Stop Daemon"
             }
           },
           "info": {
             "title": "Daemon Information",
-            "refresh": "Refresh",
+            "refresh": "రిఫ్రెష్ చేయి",
             "loadingMessage": "Loading daemon info...",
             "versionInfo": "Version Information",
             "networkStatus": "Network Status",
@@ -2352,7 +2352,7 @@
           "control": {
             "title": "Benchmark Control",
             "start": {
-              "title": "Start",
+              "title": "ప్రారంభించు",
               "subtitle": "Start benchmark",
               "button": "Start Benchmark"
             },
@@ -2362,14 +2362,14 @@
               "button": "Restart Benchmark"
             },
             "stop": {
-              "title": "Stop",
+              "title": "ఆపివేయి",
               "subtitle": "Stop benchmark",
               "button": "Stop Benchmark"
             }
           },
           "info": {
             "title": "Benchmark Information",
-            "refresh": "Refresh",
+            "refresh": "రిఫ్రెష్ చేయి",
             "loadingMessage": "Loading benchmark info...",
             "thunder": "Thunder",
             "runningWarning": "Benchmark is currently running. Please try again later.",
@@ -2385,7 +2385,7 @@
           "apiPort": "API Port",
           "blockedPorts": "Blocked Ports",
           "blockedRepositories": "Blocked Repositories",
-          "type": "Type"
+          "type": "రకం"
         },
         "placeholders": {
           "routerIpPlaceholder": "192.168.1.1",
@@ -2408,11 +2408,11 @@
           "errorLoadingBenchmarkInfo": "Error loading benchmark info"
         },
         "dialogs": {
-          "cancel": "Cancel",
-          "update": "Update",
+          "cancel": "రద్దు",
+          "update": "నవీకరణ చేయి",
           "restart": "Restart",
-          "start": "Start",
-          "stop": "Stop",
+          "start": "ప్రారంభించు",
+          "stop": "ఆపివేయి",
           "confirmProceed": "Are you sure you want to proceed?",
           "updateFlux": {
             "title": "Confirm Flux Gravity Update",
@@ -2422,22 +2422,22 @@
           "updateRouterIp": {
             "title": "Update Router IP",
             "message": "Are you sure you want to update the router IP address?",
-            "button": "Update"
+            "button": "నవీకరణ చేయి"
           },
           "updateBlockedPorts": {
             "title": "Update Blocked Ports",
             "message": "Are you sure you want to update the blocked ports?",
-            "button": "Update"
+            "button": "నవీకరణ చేయి"
           },
           "updateApiPort": {
             "title": "Update API Port",
             "message": "Are you sure you want to update the API port?",
-            "button": "Update"
+            "button": "నవీకరణ చేయి"
           },
           "updateBlockedRepos": {
             "title": "Update Blocked Repositories",
             "message": "Are you sure you want to update the blocked repositories?",
-            "button": "Update"
+            "button": "నవీకరణ చేయి"
           },
           "restartFluxOs": {
             "title": "Confirm Restart",
@@ -2499,8 +2499,8 @@
         },
         "tooltips": {
           "manage": "Manage",
-          "install": "Install",
-          "remove": "Remove",
+          "install": "ఇన్‌స్టాల్ చేయి",
+          "remove": "తీసివేయి",
           "visit": "Visit"
         },
         "searchIpPlaceholder": "Search IP...",
@@ -2518,7 +2518,7 @@
           "fullLogs": "Full Logs",
           "showLogs": "Show Logs",
           "hideLogs": "Hide Logs",
-          "close": "Close"
+          "close": "మూసివేయి"
         },
         "specification": {
           "local": "Local Specification",
@@ -2539,7 +2539,7 @@
           "noInstancesAvailableTitle": "No Instances Available",
           "noInstancesAvailableMessage": "This application has no running instances. The app may be deploying, redeploying, not yet deployed, or all instances are offline.",
           "retry": "Retry",
-          "loadingTitle": "Loading...",
+          "loadingTitle": "లోడ్ చేస్తున్నారు...",
           "loadingMessage": "Retrieving application information...",
           "noInstancesWarningTitle": "Limited Functionality - No Running Instances",
           "noInstancesWarningMessage": "This app has no active instances. Some features are unavailable. You can still manage subscriptions and view specifications.",
@@ -2562,7 +2562,7 @@
           "timeRange": "Time Range",
           "component": "Component",
           "selectComponent": "Select component",
-          "itemsPerPage": "Items per page"
+          "itemsPerPage": "పేజీకు అంశాలు"
         },
         "timeRange": {
           "last15Minutes": "Last 15 Minutes",
@@ -2596,11 +2596,11 @@
       },
       "table": {
         "perPage": "Per Page",
-        "filter": "Filter",
+        "filter": "ఫిల్టర్",
         "filterPlaceholder": "Type to Search",
         "advancedFilterTooltip": "Open advanced filter options",
         "appType": "App Type",
-        "version": "Version",
+        "version": "సంస్కరణ",
         "minHdd": "Min HDD (GB)",
         "minRam": "Min RAM (MB)",
         "minCpu": "Min CPU (Cores)",
@@ -2609,8 +2609,8 @@
         "repotagsPlaceholder": "Type and press enter",
         "matchAllTags": "Include all tags (match all)",
         "clearFilters": "Clear All Filters",
-        "loading": "Loading...",
-        "signInRequired": "Login Required",
+        "loading": "లోడ్ చేస్తున్నారు...",
+        "signInRequired": "లాగిన్ అవసరం",
         "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",
         "features": {
           "viewApps": "View your apps",
@@ -2618,7 +2618,7 @@
           "monitorPerformance": "Monitor performance",
           "controlDeployments": "Control deployments"
         },
-        "signIn": "Login",
+        "signIn": "లాగిన్",
         "learnMore": "Learn More",
         "noMatchingApps": "No matching apps found.",
         "connectionError": "Unable to connect to the server. Please check your internet or try again later.",
@@ -2626,11 +2626,11 @@
         "checking": "checking...",
         "composition": "Composition",
         "locations": "Locations",
-        "loginRequired": "Login Required",
+        "loginRequired": "లాగిన్ అవసరం",
         "applicationExpired": "Application Expired",
         "cannotCalculateExpiration": "Not possible to calculate expiration",
         "modeOptions": {
-          "all": "All",
+          "all": "అన్నీ",
           "marketplace": "Marketplace",
           "marketplaceExcluded": "Marketplace Excluded"
         },
@@ -2644,9 +2644,9 @@
           "v8": "Version 8"
         },
         "headers": {
-          "name": "Name",
-          "status": "Status",
-          "description": "Description"
+          "name": "పేరు",
+          "status": "స్థితి",
+          "description": "వివరణ"
         }
       },
       "register": {
@@ -2710,7 +2710,7 @@
               "description": "Standard Docker containers mean you can migrate anytime. Full control over your applications and data."
             },
             "guarantee": {
-              "title": "30-Day Money-Back Guarantee",
+              "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
               "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
             },
             "freeDomain": {
@@ -2732,7 +2732,7 @@
             "provider": "Provider",
             "cpu": "CPU",
             "ram": "RAM",
-            "storage": "Storage",
+            "storage": "నిల్వ",
             "pricePerMonth": "Price/Month",
             "note": "Prices are approximate and based on publicly available pricing for similar configurations. *Akash Network uses a bidding marketplace, so actual prices may vary. FluxCloud price is calculated in real-time from our pricing API."
           },
@@ -2885,7 +2885,7 @@
               "dedicatedResources": "Dedicated Resources",
               "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
-            "free": "Free",
+            "free": "ఉచితం",
             "developer": "Standard",
             "pro": "Pro",
             "beta": "Beta",
@@ -2900,13 +2900,13 @@
             "perMonth": "/month",
             "billingOptions": "Billing Options",
             "billingPeriod": "Billing Period",
-            "billingMonthly": "Monthly",
+            "billingMonthly": "నెలవారీ",
             "billing1Month": "1 Month",
             "billing3Months": "3 Months",
             "billing6Months": "6 Months",
             "billing12Months": "12 Months",
             "savings": "Save {percent}%",
-            "total": "Total",
+            "total": "మొత్తం",
             "customDomain": "Custom Domain",
             "customDomainPlaceholder": "app.yourdomain.com",
             "customDomainHint": "Point your domain's CNAME record to your Flux app URL",
@@ -3006,20 +3006,20 @@
             "enterprisePrivate": "Enterprise (Private Repo)",
             "configuration": "Configuration",
             "appName": "App Name",
-            "description": "Description",
+            "description": "వివరణ",
             "appPort": "App Port",
             "exposedPort": "Exposed Port",
             "contact": "Contact",
             "runtime": "Runtime",
             "envVariables": "Env Variables",
             "planAndResources": "Plan & Resources",
-            "plan": "Plan",
+            "plan": "ప్లాన్",
             "resources": "Resources",
             "activeDeployments": "Active Deployments",
             "builds": "Builds",
             "branchPreviews": "Branch Previews",
-            "enabled": "Enabled",
-            "billing": "Billing",
+            "enabled": "ప్రారంభించారు",
+            "billing": "బిలింగ్",
             "geolocation": "Geolocation",
             "totalPrice": "Total Price",
             "unlimited": "Unlimited",
@@ -3051,7 +3051,7 @@
             "paymentDescription": "Choose your preferred payment method to activate your Pro plan.",
             "processingPayment": "Processing payment...",
             "waitingConfirmation": "Waiting for payment confirmation...",
-            "cancel": "Cancel",
+            "cancel": "రద్దు",
             "paymentSummary": "Payment Summary",
             "discountApplied": "{percent}% discount applied",
             "fiatPayment": "Fiat Payment",
@@ -3096,10 +3096,10 @@
             "cancelPayment": "Cancel and go back"
           },
           "navigation": {
-            "back": "Back",
+            "back": "వెనుకకు",
             "continue": "Continue",
-            "next": "Next",
-            "previous": "Previous"
+            "next": "తరువాత",
+            "previous": "గత"
           },
           "payment": {
             "payWithCard": "Pay with Card",
@@ -3112,7 +3112,7 @@
             "instantConfirmation": "Instant payment confirmation",
             "multipleCurrency": "Multiple currency support",
             "sendTo": "Send to",
-            "message": "Message"
+            "message": "సందేశం"
           },
           "features": {
             "title": "Deploy from Git in Minutes",
@@ -3207,13 +3207,13 @@
             "title": "How Git Deployment Compares",
             "subtitle": "See how Git deployment stacks up against other Git deployment platforms",
             "provider": "Provider",
-            "plan": "Plan",
-            "price": "Price",
+            "plan": "ప్లాన్",
+            "price": "ధర",
             "cpu": "CPU",
             "ram": "RAM",
             "builds": "Builds",
             "best": "Best Value",
-            "cores": "Cores",
+            "cores": "కోర్లు",
             "core": "Core",
             "unlimited": "Unlimited",
             "shared": "Shared",
@@ -3237,7 +3237,7 @@
           },
           "stepper": {
             "overview": "Overview",
-            "plan": "Plan",
+            "plan": "ప్లాన్",
             "repository": "Repository",
             "configure": "Configure",
             "review": "Review",
@@ -3275,7 +3275,7 @@
             "branchPlaceholder": "Select a branch",
             "loadingBranches": "Loading branches...",
             "noBranchesFound": "No branches found",
-            "default": "Default",
+            "default": "డిఫాల్ట్",
             "branchesAvailable": "branches available",
             "defaultMain": "Default: main",
             "detectingMonorepo": "Detecting monorepo structure...",
@@ -3320,13 +3320,13 @@
             "yourEnvVariables": "Your Environment Variables",
             "noneAddedYet": "(none added yet)",
             "keyLabel": "Key",
-            "valueLabel": "Value",
+            "valueLabel": "విలువ",
             "addCustomVariable": "Add Custom Variable",
             "deploymentLocationTitle": "Deployment Location",
             "deploymentLocationInfo": "Choose where your application will be deployed.",
             "serverLocation": "Server Location",
             "continentLabel": "Continent",
-            "countryLabel": "Country",
+            "countryLabel": "దేశం",
             "regionLabel": "Region",
             "selectRegionInfo": "Add allowed locations where your app CAN run, or forbidden locations where it CANNOT run. Leave empty for global deployment.",
             "allowedLocations": "Allowed Locations",
@@ -3346,7 +3346,7 @@
             "customResourcesInfo": "Configure the CPU, RAM, and storage for your custom plan. The price will be calculated based on your selections.",
             "cpuLabel": "CPU",
             "ramLabel": "RAM",
-            "storageLabel": "Storage",
+            "storageLabel": "నిల్వ",
             "instancesLabel": "Instances",
             "selected": "Selected",
             "selectPlan": "Select Plan",
@@ -3457,7 +3457,7 @@
       "calculating": "Calculating...",
       "withDiscount": "with {discount}% discount",
       "retry": "Retry",
-      "helpButton": "Help",
+      "helpButton": "సహాయం",
       "presetConfigurations": "Preset Configurations",
       "nodes": "Nodes",
       "cpu": "CPU",
@@ -3604,22 +3604,22 @@
         "providersTitle": "Providers",
         "noGeographicData": "No geographic data available.",
         "noProviderData": "No provider data available.",
-        "unknown": "Unknown"
+        "unknown": "తెలియనిది"
       },
       "list": {
         "perPage": "Per page",
-        "filter": "Filter",
+        "filter": "ఫిల్టర్",
         "filterPlaceholder": "Type to Search",
         "notAvailable": "N/A",
-        "unknown": "Unknown",
+        "unknown": "తెలియనిది",
         "errorLoading": "Error loading flux list:",
         "columns": {
           "ip": "IP Address",
-          "paymentAddress": "Address",
-          "locationCountry": "Country",
+          "paymentAddress": "చిరునామా",
+          "locationCountry": "దేశం",
           "locationOrg": "Provider",
           "lastpaid": "Last Paid",
-          "tier": "Tier"
+          "tier": "స్థాయి"
         }
       },
       "resources": {
@@ -3646,7 +3646,7 @@
         "tierNimbus": "Nimbus",
         "tierStratus": "Stratus",
         "errorFetchHistory": "Unable to fetch history stats",
-        "close": "Close"
+        "close": "మూసివేయి"
       },
       "rewards": {
         "intro": {
@@ -3664,8 +3664,8 @@
         "perMonth": "Per Month",
         "usd": "USD",
         "historicalPriceChart": "Historical Price Chart",
-        "price": "Price",
-        "close": "Close",
+        "price": "ధర",
+        "close": "మూసివేయి",
         "errors": {
           "failedToFetchData": "Failed to fetch data",
           "failedToFetchRates": "Failed to fetch rates",
@@ -3690,7 +3690,7 @@
       "renewalSuccess": "Subscription renewed successfully!",
       "renewalFailed": "Renewal failed: ",
       "upgradeFailed": "Upgrade failed: ",
-      "cancel": "Cancel",
+      "cancel": "రద్దు",
       "features": {
         "title": "Why Choose FluxDrive",
         "encryption": {
@@ -3718,7 +3718,7 @@
           "description": "Benefit from global CDN-like performance with files distributed across the nearest available nodes."
         },
         "guarantee": {
-          "title": "30-Day Money-Back Guarantee",
+          "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
           "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
         }
       },
@@ -3743,27 +3743,27 @@
       "detail": {
         "loadingTitle": "Loading Application...",
         "errorMessage": "Failed to load application details: {error}",
-        "priceLabel": "Price",
-        "priceFree": "Free",
+        "priceLabel": "ధర",
+        "priceFree": "ఉచితం",
         "install": "Buy Now",
         "minimumRequirements": "Minimum Requirements",
         "unitCores": "vCores",
         "unitMB": "MB",
         "unitGB": "GB",
         "cpuPower": "CPU Power",
-        "memory": "Memory",
-        "storage": "Storage",
-        "screenshots": "Screenshots",
+        "memory": "మెమరీ",
+        "storage": "నిల్వ",
+        "screenshots": "స్క్రీన్‌షాట్‌లు",
         "screenshotAlt": "Screenshot {number}",
-        "about": "About",
-        "developer": "Developer",
+        "about": "గురించి",
+        "developer": "డెవలపర్",
         "lastUpdate": "Last Update",
-        "version": "Version",
-        "downloads": "Downloads",
-        "links": "Links",
-        "website": "Website",
+        "version": "సంస్కరణ",
+        "downloads": "డౌన్‌లోడ్‌లు",
+        "links": "లింకులు",
+        "website": "వెబ్‌సైట్",
         "sourceCode": "Source Code",
-        "support": "Support"
+        "support": "సపోర్టు"
       },
       "common": {
         "whyFlux": {
@@ -3807,7 +3807,7 @@
             },
             {
               "icon": "mdi-cash-refund",
-              "title": "30-Day Money-Back Guarantee",
+              "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
               "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
             }
           ]
@@ -4087,7 +4087,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4181,7 +4181,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4334,7 +4334,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4428,7 +4428,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4522,7 +4522,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4602,7 +4602,7 @@
             "perMonth": "/mo",
             "cpu": "CPU",
             "ram": "RAM",
-            "storage": "Storage",
+            "storage": "నిల్వ",
             "instances": "Nodes",
             "getStarted": "Get Started"
           },
@@ -4634,7 +4634,7 @@
                 "description": "No hidden fees. Pay only for what you use with flexible monthly billing."
               },
               "guarantee": {
-                "title": "30-Day Money-Back Guarantee",
+                "title": "30-రోజుల మানీ-బ్యాక్ గ్యారెంటీ",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             }
@@ -4702,15 +4702,15 @@
           "performancePlan": "Performance Plan",
           "deployment": "Deployment",
           "subscriptionPeriod": "Subscription Period",
-          "month": "month",
-          "months": "months",
+          "month": "నెల",
+          "months": "నెలలు",
           "subscription": "subscription",
           "pricing": "Pricing",
           "subtotal": "Subtotal",
           "discount": "Discount",
-          "total": "Total",
+          "total": "మొత్తం",
           "install": "Install WordPress",
-          "loginRequired": "Login Required",
+          "loginRequired": "లాగిన్ అవసరం",
           "loginToInstall": "Please log in to install WordPress",
           "dappNameTitle": "WordPress Dapp Name",
           "dappNameHelp": "Internal nick name, not used externally.",
@@ -4949,7 +4949,7 @@
               "perMonth": "/month",
               "cpu": "CPU",
               "ram": "RAM",
-              "storage": "Storage",
+              "storage": "నిల్వ",
               "instances": "Instances",
               "getStarted": "Get Started"
             },
@@ -4986,7 +4986,7 @@
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
       "loggedIn": "Logged in",
-      "login": "Login",
+      "login": "లాగిన్",
       "loginToVote": "Login to Vote",
       "filters": "Filters",
       "addProposal": "Add Proposal",
@@ -5018,10 +5018,10 @@
       "tryDifferentFilter": "Try selecting a different filter.",
       "anonymous": "Anonymous",
       "end": "End",
-      "required": "Required",
-      "total": "Total",
-      "yes": "Yes",
-      "no": "No",
+      "required": "ఈ ఫీల్డ్ అవసరం",
+      "total": "మొత్తం",
+      "yes": "అవును",
+      "no": "లేదు",
       "loginRequiredForVoting": "Login Required for Voting",
       "loginRequiredMessage": "You need to be logged in to participate in xDAO voting. Please choose your preferred login method below.",
       "debugInfo": "Debug Info:",
@@ -5029,7 +5029,7 @@
         "loadProposalsServer": "Failed to load proposals from server",
         "networkFailed": "Network connection failed. Please check your internet connection.",
         "timeout": "Request timed out. The server may be temporarily unavailable.",
-        "serverError": "Server error. Please try again later.",
+        "serverError": "సర్వర్ లోపం. దయచేసి తర్వాత మళ్లీ ప్రయత్నించండి.",
         "serviceNotFound": "Proposals service not found.",
         "loadProposalsGeneric": "Failed to load proposals. Please try again."
       }
@@ -5066,23 +5066,23 @@
       },
       "orderSummary": {
         "title": "Order Summary",
-        "plan": "Plan",
-        "storage": "Storage",
-        "billing": "Billing",
-        "monthly": "Monthly",
-        "total": "Total",
+        "plan": "ప్లాన్",
+        "storage": "నిల్వ",
+        "billing": "బిలింగ్",
+        "monthly": "నెలవారీ",
+        "total": "మొత్తం",
         "currentPlan": "Current Plan",
-        "status": "Status"
+        "status": "స్థితి"
       },
       "subscriptionDetails": "Subscription Details",
       "billingCycle": "Billing Cycle",
-      "monthly": "Monthly",
-      "total": "Total",
+      "monthly": "నెలవారీ",
+      "total": "మొత్తం",
       "proceedToPayment": "Proceed to Payment",
       "paymentProcessing": "Processing Payment",
       "secureCheckout": "Secure Checkout",
-      "plan": "Plan",
-      "price": "Price",
+      "plan": "ప్లాన్",
+      "price": "ధర",
       "perMonth": "per month",
       "header": {
         "title": "FluxDrive",
@@ -5131,15 +5131,15 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "No data available",
+    "noDataText": "డేటా అందుబాటులో లేనిది",
     "dataIterator": {
       "loadingText": "Loading your data, please wait...",
       "noResultsText": "No matching records found.",
       "noDataText": "No data available."
     },
-    "close": "Close",
+    "close": "మూసివేయి",
     "open": "open",
-    "loading": "loading",
+    "loading": "లోడ్ చేస్తున్నారు",
     "carousel": {
       "ariaLabel": {
         "delimiter": "delimiter"
@@ -5147,7 +5147,7 @@
     },
     "dataFooter": {
       "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "All",
+      "itemsPerPageAll": "అన్నీ",
       "pageText": "{0}-{1} of {2}",
       "firstPage": "First Page",
       "prevPage": "Previous Page",
@@ -5157,16 +5157,16 @@
     "pagination": {
       "ariaLabel": {
         "root": "root",
-        "previous": "previous",
+        "previous": "గత",
         "first": "first",
         "last": "last",
-        "next": "next",
+        "next": "తరువాత",
         "currentPage": "currentPage",
-        "page": "page"
+        "page": "పేజీ"
       }
     },
     "input": {
-      "clear": "clear",
+      "clear": "క్లియర్ చేయి",
       "appendAction": "appendAction",
       "prependAction": "prependAction",
       "counterSize": "counterSize",
@@ -5193,7 +5193,7 @@
     "trend": "Trend",
     "used": "used",
     "limit": "limit",
-    "refresh": "Refresh",
+    "refresh": "రిఫ్రెష్ చేయి",
     "forceGC": "Force GC",
     "clearHistory": "Clear History",
     "notAvailable": "Performance Memory API not available in this browser.",
@@ -5207,7 +5207,7 @@
       "usedHeapDesc": "Memory actively used by JavaScript objects",
       "freeHeap": "Free Heap",
       "freeHeapDesc": "Allocated but unused heap space",
-      "available": "Available",
+      "available": "అందుబాటులో",
       "availableDesc": "Heap space not yet allocated",
       "domNodes": "DOM Nodes (est.)",
       "domNodesDesc": "Approximately {count} DOM elements",
@@ -5234,7 +5234,7 @@
       "fluxDrive": {
         "name": "FluxDrive",
         "description": "Secure, decentralized storage solution for your data",
-        "category": "Storage"
+        "category": "నిల్వ"
       },
       "fluxEdge": {
         "name": "FluxEdge",

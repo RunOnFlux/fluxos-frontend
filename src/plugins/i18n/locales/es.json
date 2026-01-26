@@ -1,175 +1,175 @@
 {
   "common": {
-    "off": "off",
+    "off": "apagado",
     "buttons": {
-      "cancel": "Cancel",
-      "close": "Close",
-      "save": "Save",
-      "delete": "Delete",
-      "submit": "Submit",
-      "update": "Update",
-      "install": "Install",
-      "start": "Start",
-      "stop": "Stop",
-      "remove": "Remove",
-      "download": "Download",
-      "upload": "Upload",
-      "copy": "Copy",
-      "paste": "Paste",
-      "export": "Export",
-      "import": "Import",
-      "edit": "Edit",
-      "view": "View",
-      "refresh": "Refresh",
-      "reload": "Reload",
-      "back": "Back",
-      "next": "Next",
-      "previous": "Previous",
-      "confirm": "Confirm",
-      "apply": "Apply",
-      "reset": "Reset",
-      "clear": "Clear",
-      "search": "Search",
-      "filter": "Filter",
-      "yes": "Yes",
+      "cancel": "Cancelar",
+      "close": "Cerrar",
+      "save": "Guardar",
+      "delete": "Eliminar",
+      "submit": "Enviar",
+      "update": "Actualizar",
+      "install": "Instalar",
+      "start": "Iniciar",
+      "stop": "Detener",
+      "remove": "Quitar",
+      "download": "Descargar",
+      "upload": "Cargar",
+      "copy": "Copiar",
+      "paste": "Pegar",
+      "export": "Exportar",
+      "import": "Importar",
+      "edit": "Editar",
+      "view": "Ver",
+      "refresh": "Actualizar",
+      "reload": "Recargar",
+      "back": "Atrás",
+      "next": "Siguiente",
+      "previous": "Anterior",
+      "confirm": "Confirmar",
+      "apply": "Aplicar",
+      "reset": "Reiniciar",
+      "clear": "Limpiar",
+      "search": "Buscar",
+      "filter": "Filtrar",
+      "yes": "Sí",
       "no": "No",
       "ok": "OK",
-      "login": "Login"
+      "login": "Iniciar sesión"
     },
     "labels": {
-      "name": "Name",
-      "title": "Title",
-      "description": "Description",
-      "status": "Status",
-      "type": "Type",
-      "version": "Version",
-      "size": "Size",
-      "value": "Value",
+      "name": "Nombre",
+      "title": "Título",
+      "description": "Descripción",
+      "status": "Estado",
+      "type": "Tipo",
+      "version": "Versión",
+      "size": "Tamaño",
+      "value": "Valor",
       "url": "URL",
-      "message": "Message",
-      "owner": "Owner",
-      "date": "Date",
-      "time": "Time",
-      "location": "Location",
-      "country": "Country",
-      "city": "City",
-      "email": "Email",
-      "password": "Password",
-      "username": "Username",
-      "address": "Address",
-      "port": "Port",
-      "ip": "IP Address",
-      "tier": "Tier",
-      "price": "Price",
+      "message": "Mensaje",
+      "owner": "Propietario",
+      "date": "Fecha",
+      "time": "Hora",
+      "location": "Ubicación",
+      "country": "País",
+      "city": "Ciudad",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "username": "Nombre de usuario",
+      "address": "Dirección",
+      "port": "Puerto",
+      "ip": "Dirección IP",
+      "tier": "Nivel",
+      "price": "Precio",
       "total": "Total",
-      "amount": "Amount",
-      "free": "Free",
-      "memory": "Memory",
-      "storage": "Storage",
-      "screenshots": "Screenshots",
-      "about": "About",
-      "developer": "Developer",
-      "lastUpdate": "Last Update",
-      "downloads": "Downloads",
-      "links": "Links",
-      "website": "Website",
-      "sourceCode": "Source Code",
-      "support": "Support",
+      "amount": "Cantidad",
+      "free": "Gratis",
+      "memory": "Memoria",
+      "storage": "Almacenamiento",
+      "screenshots": "Capturas de pantalla",
+      "about": "Acerca de",
+      "developer": "Desarrollador",
+      "lastUpdate": "Última actualización",
+      "downloads": "Descargas",
+      "links": "Enlaces",
+      "website": "Sitio web",
+      "sourceCode": "Código fuente",
+      "support": "Soporte",
       "plan": "Plan",
-      "billing": "Billing",
-      "monthly": "Monthly",
-      "scrollLeft": "Scroll left",
-      "scrollRight": "Scroll right",
-      "optional": "Optional"
+      "billing": "Facturación",
+      "monthly": "Mensual",
+      "scrollLeft": "Desplazarse a la izquierda",
+      "scrollRight": "Desplazarse a la derecha",
+      "optional": "Opcional"
     },
     "theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "switchTheme": "Switch theme"
+      "light": "Claro",
+      "dark": "Oscuro",
+      "switchTheme": "Cambiar tema"
     },
     "status": {
-      "loading": "Loading...",
-      "success": "Success",
+      "loading": "Cargando...",
+      "success": "Éxito",
       "error": "Error",
-      "warning": "Warning",
-      "info": "Info",
-      "active": "Active",
-      "inactive": "Inactive",
-      "enabled": "Enabled",
-      "disabled": "Disabled",
-      "online": "Online",
-      "offline": "Offline",
-      "available": "Available",
-      "unavailable": "Unavailable",
-      "running": "Running",
-      "stopped": "Stopped",
-      "pending": "Pending",
-      "processing": "Processing",
-      "completed": "Completed",
-      "failed": "Failed",
-      "unknown": "Unknown"
+      "warning": "Advertencia",
+      "info": "Información",
+      "active": "Activo",
+      "inactive": "Inactivo",
+      "enabled": "Habilitado",
+      "disabled": "Deshabilitado",
+      "online": "En línea",
+      "offline": "Desconectado",
+      "available": "Disponible",
+      "unavailable": "No disponible",
+      "running": "En ejecución",
+      "stopped": "Detenido",
+      "pending": "Pendiente",
+      "processing": "Procesando",
+      "completed": "Completado",
+      "failed": "Falló",
+      "unknown": "Desconocido"
     },
     "messages": {
-      "pleaseWait": "Please wait...",
-      "loadingData": "Loading data...",
-      "noData": "No data available",
-      "noResults": "No results found",
-      "errorOccurred": "An error occurred",
-      "operationSuccess": "Operation completed successfully",
-      "operationFailed": "Operation failed",
-      "confirmDelete": "Are you sure you want to delete?",
-      "unsavedChanges": "You have unsaved changes",
-      "invalidInput": "Invalid input",
-      "required": "This field is required",
-      "connectionError": "Connection error. Please try again.",
-      "unauthorized": "Unauthorized access",
-      "notFound": "Not found",
-      "serverError": "Server error. Please try again later.",
-      "copiedToClipboard": "Copied to clipboard!",
-      "failedToCopy": "Failed to copy to clipboard",
-      "loginRequired": "Login Required",
-      "loggedOutSuccessfully": "Logged out successfully"
+      "pleaseWait": "Por favor espera...",
+      "loadingData": "Cargando datos...",
+      "noData": "No hay datos disponibles",
+      "noResults": "No se encontraron resultados",
+      "errorOccurred": "Ocurrió un error",
+      "operationSuccess": "Operación completada con éxito",
+      "operationFailed": "Operación fallida",
+      "confirmDelete": "¿Estás seguro de que deseas eliminar?",
+      "unsavedChanges": "Tienes cambios sin guardar",
+      "invalidInput": "Entrada no válida",
+      "required": "Este campo es obligatorio",
+      "connectionError": "Error de conexión. Por favor, intenta de nuevo.",
+      "unauthorized": "Acceso no autorizado",
+      "notFound": "No encontrado",
+      "serverError": "Error del servidor. Por favor, intenta de nuevo más tarde.",
+      "copiedToClipboard": "¡Copiado al portapapeles!",
+      "failedToCopy": "Error al copiar al portapapeles",
+      "loginRequired": "Inicio de sesión requerido",
+      "loggedOutSuccessfully": "Sesión cerrada con éxito"
     },
-    "itemsPerPage": "Items per page",
-    "of": "of",
-    "selectServerConfiguration": "Select Server Configuration",
+    "itemsPerPage": "Elementos por página",
+    "of": "de",
+    "selectServerConfiguration": "Seleccionar configuración del servidor",
     "groups": {
-      "smallServers": "Small Servers",
-      "mediumServers": "Medium Servers",
-      "largeServers": "Large Servers"
+      "smallServers": "Servidores pequeños",
+      "mediumServers": "Servidores medianos",
+      "largeServers": "Servidores grandes"
     },
     "guarantee": {
-      "title": "30-Day Money-Back Guarantee",
-      "description": "Try our service risk-free. If you're not completely satisfied within the first 30 days, we'll refund your payment—no questions asked.",
-      "shortTitle": "Money-Back Guarantee",
-      "badge": "30-Day Guarantee",
-      "trustMessage": "Your satisfaction is our priority"
+      "title": "Garantía de devolución de dinero de 30 días",
+      "description": "Prueba nuestro servicio sin riesgo. Si no estás completamente satisfecho dentro de los primeros 30 días, reembolsaremos tu pago sin preguntas.",
+      "shortTitle": "Garantía de devolución de dinero",
+      "badge": "Garantía de 30 días",
+      "trustMessage": "Tu satisfacción es nuestra prioridad"
     },
     "trustpilot": {
-      "title": "Trusted by Thousands",
-      "ratingLabel": "Excellent",
-      "rating": "4.5 out of 5",
-      "reviews": "Based on 16 reviews",
-      "basedOn": "Based on {count} reviews",
+      "title": "Confiado por miles",
+      "ratingLabel": "Excelente",
+      "rating": "4.5 de 5",
+      "reviews": "Basado en 16 reseñas",
+      "basedOn": "Basado en {count} reseñas",
       "reviewsCount": "16",
       "score": "4.5",
       "outOf": "out of 5",
-      "verifiedCustomer": "Verified Customer",
+      "verifiedCustomer": "Cliente verificado",
       "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
-      "viewAllReviews": "View all reviews on Trustpilot",
+      "viewAllReviews": "Ver todas las reseñas en Trustpilot",
       "sampleReviews": {
         "review1": {
-          "text": "I was surprised how cheap hosting on Runonflux was. No issues so far.",
+          "text": "Me sorprendió lo barato que es el alojamiento en Runonflux. Sin problemas hasta ahora.",
           "author": "Tuukka Tinkala",
           "rating": "5"
         },
         "review2": {
-          "text": "Uptime is incredible and redundancy is built in. Prices can't be beat when compared to the hyperscalers.",
+          "text": "El tiempo de actividad es increíble y la redundancia está integrada. Los precios son insuperables en comparación con los hiperscaladores.",
           "author": "ST",
           "rating": "5"
         },
         "review3": {
-          "text": "Seamlessly deployed our apps in flux cloud. Very easy to use, hassle free. No kyc needed",
+          "text": "Implementamos nuestras aplicaciones en la nube de flux sin problemas. Muy fácil de usar, sin complicaciones. No se necesita KYC",
           "author": "Cyber fly",
           "rating": "5"
         }
@@ -178,32 +178,32 @@
     "resources": {
       "cpu": "CPU",
       "ram": "RAM",
-      "memory": "Memory",
-      "storage": "Storage",
-      "disk": "Disk",
+      "memory": "Memoria",
+      "storage": "Almacenamiento",
+      "disk": "Disco",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
-      "bandwidth": "Bandwidth",
-      "cores": "Cores",
-      "threads": "Threads"
+      "bandwidth": "Ancho de banda",
+      "cores": "Núcleos",
+      "threads": "Hilos"
     },
     "time": {
-      "second": "second",
-      "seconds": "seconds",
-      "minute": "minute",
-      "minutes": "minutes",
-      "hour": "hour",
-      "hours": "hours",
-      "day": "day",
-      "days": "days",
-      "week": "week",
-      "weeks": "weeks",
-      "month": "month",
-      "months": "months",
-      "year": "year",
-      "years": "years",
-      "ago": "ago",
-      "now": "now"
+      "second": "segundo",
+      "seconds": "segundos",
+      "minute": "minuto",
+      "minutes": "minutos",
+      "hour": "hora",
+      "hours": "horas",
+      "day": "día",
+      "days": "días",
+      "week": "semana",
+      "weeks": "semanas",
+      "month": "mes",
+      "months": "meses",
+      "year": "año",
+      "years": "años",
+      "ago": "hace",
+      "now": "ahora"
     },
     "units": {
       "vCores": "vCores",
@@ -211,113 +211,113 @@
       "gb": "GB"
     },
     "cookieConsent": {
-      "title": "We value your privacy",
-      "description": "We use cookies to enhance your browsing experience and analyze our traffic. By clicking Accept All, you consent to our use of cookies.",
-      "learnMore": "Learn more",
-      "accept": "Accept",
-      "acceptAll": "Accept All",
-      "onlyNecessary": "Only Necessary",
-      "close": "Close",
-      "customize": "Customize",
-      "manageCookies": "Manage Cookies",
-      "settingsTitle": "Cookie Preferences",
-      "settingsDescription": "We use cookies to improve your experience on our site. You can choose which types of cookies to allow.",
-      "necessary": "Necessary Cookies",
-      "necessaryDescription": "These cookies are essential for the website to function properly. They cannot be disabled.",
-      "analytics": "Analytics Cookies",
-      "analyticsDescription": "These cookies help us understand how visitors interact with our website by collecting and reporting information anonymously."
+      "title": "Valoramos tu privacidad",
+      "description": "Utilizamos cookies para mejorar tu experiencia de navegación y analizar nuestro tráfico. Al hacer clic en Aceptar todo, consientes nuestro uso de cookies.",
+      "learnMore": "Más información",
+      "accept": "Aceptar",
+      "acceptAll": "Aceptar todo",
+      "onlyNecessary": "Solo necesarias",
+      "close": "Cerrar",
+      "customize": "Personalizar",
+      "manageCookies": "Gestionar cookies",
+      "settingsTitle": "Preferencias de cookies",
+      "settingsDescription": "Utilizamos cookies para mejorar tu experiencia en nuestro sitio. Puedes elegir qué tipos de cookies permitir.",
+      "necessary": "Cookies necesarias",
+      "necessaryDescription": "Estas cookies son esenciales para que el sitio web funcione correctamente. No se pueden desactivar.",
+      "analytics": "Cookies analíticas",
+      "analyticsDescription": "Estas cookies nos ayudan a entender cómo los visitantes interactúan con nuestro sitio web mediante la recopilación y presentación anónima de información."
     }
   },
   "menu": {
     "home": {
-      "title": "Home"
+      "title": "Inicio"
     },
     "dashboard": {
-      "title": "Flux Network",
-      "overview": "Overview",
-      "resources": "Resources",
-      "map": "Map",
-      "rewards": "Rewards",
-      "nodeList": "Node List"
+      "title": "Red Flux",
+      "overview": "Descripción general",
+      "resources": "Recursos",
+      "map": "Mapa",
+      "rewards": "Recompensas",
+      "nodeList": "Lista de nodos"
     },
     "application": {
-      "title": "Applications",
-      "myApplications": "My Applications",
-      "management": "Management",
-      "globalApps": "Global Apps",
-      "localApps": "Local Apps",
-      "registerNewApp": "Register New App",
-      "marketplace": "App Marketplace",
-      "marketplaceApps": "Applications",
-      "marketplaceGames": "Games",
+      "title": "Aplicaciones",
+      "myApplications": "Mis aplicaciones",
+      "management": "Gestión",
+      "globalApps": "Aplicaciones globales",
+      "localApps": "Aplicaciones locales",
+      "registerNewApp": "Registrar nueva aplicación",
+      "marketplace": "Mercado de aplicaciones",
+      "marketplaceApps": "Aplicaciones",
+      "marketplaceGames": "Juegos",
       "marketplaceWordPress": "WordPress",
-      "composition": "Composition",
-      "locations": "Locations",
-      "perPage": "Per Page",
-      "filter": "Filter",
-      "typeToSearch": "Type to Search",
-      "openAdvancedFilter": "Open advanced filter options",
-      "appType": "App Type",
-      "all": "All",
-      "marketplaceOnly": "Marketplace",
-      "marketplaceExcluded": "Marketplace Excluded",
-      "version": "Version",
-      "allVersions": "All Versions",
-      "minHdd": "Min HDD (GB)",
-      "minRam": "Min RAM (MB)",
-      "minCpu": "Min CPU (Cores)",
-      "minInstances": "Min Instances",
-      "repotags": "Repotags",
-      "includeAllTags": "Include all tags (match all)",
-      "clearAllFilters": "Clear All Filters",
-      "noMatchingApps": "No matching apps found.",
-      "noApps": "You don't have any apps.",
-      "signInRequired": "Login Required",
-      "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",
-      "viewYourApps": "View your apps",
-      "manageResources": "Manage resources",
-      "monitorPerformance": "Monitor performance",
-      "controlDeployments": "Control deployments",
-      "deployDistributedApps": "Deploy distributed apps",
-      "scaleGlobally": "Scale globally",
-      "signIn": "Login",
-      "learnMore": "Learn More",
-      "newToFlux": "New to Flux?",
-      "checkDocumentation": "Check our documentation",
-      "toGetStarted": "to get started.",
-      "status": "Status",
-      "checking": "checking...",
-      "loading": "Loading...",
-      "unableToConnect": "Unable to connect to the server. Please check your internet or try again later.",
-      "myActiveApps": "My Active Apps",
-      "activeApps": "Active Apps",
-      "myExpiredApps": "My Expired Apps",
-      "failedToLoadActiveApps": "Failed to load active apps",
-      "failedToLoadExpiredApps": "Failed to load expired apps",
-      "installedApps": "Installed Apps",
-      "availableApps": "Available Apps",
-      "marketplaceAppsTab": "Marketplace Apps"
+      "composition": "Composición",
+      "locations": "Ubicaciones",
+      "perPage": "Por página",
+      "filter": "Filtrar",
+      "typeToSearch": "Escribe para buscar",
+      "openAdvancedFilter": "Abrir opciones de filtro avanzado",
+      "appType": "Tipo de aplicación",
+      "all": "Todos",
+      "marketplaceOnly": "Mercado",
+      "marketplaceExcluded": "Mercado excluido",
+      "version": "Versión",
+      "allVersions": "Todas las versiones",
+      "minHdd": "HDD mín. (GB)",
+      "minRam": "RAM mín. (MB)",
+      "minCpu": "CPU mín. (Núcleos)",
+      "minInstances": "Instancias mín.",
+      "repotags": "Etiquetas del repositorio",
+      "includeAllTags": "Incluir todas las etiquetas (coincidir con todas)",
+      "clearAllFilters": "Borrar todos los filtros",
+      "noMatchingApps": "No se encontraron aplicaciones coincidentes.",
+      "noApps": "No tienes ninguna aplicación.",
+      "signInRequired": "Inicio de sesión requerido",
+      "signInDescription": "Para gestionar y monitorear tus aplicaciones en la red Flux, debes autenticarte con tu identidad de Flux.",
+      "viewYourApps": "Ver tus aplicaciones",
+      "manageResources": "Gestionar recursos",
+      "monitorPerformance": "Monitorear rendimiento",
+      "controlDeployments": "Controlar implementaciones",
+      "deployDistributedApps": "Implementar aplicaciones distribuidas",
+      "scaleGlobally": "Escalar globalmente",
+      "signIn": "Iniciar sesión",
+      "learnMore": "Más información",
+      "newToFlux": "¿Nuevo en Flux?",
+      "checkDocumentation": "Consulta nuestra documentación",
+      "toGetStarted": "para empezar.",
+      "status": "Estado",
+      "checking": "verificando...",
+      "loading": "Cargando...",
+      "unableToConnect": "No se puede conectar al servidor. Por favor, verifica tu conexión a internet o intenta de nuevo más tarde.",
+      "myActiveApps": "Mis aplicaciones activas",
+      "activeApps": "Aplicaciones activas",
+      "myExpiredApps": "Mis aplicaciones expiradas",
+      "failedToLoadActiveApps": "Error al cargar las aplicaciones activas",
+      "failedToLoadExpiredApps": "Error al cargar las aplicaciones expiradas",
+      "installedApps": "Aplicaciones instaladas",
+      "availableApps": "Aplicaciones disponibles",
+      "marketplaceAppsTab": "Aplicaciones del mercado"
     },
     "administration": {
-      "title": "Administration",
-      "systemInfo": "Information",
-      "dockerEvents": "Docker Events",
-      "manageFlux": "Manage Flux Gravity",
-      "manageDaemon": "Manage Daemon",
-      "manageBenchmark": "Manage Benchmark",
-      "manageUsers": "Manage Users",
-      "loggedSessions": "Logged Sessions",
-      "myFluxShare": "My FluxShare",
+      "title": "Administración",
+      "systemInfo": "Información",
+      "dockerEvents": "Eventos de Docker",
+      "manageFlux": "Gestionar Flux Gravity",
+      "manageDaemon": "Gestionar demonio",
+      "manageBenchmark": "Gestionar evaluación",
+      "manageUsers": "Gestionar usuarios",
+      "loggedSessions": "Sesiones iniciadas",
+      "myFluxShare": "Mi FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flux XDAO"
     },
     "costCalculator": {
-      "title": "Cost Calculator"
+      "title": "Calculadora de costos"
     },
     "apiReference": {
-      "title": "Help"
+      "title": "Ayuda"
     },
     "fluxDrive": {
       "title": "FluxDrive"
@@ -325,37 +325,37 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "Decentralized Application Management",
-    "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
+    "fluxCloudSubtitle": "Gestión de aplicaciones descentralizadas",
+    "fluxCloudDescription": "Monitorea y gestiona todas tus aplicaciones contenedorizadas con Docker que se ejecutan en la red de nube descentralizada de Flux. Ve el estado en tiempo real, el uso de recursos y las métricas de rendimiento de tus aplicaciones distribuidas implementadas en nuestra infraestructura impulsada por blockchain global. Haz clic en cualquier aplicación para acceder a controles de gestión detallados y análisis."
   },
   "sections": {
     "dashboard": {
-      "title": "Flux Network",
-      "description": "Check Flux network information, resources available, or a map with server locations."
+      "title": "Red Flux",
+      "description": "Consulta la información de la red Flux, los recursos disponibles o un mapa con las ubicaciones de los servidores."
     },
     "application": {
-      "title": "Applications",
-      "description": "Buy on marketplace, register your own app, manage your active apps."
+      "title": "Aplicaciones",
+      "description": "Compra en el mercado, registra tu propia aplicación, gestiona tus aplicaciones activas."
     },
     "administration": {
-      "title": "Administration",
-      "description": "Tools for infrastructure administrators and node operators allow for managing Flux Gravity."
+      "title": "Administración",
+      "description": "Las herramientas para administradores de infraestructura y operadores de nodos permiten gestionar Flux Gravity."
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "See the list of changes proposed to Flux network, create new ones and vote."
+      "description": "Consulta la lista de cambios propuestos para la red Flux, crea nuevos y vota."
     }
   },
   "core": {
     "appDetailsCard": {
       "general": "General",
       "copySpecification": "Copy Specification",
-      "updateSubscription": "Update",
+      "updateSubscription": "Actualizar",
       "renewSubscription": "Renew",
-      "cancelSubscription": "Cancel",
-      "name": "Name",
-      "description": "Description",
-      "owner": "Owner",
+      "cancelSubscription": "Cancelar",
+      "name": "Nombre",
+      "description": "Descripción",
+      "owner": "Propietario",
       "hash": "Hash",
       "contacts": "Contacts",
       "geolocation": "Geolocation",
@@ -372,7 +372,7 @@
       "staticIpNo": "No, Running on all nodes",
       "specificationCopied": "Application specification copied to clipboard!",
       "specificationCopyFailed": "Failed to copy specification",
-      "unknown": "Unknown",
+      "unknown": "Desconocido",
       "continent": "Continent: {name}",
       "country": ", Country: {name}",
       "region": ", Region: {name}",
@@ -382,8 +382,8 @@
       "applicationExpired": "Application Expired"
     },
     "componentDetails": {
-      "name": "Name",
-      "description": "Description",
+      "name": "Nombre",
+      "description": "Descripción",
       "repository": "Repository",
       "repositoryAuthentication": "Repository Authentication",
       "private": "Private",
@@ -409,8 +409,8 @@
     "confirmCustomDialog": {
       "confirmation": "Confirmation",
       "areYouSure": "Are you sure?",
-      "cancel": "Cancel",
-      "confirm": "Confirm"
+      "cancel": "Cancelar",
+      "confirm": "Confirmar"
     },
     "manualSignDialog": {
       "title": "Manual Signing",
@@ -418,8 +418,8 @@
       "messageToSign": "Message to sign:",
       "pasteSignature": "Paste signature:",
       "signaturePlaceholder": "Enter signature here",
-      "cancel": "Cancel",
-      "submit": "Submit"
+      "cancel": "Cancelar",
+      "submit": "Enviar"
     },
     "fileUpload": {
       "dropFilesHere": "Drop files here or",
@@ -452,19 +452,19 @@
     },
     "locations": {
       "perPage": "Per page",
-      "filter": "Filter",
-      "typeToSearch": "Type to Search",
+      "filter": "Filtrar",
+      "typeToSearch": "Escribe para buscar",
       "selectActiveInstance": "Select active instance",
       "noInstancesFound": "No instances found...",
       "systemUptimeTooltip": "System uptime since last reboot",
       "timeElapsedTooltip": "Time elapsed since installation",
       "visitApp": "Visit App",
       "visitFluxNode": "Visit FluxNode",
-      "ipAddress": "IP Address",
+      "ipAddress": "Dirección IP",
       "uptime": "Uptime",
-      "running": "Running",
+      "running": "En ejecución",
       "continent": "Continent",
-      "country": "Country",
+      "country": "País",
       "region": "Region",
       "notAvailable": "N/A"
     },
@@ -478,19 +478,19 @@
       "folderName": "Folder Name",
       "create": "Create",
       "uploadFiles": "Upload Files",
-      "close": "Close",
+      "close": "Cerrar",
       "rename": "Rename",
       "newName": "New Name",
       "editing": "Editing: {file}",
       "saving": "Saving...",
-      "save": "Save",
-      "name": "Name",
-      "size": "Size",
+      "save": "Guardar",
+      "name": "Nombre",
+      "size": "Tamaño",
       "modifiedAt": "Modified At",
       "downloadFolderAsArchive": "Download Folder as Archive",
       "downloadFile": "Download File",
-      "edit": "Edit",
-      "delete": "Delete",
+      "edit": "Editar",
+      "delete": "Eliminar",
       "fileTooLarge": "The file exceeds the maximum size for browser-based editing. Please use a terminal-based editor.",
       "initializing": "Initializing...",
       "loadingFile": "Loading {file}... ",
@@ -521,7 +521,7 @@
       "customCommand": "Custom Command",
       "userUid": "User UID",
       "environmentVariables": "Environment Variables (e.g., VAR1=value1,VAR2=value2)",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "¡Copiado al portapapeles!",
       "manager": {
         "title": "Terminal Manager",
         "layoutGrid": "Grid",
@@ -561,9 +561,9 @@
       "lineSelection": "Line Selection Mode",
       "autoScroll": "Auto Scroll",
       "copied": "Copied",
-      "copy": "Copy",
+      "copy": "Copiar",
       "unselect": "Unselect",
-      "download": "Download",
+      "download": "Descargar",
       "noMatchingLogs": "No matching logs found for '{keyword}'",
       "noLogsFound": "No logs found",
       "errors": {
@@ -603,12 +603,12 @@
       "selectComponent": "Select component",
       "enterRemoteBackupUrl": "Enter the URL for your remote backup archive",
       "component": "Component",
-      "size": "Size",
+      "size": "Tamaño",
       "created": "Created",
       "expires": "Expires",
       "actions": "Actions",
-      "name": "Name",
-      "time": "Time",
+      "name": "Nombre",
+      "time": "Hora",
       "url": "URL",
       "timestamp": "Timestamp",
       "file": "File",
@@ -637,7 +637,7 @@
       "thirdPartyLogin": "3rd Party Login",
       "emailPassword": "Email/Password",
       "finishingLogin": "Finishing Login",
-      "pleaseWait": "Please wait...",
+      "pleaseWait": "Por favor espera...",
       "cancelVerification": "Cancel Verification",
       "finishingVerification": "Finishing verification",
       "checkEmail": "Check your email",
@@ -647,9 +647,9 @@
       "termsOfService": "Terms of Service",
       "and": "and",
       "privacyPolicy": "Privacy Policy",
-      "email": "Email",
-      "password": "Password",
-      "login": "Login",
+      "email": "Correo electrónico",
+      "password": "Contraseña",
+      "login": "Iniciar sesión",
       "signUp": "Sign Up",
       "dontHaveAccount": "Don't have an account?",
       "or": "OR",
@@ -662,20 +662,20 @@
       "loginWithWalletConnect": "Login with WalletConnect",
       "loginWithMetamask": "Login with Metamask",
       "signWithWallet": "Sign message with your wallet",
-      "message": "Message",
+      "message": "Mensaje",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
       "getNewLoginPhrase": "Get new login phrase",
       "copyLoginPhrase": "Copy login phrase",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "¡Copiado al portapapeles!",
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
-      "address": "Address",
+      "address": "Dirección",
       "insertAddress": "Insert address",
       "signature": "Signature",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
-      "cancel": "Cancel",
+      "cancel": "Cancelar",
       "ok": "OK",
       "emailRequired": "Email is required",
       "emailInvalid": "Invalid email format",
@@ -705,7 +705,7 @@
       "signMessageFailed": "Failed to sign message, please try again"
     },
     "mapComponent": {
-      "loading": "Loading..."
+      "loading": "Cargando..."
     },
     "backendSelector": {
       "customBackend": "Custom Backend"
@@ -718,7 +718,7 @@
       "local": "Local",
       "global": "Global",
       "manualSelection": "Manual Selection",
-      "available": "Available",
+      "available": "Disponible",
       "selected": "Selected",
       "monitoring": "Monitoring",
       "showLogs": "Show Logs",
@@ -789,8 +789,8 @@
       "theming": "Theming",
       "primaryColor": "Primary Color",
       "theme": "Theme",
-      "light": "Light",
-      "dark": "Dark",
+      "light": "Claro",
+      "dark": "Oscuro",
       "skins": "Skins",
       "default": "Default",
       "bordered": "Bordered",
@@ -849,7 +849,7 @@
       "validationSubdirContainsPipe": "Remove {'|'} from subdirectory name",
       "validationModeConflictsWithPrefix": "Choose a different Mode - m, f, c, cf are not allowed",
       "labelMode": "Mode",
-      "labelMountType": "Type",
+      "labelMountType": "Tipo",
       "labelPath": "Path",
       "typePrimary": "Primary",
       "typePrimaryDesc": "Main persistent storage for your application",
@@ -952,9 +952,9 @@
       "reviewTooltip": "Review application configuration before signing",
       "name": "Application Name",
       "nameTooltip": "The name of your application",
-      "description": "Description",
+      "description": "Descripción",
       "descriptionTooltip": "A brief description of your application",
-      "owner": "Owner",
+      "owner": "Propietario",
       "ownerTooltip": "The owner of the application",
       "specVersion": "Specification Version",
       "usingLatestSpec": "Using latest specification version",
@@ -975,8 +975,8 @@
       "subscriptionNotExtended": "Enable Renewal to extend subscription period.",
       "managementAction": "Management Action",
       "renewalAction": "Renewal",
-      "updateAction": "Update",
-      "cancelAction": "Cancel",
+      "updateAction": "Actualizar",
+      "cancelAction": "Cancelar",
       "cancelSubscription": "Cancel Subscription",
       "cancelWarning": "This will expire your application.",
       "currentlySubscribedUntil": "Currently your application is subscribed until",
@@ -989,7 +989,7 @@
       "enterpriseTooltip": "Enable enterprise features for your application",
       "allowedGeolocation": "Allowed Geolocation",
       "continent": "Continent",
-      "country": "Country",
+      "country": "País",
       "addAllowed": "Add Allowed Location",
       "addForbidden": "Add Forbidden Location",
       "tabGeneral": "General",
@@ -998,8 +998,8 @@
       "tabEnterpriseNodes": "Enterprise Nodes",
       "tabPriorityNodes": "Priority Nodes",
       "region": "Region",
-      "componentName": "Name",
-      "componentDescription": "Description",
+      "componentName": "Nombre",
+      "componentDescription": "Descripción",
       "repositoryTag": "Repository Tag",
       "repositoryAuthentication": "Repository Authentication",
       "secrets": "Secrets",
@@ -1013,7 +1013,7 @@
       "portDomainConfiguration": "Port & Domain Configuration",
       "enterDomainForPort": "Enter domain for this port",
       "key": "Key",
-      "value": "Value",
+      "value": "Valor",
       "keyPlaceholder": "KEY",
       "valuePlaceholder": "VALUE",
       "newCommand": "New Command",
@@ -1029,7 +1029,7 @@
       "searchNodes": "Search nodes",
       "searchNodesPlaceholder": "IP, address, tier...",
       "perPage": "Per page",
-      "ipAddress": "IP Address",
+      "ipAddress": "Dirección IP",
       "ipAddressLabel": "IP Address:",
       "publicKey": "Public Key",
       "publicKeyLabel": "Public Key:",
@@ -1037,7 +1037,7 @@
       "nodeAddressLabel": "Node Address:",
       "collateral": "Collateral",
       "collateralLabel": "Collateral:",
-      "tier": "Tier",
+      "tier": "Nivel",
       "tierLabel": "Tier:",
       "overallScore": "Overall Score",
       "collateralScore": "Collateral Score:",
@@ -1046,10 +1046,10 @@
       "publicKeyScore": "Public Key Score:",
       "publicKeyScoreLabel": "Public Key Score:",
       "appsAssigned": "Apps Assigned:",
-      "status": "Status",
+      "status": "Estado",
       "statusLabel": "Status:",
       "sendTo": "Send to",
-      "message": "Message",
+      "message": "Mensaje",
       "selected": "selected",
       "nodesSelected": "{count} selected",
       "pageOf": "Page {current} of {total}",
@@ -1090,8 +1090,8 @@
       "timeLeft": "Time left:",
       "renewalPeriod": "Renewal period",
       "afterRenewalSubscriptionUntil": "After renewal subscription until:",
-      "cancel": "Cancel",
-      "save": "Save",
+      "cancel": "Cancelar",
+      "save": "Guardar",
       "autoSelect": "Auto Select",
       "chooseEnterpriseNodes": "Choose Enterprise Nodes",
       "choosePriorityNodes": "Choose Priority Nodes",
@@ -1133,7 +1133,7 @@
       "newSubscriptionEndsOn": "Your new adjusted subscription ends on",
       "noNodesSelected": "No nodes selected",
       "page": "Page",
-      "of": "of",
+      "of": "de",
       "validationError": "Validation Error:",
       "freeUpdate": "Free update",
       "failedToCalculatePrice": "Failed to calculate price",
@@ -1171,7 +1171,7 @@
       "instantPaymentConfirmation": "Instant payment confirmation",
       "multipleCurrencySupport": "Multiple currency support",
       "fiatGatewaysUnavailable": "Fiat payment gateways are temporarily unavailable",
-      "loading": "Loading...",
+      "loading": "Cargando...",
       "searchNodesIpAddressTier": "Search nodes (IP, address, tier)",
       "noNodesMatchSearch": "No nodes match your search",
       "noNodesAvailable": "No nodes available",
@@ -1297,7 +1297,7 @@
       "connected": "Connected",
       "updateAvailable": "Update Available",
       "upToDate": "Up to date",
-      "statusMessage": "Status",
+      "statusMessage": "Estado",
       "unreachable": "Unreachable",
       "connecting": "Connecting...",
       "disconnected": "Disconnected",
@@ -1317,7 +1317,7 @@
   },
   "components": {
     "loginDialog": {
-      "title": "Login Required"
+      "title": "Inicio de sesión requerido"
     },
     "marketplace": {
       "discoverCard": {
@@ -1325,15 +1325,15 @@
         "subtitle": "Web3 Marketplace"
       },
       "appCard": {
-        "install": "Install",
-        "view": "View",
+        "install": "Instalar",
+        "view": "Ver",
         "viewDetails": "View Details",
         "defaultCategory": "Apps",
         "noDescription": "No description available"
       },
       "fluxCloudAppCard": {
         "unknownDeveloper": "Unknown Developer",
-        "install": "Install",
+        "install": "Instalar",
         "viewApp": "View App",
         "sponsored": "Sponsored"
       },
@@ -1342,9 +1342,9 @@
         "viewDetails": "View Details"
       },
       "marketplaceAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
-        "install": "Install",
+        "unknown": "Desconocido",
+        "free": "Gratis",
+        "install": "Instalar",
         "viewDetails": "View Details",
         "noDescription": "No description available",
         "other": "Other"
@@ -1352,45 +1352,45 @@
       "appList": {
         "featured": "Featured",
         "by": "by",
-        "free": "Free",
+        "free": "Gratis",
         "purchase": "Purchase",
         "deploy": "Deploy",
         "details": "Details"
       },
       "sponsoredAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
+        "unknown": "Desconocido",
+        "free": "Gratis",
         "other": "Other"
       },
       "sponsoredCard": {
         "sponsored": "Sponsored",
-        "install": "Install",
-        "view": "View",
+        "install": "Instalar",
+        "view": "Ver",
         "viewDetails": "View Details",
         "noSponsoredApps": "No sponsored apps available",
-        "free": "Free"
+        "free": "Gratis"
       },
       "newListedCard": {
         "title": "NEW LISTED APPLICATIONS",
         "noNewApps": "No new apps available",
         "unknownApp": "Unknown App",
         "noDescription": "No description available",
-        "view": "View"
+        "view": "Ver"
       },
       "maintenanceCard": {
         "defaultTitle": "Under Maintenance",
         "defaultSubtitle": "We're currently experiencing technical difficulties. Our team is working to resolve this issue as quickly as possible.",
         "defaultDescription": "Please check back later or contact support if you need immediate assistance.",
-        "refresh": "Refresh"
+        "refresh": "Actualizar"
       },
       "appConfigCard": {
         "cpu": "CPU",
         "ram": "RAM",
-        "storage": "Storage",
+        "storage": "Almacenamiento",
         "installNow": "Buy Now",
         "perMonth": "/mo",
         "core": "Core",
-        "cores": "Cores",
+        "cores": "Núcleos",
         "mostPopular": "Most Popular"
       },
       "appsGrid": {
@@ -1405,12 +1405,12 @@
         "resetFilters": "Reset Filters",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
-        "refresh": "Refresh",
-        "previous": "Previous",
-        "next": "Next",
+        "refresh": "Actualizar",
+        "previous": "Anterior",
+        "next": "Siguiente",
         "sortDefault": "Default",
-        "sortDate": "Date",
-        "sortName": "Name"
+        "sortDate": "Fecha",
+        "sortName": "Nombre"
       },
       "panels": {
         "screenshotsPanel": {
@@ -1460,7 +1460,7 @@
         "deploymentOptions": "Deployment Options",
         "instances": "{count} Instance | {count} Instances",
         "estimatedPricing": "Estimated Pricing",
-        "loading": "Loading...",
+        "loading": "Cargando...",
         "wordPressPlanTitle": "WordPress {planName}",
         "walletAltZelcore": "Flux ID (ZelCore)",
         "walletAltSSP": "SSP",
@@ -1480,7 +1480,7 @@
         "allowedLocations": "Allowed Locations",
         "forbiddenLocations": "Forbidden Locations",
         "continent": "Continent",
-        "country": "Country",
+        "country": "País",
         "global": "Global",
         "globalAllContinents": "Global (All Continents)",
         "allCountries": "All Countries",
@@ -1516,7 +1516,7 @@
         "noCompatibleWallets": "No compatible wallets detected. Please install ZelCore, SSP, MetaMask, ensure you're logged in via SSO, or login manually.",
         "signingApp": "Signing App...",
         "registeringApp": "Registering App...",
-        "cancel": "Cancel",
+        "cancel": "Cancelar",
         "manualSigningCancelled": "Manual signing cancelled",
         "signingAndRegistrationComplete": "Signing and Registration Complete",
         "redirectIn": "You will be redirected in {seconds} seconds...",
@@ -1539,7 +1539,7 @@
         "generating": "Generating...",
         "paymentInstructionsZelCore": "ZelCore Payment Instructions",
         "paymentInstructionsSSP": "SSP Payment Instructions",
-        "copiedToClipboard": "Copied to clipboard!",
+        "copiedToClipboard": "¡Copiado al portapapeles!",
         "openWallet": "Open {wallet}",
         "paymentConfirmed": "Payment Confirmed!",
         "waitingForPayment": "Waiting for Payment",
@@ -1573,12 +1573,12 @@
         "deploy": "Deploy",
         "config": "Config",
         "params": "Params",
-        "location": "Location",
+        "location": "Ubicación",
         "alerts": "Alerts",
         "sign": "Sign",
         "messages": {
           "usingGlobalDeployment": "Using global deployment - geolocation data unavailable",
-          "failedToCopyToClipboard": "Failed to copy to clipboard",
+          "failedToCopyToClipboard": "Error al copiar al portapapeles",
           "paymentMonitoringTimedOut": "Payment monitoring timed out. Please check your application status.",
           "paymentConfirmedActive": "Payment confirmed! Your application is now active and running on the network.",
           "openingZelCoreWallet": "Opening ZelCore wallet for payment...",
@@ -1631,7 +1631,7 @@
           }
         },
         "validation": {
-          "fieldRequired": "This field is required",
+          "fieldRequired": "Este campo es obligatorio",
           "minCharactersRequired": "Minimum {min} characters required",
           "grantMustBeWholeNumber": "Grant amount must be a whole number",
           "addressNoSpaces": "Address cannot contain spaces"
@@ -1659,8 +1659,8 @@
           "sspWalletNotInstalled": "SSP Wallet not installed",
           "sspPaymentInitiated": "SSP payment initiated",
           "failedToInitiateSSP": "Failed to initiate SSP payment: {error}",
-          "copiedToClipboard": "Copied to clipboard!",
-          "failedToCopy": "Failed to copy to clipboard"
+          "copiedToClipboard": "¡Copiado al portapapeles!",
+          "failedToCopy": "Error al copiar al portapapeles"
         }
       },
       "proposalDetail": {
@@ -1668,7 +1668,7 @@
         "anonymous": "Anonymous",
         "submitted": "Submitted",
         "endDate": "End Date",
-        "description": "Description",
+        "description": "Descripción",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
           "voteProgress": "Vote Progress",
@@ -1692,7 +1692,7 @@
         "voting": {
           "castYourVote": "Cast Your Vote",
           "makeYourVoiceHeard": "Make your voice heard",
-          "loginRequired": "Login Required",
+          "loginRequired": "Inicio de sesión requerido",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
@@ -1715,13 +1715,13 @@
         "technicalDetails": {
           "title": "Technical Details",
           "proposalHash": "Proposal Hash",
-          "copy": "Copy",
+          "copy": "Copiar",
           "submitDate": "Submit Date",
           "voteEndDate": "Vote End Date",
           "currentStatus": "Current Status"
         },
         "messages": {
-          "copiedToClipboard": "Copied to clipboard!",
+          "copiedToClipboard": "¡Copiado al portapapeles!",
           "successfullySignedWithSSP": "Successfully signed with SSP",
           "failedToSignWithSSP": "Failed to sign with SSP",
           "failedToInitiateZelcore": "Failed to initiate Zelcore signing",
@@ -1746,8 +1746,8 @@
         "fileTypeHint": "Application specification or Docker Compose (JSON/YAML)",
         "pasteHint": "Paste application specification or Docker Compose (JSON/YAML)",
         "reviewAndEdit": "Review and edit before importing",
-        "import": "Import",
-        "cancel": "Cancel",
+        "import": "Importar",
+        "cancel": "Cancelar",
         "loadSpecification": "Load Specification",
         "pasteFromClipboard": "Paste from Clipboard",
         "contentPasted": "Content pasted from clipboard!",
@@ -1792,7 +1792,7 @@
       "title": "Pricing Plans",
       "subtitle1": "All plans include 40+ advanced tools and features to boost your product.",
       "subtitle2": "Choose the best plan to fit your needs.",
-      "monthly": "Monthly",
+      "monthly": "Mensual",
       "annually": "Annually",
       "saveUpTo": "Save up to 10%",
       "popular": "Popular",
@@ -1855,7 +1855,7 @@
       "planComparison": "Plan Comparison",
       "yourCurrentPlan": "Your Current Plan",
       "newPlan": "New Plan",
-      "storage": "Storage",
+      "storage": "Almacenamiento",
       "plan": "Plan",
       "duration": "Duration",
       "oneMonth": "1 Month",
@@ -1872,9 +1872,9 @@
       "fluxPay": "Flux Pay",
       "calculatingFlux": "Calculating FLUX...",
       "manualPaymentDetails": "Manual Payment Details",
-      "address": "Address",
-      "amount": "Amount",
-      "message": "Message",
+      "address": "Dirección",
+      "amount": "Cantidad",
+      "message": "Mensaje",
       "loadingPaymentDetails": "Loading payment details...",
       "paymentDetailsWillAppear": "Payment details will appear here",
       "fluxPriceEstimated": "*FLUX price is estimated and will be finalized in ZelCore",
@@ -1886,7 +1886,7 @@
       "canTakeUpTo20Minutes": "This can take up to 20 minutes",
       "cancelMonitoring": "Cancel Monitoring",
       "pendingPayment": "Pending Payment",
-      "cancel": "Cancel",
+      "cancel": "Cancelar",
       "sspPaymentInitiated": "SSP payment initiated, monitoring for confirmation...",
       "sspPaymentFailed": "SSP payment failed: {error}",
       "zelcorePaymentFailed": "Zelcore payment failed: {error}",
@@ -1894,7 +1894,7 @@
       "redirectedToCryptoCom": "Redirected to Crypto.com for payment. Complete the payment and return here.",
       "cryptoComPaymentCancelled": "Crypto.com payment cancelled",
       "paymentMonitoringCancelledCanPayManually": "Payment monitoring cancelled. You can still pay manually using the details above.",
-      "copiedToClipboard": "Copied to clipboard!",
+      "copiedToClipboard": "¡Copiado al portapapeles!",
       "noLoginCredentials": "No login credentials found",
       "failedToPrepareManualSigning": "Failed to prepare manual signing: {error}",
       "pleaseEnterSignature": "Please enter a signature",
@@ -1946,11 +1946,11 @@
         "searchPlaceholder": "Search files and folders...",
         "listView": "List View",
         "gridView": "Grid View",
-        "columnName": "Name",
+        "columnName": "Nombre",
         "columnUpdated": "Updated",
-        "columnSize": "Size",
+        "columnSize": "Tamaño",
         "newFolder": "New Folder",
-        "upload": "Upload",
+        "upload": "Cargar",
         "uploadFiles": "Upload Files",
         "uploadFolder": "Upload Folder",
         "goToRoot": "Go to Root",
@@ -1965,23 +1965,23 @@
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
         "preview": "Preview",
-        "download": "Download",
+        "download": "Descargar",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
         "rename": "Rename",
         "moveTo": "Move To",
         "copyLink": "Copy Link",
-        "delete": "Delete",
+        "delete": "Eliminar",
         "paginationInfo": "Showing {start}-{end} of {total}",
-        "edit": "Edit",
+        "edit": "Editar",
         "browserNoVideoSupport": "Your browser does not support the video tag.",
         "browserNoAudioSupport": "Your browser does not support the audio element.",
         "previewNotAvailable": "Preview not available for this file type",
         "downloadFile": "Download File",
         "uploadingFiles": "Uploading {current} of {total} files",
         "uploadingFile": "Uploading file",
-        "uploadWait": "Please wait...",
+        "uploadWait": "Por favor espera...",
         "uploadProgress": "Upload progress: {progress}%",
         "fileOfTotal": "File {current} of {total}",
         "debugInfo": "Debug Info:",
@@ -1994,7 +1994,7 @@
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
         "folder": "folder",
         "file": "file",
-        "cancel": "Cancel",
+        "cancel": "Cancelar",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
         "newName": "New Name",
@@ -2008,7 +2008,7 @@
         "latest": "Latest",
         "versionNumber": "Version {number}",
         "noPreviousVersions": "No Previous Versions",
-        "close": "Close",
+        "close": "Cerrar",
         "createNewFolder": "Create New Folder",
         "folderName": "Folder Name",
         "createFolder": "Create Folder",
@@ -2040,7 +2040,7 @@
         "title": "Storage Usage",
         "usedOf": "{used} of {total} used",
         "usedSpace": "Used Space",
-        "available": "Available",
+        "available": "Disponible",
         "total": "Total",
         "almostFull": "Storage Almost Full",
         "almostFullMessage": "Your storage is {percentage}% full. Consider upgrading your plan or removing unused files.",
@@ -2051,11 +2051,11 @@
         "title": "File Versions",
         "current": "Current",
         "currentVersion": "Current Version (Last Updated)",
-        "previous": "Previous",
+        "previous": "Anterior",
         "original": "Original",
         "versionNumber": "Version {number}",
         "preview": "Preview",
-        "download": "Download",
+        "download": "Descargar",
         "copyLink": "Copy Link",
         "noPreviousVersions": "No Previous Versions",
         "noPreviousVersionsMessage": "This file has no previous versions",
@@ -2071,9 +2071,9 @@
       "pricingPlans": {
         "title": "FluxDrive Storage Plans",
         "subtitle": "Choose your perfect storage plan.",
-        "storage": "Storage",
+        "storage": "Almacenamiento",
         "contactUs": "Contact Us",
-        "signIn": "Login",
+        "signIn": "Iniciar sesión",
         "current": "Current",
         "renew": "Renew",
         "upgrade": "Upgrade",
@@ -2121,7 +2121,7 @@
         "title": "System Information",
         "subtitle": "View system resources and component versions",
         "resourcesAllocated": "Resources Allocated",
-        "storage": "Storage",
+        "storage": "Almacenamiento",
         "storageUsed": "{used} GB",
         "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
@@ -2130,8 +2130,8 @@
         "ram": "RAM",
         "ramUsed": "{used} GB",
         "ramTotal": "of {total} GB",
-        "applications": "Applications",
-        "installedApps": "Installed Apps",
+        "applications": "Aplicaciones",
+        "installedApps": "Aplicaciones instaladas",
         "installedAppsCount": "{count} application(s)",
         "appsHashes": "Apps Hashes",
         "notSynced": "{count} not synced",
@@ -2139,7 +2139,7 @@
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Docker Events",
+        "title": "Eventos de Docker",
         "subtitle": "Monitor Docker container events and activity",
         "recentEvents": "Recent Events",
         "noEventsAvailable": "No Docker events available",
@@ -2151,27 +2151,27 @@
         "subtitle": "Manage your files and share them with others",
         "storageUsage": "Storage Usage",
         "used": "used",
-        "available": "Available",
+        "available": "Disponible",
         "fileManager": "File Manager",
-        "upload": "Upload",
+        "upload": "Cargar",
         "newFolder": "New Folder",
         "emptyFolder": "This folder is empty",
         "folder": "Folder",
         "file": "File",
         "columns": {
-          "name": "Name",
+          "name": "Nombre",
           "modified": "Modified",
-          "type": "Type",
-          "size": "Size",
+          "type": "Tipo",
+          "size": "Tamaño",
           "actions": "Actions"
         },
-        "download": "Download",
+        "download": "Descargar",
         "downloadZip": "Download as ZIP",
         "rename": "Rename",
         "share": "Share",
         "unshare": "Unshare",
         "copyLink": "Copy Share Link",
-        "delete": "Delete",
+        "delete": "Eliminar",
         "createFolder": "Create Folder",
         "folderName": "Folder Name",
         "renameItem": "Rename",
@@ -2215,17 +2215,17 @@
         }
       },
       "manageUsers": {
-        "title": "Manage Users",
+        "title": "Gestionar usuarios",
         "subtitle": "View and manage logged users and active sessions",
         "searchUsers": "Search users",
-        "refresh": "Refresh",
+        "refresh": "Actualizar",
         "logOut": "Log Out",
         "logOutAll": "Log Out All",
         "logOutAllUsers": "Log Out All Users",
         "current": "Current",
         "yourCurrentSession": "Your current session",
         "activeSessions": "Active Sessions",
-        "cancel": "Cancel",
+        "cancel": "Cancelar",
         "areYouSureProceed": "Are you sure you want to proceed?",
         "confirmLogoutUser": "Confirm Logout User",
         "confirmLogoutAllUsers": "Confirm Logout All Users",
@@ -2242,7 +2242,7 @@
         }
       },
       "manageFlux": {
-        "title": "Manage Flux Gravity",
+        "title": "Gestionar Flux Gravity",
         "subtitle": "Configure and manage your Flux node settings",
         "tabs": {
           "settings": "Settings",
@@ -2305,15 +2305,15 @@
           "flux": "Flux Logs",
           "daemon": "Daemon Logs",
           "benchmark": "Benchmark Logs",
-          "download": "Download",
-          "refresh": "Refresh",
+          "download": "Descargar",
+          "refresh": "Actualizar",
           "loading": "Loading logs..."
         },
         "daemon": {
           "control": {
             "title": "Daemon Control",
             "start": {
-              "title": "Start",
+              "title": "Iniciar",
               "subtitle": "Start daemon",
               "button": "Start Daemon"
             },
@@ -2323,14 +2323,14 @@
               "button": "Restart Daemon"
             },
             "stop": {
-              "title": "Stop",
+              "title": "Detener",
               "subtitle": "Stop daemon",
               "button": "Stop Daemon"
             }
           },
           "info": {
             "title": "Daemon Information",
-            "refresh": "Refresh",
+            "refresh": "Actualizar",
             "loadingMessage": "Loading daemon info...",
             "versionInfo": "Version Information",
             "networkStatus": "Network Status",
@@ -2352,7 +2352,7 @@
           "control": {
             "title": "Benchmark Control",
             "start": {
-              "title": "Start",
+              "title": "Iniciar",
               "subtitle": "Start benchmark",
               "button": "Start Benchmark"
             },
@@ -2362,14 +2362,14 @@
               "button": "Restart Benchmark"
             },
             "stop": {
-              "title": "Stop",
+              "title": "Detener",
               "subtitle": "Stop benchmark",
               "button": "Stop Benchmark"
             }
           },
           "info": {
             "title": "Benchmark Information",
-            "refresh": "Refresh",
+            "refresh": "Actualizar",
             "loadingMessage": "Loading benchmark info...",
             "thunder": "Thunder",
             "runningWarning": "Benchmark is currently running. Please try again later.",
@@ -2385,7 +2385,7 @@
           "apiPort": "API Port",
           "blockedPorts": "Blocked Ports",
           "blockedRepositories": "Blocked Repositories",
-          "type": "Type"
+          "type": "Tipo"
         },
         "placeholders": {
           "routerIpPlaceholder": "192.168.1.1",
@@ -2408,11 +2408,11 @@
           "errorLoadingBenchmarkInfo": "Error loading benchmark info"
         },
         "dialogs": {
-          "cancel": "Cancel",
-          "update": "Update",
+          "cancel": "Cancelar",
+          "update": "Actualizar",
           "restart": "Restart",
-          "start": "Start",
-          "stop": "Stop",
+          "start": "Iniciar",
+          "stop": "Detener",
           "confirmProceed": "Are you sure you want to proceed?",
           "updateFlux": {
             "title": "Confirm Flux Gravity Update",
@@ -2422,22 +2422,22 @@
           "updateRouterIp": {
             "title": "Update Router IP",
             "message": "Are you sure you want to update the router IP address?",
-            "button": "Update"
+            "button": "Actualizar"
           },
           "updateBlockedPorts": {
             "title": "Update Blocked Ports",
             "message": "Are you sure you want to update the blocked ports?",
-            "button": "Update"
+            "button": "Actualizar"
           },
           "updateApiPort": {
             "title": "Update API Port",
             "message": "Are you sure you want to update the API port?",
-            "button": "Update"
+            "button": "Actualizar"
           },
           "updateBlockedRepos": {
             "title": "Update Blocked Repositories",
             "message": "Are you sure you want to update the blocked repositories?",
-            "button": "Update"
+            "button": "Actualizar"
           },
           "restartFluxOs": {
             "title": "Confirm Restart",
@@ -2487,7 +2487,7 @@
       "manage": {
         "tabs": {
           "specifications": "Specifications",
-          "information": "Information",
+          "information": "Información",
           "fileChanges": "File Changes",
           "monitoring": "Monitoring",
           "logs": "Logs",
@@ -2499,8 +2499,8 @@
         },
         "tooltips": {
           "manage": "Manage",
-          "install": "Install",
-          "remove": "Remove",
+          "install": "Instalar",
+          "remove": "Quitar",
           "visit": "Visit"
         },
         "searchIpPlaceholder": "Search IP...",
@@ -2518,13 +2518,13 @@
           "fullLogs": "Full Logs",
           "showLogs": "Show Logs",
           "hideLogs": "Hide Logs",
-          "close": "Close"
+          "close": "Cerrar"
         },
         "specification": {
           "local": "Local Specification",
           "global": "Global Specification"
         },
-        "composition": "Composition",
+        "composition": "Composición",
         "messages": {
           "awaitingLaunch": "Application is awaiting launching...",
           "fileChangesDescription": "File changes inside Docker container (Kind: 0 = Modified, Kind: 1 = Added, Kind: 2 = Deleted)",
@@ -2539,7 +2539,7 @@
           "noInstancesAvailableTitle": "No Instances Available",
           "noInstancesAvailableMessage": "This application has no running instances. The app may be deploying, redeploying, not yet deployed, or all instances are offline.",
           "retry": "Retry",
-          "loadingTitle": "Loading...",
+          "loadingTitle": "Cargando...",
           "loadingMessage": "Retrieving application information...",
           "noInstancesWarningTitle": "Limited Functionality - No Running Instances",
           "noInstancesWarningMessage": "This app has no active instances. Some features are unavailable. You can still manage subscriptions and view specifications.",
@@ -2562,7 +2562,7 @@
           "timeRange": "Time Range",
           "component": "Component",
           "selectComponent": "Select component",
-          "itemsPerPage": "Items per page"
+          "itemsPerPage": "Elementos por página"
         },
         "timeRange": {
           "last15Minutes": "Last 15 Minutes",
@@ -2595,47 +2595,47 @@
         "confirmButton": "Redeploy"
       },
       "table": {
-        "perPage": "Per Page",
-        "filter": "Filter",
-        "filterPlaceholder": "Type to Search",
-        "advancedFilterTooltip": "Open advanced filter options",
-        "appType": "App Type",
-        "version": "Version",
-        "minHdd": "Min HDD (GB)",
-        "minRam": "Min RAM (MB)",
-        "minCpu": "Min CPU (Cores)",
-        "minInstances": "Min Instances",
-        "repotags": "Repotags",
+        "perPage": "Por página",
+        "filter": "Filtrar",
+        "filterPlaceholder": "Escribe para buscar",
+        "advancedFilterTooltip": "Abrir opciones de filtro avanzado",
+        "appType": "Tipo de aplicación",
+        "version": "Versión",
+        "minHdd": "HDD mín. (GB)",
+        "minRam": "RAM mín. (MB)",
+        "minCpu": "CPU mín. (Núcleos)",
+        "minInstances": "Instancias mín.",
+        "repotags": "Etiquetas del repositorio",
         "repotagsPlaceholder": "Type and press enter",
-        "matchAllTags": "Include all tags (match all)",
-        "clearFilters": "Clear All Filters",
-        "loading": "Loading...",
-        "signInRequired": "Login Required",
-        "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",
+        "matchAllTags": "Incluir todas las etiquetas (coincidir con todas)",
+        "clearFilters": "Borrar todos los filtros",
+        "loading": "Cargando...",
+        "signInRequired": "Inicio de sesión requerido",
+        "signInDescription": "Para gestionar y monitorear tus aplicaciones en la red Flux, debes autenticarte con tu identidad de Flux.",
         "features": {
-          "viewApps": "View your apps",
-          "manageResources": "Manage resources",
-          "monitorPerformance": "Monitor performance",
-          "controlDeployments": "Control deployments"
+          "viewApps": "Ver tus aplicaciones",
+          "manageResources": "Gestionar recursos",
+          "monitorPerformance": "Monitorear rendimiento",
+          "controlDeployments": "Controlar implementaciones"
         },
-        "signIn": "Login",
-        "learnMore": "Learn More",
-        "noMatchingApps": "No matching apps found.",
-        "connectionError": "Unable to connect to the server. Please check your internet or try again later.",
-        "noApps": "You don't have any apps.",
-        "checking": "checking...",
-        "composition": "Composition",
-        "locations": "Locations",
-        "loginRequired": "Login Required",
+        "signIn": "Iniciar sesión",
+        "learnMore": "Más información",
+        "noMatchingApps": "No se encontraron aplicaciones coincidentes.",
+        "connectionError": "No se puede conectar al servidor. Por favor, verifica tu conexión a internet o intenta de nuevo más tarde.",
+        "noApps": "No tienes ninguna aplicación.",
+        "checking": "verificando...",
+        "composition": "Composición",
+        "locations": "Ubicaciones",
+        "loginRequired": "Inicio de sesión requerido",
         "applicationExpired": "Application Expired",
         "cannotCalculateExpiration": "Not possible to calculate expiration",
         "modeOptions": {
-          "all": "All",
-          "marketplace": "Marketplace",
-          "marketplaceExcluded": "Marketplace Excluded"
+          "all": "Todos",
+          "marketplace": "Mercado",
+          "marketplaceExcluded": "Mercado excluido"
         },
         "versionOptions": {
-          "all": "All Versions",
+          "all": "Todas las versiones",
           "v3": "Version 3",
           "v4": "Version 4",
           "v5": "Version 5",
@@ -2644,9 +2644,9 @@
           "v8": "Version 8"
         },
         "headers": {
-          "name": "Name",
-          "status": "Status",
-          "description": "Description"
+          "name": "Nombre",
+          "status": "Estado",
+          "description": "Descripción"
         }
       },
       "register": {
@@ -2710,7 +2710,7 @@
               "description": "Standard Docker containers mean you can migrate anytime. Full control over your applications and data."
             },
             "guarantee": {
-              "title": "30-Day Money-Back Guarantee",
+              "title": "Garantía de devolución de dinero de 30 días",
               "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
             },
             "freeDomain": {
@@ -2732,7 +2732,7 @@
             "provider": "Provider",
             "cpu": "CPU",
             "ram": "RAM",
-            "storage": "Storage",
+            "storage": "Almacenamiento",
             "pricePerMonth": "Price/Month",
             "note": "Prices are approximate and based on publicly available pricing for similar configurations. *Akash Network uses a bidding marketplace, so actual prices may vary. FluxCloud price is calculated in real-time from our pricing API."
           },
@@ -2808,13 +2808,13 @@
           },
           "relatedLinks": {
             "title": "Explore More on FluxCloud",
-            "marketplace": "Marketplace",
+            "marketplace": "Mercado",
             "marketplaceDesc": "Browse pre-configured applications",
             "wordpress": "WordPress Hosting",
             "wordpressDesc": "Deploy WordPress sites on FluxCloud",
             "gaming": "Game Servers",
             "gamingDesc": "Host your favorite game servers",
-            "calculator": "Cost Calculator",
+            "calculator": "Calculadora de costos",
             "calculatorDesc": "Estimate your hosting costs"
           }
         },
@@ -2885,7 +2885,7 @@
               "dedicatedResources": "Dedicated Resources",
               "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
-            "free": "Free",
+            "free": "Gratis",
             "developer": "Standard",
             "pro": "Pro",
             "beta": "Beta",
@@ -2900,7 +2900,7 @@
             "perMonth": "/month",
             "billingOptions": "Billing Options",
             "billingPeriod": "Billing Period",
-            "billingMonthly": "Monthly",
+            "billingMonthly": "Mensual",
             "billing1Month": "1 Month",
             "billing3Months": "3 Months",
             "billing6Months": "6 Months",
@@ -3002,11 +3002,11 @@
             "projectPath": "Project Path",
             "accessToken": "Authentication",
             "configured": "Configured",
-            "appType": "App Type",
+            "appType": "Tipo de aplicación",
             "enterprisePrivate": "Enterprise (Private Repo)",
             "configuration": "Configuration",
             "appName": "App Name",
-            "description": "Description",
+            "description": "Descripción",
             "appPort": "App Port",
             "exposedPort": "Exposed Port",
             "contact": "Contact",
@@ -3014,12 +3014,12 @@
             "envVariables": "Env Variables",
             "planAndResources": "Plan & Resources",
             "plan": "Plan",
-            "resources": "Resources",
+            "resources": "Recursos",
             "activeDeployments": "Active Deployments",
             "builds": "Builds",
             "branchPreviews": "Branch Previews",
-            "enabled": "Enabled",
-            "billing": "Billing",
+            "enabled": "Habilitado",
+            "billing": "Facturación",
             "geolocation": "Geolocation",
             "totalPrice": "Total Price",
             "unlimited": "Unlimited",
@@ -3051,7 +3051,7 @@
             "paymentDescription": "Choose your preferred payment method to activate your Pro plan.",
             "processingPayment": "Processing payment...",
             "waitingConfirmation": "Waiting for payment confirmation...",
-            "cancel": "Cancel",
+            "cancel": "Cancelar",
             "paymentSummary": "Payment Summary",
             "discountApplied": "{percent}% discount applied",
             "fiatPayment": "Fiat Payment",
@@ -3096,10 +3096,10 @@
             "cancelPayment": "Cancel and go back"
           },
           "navigation": {
-            "back": "Back",
+            "back": "Atrás",
             "continue": "Continue",
-            "next": "Next",
-            "previous": "Previous"
+            "next": "Siguiente",
+            "previous": "Anterior"
           },
           "payment": {
             "payWithCard": "Pay with Card",
@@ -3112,7 +3112,7 @@
             "instantConfirmation": "Instant payment confirmation",
             "multipleCurrency": "Multiple currency support",
             "sendTo": "Send to",
-            "message": "Message"
+            "message": "Mensaje"
           },
           "features": {
             "title": "Deploy from Git in Minutes",
@@ -3208,12 +3208,12 @@
             "subtitle": "See how Git deployment stacks up against other Git deployment platforms",
             "provider": "Provider",
             "plan": "Plan",
-            "price": "Price",
+            "price": "Precio",
             "cpu": "CPU",
             "ram": "RAM",
             "builds": "Builds",
             "best": "Best Value",
-            "cores": "Cores",
+            "cores": "Núcleos",
             "core": "Core",
             "unlimited": "Unlimited",
             "shared": "Shared",
@@ -3236,7 +3236,7 @@
             "connectAndDeploy": "Connect your Git repository and deploy in minutes"
           },
           "stepper": {
-            "overview": "Overview",
+            "overview": "Descripción general",
             "plan": "Plan",
             "repository": "Repository",
             "configure": "Configure",
@@ -3320,13 +3320,13 @@
             "yourEnvVariables": "Your Environment Variables",
             "noneAddedYet": "(none added yet)",
             "keyLabel": "Key",
-            "valueLabel": "Value",
+            "valueLabel": "Valor",
             "addCustomVariable": "Add Custom Variable",
             "deploymentLocationTitle": "Deployment Location",
             "deploymentLocationInfo": "Choose where your application will be deployed.",
             "serverLocation": "Server Location",
             "continentLabel": "Continent",
-            "countryLabel": "Country",
+            "countryLabel": "País",
             "regionLabel": "Region",
             "selectRegionInfo": "Add allowed locations where your app CAN run, or forbidden locations where it CANNOT run. Leave empty for global deployment.",
             "allowedLocations": "Allowed Locations",
@@ -3346,7 +3346,7 @@
             "customResourcesInfo": "Configure the CPU, RAM, and storage for your custom plan. The price will be calculated based on your selections.",
             "cpuLabel": "CPU",
             "ramLabel": "RAM",
-            "storageLabel": "Storage",
+            "storageLabel": "Almacenamiento",
             "instancesLabel": "Instances",
             "selected": "Selected",
             "selectPlan": "Select Plan",
@@ -3421,7 +3421,7 @@
       "title": "App Hosting Cost Calculator",
       "subtitle": "Affordable decentralized hosting starting at $0.99/month - Calculate your exact costs",
       "description": "Deploy your applications on the Flux decentralized cloud network with transparent, pay-as-you-go pricing. Choose your compute resources (CPU, RAM, storage), select the number of instances, and get instant pricing. No hidden fees, no vendor lock-in. Perfect for Docker containers, web apps, APIs, databases, and microservices. Starting at just $0.99/month for basic configurations.",
-      "learnMore": "Learn More",
+      "learnMore": "Más información",
       "configuration": "Configuration",
       "instancesQuestion": "How many instances will you be running?",
       "instancesHint": "(min 1 / max 100) 1 Instance = 1 Node",
@@ -3457,7 +3457,7 @@
       "calculating": "Calculating...",
       "withDiscount": "with {discount}% discount",
       "retry": "Retry",
-      "helpButton": "Help",
+      "helpButton": "Ayuda",
       "presetConfigurations": "Preset Configurations",
       "nodes": "Nodes",
       "cpu": "CPU",
@@ -3577,7 +3577,7 @@
             "title": "FluxCloud Network",
             "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
           },
-          "learnMore": "Learn More"
+          "learnMore": "Más información"
         },
         "totalNodes": "Total Nodes",
         "nodeHistory": "Node History",
@@ -3604,22 +3604,22 @@
         "providersTitle": "Providers",
         "noGeographicData": "No geographic data available.",
         "noProviderData": "No provider data available.",
-        "unknown": "Unknown"
+        "unknown": "Desconocido"
       },
       "list": {
         "perPage": "Per page",
-        "filter": "Filter",
-        "filterPlaceholder": "Type to Search",
+        "filter": "Filtrar",
+        "filterPlaceholder": "Escribe para buscar",
         "notAvailable": "N/A",
-        "unknown": "Unknown",
+        "unknown": "Desconocido",
         "errorLoading": "Error loading flux list:",
         "columns": {
-          "ip": "IP Address",
-          "paymentAddress": "Address",
-          "locationCountry": "Country",
+          "ip": "Dirección IP",
+          "paymentAddress": "Dirección",
+          "locationCountry": "País",
           "locationOrg": "Provider",
           "lastpaid": "Last Paid",
-          "tier": "Tier"
+          "tier": "Nivel"
         }
       },
       "resources": {
@@ -3646,7 +3646,7 @@
         "tierNimbus": "Nimbus",
         "tierStratus": "Stratus",
         "errorFetchHistory": "Unable to fetch history stats",
-        "close": "Close"
+        "close": "Cerrar"
       },
       "rewards": {
         "intro": {
@@ -3664,8 +3664,8 @@
         "perMonth": "Per Month",
         "usd": "USD",
         "historicalPriceChart": "Historical Price Chart",
-        "price": "Price",
-        "close": "Close",
+        "price": "Precio",
+        "close": "Cerrar",
         "errors": {
           "failedToFetchData": "Failed to fetch data",
           "failedToFetchRates": "Failed to fetch rates",
@@ -3690,7 +3690,7 @@
       "renewalSuccess": "Subscription renewed successfully!",
       "renewalFailed": "Renewal failed: ",
       "upgradeFailed": "Upgrade failed: ",
-      "cancel": "Cancel",
+      "cancel": "Cancelar",
       "features": {
         "title": "Why Choose FluxDrive",
         "encryption": {
@@ -3718,7 +3718,7 @@
           "description": "Benefit from global CDN-like performance with files distributed across the nearest available nodes."
         },
         "guarantee": {
-          "title": "30-Day Money-Back Guarantee",
+          "title": "Garantía de devolución de dinero de 30 días",
           "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
         }
       },
@@ -3743,27 +3743,27 @@
       "detail": {
         "loadingTitle": "Loading Application...",
         "errorMessage": "Failed to load application details: {error}",
-        "priceLabel": "Price",
-        "priceFree": "Free",
+        "priceLabel": "Precio",
+        "priceFree": "Gratis",
         "install": "Buy Now",
         "minimumRequirements": "Minimum Requirements",
         "unitCores": "vCores",
         "unitMB": "MB",
         "unitGB": "GB",
         "cpuPower": "CPU Power",
-        "memory": "Memory",
-        "storage": "Storage",
-        "screenshots": "Screenshots",
+        "memory": "Memoria",
+        "storage": "Almacenamiento",
+        "screenshots": "Capturas de pantalla",
         "screenshotAlt": "Screenshot {number}",
-        "about": "About",
-        "developer": "Developer",
-        "lastUpdate": "Last Update",
-        "version": "Version",
-        "downloads": "Downloads",
-        "links": "Links",
-        "website": "Website",
-        "sourceCode": "Source Code",
-        "support": "Support"
+        "about": "Acerca de",
+        "developer": "Desarrollador",
+        "lastUpdate": "Última actualización",
+        "version": "Versión",
+        "downloads": "Descargas",
+        "links": "Enlaces",
+        "website": "Sitio web",
+        "sourceCode": "Código fuente",
+        "support": "Soporte"
       },
       "common": {
         "whyFlux": {
@@ -3807,7 +3807,7 @@
             },
             {
               "icon": "mdi-cash-refund",
-              "title": "30-Day Money-Back Guarantee",
+              "title": "Garantía de devolución de dinero de 30 días",
               "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
             }
           ]
@@ -4087,7 +4087,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "Garantía de devolución de dinero de 30 días",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4181,7 +4181,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "Garantía de devolución de dinero de 30 días",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4334,7 +4334,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "Garantía de devolución de dinero de 30 días",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4428,7 +4428,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "Garantía de devolución de dinero de 30 días",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4522,7 +4522,7 @@
               },
               {
                 "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
+                "title": "Garantía de devolución de dinero de 30 días",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             ]
@@ -4602,7 +4602,7 @@
             "perMonth": "/mo",
             "cpu": "CPU",
             "ram": "RAM",
-            "storage": "Storage",
+            "storage": "Almacenamiento",
             "instances": "Nodes",
             "getStarted": "Get Started"
           },
@@ -4634,7 +4634,7 @@
                 "description": "No hidden fees. Pay only for what you use with flexible monthly billing."
               },
               "guarantee": {
-                "title": "30-Day Money-Back Guarantee",
+                "title": "Garantía de devolución de dinero de 30 días",
                 "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
               }
             }
@@ -4702,15 +4702,15 @@
           "performancePlan": "Performance Plan",
           "deployment": "Deployment",
           "subscriptionPeriod": "Subscription Period",
-          "month": "month",
-          "months": "months",
+          "month": "mes",
+          "months": "meses",
           "subscription": "subscription",
           "pricing": "Pricing",
           "subtotal": "Subtotal",
           "discount": "Discount",
           "total": "Total",
           "install": "Install WordPress",
-          "loginRequired": "Login Required",
+          "loginRequired": "Inicio de sesión requerido",
           "loginToInstall": "Please log in to install WordPress",
           "dappNameTitle": "WordPress Dapp Name",
           "dappNameHelp": "Internal nick name, not used externally.",
@@ -4907,7 +4907,7 @@
               "subtitle": "Discover other ways to leverage decentralized infrastructure",
               "links": [
                 {
-                  "title": "Cost Calculator",
+                  "title": "Calculadora de costos",
                   "description": "Calculate exact hosting costs for your applications with transparent pricing",
                   "url": "/cost-calculator",
                   "icon": "mdi-calculator"
@@ -4949,7 +4949,7 @@
               "perMonth": "/month",
               "cpu": "CPU",
               "ram": "RAM",
-              "storage": "Storage",
+              "storage": "Almacenamiento",
               "instances": "Instances",
               "getStarted": "Get Started"
             },
@@ -4960,7 +4960,7 @@
             "relatedLinks": {
               "sectionTitle": "Explore More on FluxCloud",
               "marketplace": {
-                "title": "Marketplace",
+                "title": "Mercado",
                 "description": "Browse all available applications"
               },
               "gameServers": {
@@ -4972,7 +4972,7 @@
                 "description": "Decentralized file storage"
               },
               "costCalculator": {
-                "title": "Cost Calculator",
+                "title": "Calculadora de costos",
                 "description": "Estimate your hosting costs"
               }
             }
@@ -4986,7 +4986,7 @@
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
       "loggedIn": "Logged in",
-      "login": "Login",
+      "login": "Iniciar sesión",
       "loginToVote": "Login to Vote",
       "filters": "Filters",
       "addProposal": "Add Proposal",
@@ -5020,7 +5020,7 @@
       "end": "End",
       "required": "Required",
       "total": "Total",
-      "yes": "Yes",
+      "yes": "Sí",
       "no": "No",
       "loginRequiredForVoting": "Login Required for Voting",
       "loginRequiredMessage": "You need to be logged in to participate in xDAO voting. Please choose your preferred login method below.",
@@ -5029,7 +5029,7 @@
         "loadProposalsServer": "Failed to load proposals from server",
         "networkFailed": "Network connection failed. Please check your internet connection.",
         "timeout": "Request timed out. The server may be temporarily unavailable.",
-        "serverError": "Server error. Please try again later.",
+        "serverError": "Error del servidor. Por favor, intenta de nuevo más tarde.",
         "serviceNotFound": "Proposals service not found.",
         "loadProposalsGeneric": "Failed to load proposals. Please try again."
       }
@@ -5067,22 +5067,22 @@
       "orderSummary": {
         "title": "Order Summary",
         "plan": "Plan",
-        "storage": "Storage",
-        "billing": "Billing",
-        "monthly": "Monthly",
+        "storage": "Almacenamiento",
+        "billing": "Facturación",
+        "monthly": "Mensual",
         "total": "Total",
         "currentPlan": "Current Plan",
-        "status": "Status"
+        "status": "Estado"
       },
       "subscriptionDetails": "Subscription Details",
       "billingCycle": "Billing Cycle",
-      "monthly": "Monthly",
+      "monthly": "Mensual",
       "total": "Total",
       "proceedToPayment": "Proceed to Payment",
       "paymentProcessing": "Processing Payment",
       "secureCheckout": "Secure Checkout",
       "plan": "Plan",
-      "price": "Price",
+      "price": "Precio",
       "perMonth": "per month",
       "header": {
         "title": "FluxDrive",
@@ -5131,13 +5131,13 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "No data available",
+    "noDataText": "No hay datos disponibles",
     "dataIterator": {
       "loadingText": "Loading your data, please wait...",
       "noResultsText": "No matching records found.",
       "noDataText": "No data available."
     },
-    "close": "Close",
+    "close": "Cerrar",
     "open": "open",
     "loading": "loading",
     "carousel": {
@@ -5147,7 +5147,7 @@
     },
     "dataFooter": {
       "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "All",
+      "itemsPerPageAll": "Todos",
       "pageText": "{0}-{1} of {2}",
       "firstPage": "First Page",
       "prevPage": "Previous Page",
@@ -5193,7 +5193,7 @@
     "trend": "Trend",
     "used": "used",
     "limit": "limit",
-    "refresh": "Refresh",
+    "refresh": "Actualizar",
     "forceGC": "Force GC",
     "clearHistory": "Clear History",
     "notAvailable": "Performance Memory API not available in this browser.",
@@ -5207,7 +5207,7 @@
       "usedHeapDesc": "Memory actively used by JavaScript objects",
       "freeHeap": "Free Heap",
       "freeHeapDesc": "Allocated but unused heap space",
-      "available": "Available",
+      "available": "Disponible",
       "availableDesc": "Heap space not yet allocated",
       "domNodes": "DOM Nodes (est.)",
       "domNodesDesc": "Approximately {count} DOM elements",
@@ -5234,7 +5234,7 @@
       "fluxDrive": {
         "name": "FluxDrive",
         "description": "Secure, decentralized storage solution for your data",
-        "category": "Storage"
+        "category": "Almacenamiento"
       },
       "fluxEdge": {
         "name": "FluxEdge",
