@@ -1,13 +1,13 @@
 {
   "common": {
-    "off": "off",
+    "off": "آف",
     "buttons": {
       "cancel": "منسوخ کریں",
       "close": "بند کریں",
       "save": "محفوظ کریں",
       "delete": "حذف کریں",
       "submit": "جمع کریں",
-      "update": "اپ ڈیٹ کریں",
+      "update": "اپڈیٹ کریں",
       "install": "انسٹال کریں",
       "start": "شروع کریں",
       "stop": "روکیں",
@@ -20,27 +20,27 @@
       "import": "درآمد کریں",
       "edit": "ترمیم کریں",
       "view": "دیکھیں",
-      "refresh": "تازہ کریں",
+      "refresh": "ریفریش کریں",
       "reload": "دوبارہ لوڈ کریں",
       "back": "واپس",
       "next": "اگلا",
       "previous": "پچھلا",
       "confirm": "تصدیق کریں",
       "apply": "لاگو کریں",
-      "reset": "دوبارہ سیٹ کریں",
+      "reset": "ری سیٹ کریں",
       "clear": "صاف کریں",
       "search": "تلاش کریں",
       "filter": "فلٹر کریں",
       "yes": "ہاں",
       "no": "نہیں",
-      "ok": "OK",
-      "login": "لاگ ان کریں"
+      "ok": "ٹھیک ہے",
+      "login": "لاگ ان"
     },
     "labels": {
       "name": "نام",
       "title": "عنوان",
       "description": "تفصیل",
-      "status": "حالت",
+      "status": "اسٹیٹس",
       "type": "قسم",
       "version": "ورژن",
       "size": "سائز",
@@ -55,41 +55,41 @@
       "city": "شہر",
       "email": "ای میل",
       "password": "پاس ورڈ",
-      "username": "یوزر نیم",
+      "username": "صارف نام",
       "address": "پتہ",
       "port": "پورٹ",
-      "ip": "IP Address",
-      "tier": "سطح",
+      "ip": "IP پتہ",
+      "tier": "درجہ",
       "price": "قیمت",
       "total": "کل",
       "amount": "رقم",
       "free": "مفت",
       "memory": "میموری",
       "storage": "اسٹوریج",
-      "screenshots": "Screenshots",
-      "about": "About",
-      "developer": "Developer",
-      "lastUpdate": "Last Update",
-      "downloads": "Downloads",
-      "links": "Links",
-      "website": "Website",
-      "sourceCode": "Source Code",
-      "support": "Support",
-      "plan": "Plan",
-      "billing": "Billing",
-      "monthly": "Monthly",
-      "scrollLeft": "Scroll left",
-      "scrollRight": "Scroll right",
-      "optional": "Optional"
+      "screenshots": "اسکرین شاٹس",
+      "about": "کے بارے میں",
+      "developer": "ڈویلپر",
+      "lastUpdate": "آخری اپڈیٹ",
+      "downloads": "ڈاؤن لوڈز",
+      "links": "لنکس",
+      "website": "ویب سائٹ",
+      "sourceCode": "سورس کوڈ",
+      "support": "سپورٹ",
+      "plan": "پلان",
+      "billing": "بلنگ",
+      "monthly": "ماہانہ",
+      "scrollLeft": "بائیں اسکرول کریں",
+      "scrollRight": "دائیں اسکرول کریں",
+      "optional": "اختیاری"
     },
     "theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "switchTheme": "Switch theme"
+      "light": "روشن",
+      "dark": "تاریک",
+      "switchTheme": "تھیم تبدیل کریں"
     },
     "status": {
-      "loading": "لوڈ ہو رہا ہے...",
-      "success": "کامیابی",
+      "loading": "لوڈ ہو رہا ہے",
+      "success": "کامیاب",
       "error": "خرابی",
       "warning": "انتباہ",
       "info": "معلومات",
@@ -102,7 +102,7 @@
       "available": "دستیاب",
       "unavailable": "دستیاب نہیں",
       "running": "چل رہا ہے",
-      "stopped": "روکا گیا",
+      "stopped": "رکا ہوا",
       "pending": "زیر التوا",
       "processing": "پروسیسنگ",
       "completed": "مکمل",
@@ -115,61 +115,61 @@
       "noData": "کوئی ڈیٹا دستیاب نہیں",
       "noResults": "کوئی نتیجہ نہیں ملا",
       "errorOccurred": "ایک خرابی واقع ہوئی",
-      "operationSuccess": "Operation completed successfully",
-      "operationFailed": "Operation failed",
-      "confirmDelete": "Are you sure you want to delete?",
-      "unsavedChanges": "You have unsaved changes",
+      "operationSuccess": "آپریشن کامیابی سے مکمل ہوا",
+      "operationFailed": "آپریشن ناکام ہوا",
+      "confirmDelete": "کیا آپ واقعی حذف کرنا چاہتے ہیں؟",
+      "unsavedChanges": "آپ کی غیر محفوظ تبدیلیاں ہیں",
       "invalidInput": "غلط ان پٹ",
-      "required": "This field is required",
-      "connectionError": "Connection error. Please try again.",
-      "unauthorized": "Unauthorized access",
+      "required": "یہ فیلڈ ضروری ہے",
+      "connectionError": "کنکشن میں خرابی۔ براہ کرم دوبارہ کوشش کریں۔",
+      "unauthorized": "غیر مجاز رسائی",
       "notFound": "نہیں ملا",
-      "serverError": "Server error. Please try again later.",
-      "copiedToClipboard": "Copied to clipboard!",
-      "failedToCopy": "Failed to copy to clipboard",
-      "loginRequired": "Login Required",
-      "loggedOutSuccessfully": "Logged out successfully"
+      "serverError": "سرور میں خرابی۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+      "copiedToClipboard": "کلپ بورڈ پر کاپی ہو گیا!",
+      "failedToCopy": "کلپ بورڈ پر کاپی کرنے میں ناکام",
+      "loginRequired": "لاگ ان ضروری ہے",
+      "loggedOutSuccessfully": "کامیابی سے لاگ آؤٹ ہو گیا"
     },
-    "itemsPerPage": "Items per page",
-    "of": "of",
-    "selectServerConfiguration": "Select Server Configuration",
+    "itemsPerPage": "آئٹمز فی صفحہ",
+    "of": "میں سے",
+    "selectServerConfiguration": "سرور کنفیگریشن منتخب کریں",
     "groups": {
-      "smallServers": "Small Servers",
-      "mediumServers": "Medium Servers",
-      "largeServers": "Large Servers"
+      "smallServers": "چھوٹے سرورز",
+      "mediumServers": "درمیانے سرورز",
+      "largeServers": "بڑے سرورز"
     },
     "guarantee": {
-      "title": "30-Day Money-Back Guarantee",
-      "description": "Try our service risk-free. If you're not completely satisfied within the first 30 days, we'll refund your payment—no questions asked.",
-      "shortTitle": "Money-Back Guarantee",
-      "badge": "30-Day Guarantee",
-      "trustMessage": "Your satisfaction is our priority"
+      "title": "30 دن کی رقم واپسی کی گارنٹی",
+      "description": "ہماری سروس کو بغیر خطرے کے آزمائیں۔ اگر آپ 30 دنوں میں مکمل طور پر مطمئن نہیں ہیں تو رقم واپس لیں۔",
+      "shortTitle": "رقم واپسی کی گارنٹی",
+      "badge": "30 دن کی گارنٹی",
+      "trustMessage": "آپ کی اطمینان ہماری ترجیح ہے"
     },
     "trustpilot": {
-      "title": "Trusted by Thousands",
-      "ratingLabel": "Excellent",
-      "rating": "4.5 out of 5",
-      "reviews": "Based on 16 reviews",
-      "basedOn": "Based on {count} reviews",
+      "title": "ہزاروں کا اعتماد",
+      "ratingLabel": "بہترین",
+      "rating": "5 میں سے 4.5",
+      "reviews": "16 جائزوں کی بنیاد پر",
+      "basedOn": "{count} جائزوں کی بنیاد پر",
       "reviewsCount": "16",
       "score": "4.5",
-      "outOf": "out of 5",
-      "verifiedCustomer": "Verified Customer",
+      "outOf": "میں سے 5",
+      "verifiedCustomer": "تصدیق شدہ گاہک",
       "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
-      "viewAllReviews": "View all reviews on Trustpilot",
+      "viewAllReviews": "Trustpilot پر تمام جائزے دیکھیں",
       "sampleReviews": {
         "review1": {
-          "text": "I was surprised how cheap hosting on Runonflux was. No issues so far.",
+          "text": "Runonflux پر ہوسٹنگ کتنی سستی ہے مجھے حیرت ہوئی۔ اب تک کوئی مسئلہ نہیں۔",
           "author": "Tuukka Tinkala",
           "rating": "5"
         },
         "review2": {
-          "text": "Uptime is incredible and redundancy is built in. Prices can't be beat when compared to the hyperscalers.",
+          "text": "اپ ٹائم ناقابل یقین ہے اور ریڈنڈنسی بلٹ ان ہے۔ قیمتیں بہترین ہیں۔",
           "author": "ST",
           "rating": "5"
         },
         "review3": {
-          "text": "Seamlessly deployed our apps in flux cloud. Very easy to use, hassle free. No kyc needed",
+          "text": "فلکس کلاؤڈ میں ہماری ایپس کو بغیر کسی پریشانی کے ڈیپلائی کیا۔ استعمال میں بہت آسان۔",
           "author": "Cyber fly",
           "rating": "5"
         }
@@ -180,35 +180,35 @@
       "ram": "RAM",
       "memory": "میموری",
       "storage": "اسٹوریج",
-      "disk": "Disk",
+      "disk": "ڈسک",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
-      "bandwidth": "Bandwidth",
-      "cores": "Cores",
-      "threads": "Threads"
+      "bandwidth": "بینڈوڈتھ",
+      "cores": "کور",
+      "threads": "تھریڈز"
     },
     "time": {
-      "second": "second",
-      "seconds": "seconds",
-      "minute": "minute",
-      "minutes": "minutes",
-      "hour": "hour",
-      "hours": "hours",
-      "day": "day",
-      "days": "days",
-      "week": "week",
-      "weeks": "weeks",
-      "month": "month",
-      "months": "months",
-      "year": "year",
-      "years": "years",
-      "ago": "ago",
+      "second": "سیکنڈ",
+      "seconds": "سیکنڈز",
+      "minute": "منٹ",
+      "minutes": "منٹس",
+      "hour": "گھنٹہ",
+      "hours": "گھنٹے",
+      "day": "دن",
+      "days": "دن",
+      "week": "ہفتہ",
+      "weeks": "ہفتے",
+      "month": "مہینہ",
+      "months": "مہینے",
+      "year": "سال",
+      "years": "سال",
+      "ago": "پہلے",
       "now": "now"
     },
     "units": {
-      "vCores": "vCores",
-      "mb": "MB",
-      "gb": "GB"
+      "vCores": "ورچوئل کورز",
+      "mb": "ایم بی",
+      "gb": "جی بی"
     },
     "cookieConsent": {
       "title": "We value your privacy",
@@ -233,22 +233,22 @@
       "title": "ہوم"
     },
     "dashboard": {
-      "title": "Flux Network",
-      "overview": "Overview",
-      "resources": "Resources",
-      "map": "Map",
-      "rewards": "Rewards",
-      "nodeList": "Node List"
+      "title": "Flux نیٹورک",
+      "overview": "جائزہ",
+      "resources": "وسائل",
+      "map": "نقشہ",
+      "rewards": "انعامات",
+      "nodeList": "نوڈ فہرست"
     },
     "application": {
-      "title": "ایپلی کیشنز",
-      "myApplications": "My Applications",
-      "management": "Management",
-      "globalApps": "Global Apps",
-      "localApps": "Local Apps",
-      "registerNewApp": "Register New App",
-      "marketplace": "App Marketplace",
-      "marketplaceApps": "ایپلی کیشنز",
+      "title": "ایپلیکیشنز",
+      "myApplications": "میری ایپلیکیشنز",
+      "management": "انتظام",
+      "globalApps": "عالمی ایپس",
+      "localApps": "مقامی ایپس",
+      "registerNewApp": "نئی ایپ رجسٹر کریں",
+      "marketplace": "ایپ مارکیٹ پلیس",
+      "marketplaceApps": "ایپلیکیشنز",
       "marketplaceGames": "گیمز",
       "marketplaceWordPress": "WordPress",
       "composition": "Composition",
@@ -290,7 +290,7 @@
       "loading": "لوڈ ہو رہا ہے...",
       "unableToConnect": "Unable to connect to the server. Please check your internet or try again later.",
       "myActiveApps": "My Active Apps",
-      "activeApps": "Active Apps",
+      "activeApps": "فعال ایپس",
       "myExpiredApps": "My Expired Apps",
       "failedToLoadActiveApps": "Failed to load active apps",
       "failedToLoadExpiredApps": "Failed to load expired apps",
@@ -299,22 +299,22 @@
       "marketplaceAppsTab": "Marketplace Apps"
     },
     "administration": {
-      "title": "انتظام",
-      "systemInfo": "Information",
-      "dockerEvents": "Docker Events",
-      "manageFlux": "Manage Flux Gravity",
-      "manageDaemon": "Manage Daemon",
-      "manageBenchmark": "Manage Benchmark",
-      "manageUsers": "Manage Users",
-      "loggedSessions": "Logged Sessions",
-      "myFluxShare": "My FluxShare",
+      "title": "انتظامیہ",
+      "systemInfo": "سسٹم معلومات",
+      "dockerEvents": "Docker ایونٹس",
+      "manageFlux": "Flux Gravity کا انتظام کریں",
+      "manageDaemon": "Daemon کا انتظام کریں",
+      "manageBenchmark": "Benchmark کا انتظام کریں",
+      "manageUsers": "صارفین کا انتظام کریں",
+      "loggedSessions": "لاگ ان سیشنز",
+      "myFluxShare": "میرا FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flux XDAO"
     },
     "costCalculator": {
-      "title": "Cost Calculator"
+      "title": "لاگت کیلکولیٹر"
     },
     "apiReference": {
       "title": "مدد"
@@ -325,79 +325,79 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "Decentralized Application Management",
-    "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
+    "fluxCloudSubtitle": "غیر مرکزی ایپلیکیشن مینجمنٹ",
+    "fluxCloudDescription": "Flux غیر مرکزی کلاؤڈ نیٹورک پر چلنے والی اپنی تمام Docker کنٹینرائزڈ ایپلیکیشنز کی نگرانی اور انتظام کریں۔ ہمارے عالمی بلاک چین سے چلنے والے انفراسٹرکچر پر تعینات آپ کی تقسیم شدہ ایپس کی ریئل ٹائم اسٹیٹس، وسائل کا استعمال، اور کارکردگی کی پیمائش دیکھیں۔"
   },
   "sections": {
     "dashboard": {
-      "title": "Flux Network",
-      "description": "Check Flux network information, resources available, or a map with server locations."
+      "title": "Flux نیٹورک",
+      "description": "Flux نیٹورک کی معلومات، دستیاب وسائل، یا سرور کے مقامات کا نقشہ چیک کریں۔"
     },
     "application": {
-      "title": "ایپلی کیشنز",
-      "description": "Buy on marketplace, register your own app, manage your active apps."
+      "title": "ایپلیکیشنز",
+      "description": "مارکیٹ پلیس سے خریدیں، اپنی ایپ رجسٹر کریں، اپنی فعال ایپس کا انتظام کریں۔"
     },
     "administration": {
-      "title": "انتظام",
-      "description": "Tools for infrastructure administrators and node operators allow for managing Flux Gravity."
+      "title": "انتظامیہ",
+      "description": "انفراسٹرکچر ایڈمنسٹریٹرز اور نوڈ آپریٹرز کے لیے Flux Gravity مینجمنٹ ٹولز۔"
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "See the list of changes proposed to Flux network, create new ones and vote."
+      "description": "Flux نیٹورک کے لیے تجویز کردہ تبدیلیوں کی فہرست دیکھیں، نئی تجاویز بنائیں اور ووٹ دیں۔"
     }
   },
   "core": {
     "appDetailsCard": {
-      "general": "General",
-      "copySpecification": "Copy Specification",
+      "general": "عمومی",
+      "copySpecification": "تصریح کاپی کریں",
       "updateSubscription": "اپ ڈیٹ کریں",
-      "renewSubscription": "Renew",
+      "renewSubscription": "تجدید کریں",
       "cancelSubscription": "منسوخ کریں",
       "name": "نام",
       "description": "تفصیل",
       "owner": "مالک",
-      "hash": "Hash",
-      "contacts": "Contacts",
-      "geolocation": "Geolocation",
-      "worldwide": "Worldwide",
-      "instances": "Instances",
-      "specificationsVersion": "Specifications version",
-      "registeredOnBlockheight": "Registered on Blockheight",
-      "expiresOnBlockheight": "Expires on Blockheight",
-      "expiresIn": "Expires in",
-      "enterpriseNodes": "Enterprise Nodes",
-      "notScoped": "Not scoped",
-      "staticIp": "Static IP",
-      "staticIpYes": "Yes, Running only on Static IP nodes",
-      "staticIpNo": "No, Running on all nodes",
-      "specificationCopied": "Application specification copied to clipboard!",
-      "specificationCopyFailed": "Failed to copy specification",
+      "hash": "ہیش",
+      "contacts": "رابطے",
+      "geolocation": "جیو لوکیشن",
+      "worldwide": "دنیا بھر میں",
+      "instances": "مثالیں",
+      "specificationsVersion": "تصریح ورژن",
+      "registeredOnBlockheight": "رجسٹرڈ بلاک ہائیٹ",
+      "expiresOnBlockheight": "بلاک ہائیٹ پر ختم ہوتا ہے",
+      "expiresIn": "میعاد ختم ہوتی ہے",
+      "enterpriseNodes": "انٹرپرائز نوڈز",
+      "notScoped": "سکوپ نہیں",
+      "staticIp": "جامد IP",
+      "staticIpYes": "ہاں، صرف جامد IP نوڈز پر چل رہا ہے",
+      "staticIpNo": "نہیں، تمام نوڈز پر چل رہا ہے",
+      "specificationCopied": "ایپلیکیشن تصریح کلپ بورڈ میں کاپی ہو گئی!",
+      "specificationCopyFailed": "تصریح کاپی کرنے میں ناکام",
       "unknown": "نامعلوم",
       "continent": "Continent: {name}",
       "country": ", Country: {name}",
       "region": ", Region: {name}",
       "allowedContinent": "Allowed: Continent: {name}",
       "forbiddenContinent": "Forbidden: Continent: {name}",
-      "notAvailable": "Not available",
-      "applicationExpired": "Application Expired"
+      "notAvailable": "دستیاب نہیں",
+      "applicationExpired": "ایپلیکیشن کی میعاد ختم"
     },
     "componentDetails": {
       "name": "نام",
       "description": "تفصیل",
-      "repository": "Repository",
-      "repositoryAuthentication": "Repository Authentication",
-      "private": "Private",
-      "public": "Public",
-      "customDomains": "Custom Domains",
-      "automaticDomains": "Automatic Domains",
-      "ports": "Ports",
-      "containerPorts": "Container Ports",
-      "containerData": "Container Data",
-      "environmentParameters": "Environment Parameters",
-      "commands": "Commands",
-      "secrets": "Secrets",
-      "contentEncrypted": "Content Encrypted",
-      "hardwareResources": "Hardware Resources",
+      "repository": "ریپوزٹری",
+      "repositoryAuthentication": "ریپوزٹری تصدیق",
+      "private": "پرائیویٹ",
+      "public": "پبلک",
+      "customDomains": "کسٹم ڈومینز",
+      "automaticDomains": "خودکار ڈومینز",
+      "ports": "پورٹس",
+      "containerPorts": "کنٹینر پورٹس",
+      "containerData": "کنٹینر ڈیٹا",
+      "environmentParameters": "ماحولیاتی پیرامیٹرز",
+      "commands": "کمانڈز",
+      "secrets": "راز",
+      "contentEncrypted": "مواد مرموز",
+      "hardwareResources": "ہارڈویئر وسائل",
       "cpu": "CPU",
       "ram": "RAM",
       "ssd": "SSD/NVMe",
@@ -439,12 +439,12 @@
       "removeFile": "Remove File"
     },
     "notifications": {
-      "notifications": "Notifications",
+      "notifications": "اطلاعات",
       "newCount": "{count} New",
       "markAllAsUnread": "Mark all as unread",
-      "markAllAsRead": "Mark all as read",
-      "noNotificationFound": "No Notification Found!",
-      "removeAllNotifications": "Remove All Notifications"
+      "markAllAsRead": "سب کو پڑھا ہوا نشان زد کریں",
+      "noNotificationFound": "کوئی اطلاع نہیں ملی!",
+      "removeAllNotifications": "تمام اطلاعات ہٹا دیں"
     },
     "runningInstances": {
       "deployedInstances": "Deployed Instances",
@@ -509,12 +509,12 @@
       }
     },
     "terminal": {
-      "title": "Secure Shell",
-      "selectComponent": "Select Component",
-      "selectCommand": "Select Command",
-      "connect": "Connect",
-      "disconnect": "Disconnect",
-      "newTerminal": "New Terminal",
+      "title": "سیکیور شیل",
+      "selectComponent": "جزو منتخب کریں",
+      "selectCommand": "کمانڈ منتخب کریں",
+      "connect": "کنیکٹ کریں",
+      "disconnect": "منقطع کریں",
+      "newTerminal": "نیا ٹرمینل",
       "popOutAll": "Pin all terminals to manager",
       "user": "User",
       "environment": "Environment",
@@ -547,15 +547,15 @@
       }
     },
     "logViewer": {
-      "title": "Log Viewer",
-      "component": "Component",
+      "title": "لاگ ویور",
+      "component": "جزو",
       "selectComponent": "Select Component",
       "lineCount": "Line Count",
       "logsSince": "Logs Since",
-      "filterLogs": "Filter Logs",
+      "filterLogs": "لاگز فلٹر کریں",
       "enterKeywords": "Enter keywords...",
       "advanceOptions": "Advanced Options",
-      "autoRefresh": "Auto Refresh",
+      "autoRefresh": "خودکار ریفریش",
       "displayAllLogs": "Display All Logs",
       "displayTimestamp": "Display Timestamp",
       "lineSelection": "Line Selection Mode",
@@ -571,15 +571,15 @@
       }
     },
     "backupAndRestore": {
-      "backup": "Backup",
-      "restore": "Restore",
-      "backupContainerData": "Backup Container Data",
-      "selectComponentsToBackup": "Select component(s) to backup",
-      "selectAll": "Select all",
-      "createBackup": "Create Backup",
-      "availableLocalBackups": "Available Local Backups",
-      "downloadSelected": "Download selected",
-      "downloadAll": "Download all",
+      "backup": "بیک اپ",
+      "restore": "ریسٹور کریں",
+      "backupContainerData": "کنٹینر ڈیٹا کا بیک اپ لیں",
+      "selectComponentsToBackup": "بیک اپ کے لیے اجزاء منتخب کریں",
+      "selectAll": "سب منتخب کریں",
+      "createBackup": "بیک اپ بنائیں",
+      "availableLocalBackups": "دستیاب مقامی بیک اپس",
+      "downloadSelected": "منتخب ڈاؤن لوڈ کریں",
+      "downloadAll": "سب ڈاؤن لوڈ کریں",
       "removeAllBackupFiles": "Remove all backup files",
       "backupListDescription": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime.",
       "downloadBackupFile": "Download backup file",
@@ -619,7 +619,7 @@
       "uploading": "Uploading...",
       "initializingRestoreJobs": "Initializing restore jobs...",
       "restoreCompletedSuccessfully": "Restore completed successfully",
-      "restoreFailed": "Restore failed",
+      "restoreFailed": "ریسٹور کرنے میں ناکام",
       "initializingBackupJobs": "Initializing backup jobs...",
       "downloadingBackupFiles": "Downloading backup files...",
       "backupUploadedSuccessfully": "{component} backup uploaded to FluxDrive successfully.",
@@ -633,35 +633,35 @@
       "invalidUrlValidation": "Please enter a valid URL ending with .tar.gz"
     },
     "login": {
-      "automatedLogin": "Automated Login",
-      "thirdPartyLogin": "3rd Party Login",
-      "emailPassword": "Email/Password",
-      "finishingLogin": "Finishing Login",
+      "automatedLogin": "خودکار لاگ ان",
+      "thirdPartyLogin": "تھرڈ پارٹی لاگ ان",
+      "emailPassword": "ای میل/پاس ورڈ",
+      "finishingLogin": "لاگ ان مکمل ہو رہا ہے",
       "pleaseWait": "براہ کرم انتظار کریں...",
       "cancelVerification": "Cancel Verification",
       "finishingVerification": "Finishing verification",
       "checkEmail": "Check your email",
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
-      "bySigningIn": "By signing in, you agree to our",
-      "termsOfService": "Terms of Service",
-      "and": "and",
-      "privacyPolicy": "Privacy Policy",
+      "bySigningIn": "سائن ان کرکے، آپ اتفاق کرتے ہیں",
+      "termsOfService": "سروس کی شرائط",
+      "and": "اور",
+      "privacyPolicy": "رازداری کی پالیسی",
       "email": "ای میل",
       "password": "پاس ورڈ",
-      "login": "لاگ ان کریں",
-      "signUp": "Sign Up",
-      "dontHaveAccount": "Don't have an account?",
-      "or": "OR",
-      "decentralizedLogin": "Decentralized Login",
-      "decentralizedWallets": "Wallets",
-      "walletLoginInfo": "Login using your crypto wallet",
-      "manualLogin": "Manual",
-      "loginWithZelcore": "Login with Zelcore",
-      "loginWithSSP": "Login with SSP",
-      "loginWithWalletConnect": "Login with WalletConnect",
-      "loginWithMetamask": "Login with Metamask",
-      "signWithWallet": "Sign message with your wallet",
+      "login": "لاگ ان",
+      "signUp": "سائن اپ",
+      "dontHaveAccount": "اکاؤنٹ نہیں ہے؟",
+      "or": "یا",
+      "decentralizedLogin": "غیر مرکزی لاگ ان",
+      "decentralizedWallets": "والیٹس",
+      "walletLoginInfo": "اپنے کرپٹو والیٹ سے لاگ ان کریں",
+      "manualLogin": "دستی",
+      "loginWithZelcore": "Zelcore سے لاگ ان",
+      "loginWithSSP": "SSP سے لاگ ان",
+      "loginWithWalletConnect": "WalletConnect سے لاگ ان",
+      "loginWithMetamask": "Metamask سے لاگ ان",
+      "signWithWallet": "اپنے والیٹ سے پیغام پر دستخط کریں",
       "message": "پیغام",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
@@ -671,7 +671,7 @@
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
       "address": "پتہ",
       "insertAddress": "Insert address",
-      "signature": "Signature",
+      "signature": "دستخط",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
@@ -685,7 +685,7 @@
       "passwordMismatch": "Passwords do not match",
       "googleError": "Google login failed",
       "appleError": "Apple login failed",
-      "loginFailed": "Login failed, please try again",
+      "loginFailed": "لاگ ان ناکام، براہ کرم دوبارہ کوشش کریں",
       "invalidCredential": "Invalid email or password. Please check and try again.",
       "userNotFound": "No account found with this email. Please sign up first.",
       "wrongPassword": "Incorrect password. Please try again.",
@@ -711,35 +711,35 @@
       "customBackend": "Custom Backend"
     },
     "appControl": {
-      "title": "Application Control",
-      "control": "Control",
-      "manual": "Manual",
-      "component": "Component",
-      "local": "Local",
-      "global": "Global",
-      "manualSelection": "Manual Selection",
+      "title": "ایپلیکیشن کنٹرول",
+      "control": "کنٹرول",
+      "manual": "دستی",
+      "component": "جزو",
+      "local": "مقامی",
+      "global": "عالمی",
+      "manualSelection": "دستی انتخاب",
       "available": "دستیاب",
-      "selected": "Selected",
-      "monitoring": "Monitoring",
-      "showLogs": "Show Logs",
-      "hideLogs": "Hide Logs",
+      "selected": "منتخب",
+      "monitoring": "نگرانی",
+      "showLogs": "لاگز دکھائیں",
+      "hideLogs": "لاگز چھپائیں",
       "buttons": {
-        "startComponent": "Start Component",
-        "stopComponent": "Stop Component",
-        "restartComponent": "Restart Component",
-        "pauseComponent": "Pause Component",
-        "unpauseComponent": "Unpause Component",
-        "startApplication": "Start Application",
-        "stopApplication": "Stop Application",
-        "restartApplication": "Restart Application",
+        "startComponent": "جزو شروع کریں",
+        "stopComponent": "جزو روکیں",
+        "restartComponent": "جزو دوبارہ شروع کریں",
+        "pauseComponent": "جزو روکیں",
+        "unpauseComponent": "جزو جاری رکھیں",
+        "startApplication": "ایپلیکیشن شروع کریں",
+        "stopApplication": "ایپلیکیشن روکیں",
+        "restartApplication": "ایپلیکیشن دوبارہ شروع کریں",
         "pauseApplication": "Pause Application",
         "unpauseApplication": "Unpause Application",
-        "removeApplication": "Remove Application",
-        "softReinstall": "Soft Reinstall",
-        "hardReinstall": "Hard Reinstall",
-        "startMonitoring": "Start Monitoring",
-        "stopMonitoring": "Stop Monitoring",
-        "stopMonitoringDelete": "Stop & Delete Data"
+        "removeApplication": "ایپلیکیشن ہٹائیں",
+        "softReinstall": "سافٹ ری انسٹال",
+        "hardReinstall": "ہارڈ ری انسٹال",
+        "startMonitoring": "نگرانی شروع کریں",
+        "stopMonitoring": "نگرانی روکیں",
+        "stopMonitoringDelete": "روکیں اور ڈیٹا حذف کریں"
       },
       "tooltips": {
         "addSelected": "Add selected items",
@@ -770,9 +770,9 @@
         "hardReinstall": "Hard reinstall will completely remove and redeploy the application. All application data will be deleted. This action cannot be undone."
       },
       "operations": {
-        "starting": "Starting",
-        "stopping": "Stopping",
-        "restarting": "Restarting",
+        "starting": "شروع ہو رہا ہے",
+        "stopping": "رک رہا ہے",
+        "restarting": "دوبارہ شروع ہو رہا ہے",
         "pausing": "Pausing",
         "unpausing": "Unpausing",
         "startingMonitoring": "Starting Monitoring",
@@ -863,7 +863,7 @@
       "typeComponentDirectoryDesc": "Reference a directory from another component",
       "typeComponentFile": "Component File",
       "typeComponentFileDesc": "Reference a file from another component",
-      "filename": "Filename",
+      "filename": "فائل کا نام",
       "subdirLabel": "Subdirectory",
       "filenamePlaceholder": "config.yaml",
       "subdirPlaceholder": "logs",
@@ -941,7 +941,7 @@
       "ruleAllPathsStartSlash": "All container paths must start with / and cannot contain invalid characters"
     },
     "subscriptionManager": {
-      "title": "Subscription Manager",
+      "title": "سبسکرپشن مینیجر",
       "registerNewApplication": "Register New Application",
       "upgradeToLatest": "Upgrade to Latest Specification",
       "importSpec": "Import Specification",
@@ -1292,26 +1292,26 @@
       "loading": "Loading Terms of Service..."
     },
     "statusBar": {
-      "backend": "Backend",
-      "frontend": "Frontend",
-      "connected": "Connected",
-      "updateAvailable": "Update Available",
-      "upToDate": "Up to date",
+      "backend": "بیک اینڈ",
+      "frontend": "فرنٹ اینڈ",
+      "connected": "منسلک",
+      "updateAvailable": "اپ ڈیٹ دستیاب",
+      "upToDate": "اپ ٹو ڈیٹ",
       "statusMessage": "حالت",
-      "unreachable": "Unreachable",
-      "connecting": "Connecting...",
-      "disconnected": "Disconnected",
-      "notSynced": "Not Synced",
-      "checkingStatus": "Checking...",
+      "unreachable": "ناقابل رسائی",
+      "connecting": "کنیکٹ ہو رہا ہے...",
+      "disconnected": "منقطع",
+      "notSynced": "سنک نہیں",
+      "checkingStatus": "چیک ہو رہا ہے...",
       "checkingStatusMessage": "Checking node status...",
       "notSyncedMessage": "Blockchain not synced (block {blocks}/{headers}, {blocksBehind} behind)",
       "connectedMessage": "Flux Gravity is operational and synced with the Flux network.",
       "connectingMessage": "Connecting to the Flux network. Flux Gravity is running with limited capabilities.",
       "disconnectedMessage": "Not connected to the Flux network. Flux Gravity is running with limited capabilities.",
-      "hideStatusBar": "Hide status bar",
-      "showStatusBar": "Show status bar",
+      "hideStatusBar": "اسٹیٹس بار چھپائیں",
+      "showStatusBar": "اسٹیٹس بار دکھائیں",
       "backendError": "Failed to fetch backend version",
-      "error": "Unreachable",
+      "error": "خرابی",
       "manageCookiesTooltip": "Manage cookie preferences and privacy settings"
     }
   },
@@ -1321,25 +1321,25 @@
     },
     "marketplace": {
       "discoverCard": {
-        "title": "Discover Your Flux",
-        "subtitle": "Web3 Marketplace"
+        "title": "اپنا Flux دریافت کریں",
+        "subtitle": "Web3 مارکیٹ پلیس"
       },
       "appCard": {
         "install": "انسٹال کریں",
         "view": "دیکھیں",
-        "viewDetails": "View Details",
-        "defaultCategory": "Apps",
-        "noDescription": "No description available"
+        "viewDetails": "تفصیلات دیکھیں",
+        "defaultCategory": "ایپس",
+        "noDescription": "تفصیل دستیاب نہیں"
       },
       "fluxCloudAppCard": {
-        "unknownDeveloper": "Unknown Developer",
+        "unknownDeveloper": "نامعلوم ڈویلپر",
         "install": "انسٹال کریں",
-        "viewApp": "View App",
-        "sponsored": "Sponsored"
+        "viewApp": "ایپ دیکھیں",
+        "sponsored": "سپانسرڈ"
       },
       "gameCard": {
         "startingAt": "Starting at ${price} / month",
-        "viewDetails": "View Details"
+        "viewDetails": "تفصیلات دیکھیں"
       },
       "marketplaceAppCard": {
         "unknown": "نامعلوم",
@@ -1350,12 +1350,12 @@
         "other": "Other"
       },
       "appList": {
-        "featured": "Featured",
-        "by": "by",
+        "featured": "نمایاں",
+        "by": "کی طرف سے",
         "free": "مفت",
-        "purchase": "Purchase",
-        "deploy": "Deploy",
-        "details": "Details"
+        "purchase": "خریدیں",
+        "deploy": "تعینات کریں",
+        "details": "تفصیلات"
       },
       "sponsoredAppCard": {
         "unknown": "نامعلوم",
@@ -1394,18 +1394,18 @@
         "mostPopular": "Most Popular"
       },
       "appsGrid": {
-        "title": "Flux Applications",
-        "searchPlaceholder": "Search apps...",
-        "category": "Category",
-        "sortBy": "Sort by",
-        "allCategories": "All Categories",
-        "loadingApps": "Loading marketplace apps...",
-        "noAppsFound": "No apps found",
-        "adjustFilters": "Try adjusting your search or filters",
-        "resetFilters": "Reset Filters",
+        "title": "Flux ایپلیکیشنز",
+        "searchPlaceholder": "ایپس تلاش کریں...",
+        "category": "زمرہ",
+        "sortBy": "ترتیب دیں",
+        "allCategories": "تمام زمرے",
+        "loadingApps": "مارکیٹ پلیس ایپس لوڈ ہو رہی ہیں...",
+        "noAppsFound": "ایپس نہیں ملیں",
+        "adjustFilters": "اپنی تلاش یا فلٹرز کو ایڈجسٹ کرنے کی کوشش کریں",
+        "resetFilters": "فلٹرز ری سیٹ کریں",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
-        "refresh": "تازہ کریں",
+        "refresh": "ریفریش کریں",
         "previous": "پچھلا",
         "next": "اگلا",
         "sortDefault": "Default",
@@ -1559,7 +1559,7 @@
         "paymentType": "Payment Type",
         "crypto": "Crypto",
         "fiat": "Fiat",
-        "paymentMethod": "Payment Method",
+        "paymentMethod": "ادائیگی کا طریقہ",
         "totalPaid": "Total Paid",
         "subscriptionValidUntil": "Subscription Valid Until",
         "manageApplication": "Manage Application",
@@ -1601,13 +1601,13 @@
     },
     "xdao": {
       "addProposal": {
-        "title": "Add New Proposal",
-        "validated": "Validated",
+        "title": "نئی تجویز شامل کریں",
+        "validated": "توثیق شدہ",
         "completeFormToValidate": "Complete Form to Validate",
-        "validateProposal": "Validate Proposal",
+        "validateProposal": "تجویز کی توثیق کریں",
         "validatedSuccessfully": "Proposal Validated Successfully!",
-        "registrationFee": "Proposal Registration Fee",
-        "registerProposal": "Register Flux XDAO Proposal",
+        "registrationFee": "تجویز رجسٹریشن فیس",
+        "registerProposal": "Flux XDAO تجویز رجسٹر کریں",
         "fields": {
           "topic": {
             "label": "Proposal Topic",
@@ -1664,10 +1664,10 @@
         }
       },
       "proposalDetail": {
-        "title": "Proposal Details",
-        "anonymous": "Anonymous",
-        "submitted": "Submitted",
-        "endDate": "End Date",
+        "title": "تجویز کی تفصیلات",
+        "anonymous": "گمنام",
+        "submitted": "جمع کروایا گیا",
+        "endDate": "آخری تاریخ",
         "description": "تفصیل",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
@@ -1690,15 +1690,15 @@
           }
         },
         "voting": {
-          "castYourVote": "Cast Your Vote",
+          "castYourVote": "اپنا ووٹ ڈالیں",
           "makeYourVoiceHeard": "Make your voice heard",
           "loginRequired": "Login Required",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
           "votesAvailable": "votes available",
-          "voteYes": "Vote YES",
-          "voteNo": "Vote NO",
+          "voteYes": "ہاں کا ووٹ دیں",
+          "voteNo": "نہیں کا ووٹ دیں",
           "youHaveVoted": "You have voted",
           "yes": "YES",
           "no": "NO",
@@ -1706,10 +1706,10 @@
           "votingEnds": "Voting ends"
         },
         "grant": {
-          "title": "Grant Information",
+          "title": "گرانٹ معلومات",
           "fundingDetails": "Funding Details",
-          "grantAmount": "Grant Amount",
-          "recipientAddress": "Recipient Address",
+          "grantAmount": "گرانٹ کی رقم",
+          "recipientAddress": "وصول کنندہ کا پتہ",
           "viewOnExplorer": "View on Explorer"
         },
         "technicalDetails": {
@@ -1941,37 +1941,37 @@
     "fluxDrive": {
       "fileManager": {
         "title": "FluxDrive",
-        "subtitle": "Secure decentralized storage",
-        "upgradePlan": "Upgrade Plan",
-        "searchPlaceholder": "Search files and folders...",
-        "listView": "List View",
-        "gridView": "Grid View",
+        "subtitle": "محفوظ غیر مرکزی سٹوریج",
+        "upgradePlan": "پلان اپ گریڈ کریں",
+        "searchPlaceholder": "فائلز اور فولڈرز تلاش کریں...",
+        "listView": "لسٹ ویو",
+        "gridView": "گرڈ ویو",
         "columnName": "نام",
         "columnUpdated": "Updated",
         "columnSize": "سائز",
-        "newFolder": "New Folder",
+        "newFolder": "نیا فولڈر",
         "upload": "اپ لوڈ کریں",
-        "uploadFiles": "Upload Files",
-        "uploadFolder": "Upload Folder",
+        "uploadFiles": "فائلز اپ لوڈ کریں",
+        "uploadFolder": "فولڈر اپ لوڈ کریں",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
         "filesMissingDescription": "Some files totaling {storage} could not be located. This may indicate data corruption.",
         "showAllFilesRecovery": "Show All Files (Recovery Mode)",
         "backToNormalMode": "Back to Normal Mode",
-        "noFilesFound": "No Files Found",
-        "folderEmpty": "This Folder is Empty",
+        "noFilesFound": "فائلز نہیں ملیں",
+        "folderEmpty": "یہ فولڈر خالی ہے",
         "noFilesMatch": "No files match \"{query}\"",
-        "dropFilesHere": "Drop files here to upload",
+        "dropFilesHere": "اپ لوڈ کرنے کے لیے فائلز یہاں ڈراپ کریں",
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
-        "preview": "Preview",
+        "preview": "پیش نظارہ",
         "download": "ڈاؤن لوڈ کریں",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
-        "rename": "Rename",
-        "moveTo": "Move To",
-        "copyLink": "Copy Link",
+        "rename": "نام تبدیل کریں",
+        "moveTo": "منتقل کریں",
+        "copyLink": "لنک کاپی کریں",
         "delete": "حذف کریں",
         "paginationInfo": "Showing {start}-{end} of {total}",
         "edit": "ترمیم کریں",
@@ -1990,10 +1990,10 @@
         "commentValidation": "Comment must be less than 100 characters",
         "downloading": "Downloading",
         "downloadProgress": "Download progress: {progress}%",
-        "confirmDelete": "Confirm Delete",
+        "confirmDelete": "حذف کی تصدیق کریں",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "folder",
-        "file": "file",
+        "folder": "فولڈر",
+        "file": "فائل",
         "cancel": "منسوخ کریں",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
@@ -2069,7 +2069,7 @@
         "linkCopyFailed": "Failed to copy link to clipboard"
       },
       "pricingPlans": {
-        "title": "FluxDrive Storage Plans",
+        "title": "قیمتوں کے پلانز",
         "subtitle": "Choose your perfect storage plan.",
         "storage": "اسٹوریج",
         "contactUs": "Contact Us",
@@ -2114,35 +2114,35 @@
   "pages": {
     "administration": {
       "systemInfo": {
-        "loadingTitle": "Loading System Information...",
-        "errorTitle": "System Information Unavailable",
-        "errorSubtitle": "Unable to load system information at this time.",
-        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
-        "title": "System Information",
-        "subtitle": "View system resources and component versions",
-        "resourcesAllocated": "Resources Allocated",
+        "title": "سسٹم معلومات",
+        "subtitle": "سسٹم وسائل اور اجزاء کے ورژن دیکھیں",
+        "resourcesAllocated": "مختص وسائل",
         "storage": "اسٹوریج",
-        "storageUsed": "{used} GB",
-        "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
-        "vcpuUsed": "{used} vCores",
-        "vcpuTotal": "of {total} vCores",
         "ram": "RAM",
-        "ramUsed": "{used} GB",
+        "applications": "ایپلیکیشنز",
+        "installedApps": "انسٹال شدہ ایپس",
+        "appsHashes": "ایپس ہیشز",
+        "componentVersions": "اجزاء ورژن",
+        "vcpuUsed": "{used} vCores",
         "ramTotal": "of {total} GB",
-        "applications": "ایپلی کیشنز",
-        "installedApps": "Installed Apps",
+        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
+        "errorSubtitle": "Unable to load system information at this time.",
         "installedAppsCount": "{count} application(s)",
-        "appsHashes": "Apps Hashes",
+        "loadingTitle": "Loading System Information...",
+        "ramUsed": "{used} GB",
+        "storageTotal": "of {total} GB",
         "notSynced": "{count} not synced",
-        "componentVersions": "Component Versions"
+        "storageUsed": "{used} GB",
+        "errorTitle": "System Information Unavailable",
+        "vcpuTotal": "of {total} vCores"
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Docker Events",
-        "subtitle": "Monitor Docker container events and activity",
-        "recentEvents": "Recent Events",
-        "noEventsAvailable": "No Docker events available",
+        "title": "Docker ایونٹس",
+        "subtitle": "Docker کنٹینر ایونٹس اور سرگرمی کی نگرانی کریں",
+        "recentEvents": "حالیہ ایونٹس",
+        "noEventsAvailable": "Docker ایونٹس دستیاب نہیں",
         "errorLoadingEvents": "Failed to load Docker events"
       },
       "fluxShare": {
@@ -2215,7 +2215,7 @@
         }
       },
       "manageUsers": {
-        "title": "Manage Users",
+        "title": "یوزرز منیج کریں",
         "subtitle": "View and manage logged users and active sessions",
         "searchUsers": "Search users",
         "refresh": "تازہ کریں",
@@ -2242,7 +2242,7 @@
         }
       },
       "manageFlux": {
-        "title": "Manage Flux Gravity",
+        "title": "Flux منیج کریں",
         "subtitle": "Configure and manage your Flux node settings",
         "tabs": {
           "settings": "ترتیبات",
@@ -2486,95 +2486,95 @@
     "apps": {
       "manage": {
         "tabs": {
-          "specifications": "Specifications",
-          "information": "Information",
-          "fileChanges": "File Changes",
-          "monitoring": "Monitoring",
-          "logs": "Logs",
-          "terminal": "Secure Shell",
-          "control": "Control",
-          "backupRestore": "Backup & Restore",
-          "instances": "Instances",
-          "subscription": "Subscription"
+          "specifications": "تصریحات",
+          "information": "معلومات",
+          "fileChanges": "فائل تبدیلیاں",
+          "monitoring": "نگرانی",
+          "logs": "لاگز",
+          "terminal": "سیکیور شیل",
+          "control": "کنٹرول",
+          "backupRestore": "بیک اپ اور ریسٹور",
+          "instances": "مثالیں",
+          "subscription": "سبسکرپشن"
         },
         "tooltips": {
-          "manage": "Manage",
+          "manage": "منیج کریں",
           "install": "انسٹال کریں",
           "remove": "ہٹائیں",
-          "visit": "Visit"
+          "visit": "دیکھیں"
         },
-        "searchIpPlaceholder": "Search IP...",
-        "persistentStorage": "Persistent Storage",
-        "persistentStorageTooltip": "Tracks storage that persists across container restarts. Prevents disk overuse.",
-        "rootFilesystem": "Root Filesystem (rootfs)",
-        "rootFilesystemTooltip": "Temporary container storage. Monitoring rootfs helps avoid space issues.",
-        "confirmButton": "Manage",
+        "searchIpPlaceholder": "IP تلاش کریں...",
+        "persistentStorage": "مستقل اسٹوریج",
+        "persistentStorageTooltip": "اسٹوریج کو ٹریک کرتا ہے جو کنٹینر ری اسٹارٹ میں برقرار رہتی ہے۔",
+        "rootFilesystem": "روٹ فائل سسٹم (rootfs)",
+        "rootFilesystemTooltip": "عارضی کنٹینر اسٹوریج۔ rootfs کی مانیٹرنگ سپیس کے مسائل سے بچنے میں مدد کرتی ہے۔",
+        "confirmButton": "منیج کریں",
         "dialog": {
-          "installingTitle": "Installing App...",
-          "installingAppName": "Installing {appName}...",
-          "removingAppName": "Removing {appName}...",
-          "currentTask": "Current Task:",
-          "overallProgress": "Overall Progress",
-          "fullLogs": "Full Logs",
-          "showLogs": "Show Logs",
-          "hideLogs": "Hide Logs",
+          "installingTitle": "ایپ انسٹال ہو رہی ہے...",
+          "installingAppName": "{appName} انسٹال ہو رہی ہے...",
+          "removingAppName": "{appName} ہٹائی جا رہی ہے...",
+          "currentTask": "موجودہ ٹاسک:",
+          "overallProgress": "مجموعی پیشرفت",
+          "fullLogs": "مکمل لاگز",
+          "showLogs": "لاگز دکھائیں",
+          "hideLogs": "لاگز چھپائیں",
           "close": "بند کریں"
         },
         "specification": {
-          "local": "Local Specification",
-          "global": "Global Specification"
+          "local": "مقامی تفصیلات",
+          "global": "عالمی تفصیلات"
         },
-        "composition": "Composition",
+        "composition": "ترکیب",
         "messages": {
-          "awaitingLaunch": "Application is awaiting launching...",
-          "fileChangesDescription": "File changes inside Docker container (Kind: 0 = Modified, Kind: 1 = Added, Kind: 2 = Deleted)",
-          "noRecordsAvailable": "No records available.",
-          "dataRetrievalError": "We couldn't retrieve the data. Please try again later or switch to a different backend instance.",
-          "instanceNotFound": "Instance not found. It may be initializing. Please refresh or try again later.",
-          "applicationExpired": "Application Expired",
-          "cannotCalculateExpiration": "Not possible to calculate expiration",
-          "failedToCheck": "Failed to Check",
-          "definingNewPrimary": "Defining New Primary In Progress",
-          "sessionExpired": "Session expired, logging out...",
-          "noInstancesAvailableTitle": "No Instances Available",
-          "noInstancesAvailableMessage": "This application has no running instances. The app may be deploying, redeploying, not yet deployed, or all instances are offline.",
-          "retry": "Retry",
+          "awaitingLaunch": "ایپلیکیشن لانچ ہونے کا انتظار کر رہی ہے...",
+          "fileChangesDescription": "Docker کنٹینر کے اندر فائل کی تبدیلیاں (Kind: 0 = ترمیم شدہ، Kind: 1 = شامل)",
+          "noRecordsAvailable": "کوئی ریکارڈ دستیاب نہیں۔",
+          "dataRetrievalError": "ہم ڈیٹا حاصل نہیں کر سکے۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+          "instanceNotFound": "انسٹینس نہیں ملی۔ یہ شروع ہو رہی ہو سکتی ہے۔ براہ کرم ریفریش کریں۔",
+          "applicationExpired": "ایپلیکیشن ختم ہو گئی",
+          "cannotCalculateExpiration": "ایکسپائری کا حساب لگانا ممکن نہیں",
+          "failedToCheck": "چیک کرنے میں ناکام",
+          "definingNewPrimary": "نئی پرائمری ڈیفائن ہو رہی ہے",
+          "sessionExpired": "سیشن ختم، لاگ آؤٹ ہو رہا ہے...",
+          "noInstancesAvailableTitle": "کوئی انسٹینس دستیاب نہیں",
+          "noInstancesAvailableMessage": "اس ایپلیکیشن کی کوئی چلتی انسٹینس نہیں ہے۔ ایپ تعینات، ری اسٹارٹ یا موقوف ہو سکتی ہے۔",
+          "retry": "دوبارہ کوشش کریں",
           "loadingTitle": "لوڈ ہو رہا ہے...",
-          "loadingMessage": "Retrieving application information...",
-          "noInstancesWarningTitle": "Limited Functionality - No Running Instances",
-          "noInstancesWarningMessage": "This app has no active instances. Some features are unavailable. You can still manage subscriptions and view specifications.",
-          "noInstancesChip": "No Instances"
+          "loadingMessage": "ایپلیکیشن کی معلومات حاصل ہو رہی ہیں...",
+          "noInstancesWarningTitle": "محدود فنکشنیلٹی - کوئی چلتی انسٹینس نہیں",
+          "noInstancesWarningMessage": "اس ایپ کی کوئی فعال انسٹینس نہیں۔ کچھ فیچرز دستیاب نہیں ہیں۔",
+          "noInstancesChip": "کوئی انسٹینس نہیں"
         },
         "placeholders": {
-          "searchProcesses": "Search processes..."
+          "searchProcesses": "پروسیسز تلاش کریں..."
         },
         "titles": {
-          "inspectDetails": "Inspect Details",
-          "fileChanges": "File Changes",
-          "loadingFileContent": "Loading file content...",
-          "historyStatsOverview": "History Stats Overview",
-          "statsProcessesOverview": "Stats & Processes Overview"
+          "inspectDetails": "تفصیلات کا معائنہ کریں",
+          "fileChanges": "فائل کی تبدیلیاں",
+          "loadingFileContent": "فائل کا مواد لوڈ ہو رہا ہے...",
+          "historyStatsOverview": "تاریخی اعدادوشمار کا جائزہ",
+          "statsProcessesOverview": "اعدادوشمار اور پروسیسز کا جائزہ"
         },
         "labels": {
-          "historyStatistics": "History Statistics",
-          "points": "Points",
-          "refreshRate": "Refresh Rate",
-          "timeRange": "Time Range",
-          "component": "Component",
-          "selectComponent": "Select component",
-          "itemsPerPage": "Items per page"
+          "historyStatistics": "تاریخی اعدادوشمار",
+          "points": "پوائنٹس",
+          "refreshRate": "ریفریش ریٹ",
+          "timeRange": "وقت کی حد",
+          "component": "کمپوننٹ",
+          "selectComponent": "کمپوننٹ منتخب کریں",
+          "itemsPerPage": "آئٹمز فی صفحہ"
         },
         "timeRange": {
-          "last15Minutes": "Last 15 Minutes",
+          "last15Minutes": "آخری 15 منٹ",
           "last30Minutes": "Last 30 Minutes",
-          "last1Hour": "Last 1 Hour",
+          "last1Hour": "آخری 1 گھنٹہ",
           "last2Hours": "Last 2 Hours",
           "last3Hours": "Last 3 Hours",
           "last5Hours": "Last 5 Hours",
           "last1Day": "Last 1 Day",
           "last2Days": "Last 2 Days",
           "last3Days": "Last 3 Days",
-          "last7Days": "Last 7 Days"
+          "last7Days": "آخری 7 دن"
         },
         "charts": {
           "bind": "Bind",
@@ -2596,7 +2596,7 @@
       },
       "table": {
         "perPage": "Per Page",
-        "filter": "فلٹر کریں",
+        "filter": "فلٹر",
         "filterPlaceholder": "Type to Search",
         "advancedFilterTooltip": "Open advanced filter options",
         "appType": "App Type",
@@ -2622,7 +2622,7 @@
         "learnMore": "Learn More",
         "noMatchingApps": "No matching apps found.",
         "connectionError": "Unable to connect to the server. Please check your internet or try again later.",
-        "noApps": "You don't have any apps.",
+        "noApps": "کوئی ایپلیکیشن نہیں",
         "checking": "checking...",
         "composition": "Composition",
         "locations": "Locations",
@@ -2651,12 +2651,12 @@
       },
       "register": {
         "landing": {
-          "title": "Deploy Your App on FluxCloud",
-          "subtitle": "Experience the power of truly decentralized cloud computing. Deploy Docker containers, web apps, databases, APIs, and microservices on our global network of {nodeCount}+ nodes across {countryCount}+ countries.",
-          "getStarted": "Start Deploying",
+          "title": "ایپ رجسٹر کریں",
+          "subtitle": "Flux نیٹ ورک پر اپنی ایپلیکیشن تعینات کریں",
+          "getStarted": "شروع کریں",
           "documentation": "View Documentation",
           "appTypes": {
-            "title": "What Can You Deploy?",
+            "title": "ایپ کی قسم منتخب کریں",
             "subtitle": "FluxCloud supports any Dockerized application. From simple web apps to complex multi-container deployments.",
             "web": {
               "title": "Web Applications",
@@ -2680,7 +2680,7 @@
             },
             "docker": {
               "title": "Docker Compose",
-              "description": "Multi-container applications with Docker Compose support. Complex stacks made simple."
+              "description": "Docker کمپوز فائل سے تعینات کریں"
             }
           },
           "benefits": {
@@ -2727,7 +2727,7 @@
             }
           },
           "pricing": {
-            "title": "Transparent & Affordable Pricing",
+            "title": "قیمتیں",
             "subtitle": "See how FluxCloud compares to traditional cloud providers. Same resources, fraction of the cost.",
             "provider": "Provider",
             "cpu": "CPU",
@@ -2851,7 +2851,7 @@
             "stepDescription": "Discover what FluxCloud Git offers and how it compares to other platforms."
           },
           "pricing": {
-            "title": "Git Plans",
+            "title": "قیمتوں کے پلانز",
             "subtitle": "Simple pricing for Git-based deployments",
             "stepTitle": "Select Your Plan",
             "stepDescription": "Choose your plan based on your resource needs.",
@@ -2886,8 +2886,8 @@
               "dedicatedResourcesDetail": "No shared hardware - your rented resources are exclusively for your app"
             },
             "free": "مفت",
-            "developer": "Standard",
-            "pro": "Pro",
+            "developer": "ڈویلپر",
+            "pro": "پرو",
             "beta": "Beta",
             "comingSoon": "Coming Soon",
             "freeBuilds": "50 builds/month",
@@ -2959,7 +2959,7 @@
               "geolocation": "Geolocation selection",
               "cicd": "Full CI/CD pipeline"
             },
-            "custom": "Custom",
+            "custom": "کسٹم",
             "customizable": "Customizable",
             "customPriceDetail": "Configure your own resources and pricing",
             "startingAt": "Starting at",
@@ -3115,7 +3115,7 @@
             "message": "پیغام"
           },
           "features": {
-            "title": "Deploy from Git in Minutes",
+            "title": "فیچرز",
             "subtitle": "Push your code, we handle the rest",
             "howItWorks": {
               "title": "How Git Deployment Works",
@@ -3137,7 +3137,7 @@
               }
             },
             "supported": {
-              "title": "100+ Frameworks Supported",
+              "title": "سپورٹڈ زبانیں اور فریم ورکس",
               "javascript": "Node.js / JavaScript",
               "javascriptFrameworks": "Next.js, Nuxt, Remix, Astro, Express, NestJS, Vite",
               "python": "Python",
@@ -3204,7 +3204,7 @@
             "viewPricing": "View Pricing"
           },
           "comparison": {
-            "title": "How Git Deployment Compares",
+            "title": "موازنہ",
             "subtitle": "See how Git deployment stacks up against other Git deployment platforms",
             "provider": "Provider",
             "plan": "Plan",
@@ -3418,8 +3418,8 @@
       }
     },
     "costCalculator": {
-      "title": "App Hosting Cost Calculator",
-      "subtitle": "Affordable decentralized hosting starting at $0.99/month - Calculate your exact costs",
+      "title": "لاگت کیلکولیٹر",
+      "subtitle": "اپنی ہوسٹنگ لاگت کا تخمینہ لگائیں",
       "description": "Deploy your applications on the Flux decentralized cloud network with transparent, pay-as-you-go pricing. Choose your compute resources (CPU, RAM, storage), select the number of instances, and get instant pricing. No hidden fees, no vendor lock-in. Perfect for Docker containers, web apps, APIs, databases, and microservices. Starting at just $0.99/month for basic configurations.",
       "learnMore": "Learn More",
       "configuration": "Configuration",
@@ -3453,7 +3453,7 @@
       "staticIpDescription": "Assign a dedicated static IP address to your application",
       "syncData": "Synchronize data across instances",
       "syncDataDescription": "Enable data sync using Phased Master-Master (r) or Master-Slave (g) modes with shared storage. When disabled, each instance uses its own isolated persistent storage",
-      "estimatedCost": "Estimated Deployment Cost",
+      "estimatedCost": "تخمینی لاگت",
       "calculating": "Calculating...",
       "withDiscount": "with {discount}% discount",
       "retry": "Retry",
@@ -3535,30 +3535,30 @@
         }
       },
       "relatedResources": {
-        "title": "Ready to Deploy?",
+        "title": "متعلقہ وسائل",
         "subtitle": "Explore our marketplace and deploy your application today",
         "links": [
           {
-            "title": "Game Server Hosting",
-            "description": "Deploy Minecraft, Palworld, Factorio, and other popular game servers instantly",
+            "title": "گیم سرور ہوسٹنگ",
+            "description": "Minecraft، Palworld، Factorio اور دیگر مقبول گیم سرورز فوری طور پر تعینات کریں",
             "url": "/marketplace/games",
             "icon": "mdi-gamepad-variant"
           },
           {
-            "title": "WordPress Hosting",
-            "description": "Launch WordPress sites with automatic backups and DDoS protection",
+            "title": "WordPress ہوسٹنگ",
+            "description": "خودکار بیک اپ اور DDoS تحفظ کے ساتھ WordPress سائٹس لانچ کریں",
             "url": "/marketplace/wordpress",
             "icon": "mdi-wordpress"
           },
           {
-            "title": "Custom Applications",
-            "description": "Register and deploy any Docker application on the Flux network",
+            "title": "کسٹم ایپلیکیشنز",
+            "description": "Flux نیٹ ورک پر کوئی بھی Docker ایپلیکیشن رجسٹر اور تعینات کریں",
             "url": "/apps/register",
             "icon": "mdi-docker"
           },
           {
-            "title": "Browse Marketplace",
-            "description": "Explore pre-configured applications ready to deploy",
+            "title": "مارکیٹ پلیس براؤز کریں",
+            "description": "تعینات کے لیے تیار پہلے سے کنفیگر شدہ ایپلیکیشنز دریافت کریں",
             "url": "/marketplace",
             "icon": "mdi-apps"
           }
@@ -3566,34 +3566,6 @@
       }
     },
     "dashboard": {
-      "overview": {
-        "intro": {
-          "title": "Welcome to Flux Ecosystem",
-          "blockchain": {
-            "title": "Flux Blockchain",
-            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
-          },
-          "cloud": {
-            "title": "FluxCloud Network",
-            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
-          },
-          "learnMore": "Learn More"
-        },
-        "totalNodes": "Total Nodes",
-        "nodeHistory": "Node History",
-        "lockedSupply": "Locked Supply",
-        "fluxSupply": "FLUX Supply",
-        "maxSupply": "Max Supply",
-        "circulatingSupply": "Circulating Supply",
-        "cumulus": "Cumulus",
-        "nimbus": "Nimbus",
-        "stratus": "Stratus",
-        "versionBreakdown": "Version Breakdown",
-        "tierBreakdown": "Tier Breakdown",
-        "legacy": "Legacy",
-        "nodes": "node | nodes",
-        "errorFetchingHistoryStats": "Unable to fetch history stats"
-      },
       "locations": {
         "intro": {
           "title": "Global FluxCloud Network",
@@ -3601,25 +3573,25 @@
           "description": "FluxCloud operates the world's largest decentralized cloud infrastructure network, with FluxNodes distributed across all continents and hundreds of hosting providers. This geographic diversity provides app owners with unparalleled benefits: low latency from edge computing, high redundancy and fault tolerance, censorship resistance, and true decentralization. Your applications run on real, independently operated hardware—not centralized data centers."
         },
         "geographicTitle": "Geographic Locations",
-        "providersTitle": "Providers",
+        "providersTitle": "فراہم کنندگان",
         "noGeographicData": "No geographic data available.",
         "noProviderData": "No provider data available.",
         "unknown": "نامعلوم"
       },
       "list": {
         "perPage": "Per page",
-        "filter": "فلٹر کریں",
+        "filter": "فلٹر",
         "filterPlaceholder": "Type to Search",
-        "notAvailable": "N/A",
+        "notAvailable": "دستیاب نہیں",
         "unknown": "نامعلوم",
         "errorLoading": "Error loading flux list:",
         "columns": {
-          "ip": "IP Address",
+          "ip": "IP ایڈریس",
           "paymentAddress": "پتہ",
           "locationCountry": "ملک",
-          "locationOrg": "Provider",
+          "locationOrg": "فراہم کنندہ",
           "lastpaid": "Last Paid",
-          "tier": "سطح"
+          "tier": "ٹیئر"
         }
       },
       "resources": {
@@ -3633,15 +3605,15 @@
         },
         "vCores": "vCores",
         "ram": "RAM",
-        "ssd": "SSD/NVMe",
+        "ssd": "SSD",
         "hdd": "HDD",
-        "cpuHistory": "CPU History",
-        "ramHistory": "RAM History",
+        "cpuHistory": "CPU ہسٹری",
+        "ramHistory": "RAM ہسٹری",
         "storageHistory": "Storage History",
         "totalVCores": "Total vCores",
-        "totalRam": "Total RAM",
+        "totalRam": "کل RAM",
         "totalSsd": "Total SSD/NVMe",
-        "totalHdd": "Total HDD",
+        "totalHdd": "کل HDD",
         "tierCumulus": "Cumulus",
         "tierNimbus": "Nimbus",
         "tierStratus": "Stratus",
@@ -3673,6 +3645,34 @@
           "failedToFetchNodeCount": "Failed to fetch node count",
           "failedToFetchBlockReward": "Failed to fetch block reward"
         }
+      },
+      "overview": {
+        "nodes": "node | nodes",
+        "cumulus": "Cumulus",
+        "intro": {
+          "learnMore": "Learn More",
+          "blockchain": {
+            "title": "Flux Blockchain",
+            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
+          },
+          "cloud": {
+            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud.",
+            "title": "FluxCloud Network"
+          },
+          "title": "Welcome to Flux Ecosystem"
+        },
+        "legacy": "Legacy",
+        "circulatingSupply": "Circulating Supply",
+        "fluxSupply": "FLUX Supply",
+        "nodeHistory": "Node History",
+        "tierBreakdown": "Tier Breakdown",
+        "maxSupply": "Max Supply",
+        "versionBreakdown": "Version Breakdown",
+        "errorFetchingHistoryStats": "Unable to fetch history stats",
+        "totalNodes": "Total Nodes",
+        "lockedSupply": "Locked Supply",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus"
       }
     },
     "fluxDrive": {
@@ -3723,7 +3723,7 @@
         }
       },
       "benefits": {
-        "title": "FluxDrive Benefits",
+        "title": "FluxDrive کے فوائد",
         "noCentralized": "No centralized provider can access your data",
         "fullControl": "Full ownership and control of your files",
         "globalRedundancy": "Global redundancy across 2,600+ nodes",
@@ -3737,8 +3737,8 @@
       "maintenanceTitle": "Applications Marketplace\nUnder Maintenance",
       "maintenanceSubtitle": "We're currently experiencing technical difficulties with the marketplace. Our team is working to resolve this issue as quickly as possible.",
       "hero": {
-        "title": "Flux Application Marketplace",
-        "subtitle": "Deploy decentralized pre-configured applications on Flux's Web3 cloud. Docker containers, web apps, and APIs on {nodeCount}+ FluxNodes worldwide."
+        "title": "FluxCloud مارکیٹ پلیس",
+        "subtitle": "Flux کے Web3 کلاؤڈ پر پہلے سے کنفیگر شدہ غیر مرکزی ایپلیکیشنز تعینات کریں۔ Docker کنٹینرز شامل ہیں۔"
       },
       "detail": {
         "loadingTitle": "Loading Application...",
@@ -3750,127 +3750,119 @@
         "unitCores": "vCores",
         "unitMB": "MB",
         "unitGB": "GB",
-        "cpuPower": "CPU Power",
+        "cpuPower": "CPU پاور",
         "memory": "میموری",
         "storage": "اسٹوریج",
-        "screenshots": "Screenshots",
+        "screenshots": "اسکرین شاٹس",
         "screenshotAlt": "Screenshot {number}",
-        "about": "About",
-        "developer": "Developer",
+        "about": "کے بارے میں",
+        "developer": "ڈویلپر",
         "lastUpdate": "Last Update",
         "version": "ورژن",
-        "downloads": "Downloads",
-        "links": "Links",
-        "website": "Website",
+        "downloads": "ڈاؤن لوڈز",
+        "links": "لنکس",
+        "website": "ویب سائٹ",
         "sourceCode": "Source Code",
-        "support": "Support"
+        "support": "سپورٹ"
       },
       "common": {
         "whyFlux": {
-          "title": "Why Host on FluxCloud",
+          "title": "FluxCloud پر کیوں ہوسٹ کریں",
           "subtitle": "Experience the power of decentralized cloud infrastructure built on Web3 technology",
           "benefits": [
             {
-              "icon": "mdi-web",
-              "title": "Global Network",
-              "description": "Deploy across 62+ countries with our worldwide decentralized infrastructure for low latency everywhere."
+              "title": "عالمی نیٹ ورک",
+              "description": "62+ ممالک میں ہمارے عالمی غیر مرکزی انفراسٹرکچر پر تعینات کریں۔"
             },
             {
-              "icon": "mdi-flash",
-              "title": "Lightning Fast Deployment",
-              "description": "Get your applications up and running in minutes with our automated deployment system."
+              "title": "تیز رفتار تعیناتی",
+              "description": "ہمارے خودکار تعیناتی سسٹم سے منٹوں میں اپنی ایپلیکیشنز شروع کریں۔"
             },
             {
-              "icon": "mdi-currency-usd-off",
-              "title": "Cost Effective",
-              "description": "Save up to 70% compared to traditional cloud providers with transparent, competitive pricing."
+              "title": "لاگت مؤثر",
+              "description": "شفاف، مسابقتی قیمتوں کے ساتھ روایتی کلاؤڈ فراہم کنندگان کے مقابلے میں 70% تک بچائیں۔"
             },
             {
-              "icon": "mdi-server-network",
-              "title": "99.9% Uptime",
-              "description": "Distributed network architecture ensures maximum availability and redundancy."
+              "title": "99.9% اپ ٹائم",
+              "description": "تقسیم شدہ نیٹ ورک آرکیٹیکچر زیادہ سے زیادہ دستیابی اور ریڈنڈنسی کو یقینی بناتا ہے۔"
             },
             {
-              "icon": "mdi-chart-line",
-              "title": "Easy Scaling",
-              "description": "Scale your resources up or down instantly to match demand without downtime."
+              "title": "آسان اسکیلنگ",
+              "description": "بغیر ڈاؤن ٹائم کے مانگ کے مطابق فوری طور پر اپنے وسائل بڑھائیں یا کم کریں۔"
             },
             {
-              "icon": "mdi-lock-open",
-              "title": "No Vendor Lock-in",
-              "description": "Full data portability and open standards mean you're never locked into one provider."
+              "title": "کوئی وینڈر لاک ان نہیں",
+              "description": "مکمل ڈیٹا پورٹیبلٹی اور کھلے معیار کا مطلب ہے کہ آپ کبھی کسی ایک فراہم کنندہ میں بند نہیں ہوتے۔"
             },
             {
-              "icon": "mdi-account-heart",
-              "title": "24/7 Support",
-              "description": "Expert support team available around the clock to help with any issues or questions."
+              "title": "24/7 سپورٹ",
+              "description": "کسی بھی مسئلے یا سوالات میں مدد کے لیے ماہر سپورٹ ٹیم چوبیس گھنٹے دستیاب ہے۔"
             },
             {
-              "icon": "mdi-cash-refund",
-              "title": "30-Day Money-Back Guarantee",
-              "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
+              "title": "30 دن کی رقم واپسی کی گارنٹی",
+              "description": "مطمئن نہیں؟ 30 دنوں میں بغیر کسی سوال کے مکمل رقم واپس لیں۔"
             }
           ]
         },
         "genericFAQ": {
           "title": "Frequently Asked Questions",
-          "subtitle": "Everything you need to know about hosting on FluxCloud",
+          "subtitle": "FluxCloud ہوسٹنگ کے بارے میں وہ سب کچھ جو آپ کو جاننا چاہیے",
           "questions": [
             {
-              "q": "What is FluxCloud?",
-              "a": "FluxCloud is a decentralized cloud computing platform powered by Web3 technology. It provides secure, scalable, and cost-effective hosting for applications, games, and services across a global network of nodes."
+              "q": "FluxCloud کیا ہے؟",
+              "a": "FluxCloud Web3 ٹیکنالوجی سے چلنے والا ایک غیر مرکزی کلاؤڈ کمپیوٹنگ پلیٹ فارم ہے۔ یہ نوڈز کے عالمی نیٹ ورک پر ایپلیکیشنز، گیمز اور سروسز کے لیے محفوظ، توسیع پذیر اور لاگت مؤثر ہوسٹنگ فراہم کرتا ہے۔"
             },
             {
-              "q": "How do I get started?",
-              "a": "Simply browse the marketplace, select your desired application or game, choose your configuration, and deploy. Your instance will be live within minutes. No complex setup required!"
+              "q": "یہ روایتی ہوسٹنگ سے کیسے مختلف ہے؟",
+              "a": "روایتی کلاؤڈ فراہم کنندگان کے برعکس، FluxCloud غیر مرکزی نوڈز کے نیٹ ورک پر چلتا ہے، جو ناکامی کا کوئی واحد نقطہ نہیں فراہم کرتا اور بہتر اپ ٹائم اور سیکیورٹی دیتا ہے۔"
             },
             {
-              "q": "What payment methods do you accept?",
-              "a": "We accept FLUX tokens, as well traditional payment methods through our integrated payment processors (Stripe and Paypal)."
+              "q": "قیمتیں کیسے کام کرتی ہیں؟",
+              "a": "FluxCloud استعمال کے مطابق ادائیگی کی شفاف قیمت استعمال کرتا ہے۔ کوئی پوشیدہ فیس نہیں اور آپ کسی بھی وقت منسوخ کر سکتے ہیں۔"
             },
             {
-              "q": "Can I upgrade or downgrade my plan?",
-              "a": "Yes! You can easily scale your resources up or down at any time through your dashboard. Changes take effect immediately with no downtime."
+              "q": "کون سے ادائیگی کے طریقے قبول ہیں؟",
+              "a": "ہم کرپٹو کرنسی (FLUX، BTC، ETH) اور Crypto.com کے ذریعے روایتی ادائیگی کے طریقے دونوں قبول کرتے ہیں۔"
             },
             {
-              "q": "What happens if I need more resources?",
-              "a": "You can instantly upgrade to a higher tier configuration at any time. Simply select the new configuration in your dashboard and the changes will be applied automatically."
+              "q": "تعیناتی میں کتنا وقت لگتا ہے؟",
+              "a": "زیادہ تر ایپلیکیشنز منٹوں میں تعینات ہو جاتی ہیں۔ ایک بار آپ کی Docker امیج تیار ہونے کے بعد، تعیناتی تقریباً فوری ہوتی ہے۔"
             },
             {
-              "q": "How is uptime guaranteed?",
-              "a": "Our decentralized architecture distributes your application across multiple nodes, ensuring 99.9% uptime. If one node experiences issues, your application automatically fails over to healthy nodes."
+              "q": "کیا DDoS تحفظ شامل ہے؟",
+              "a": "جی ہاں، تمام تعیناتیوں میں انٹرپرائز گریڈ DDoS تحفظ شامل ہے۔"
             },
             {
-              "q": "Can I cancel anytime?",
-              "a": "Yes, there are no long-term contracts or cancellation fees. You can cancel your subscription at any time ask for a refund in the first 30 days."
+              "q": "کیا میں اپنی ایپلیکیشنز کو اسکیل کر سکتا ہوں؟",
+              "a": "بالکل! آپ فوری طور پر وسائل اسکیل کر سکتے ہیں یا مانگ کو پورا کرنے کے لیے مزید انسٹینسز تعینات کر سکتے ہیں۔"
             },
             {
-              "q": "Do you offer backups?",
-              "a": "Yes, automatic backups are included with all apps that have decentralized persistent data. Your data is weekly backed up and can be restored at any time through your dashboard."
+              "q": "کیا سپورٹ دستیاب ہے؟",
+              "a": "ہم Discord کمیونٹی اور تکنیکی سپورٹ ٹکٹس کے ذریعے 24/7 سپورٹ فراہم کرتے ہیں۔"
             },
             {
-              "q": "What kind of support is available?",
-              "a": "We offer 24/7 support through our Discord community, email support, our AI built-in tool, and our support ticket system at <a href=\"https://support.runonflux.io/\" target=\"_blank\" rel=\"noopener noreferrer\">support.runonflux.io</a>."
+              "q": "کیا ریفنڈ پالیسی ہے؟",
+              "a": "جی ہاں، ہم تمام بامعاوضہ سروسز پر 30 دن کی رقم واپسی کی گارنٹی فراہم کرتے ہیں۔"
             }
           ]
         },
         "appSpecificFAQ": {
-          "pricingQuestion": "How much does it cost to host {appName} on FluxCloud?",
-          "pricingAnswerPaid": "Hosting <strong>{appName}</strong> on FluxCloud starts at <strong>{priceText}/month</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required.",
-          "pricingAnswerFree": "Hosting <strong>{appName}</strong> on FluxCloud is <strong>free</strong>. This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support. You can scale resources up or down anytime with our flexible pricing options. No hidden fees or long-term contracts required."
+          "pricingQuestion": "FluxCloud پر {appName} ہوسٹ کرنے میں کتنا خرچہ آتا ہے؟",
+          "pricingAnswerPaid": "FluxCloud پر <strong>{appName}</strong> ہوسٹنگ <strong>{priceText}/مہینہ</strong> سے شروع ہوتی ہے۔",
+          "pricingAnswerFree": "FluxCloud پر <strong>{appName}</strong> ہوسٹنگ <strong>مفت</strong> ہے۔ غیر مرکزی انفراسٹرکچر شامل ہے۔"
         }
       },
       "games": {
         "index": {
-          "title": "Game Server Hosting",
-          "subtitle": "Deploy and manage game servers on FluxCloud",
+          "title": "گیم سرور ہوسٹنگ",
+          "subtitle": "منٹوں میں اپنا گیم سرور تعینات کریں",
           "loading": "Loading available games...",
           "maintenanceTitle": "Games Marketplace Temporarily Unavailable",
           "maintenanceSubtitle": "We're experiencing temporary issues",
           "hero": {
-            "title": "Premium Game Server Hosting on FluxCloud",
-            "subtitle": "Deploy your favorite game servers in seconds with global distribution, DDoS protection, and pay-as-you-go pricing powered by blockchain technology.",
-            "cta": "Browse Game Servers",
+            "title": "FluxPlay گیم سرور ہوسٹنگ",
+            "subtitle": "غیر مرکزی گیم سرور ہوسٹنگ سب کے لیے قابل رسائی بنایا گیا",
+            "cta": "ابھی شروع کریں",
             "benefits": {
               "instant": "Instant Deployment",
               "global": "Global Servers",
@@ -3881,15 +3873,15 @@
           "trust": {
             "servers": {
               "value": "1000+",
-              "label": "Active Servers"
+              "label": "سرورز"
             },
             "uptime": {
               "value": "99.9%",
-              "label": "Uptime SLA"
+              "label": "اپ ٹائم"
             },
             "locations": {
               "value": "50+",
-              "label": "Countries"
+              "label": "ممالک"
             },
             "deployment": {
               "value": "< 30s",
@@ -3897,7 +3889,7 @@
             }
           },
           "features": {
-            "title": "Why Choose FluxPlay for Game Hosting?",
+            "title": "ہم مختلف کیوں ہیں",
             "items": {
               "instant": {
                 "title": "Instant Deployment",
@@ -3958,10 +3950,10 @@
           "gamesTitle": "Available Game Servers",
           "gamesSubtitle": "Choose a game and deploy your server in seconds",
           "comparison": {
-            "title": "Why FluxPlay vs Traditional Hosting",
+            "title": "موازنہ",
             "feature": "Feature",
             "fluxplay": "FluxPlay",
-            "traditional": "Traditional Hosting",
+            "traditional": "روایتی",
             "rows": {
               "setup": "Setup Time",
               "pricing": "Pricing Model",
@@ -3982,7 +3974,7 @@
             }
           },
           "faq": {
-            "title": "Frequently Asked Questions",
+            "title": "اکثر پوچھے گئے سوالات",
             "items": {
               "what": {
                 "question": "What is FluxPlay game server hosting?",
@@ -4035,60 +4027,52 @@
         },
         "palworld": {
           "description": {
-            "title": "About Palworld Server Hosting",
+            "title": "Palworld کے بارے میں",
             "content": "<p><strong>Palworld</strong> is a multiplayer open-world survival crafting game where mysterious creatures called \"Pals\" inhabit the land. In this game, you can befriend and collect Pals, use them in battles, make them work in your base, and even sell them!</p><p>Running your own Palworld server on the Flux network gives you complete control over your gaming experience. Customize game settings, manage player access, and enjoy lag-free gameplay with your friends. <strong>Server hosting starts at just [[minPrice]]/month</strong> with flexible scaling options as your player base grows.</p><p>Whether you're building the ultimate Pal sanctuary or creating a competitive PvP environment, hosting on Flux provides the reliability and performance you need.</p>",
             "highlights": [
-              "Up to 32 players per server",
-              "Full customization control",
-              "Persistent world saves",
-              "Mod support ready",
-              "Automatic backups",
-              "DDoS protection included"
+              "فی سرور 32 کھلاڑیوں تک",
+              "مکمل کسٹمائزیشن کنٹرول",
+              "مستقل ورلڈ سیوز",
+              "ماڈ سپورٹ تیار",
+              "خودکار بیک اپ",
+              "DDoS تحفظ شامل"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
+            "title": "سرور فیچرز",
             "subtitle": "Decentralized infrastructure built for gaming performance",
             "items": [
               {
-                "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
-                "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
+                "title": "DDoS تحفظ",
+                "description": "بلٹ ان تحفظ آپ کے سرور کو حملوں کے دوران بھی آن لائن رکھتا ہے۔"
               },
               {
-                "icon": "mdi-flash",
-                "title": "Instant Deployment",
-                "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
+                "title": "فوری تعیناتی",
+                "description": "آپ کا سرور منٹوں میں تیار ہے، گھنٹوں میں نہیں۔ تعینات کریں، کنفیگر کریں اور کھیلنا شروع کریں۔"
               },
               {
-                "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
-                "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
+                "title": "عالمی سطح پر کم لیٹنسی",
+                "description": "دنیا بھر میں حکمت عملی سے تقسیم شدہ سرورز کم سے کم لیگ اور بہترین گیمنگ تجربہ یقینی بناتے ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "Decentralized Network",
-                "description": "Hosted across the global Flux network for maximum uptime and resilience."
+                "title": "آسان سرور مینجمنٹ",
+                "description": "بدیہی کنٹرول پینل کے ساتھ اپنے سرور کو آسانی سے منیج کریں۔"
               },
               {
-                "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
-                "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
+                "title": "خودکار بیک اپ",
+                "description": "باقاعدہ خودکار بیک اپ آپ کی پیشرفت کو محفوظ رکھتا ہے۔"
               },
               {
-                "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
-                "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
+                "title": "ماڈ سپورٹ",
+                "description": "اپنے پسندیدہ ماڈز انسٹال کریں اور اپنے گیمنگ تجربے کو بہتر بنائیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "99.9% Uptime",
-                "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+                "title": "24/7 اپ ٹائم",
+                "description": "تقسیم شدہ نیٹ ورک کی بدولت آپ کا سرور ہمیشہ آن لائن رہتا ہے۔"
               },
               {
-                "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
-                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
+                "title": "مکمل کنٹرول",
+                "description": "سرور سیٹنگز پر مکمل کنٹرول۔"
               }
             ]
           },
@@ -4101,88 +4085,80 @@
             "subtitle": "Everything you need to know about hosting Palworld on FluxCloud",
             "questions": [
               {
-                "q": "How do I host a Palworld server on FluxCloud?",
-                "a": "Simply select your preferred server configuration from the options above, click \"Install,\" and follow the deployment wizard. Your server will be ready in just a few minutes!"
+                "q": "FluxCloud پر Palworld سرور کیسے ہوسٹ کریں؟",
+                "a": "اوپر دیے گئے آپشنز میں سے اپنی پسندیدہ سرور کنفیگریشن منتخب کریں، \"انسٹال\" پر کلک کریں اور تعیناتی وزرڈ کی پیروی کریں۔ آپ کا سرور صرف چند منٹوں میں تیار ہو جائے گا!"
               },
               {
-                "q": "How much does Palworld hosting cost?",
-                "a": "Pricing starts at just <strong>[[minPrice]]/month</strong> and scales based on capacity. All prices include DDoS protection and automatic backups."
+                "q": "Palworld ہوسٹنگ کی لاگت کتنی ہے؟",
+                "a": "قیمتیں صرف <strong>[[minPrice]]/مہینہ</strong> سے شروع ہوتی ہیں اور گنجائش کے مطابق بڑھتی ہیں۔ تمام قیمتوں میں DDoS تحفظ اور خودکار بیک اپ شامل ہیں۔"
               },
               {
-                "q": "Can I customize my server settings?",
-                "a": "Absolutely! You have full control over server settings including difficulty, PvP settings, experience rates, and more. Configure your game via SSH to your game server or using the Volume Browser functionality in application management."
+                "q": "کیا میں اپنی سرور سیٹنگز کسٹمائز کر سکتا ہوں؟",
+                "a": "بالکل! آپ کے پاس سرور سیٹنگز پر مکمل کنٹرول ہے بشمول مشکل، PvP سیٹنگز، تجربہ کی شرح وغیرہ۔"
               },
               {
-                "q": "What are the minimum requirements?",
-                "a": "For up to 8 players: 2 CPU cores, 4GB RAM, 10GB storage. For larger servers (16-32 players), choose our higher-tier plans."
+                "q": "کم از کم تقاضے کیا ہیں؟",
+                "a": "8 کھلاڑیوں تک: 2 CPU کورز، 4GB RAM، 10GB اسٹوریج۔ بڑے سرورز (16-32 کھلاڑی) کے لیے ہمارے اعلی درجے کے پلانز منتخب کریں۔"
               },
               {
-                "q": "How long does deployment take?",
-                "a": "Server deployment typically completes within <strong>5-10 minutes</strong>. You can start inviting players immediately!"
+                "q": "تعیناتی میں کتنا وقت لگتا ہے؟",
+                "a": "سرور کی تعیناتی عام طور پر <strong>5-10 منٹ</strong> میں مکمل ہوتی ہے۔ آپ فوری طور پر کھلاڑیوں کو مدعو کرنا شروع کر سکتے ہیں!"
               },
               {
-                "q": "Do you offer refunds?",
-                "a": "Yes! We offer a <strong>30-day money-back guarantee</strong>. Contact support within 30 days for a full refund if you're not satisfied."
+                "q": "کیا آپ ریفنڈ دیتے ہیں؟",
+                "a": "جی ہاں! ہم <strong>30 دن کی رقم واپسی کی گارنٹی</strong> دیتے ہیں۔ اگر آپ مطمئن نہیں ہیں تو 30 دنوں کے اندر سپورٹ سے رابطہ کریں۔"
               }
             ]
           }
         },
         "minecraft": {
           "description": {
-            "title": "About Minecraft Server Hosting",
+            "title": "Minecraft سرور کے بارے میں",
             "content": "<p><strong>Minecraft</strong> is the world's most popular sandbox game, allowing you to build, explore, and survive in an infinite procedurally-generated world. With over 140 million active players worldwide, it's the ultimate creative playground.</p><p>Host your own Minecraft server on Flux for ultimate control, performance, and reliability. Perfect for vanilla, modded, or custom gameplay experiences with friends, communities, or large multiplayer networks. <strong>Minecraft server hosting starts at [[minPrice]]/month</strong> with scalable resources to match your player count.</p><p>Whether you're running a survival server, creative building world, mini-game hub, or modded adventure, Flux provides the infrastructure you need to create unforgettable experiences.</p>",
             "highlights": [
-              "Unlimited players support",
-              "Mod and plugin support (Bukkit, Spigot, Paper, Forge, Fabric)",
-              "Regular automated backups",
-              "24/7 server uptime guarantee",
-              "DDoS protection included",
-              "Easy world management"
+              "لامحدود کھلاڑیوں کی سپورٹ",
+              "ماڈ اور پلگ ان سپورٹ (Bukkit, Spigot, Paper, Forge, Fabric)",
+              "باقاعدہ خودکار بیک اپ",
+              "24/7 سرور اپ ٹائم گارنٹی",
+              "DDoS تحفظ شامل",
+              "آسان ورلڈ مینجمنٹ"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
+            "title": "سرور فیچرز",
             "subtitle": "Decentralized infrastructure built for gaming performance",
             "items": [
               {
-                "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
-                "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
+                "title": "DDoS تحفظ",
+                "description": "بلٹ ان تحفظ آپ کے سرور کو حملوں کے دوران بھی آن لائن رکھتا ہے۔"
               },
               {
-                "icon": "mdi-flash",
-                "title": "Instant Deployment",
-                "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
+                "title": "فوری تعیناتی",
+                "description": "آپ کا سرور منٹوں میں تیار ہے۔"
               },
               {
-                "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
-                "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
+                "title": "عالمی سطح پر کم لیٹنسی",
+                "description": "دنیا بھر میں تقسیم شدہ سرورز بہترین گیمنگ تجربہ یقینی بناتے ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "Decentralized Network",
-                "description": "Hosted across the global Flux network for maximum uptime and resilience."
+                "title": "آسان سرور مینجمنٹ",
+                "description": "بدیہی کنٹرول پینل کے ساتھ اپنے سرور کو آسانی سے منیج کریں۔"
               },
               {
-                "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
-                "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
+                "title": "خودکار بیک اپ",
+                "description": "باقاعدہ خودکار بیک اپ آپ کے ورلڈ کو محفوظ رکھتا ہے۔"
               },
               {
-                "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
-                "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
+                "title": "ماڈ سپورٹ",
+                "description": "اپنے پسندیدہ ماڈز اور پلگ انز آزادانہ طور پر انسٹال کریں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "99.9% Uptime",
-                "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+                "title": "24/7 اپ ٹائم",
+                "description": "آپ کا سرور ہمیشہ آن لائن رہتا ہے۔"
               },
               {
-                "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
-                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
+                "title": "مکمل کنٹرول",
+                "description": "سرور سیٹنگز پر مکمل کنٹرول۔"
               }
             ]
           },
@@ -4195,147 +4171,136 @@
             "subtitle": "Everything you need to know about hosting Minecraft on FluxCloud",
             "questions": [
               {
-                "q": "How do I host a Minecraft server on FluxCloud?",
-                "a": "Select your preferred server configuration based on player count, click \"Install,\" and follow our simple deployment wizard. Your server will be live within minutes!"
+                "q": "FluxCloud پر Minecraft سرور کیسے ہوسٹ کریں؟",
+                "a": "متوقع کھلاڑیوں کی تعداد کی بنیاد پر اپنی پسندیدہ سرور کنفیگریشن منتخب کریں، \"انسٹال\" پر کلک کریں اور تعیناتی وزرڈ کی پیروی کریں۔ آپ کا سرور چند منٹوں میں تیار ہو جائے گا!"
               },
               {
-                "q": "How much does Minecraft hosting cost?",
-                "a": "Plans start at <strong>[[minPrice]]/month</strong> and scale based on RAM, CPU, and player capacity. All plans include DDoS protection and automatic backups."
+                "q": "Minecraft ہوسٹنگ کی لاگت کتنی ہے؟",
+                "a": "پلانز <strong>[[minPrice]]/مہینہ</strong> سے شروع ہوتے ہیں۔ تمام قیمتوں میں DDoS تحفظ اور خودکار بیک اپ شامل ہیں۔"
               },
               {
-                "q": "Can I install mods and plugins?",
-                "a": "Yes! Full support for Bukkit, Spigot, Paper, Forge, Fabric, and all major mod loaders. Upload and configure custom plugins and modpacks via SSH to your game server or using the Volume Browser functionality in application management."
+                "q": "کیا میں ماڈز اور پلگ انز انسٹال کر سکتا ہوں؟",
+                "a": "جی ہاں! Bukkit، Spigot، Paper، Forge، Fabric وغیرہ کی مکمل سپورٹ۔ اپنے پسندیدہ ماڈز اور پلگ انز آزادانہ طور پر انسٹال کریں۔"
               },
               {
-                "q": "What Minecraft versions are supported?",
-                "a": "All Minecraft Java Edition versions from 1.8 to the latest release. Switch versions anytime via SSH or the Volume Browser in application management."
+                "q": "کون سے Minecraft ورژن سپورٹڈ ہیں؟",
+                "a": "1.8 سے لے کر تازہ ترین ریلیز تک تمام Minecraft Java Edition ورژن سپورٹڈ ہیں۔"
               },
               {
-                "q": "How do backups work?",
-                "a": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime and restore with one click."
+                "q": "بیک اپ کیسے کام کرتا ہے؟",
+                "a": "جب تک آپ کی سبسکرپشن فعال ہے خودکار ہفتہ وار بیک اپ بنائے اور برقرار رکھے جاتے ہیں۔ آپ ضرورت پڑنے پر دستی بیک اپ بھی ٹرگر کر سکتے ہیں۔"
               },
               {
-                "q": "Can I transfer my existing Minecraft world?",
-                "a": "Absolutely! Upload your existing world files via SSH to your game server or using the Volume Browser functionality in application management. We also offer free migration assistance for servers hosted elsewhere."
+                "q": "کیا میں اپنا موجودہ Minecraft ورلڈ منتقل کر سکتا ہوں؟",
+                "a": "بالکل! SSH یا والیوم براؤزر فیچر استعمال کرتے ہوئے اپنی موجودہ ورلڈ فائلز اپ لوڈ کریں۔"
               }
             ]
           },
           "gettingStarted": {
-            "title": "How to Get Started with Minecraft Server Hosting",
+            "title": "شروع کرنا",
             "subtitle": "Launch your Minecraft server in 3 easy steps",
             "steps": [
               {
-                "number": "1",
-                "title": "Choose Your Configuration",
-                "description": "Select the RAM, CPU, and storage based on your expected player count. We offer configurations from small private servers (5-10 players) to large multiplayer networks (100+ players)."
+                "title": "کنفیگریشن منتخب کریں",
+                "description": "اپنے متوقع کھلاڑیوں اور ماڈ/پلگ ان استعمال کے منصوبوں کی بنیاد پر RAM، CPU اور اسٹوریج منتخب کریں۔"
               },
               {
-                "number": "2",
-                "title": "Deploy Your Server",
-                "description": "Click the deploy button and our automated system will provision your Minecraft server across the Flux decentralized network. Your server will be ready in under 5 minutes with the latest Minecraft version."
+                "title": "اپنا سرور تعینات کریں",
+                "description": "تعینات بٹن پر کلک کریں اور ہمارا خودکار سسٹم منٹوں میں آپ کا سرور سیٹ اپ کر دے گا۔"
               },
               {
-                "number": "3",
-                "title": "Customize and Play",
-                "description": "Access your server via SSH or the Volume Browser to install mods, configure settings, and upload custom worlds. Share your server IP with friends and start playing immediately!"
+                "title": "کسٹمائز کریں اور کھیلیں",
+                "description": "SSH یا والیوم براؤزر کے ذریعے اپنے سرور تک رسائی حاصل کریں، ماڈز/پلگ انز انسٹال کریں اور کھیلنا شروع کریں!"
               }
             ]
           },
           "technicalSpecs": {
-            "title": "Technical Specifications",
+            "title": "تکنیکی تفصیلات",
             "subtitle": "What you get with Minecraft hosting on FluxCloud",
             "specs": [
               {
-                "label": "Server Type",
-                "value": "Java Edition (all versions)"
+                "label": "سرور کی قسم",
+                "value": "Java Edition (تمام ورژن)"
               },
               {
-                "label": "Supported Platforms",
+                "label": "سپورٹڈ پلیٹ فارمز",
                 "value": "Vanilla, Bukkit, Spigot, Paper, Forge, Fabric"
               },
               {
-                "label": "Control Panel",
-                "value": "Web-based Volume Browser + SSH access"
+                "label": "کنٹرول پینل",
+                "value": "ویب بیسڈ والیوم براؤزر + SSH رسائی"
               },
               {
-                "label": "Backup Frequency",
-                "value": "Weekly automatic + manual on-demand"
+                "label": "بیک اپ فریکوئنسی",
+                "value": "ہفتہ وار خودکار + آن ڈیمانڈ دستی"
               },
               {
-                "label": "DDoS Protection",
-                "value": "Enterprise-grade, included free"
+                "label": "DDoS تحفظ",
+                "value": "انٹرپرائز گریڈ، مفت شامل"
               },
               {
-                "label": "Uptime SLA",
-                "value": "99.9% guaranteed"
+                "label": "اپ ٹائم SLA",
+                "value": "99.9% گارنٹی شدہ"
               },
               {
-                "label": "Deployment Time",
-                "value": "< 5 minutes average"
+                "label": "تعیناتی کا وقت",
+                "value": "اوسطاً 5 منٹ سے کم"
               },
               {
-                "label": "Player Scaling",
-                "value": "From 5 to 500+ concurrent players"
+                "label": "کھلاڑی اسکیلنگ",
+                "value": "5 سے 500+ بیک وقت کھلاڑی"
               }
             ]
           }
         },
         "factorio": {
           "description": {
-            "title": "About Factorio Server Hosting",
+            "title": "Factorio کے بارے میں",
             "content": "<p><strong>Factorio</strong> is a critically acclaimed game about building and creating automated factories to produce increasingly complex items. Design intricate production lines, automate logistics, and defend against alien attacks in this engineering masterpiece.</p><p>Host your Factorio server on Flux for seamless multiplayer gameplay with friends and colleagues. Build massive factories, collaborate on blueprints, and optimize production chains together on reliable infrastructure. <strong>Factorio server hosting starts at [[minPrice]]/month</strong> and scales with your megabase ambitions.</p><p>Perfect for engineering enthusiasts, automation lovers, and teams looking to build the ultimate factory. From modest beginnings to launching rockets, your factory's success depends on reliable hosting.</p>",
             "highlights": [
-              "Stable multiplayer performance for complex factories",
-              "Full mod support (via mod portal)",
-              "Auto-save functionality every 5 minutes",
-              "Ultra-low latency connections",
-              "Easy server configuration",
-              "DDoS protection included"
+              "پیچیدہ فیکٹریوں کے لیے مستحکم ملٹی پلیئر کارکردگی",
+              "مکمل ماڈ سپورٹ (ماڈ پورٹل کے ذریعے)",
+              "ہر 5 منٹ میں آٹو سیو فنکشنیلٹی",
+              "انتہائی کم لیٹنسی کنکشنز",
+              "آسان سرور کنفیگریشن",
+              "DDoS تحفظ شامل"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
+            "title": "سرور فیچرز",
             "subtitle": "Decentralized infrastructure built for gaming performance",
             "items": [
               {
-                "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
-                "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
+                "title": "DDoS تحفظ",
+                "description": "بلٹ ان تحفظ آپ کے سرور کو حملوں کے دوران بھی آن لائن رکھتا ہے۔"
               },
               {
-                "icon": "mdi-flash",
-                "title": "Instant Deployment",
-                "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
+                "title": "فوری تعیناتی",
+                "description": "آپ کا سرور منٹوں میں تیار ہے۔"
               },
               {
-                "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
-                "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
+                "title": "عالمی سطح پر کم لیٹنسی",
+                "description": "دنیا بھر میں تقسیم شدہ سرورز بہترین گیمنگ تجربہ یقینی بناتے ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "Decentralized Network",
-                "description": "Hosted across the global Flux network for maximum uptime and resilience."
+                "title": "آسان سرور مینجمنٹ",
+                "description": "بدیہی کنٹرول پینل کے ساتھ اپنے سرور کو آسانی سے منیج کریں۔"
               },
               {
-                "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
-                "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
+                "title": "آٹو سیو",
+                "description": "ہر 5 منٹ میں خودکار طور پر گیم سیو ہوتی ہے۔"
               },
               {
-                "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
-                "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
+                "title": "ماڈ سپورٹ",
+                "description": "ماڈ پورٹل کے ذریعے اپنے پسندیدہ ماڈز انسٹال کریں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "99.9% Uptime",
-                "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+                "title": "24/7 اپ ٹائم",
+                "description": "آپ کا سرور ہمیشہ آن لائن رہتا ہے۔"
               },
               {
-                "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
-                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
+                "title": "مکمل کنٹرول",
+                "description": "سرور سیٹنگز پر مکمل کنٹرول۔"
               }
             ]
           },
@@ -4348,88 +4313,80 @@
             "subtitle": "Everything you need to know about hosting Factorio on FluxCloud",
             "questions": [
               {
-                "q": "How do I host a Factorio server on FluxCloud?",
-                "a": "Choose your server configuration, click \"Install,\" and deploy in minutes. Upload your save file or start fresh. Your factory will be running before the biters reach your walls!"
+                "q": "FluxCloud پر Factorio سرور کیسے ہوسٹ کریں؟",
+                "a": "اپنی پسندیدہ سرور کنفیگریشن منتخب کریں، \"انسٹال\" پر کلک کریں اور تعیناتی وزرڈ کی پیروی کریں۔ آپ کا سرور چند منٹوں میں تیار ہو جائے گا!"
               },
               {
-                "q": "How much does Factorio hosting cost?",
-                "a": "Starting at <strong>[[minPrice]]/month</strong> and scales up to enterprise plans for massive megabases. All plans include automatic backups and DDoS protection."
+                "q": "Factorio ہوسٹنگ کی لاگت کتنی ہے؟",
+                "a": "قیمتیں <strong>[[minPrice]]/مہینہ</strong> سے شروع ہوتی ہیں۔ تمام قیمتوں میں DDoS تحفظ اور آٹو سیو شامل ہیں۔"
               },
               {
-                "q": "Can I use mods on my server?",
-                "a": "Yes! Full support for the Factorio mod portal. Install and configure mods via SSH to your game server or using the Volume Browser functionality in application management. Popular modpacks like Space Exploration and Krastorio 2 work perfectly."
+                "q": "کیا میں ماڈز انسٹال کر سکتا ہوں؟",
+                "a": "جی ہاں! Factorio ماڈ پورٹل کے تمام ماڈز سپورٹڈ ہیں۔"
               },
               {
-                "q": "What happens if my factory gets too big?",
-                "a": "Easily upgrade to a higher-tier plan with more CPU and RAM. Your server scales with your megabase ambitions. Live upgrades with minimal downtime."
+                "q": "کیا بڑی فیکٹریوں میں کارکردگی برقرار رہتی ہے؟",
+                "a": "جی ہاں! ہائی پرفارمنس سرورز سب سے پیچیدہ فیکٹریاں بھی آسانی سے چلاتے ہیں۔"
               },
               {
-                "q": "How often are saves backed up?",
-                "a": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime."
+                "q": "تعیناتی میں کتنا وقت لگتا ہے؟",
+                "a": "سرور کی تعیناتی عام طور پر <strong>5 منٹ سے کم</strong> میں مکمل ہوتی ہے۔"
               },
               {
-                "q": "Can I migrate my existing factory?",
-                "a": "Absolutely! Upload your existing save files via SSH to your game server or using the Volume Browser functionality in application management. All mods, blueprints, and research progress transfer seamlessly."
+                "q": "کیا آپ ریفنڈ دیتے ہیں؟",
+                "a": "جی ہاں! ہم <strong>30 دن کی رقم واپسی کی گارنٹی</strong> دیتے ہیں۔"
               }
             ]
           }
         },
         "satisfactory": {
           "description": {
-            "title": "About Satisfactory Server Hosting",
+            "title": "Satisfactory کے بارے میں",
             "content": "<p><strong>Satisfactory</strong> is a first-person open-world factory building game with a dash of exploration and combat. Explore an alien planet, harvest resources, and construct massive automated factories in stunning 3D environments.</p><p>Host your dedicated Satisfactory server on Flux for smooth cooperative gameplay with up to 4 players. Build mega-factories together, explore dangerous biomes, and automate production chains on a reliable, high-performance infrastructure. <strong>Satisfactory server hosting starts at [[minPrice]]/month</strong> with the power to handle even the most complex mega-factories.</p><p>From humble beginnings with basic conveyors to sprawling multi-level factories with trains, drones, and hypertubes - your industrial empire needs rock-solid hosting to handle the complexity.</p>",
             "highlights": [
-              "Up to 4 players co-op multiplayer",
-              "Persistent world state across sessions",
-              "Regular auto-saves every 5 minutes",
-              "High-performance hosting for mega-factories",
-              "Easy session management",
-              "DDoS protection included"
+              "4 کھلاڑیوں تک کوآپ ملٹی پلیئر",
+              "سیشنز کے درمیان مستقل ورلڈ اسٹیٹ",
+              "ہر 5 منٹ میں باقاعدہ آٹو سیو",
+              "میگا فیکٹریوں کے لیے ہائی پرفارمنس ہوسٹنگ",
+              "آسان سیشن مینجمنٹ",
+              "DDoS تحفظ شامل"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
+            "title": "سرور فیچرز",
             "subtitle": "Decentralized infrastructure built for gaming performance",
             "items": [
               {
-                "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
-                "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
+                "title": "DDoS تحفظ",
+                "description": "بلٹ ان تحفظ آپ کے سرور کو حملوں کے دوران بھی آن لائن رکھتا ہے۔"
               },
               {
-                "icon": "mdi-flash",
-                "title": "Instant Deployment",
-                "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
+                "title": "فوری تعیناتی",
+                "description": "آپ کا سرور منٹوں میں تیار ہے۔"
               },
               {
-                "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
-                "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
+                "title": "عالمی سطح پر کم لیٹنسی",
+                "description": "دنیا بھر میں تقسیم شدہ سرورز بہترین گیمنگ تجربہ یقینی بناتے ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "Decentralized Network",
-                "description": "Hosted across the global Flux network for maximum uptime and resilience."
+                "title": "آسان سرور مینجمنٹ",
+                "description": "بدیہی کنٹرول پینل کے ساتھ اپنے سرور کو آسانی سے منیج کریں۔"
               },
               {
-                "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
-                "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
+                "title": "آٹو سیو",
+                "description": "ہر 5 منٹ میں خودکار طور پر گیم سیو ہوتی ہے۔"
               },
               {
-                "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
-                "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
+                "title": "ہائی پرفارمنس",
+                "description": "بڑی فیکٹریاں بھی آسانی سے چلتی ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "99.9% Uptime",
-                "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+                "title": "24/7 اپ ٹائم",
+                "description": "آپ کا سرور ہمیشہ آن لائن رہتا ہے۔"
               },
               {
-                "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
-                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
+                "title": "مکمل کنٹرول",
+                "description": "سرور سیٹنگز پر مکمل کنٹرول۔"
               }
             ]
           },
@@ -4442,88 +4399,80 @@
             "subtitle": "Everything you need to know about hosting Satisfactory on FluxCloud",
             "questions": [
               {
-                "q": "How do I host a Satisfactory server on FluxCloud?",
-                "a": "Select your server plan, click \"Install,\" and deploy within minutes. Load your existing save or start fresh. Your factory will be online and ready for co-op building!"
+                "q": "FluxCloud پر Satisfactory سرور کیسے ہوسٹ کریں؟",
+                "a": "اپنی پسندیدہ سرور کنفیگریشن منتخب کریں، \"انسٹال\" پر کلک کریں اور تعیناتی وزرڈ کی پیروی کریں۔ آپ کا سرور چند منٹوں میں تیار ہو جائے گا!"
               },
               {
-                "q": "How much does Satisfactory hosting cost?",
-                "a": "Plans start at <strong>[[minPrice]]/month</strong> for standard servers and scale up to handle even the most complex mega-factories. DDoS protection and backups included."
+                "q": "Satisfactory ہوسٹنگ کی لاگت کتنی ہے؟",
+                "a": "قیمتیں <strong>[[minPrice]]/مہینہ</strong> سے شروع ہوتی ہیں۔ تمام قیمتوں میں DDoS تحفظ اور آٹو سیو شامل ہیں۔"
               },
               {
-                "q": "Can I use mods on my server?",
-                "a": "Yes! Full support for Satisfactory Mod Manager (SMM) mods. Upload and configure mods via SSH to your game server or using the Volume Browser functionality in application management. Popular mods like Refined Power, Smart!, and MAM Enhancer work perfectly. All players need matching mods installed."
+                "q": "کتنے لوگ ایک ساتھ کھیل سکتے ہیں؟",
+                "a": "4 کھلاڑیوں تک کوآپ ملٹی پلیئر سپورٹڈ ہے۔"
               },
               {
-                "q": "What are the server requirements?",
-                "a": "Minimum: 4GB RAM for starter factories. Recommended: 8GB RAM for mid-game. Advanced: 16GB RAM for massive late-game factories with trains and drones. CPU scales with factory complexity."
+                "q": "کیا میں اپنی موجودہ سیو منتقل کر سکتا ہوں؟",
+                "a": "جی ہاں! SSH یا والیوم براؤزر کے ذریعے اپنی موجودہ سیو فائلز اپ لوڈ کریں۔"
               },
               {
-                "q": "How do save files work?",
-                "a": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime. Download saves to play offline or transfer between servers."
+                "q": "تعیناتی میں کتنا وقت لگتا ہے؟",
+                "a": "سرور کی تعیناتی عام طور پر <strong>5 منٹ سے کم</strong> میں مکمل ہوتی ہے۔"
               },
               {
-                "q": "Can I transfer my single-player save?",
-                "a": "Absolutely! Upload your single-player save file via SSH to your game server or using the Volume Browser functionality in application management. Continue your factory with friends exactly where you left off, with all buildings and progress intact."
+                "q": "کیا آپ ریفنڈ دیتے ہیں؟",
+                "a": "جی ہاں! ہم <strong>30 دن کی رقم واپسی کی گارنٹی</strong> دیتے ہیں۔"
               }
             ]
           }
         },
         "enshrouded": {
           "description": {
-            "title": "About Enshrouded Server Hosting",
+            "title": "Enshrouded کے بارے میں",
             "content": "<p><strong>Enshrouded</strong> is a survival action RPG where you can play solo or with up to 16 players in co-op mode. Explore the vast voxel-based world of Embervale, battle fierce enemies, craft powerful equipment, and build epic bases with your friends.</p><p>Run your own Enshrouded server on Flux for an immersive co-op experience. Venture into the deadly Shroud, uncover ancient secrets, build magnificent structures, and survive together in this beautiful yet dangerous world. <strong>Enshrouded server hosting starts at [[minPrice]]/month</strong> with support for up to 16 players.</p><p>Whether you're focused on combat, building, exploration, or crafting, hosting on Flux ensures your adventures are smooth, persistent, and always available for your entire party.</p>",
             "highlights": [
-              "Up to 16 player co-op multiplayer",
-              "Full world persistence and progression",
-              "Custom server settings and difficulty",
-              "Automated backups every 30 minutes",
-              "High-performance servers for voxel worlds",
-              "DDoS protection included"
+              "16 کھلاڑیوں تک کوآپ ملٹی پلیئر",
+              "مکمل ورلڈ پرسسٹنس اور پروگریشن",
+              "کسٹم سرور سیٹنگز اور مشکل",
+              "ہر 30 منٹ میں خودکار بیک اپ",
+              "ووکسل ورلڈز کے لیے ہائی پرفارمنس سرورز",
+              "DDoS تحفظ شامل"
             ]
           },
           "features": {
-            "title": "Why Host on FluxCloud?",
+            "title": "سرور فیچرز",
             "subtitle": "Decentralized infrastructure built for gaming performance",
             "items": [
               {
-                "icon": "mdi-shield-check",
-                "title": "DDoS Protection",
-                "description": "Built-in protection keeps your server online even during attacks, ensuring uninterrupted gameplay."
+                "title": "DDoS تحفظ",
+                "description": "بلٹ ان تحفظ آپ کے سرور کو حملوں کے دوران بھی آن لائن رکھتا ہے۔"
               },
               {
-                "icon": "mdi-flash",
-                "title": "Instant Deployment",
-                "description": "Your server is ready in minutes, not hours. Deploy, configure, and start playing without the wait."
+                "title": "فوری تعیناتی",
+                "description": "آپ کا سرور منٹوں میں تیار ہے۔"
               },
               {
-                "icon": "mdi-access-point-network",
-                "title": "Low Latency Worldwide",
-                "description": "Servers strategically distributed across the globe ensure minimal ping and lag-free gameplay for players everywhere."
+                "title": "عالمی سطح پر کم لیٹنسی",
+                "description": "دنیا بھر میں تقسیم شدہ سرورز بہترین گیمنگ تجربہ یقینی بناتے ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "Decentralized Network",
-                "description": "Hosted across the global Flux network for maximum uptime and resilience."
+                "title": "آسان سرور مینجمنٹ",
+                "description": "بدیہی کنٹرول پینل کے ساتھ اپنے سرور کو آسانی سے منیج کریں۔"
               },
               {
-                "icon": "mdi-currency-usd-off",
-                "title": "Affordable Pricing",
-                "description": "Transparent pricing with no hidden fees. Pay only for what you use with flexible pricing tiers."
+                "title": "خودکار بیک اپ",
+                "description": "ہر 30 منٹ میں خودکار طور پر ورلڈ بیک اپ ہوتی ہے۔"
               },
               {
-                "icon": "mdi-chart-line",
-                "title": "Scalable Resources",
-                "description": "Easily upgrade your server resources as your player base grows. Scale up or down anytime."
+                "title": "ہائی پرفارمنس",
+                "description": "ووکسل بیسڈ ورلڈز بھی آسانی سے چلتی ہیں۔"
               },
               {
-                "icon": "mdi-server-network",
-                "title": "99.9% Uptime",
-                "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+                "title": "24/7 اپ ٹائم",
+                "description": "آپ کا سرور ہمیشہ آن لائن رہتا ہے۔"
               },
               {
-                "icon": "mdi-cash-refund",
-                "title": "30-Day Money-Back Guarantee",
-                "description": "Not satisfied? Get a full refund within 30 days, no questions asked. We're confident you'll love our service."
+                "title": "مکمل کنٹرول",
+                "description": "سرور سیٹنگز اور مشکل پر مکمل کنٹرول۔"
               }
             ]
           },
@@ -4536,28 +4485,28 @@
             "subtitle": "Everything you need to know about hosting Enshrouded on FluxCloud",
             "questions": [
               {
-                "q": "How do I host an Enshrouded server on FluxCloud?",
-                "a": "Choose your server configuration based on player count, click \"Install,\" and deploy in minutes. Your Embervale world will be ready for co-op adventures immediately!"
+                "q": "FluxCloud پر Enshrouded سرور کیسے ہوسٹ کریں؟",
+                "a": "اپنی پسندیدہ سرور کنفیگریشن منتخب کریں، \"انسٹال\" پر کلک کریں اور تعیناتی وزرڈ کی پیروی کریں۔ آپ کا سرور چند منٹوں میں تیار ہو جائے گا!"
               },
               {
-                "q": "How much does Enshrouded hosting cost?",
-                "a": "Starting at <strong>[[minPrice]]/month</strong> and scales based on player capacity (up to 16 players). All plans include DDoS protection, automatic backups, and high-performance SSD/NVMe storage."
+                "q": "Enshrouded ہوسٹنگ کی لاگت کتنی ہے؟",
+                "a": "قیمتیں <strong>[[minPrice]]/مہینہ</strong> سے شروع ہوتی ہیں۔ تمام قیمتوں میں DDoS تحفظ اور خودکار بیک اپ شامل ہیں۔"
               },
               {
-                "q": "Can I customize server settings?",
-                "a": "Yes! Full control over difficulty, combat settings, resource spawn rates, day/night cycle length, and more. Configure your game via SSH to your game server or using the Volume Browser functionality in application management to match your playstyle."
+                "q": "کتنے لوگ ایک ساتھ کھیل سکتے ہیں؟",
+                "a": "16 کھلاڑیوں تک کوآپ ملٹی پلیئر سپورٹڈ ہے۔"
               },
               {
-                "q": "What are the minimum requirements?",
-                "a": "For 8 players: 8GB RAM, 4 CPU cores. For 16 players: 16GB RAM, 6 CPU cores recommended. The voxel-based world benefits from strong CPU performance for terrain generation."
+                "q": "کیا میں سرور سیٹنگز کسٹمائز کر سکتا ہوں؟",
+                "a": "جی ہاں! مشکل، گیم موڈ وغیرہ سرور سیٹنگز پر مکمل کنٹرول۔"
               },
               {
-                "q": "How do backups work?",
-                "a": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime and restore with one click."
+                "q": "تعیناتی میں کتنا وقت لگتا ہے؟",
+                "a": "سرور کی تعیناتی عام طور پر <strong>5-10 منٹ</strong> میں مکمل ہوتی ہے۔"
               },
               {
-                "q": "Can I transfer my single-player world?",
-                "a": "Yes! Upload your single-player save file via SSH to your game server or using the Volume Browser functionality in application management. Your character, base, progression, and explored areas transfer seamlessly to multiplayer. Continue your journey with friends!"
+                "q": "کیا آپ ریفنڈ دیتے ہیں؟",
+                "a": "جی ہاں! ہم <strong>30 دن کی رقم واپسی کی گارنٹی</strong> دیتے ہیں۔"
               }
             ]
           }
@@ -4794,7 +4743,7 @@
               },
               "locations": {
                 "value": "50+",
-                "label": "Countries"
+                "label": "ممالک"
               },
               "deployment": {
                 "value": "< 30s",
@@ -4821,38 +4770,38 @@
                   "description": "Real-time performance monitoring with automatic alerts ensures your server stays healthy and responsive."
                 },
                 "paygo": {
-                  "title": "Pay-As-You-Go Pricing",
+                  "title": "استعمال کے مطابق ادائیگی",
                   "description": "Only pay for the resources you use with transparent, flexible pricing. No hidden fees or long-term contracts."
                 },
                 "blockchain": {
-                  "title": "Blockchain-Powered",
+                  "title": "بلاک چین پر مبنی",
                   "description": "Built on decentralized Flux infrastructure for enhanced security, transparency, and resistance to centralized failures."
                 }
               }
             },
             "content": {
               "title": "Professional Game Server Hosting Made Simple",
-              "body": "<p><strong>FluxPlay</strong> revolutionizes game server hosting by combining the power of decentralized infrastructure with the simplicity of traditional hosting. Whether you're hosting <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong>, or <strong>Enshrouded</strong> servers, our platform delivers unmatched performance and reliability.</p><p>Built on <strong>FluxCloud</strong>, FluxPlay provides enterprise-grade game hosting with automatic scaling, geographic distribution, and military-grade security. Our decentralized architecture ensures your game server remains online even if individual nodes fail, providing superior uptime compared to traditional centralized hosting providers.</p><p>With instant deployment, transparent pricing, and included DDoS protection, FluxPlay is the modern solution for gamers, communities, and server administrators who demand the best.</p>"
+              "body": "<p><strong>FluxPlay</strong> غیر مرکزیت کی طاقت کو ملا کر گیم سرور ہوسٹنگ میں انقلاب لاتا ہے۔</p>"
             },
             "gamesTitle": "Available Game Servers",
             "gamesSubtitle": "Choose your game and deploy a server in seconds",
             "comparison": {
               "title": "Why FluxPlay vs Traditional Hosting",
-              "feature": "Feature",
+              "feature": "فیچر",
               "fluxplay": "FluxPlay",
               "traditional": "Traditional Hosting",
               "rows": {
                 "setup": "Setup Time",
                 "pricing": "Pricing Model",
                 "ddos": "DDoS Protection",
-                "decentralized": "Decentralized",
+                "decentralized": "غیر مرکزی",
                 "locations": "Server Locations",
                 "scaling": "Scaling Speed"
               },
               "values": {
                 "instant": "< 30 seconds",
                 "hours": "Hours to days",
-                "transparent": "Transparent Pay-As-You-Go",
+                "transparent": "شفاف استعمال کے مطابق ادائیگی",
                 "hidden": "Hidden fees + contracts",
                 "extra": "Extra cost",
                 "countries": "50+ countries",
@@ -4864,69 +4813,69 @@
               "title": "Frequently Asked Questions",
               "items": {
                 "what": {
-                  "question": "What is FluxPlay game server hosting?",
-                  "answer": "<p>FluxPlay is a decentralized game server hosting platform built on FluxCloud. It allows you to deploy and manage game servers like Minecraft, Palworld, Factorio, and more with instant deployment, global distribution, and enterprise-grade security.</p>"
+                  "question": "FluxPlay گیم سرور ہوسٹنگ کیا ہے؟",
+                  "answer": "<p>FluxPlay FluxCloud پر بنایا گیا ایک غیر مرکزی گیم سرور ہوسٹنگ پلیٹ فارم ہے۔</p>"
                 },
                 "different": {
-                  "question": "How is FluxPlay different from traditional game hosting?",
-                  "answer": "<p>FluxPlay uses <strong>decentralized blockchain infrastructure</strong> instead of centralized data centers. This provides superior uptime, transparent pricing, included DDoS protection, and resistance to single points of failure. You can deploy servers in under 30 seconds compared to hours or days with traditional providers.</p>"
+                  "question": "FluxPlay روایتی گیم ہوسٹنگ سے کیسے مختلف ہے؟",
+                  "answer": "<p>FluxPlay مرکزی ڈیٹا سینٹرز کی بجائے <strong>غیر مرکزی بلاک چین انفراسٹرکچر</strong> استعمال کرتا ہے۔</p>"
                 },
                 "games": {
-                  "question": "What games can I host on FluxPlay?",
-                  "answer": "<p>FluxPlay currently supports popular games including <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong>, and <strong>Enshrouded</strong>. We're constantly adding new games based on community demand.</p>"
+                  "question": "FluxPlay پر کون سے گیمز ہوسٹ کیے جا سکتے ہیں؟",
+                  "answer": "<p>FluxPlay فی الحال <strong>Minecraft</strong>، <strong>Palworld</strong> سمیت مقبول گیمز کو سپورٹ کرتا ہے۔</p>"
                 },
                 "deploy": {
-                  "question": "How quickly can I deploy a game server?",
-                  "answer": "<p>Game servers deploy in <strong>under 30 seconds</strong> on average. Simply select your game, choose your configuration and server location, and click deploy. Our automated system handles all the technical setup for you.</p>"
+                  "question": "گیم سرور کتنی جلدی تعینات ہو سکتا ہے؟",
+                  "answer": "<p>گیم سرورز اوسطاً <strong>30 سیکنڈ سے کم</strong> میں تعینات ہوتے ہیں۔</p>"
                 },
                 "ddosProtection": {
-                  "question": "Is DDoS protection included?",
-                  "answer": "<p>Yes! <strong>Enterprise-grade DDoS protection is included</strong> with all game servers at no extra cost. Your server is protected against common attack vectors, ensuring your players stay connected even during attacks.</p>"
+                  "question": "کیا DDoS تحفظ شامل ہے؟",
+                  "answer": "<p>جی ہاں! تمام گیم سرورز کے ساتھ <strong>انٹرپرائز گریڈ DDoS تحفظ</strong> شامل ہے۔</p>"
                 },
                 "pricing": {
-                  "question": "How does pricing work?",
-                  "answer": "<p>FluxPlay uses <strong>transparent pay-as-you-go pricing</strong>. You only pay for the computing resources (CPU, RAM, storage) your server uses. No hidden fees, setup costs, or long-term contracts. Pricing varies by game and configuration, typically starting around $10-15/month for small servers.</p>"
+                  "question": "قیمتیں کیسے کام کرتی ہیں؟",
+                  "answer": "<p>FluxPlay <strong>شفاف استعمال کے مطابق ادائیگی</strong> استعمال کرتا ہے۔ آپ صرف استعمال کی گئی چیز کی ادائیگی کرتے ہیں۔</p>"
                 },
                 "support": {
-                  "question": "What support is available?",
-                  "answer": "<p>All FluxPlay servers include <strong>24/7 automated monitoring</strong> with real-time alerts. For technical support, you can access our documentation, community forums, and ticketing system. Premium support packages are available for enterprise customers.</p>"
+                  "question": "کیا سپورٹ دستیاب ہے؟",
+                  "answer": "<p>تمام FluxPlay سرورز میں ریئل ٹائم الرٹس کے ساتھ <strong>24/7 خودکار مانیٹرنگ</strong> شامل ہے۔</p>"
                 },
                 "blockchain": {
-                  "question": "Do I need cryptocurrency to use FluxPlay?",
-                  "answer": "<p>While FluxPlay is built on blockchain technology, you can pay with <strong>traditional payment methods</strong> including credit cards. The blockchain infrastructure provides security and decentralization benefits behind the scenes without requiring you to manage cryptocurrency.</p>"
+                  "question": "کیا FluxPlay استعمال کرنے کے لیے کرپٹو کرنسی ضروری ہے؟",
+                  "answer": "<p>اگرچہ FluxPlay بلاک چین ٹیکنالوجی پر بنایا گیا ہے، آپ <strong>روایتی ادائیگی کے طریقوں</strong> سے بھی ادائیگی کر سکتے ہیں۔</p>"
                 }
               }
             },
             "cta": {
-              "title": "Ready to Deploy Your Game Server?",
-              "subtitle": "Join thousands of gamers hosting on the decentralized Flux network",
-              "button": "Get Started Now"
+              "title": "اپنا گیم سرور تعینات کرنے کے لیے تیار ہیں؟",
+              "subtitle": "غیر مرکزی Flux نیٹ ورک پر ہوسٹنگ کرنے والے ہزاروں گیمرز میں شامل ہوں",
+              "button": "ابھی شروع کریں"
             },
             "relatedResources": {
-              "title": "Explore More FluxCloud Services",
-              "subtitle": "Discover other ways to leverage decentralized infrastructure",
+              "title": "دیگر FluxCloud سروسز دریافت کریں",
+              "subtitle": "غیر مرکزی انفراسٹرکچر کو استعمال کرنے کے دیگر طریقے دریافت کریں",
               "links": [
                 {
-                  "title": "Cost Calculator",
-                  "description": "Calculate exact hosting costs for your applications with transparent pricing",
+                  "title": "لاگت کیلکولیٹر",
+                  "description": "شفاف قیمتوں کے ساتھ اپنی ایپلیکیشنز کے لیے ہوسٹنگ کی صحیح لاگت کا حساب لگائیں",
                   "url": "/cost-calculator",
                   "icon": "mdi-calculator"
                 },
                 {
-                  "title": "WordPress Hosting",
-                  "description": "Deploy WordPress sites on decentralized infrastructure with one-click installation",
+                  "title": "WordPress ہوسٹنگ",
+                  "description": "ایک کلک انسٹالیشن کے ساتھ غیر مرکزی انفراسٹرکچر پر WordPress سائٹس تعینات کریں",
                   "url": "/marketplace/wordpress",
                   "icon": "mdi-wordpress"
                 },
                 {
-                  "title": "Custom App Deployment",
-                  "description": "Register and deploy custom Docker applications on the Flux network",
+                  "title": "کسٹم ایپ تعیناتی",
+                  "description": "Flux نیٹ ورک پر کسٹم Docker ایپلیکیشنز رجسٹر اور تعینات کریں",
                   "url": "/apps/register",
                   "icon": "mdi-application-cog"
                 },
                 {
-                  "title": "Full Marketplace",
-                  "description": "Browse all available applications, games, and services on FluxCloud",
+                  "title": "مکمل مارکیٹ پلیس",
+                  "description": "FluxCloud پر دستیاب تمام ایپلیکیشنز، گیمز اور سروسز براؤز کریں",
                   "url": "/marketplace",
                   "icon": "mdi-store"
                 }
@@ -4935,18 +4884,18 @@
           }
         },
         "wordpress": {
-          "loadingTitle": "Loading WordPress Hosting Plans...",
-          "maintenanceTitle": "WordPress Hosting Temporarily Unavailable",
-          "maintenanceSubtitle": "We're experiencing temporary issues",
-          "maintenanceDescription": "Our WordPress hosting service is currently unavailable. Please try again later.",
+          "loadingTitle": "WordPress ہوسٹنگ پلانز لوڈ ہو رہے ہیں...",
+          "maintenanceTitle": "WordPress ہوسٹنگ عارضی طور پر دستیاب نہیں",
+          "maintenanceSubtitle": "ہمیں عارضی مسائل درپیش ہیں",
+          "maintenanceDescription": "ہماری WordPress ہوسٹنگ سروس فی الحال دستیاب نہیں ہے۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
           "landing": {
-            "title": "WordPress Hosting on Flux",
-            "subtitle": "Deploy your WordPress site on the decentralized Flux network with instant setup and global distribution",
+            "title": "Flux پر WordPress ہوسٹنگ",
+            "subtitle": "فوری سیٹ اپ اور عالمی دستیابی کے ساتھ غیر مرکزی Flux نیٹ ورک پر اپنی WordPress سائٹ تعینات کریں",
             "plans": {
-              "title": "Choose Your WordPress Hosting Plan",
-              "subtitle": "Flexible plans for every need - from personal blogs to enterprise sites",
-              "recommended": "Recommended",
-              "perMonth": "/month",
+              "title": "اپنا WordPress ہوسٹنگ پلان منتخب کریں",
+              "subtitle": "ہر ضرورت کے لیے لچکدار پلانز - ذاتی بلاگز سے لے کر انٹرپرائز سائٹس تک",
+              "recommended": "تجویز کردہ",
+              "perMonth": "/مہینہ",
               "cpu": "CPU",
               "ram": "RAM",
               "storage": "اسٹوریج",
@@ -4965,15 +4914,15 @@
               },
               "gameServers": {
                 "title": "Game Servers",
-                "description": "Host your favorite game servers"
+                "description": "اپنے پسندیدہ گیم سرورز ہوسٹ کریں"
               },
               "fluxDrive": {
                 "title": "FluxDrive",
-                "description": "Decentralized file storage"
+                "description": "غیر مرکزی فائل اسٹوریج"
               },
               "costCalculator": {
-                "title": "Cost Calculator",
-                "description": "Estimate your hosting costs"
+                "title": "لاگت کیلکولیٹر",
+                "description": "اپنے ہوسٹنگ اخراجات کا تخمینہ لگائیں"
               }
             }
           }
@@ -4981,106 +4930,106 @@
       }
     },
     "xdao": {
-      "title": "Flux XDAO",
-      "subtitle": "Decentralized Governance Platform",
-      "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
-      "learnMore": "Learn More About XDAO",
+      "title": "Flux xDAO",
+      "subtitle": "غیر مرکزی گورننس پلیٹ فارم",
+      "description": "Flux XDAO (ایکسٹینڈڈ غیر مرکزی خودمختار تنظیم) کمیونٹی کو Flux ایکو سسٹم کے مستقبل کی تشکیل کا اختیار دیتی ہے",
+      "learnMore": "XDAO کے بارے میں مزید جانیں",
       "loggedIn": "Logged in",
       "login": "لاگ ان کریں",
-      "loginToVote": "Login to Vote",
+      "loginToVote": "ووٹ دینے کے لیے لاگ ان کریں",
       "filters": "Filters",
-      "addProposal": "Add Proposal",
-      "filterProposals": "Filter Proposals",
-      "allProposals": "All Proposals",
+      "addProposal": "تجویز شامل کریں",
+      "filterProposals": "تجاویز فلٹر کریں",
+      "allProposals": "تمام تجاویز",
       "open": "Open",
-      "passed": "Passed",
+      "passed": "منظور ہو گیا",
       "unpaid": "Unpaid",
-      "rejected": "Rejected",
-      "searchProposals": "Search proposals...",
+      "rejected": "مسترد",
+      "searchProposals": "تجاویز تلاش کریں...",
       "sortBy": "Sort by",
       "latest": "Latest",
       "titleAsc": "Title A-Z",
       "titleDesc": "Title Z-A",
       "endDate": "End Date",
-      "loadingProposals": "Loading proposals...",
-      "failedToLoad": "Failed to Load Proposals",
+      "loadingProposals": "تجاویز لوڈ ہو رہی ہیں...",
+      "failedToLoad": "تجاویز لوڈ کرنے میں ناکام",
       "tryAgain": "Try Again",
-      "noProposalsFound": "No Proposals Found",
-      "noProposalsSubmitted": "No proposals have been submitted yet.",
-      "noOpenProposals": "No Open Proposals",
-      "noOpenProposalsMessage": "There are currently no open proposals for voting.",
-      "noPassedProposals": "No Passed Proposals",
-      "noPassedProposalsMessage": "No proposals have passed yet.",
-      "noUnpaidProposals": "No Unpaid Proposals",
-      "noUnpaidProposalsMessage": "All passed proposals have been paid.",
-      "noRejectedProposals": "No Rejected Proposals",
-      "noRejectedProposalsMessage": "No proposals have been rejected.",
-      "tryDifferentFilter": "Try selecting a different filter.",
+      "noProposalsFound": "کوئی تجاویز نہیں ملیں",
+      "noProposalsSubmitted": "ابھی تک کوئی تجاویز جمع نہیں کی گئیں۔",
+      "noOpenProposals": "کوئی کھلی تجاویز نہیں",
+      "noOpenProposalsMessage": "فی الحال ووٹنگ کے لیے کوئی کھلی تجاویز نہیں ہیں۔",
+      "noPassedProposals": "کوئی منظور شدہ تجاویز نہیں",
+      "noPassedProposalsMessage": "ابھی تک کوئی تجویز منظور نہیں ہوئی۔",
+      "noUnpaidProposals": "کوئی غیر ادا شدہ تجاویز نہیں",
+      "noUnpaidProposalsMessage": "تمام منظور شدہ تجاویز ادا کر دی گئی ہیں۔",
+      "noRejectedProposals": "کوئی مسترد شدہ تجاویز نہیں",
+      "noRejectedProposalsMessage": "کوئی تجویز مسترد نہیں ہوئی۔",
+      "tryDifferentFilter": "مختلف فلٹر منتخب کرنے کی کوشش کریں۔",
       "anonymous": "Anonymous",
       "end": "End",
       "required": "ضروری",
       "total": "کل",
       "yes": "ہاں",
       "no": "نہیں",
-      "loginRequiredForVoting": "Login Required for Voting",
-      "loginRequiredMessage": "You need to be logged in to participate in xDAO voting. Please choose your preferred login method below.",
+      "loginRequiredForVoting": "ووٹنگ کے لیے لاگ ان ضروری ہے",
+      "loginRequiredMessage": "xDAO ووٹنگ میں حصہ لینے کے لیے آپ کو لاگ ان ہونا ضروری ہے۔ براہ کرم نیچے سے اپنا پسندیدہ لاگ ان طریقہ منتخب کریں۔",
       "debugInfo": "Debug Info:",
       "errors": {
-        "loadProposalsServer": "Failed to load proposals from server",
-        "networkFailed": "Network connection failed. Please check your internet connection.",
-        "timeout": "Request timed out. The server may be temporarily unavailable.",
-        "serverError": "Server error. Please try again later.",
-        "serviceNotFound": "Proposals service not found.",
-        "loadProposalsGeneric": "Failed to load proposals. Please try again."
+        "loadProposalsServer": "سرور سے تجاویز لوڈ کرنے میں ناکام",
+        "networkFailed": "نیٹ ورک کنکشن ناکام۔ براہ کرم اپنا انٹرنیٹ کنکشن چیک کریں۔",
+        "timeout": "درخواست کا وقت ختم۔ سرور عارضی طور پر دستیاب نہیں ہو سکتا۔",
+        "serverError": "سرور میں خرابی۔ براہ کرم بعد میں دوبارہ کوشش کریں۔",
+        "serviceNotFound": "تجاویز سروس نہیں ملی۔",
+        "loadProposalsGeneric": "تجاویز لوڈ کرنے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔"
       }
     },
     "error": {
-      "pageNotFoundTitle": "Page Not Found ⚠️",
-      "pageNotFoundDescription": "We couldn't find the page you are looking for.",
-      "backToHome": "Back to Home",
-      "error404Alt": "404 Page Not Found - Error Illustration",
-      "footerImageAlt": "Decorative footer image"
+      "pageNotFoundTitle": "صفحہ نہیں ملا ⚠️",
+      "pageNotFoundDescription": "ہم وہ صفحہ نہیں ڈھونڈ سکے جو آپ تلاش کر رہے ہیں۔",
+      "backToHome": "ہوم پر واپس جائیں",
+      "error404Alt": "404 صفحہ نہیں ملا - خرابی کی تصویر",
+      "footerImageAlt": "سجاوٹی فوٹر تصویر"
     },
     "successCheckout": {
-      "title": "Payment Completed Successfully! 🎉",
-      "paymentProcessed": "Your application payment has been processed successfully.",
-      "deploymentTime": "It can take up to 45 minutes",
-      "deploymentMessage": "for your application to be deployed on the Flux network.",
-      "autoCloseMessage": "This window will close automatically in {seconds} seconds",
-      "safeToClose": "You can safely close this window now",
-      "footerImageAlt": "Success page decorative footer image"
+      "title": "ادائیگی کامیابی سے مکمل ہوئی! 🎉",
+      "paymentProcessed": "آپ کی ایپلیکیشن کی ادائیگی کامیابی سے پروسیس ہو گئی۔",
+      "deploymentTime": "45 منٹ تک لگ سکتے ہیں",
+      "deploymentMessage": "آپ کی ایپلیکیشن کو Flux نیٹ ورک پر تعینات کیا جائے۔",
+      "autoCloseMessage": "یہ ونڈو {seconds} سیکنڈ میں خود بخود بند ہو جائے گی",
+      "safeToClose": "آپ اب اس ونڈو کو محفوظ طریقے سے بند کر سکتے ہیں",
+      "footerImageAlt": "کامیابی صفحہ سجاوٹی فوٹر تصویر"
     },
     "unauthorized": {
-      "title": "You are not authorized! 🔐",
-      "description": "You don't have permission to access this page.",
-      "backToHome": "Back To Home",
-      "footerImageAlt": "Unauthorized access decorative footer image"
+      "title": "آپ مجاز نہیں ہیں! 🔐",
+      "description": "آپ کو اس صفحے تک رسائی کی اجازت نہیں ہے۔",
+      "backToHome": "ہوم پر واپس جائیں",
+      "footerImageAlt": "غیر مجاز رسائی سجاوٹی فوٹر تصویر"
     },
     "checkout": {
       "title": "Checkout",
-      "selectPlan": "Select Plan",
+      "selectPlan": "پلان منتخب کریں",
       "paymentMethod": {
-        "title": "Payment Method",
+        "title": "ادائیگی کا طریقہ",
         "fluxPay": "Flux Pay",
         "cryptoCom": "Crypto.com"
       },
       "orderSummary": {
-        "title": "Order Summary",
+        "title": "آرڈر کا خلاصہ",
         "plan": "Plan",
         "storage": "اسٹوریج",
         "billing": "Billing",
         "monthly": "Monthly",
         "total": "کل",
-        "currentPlan": "Current Plan",
+        "currentPlan": "موجودہ پلان",
         "status": "حالت"
       },
       "subscriptionDetails": "Subscription Details",
-      "billingCycle": "Billing Cycle",
+      "billingCycle": "بلنگ سائیکل",
       "monthly": "Monthly",
       "total": "کل",
-      "proceedToPayment": "Proceed to Payment",
-      "paymentProcessing": "Processing Payment",
-      "secureCheckout": "Secure Checkout",
+      "proceedToPayment": "ادائیگی پر جائیں",
+      "paymentProcessing": "ادائیگی پروسیس ہو رہی ہے",
+      "secureCheckout": "محفوظ چیک آؤٹ",
       "plan": "Plan",
       "price": "قیمت",
       "perMonth": "per month",
@@ -5089,21 +5038,21 @@
         "subtitle": "Complete your subscription to unlock decentralized storage"
       },
       "fluxPay": {
-        "title": "Pay with Flux",
+        "title": "Flux سے ادائیگی",
         "subtitle": "Secure payment using your Zelcore wallet",
         "amount": "Amount:",
         "usdValue": "USD Value:",
-        "openWallet": "Open Zelcore Wallet",
+        "openWallet": "Zelcore والیٹ کھولیں",
         "waitingForPayment": "Waiting for Payment...",
-        "cancelPayment": "Cancel Payment"
+        "cancelPayment": "ادائیگی منسوخ کریں"
       },
       "cryptoCom": {
-        "title": "Pay with Crypto.com",
+        "title": "Crypto.com سے ادائیگی",
         "subtitle": "Recurring subscription via Crypto.com Pay",
         "continue": "Continue with Crypto.com"
       },
       "security": {
-        "title": "Secure Payment",
+        "title": "محفوظ ادائیگی",
         "message": "Your payment information is encrypted and secure. We never store your payment details."
       },
       "loading": {
@@ -5113,67 +5062,67 @@
       "messages": {
         "authenticationRequired": "Authentication required",
         "invalidAuthData": "Invalid authentication data format",
-        "missingAuthFields": "Missing auth fields",
+        "missingAuthFields": "تصدیقی فیلڈز غائب ہیں",
         "planDetailsNotAvailable": "Plan details not available",
-        "subscriptionLoadFailed": "Failed to load subscription data",
-        "pleaseLoginFirst": "Please login first",
-        "invalidAuth": "Invalid authentication data",
-        "paymentInitFailed": "Payment initialization failed. Please try again.",
-        "paymentFailed": "Failed to initialize payment",
-        "cryptoComInitFailed": "Crypto.com payment initialization failed. Please try again.",
-        "cryptoComPaymentFailed": "Failed to initialize Crypto.com payment",
-        "paymentFailedRetry": "Payment failed. Please try again.",
-        "paymentSuccessfulRedirecting": "Payment successful! Redirecting to FluxDrive...",
-        "pleaseLoginToContinue": "Please login to continue with your purchase",
-        "sessionExpired": "Session expired. Please login again."
+        "subscriptionLoadFailed": "سبسکرپشن ڈیٹا لوڈ کرنے میں ناکام",
+        "pleaseLoginFirst": "براہ کرم پہلے لاگ ان کریں",
+        "invalidAuth": "غلط تصدیقی ڈیٹا",
+        "paymentInitFailed": "ادائیگی شروع کرنے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+        "paymentFailed": "ادائیگی شروع کرنے میں ناکام",
+        "cryptoComInitFailed": "Crypto.com ادائیگی شروع کرنے میں ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+        "cryptoComPaymentFailed": "Crypto.com ادائیگی شروع کرنے میں ناکام",
+        "paymentFailedRetry": "ادائیگی ناکام۔ براہ کرم دوبارہ کوشش کریں۔",
+        "paymentSuccessfulRedirecting": "ادائیگی کامیاب! FluxDrive پر منتقل ہو رہا ہے...",
+        "pleaseLoginToContinue": "اپنی خریداری جاری رکھنے کے لیے براہ کرم لاگ ان کریں",
+        "sessionExpired": "سیشن ختم ہو گیا۔ براہ کرم دوبارہ لاگ ان کریں۔"
       }
     }
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "کوئی ڈیٹا دستیاب نہیں",
+    "noDataText": "کوئی ڈیٹا نہیں",
     "dataIterator": {
-      "loadingText": "Loading your data, please wait...",
-      "noResultsText": "No matching records found.",
+      "loadingText": "آئٹمز لوڈ ہو رہے ہیں...",
+      "noResultsText": "کوئی مماثل ریکارڈ نہیں ملا",
       "noDataText": "No data available."
     },
     "close": "بند کریں",
-    "open": "open",
+    "open": "کھولیں",
     "loading": "لوڈ ہو رہا ہے",
     "carousel": {
       "ariaLabel": {
-        "delimiter": "delimiter"
+        "delimiter": "کیروسل سلائیڈ {0} از {1}"
       }
     },
     "dataFooter": {
-      "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "All",
-      "pageText": "{0}-{1} of {2}",
-      "firstPage": "First Page",
-      "prevPage": "Previous Page",
-      "nextPage": "Next Page",
-      "lastPage": "Last Page"
+      "itemsPerPageText": "فی صفحہ آئٹمز:",
+      "itemsPerPageAll": "سب",
+      "pageText": "{2} میں سے {0}-{1}",
+      "firstPage": "پہلا صفحہ",
+      "prevPage": "پچھلا صفحہ",
+      "nextPage": "اگلا صفحہ",
+      "lastPage": "آخری صفحہ"
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
-        "previous": "پچھلا",
+        "root": "صفحہ بندی نیویگیشن",
+        "previous": "پچھلا صفحہ",
         "first": "first",
         "last": "last",
-        "next": "اگلا",
-        "currentPage": "currentPage",
-        "page": "page"
+        "next": "اگلا صفحہ",
+        "currentPage": "صفحہ {0}، موجودہ صفحہ",
+        "page": "صفحہ {0} پر جائیں"
       }
     },
     "input": {
-      "clear": "صاف کریں",
-      "appendAction": "appendAction",
-      "prependAction": "prependAction",
+      "clear": "{0} صاف کریں",
+      "appendAction": "{0} اپینڈ ایکشن",
+      "prependAction": "{0} پری پینڈ ایکشن",
       "counterSize": "counterSize",
       "otp": "otp"
     },
     "fileInput": {
-      "counterSize": "counterSize"
+      "counterSize": "{0} فائلز (کل {1})"
     },
     "rating": {
       "ariaLabel": {

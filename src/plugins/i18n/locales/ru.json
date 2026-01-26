@@ -16,29 +16,29 @@
       "upload": "Загрузить",
       "copy": "Копировать",
       "paste": "Вставить",
-      "export": "Экспортировать",
-      "import": "Импортировать",
+      "export": "Экспорт",
+      "import": "Импорт",
       "edit": "Редактировать",
       "view": "Просмотр",
       "refresh": "Обновить",
       "reload": "Перезагрузить",
       "back": "Назад",
       "next": "Далее",
-      "previous": "Назад",
+      "previous": "Предыдущий",
       "confirm": "Подтвердить",
       "apply": "Применить",
-      "reset": "Сброс",
+      "reset": "Сбросить",
       "clear": "Очистить",
       "search": "Поиск",
       "filter": "Фильтр",
       "yes": "Да",
       "no": "Нет",
       "ok": "ОК",
-      "login": "Вход"
+      "login": "Войти"
     },
     "labels": {
       "name": "Имя",
-      "title": "Заголовок",
+      "title": "Название",
       "description": "Описание",
       "status": "Статус",
       "type": "Тип",
@@ -50,10 +50,10 @@
       "owner": "Владелец",
       "date": "Дата",
       "time": "Время",
-      "location": "Местоположение",
+      "location": "Расположение",
       "country": "Страна",
       "city": "Город",
-      "email": "Email",
+      "email": "Электронная почта",
       "password": "Пароль",
       "username": "Имя пользователя",
       "address": "Адрес",
@@ -61,13 +61,13 @@
       "ip": "IP-адрес",
       "tier": "Уровень",
       "price": "Цена",
-      "total": "Итого",
+      "total": "Всего",
       "amount": "Сумма",
       "free": "Бесплатно",
       "memory": "Память",
       "storage": "Хранилище",
       "screenshots": "Скриншоты",
-      "about": "О программе",
+      "about": "О приложении",
       "developer": "Разработчик",
       "lastUpdate": "Последнее обновление",
       "downloads": "Загрузки",
@@ -76,16 +76,16 @@
       "sourceCode": "Исходный код",
       "support": "Поддержка",
       "plan": "План",
-      "billing": "Биллинг",
+      "billing": "Выставление счетов",
       "monthly": "Ежемесячно",
-      "scrollLeft": "Scroll left",
-      "scrollRight": "Scroll right",
-      "optional": "Optional"
+      "scrollLeft": "Прокрутить влево",
+      "scrollRight": "Прокрутить вправо",
+      "optional": "Необязательно"
     },
     "theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "switchTheme": "Switch theme"
+      "light": "Светлая",
+      "dark": "Тёмная",
+      "switchTheme": "Сменить тему"
     },
     "status": {
       "loading": "Загрузка...",
@@ -115,7 +115,7 @@
       "noData": "Данные не доступны",
       "noResults": "Результаты не найдены",
       "errorOccurred": "Произошла ошибка",
-      "operationSuccess": "Операция успешно завершена",
+      "operationSuccess": "Операция выполнена успешно",
       "operationFailed": "Операция не удалась",
       "confirmDelete": "Вы уверены, что хотите удалить?",
       "unsavedChanges": "У вас есть несохраненные изменения",
@@ -139,14 +139,14 @@
       "largeServers": "Large Servers"
     },
     "guarantee": {
-      "title": "30-Day Money-Back Guarantee",
+      "title": "30-дневная гарантия возврата",
       "description": "Try our service risk-free. If you're not completely satisfied within the first 30 days, we'll refund your payment—no questions asked.",
       "shortTitle": "Money-Back Guarantee",
       "badge": "30-Day Guarantee",
       "trustMessage": "Your satisfaction is our priority"
     },
     "trustpilot": {
-      "title": "Trusted by Thousands",
+      "title": "Доверяют тысячи",
       "ratingLabel": "Excellent",
       "rating": "4.5 out of 5",
       "reviews": "Based on 16 reviews",
@@ -189,13 +189,13 @@
     },
     "time": {
       "second": "секунда",
-      "seconds": "секунд",
+      "seconds": "секунды",
       "minute": "минута",
-      "minutes": "минут",
+      "minutes": "минуты",
       "hour": "час",
-      "hours": "часов",
+      "hours": "часы",
       "day": "день",
-      "days": "дней",
+      "days": "дни",
       "week": "неделя",
       "weeks": "недель",
       "month": "месяц",
@@ -230,24 +230,24 @@
   },
   "menu": {
     "home": {
-      "title": "Home"
+      "title": "Главная"
     },
     "dashboard": {
       "title": "Сеть Flux",
-      "overview": "Overview",
-      "resources": "Resources",
-      "map": "Map",
-      "rewards": "Rewards",
-      "nodeList": "Node List"
+      "overview": "Обзор",
+      "resources": "Ресурсы",
+      "map": "Карта",
+      "rewards": "Награды",
+      "nodeList": "Список узлов"
     },
     "application": {
       "title": "Приложения",
-      "myApplications": "My Applications",
-      "management": "Management",
+      "myApplications": "Мои приложения",
+      "management": "Управление",
       "globalApps": "Глобальные приложения",
       "localApps": "Локальные приложения",
-      "registerNewApp": "Register New App",
-      "marketplace": "App Marketplace",
+      "registerNewApp": "Зарегистрировать новое приложение",
+      "marketplace": "Магазин приложений",
       "marketplaceApps": "Приложения",
       "marketplaceGames": "Игры",
       "marketplaceWordPress": "WordPress",
@@ -299,25 +299,25 @@
       "marketplaceAppsTab": "Приложения маркетплейса"
     },
     "administration": {
-      "title": "Administration",
-      "systemInfo": "Information",
-      "dockerEvents": "Docker Events",
-      "manageFlux": "Manage Flux Gravity",
-      "manageDaemon": "Manage Daemon",
-      "manageBenchmark": "Manage Benchmark",
-      "manageUsers": "Manage Users",
-      "loggedSessions": "Logged Sessions",
-      "myFluxShare": "My FluxShare",
+      "title": "Администрирование",
+      "systemInfo": "Информация о системе",
+      "dockerEvents": "События Docker",
+      "manageFlux": "Управление Flux Gravity",
+      "manageDaemon": "Управление Daemon",
+      "manageBenchmark": "Управление Benchmark",
+      "manageUsers": "Управление пользователями",
+      "loggedSessions": "Активные сессии",
+      "myFluxShare": "Мой FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flux XDAO"
     },
     "costCalculator": {
-      "title": "Cost Calculator"
+      "title": "Калькулятор стоимости"
     },
     "apiReference": {
-      "title": "Help"
+      "title": "Помощь"
     },
     "fluxDrive": {
       "title": "FluxDrive"
@@ -325,79 +325,79 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "Decentralized Application Management",
-    "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
+    "fluxCloudSubtitle": "Децентрализованное управление приложениями",
+    "fluxCloudDescription": "Мониторинг и управление всеми вашими Docker-контейнерными приложениями, работающими в децентрализованной облачной сети Flux. Просматривайте статус в реальном времени, использование ресурсов и показатели производительности ваших распределенных приложений, развернутых в нашей глобальной блокчейн-инфраструктуре. Нажмите на любое приложение для доступа к детальным элементам управления и аналитике."
   },
   "sections": {
     "dashboard": {
       "title": "Сеть Flux",
-      "description": "Check Flux network information, resources available, or a map with server locations."
+      "description": "Проверьте информацию о сети Flux, доступные ресурсы или карту с расположением серверов."
     },
     "application": {
       "title": "Приложения",
-      "description": "Buy on marketplace, register your own app, manage your active apps."
+      "description": "Покупайте на маркетплейсе, регистрируйте собственное приложение, управляйте активными приложениями."
     },
     "administration": {
-      "title": "Administration",
-      "description": "Tools for infrastructure administrators and node operators allow for managing Flux Gravity."
+      "title": "Администрирование",
+      "description": "Инструменты управления Flux Gravity для администраторов инфраструктуры и операторов узлов."
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "See the list of changes proposed to Flux network, create new ones and vote."
+      "description": "Просмотр списка предложенных изменений в сети Flux, создание новых и голосование."
     }
   },
   "core": {
     "appDetailsCard": {
-      "general": "General",
-      "copySpecification": "Copy Specification",
+      "general": "Общее",
+      "copySpecification": "Копировать спецификацию",
       "updateSubscription": "Обновить",
       "renewSubscription": "Продлить",
-      "cancelSubscription": "Отмена",
-      "name": "Имя",
+      "cancelSubscription": "Отменить",
+      "name": "Название",
       "description": "Описание",
       "owner": "Владелец",
       "hash": "Хеш",
-      "contacts": "Contacts",
-      "geolocation": "Geolocation",
+      "contacts": "Контакты",
+      "geolocation": "Геолокация",
       "worldwide": "По всему миру",
       "instances": "Экземпляры",
-      "specificationsVersion": "Specifications version",
-      "registeredOnBlockheight": "Registered on Blockheight",
-      "expiresOnBlockheight": "Expires on Blockheight",
-      "expiresIn": "Expires in",
-      "enterpriseNodes": "Enterprise Nodes",
-      "notScoped": "Not scoped",
-      "staticIp": "Static IP",
-      "staticIpYes": "Yes, Running only on Static IP nodes",
-      "staticIpNo": "No, Running on all nodes",
-      "specificationCopied": "Application specification copied to clipboard!",
-      "specificationCopyFailed": "Failed to copy specification",
+      "specificationsVersion": "Версия спецификации",
+      "registeredOnBlockheight": "Зарегистрировано на высоте блока",
+      "expiresOnBlockheight": "Истекает на высоте блока",
+      "expiresIn": "Истекает через",
+      "enterpriseNodes": "Корпоративные узлы",
+      "notScoped": "Не ограничено",
+      "staticIp": "Статический IP",
+      "staticIpYes": "Да, работает только на узлах со статическим IP",
+      "staticIpNo": "Нет, работает на всех узлах",
+      "specificationCopied": "Спецификация приложения скопирована в буфер обмена!",
+      "specificationCopyFailed": "Не удалось скопировать спецификацию",
       "unknown": "Неизвестно",
       "continent": "Continent: {name}",
       "country": ", Страна: {name}",
       "region": ", Регион: {name}",
       "allowedContinent": "Allowed: Continent: {name}",
       "forbiddenContinent": "Forbidden: Continent: {name}",
-      "notAvailable": "Not available",
-      "applicationExpired": "Application Expired"
+      "notAvailable": "Недоступно",
+      "applicationExpired": "Срок действия приложения истёк"
     },
     "componentDetails": {
-      "name": "Имя",
+      "name": "Название",
       "description": "Описание",
-      "repository": "Repository",
-      "repositoryAuthentication": "Repository Authentication",
-      "private": "Private",
-      "public": "Public",
-      "customDomains": "Custom Domains",
-      "automaticDomains": "Automatic Domains",
-      "ports": "Ports",
-      "containerPorts": "Container Ports",
-      "containerData": "Container Data",
-      "environmentParameters": "Environment Parameters",
-      "commands": "Commands",
-      "secrets": "Secrets",
-      "contentEncrypted": "Content Encrypted",
-      "hardwareResources": "Hardware Resources",
+      "repository": "Репозиторий",
+      "repositoryAuthentication": "Аутентификация репозитория",
+      "private": "Приватный",
+      "public": "Публичный",
+      "customDomains": "Пользовательские домены",
+      "automaticDomains": "Автоматические домены",
+      "ports": "Порты",
+      "containerPorts": "Порты контейнера",
+      "containerData": "Данные контейнера",
+      "environmentParameters": "Параметры окружения",
+      "commands": "Команды",
+      "secrets": "Секреты",
+      "contentEncrypted": "Содержимое зашифровано",
+      "hardwareResources": "Аппаратные ресурсы",
       "cpu": "CPU",
       "ram": "RAM",
       "ssd": "SSD/NVMe",
@@ -439,12 +439,12 @@
       "removeFile": "Remove File"
     },
     "notifications": {
-      "notifications": "Notifications",
+      "notifications": "Уведомления",
       "newCount": "{count} New",
       "markAllAsUnread": "Mark all as unread",
-      "markAllAsRead": "Mark all as read",
-      "noNotificationFound": "No Notification Found!",
-      "removeAllNotifications": "Remove All Notifications"
+      "markAllAsRead": "Отметить все как прочитанные",
+      "noNotificationFound": "Уведомления не найдены!",
+      "removeAllNotifications": "Удалить все уведомления"
     },
     "runningInstances": {
       "deployedInstances": "Deployed Instances",
@@ -509,12 +509,12 @@
       }
     },
     "terminal": {
-      "title": "Secure Shell",
-      "selectComponent": "Select Component",
-      "selectCommand": "Select Command",
-      "connect": "Подключить",
-      "disconnect": "Отключить",
-      "newTerminal": "New Terminal",
+      "title": "Безопасная оболочка",
+      "selectComponent": "Выберите компонент",
+      "selectCommand": "Выберите команду",
+      "connect": "Подключиться",
+      "disconnect": "Отключиться",
+      "newTerminal": "Новый терминал",
       "popOutAll": "Pin all terminals to manager",
       "user": "User",
       "environment": "Environment",
@@ -547,15 +547,15 @@
       }
     },
     "logViewer": {
-      "title": "Log Viewer",
+      "title": "Просмотр логов",
       "component": "Компонент",
       "selectComponent": "Select Component",
       "lineCount": "Line Count",
       "logsSince": "Logs Since",
-      "filterLogs": "Filter Logs",
+      "filterLogs": "Фильтровать логи",
       "enterKeywords": "Enter keywords...",
       "advanceOptions": "Advanced Options",
-      "autoRefresh": "Auto Refresh",
+      "autoRefresh": "Автообновление",
       "displayAllLogs": "Display All Logs",
       "displayTimestamp": "Display Timestamp",
       "lineSelection": "Line Selection Mode",
@@ -571,15 +571,15 @@
       }
     },
     "backupAndRestore": {
-      "backup": "Backup",
+      "backup": "Резервная копия",
       "restore": "Восстановить",
-      "backupContainerData": "Backup Container Data",
-      "selectComponentsToBackup": "Select component(s) to backup",
-      "selectAll": "Select all",
-      "createBackup": "Create Backup",
-      "availableLocalBackups": "Available Local Backups",
-      "downloadSelected": "Download selected",
-      "downloadAll": "Download all",
+      "backupContainerData": "Резервное копирование данных контейнера",
+      "selectComponentsToBackup": "Выберите компонент(ы) для резервного копирования",
+      "selectAll": "Выбрать все",
+      "createBackup": "Создать резервную копию",
+      "availableLocalBackups": "Доступные локальные резервные копии",
+      "downloadSelected": "Скачать выбранные",
+      "downloadAll": "Скачать все",
       "removeAllBackupFiles": "Remove all backup files",
       "backupListDescription": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime.",
       "downloadBackupFile": "Download backup file",
@@ -633,35 +633,35 @@
       "invalidUrlValidation": "Please enter a valid URL ending with .tar.gz"
     },
     "login": {
-      "automatedLogin": "Automated Login",
-      "thirdPartyLogin": "3rd Party Login",
-      "emailPassword": "Email/Password",
-      "finishingLogin": "Finishing Login",
+      "automatedLogin": "Автоматический вход",
+      "thirdPartyLogin": "Вход через сторонние сервисы",
+      "emailPassword": "Email/Пароль",
+      "finishingLogin": "Завершение входа",
       "pleaseWait": "Пожалуйста, подождите...",
       "cancelVerification": "Cancel Verification",
       "finishingVerification": "Finishing verification",
       "checkEmail": "Check your email",
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
-      "bySigningIn": "By signing in, you agree to our",
-      "termsOfService": "Terms of Service",
+      "bySigningIn": "Входя в систему, вы соглашаетесь с",
+      "termsOfService": "Условия использования",
       "and": "и",
-      "privacyPolicy": "Privacy Policy",
+      "privacyPolicy": "Политика конфиденциальности",
       "email": "Email",
       "password": "Пароль",
       "login": "Вход",
-      "signUp": "Зарегистрироваться",
-      "dontHaveAccount": "Don't have an account?",
-      "or": "или",
-      "decentralizedLogin": "Decentralized Login",
-      "decentralizedWallets": "Wallets",
-      "walletLoginInfo": "Login using your crypto wallet",
-      "manualLogin": "Manual",
-      "loginWithZelcore": "Login with Zelcore",
-      "loginWithSSP": "Login with SSP",
-      "loginWithWalletConnect": "Login with WalletConnect",
-      "loginWithMetamask": "Login with Metamask",
-      "signWithWallet": "Sign message with your wallet",
+      "signUp": "Регистрация",
+      "dontHaveAccount": "Нет аккаунта?",
+      "or": "ИЛИ",
+      "decentralizedLogin": "Децентрализованный вход",
+      "decentralizedWallets": "Кошельки",
+      "walletLoginInfo": "Войдите с помощью криптокошелька",
+      "manualLogin": "Ручной",
+      "loginWithZelcore": "Войти через Zelcore",
+      "loginWithSSP": "Войти через SSP",
+      "loginWithWalletConnect": "Войти через WalletConnect",
+      "loginWithMetamask": "Войти через Metamask",
+      "signWithWallet": "Подпишите сообщение своим кошельком",
       "message": "Сообщение",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
@@ -671,7 +671,7 @@
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
       "address": "Адрес",
       "insertAddress": "Insert address",
-      "signature": "Signature",
+      "signature": "Подпись",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
@@ -685,7 +685,7 @@
       "passwordMismatch": "Passwords do not match",
       "googleError": "Google login failed",
       "appleError": "Apple login failed",
-      "loginFailed": "Login failed, please try again",
+      "loginFailed": "Вход не удался, попробуйте снова",
       "invalidCredential": "Invalid email or password. Please check and try again.",
       "userNotFound": "На этот адрес электронной почты не найдена учетная запись. Пожалуйста, сначала зарегистрируйтесь.",
       "wrongPassword": "Incorrect password. Please try again.",
@@ -711,35 +711,35 @@
       "customBackend": "Custom Backend"
     },
     "appControl": {
-      "title": "Application Control",
-      "control": "Control",
-      "manual": "Manual",
+      "title": "Управление приложением",
+      "control": "Управление",
+      "manual": "Ручной",
       "component": "Компонент",
-      "local": "Local",
+      "local": "Локальный",
       "global": "Глобальный",
-      "manualSelection": "Manual Selection",
+      "manualSelection": "Ручной выбор",
       "available": "Доступно",
-      "selected": "Selected",
-      "monitoring": "Monitoring",
+      "selected": "Выбрано",
+      "monitoring": "Мониторинг",
       "showLogs": "Показать логи",
       "hideLogs": "Скрыть логи",
       "buttons": {
         "startComponent": "Запустить компонент",
         "stopComponent": "Остановить компонент",
-        "restartComponent": "Перезагрузить компонент",
+        "restartComponent": "Перезапустить компонент",
         "pauseComponent": "Приостановить компонент",
         "unpauseComponent": "Возобновить компонент",
         "startApplication": "Запустить приложение",
         "stopApplication": "Остановить приложение",
-        "restartApplication": "Перезагрузить приложение",
+        "restartApplication": "Перезапустить приложение",
         "pauseApplication": "Приостановить приложение",
         "unpauseApplication": "Возобновить приложение",
         "removeApplication": "Удалить приложение",
         "softReinstall": "Мягкая переустановка",
-        "hardReinstall": "Жесткая переустановка",
+        "hardReinstall": "Жёсткая переустановка",
         "startMonitoring": "Начать мониторинг",
         "stopMonitoring": "Остановить мониторинг",
-        "stopMonitoringDelete": "Stop & Delete Data"
+        "stopMonitoringDelete": "Остановить и удалить данные"
       },
       "tooltips": {
         "addSelected": "Add selected items",
@@ -770,9 +770,9 @@
         "hardReinstall": "Hard reinstall will completely remove and redeploy the application. All application data will be deleted. This action cannot be undone."
       },
       "operations": {
-        "starting": "Starting",
-        "stopping": "Stopping",
-        "restarting": "Restarting",
+        "starting": "Запуск",
+        "stopping": "Остановка",
+        "restarting": "Перезапуск",
         "pausing": "Pausing",
         "unpausing": "Unpausing",
         "startingMonitoring": "Starting Monitoring",
@@ -1292,24 +1292,24 @@
       "loading": "Loading Terms of Service..."
     },
     "statusBar": {
-      "backend": "Backend",
-      "frontend": "Frontend",
+      "backend": "Бэкенд",
+      "frontend": "Фронтенд",
       "connected": "Подключено",
       "updateAvailable": "Доступно обновление",
-      "upToDate": "Актуально",
+      "upToDate": "Обновлено",
       "statusMessage": "Статус",
-      "unreachable": "Недоступно",
-      "connecting": "Connecting...",
+      "unreachable": "Недоступен",
+      "connecting": "Подключение...",
       "disconnected": "Отключено",
       "notSynced": "Не синхронизировано",
-      "checkingStatus": "Checking...",
+      "checkingStatus": "Проверка...",
       "checkingStatusMessage": "Checking node status...",
       "notSyncedMessage": "Blockchain not synced (block {blocks}/{headers}, {blocksBehind} behind)",
       "connectedMessage": "Flux Gravity is operational and synced with the Flux network.",
       "connectingMessage": "Connecting to the Flux network. Flux Gravity is running with limited capabilities.",
       "disconnectedMessage": "Not connected to the Flux network. Flux Gravity is running with limited capabilities.",
-      "hideStatusBar": "Hide status bar",
-      "showStatusBar": "Show status bar",
+      "hideStatusBar": "Скрыть строку состояния",
+      "showStatusBar": "Показать строку состояния",
       "backendError": "Failed to fetch backend version",
       "error": "Недоступно",
       "manageCookiesTooltip": "Manage cookie preferences and privacy settings"
@@ -1321,25 +1321,25 @@
     },
     "marketplace": {
       "discoverCard": {
-        "title": "Discover Your Flux",
-        "subtitle": "Web3 Marketplace"
+        "title": "Откройте для себя Flux",
+        "subtitle": "Web3 Маркетплейс"
       },
       "appCard": {
         "install": "Установить",
         "view": "Просмотр",
-        "viewDetails": "View Details",
-        "defaultCategory": "Apps",
-        "noDescription": "No description available"
+        "viewDetails": "Подробнее",
+        "defaultCategory": "Приложения",
+        "noDescription": "Описание недоступно"
       },
       "fluxCloudAppCard": {
-        "unknownDeveloper": "Unknown Developer",
+        "unknownDeveloper": "Неизвестный разработчик",
         "install": "Установить",
-        "viewApp": "View App",
-        "sponsored": "Sponsored"
+        "viewApp": "Просмотр приложения",
+        "sponsored": "Спонсировано"
       },
       "gameCard": {
         "startingAt": "Starting at ${price} / month",
-        "viewDetails": "View Details"
+        "viewDetails": "Подробнее"
       },
       "marketplaceAppCard": {
         "unknown": "Неизвестно",
@@ -1350,12 +1350,12 @@
         "other": "другое"
       },
       "appList": {
-        "featured": "Featured",
-        "by": "by",
+        "featured": "Рекомендуемое",
+        "by": "от",
         "free": "Бесплатно",
-        "purchase": "Purchase",
+        "purchase": "Купить",
         "deploy": "Развернуть",
-        "details": "Details"
+        "details": "Подробности"
       },
       "sponsoredAppCard": {
         "unknown": "Неизвестно",
@@ -1394,15 +1394,15 @@
         "mostPopular": "Most Popular"
       },
       "appsGrid": {
-        "title": "Flux Applications",
-        "searchPlaceholder": "Search apps...",
-        "category": "Category",
-        "sortBy": "Sort by",
-        "allCategories": "All Categories",
-        "loadingApps": "Loading marketplace apps...",
-        "noAppsFound": "No apps found",
-        "adjustFilters": "Try adjusting your search or filters",
-        "resetFilters": "Reset Filters",
+        "title": "Приложения Flux",
+        "searchPlaceholder": "Поиск приложений...",
+        "category": "Категория",
+        "sortBy": "Сортировать по",
+        "allCategories": "Все категории",
+        "loadingApps": "Загрузка приложений маркетплейса...",
+        "noAppsFound": "Приложения не найдены",
+        "adjustFilters": "Попробуйте изменить поиск или фильтры",
+        "resetFilters": "Сбросить фильтры",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
         "refresh": "Обновить",
@@ -1559,7 +1559,7 @@
         "paymentType": "Payment Type",
         "crypto": "Crypto",
         "fiat": "Fiat",
-        "paymentMethod": "Payment Method",
+        "paymentMethod": "Способ оплаты",
         "totalPaid": "Total Paid",
         "subscriptionValidUntil": "Subscription Valid Until",
         "manageApplication": "Manage Application",
@@ -1601,13 +1601,13 @@
     },
     "xdao": {
       "addProposal": {
-        "title": "Add New Proposal",
-        "validated": "Validated",
+        "title": "Добавить новое предложение",
+        "validated": "Проверено",
         "completeFormToValidate": "Complete Form to Validate",
-        "validateProposal": "Validate Proposal",
+        "validateProposal": "Проверить предложение",
         "validatedSuccessfully": "Proposal Validated Successfully!",
-        "registrationFee": "Proposal Registration Fee",
-        "registerProposal": "Register Flux XDAO Proposal",
+        "registrationFee": "Плата за регистрацию предложения",
+        "registerProposal": "Зарегистрировать предложение Flux XDAO",
         "fields": {
           "topic": {
             "label": "Proposal Topic",
@@ -1664,10 +1664,10 @@
         }
       },
       "proposalDetail": {
-        "title": "Proposal Details",
-        "anonymous": "Anonymous",
-        "submitted": "Submitted",
-        "endDate": "End Date",
+        "title": "Подробности предложения",
+        "anonymous": "Анонимный",
+        "submitted": "Отправлено",
+        "endDate": "Дата окончания",
         "description": "Описание",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
@@ -1690,15 +1690,15 @@
           }
         },
         "voting": {
-          "castYourVote": "Cast Your Vote",
+          "castYourVote": "Отдайте свой голос",
           "makeYourVoiceHeard": "Make your voice heard",
           "loginRequired": "Требуется вход",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
           "votesAvailable": "votes available",
-          "voteYes": "Vote YES",
-          "voteNo": "Vote NO",
+          "voteYes": "Голосовать ЗА",
+          "voteNo": "Голосовать ПРОТИВ",
           "youHaveVoted": "You have voted",
           "yes": "Да",
           "no": "Нет",
@@ -1706,10 +1706,10 @@
           "votingEnds": "Voting ends"
         },
         "grant": {
-          "title": "Grant Information",
+          "title": "Информация о гранте",
           "fundingDetails": "Funding Details",
-          "grantAmount": "Grant Amount",
-          "recipientAddress": "Recipient Address",
+          "grantAmount": "Сумма гранта",
+          "recipientAddress": "Адрес получателя",
           "viewOnExplorer": "View on Explorer"
         },
         "technicalDetails": {
@@ -1941,37 +1941,37 @@
     "fluxDrive": {
       "fileManager": {
         "title": "FluxDrive",
-        "subtitle": "Secure decentralized storage",
-        "upgradePlan": "Upgrade Plan",
-        "searchPlaceholder": "Search files and folders...",
-        "listView": "List View",
-        "gridView": "Grid View",
+        "subtitle": "Безопасное децентрализованное хранилище",
+        "upgradePlan": "Обновить план",
+        "searchPlaceholder": "Поиск файлов и папок...",
+        "listView": "Список",
+        "gridView": "Сетка",
         "columnName": "Имя",
         "columnUpdated": "Updated",
         "columnSize": "Размер",
-        "newFolder": "New Folder",
+        "newFolder": "Новая папка",
         "upload": "Загрузить",
-        "uploadFiles": "Upload Files",
-        "uploadFolder": "Upload Folder",
+        "uploadFiles": "Загрузить файлы",
+        "uploadFolder": "Загрузить папку",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
         "filesMissingDescription": "Some files totaling {storage} could not be located. This may indicate data corruption.",
         "showAllFilesRecovery": "Show All Files (Recovery Mode)",
         "backToNormalMode": "Back to Normal Mode",
-        "noFilesFound": "No Files Found",
-        "folderEmpty": "This Folder is Empty",
+        "noFilesFound": "Файлы не найдены",
+        "folderEmpty": "Эта папка пуста",
         "noFilesMatch": "No files match \"{query}\"",
-        "dropFilesHere": "Drop files here to upload",
+        "dropFilesHere": "Перетащите файлы сюда для загрузки",
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
-        "preview": "Preview",
+        "preview": "Предпросмотр",
         "download": "Скачать",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
         "rename": "Переименовать",
-        "moveTo": "Move To",
-        "copyLink": "Copy Link",
+        "moveTo": "Переместить в",
+        "copyLink": "Копировать ссылку",
         "delete": "Удалить",
         "paginationInfo": "Showing {start}-{end} of {total}",
         "edit": "Редактировать",
@@ -1990,10 +1990,10 @@
         "commentValidation": "Comment must be less than 100 characters",
         "downloading": "Downloading",
         "downloadProgress": "Download progress: {progress}%",
-        "confirmDelete": "Confirm Delete",
+        "confirmDelete": "Подтвердить удаление",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "Папка",
-        "file": "Файл",
+        "folder": "папка",
+        "file": "файл",
         "cancel": "Отмена",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
@@ -2114,35 +2114,35 @@
   "pages": {
     "administration": {
       "systemInfo": {
-        "loadingTitle": "Loading System Information...",
-        "errorTitle": "System Information Unavailable",
-        "errorSubtitle": "Unable to load system information at this time.",
-        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
-        "title": "System Information",
-        "subtitle": "View system resources and component versions",
-        "resourcesAllocated": "Resources Allocated",
+        "title": "Информация о системе",
+        "subtitle": "Просмотр системных ресурсов и версий компонентов",
+        "resourcesAllocated": "Выделенные ресурсы",
         "storage": "Хранилище",
-        "storageUsed": "{used} GB",
-        "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
-        "vcpuUsed": "{used} vCores",
-        "vcpuTotal": "of {total} vCores",
         "ram": "RAM",
-        "ramUsed": "{used} GB",
-        "ramTotal": "of {total} GB",
         "applications": "Приложения",
         "installedApps": "Установленные приложения",
+        "appsHashes": "Хеши приложений",
+        "componentVersions": "Версии компонентов",
+        "vcpuUsed": "{used} vCores",
+        "ramTotal": "of {total} GB",
+        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
+        "errorSubtitle": "Unable to load system information at this time.",
         "installedAppsCount": "{count} application(s)",
-        "appsHashes": "Apps Hashes",
+        "loadingTitle": "Loading System Information...",
+        "ramUsed": "{used} GB",
+        "storageTotal": "of {total} GB",
         "notSynced": "{count} not synced",
-        "componentVersions": "Component Versions"
+        "storageUsed": "{used} GB",
+        "errorTitle": "System Information Unavailable",
+        "vcpuTotal": "of {total} vCores"
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Docker Events",
-        "subtitle": "Monitor Docker container events and activity",
-        "recentEvents": "Recent Events",
-        "noEventsAvailable": "No Docker events available",
+        "title": "События Docker",
+        "subtitle": "Мониторинг событий и активности контейнеров Docker",
+        "recentEvents": "Недавние события",
+        "noEventsAvailable": "События Docker недоступны",
         "errorLoadingEvents": "Failed to load Docker events"
       },
       "fluxShare": {
@@ -2486,14 +2486,14 @@
     "apps": {
       "manage": {
         "tabs": {
-          "specifications": "Specifications",
-          "information": "Information",
-          "fileChanges": "File Changes",
-          "monitoring": "Monitoring",
-          "logs": "Logs",
-          "terminal": "Secure Shell",
-          "control": "Control",
-          "backupRestore": "Backup & Restore",
+          "specifications": "Спецификации",
+          "information": "Информация",
+          "fileChanges": "Изменения файлов",
+          "monitoring": "Мониторинг",
+          "logs": "Логи",
+          "terminal": "Безопасная оболочка",
+          "control": "Управление",
+          "backupRestore": "Резервное копирование и восстановление",
           "instances": "Экземпляры",
           "subscription": "Подписка"
         },
@@ -3566,34 +3566,6 @@
       }
     },
     "dashboard": {
-      "overview": {
-        "intro": {
-          "title": "Welcome to Flux Ecosystem",
-          "blockchain": {
-            "title": "Flux Blockchain",
-            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
-          },
-          "cloud": {
-            "title": "FluxCloud Network",
-            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
-          },
-          "learnMore": "Узнать больше"
-        },
-        "totalNodes": "Total Nodes",
-        "nodeHistory": "Node History",
-        "lockedSupply": "Locked Supply",
-        "fluxSupply": "FLUX Supply",
-        "maxSupply": "Max Supply",
-        "circulatingSupply": "Circulating Supply",
-        "cumulus": "Cumulus",
-        "nimbus": "Nimbus",
-        "stratus": "Stratus",
-        "versionBreakdown": "Version Breakdown",
-        "tierBreakdown": "Tier Breakdown",
-        "legacy": "Legacy",
-        "nodes": "node | nodes",
-        "errorFetchingHistoryStats": "Unable to fetch history stats"
-      },
       "locations": {
         "intro": {
           "title": "Global FluxCloud Network",
@@ -3673,6 +3645,34 @@
           "failedToFetchNodeCount": "Failed to fetch node count",
           "failedToFetchBlockReward": "Failed to fetch block reward"
         }
+      },
+      "overview": {
+        "nodes": "node | nodes",
+        "cumulus": "Cumulus",
+        "intro": {
+          "learnMore": "Learn More",
+          "blockchain": {
+            "title": "Flux Blockchain",
+            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
+          },
+          "cloud": {
+            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud.",
+            "title": "FluxCloud Network"
+          },
+          "title": "Welcome to Flux Ecosystem"
+        },
+        "legacy": "Legacy",
+        "circulatingSupply": "Circulating Supply",
+        "fluxSupply": "FLUX Supply",
+        "nodeHistory": "Node History",
+        "tierBreakdown": "Tier Breakdown",
+        "maxSupply": "Max Supply",
+        "versionBreakdown": "Version Breakdown",
+        "errorFetchingHistoryStats": "Unable to fetch history stats",
+        "totalNodes": "Total Nodes",
+        "lockedSupply": "Locked Supply",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus"
       }
     },
     "fluxDrive": {
@@ -4981,7 +4981,7 @@
       }
     },
     "xdao": {
-      "title": "Flux XDAO",
+      "title": "Flux xDAO",
       "subtitle": "Decentralized Governance Platform",
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
@@ -4993,9 +4993,9 @@
       "filterProposals": "Filter Proposals",
       "allProposals": "All Proposals",
       "open": "Открыть",
-      "passed": "Passed",
+      "passed": "Принято",
       "unpaid": "Unpaid",
-      "rejected": "Rejected",
+      "rejected": "Отклонено",
       "searchProposals": "Search proposals...",
       "sortBy": "Sort by",
       "latest": "Latest",
@@ -5131,10 +5131,10 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "Данные не доступны",
+    "noDataText": "Нет данных",
     "dataIterator": {
-      "loadingText": "Loading your data, please wait...",
-      "noResultsText": "No matching records found.",
+      "loadingText": "Загрузка элементов...",
+      "noResultsText": "Не найдено совпадающих записей",
       "noDataText": "No data available."
     },
     "close": "Закрыть",
@@ -5146,29 +5146,29 @@
       }
     },
     "dataFooter": {
-      "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "все",
-      "pageText": "{0}-{1} of {2}",
-      "firstPage": "First Page",
-      "prevPage": "Previous Page",
-      "nextPage": "Next Page",
-      "lastPage": "Last Page"
+      "itemsPerPageText": "Элементов на страницу:",
+      "itemsPerPageAll": "Все",
+      "pageText": "{0}-{1} из {2}",
+      "firstPage": "Первая страница",
+      "prevPage": "Предыдущая страница",
+      "nextPage": "Следующая страница",
+      "lastPage": "Последняя страница"
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
-        "previous": "Назад",
+        "root": "Навигация по страницам",
+        "previous": "Предыдущая страница",
         "first": "first",
         "last": "last",
-        "next": "Далее",
-        "currentPage": "currentPage",
-        "page": "page"
+        "next": "Следующая страница",
+        "currentPage": "Страница {0}, текущая страница",
+        "page": "Перейти на страницу {0}"
       }
     },
     "input": {
-      "clear": "Очистить",
-      "appendAction": "appendAction",
-      "prependAction": "prependAction",
+      "clear": "Очистить {0}",
+      "appendAction": "Действие добавления в конец {0}",
+      "prependAction": "Действие добавления {0}",
       "counterSize": "counterSize",
       "otp": "otp"
     },

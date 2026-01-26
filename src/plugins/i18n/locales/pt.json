@@ -19,7 +19,7 @@
       "export": "Exportar",
       "import": "Importar",
       "edit": "Editar",
-      "view": "Visualizar",
+      "view": "Ver",
       "refresh": "Atualizar",
       "reload": "Recarregar",
       "back": "Voltar",
@@ -53,7 +53,7 @@
       "location": "Localização",
       "country": "País",
       "city": "Cidade",
-      "email": "Email",
+      "email": "E-mail",
       "password": "Senha",
       "username": "Nome de usuário",
       "address": "Endereço",
@@ -62,8 +62,8 @@
       "tier": "Nível",
       "price": "Preço",
       "total": "Total",
-      "amount": "Quantidade",
-      "free": "Gratuito",
+      "amount": "Quantia",
+      "free": "Grátis",
       "memory": "Memória",
       "storage": "Armazenamento",
       "screenshots": "Capturas de tela",
@@ -72,20 +72,20 @@
       "lastUpdate": "Última atualização",
       "downloads": "Downloads",
       "links": "Links",
-      "website": "Website",
-      "sourceCode": "Código-fonte",
+      "website": "Site",
+      "sourceCode": "Código fonte",
       "support": "Suporte",
       "plan": "Plano",
       "billing": "Cobrança",
       "monthly": "Mensal",
-      "scrollLeft": "Scroll left",
-      "scrollRight": "Scroll right",
-      "optional": "Optional"
+      "scrollLeft": "Rolar para a esquerda",
+      "scrollRight": "Rolar para a direita",
+      "optional": "Opcional"
     },
     "theme": {
       "light": "Claro",
       "dark": "Escuro",
-      "switchTheme": "Alternar tema"
+      "switchTheme": "Mudar tema"
     },
     "status": {
       "loading": "Carregando...",
@@ -115,22 +115,22 @@
       "noData": "No data available",
       "noResults": "No results found",
       "errorOccurred": "An error occurred",
-      "operationSuccess": "Operation completed successfully",
-      "operationFailed": "Operation failed",
+      "operationSuccess": "Operação concluída com sucesso",
+      "operationFailed": "Operação falhou",
       "confirmDelete": "Are you sure you want to delete?",
       "unsavedChanges": "You have unsaved changes",
       "invalidInput": "Invalid input",
-      "required": "This field is required",
+      "required": "Este campo é obrigatório",
       "connectionError": "Connection error. Please try again.",
       "unauthorized": "Unauthorized access",
       "notFound": "Not found",
       "serverError": "Server error. Please try again later.",
       "copiedToClipboard": "Copied to clipboard!",
       "failedToCopy": "Failed to copy to clipboard",
-      "loginRequired": "Login Required",
+      "loginRequired": "Login necessário",
       "loggedOutSuccessfully": "Logged out successfully"
     },
-    "itemsPerPage": "Items per page",
+    "itemsPerPage": "Itens por página",
     "of": "of",
     "selectServerConfiguration": "Select Server Configuration",
     "groups": {
@@ -139,14 +139,14 @@
       "largeServers": "Large Servers"
     },
     "guarantee": {
-      "title": "30-Day Money-Back Guarantee",
+      "title": "Garantia de 30 dias",
       "description": "Try our service risk-free. If you're not completely satisfied within the first 30 days, we'll refund your payment—no questions asked.",
       "shortTitle": "Money-Back Guarantee",
       "badge": "30-Day Guarantee",
       "trustMessage": "Your satisfaction is our priority"
     },
     "trustpilot": {
-      "title": "Trusted by Thousands",
+      "title": "Milhares confiam",
       "ratingLabel": "Excellent",
       "rating": "4.5 out of 5",
       "reviews": "Based on 16 reviews",
@@ -183,7 +183,7 @@
       "disk": "Disco",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
-      "bandwidth": "Largura de banda",
+      "bandwidth": "Largura de Banda",
       "cores": "Núcleos",
       "threads": "Threads"
     },
@@ -243,11 +243,11 @@
     "application": {
       "title": "Aplicações",
       "myApplications": "Minhas aplicações",
-      "management": "Gerenciamento",
-      "globalApps": "Aplicações globais",
-      "localApps": "Aplicações locais",
-      "registerNewApp": "Registrar nova aplicação",
-      "marketplace": "Mercado de aplicações",
+      "management": "Gestão",
+      "globalApps": "Apps globais",
+      "localApps": "Apps locais",
+      "registerNewApp": "Registrar nova app",
+      "marketplace": "Marketplace de apps",
       "marketplaceApps": "Aplicações",
       "marketplaceGames": "Jogos",
       "marketplaceWordPress": "WordPress",
@@ -300,11 +300,11 @@
     },
     "administration": {
       "title": "Administração",
-      "systemInfo": "Informações",
-      "dockerEvents": "Eventos Docker",
+      "systemInfo": "Informações do sistema",
+      "dockerEvents": "Eventos do Docker",
       "manageFlux": "Gerenciar Flux Gravity",
-      "manageDaemon": "Gerenciar daemon",
-      "manageBenchmark": "Gerenciar benchmark",
+      "manageDaemon": "Gerenciar Daemon",
+      "manageBenchmark": "Gerenciar Benchmark",
       "manageUsers": "Gerenciar usuários",
       "loggedSessions": "Sessões registradas",
       "myFluxShare": "Meu FluxShare",
@@ -314,7 +314,7 @@
       "title": "Flux XDAO"
     },
     "costCalculator": {
-      "title": "Calculadora de custo"
+      "title": "Calculadora de custos"
     },
     "apiReference": {
       "title": "Ajuda"
@@ -325,31 +325,31 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "Decentralized Application Management",
-    "fluxCloudDescription": "Monitorize e gerencie todas as suas aplicações Docker em contêineres a correr na rede cloud descentralizada Flux. Veja o estado em tempo real, utilização de recursos e métricas de desempenho das suas aplicações distribuídas implantadas na nossa infraestrutura global alimentada por blockchain. Clique em qualquer aplicação para aceder a controlos de gestão detalhados e análises."
+    "fluxCloudSubtitle": "Gestão de Aplicações Descentralizada",
+    "fluxCloudDescription": "Monitore e gerencie todas as suas aplicações Docker executando na rede de nuvem descentralizada Flux. Veja o status em tempo real, uso de recursos e métricas de desempenho de seus apps distribuídos implantados em nossa infraestrutura global alimentada por blockchain. Clique em qualquer aplicação para acessar controles de gerenciamento detalhados e análises."
   },
   "sections": {
     "dashboard": {
       "title": "Rede Flux",
-      "description": "Consulte informações da rede Flux, recursos disponíveis ou um mapa com a localização dos servidores."
+      "description": "Verifique informações da rede Flux, recursos disponíveis ou um mapa com localizações de servidores."
     },
     "application": {
       "title": "Aplicações",
-      "description": "Compre no marketplace, registe a sua própria aplicação, gerencie as suas aplicações ativas."
+      "description": "Compre no marketplace, registre seu próprio app, gerencie seus apps ativos."
     },
     "administration": {
       "title": "Administração",
-      "description": "Ferramentas para administradores de infraestrutura e operadores de nós permitem gerir o Flux Gravity."
+      "description": "Ferramentas de administração do Flux Gravity para administradores de infraestrutura e operadores de nós."
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "Veja a lista de alterações propostas à rede Flux, crie novas e vote."
+      "description": "Veja a lista de alterações propostas para a rede Flux, crie novas e vote."
     }
   },
   "core": {
     "appDetailsCard": {
       "general": "Geral",
-      "copySpecification": "Copiar especificação",
+      "copySpecification": "Copiar Especificação",
       "updateSubscription": "Atualizar",
       "renewSubscription": "Renovar",
       "cancelSubscription": "Cancelar",
@@ -359,17 +359,17 @@
       "hash": "Hash",
       "contacts": "Contatos",
       "geolocation": "Geolocalização",
-      "worldwide": "Worldwide",
+      "worldwide": "Mundial",
       "instances": "Instâncias",
-      "specificationsVersion": "Versão das especificações",
-      "registeredOnBlockheight": "Registrado em altura de bloco",
-      "expiresOnBlockheight": "Expira em altura de bloco",
+      "specificationsVersion": "Versão da Especificação",
+      "registeredOnBlockheight": "Registrado na Altura do Bloco",
+      "expiresOnBlockheight": "Expira na Altura do Bloco",
       "expiresIn": "Expira em",
       "enterpriseNodes": "Nós Enterprise",
-      "notScoped": "Sem escopo",
-      "staticIp": "IP estático",
-      "staticIpYes": "Sim, executando apenas em nós com IP estático",
-      "staticIpNo": "Não, executando em todos os nós",
+      "notScoped": "Não Delimitado",
+      "staticIp": "IP Estático",
+      "staticIpYes": "Sim, Executando apenas em nós com IP Estático",
+      "staticIpNo": "Não, Executando em todos os nós",
       "specificationCopied": "Especificação da aplicação copiada para a área de transferência!",
       "specificationCopyFailed": "Falha ao copiar especificação",
       "unknown": "Desconhecido",
@@ -378,26 +378,26 @@
       "region": ", Region: {name}",
       "allowedContinent": "Allowed: Continent: {name}",
       "forbiddenContinent": "Forbidden: Continent: {name}",
-      "notAvailable": "Não disponível",
-      "applicationExpired": "Aplicação expirada"
+      "notAvailable": "Não Disponível",
+      "applicationExpired": "Aplicação Expirada"
     },
     "componentDetails": {
       "name": "Nome",
       "description": "Descrição",
       "repository": "Repositório",
-      "repositoryAuthentication": "Autenticação do repositório",
+      "repositoryAuthentication": "Autenticação de Repositório",
       "private": "Privado",
       "public": "Público",
-      "customDomains": "Domínios personalizados",
-      "automaticDomains": "Domínios automáticos",
+      "customDomains": "Domínios Personalizados",
+      "automaticDomains": "Domínios Automáticos",
       "ports": "Portas",
-      "containerPorts": "Portas do contêiner",
-      "containerData": "Dados do contêiner",
-      "environmentParameters": "Parâmetros de ambiente",
+      "containerPorts": "Portas do Container",
+      "containerData": "Dados do Container",
+      "environmentParameters": "Parâmetros de Ambiente",
       "commands": "Comandos",
       "secrets": "Segredos",
-      "contentEncrypted": "Conteúdo criptografado",
-      "hardwareResources": "Recursos de hardware",
+      "contentEncrypted": "Conteúdo Criptografado",
+      "hardwareResources": "Recursos de Hardware",
       "cpu": "CPU",
       "ram": "RAM",
       "ssd": "SSD/NVMe",
@@ -509,12 +509,12 @@
       }
     },
     "terminal": {
-      "title": "Shell seguro",
-      "selectComponent": "Selecionar componente",
-      "selectCommand": "Selecionar comando",
+      "title": "Shell Seguro",
+      "selectComponent": "Selecionar Componente",
+      "selectCommand": "Selecionar Comando",
       "connect": "Conectar",
       "disconnect": "Desconectar",
-      "newTerminal": "Novo terminal",
+      "newTerminal": "Novo Terminal",
       "popOutAll": "Fixar todos os terminais no gerenciador",
       "user": "Usuário",
       "environment": "Ambiente",
@@ -547,15 +547,15 @@
       }
     },
     "logViewer": {
-      "title": "Visualizador de logs",
+      "title": "Visualizador de Logs",
       "component": "Componente",
       "selectComponent": "Selecionar componente",
       "lineCount": "Contagem de linhas",
       "logsSince": "Logs desde",
-      "filterLogs": "Filtrar logs",
+      "filterLogs": "Filtrar Logs",
       "enterKeywords": "Insira palavras-chave...",
       "advanceOptions": "Opções avançadas",
-      "autoRefresh": "Atualização automática",
+      "autoRefresh": "Atualização Automática",
       "displayAllLogs": "Exibir todos os logs",
       "displayTimestamp": "Exibir timestamp",
       "lineSelection": "Modo de seleção de linha",
@@ -573,13 +573,13 @@
     "backupAndRestore": {
       "backup": "Backup",
       "restore": "Restaurar",
-      "backupContainerData": "Dados do contêiner de backup",
-      "selectComponentsToBackup": "Selecionar componente(s) para backup",
+      "backupContainerData": "Backup de Dados do Container",
+      "selectComponentsToBackup": "Selecione componente(s) para backup",
       "selectAll": "Selecionar tudo",
-      "createBackup": "Criar backup",
-      "availableLocalBackups": "Backups locais disponíveis",
-      "downloadSelected": "Baixar selecionados",
-      "downloadAll": "Baixar tudo",
+      "createBackup": "Criar Backup",
+      "availableLocalBackups": "Backups Locais Disponíveis",
+      "downloadSelected": "Baixar Selecionados",
+      "downloadAll": "Baixar Tudo",
       "removeAllBackupFiles": "Remover todos os arquivos de backup",
       "backupListDescription": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime.",
       "downloadBackupFile": "Download backup file",
@@ -633,35 +633,35 @@
       "invalidUrlValidation": "Please enter a valid URL ending with .tar.gz"
     },
     "login": {
-      "automatedLogin": "Login automatizado",
-      "thirdPartyLogin": "Login de terceiros",
+      "automatedLogin": "Login Automatizado",
+      "thirdPartyLogin": "Login de Terceiros",
       "emailPassword": "Email/Senha",
-      "finishingLogin": "Finalizando login",
-      "pleaseWait": "Please wait...",
+      "finishingLogin": "Finalizando Login",
+      "pleaseWait": "Por favor aguarde...",
       "cancelVerification": "Cancelar verificação",
       "finishingVerification": "Finalizando verificação",
       "checkEmail": "Verifique seu email",
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
       "bySigningIn": "Ao entrar, você concorda com nossos",
-      "termsOfService": "Termos de serviço",
+      "termsOfService": "Termos de Serviço",
       "and": "e",
-      "privacyPolicy": "Política de privacidade",
+      "privacyPolicy": "Política de Privacidade",
       "email": "Email",
       "password": "Senha",
       "login": "Entrar",
-      "signUp": "Sign Up",
-      "dontHaveAccount": "Don't have an account?",
+      "signUp": "Cadastrar",
+      "dontHaveAccount": "Não tem conta?",
       "or": "OU",
-      "decentralizedLogin": "Login descentralizado",
+      "decentralizedLogin": "Login Descentralizado",
       "decentralizedWallets": "Carteiras",
-      "walletLoginInfo": "Faça login usando sua carteira criptográfica",
+      "walletLoginInfo": "Entre com sua carteira crypto",
       "manualLogin": "Manual",
       "loginWithZelcore": "Entrar com Zelcore",
       "loginWithSSP": "Entrar com SSP",
       "loginWithWalletConnect": "Entrar com WalletConnect",
       "loginWithMetamask": "Entrar com Metamask",
-      "signWithWallet": "Assinar mensagem com sua carteira",
+      "signWithWallet": "Assine a mensagem com sua carteira",
       "message": "Mensagem",
       "insertMessage": "Inserir mensagem",
       "clickToGetMessage": "Clique em atualizar para obter uma nova frase de login",
@@ -685,7 +685,7 @@
       "passwordMismatch": "As senhas não coincidem",
       "googleError": "Falha no login do Google",
       "appleError": "Falha no login do Apple",
-      "loginFailed": "Falha no login, tente novamente",
+      "loginFailed": "Falha no login, por favor tente novamente",
       "invalidCredential": "Email ou senha inválidos. Verifique e tente novamente.",
       "userNotFound": "Nenhuma conta encontrada com este email. Por favor, inscreva-se primeiro.",
       "wrongPassword": "Senha incorreta. Tente novamente.",
@@ -711,35 +711,35 @@
       "customBackend": "Backend personalizado"
     },
     "appControl": {
-      "title": "Controle de aplicação",
+      "title": "Controle de Aplicação",
       "control": "Controle",
       "manual": "Manual",
       "component": "Componente",
       "local": "Local",
       "global": "Global",
-      "manualSelection": "Seleção manual",
+      "manualSelection": "Seleção Manual",
       "available": "Disponível",
-      "selected": "Selected",
-      "monitoring": "Monitoring",
-      "showLogs": "Mostrar logs",
-      "hideLogs": "Ocultar logs",
+      "selected": "Selecionado",
+      "monitoring": "Monitoramento",
+      "showLogs": "Mostrar Logs",
+      "hideLogs": "Ocultar Logs",
       "buttons": {
-        "startComponent": "Start Component",
-        "stopComponent": "Stop Component",
-        "restartComponent": "Restart Component",
-        "pauseComponent": "Pause Component",
-        "unpauseComponent": "Unpause Component",
-        "startApplication": "Start Application",
-        "stopApplication": "Stop Application",
-        "restartApplication": "Restart Application",
+        "startComponent": "Iniciar Componente",
+        "stopComponent": "Parar Componente",
+        "restartComponent": "Reiniciar Componente",
+        "pauseComponent": "Pausar Componente",
+        "unpauseComponent": "Retomar Componente",
+        "startApplication": "Iniciar Aplicação",
+        "stopApplication": "Parar Aplicação",
+        "restartApplication": "Reiniciar Aplicação",
         "pauseApplication": "Pause Application",
         "unpauseApplication": "Unpause Application",
-        "removeApplication": "Remove Application",
-        "softReinstall": "Reinstalação suave",
-        "hardReinstall": "Reinstalação completa",
-        "startMonitoring": "Iniciar monitoramento",
-        "stopMonitoring": "Parar monitoramento",
-        "stopMonitoringDelete": "Parar e excluir dados"
+        "removeApplication": "Remover Aplicação",
+        "softReinstall": "Reinstalação Suave",
+        "hardReinstall": "Reinstalação Completa",
+        "startMonitoring": "Iniciar Monitoramento",
+        "stopMonitoring": "Parar Monitoramento",
+        "stopMonitoringDelete": "Parar e Excluir Dados"
       },
       "tooltips": {
         "addSelected": "Add selected items",
@@ -770,9 +770,9 @@
         "hardReinstall": "Hard reinstall will completely remove and redeploy the application. All application data will be deleted. This action cannot be undone."
       },
       "operations": {
-        "starting": "Starting",
-        "stopping": "Stopping",
-        "restarting": "Restarting",
+        "starting": "Iniciando",
+        "stopping": "Parando",
+        "restarting": "Reiniciando",
         "pausing": "Pausing",
         "unpausing": "Unpausing",
         "startingMonitoring": "Starting Monitoring",
@@ -1294,22 +1294,22 @@
     "statusBar": {
       "backend": "Backend",
       "frontend": "Frontend",
-      "connected": "Connected",
-      "updateAvailable": "Update Available",
-      "upToDate": "Up to date",
+      "connected": "Conectado",
+      "updateAvailable": "Atualização Disponível",
+      "upToDate": "Atualizado",
       "statusMessage": "Status",
-      "unreachable": "Unreachable",
-      "connecting": "Connecting...",
-      "disconnected": "Disconnected",
-      "notSynced": "Not Synced",
-      "checkingStatus": "Checking...",
+      "unreachable": "Inacessível",
+      "connecting": "Conectando...",
+      "disconnected": "Desconectado",
+      "notSynced": "Não Sincronizado",
+      "checkingStatus": "Verificando...",
       "checkingStatusMessage": "Checking node status...",
       "notSyncedMessage": "Blockchain not synced (block {blocks}/{headers}, {blocksBehind} behind)",
       "connectedMessage": "Flux Gravity is operational and synced with the Flux network.",
       "connectingMessage": "Connecting to the Flux network. Flux Gravity is running with limited capabilities.",
       "disconnectedMessage": "Not connected to the Flux network. Flux Gravity is running with limited capabilities.",
-      "hideStatusBar": "Hide status bar",
-      "showStatusBar": "Show status bar",
+      "hideStatusBar": "Ocultar barra de status",
+      "showStatusBar": "Mostrar barra de status",
       "backendError": "Failed to fetch backend version",
       "error": "Unreachable",
       "manageCookiesTooltip": "Manage cookie preferences and privacy settings"
@@ -1321,41 +1321,41 @@
     },
     "marketplace": {
       "discoverCard": {
-        "title": "Discover Your Flux",
-        "subtitle": "Web3 Marketplace"
+        "title": "Descubra seu Flux",
+        "subtitle": "Marketplace Web3"
       },
       "appCard": {
         "install": "Instalar",
-        "view": "Visualizar",
-        "viewDetails": "View Details",
+        "view": "Ver",
+        "viewDetails": "Ver Detalhes",
         "defaultCategory": "Apps",
-        "noDescription": "No description available"
+        "noDescription": "Sem descrição disponível"
       },
       "fluxCloudAppCard": {
-        "unknownDeveloper": "Unknown Developer",
+        "unknownDeveloper": "Desenvolvedor Desconhecido",
         "install": "Instalar",
-        "viewApp": "View App",
-        "sponsored": "Sponsored"
+        "viewApp": "Ver App",
+        "sponsored": "Patrocinado"
       },
       "gameCard": {
         "startingAt": "Starting at ${price} / month",
-        "viewDetails": "View Details"
+        "viewDetails": "Ver Detalhes"
       },
       "marketplaceAppCard": {
         "unknown": "Desconhecido",
-        "free": "Gratuito",
+        "free": "Grátis",
         "install": "Instalar",
         "viewDetails": "View Details",
         "noDescription": "No description available",
         "other": "Other"
       },
       "appList": {
-        "featured": "Featured",
-        "by": "by",
+        "featured": "Destaque",
+        "by": "por",
         "free": "Gratuito",
-        "purchase": "Purchase",
-        "deploy": "Deploy",
-        "details": "Details"
+        "purchase": "Comprar",
+        "deploy": "Implantar",
+        "details": "Detalhes"
       },
       "sponsoredAppCard": {
         "unknown": "Desconhecido",
@@ -1394,15 +1394,15 @@
         "mostPopular": "Most Popular"
       },
       "appsGrid": {
-        "title": "Flux Applications",
-        "searchPlaceholder": "Search apps...",
-        "category": "Category",
-        "sortBy": "Sort by",
-        "allCategories": "All Categories",
-        "loadingApps": "Loading marketplace apps...",
-        "noAppsFound": "No apps found",
-        "adjustFilters": "Try adjusting your search or filters",
-        "resetFilters": "Reset Filters",
+        "title": "Aplicações Flux",
+        "searchPlaceholder": "Buscar apps...",
+        "category": "Categoria",
+        "sortBy": "Ordenar por",
+        "allCategories": "Todas as Categorias",
+        "loadingApps": "Carregando apps do marketplace...",
+        "noAppsFound": "Nenhum app encontrado",
+        "adjustFilters": "Tente ajustar sua busca ou filtros",
+        "resetFilters": "Redefinir Filtros",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
         "refresh": "Atualizar",
@@ -1559,7 +1559,7 @@
         "paymentType": "Payment Type",
         "crypto": "Crypto",
         "fiat": "Fiat",
-        "paymentMethod": "Payment Method",
+        "paymentMethod": "Método de Pagamento",
         "totalPaid": "Total Paid",
         "subscriptionValidUntil": "Subscription Valid Until",
         "manageApplication": "Manage Application",
@@ -1601,13 +1601,13 @@
     },
     "xdao": {
       "addProposal": {
-        "title": "Add New Proposal",
-        "validated": "Validated",
+        "title": "Adicionar Nova Proposta",
+        "validated": "Validado",
         "completeFormToValidate": "Complete Form to Validate",
-        "validateProposal": "Validate Proposal",
+        "validateProposal": "Validar Proposta",
         "validatedSuccessfully": "Proposal Validated Successfully!",
-        "registrationFee": "Proposal Registration Fee",
-        "registerProposal": "Register Flux XDAO Proposal",
+        "registrationFee": "Taxa de Registro de Proposta",
+        "registerProposal": "Registrar Proposta Flux XDAO",
         "fields": {
           "topic": {
             "label": "Proposal Topic",
@@ -1664,10 +1664,10 @@
         }
       },
       "proposalDetail": {
-        "title": "Proposal Details",
-        "anonymous": "Anonymous",
-        "submitted": "Submitted",
-        "endDate": "End Date",
+        "title": "Detalhes da Proposta",
+        "anonymous": "Anônimo",
+        "submitted": "Enviado",
+        "endDate": "Data de Término",
         "description": "Descrição",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
@@ -1690,15 +1690,15 @@
           }
         },
         "voting": {
-          "castYourVote": "Cast Your Vote",
+          "castYourVote": "Vote",
           "makeYourVoiceHeard": "Make your voice heard",
           "loginRequired": "Login Required",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
           "votesAvailable": "votes available",
-          "voteYes": "Vote YES",
-          "voteNo": "Vote NO",
+          "voteYes": "Votar SIM",
+          "voteNo": "Votar NÃO",
           "youHaveVoted": "You have voted",
           "yes": "YES",
           "no": "NO",
@@ -1706,10 +1706,10 @@
           "votingEnds": "Voting ends"
         },
         "grant": {
-          "title": "Grant Information",
+          "title": "Informações da Concessão",
           "fundingDetails": "Funding Details",
-          "grantAmount": "Grant Amount",
-          "recipientAddress": "Recipient Address",
+          "grantAmount": "Valor da Concessão",
+          "recipientAddress": "Endereço do Destinatário",
           "viewOnExplorer": "View on Explorer"
         },
         "technicalDetails": {
@@ -1941,37 +1941,37 @@
     "fluxDrive": {
       "fileManager": {
         "title": "FluxDrive",
-        "subtitle": "Secure decentralized storage",
-        "upgradePlan": "Upgrade Plan",
-        "searchPlaceholder": "Search files and folders...",
-        "listView": "List View",
-        "gridView": "Grid View",
+        "subtitle": "Armazenamento descentralizado seguro",
+        "upgradePlan": "Atualizar Plano",
+        "searchPlaceholder": "Buscar arquivos e pastas...",
+        "listView": "Visualização de Lista",
+        "gridView": "Visualização de Grade",
         "columnName": "Nome",
         "columnUpdated": "Updated",
         "columnSize": "Tamanho",
-        "newFolder": "New Folder",
+        "newFolder": "Nova Pasta",
         "upload": "Enviar",
-        "uploadFiles": "Enviar arquivos",
-        "uploadFolder": "Upload Folder",
+        "uploadFiles": "Enviar Arquivos",
+        "uploadFolder": "Enviar Pasta",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
         "filesMissingDescription": "Some files totaling {storage} could not be located. This may indicate data corruption.",
         "showAllFilesRecovery": "Show All Files (Recovery Mode)",
         "backToNormalMode": "Back to Normal Mode",
-        "noFilesFound": "No Files Found",
-        "folderEmpty": "This Folder is Empty",
+        "noFilesFound": "Nenhum Arquivo Encontrado",
+        "folderEmpty": "Esta Pasta Está Vazia",
         "noFilesMatch": "No files match \"{query}\"",
-        "dropFilesHere": "Drop files here to upload",
+        "dropFilesHere": "Arraste arquivos aqui para enviar",
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
-        "preview": "Preview",
+        "preview": "Pré-visualização",
         "download": "Baixar",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
         "rename": "Renomear",
-        "moveTo": "Move To",
-        "copyLink": "Copy Link",
+        "moveTo": "Mover para",
+        "copyLink": "Copiar Link",
         "delete": "Excluir",
         "paginationInfo": "Showing {start}-{end} of {total}",
         "edit": "Editar",
@@ -1990,10 +1990,10 @@
         "commentValidation": "Comment must be less than 100 characters",
         "downloading": "Downloading",
         "downloadProgress": "Download progress: {progress}%",
-        "confirmDelete": "Confirm Delete",
+        "confirmDelete": "Confirmar Exclusão",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "folder",
-        "file": "file",
+        "folder": "pasta",
+        "file": "arquivo",
         "cancel": "Cancelar",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
@@ -2114,35 +2114,35 @@
   "pages": {
     "administration": {
       "systemInfo": {
-        "loadingTitle": "Loading System Information...",
-        "errorTitle": "System Information Unavailable",
-        "errorSubtitle": "Unable to load system information at this time.",
-        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
-        "title": "System Information",
-        "subtitle": "View system resources and component versions",
-        "resourcesAllocated": "Resources Allocated",
+        "title": "Informações do Sistema",
+        "subtitle": "Ver recursos do sistema e versões de componentes",
+        "resourcesAllocated": "Recursos Alocados",
         "storage": "Armazenamento",
-        "storageUsed": "{used} GB",
-        "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
-        "vcpuUsed": "{used} vCores",
-        "vcpuTotal": "of {total} vCores",
         "ram": "RAM",
-        "ramUsed": "{used} GB",
-        "ramTotal": "of {total} GB",
         "applications": "Aplicações",
-        "installedApps": "Aplicações instaladas",
+        "installedApps": "Apps Instalados",
+        "appsHashes": "Hashes de Apps",
+        "componentVersions": "Versões de Componentes",
+        "vcpuUsed": "{used} vCores",
+        "ramTotal": "of {total} GB",
+        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
+        "errorSubtitle": "Unable to load system information at this time.",
         "installedAppsCount": "{count} application(s)",
-        "appsHashes": "Apps Hashes",
+        "loadingTitle": "Loading System Information...",
+        "ramUsed": "{used} GB",
+        "storageTotal": "of {total} GB",
         "notSynced": "{count} not synced",
-        "componentVersions": "Component Versions"
+        "storageUsed": "{used} GB",
+        "errorTitle": "System Information Unavailable",
+        "vcpuTotal": "of {total} vCores"
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Eventos Docker",
-        "subtitle": "Monitor Docker container events and activity",
-        "recentEvents": "Recent Events",
-        "noEventsAvailable": "No Docker events available",
+        "title": "Eventos do Docker",
+        "subtitle": "Monitorar eventos e atividade de containers Docker",
+        "recentEvents": "Eventos Recentes",
+        "noEventsAvailable": "Nenhum evento Docker disponível",
         "errorLoadingEvents": "Failed to load Docker events"
       },
       "fluxShare": {
@@ -2486,16 +2486,16 @@
     "apps": {
       "manage": {
         "tabs": {
-          "specifications": "Specifications",
-          "information": "Informações",
-          "fileChanges": "File Changes",
-          "monitoring": "Monitoring",
+          "specifications": "Especificações",
+          "information": "Informação",
+          "fileChanges": "Alterações de Arquivos",
+          "monitoring": "Monitoramento",
           "logs": "Logs",
-          "terminal": "Shell seguro",
+          "terminal": "Shell Seguro",
           "control": "Controle",
-          "backupRestore": "Backup & Restore",
+          "backupRestore": "Backup e Restauração",
           "instances": "Instâncias",
-          "subscription": "Subscription"
+          "subscription": "Assinatura"
         },
         "tooltips": {
           "manage": "Manage",
@@ -3566,34 +3566,6 @@
       }
     },
     "dashboard": {
-      "overview": {
-        "intro": {
-          "title": "Welcome to Flux Ecosystem",
-          "blockchain": {
-            "title": "Flux Blockchain",
-            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
-          },
-          "cloud": {
-            "title": "FluxCloud Network",
-            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
-          },
-          "learnMore": "Learn More"
-        },
-        "totalNodes": "Total Nodes",
-        "nodeHistory": "Node History",
-        "lockedSupply": "Locked Supply",
-        "fluxSupply": "FLUX Supply",
-        "maxSupply": "Max Supply",
-        "circulatingSupply": "Circulating Supply",
-        "cumulus": "Cumulus",
-        "nimbus": "Nimbus",
-        "stratus": "Stratus",
-        "versionBreakdown": "Version Breakdown",
-        "tierBreakdown": "Tier Breakdown",
-        "legacy": "Legacy",
-        "nodes": "node | nodes",
-        "errorFetchingHistoryStats": "Unable to fetch history stats"
-      },
       "locations": {
         "intro": {
           "title": "Global FluxCloud Network",
@@ -3673,6 +3645,34 @@
           "failedToFetchNodeCount": "Failed to fetch node count",
           "failedToFetchBlockReward": "Failed to fetch block reward"
         }
+      },
+      "overview": {
+        "nodes": "node | nodes",
+        "cumulus": "Cumulus",
+        "intro": {
+          "learnMore": "Learn More",
+          "blockchain": {
+            "title": "Flux Blockchain",
+            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
+          },
+          "cloud": {
+            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud.",
+            "title": "FluxCloud Network"
+          },
+          "title": "Welcome to Flux Ecosystem"
+        },
+        "legacy": "Legacy",
+        "circulatingSupply": "Circulating Supply",
+        "fluxSupply": "FLUX Supply",
+        "nodeHistory": "Node History",
+        "tierBreakdown": "Tier Breakdown",
+        "maxSupply": "Max Supply",
+        "versionBreakdown": "Version Breakdown",
+        "errorFetchingHistoryStats": "Unable to fetch history stats",
+        "totalNodes": "Total Nodes",
+        "lockedSupply": "Locked Supply",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus"
       }
     },
     "fluxDrive": {
@@ -4981,7 +4981,7 @@
       }
     },
     "xdao": {
-      "title": "Flux XDAO",
+      "title": "Flux xDAO",
       "subtitle": "Decentralized Governance Platform",
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
@@ -4993,9 +4993,9 @@
       "filterProposals": "Filter Proposals",
       "allProposals": "All Proposals",
       "open": "Open",
-      "passed": "Passed",
+      "passed": "Aprovada",
       "unpaid": "Unpaid",
-      "rejected": "Rejected",
+      "rejected": "Rejeitada",
       "searchProposals": "Search proposals...",
       "sortBy": "Sort by",
       "latest": "Latest",
@@ -5131,14 +5131,14 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "No data available",
+    "noDataText": "Sem dados disponíveis",
     "dataIterator": {
-      "loadingText": "Loading your data, please wait...",
-      "noResultsText": "No matching records found.",
+      "loadingText": "Carregando itens...",
+      "noResultsText": "Nenhum registro correspondente encontrado",
       "noDataText": "No data available."
     },
     "close": "Fechar",
-    "open": "open",
+    "open": "Abrir",
     "loading": "loading",
     "carousel": {
       "ariaLabel": {
@@ -5146,29 +5146,29 @@
       }
     },
     "dataFooter": {
-      "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "Tudo",
-      "pageText": "{0}-{1} of {2}",
-      "firstPage": "First Page",
-      "prevPage": "Previous Page",
-      "nextPage": "Next Page",
-      "lastPage": "Last Page"
+      "itemsPerPageText": "Itens por página:",
+      "itemsPerPageAll": "Todos",
+      "pageText": "{0}-{1} de {2}",
+      "firstPage": "Primeira página",
+      "prevPage": "Página anterior",
+      "nextPage": "Próxima página",
+      "lastPage": "Última página"
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
-        "previous": "previous",
+        "root": "Navegação de paginação",
+        "previous": "Página anterior",
         "first": "first",
         "last": "last",
-        "next": "next",
-        "currentPage": "currentPage",
-        "page": "page"
+        "next": "Próxima página",
+        "currentPage": "Página {0}, página atual",
+        "page": "Ir para página {0}"
       }
     },
     "input": {
-      "clear": "clear",
-      "appendAction": "appendAction",
-      "prependAction": "prependAction",
+      "clear": "Limpar {0}",
+      "appendAction": "Ação de sufixo {0}",
+      "prependAction": "Ação de prefixo {0}",
       "counterSize": "counterSize",
       "otp": "otp"
     },

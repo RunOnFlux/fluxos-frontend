@@ -466,7 +466,7 @@
       "continent": "대륙",
       "country": "국가",
       "region": "지역",
-      "notAvailable": "N/A"
+      "notAvailable": "해당 없음"
     },
     "volumeBrowser": {
       "title": "볼륨 브라우저",
@@ -641,8 +641,8 @@
       "cancelVerification": "확인 취소",
       "finishingVerification": "확인 완료 중",
       "checkEmail": "이메일 확인",
-      "googleLogin": "Google",
-      "appleLogin": "Apple ID",
+      "googleLogin": "Google 로그인",
+      "appleLogin": "Apple ID 로그인",
       "bySigningIn": "로그인하면 다음에 동의합니다",
       "termsOfService": "서비스 약관",
       "and": "및",
@@ -1166,7 +1166,7 @@
       "updateAutoDetected": "업데이트가 자동으로 감지됩니다.",
       "paymentAutoDetectedUpdate": "결제 확인 및 업데이트가 자동으로 감지됩니다.",
       "canTakeFortyFiveMinutes": "최대 45분이 소요될 수 있습니다.",
-      "usdPlusVat": "${price} USD + VAT",
+      "usdPlusVat": "${price} USD + 부가세",
       "securePaymentProcessing": "안전한 결제 처리",
       "instantPaymentConfirmation": "즉각적인 결제 확인",
       "multipleCurrencySupport": "다중 통화 지원",
@@ -1466,7 +1466,7 @@
         "walletAltSSP": "SSP",
         "walletAltMetaMask": "MetaMask",
         "walletAltWalletConnect": "WalletConnect",
-        "agreeToTerms": "I agree to the <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: inherit; text-decoration: none; font-weight: bold;\">Terms of Use</a>",
+        "agreeToTerms": "<a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: inherit; text-decoration: none; font-weight: bold;\">이용약관</a>에 동의합니다",
         "oneMonth": "1개월",
         "threeMonths": "3개월",
         "sixMonths": "6개월",
@@ -1533,7 +1533,7 @@
         "payWithCreditCard": "신용카드로 결제",
         "payWithPayPal": "PayPal로 결제",
         "payWithFlux": "FLUX로 결제",
-        "vat": "VAT",
+        "vat": "부가세",
         "paymentAddress": "결제 주소",
         "paymentMessage": "결제 메시지",
         "generating": "생성 중...",
@@ -1596,345 +1596,6 @@
           "addedForbiddenLocation": "금지된 위치 추가됨: {location}",
           "removedAllowedLocation": "허용된 위치 제거됨: {location}",
           "removedForbiddenLocation": "금지된 위치 제거됨: {location}"
-        }
-      },
-      "xdao": {
-        "addProposal": {
-          "title": "새 제안 추가",
-          "validated": "검증됨",
-          "completeFormToValidate": "검증하려면 양식 작성",
-          "validateProposal": "제안 검증",
-          "validatedSuccessfully": "제안이 성공적으로 검증되었습니다!",
-          "registrationFee": "제안 등록 수수료",
-          "registerProposal": "Flux XDAO 제안 등록",
-          "fields": {
-            "topic": {
-              "label": "제안 주제",
-              "placeholder": "명확하고 설명적인 제안 제목을 입력하세요"
-            },
-            "description": {
-              "label": "제안 설명",
-              "placeholder": "제안에 대한 상세한 설명을 제공하세요 (최소 50자)"
-            },
-            "grantInformation": "보조금 정보",
-            "grantAmount": {
-              "label": "보조금 액수 (FLUX)"
-            },
-            "grantAddress": {
-              "label": "보조금 수신 주소",
-              "placeholder": "보조금을 받을 Flux 주소"
-            },
-            "nickname": {
-              "label": "이름/닉네임",
-              "placeholder": "귀하의 이름 또는 닉네임 (선택사항)"
-            }
-          },
-          "validation": {
-            "fieldRequired": "필수 입력 항목입니다",
-            "minCharactersRequired": "최소 {min}자 필요",
-            "grantMustBeWholeNumber": "보조금 액수는 정수여야 합니다",
-            "addressNoSpaces": "주소는 공백을 포함할 수 없습니다"
-          },
-          "payment": {
-            "completePayment": "결제 완료",
-            "paymentRequired": "결제 필요",
-            "toCompleteRegistration": "제안 등록을 완료하려면",
-            "walletPayment": "지갑 결제",
-            "chooseWallet": "선호하는 지갑 선택",
-            "manualPayment": "수동 결제",
-            "foundationAddress": "재단 주소",
-            "transactionMessage": "거래 메시지",
-            "viewOnExplorer": "Explorer에서 보기"
-          },
-          "messages": {
-            "completeRequiredFields": "모든 필수 항목을 올바르게 작성하세요",
-            "proposalValidatedSuccess": "제안이 성공적으로 검증되었습니다!",
-            "failedToValidate": "제안 검증 실패: {error}",
-            "proposalRegisteredSuccess": "제안이 등록되었습니다! 결제를 완료하세요.",
-            "failedToRegister": "제안 등록 실패: {error}",
-            "paymentDetailsNotAvailable": "결제 세부 정보를 사용할 수 없습니다. 다시 등록해보세요.",
-            "zelcorePaymentInitiated": "Zelcore 결제 시작됨 - Zelcore 지갑에서 결제를 완료하세요",
-            "failedToOpenZelcore": "Zelcore를 열 수 없습니다",
-            "sspWalletNotInstalled": "SSP 지갑이 설치되지 않았습니다",
-            "sspPaymentInitiated": "SSP 결제 시작됨",
-            "failedToInitiateSSP": "SSP 결제 시작 실패: {error}",
-            "copiedToClipboard": "클립보드에 복사되었습니다!",
-            "failedToCopy": "클립보드에 복사하지 못했습니다"
-          }
-        },
-        "proposalDetail": {
-          "title": "제안 세부 정보",
-          "anonymous": "익명",
-          "submitted": "제출됨",
-          "endDate": "종료 날짜",
-          "description": "설명",
-          "viewAddressOnExplorer": "Explorer에서 주소 보기",
-          "charts": {
-            "voteProgress": "투표 진행률",
-            "voteSplit": "투표 분할",
-            "required": "필수",
-            "received": "수신됨",
-            "yesVotes": "예 투표",
-            "noVotes": "아니오 투표",
-            "votingCompletePassed": "투표 완료 - 승인됨",
-            "votingCompleteRejected": "투표 완료 - 거부됨",
-            "percentageOfVotesReceived": "필수 투표의 {percentage}% 수신됨",
-            "status": {
-              "open": "열림",
-              "passed": "승인됨",
-              "rejected": "거부됨",
-              "unpaid": "미지불",
-              "voting": "투표 중",
-              "notEnoughVotes": "투표 부족"
-            }
-          },
-          "voting": {
-            "castYourVote": "투표 투표",
-            "makeYourVoiceHeard": "목소리를 내세요",
-            "loginRequired": "로그인 필요",
-            "loginRequiredMessage": "투표에 참여하려면 로그인해야 합니다. Flux 지갑으로 로그인하세요.",
-            "voteWarning": "기억하세요: 투표 후에는 투표를 변경할 수 없습니다!",
-            "yourVotingPower": "귀하의 투표력",
-            "votesAvailable": "표 이용 가능",
-            "voteYes": "예 투표",
-            "voteNo": "아니오 투표",
-            "youHaveVoted": "투표했습니다",
-            "yes": "예",
-            "no": "아니오",
-            "voteCount": "{count}개 투표",
-            "votingEnds": "투표 종료"
-          },
-          "grant": {
-            "title": "보조금 정보",
-            "fundingDetails": "자금 세부 정보",
-            "grantAmount": "보조금 액수",
-            "recipientAddress": "수신자 주소",
-            "viewOnExplorer": "Explorer에서 보기"
-          },
-          "technicalDetails": {
-            "title": "기술 세부 정보",
-            "proposalHash": "제안 해시",
-            "copy": "복사",
-            "submitDate": "제출 날짜",
-            "voteEndDate": "투표 종료 날짜",
-            "currentStatus": "현재 상태"
-          },
-          "messages": {
-            "copiedToClipboard": "클립보드에 복사되었습니다!",
-            "successfullySignedWithSSP": "SSP로 성공적으로 서명됨",
-            "failedToSignWithSSP": "SSP로 서명 실패",
-            "failedToInitiateZelcore": "Zelcore 서명 시작 실패",
-            "pleaseLogInFirst": "먼저 로그인하세요",
-            "alreadyVoted": "이미 이 제안에 투표했습니다!",
-            "proposalHashNotAvailable": "제안 해시를 사용할 수 없습니다",
-            "missingSignature": "서명이 없습니다. 먼저 지갑으로 서명하세요.",
-            "voteRecordedSuccess": "투표가 성공적으로 기록되었습니다!",
-            "voteFailed": "투표 실패",
-            "failedToCastVote": "투표 실패"
-          }
-        }
-      },
-      "dialogs": {
-        "importJsonDialog": {
-          "title": "{type} 가져오기",
-          "environmentVariables": "환경 변수",
-          "commands": "명령어",
-          "uploadFile": "파일 업로드",
-          "pasteSpecification": "사양 붙여넣기",
-          "dropFileHere": "여기에 파일을 놓으세요 또는 클릭하여 찾아보기",
-          "fileTypeHint": "애플리케이션 사양 또는 Docker Compose (JSON/YAML)",
-          "pasteHint": "애플리케이션 사양 또는 Docker Compose (JSON/YAML) 붙여넣기",
-          "reviewAndEdit": "가져오기 전에 검토 및 편집",
-          "import": "가져오기",
-          "cancel": "취소",
-          "loadSpecification": "사양 로드",
-          "pasteFromClipboard": "클립보드에서 붙여넣기",
-          "contentPasted": "클립보드에서 콘텐츠가 붙여넣어졌습니다!",
-          "clipboardFailed": "클립보드를 읽지 못했습니다. Ctrl+V를 사용하여 붙여넣으세요.",
-          "format": "형식",
-          "formatHint": "문자열의 JSON 배열",
-          "example": "예",
-          "placeholder": "JSON 배열을 여기에 붙여넣으세요...",
-          "browse": "파일 찾아보기",
-          "invalidFileType": "JSON 파일을 선택하세요",
-          "failedToReadFile": "파일 읽기 실패: {message}",
-          "invalidJsonArray": "JSON 배열이 필요합니다",
-          "emptyArray": "배열은 비워둘 수 없습니다",
-          "invalidEnvFormat": "잘못된 형식: {item}",
-          "invalidEnvEntry": "잘못된 항목 (KEY=value여야 함): {item}",
-          "noValidCommands": "유효한 명령어 없음",
-          "invalidJsonFormat": "잘못된 JSON 형식: {message}",
-          "invalidName": "잘못된 사양: \"name\" 필드가 필요하며 문자열이어야 합니다",
-          "invalidCompose": "잘못된 사양: \"compose\" 필드가 필요하며 배열이어야 합니다",
-          "emptyCompose": "잘못된 사양: \"compose\" 배열은 비워둘 수 없습니다",
-          "loadingEditor": "편집기 로드 중..."
-        },
-        "upgradeSpecDialog": {
-          "title": "애플리케이션 사양 업그레이드",
-          "upgradeInfo": "v{currentVersion}에서 v{targetVersion}으로 이 애플리케이션 사양을 업그레이드하려고 합니다.",
-          "dataLossWarning": "다음 데이터가 손실되거나 재설정됩니다:",
-          "nextSteps": "다음에 일어날 일:",
-          "step1": "사양 형식이 v{targetVersion}으로 업데이트됩니다",
-          "step2": "업그레이드된 사양을 검토하고 수정할 수 있습니다",
-          "step3": "업데이트된 사양을 검증하고 서명해야 합니다",
-          "upgrade": "업그레이드",
-          "warnings": {
-            "tieredPricing": "계층형 가격 구성 (계층화된 필드)",
-            "customContacts": "사용자 정의 연락처 (비워둔 상태로 재설정)",
-            "customGeolocation": "사용자 정의 지정학적 위치 (비워둔 상태로 재설정)",
-            "customExpire": "사용자 정의 만료 값 (22000으로 재설정)",
-            "portConversion": "포트 유형 변환 (문자열 → 숫자)"
-          }
-        }
-      },
-      "appPricing": {
-        "title": "가격 플랜",
-        "subtitle1": "모든 플랜에는 제품을 부스트하기 위한 40+ 고급 도구 및 기능이 포함되어 있습니다.",
-        "subtitle2": "필요에 맞는 최고의 플랜을 선택하세요.",
-        "monthly": "월간",
-        "annually": "연간",
-        "saveUpTo": "최대 10% 절약",
-        "popular": "인기",
-        "perMonth": "/월",
-        "free": "무료",
-        "yearlyPrice": "USD {price}/연",
-        "currentPlan": "현재 플랜",
-        "upgrade": "업그레이드",
-        "plans": {
-          "basic": {
-            "name": "기본",
-            "tagLine": "모두를 위한 간단한 시작",
-            "features": {
-              "0": "월 100개 응답",
-              "1": "무제한 양식 및 설문조사",
-              "2": "무제한 필드",
-              "3": "기본 양식 작성 도구",
-              "4": "최대 2개 하위 도메인"
-            }
-          },
-          "standard": {
-            "name": "표준",
-            "tagLine": "소규모 및 중규모 비즈니스용",
-            "features": {
-              "0": "무제한 응답",
-              "1": "무제한 양식 및 설문조사",
-              "2": "Instagram 프로필 페이지",
-              "3": "Google Docs 통합",
-              "4": "사용자 정의 \"감사합니다\" 페이지"
-            }
-          },
-          "enterprise": {
-            "name": "엔터프라이즈",
-            "tagLine": "대규모 조직을 위한 솔루션",
-            "features": {
-              "0": "PayPal 결제",
-              "1": "논리 점프",
-              "2": "5GB 저장소 파일 업로드",
-              "3": "사용자 정의 도메인 지원",
-              "4": "Stripe 통합"
-            }
-          }
-        }
-      },
-      "fluxAIToggler": {
-        "askFluxAI": "FluxAI에 묻기",
-        "tooltip": "Flux 제품, 배포 및 앱 관리에 대한 즉각적인 답변 얻기",
-        "disclaimer": "Flux 제품, 배포 및 앱 관리에 대한 즉각적인 답변을 얻으세요. 공식 문서, 백서 및 지원 리소스에서 학습한 AI로 구동됩니다."
-      },
-      "checkoutContent": {
-        "loadingPlanDetails": "플랜 세부 정보 로드 중...",
-        "unableToLoadPlan": "플랜 세부 정보를 로드할 수 없습니다",
-        "tryAgainOrContactSupport": "다시 시도하거나 문제가 계속되면 지원팀에 문의하세요.",
-        "tryAgain": "다시 시도",
-        "renewal": "갱신",
-        "upgrade": "업그레이드",
-        "downgrade": "다운그레이드",
-        "order": "주문",
-        "summary": "요약",
-        "planComparison": "플랜 비교",
-        "yourCurrentPlan": "현재 플랜",
-        "newPlan": "새 플랜",
-        "storage": "저장소",
-        "plan": "플랜",
-        "duration": "기간",
-        "oneMonth": "1개월",
-        "total": "합계",
-        "downgradeTo": "다운그레이드",
-        "upgradeTo": "업그레이드",
-        "renewingYourCurrentPlan": "현재 플랜 갱신",
-        "upgradingToHigherPlan": "더 높은 플랜으로 업그레이드",
-        "downgradingToLowerPlan": "더 낮은 플랜으로 다운그레이드",
-        "newSubscription": "새 구독",
-        "youWillSave": "절약할 금액:",
-        "priceDifference": "가격 차이:",
-        "paymentMethod": "결제 방법",
-        "fluxPay": "Flux Pay",
-        "calculatingFlux": "FLUX 계산 중...",
-        "manualPaymentDetails": "수동 결제 세부 정보",
-        "address": "주소",
-        "amount": "금액",
-        "message": "메시지",
-        "loadingPaymentDetails": "결제 세부 정보 로드 중...",
-        "paymentDetailsWillAppear": "결제 세부 정보가 여기에 표시됩니다",
-        "fluxPriceEstimated": "*FLUX 가격은 예상이며 ZelCore에서 최종 결정됩니다",
-        "nextAutomaticSubscription": "다음 자동 구독",
-        "generateSubscription": "구독 생성",
-        "subscriptionsChargedMonthly": "구독이 월별로 청구됩니다",
-        "monitoringPayment": "결제 모니터링 중...",
-        "waitingForPaymentConfirmation": "Flux 블록체인에서 결제 확인을 대기 중입니다.",
-        "canTakeUpTo20Minutes": "최대 20분이 소요될 수 있습니다",
-        "cancelMonitoring": "모니터링 취소",
-        "pendingPayment": "대기 중인 결제",
-        "cancel": "취소",
-        "sspPaymentInitiated": "SSP 결제 시작됨, 확인을 위해 모니터링 중...",
-        "sspPaymentFailed": "SSP 결제 실패: {error}",
-        "zelcorePaymentFailed": "Zelcore 결제 실패: {error}",
-        "openingZelcoreWallet": "결제를 위해 ZelCore 지갑을 열고 있습니다...",
-        "redirectedToCryptoCom": "결제를 위해 Crypto.com으로 리디렉션되었습니다. 결제를 완료하고 여기로 돌아오세요.",
-        "cryptoComPaymentCancelled": "Crypto.com 결제 취소됨",
-        "paymentMonitoringCancelledCanPayManually": "결제 모니터링이 취소되었습니다. 위의 세부 정보를 사용하여 수동으로 결제할 수 있습니다.",
-        "copiedToClipboard": "클립보드에 복사되었습니다!",
-        "noLoginCredentials": "로그인 자격증명을 찾을 수 없습니다",
-        "failedToPrepareManualSigning": "수동 서명 준비 실패: {error}",
-        "pleaseEnterSignature": "서명을 입력하세요",
-        "paymentConfirmedSubscriptionActive": "결제가 확인되었습니다! 구독이 이제 활성화됩니다.",
-        "paymentConfirmedRenewed": "결제가 확인되었습니다! 구독이 갱신되었습니다.",
-        "paymentConfirmedUpgraded": "결제가 확인되었습니다! 구독이 업그레이드되었습니다.",
-        "paymentConfirmedDowngraded": "결제가 확인되었습니다! 구독이 다운그레이드되었습니다.",
-        "currentEnds": "현재 종료",
-        "ends": "종료",
-        "pleaseLoginToContinue": "구매를 계속하려면 로그인하세요",
-        "invalidAuthenticationData": "잘못된 인증 데이터",
-        "authenticationRequired": "인증이 필요합니다. 다시 로그인하세요.",
-        "planNotFoundOrInvalidResponse": "플랜을 찾을 수 없거나 서버에서 잘못된 응답을 받았습니다",
-        "failedToLoadPlanDetails": "플랜 세부 정보를 로드하지 못했습니다. 다시 시도하세요.",
-        "failedToInitializePayment": "결제 초기화 실패",
-        "failedToInitializePaymentTryAgain": "결제 초기화 실패. 다시 시도하세요.",
-        "failedToInitializeCryptoCom": "Crypto.com 결제 초기화 실패",
-        "failedToInitializeCryptoComTryAgain": "Crypto.com 결제 초기화 실패. 다시 시도하세요.",
-        "paymentInitializedNoUrl": "결제가 초기화되었지만 결제 URL이 수신되지 않았습니다. 지원팀에 문의하세요.",
-        "serverErrorContactSupport": "서버 오류 - 지원팀에 문의하세요.",
-        "paymentServiceNotFound": "결제 서비스를 찾을 수 없습니다 - 지원팀에 문의하세요.",
-        "paymentServiceNotConfigured": "결제 서비스가 제대로 구성되지 않음 - 지원팀에 문의하세요.",
-        "cryptoComTimeoutCheckManually": "Crypto.com 결제 모니터링 시간 초과. 구독 상태를 수동으로 확인하세요.",
-        "fluxPayTimeoutCheckManually": "FluxPay 결제 모니터링 시간 초과. 구독 상태를 수동으로 확인하세요.",
-        "failedToCopy": "복사 실패",
-        "cryptoCom": "Crypto.com",
-        "zelcore": "Zelcore",
-        "ssp": "SSP",
-        "currentSubscription": "현재 구독",
-        "currentPlanFallback": "현재 플랜",
-        "currentStorage": "현재 저장소",
-        "general": "일반",
-        "planNames": {
-          "starter": "스타터",
-          "standard": "표준",
-          "pro": "엘리트",
-          "enterprise": "FluxDrive Pro",
-          "fluxDrivePro": "FluxDrive Pro"
-        },
-        "messages": {
-          "paymentSuccessfulRedirecting": "결제 성공! 리디렉션 중..."
         }
       }
     },
@@ -2109,6 +1770,345 @@
         },
         "customizable": "맞춤 가능"
       }
+    },
+    "xdao": {
+      "addProposal": {
+        "title": "새 제안 추가",
+        "validated": "검증됨",
+        "completeFormToValidate": "검증을 위해 양식을 완성하세요",
+        "validateProposal": "제안 검증",
+        "validatedSuccessfully": "제안이 성공적으로 검증되었습니다!",
+        "registrationFee": "제안 등록 수수료",
+        "registerProposal": "Flux XDAO 제안 등록",
+        "fields": {
+          "topic": {
+            "label": "제안 주제",
+            "placeholder": "명확하고 설명적인 제안 제목을 입력하세요"
+          },
+          "description": {
+            "label": "제안 설명",
+            "placeholder": "제안에 대한 자세한 설명을 제공하세요 (최소 50자)"
+          },
+          "grantInformation": "보조금 정보",
+          "grantAmount": {
+            "label": "보조금 금액 (FLUX)"
+          },
+          "grantAddress": {
+            "label": "보조금 수령 주소",
+            "placeholder": "보조금을 받을 Flux 주소"
+          },
+          "nickname": {
+            "label": "이름/닉네임",
+            "placeholder": "이름 또는 닉네임 (선택사항)"
+          }
+        },
+        "validation": {
+          "fieldRequired": "이 필드는 필수입니다",
+          "minCharactersRequired": "최소 {min}자 이상 필요합니다",
+          "grantMustBeWholeNumber": "보조금 금액은 정수여야 합니다",
+          "addressNoSpaces": "주소에 공백을 포함할 수 없습니다"
+        },
+        "payment": {
+          "completePayment": "결제 완료",
+          "paymentRequired": "결제 필요",
+          "toCompleteRegistration": "제안 등록을 완료하려면",
+          "walletPayment": "지갑 결제",
+          "chooseWallet": "선호하는 지갑을 선택하세요",
+          "manualPayment": "수동 결제",
+          "foundationAddress": "재단 주소",
+          "transactionMessage": "거래 메시지",
+          "viewOnExplorer": "탐색기에서 보기"
+        },
+        "messages": {
+          "completeRequiredFields": "모든 필수 필드를 올바르게 완성해주세요",
+          "proposalValidatedSuccess": "제안이 성공적으로 검증되었습니다!",
+          "failedToValidate": "제안 검증 실패: {error}",
+          "proposalRegisteredSuccess": "제안이 등록되었습니다! 결제를 완료해주세요.",
+          "failedToRegister": "제안 등록 실패: {error}",
+          "paymentDetailsNotAvailable": "결제 정보를 사용할 수 없습니다. 다시 등록해주세요.",
+          "zelcorePaymentInitiated": "Zelcore 결제가 시작되었습니다 - Zelcore 지갑에서 결제를 완료해주세요",
+          "failedToOpenZelcore": "Zelcore 열기 실패",
+          "sspWalletNotInstalled": "SSP 지갑이 설치되지 않았습니다",
+          "sspPaymentInitiated": "SSP 결제가 시작되었습니다",
+          "failedToInitiateSSP": "SSP 결제 시작 실패: {error}",
+          "copiedToClipboard": "클립보드에 복사되었습니다!",
+          "failedToCopy": "클립보드 복사 실패"
+        }
+      },
+      "proposalDetail": {
+        "title": "제안 상세정보",
+        "anonymous": "익명",
+        "submitted": "제출됨",
+        "endDate": "종료일",
+        "description": "설명",
+        "viewAddressOnExplorer": "탐색기에서 주소 보기",
+        "charts": {
+          "voteProgress": "투표 진행률",
+          "voteSplit": "투표 분포",
+          "required": "필요",
+          "received": "수신",
+          "yesVotes": "찬성 투표",
+          "noVotes": "반대 투표",
+          "votingCompletePassed": "투표 완료 - 통과",
+          "votingCompleteRejected": "투표 완료 - 거부",
+          "percentageOfVotesReceived": "필요한 투표의 {percentage}% 수신됨",
+          "status": {
+            "open": "진행중",
+            "passed": "통과",
+            "rejected": "거부",
+            "unpaid": "미지급",
+            "voting": "투표중",
+            "notEnoughVotes": "투표 부족"
+          }
+        },
+        "voting": {
+          "castYourVote": "투표하기",
+          "makeYourVoiceHeard": "당신의 목소리를 들려주세요",
+          "loginRequired": "로그인 필요",
+          "loginRequiredMessage": "투표에 참여하려면 로그인이 필요합니다. Flux 지갑으로 로그인해주세요.",
+          "voteWarning": "주의: 투표 후에는 변경할 수 없습니다!",
+          "yourVotingPower": "나의 투표권",
+          "votesAvailable": "사용 가능한 투표",
+          "voteYes": "찬성 투표",
+          "voteNo": "반대 투표",
+          "youHaveVoted": "투표하셨습니다",
+          "yes": "찬성",
+          "no": "반대",
+          "voteCount": "{count} 투표",
+          "votingEnds": "투표 종료"
+        },
+        "grant": {
+          "title": "보조금 정보",
+          "fundingDetails": "자금 세부정보",
+          "grantAmount": "보조금 금액",
+          "recipientAddress": "수령인 주소",
+          "viewOnExplorer": "탐색기에서 보기"
+        },
+        "technicalDetails": {
+          "title": "기술 세부정보",
+          "proposalHash": "제안 해시",
+          "copy": "복사",
+          "submitDate": "제출일",
+          "voteEndDate": "투표 종료일",
+          "currentStatus": "현재 상태"
+        },
+        "messages": {
+          "copiedToClipboard": "클립보드에 복사되었습니다!",
+          "successfullySignedWithSSP": "SSP로 성공적으로 서명되었습니다",
+          "failedToSignWithSSP": "SSP 서명 실패",
+          "failedToInitiateZelcore": "Zelcore 서명 시작 실패",
+          "pleaseLogInFirst": "먼저 로그인해주세요",
+          "alreadyVoted": "이미 이 제안에 투표하셨습니다!",
+          "proposalHashNotAvailable": "제안 해시를 사용할 수 없습니다",
+          "missingSignature": "서명이 없습니다. 먼저 지갑으로 로그인해주세요.",
+          "voteRecordedSuccess": "투표가 성공적으로 기록되었습니다!",
+          "voteFailed": "투표 실패",
+          "failedToCastVote": "투표하기 실패"
+        }
+      }
+    },
+    "dialogs": {
+      "importJsonDialog": {
+        "title": "{type} 가져오기",
+        "environmentVariables": "환경 변수",
+        "commands": "명령어",
+        "uploadFile": "파일 업로드",
+        "pasteSpecification": "사양 붙여넣기",
+        "dropFileHere": "파일을 여기에 놓거나 클릭하여 찾아보기",
+        "fileTypeHint": "애플리케이션 사양 또는 Docker Compose (JSON/YAML)",
+        "pasteHint": "애플리케이션 사양 또는 Docker Compose 붙여넣기 (JSON/YAML)",
+        "reviewAndEdit": "가져오기 전에 검토 및 편집",
+        "import": "가져오기",
+        "cancel": "취소",
+        "loadSpecification": "사양 불러오기",
+        "pasteFromClipboard": "클립보드에서 붙여넣기",
+        "contentPasted": "클립보드에서 내용을 붙여넣었습니다!",
+        "clipboardFailed": "클립보드 읽기 실패. Ctrl+V를 사용하여 붙여넣기해주세요.",
+        "format": "형식",
+        "formatHint": "문자열의 JSON 배열",
+        "example": "예시",
+        "placeholder": "JSON 배열을 여기에 붙여넣기...",
+        "browse": "파일 찾아보기",
+        "invalidFileType": "JSON 파일을 선택해주세요",
+        "failedToReadFile": "파일 읽기 실패: {message}",
+        "invalidJsonArray": "JSON 배열이 필요합니다",
+        "emptyArray": "배열이 비어있을 수 없습니다",
+        "invalidEnvFormat": "잘못된 형식: {item}",
+        "invalidEnvEntry": "잘못된 항목 (KEY=value 형식이어야 함): {item}",
+        "noValidCommands": "유효한 명령어를 찾을 수 없습니다",
+        "invalidJsonFormat": "잘못된 JSON 형식: {message}",
+        "invalidName": "잘못된 사양: \"name\" 필드가 필요하며 문자열이어야 합니다",
+        "invalidCompose": "잘못된 사양: \"compose\" 필드가 필요하며 배열이어야 합니다",
+        "emptyCompose": "잘못된 사양: \"compose\" 배열이 비어있을 수 없습니다",
+        "loadingEditor": "편집기 로딩 중..."
+      },
+      "upgradeSpecDialog": {
+        "title": "애플리케이션 사양 업그레이드",
+        "upgradeInfo": "이 애플리케이션 사양을 v{currentVersion}에서 v{targetVersion}으로 업그레이드하려고 합니다.",
+        "dataLossWarning": "다음 데이터가 손실되거나 초기화됩니다:",
+        "nextSteps": "다음 단계:",
+        "step1": "사양 형식이 v{targetVersion}으로 업데이트됩니다",
+        "step2": "업그레이드된 사양을 검토하고 수정할 수 있습니다",
+        "step3": "업데이트된 사양을 검증하고 서명해야 합니다",
+        "upgrade": "업그레이드",
+        "warnings": {
+          "tieredPricing": "계층화된 가격 구성 (tiered 필드)",
+          "customContacts": "사용자 정의 연락처 (비어있게 초기화)",
+          "customGeolocation": "사용자 정의 지리적 위치 (비어있게 초기화)",
+          "customExpire": "사용자 정의 만료 값 (22000으로 초기화)",
+          "portConversion": "포트 유형 변환 (문자열 → 숫자)"
+        }
+      }
+    },
+    "appPricing": {
+      "title": "요금제",
+      "subtitle1": "모든 요금제에 40개 이상의 고급 도구와 기능이 포함됩니다.",
+      "subtitle2": "필요에 맞는 최적의 요금제를 선택하세요.",
+      "monthly": "월간",
+      "annually": "연간",
+      "saveUpTo": "최대 10% 절약",
+      "popular": "인기",
+      "perMonth": "/월",
+      "free": "무료",
+      "yearlyPrice": "USD {price}/년",
+      "currentPlan": "현재 요금제",
+      "upgrade": "업그레이드",
+      "plans": {
+        "basic": {
+          "name": "기본",
+          "tagLine": "모두를 위한 간단한 시작",
+          "features": {
+            "0": "월 100회 응답",
+            "1": "무제한 양식 및 설문조사",
+            "2": "무제한 필드",
+            "3": "기본 양식 생성 도구",
+            "4": "최대 2개 서브도메인"
+          }
+        },
+        "standard": {
+          "name": "스탠다드",
+          "tagLine": "중소 비즈니스용",
+          "features": {
+            "0": "무제한 응답",
+            "1": "무제한 양식 및 설문조사",
+            "2": "Instagram 프로필 페이지",
+            "3": "Google Docs 통합",
+            "4": "사용자 정의 \"감사합니다\" 페이지"
+          }
+        },
+        "enterprise": {
+          "name": "엔터프라이즈",
+          "tagLine": "대기업을 위한 솔루션",
+          "features": {
+            "0": "PayPal 결제",
+            "1": "로직 점프",
+            "2": "5GB 스토리지로 파일 업로드",
+            "3": "사용자 정의 도메인 지원",
+            "4": "Stripe 통합"
+          }
+        }
+      }
+    },
+    "fluxAIToggler": {
+      "askFluxAI": "FluxAI에게 물어보기",
+      "tooltip": "Flux 제품, 배포 및 앱 관리에 대한 즉각적인 답변을 받으세요",
+      "disclaimer": "Flux 제품, 배포 및 앱 관리에 대한 즉각적인 답변을 받으세요. 공식 문서, 백서 및 지원 리소스로 학습된 AI로 구동됩니다."
+    },
+    "checkoutContent": {
+      "loadingPlanDetails": "요금제 정보 로딩 중...",
+      "unableToLoadPlan": "요금제 정보를 불러올 수 없습니다",
+      "tryAgainOrContactSupport": "다시 시도하거나 문제가 지속되면 지원팀에 문의하세요.",
+      "tryAgain": "다시 시도",
+      "renewal": "갱신",
+      "upgrade": "업그레이드",
+      "downgrade": "다운그레이드",
+      "order": "주문",
+      "summary": "요약",
+      "planComparison": "요금제 비교",
+      "yourCurrentPlan": "현재 요금제",
+      "newPlan": "새 요금제",
+      "storage": "스토리지",
+      "plan": "요금제",
+      "duration": "기간",
+      "oneMonth": "1개월",
+      "total": "총액",
+      "downgradeTo": "다운그레이드:",
+      "upgradeTo": "업그레이드:",
+      "renewingYourCurrentPlan": "현재 요금제 갱신",
+      "upgradingToHigherPlan": "상위 요금제로 업그레이드",
+      "downgradingToLowerPlan": "하위 요금제로 다운그레이드",
+      "newSubscription": "새 구독",
+      "youWillSave": "절약 금액:",
+      "priceDifference": "가격 차이:",
+      "paymentMethod": "결제 방법",
+      "fluxPay": "Flux Pay",
+      "calculatingFlux": "FLUX 계산 중...",
+      "manualPaymentDetails": "수동 결제 정보",
+      "address": "주소",
+      "amount": "금액",
+      "message": "메시지",
+      "loadingPaymentDetails": "결제 정보 로딩 중...",
+      "paymentDetailsWillAppear": "결제 정보가 여기에 표시됩니다",
+      "fluxPriceEstimated": "*FLUX 가격은 예상치이며 ZelCore에서 최종 확정됩니다",
+      "nextAutomaticSubscription": "다음 자동 구독",
+      "generateSubscription": "구독 생성",
+      "subscriptionsChargedMonthly": "구독료는 매월 청구됩니다",
+      "monitoringPayment": "결제 모니터링 중...",
+      "waitingForPaymentConfirmation": "Flux 블록체인에서 결제 확인을 기다리는 중입니다.",
+      "canTakeUpTo20Minutes": "최대 20분이 소요될 수 있습니다",
+      "cancelMonitoring": "모니터링 취소",
+      "pendingPayment": "결제 대기 중",
+      "cancel": "취소",
+      "sspPaymentInitiated": "SSP 결제가 시작되었습니다. 확인을 모니터링 중...",
+      "sspPaymentFailed": "SSP 결제 실패: {error}",
+      "zelcorePaymentFailed": "Zelcore 결제 실패: {error}",
+      "openingZelcoreWallet": "결제를 위해 ZelCore 지갑을 여는 중...",
+      "redirectedToCryptoCom": "Crypto.com으로 리디렉션되었습니다. 결제를 완료하고 여기로 돌아오세요.",
+      "cryptoComPaymentCancelled": "Crypto.com 결제가 취소되었습니다",
+      "paymentMonitoringCancelledCanPayManually": "결제 모니터링이 취소되었습니다. 위의 정보를 사용하여 수동으로 결제할 수 있습니다.",
+      "copiedToClipboard": "클립보드에 복사되었습니다!",
+      "noLoginCredentials": "로그인 자격 증명을 찾을 수 없습니다",
+      "failedToPrepareManualSigning": "수동 서명 준비 실패: {error}",
+      "pleaseEnterSignature": "서명을 입력해주세요",
+      "paymentConfirmedSubscriptionActive": "결제가 확인되었습니다! 구독이 활성화되었습니다.",
+      "paymentConfirmedRenewed": "결제가 확인되었습니다! 구독이 갱신되었습니다.",
+      "paymentConfirmedUpgraded": "결제가 확인되었습니다! 구독이 업그레이드되었습니다.",
+      "paymentConfirmedDowngraded": "결제가 확인되었습니다! 구독이 다운그레이드되었습니다.",
+      "currentEnds": "현재 종료",
+      "ends": "종료",
+      "pleaseLoginToContinue": "구매를 계속하려면 로그인해주세요",
+      "invalidAuthenticationData": "잘못된 인증 데이터",
+      "authenticationRequired": "인증이 필요합니다. 다시 로그인해주세요.",
+      "planNotFoundOrInvalidResponse": "요금제를 찾을 수 없거나 서버 응답이 잘못되었습니다",
+      "failedToLoadPlanDetails": "요금제 정보 로드 실패. 다시 시도해주세요.",
+      "failedToInitializePayment": "결제 초기화 실패",
+      "failedToInitializePaymentTryAgain": "결제 초기화 실패. 다시 시도해주세요.",
+      "failedToInitializeCryptoCom": "Crypto.com 결제 초기화 실패",
+      "failedToInitializeCryptoComTryAgain": "Crypto.com 결제 초기화 실패. 다시 시도해주세요.",
+      "paymentInitializedNoUrl": "결제가 초기화되었지만 결제 URL을 받지 못했습니다. 지원팀에 문의하세요.",
+      "serverErrorContactSupport": "서버 오류 - 지원팀에 문의하세요.",
+      "paymentServiceNotFound": "결제 서비스를 찾을 수 없습니다 - 지원팀에 문의하세요.",
+      "paymentServiceNotConfigured": "결제 서비스가 올바르게 구성되지 않았습니다 - 지원팀에 문의하세요.",
+      "cryptoComTimeoutCheckManually": "Crypto.com 결제 모니터링 시간 초과. 구독 상태를 수동으로 확인해주세요.",
+      "fluxPayTimeoutCheckManually": "FluxPay 결제 모니터링 시간 초과. 구독 상태를 수동으로 확인해주세요.",
+      "failedToCopy": "복사 실패",
+      "cryptoCom": "Crypto.com",
+      "zelcore": "Zelcore",
+      "currentSubscription": "현재 구독",
+      "currentPlanFallback": "현재 요금제",
+      "currentStorage": "현재 스토리지",
+      "general": "일반",
+      "planNames": {
+        "starter": "스타터",
+        "standard": "스탠다드",
+        "pro": "엘리트",
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
+      },
+      "ssp": "SSP",
+      "messages": {
+        "paymentSuccessfulRedirecting": "결제 성공! 리디렉션 중..."
+      }
     }
   },
   "pages": {
@@ -2127,7 +2127,7 @@
         "vcpu": "vCPU",
         "vcpuUsed": "{used} vCore",
         "vcpuTotal": "{total} vCore 중",
-        "ram": "RAM",
+        "ram": "램",
         "ramUsed": "{used} GB",
         "ramTotal": "{total} GB 중",
         "applications": "애플리케이션",
@@ -2371,7 +2371,7 @@
             "title": "벤치마크 정보",
             "refresh": "새로고침",
             "loadingMessage": "벤치마크 정보 로드 중...",
-            "thunder": "Thunder",
+            "thunder": "썬더",
             "runningWarning": "벤치마크가 현재 실행 중입니다. 나중에 다시 시도하세요.",
             "hardwareSpecs": "하드웨어 사양",
             "performanceMetrics": "성능 지표",
@@ -2482,6 +2482,2600 @@
           }
         }
       }
+    },
+    "apps": {
+      "manage": {
+        "tabs": {
+          "specifications": "사양",
+          "information": "정보",
+          "fileChanges": "파일 변경",
+          "monitoring": "모니터링",
+          "logs": "로그",
+          "terminal": "보안 셸",
+          "control": "제어",
+          "backupRestore": "백업 및 복원",
+          "instances": "인스턴스",
+          "subscription": "구독"
+        },
+        "tooltips": {
+          "manage": "관리",
+          "install": "설치",
+          "remove": "제거",
+          "visit": "방문"
+        },
+        "searchIpPlaceholder": "IP 검색...",
+        "persistentStorage": "영구 저장소",
+        "persistentStorageTooltip": "컨테이너 재시작 시에도 유지되는 저장소를 추적합니다. 디스크 과다 사용을 방지합니다.",
+        "rootFilesystem": "루트 파일 시스템 (rootfs)",
+        "rootFilesystemTooltip": "임시 컨테이너 저장소입니다. rootfs를 모니터링하면 공간 문제를 방지할 수 있습니다.",
+        "confirmButton": "관리",
+        "dialog": {
+          "installingTitle": "앱 설치 중...",
+          "installingAppName": "{appName} 설치 중...",
+          "removingAppName": "{appName} 제거 중...",
+          "currentTask": "현재 작업:",
+          "overallProgress": "전체 진행률",
+          "fullLogs": "전체 로그",
+          "showLogs": "로그 보기",
+          "hideLogs": "로그 숨기기",
+          "close": "닫기"
+        },
+        "specification": {
+          "local": "로컬 사양",
+          "global": "글로벌 사양"
+        },
+        "composition": "구성",
+        "messages": {
+          "awaitingLaunch": "애플리케이션이 실행 대기 중입니다...",
+          "fileChangesDescription": "Docker 컨테이너 내 파일 변경 (Kind: 0 = 수정됨, Kind: 1 = 추가됨, Kind: 2 = 삭제됨)",
+          "noRecordsAvailable": "사용 가능한 레코드가 없습니다.",
+          "dataRetrievalError": "데이터를 가져올 수 없습니다. 나중에 다시 시도하거나 다른 백엔드 인스턴스로 전환해 주세요.",
+          "instanceNotFound": "인스턴스를 찾을 수 없습니다. 초기화 중일 수 있습니다. 새로고침하거나 나중에 다시 시도해 주세요.",
+          "applicationExpired": "애플리케이션 만료됨",
+          "cannotCalculateExpiration": "만료일을 계산할 수 없습니다",
+          "failedToCheck": "확인 실패",
+          "definingNewPrimary": "새 프라이머리 정의 진행 중",
+          "sessionExpired": "세션이 만료되어 로그아웃합니다...",
+          "noInstancesAvailableTitle": "사용 가능한 인스턴스 없음",
+          "noInstancesAvailableMessage": "이 애플리케이션에는 실행 중인 인스턴스가 없습니다. 앱이 배포 중이거나, 재배포 중이거나, 아직 배포되지 않았거나, 모든 인스턴스가 오프라인일 수 있습니다.",
+          "retry": "재시도",
+          "loadingTitle": "로딩 중...",
+          "loadingMessage": "애플리케이션 정보를 가져오는 중...",
+          "noInstancesWarningTitle": "제한된 기능 - 실행 중인 인스턴스 없음",
+          "noInstancesWarningMessage": "이 앱에는 활성 인스턴스가 없습니다. 일부 기능을 사용할 수 없습니다. 구독 관리 및 사양 확인은 가능합니다.",
+          "noInstancesChip": "인스턴스 없음"
+        },
+        "placeholders": {
+          "searchProcesses": "프로세스 검색..."
+        },
+        "titles": {
+          "inspectDetails": "검사 세부 정보",
+          "fileChanges": "파일 변경",
+          "loadingFileContent": "파일 내용 로딩 중...",
+          "historyStatsOverview": "이력 통계 개요",
+          "statsProcessesOverview": "통계 및 프로세스 개요"
+        },
+        "labels": {
+          "historyStatistics": "이력 통계",
+          "points": "포인트",
+          "refreshRate": "새로고침 빈도",
+          "timeRange": "시간 범위",
+          "component": "컴포넌트",
+          "selectComponent": "컴포넌트 선택",
+          "itemsPerPage": "페이지당 항목 수"
+        },
+        "timeRange": {
+          "last15Minutes": "최근 15분",
+          "last30Minutes": "최근 30분",
+          "last1Hour": "최근 1시간",
+          "last2Hours": "최근 2시간",
+          "last3Hours": "최근 3시간",
+          "last5Hours": "최근 5시간",
+          "last1Day": "최근 1일",
+          "last2Days": "최근 2일",
+          "last3Days": "최근 3일",
+          "last7Days": "최근 7일"
+        },
+        "charts": {
+          "bind": "바인드",
+          "volume": "볼륨",
+          "fileSystem": "파일 시스템 (RootFS)",
+          "memoryAllocated": "할당된 메모리",
+          "memoryUtilization": "메모리 사용률 (%)",
+          "cpuAllocated": "할당된 CPU",
+          "cpuUtilization": "CPU 사용률 (%)",
+          "networkRx": "eth0 수신",
+          "networkTx": "eth0 송신",
+          "ioRead": "읽기",
+          "ioWrite": "쓰기"
+        }
+      },
+      "redeploy": {
+        "tooltip": "재배포",
+        "confirmButton": "재배포"
+      },
+      "table": {
+        "perPage": "페이지당",
+        "filter": "필터",
+        "filterPlaceholder": "검색어 입력",
+        "advancedFilterTooltip": "고급 필터 옵션 열기",
+        "appType": "앱 유형",
+        "version": "버전",
+        "minHdd": "최소 HDD (GB)",
+        "minRam": "최소 RAM (MB)",
+        "minCpu": "최소 CPU (코어)",
+        "minInstances": "최소 인스턴스",
+        "repotags": "저장소 태그",
+        "repotagsPlaceholder": "입력 후 Enter 키를 누르세요",
+        "matchAllTags": "모든 태그 포함 (전체 일치)",
+        "clearFilters": "모든 필터 지우기",
+        "loading": "로딩 중...",
+        "signInRequired": "로그인 필요",
+        "signInDescription": "Flux 네트워크에서 애플리케이션을 관리하고 모니터링하려면 Flux ID로 인증해야 합니다.",
+        "features": {
+          "viewApps": "앱 보기",
+          "manageResources": "리소스 관리",
+          "monitorPerformance": "성능 모니터링",
+          "controlDeployments": "배포 제어"
+        },
+        "signIn": "로그인",
+        "learnMore": "자세히 보기",
+        "noMatchingApps": "일치하는 앱을 찾을 수 없습니다.",
+        "connectionError": "서버에 연결할 수 없습니다. 인터넷 연결을 확인하거나 나중에 다시 시도해 주세요.",
+        "noApps": "앱이 없습니다.",
+        "checking": "확인 중...",
+        "composition": "구성",
+        "locations": "위치",
+        "loginRequired": "로그인 필요",
+        "applicationExpired": "애플리케이션 만료됨",
+        "cannotCalculateExpiration": "만료일을 계산할 수 없습니다",
+        "modeOptions": {
+          "all": "전체",
+          "marketplace": "마켓플레이스",
+          "marketplaceExcluded": "마켓플레이스 제외"
+        },
+        "versionOptions": {
+          "all": "모든 버전",
+          "v3": "버전 3",
+          "v4": "버전 4",
+          "v5": "버전 5",
+          "v6": "버전 6",
+          "v7": "버전 7",
+          "v8": "버전 8"
+        },
+        "headers": {
+          "name": "이름",
+          "status": "상태",
+          "description": "설명"
+        }
+      },
+      "register": {
+        "landing": {
+          "title": "FluxCloud에 앱 배포",
+          "subtitle": "진정한 분산 클라우드 컴퓨팅의 힘을 경험하세요. {countryCount}개 이상의 국가에 걸쳐 {nodeCount}개 이상의 노드로 구성된 글로벌 네트워크에 Docker 컨테이너, 웹 앱, 데이터베이스, API 및 마이크로서비스를 배포하세요.",
+          "getStarted": "배포 시작",
+          "documentation": "문서 보기",
+          "appTypes": {
+            "title": "무엇을 배포할 수 있나요?",
+            "subtitle": "FluxCloud는 모든 Docker 애플리케이션을 지원합니다. 간단한 웹 앱부터 복잡한 다중 컨테이너 배포까지.",
+            "web": {
+              "title": "웹 애플리케이션",
+              "description": "프론트엔드와 백엔드 서비스가 포함된 풀스택 웹 애플리케이션을 배포하세요. React, Vue, Angular, Next.js 등에 완벽합니다."
+            },
+            "api": {
+              "title": "API 및 마이크로서비스",
+              "description": "RESTful API, GraphQL 엔드포인트 및 마이크로서비스 아키텍처를 쉽게 구축하고 배포하세요."
+            },
+            "database": {
+              "title": "데이터베이스",
+              "description": "영구 저장소가 있는 PostgreSQL, MongoDB, MySQL 및 기타 데이터베이스 서비스를 호스팅하세요."
+            },
+            "blockchain": {
+              "title": "블록체인 노드",
+              "description": "분산 인프라에서 블록체인 노드, 검증자 및 DeFi 애플리케이션을 실행하세요."
+            },
+            "custom": {
+              "title": "커스텀 애플리케이션",
+              "description": "모든 Docker 컨테이너를 배포하세요. 머신러닝 모델, 데이터 처리 파이프라인 또는 맞춤형 비즈니스 앱."
+            },
+            "docker": {
+              "title": "Docker Compose",
+              "description": "Docker Compose를 지원하는 다중 컨테이너 애플리케이션. 복잡한 스택이 간단해집니다."
+            }
+          },
+          "benefits": {
+            "title": "왜 FluxCloud를 선택해야 할까요?",
+            "decentralized": {
+              "title": "진정한 분산화",
+              "description": "단일 장애점이 없습니다. 앱이 전 세계적으로 독립적으로 운영되는 수천 개의 노드에서 실행됩니다."
+            },
+            "affordable": {
+              "title": "70% 더 저렴",
+              "description": "AWS, Google Cloud 또는 Azure에 비해 비용을 크게 절약하세요. 숨겨진 수수료 없이 투명한 가격."
+            },
+            "global": {
+              "title": "글로벌 배포",
+              "description": "{countryCount}개 이상의 국가에 배포하고 자동 지역 라우팅으로 어디서나 최적의 성능을 제공합니다."
+            },
+            "censorship": {
+              "title": "검열 저항",
+              "description": "Web3 원칙을 기반으로 구축되었습니다. 애플리케이션은 접근 가능한 상태를 유지하며 어떤 단일 기관도 차단할 수 없습니다."
+            },
+            "scalable": {
+              "title": "즉시 확장 가능",
+              "description": "1개에서 100개의 인스턴스로 즉시 확장하세요. 유연한 리소스 할당으로 사용한 만큼만 지불합니다."
+            },
+            "noVendor": {
+              "title": "벤더 종속 없음",
+              "description": "표준 Docker 컨테이너를 사용하므로 언제든지 마이그레이션할 수 있습니다. 애플리케이션과 데이터를 완전히 제어하세요."
+            },
+            "guarantee": {
+              "title": "30일 환불 보장",
+              "description": "만족하지 않으신가요? 30일 이내에 전액 환불받으세요. 묻지 않습니다. 저희 서비스를 좋아하실 것이라고 확신합니다."
+            },
+            "freeDomain": {
+              "title": "무료 도메인 관리 서비스",
+              "description": "자동 도메인 관리 및 SSL 인증서가 포함됩니다. 도메인만 연결하면 나머지는 설정 없이 저희가 처리합니다."
+            },
+            "loadBalancer": {
+              "title": "로드 밸런서 통합",
+              "description": "모든 인스턴스에 걸쳐 내장 로드 밸런싱. 자동 트래픽 분산으로 최적의 성능과 안정성을 보장합니다."
+            },
+            "dedicatedResources": {
+              "title": "전용 리소스",
+              "description": "보장된 CPU, RAM 및 스토리지를 제공합니다. 공유 인프라나 콜드 스타트가 없습니다."
+            }
+          },
+          "pricing": {
+            "title": "투명하고 저렴한 가격",
+            "subtitle": "FluxCloud가 기존 클라우드 제공업체와 어떻게 비교되는지 확인하세요. 동일한 리소스, 훨씬 저렴한 비용.",
+            "provider": "제공업체",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "storage": "스토리지",
+            "pricePerMonth": "월 가격",
+            "note": "가격은 유사한 구성에 대해 공개된 가격을 기준으로 한 대략적인 값입니다. *Akash Network는 입찰 마켓플레이스를 사용하므로 실제 가격은 다를 수 있습니다. FluxCloud 가격은 가격 API에서 실시간으로 계산됩니다."
+          },
+          "serverNetwork": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "모든 대륙에 노드가 있는 전 세계 분산 인프라에 애플리케이션을 배포하세요.",
+            "activeServers": "활성 서버",
+            "countries": "국가",
+            "global": "글로벌",
+            "coverage": "커버리지",
+            "noData": "서버 맵 데이터를 현재 사용할 수 없습니다"
+          },
+          "features": {
+            "title": "엔터프라이즈급 기능",
+            "performance": {
+              "title": "고성능",
+              "description": "SSD/NVMe 스토리지, 고속 네트워킹 및 최적화된 라우팅으로 앱이 어디서나 빠르게 실행됩니다."
+            },
+            "security": {
+              "title": "보안 설계",
+              "description": "내장 DDoS 보호, 암호화된 데이터 전송 및 격리된 컨테이너 환경."
+            },
+            "redundancy": {
+              "title": "자동 이중화",
+              "description": "여러 노드에 걸친 다중 인스턴스로 자동 장애 조치와 함께 99.9% 가동 시간을 보장합니다."
+            },
+            "monitoring": {
+              "title": "실시간 모니터링",
+              "description": "CPU, RAM, 스토리지 및 네트워크 사용량을 실시간으로 추적하세요. 상세 로그와 메트릭이 포함됩니다."
+            },
+            "updates": {
+              "title": "무중단 업데이트",
+              "description": "롤링 배포 전략을 사용하여 중단 없이 애플리케이션을 업데이트하세요."
+            },
+            "support": {
+              "title": "24시간 지원",
+              "description": "커뮤니티 Discord, 문서 및 티켓 시스템을 24시간 이용할 수 있습니다."
+            }
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "questions": {
+              "whatIsFlux": {
+                "question": "FluxCloud란 무엇인가요?",
+                "answer": "FluxCloud는 Web3 기술로 구동되는 분산 클라우드 컴퓨팅 플랫폼입니다. 중앙 집중식 데이터 센터에 의존하는 기존 클라우드 제공업체와 달리, FluxCloud는 {countryCount}개 이상의 국가에서 독립적으로 운영되는 {nodeCount}개 이상의 노드에 애플리케이션을 분산합니다. 이를 통해 더 나은 이중화, 검열 저항 및 상당히 낮은 비용을 제공합니다."
+              },
+              "howToDeploy": {
+                "question": "애플리케이션을 어떻게 배포하나요?",
+                "answer": "FluxCloud에 배포하는 것은 간단합니다:<ol><li>\"배포 시작\"을 클릭하여 구성 페이지에 접근</li><li>Docker 이미지와 구성 지정</li><li>리소스 선택 (CPU, RAM, 스토리지)</li><li>인스턴스 수와 배포 위치 선택</li><li>배포하면 몇 분 안에 앱이 라이브됩니다</li></ol><p>Docker Hub, GitHub Container Registry 및 프라이빗 레지스트리를 포함한 모든 레지스트리의 Docker 이미지를 지원합니다.</p>"
+              },
+              "pricing": {
+                "question": "비용은 얼마인가요?",
+                "answer": "FluxCloud는 기본 구성에 대해 월 $0.99부터 시작하는 투명한 종량제 가격을 제공합니다. 가격은 다음에 따라 달라집니다:<ul><li>할당된 CPU 코어</li><li>RAM 양</li><li>스토리지 크기</li><li>인스턴스 수</li><li>포트 요구 사항</li></ul><p><a href=\"/cost-calculator\" target=\"_blank\">비용 계산기</a>를 사용하여 필요에 맞는 정확한 가격을 추정하세요. 숨겨진 수수료나 예상치 못한 요금이 없습니다.</p>"
+              },
+              "support": {
+                "question": "어떤 지원을 받을 수 있나요?",
+                "answer": "여러 지원 채널을 제공합니다:<ul><li><strong>문서:</strong> <a href=\"https://docs.runonflux.io\" target=\"_blank\">docs.runonflux.io</a>에서 종합 가이드 제공</li><li><strong>Discord 커뮤니티:</strong> 24시간 활성 커뮤니티 지원</li><li><strong>이메일 지원:</strong> 팀의 직접 지원</li><li><strong>티켓 시스템:</strong> <a href=\"https://support.runonflux.io\" target=\"_blank\">support.runonflux.io</a>에서 이슈 추적</li><li><strong>AI 어시스턴트:</strong> 빠른 질문을 위한 내장 AI 도우미</li></ul>"
+              },
+              "requirements": {
+                "question": "배포 요구 사항은 무엇인가요?",
+                "answer": "FluxCloud에 애플리케이션을 배포하려면 다음이 필요합니다:<ul><li><strong>Flux ID:</strong> Flux 호환 지갑을 사용하여 무료로 생성</li><li><strong>Docker 이미지:</strong> Docker 컨테이너로 패키징된 애플리케이션</li><li><strong>FLUX 토큰 또는 USD:</strong> 호스팅 비용 결제 (Stripe 및 PayPal을 통한 신용카드 결제 가능)</li><li><strong>최소 3개 인스턴스:</strong> 분산화 및 이중화를 위해</li></ul><p>인스턴스당 최소 리소스: 0.1 CPU 코어, 100 MB RAM, 1 GB 스토리지</p>"
+              },
+              "security": {
+                "question": "FluxCloud는 얼마나 안전한가요?",
+                "answer": "FluxCloud는 여러 보안 계층을 구현합니다:<ul><li><strong>컨테이너 격리:</strong> 각 앱은 자체 격리된 Docker 컨테이너에서 실행</li><li><strong>암호화된 전송:</strong> 전송 중인 모든 데이터가 암호화됨</li><li><strong>DDoS 보호:</strong> 공격에 대한 내장 보호</li><li><strong>정기 감사:</strong> 코드와 인프라가 정기적으로 감사됨</li><li><strong>분산화:</strong> 단일 장애점 없음</li><li><strong>프라이빗 옵션:</strong> 향상된 개인 정보 보호를 위한 엔터프라이즈 모드</li></ul><p>애플리케이션 코드와 데이터를 완전히 제어할 수 있습니다.</p>"
+              }
+            }
+          },
+          "cta": {
+            "title": "배포할 준비가 되셨나요?",
+            "subtitle": "이미 FluxCloud에서 빌드하고 있는 수천 명의 개발자와 함께하세요. 오늘 애플리케이션 배포를 시작하세요.",
+            "button": "배포 구성하기"
+          },
+          "relatedLinks": {
+            "title": "FluxCloud에서 더 알아보기",
+            "marketplace": "마켓플레이스",
+            "marketplaceDesc": "사전 구성된 애플리케이션 둘러보기",
+            "wordpress": "WordPress 호스팅",
+            "wordpressDesc": "FluxCloud에 WordPress 사이트 배포",
+            "gaming": "게임 서버",
+            "gamingDesc": "좋아하는 게임 서버 호스팅",
+            "calculator": "비용 계산기",
+            "calculatorDesc": "호스팅 비용 추정"
+          }
+        },
+        "orbit": {
+          "choice": {
+            "title": "어떻게 배포하시겠습니까?",
+            "subtitle": "워크플로에 가장 적합한 배포 방법을 선택하세요",
+            "newBadge": "새로운",
+            "betaBadge": "베타",
+            "orbitSubtitle": "Git 기반 배포",
+            "orbitDescription": "저장소를 연결하기만 하면 나머지는 저희가 처리합니다. Docker 지식이 필요하지 않습니다.",
+            "orbitFeature1": "Docker 지식이 필요 없음",
+            "orbitFeature2": "100개 이상의 프레임워크 자동 감지",
+            "orbitFeature3": "내장 CI/CD 파이프라인",
+            "orbitFeature4": "자동 롤백",
+            "orbitFeature5": "GitHub/GitLab/Bitbucket 지원",
+            "orbitCta": "Git으로 배포",
+            "dockerSubtitle": "컨테이너 기반 배포",
+            "dockerDescription": "커스텀 Docker 컨테이너로 완전한 제어. 복잡한 배포에 완벽합니다.",
+            "dockerFeature1": "모든 Docker 이미지",
+            "dockerFeature2": "프라이빗 레지스트리",
+            "dockerFeature3": "다중 컨테이너 컴포즈",
+            "dockerFeature4": "완전한 리소스 제어",
+            "dockerFeature5": "엔터프라이즈 기능",
+            "dockerCta": "Docker로 배포",
+            "startingAt": "시작가",
+            "dockerPriceDetail": "3 인스턴스, 2 vCPU, 4GB RAM",
+            "comparisonHint": "어떤 것을 선택해야 할지 모르시겠나요? Git은 대부분의 웹 앱에 완벽합니다. Docker는 최대한의 제어를 제공합니다.",
+            "deployment": "배포",
+            "deployments": "배포"
+          },
+          "overview": {
+            "stepTitle": "FluxCloud Git 개요",
+            "stepDescription": "FluxCloud Git이 제공하는 기능과 다른 플랫폼과의 비교를 알아보세요."
+          },
+          "pricing": {
+            "title": "Git 플랜",
+            "subtitle": "Git 기반 배포를 위한 간단한 가격",
+            "stepTitle": "플랜 선택",
+            "stepDescription": "리소스 요구 사항에 맞는 플랜을 선택하세요.",
+            "allPlansInclude": "리소스 선택",
+            "poweredByFluxCloud": "FluxCloud 기반",
+            "sharedFeatures": {
+              "title": "FluxCloud Git 기능",
+              "subtitle": "당신의 코드. 우리의 마법. Docker 두통 제로.",
+              "unlimitedBuilds": "무제한 빌드",
+              "frameworks": "100개 이상의 프레임워크",
+              "frameworksDetail": "Node.js, Python, Rust, Go, Java, .NET, PHP 등",
+              "zeroConfig": "설정 필요 없음",
+              "zeroConfigDetail": "프로젝트 유형 자동 감지, 의존성 설치, 자동 빌드",
+              "cicd": "내장 CI/CD",
+              "cicdDetail": "GitHub, GitLab, Bitbucket 웹훅 + 폴링 모드",
+              "customDomain": "커스텀 도메인",
+              "customDomainDetail": "SSL이 포함된 자체 도메인 연결",
+              "geolocation": "지역 선택",
+              "geolocationDetail": "전 세계 특정 지역에 배포",
+              "branchPreviews": "배포 미리보기",
+              "branchPreviewsDetail": "브랜치 및 PR에 대한 미리보기 배포",
+              "autoRollback": "자동 롤백",
+              "autoRollbackDetail": "실패한 배포는 마지막 작동 버전으로 되돌아갑니다",
+              "monorepo": "모노레포 지원",
+              "monorepoDetail": "PROJECT_PATH를 사용하여 특정 폴더 배포",
+              "healthChecks": "상태 모니터링",
+              "healthChecksDetail": "내장 상태 확인 및 프로세스 감독",
+              "security": "강화된 보안",
+              "securityDetail": "비루트 실행 및 자동 로그 로테이션",
+              "unlimitedBuildsDetail": "빌드 횟수나 빌드 시간에 제한 없음",
+              "dedicatedResources": "전용 리소스",
+              "dedicatedResourcesDetail": "공유 하드웨어 없음 - 임대한 리소스는 앱 전용입니다"
+            },
+            "free": "무료",
+            "developer": "스탠다드",
+            "pro": "프로",
+            "beta": "베타",
+            "comingSoon": "출시 예정",
+            "freeBuilds": "월 50회 빌드",
+            "developerBuilds": "무제한 빌드",
+            "proBuilds": "무제한 빌드",
+            "freePriceDetail": "사이드 프로젝트와 학습에 완벽",
+            "developerPriceDetail": "성장하는 프로젝트와 소규모 앱용",
+            "proPriceDetail": "활발한 개발 및 프로덕션 앱용",
+            "betaPriceDetail": "베타 기간 동안 전체 액세스",
+            "perMonth": "/월",
+            "billingOptions": "결제 옵션",
+            "billingPeriod": "결제 기간",
+            "billingMonthly": "월간",
+            "billing1Month": "1개월",
+            "billing3Months": "3개월",
+            "billing6Months": "6개월",
+            "billing12Months": "12개월",
+            "savings": "{percent}% 절약",
+            "total": "합계",
+            "customDomain": "커스텀 도메인",
+            "customDomainPlaceholder": "app.yourdomain.com",
+            "customDomainHint": "도메인의 CNAME 레코드를 Flux 앱 URL로 지정하세요",
+            "preferredGeolocation": "선호 지역",
+            "geolocationHint": "앱이 배포될 지역을 선택하세요. 최적의 가용성을 위해 \"글로벌\"로 두세요.",
+            "addLocation": "위치 추가",
+            "noLocationsSelected": "특정 위치가 선택되지 않았습니다. 앱이 전 세계에 배포됩니다.",
+            "freeFeatures": {
+              "deployments": "1개 활성 배포",
+              "builds": "무제한",
+              "cpu": "0.5 코어",
+              "ram": "1 GB",
+              "storage": "5 GB SSD/NVMe",
+              "support": "커뮤니티 지원",
+              "frameworks": "100개 이상의 프레임워크 지원"
+            },
+            "developerFeatures": {
+              "deployments": "3개 활성 배포",
+              "builds": "무제한",
+              "cpu": "1.5 코어",
+              "ram": "4 GB",
+              "storage": "15 GB SSD/NVMe",
+              "support": "우선 지원",
+              "frameworks": "100개 이상의 프레임워크 지원"
+            },
+            "proFeatures": {
+              "deployments": "5개 활성 배포",
+              "deploymentsExtra": "+$3/추가",
+              "builds": "무제한",
+              "cpu": "2.0 코어",
+              "ram": "6 GB",
+              "storage": "20 GB SSD/NVMe",
+              "support": "우선 지원",
+              "frameworks": "100개 이상의 프레임워크 지원",
+              "branchPreviews": "브랜치 배포 미리보기",
+              "customDomain": "커스텀 도메인 지원",
+              "geolocation": "지역 선택",
+              "cicd": "전체 CI/CD 파이프라인"
+            },
+            "betaFeatures": {
+              "deployments": "무제한 활성 배포",
+              "builds": "무제한 빌드",
+              "cpu": "2.0 코어",
+              "ram": "6 GB",
+              "storage": "40 GB SSD/NVMe",
+              "support": "우선 지원",
+              "frameworks": "100개 이상의 프레임워크 지원",
+              "branchPreviews": "브랜치 배포 미리보기",
+              "customDomain": "커스텀 도메인 지원",
+              "geolocation": "지역 선택",
+              "cicd": "전체 CI/CD 파이프라인"
+            },
+            "custom": "커스텀",
+            "customizable": "사용자 정의 가능",
+            "customPriceDetail": "자체 리소스 및 가격 구성",
+            "startingAt": "시작가",
+            "priceAfterFirstMonth": "첫 달 이후 가격",
+            "customFeatures": {
+              "cpu": "0.1 - 15 코어",
+              "ram": "100 MB - 59 GB",
+              "storage": "1 - 820 GB",
+              "instances": "1 - 3 인스턴스"
+            },
+            "buildLimitWarning": "무료 등급 한도에 도달하면 다음 빌드가 자동으로 프로로 업그레이드됩니다",
+            "currentPlan": "현재 플랜",
+            "selectPlan": "플랜 선택",
+            "recommended": "추천",
+            "mostPopular": "가장 인기",
+            "firstMonthFree": "첫 달 무료*",
+            "freeForever": "영구 무료*",
+            "freePlanExplainer": "무료 플랜은 1개의 Git 앱으로 자동 갱신됩니다. 앱을 추가하면 월 $0.99가 청구됩니다.",
+            "startDeploying": "배포 시작",
+            "startFreeTrial": "무료 평가판 시작",
+            "freeTrialDisclaimer": "악용 방지를 위해 제한이 적용될 수 있습니다.",
+            "beginnerDisclaimer": "무료 플랜은 네트워크에서 하나의 Git 앱만 실행하는 한 InFlux Technologies에 의해 무료로 자동 갱신됩니다. 추가 Git 앱을 배포하면 각 무료 플랜 앱에 월 $0.99가 청구됩니다.",
+            "beginnerDowntimeNote": "무료 플랜은 단일 인스턴스에서 실행됩니다. Flux는 분산 네트워크이므로 호스팅 노드가 재시작되거나 오프라인이 되면 짧은 다운타임(일반적으로 몇 분)이 발생할 수 있습니다. 고가용성 애플리케이션의 경우 여러 인스턴스에서 실행되는 스탠다드 또는 프로 플랜을 권장합니다.",
+            "privateRepoDisclaimer": "프라이빗 GitHub 저장소는 소스 코드와 데이터를 완전히 암호화하여 ArcaneOS 노드에서만 실행되는 엔터프라이즈 앱으로 자동 배포됩니다. 엔터프라이즈는 무료 플랜에 월 $1.33, 스탠다드, 프로 및 커스텀 플랜에 월 $2.66가 추가됩니다.",
+            "competitive": {
+              "savings": "Vercel/Render보다 최대 85% 저렴",
+              "dedicated": "공유가 아닌 전용 리소스",
+              "unlimitedBuilds": "무제한 빌드 포함"
+            }
+          },
+          "review": {
+            "stepTitle": "검토 및 배포",
+            "stepDescription": "Flux 네트워크에 배포하기 전에 구성을 검토하세요.",
+            "checkingEligibility": "첫 달 무료 자격 확인 중...",
+            "notEligibleTitle": "이 FluxCloud Git은 첫 달 무료 자격이 없습니다",
+            "notEligibleDescription": "진행하려면 결제가 필요합니다.",
+            "repository": "저장소",
+            "url": "URL",
+            "branch": "브랜치",
+            "projectPath": "프로젝트 경로",
+            "accessToken": "인증",
+            "configured": "구성됨",
+            "appType": "앱 유형",
+            "enterprisePrivate": "엔터프라이즈 (프라이빗 저장소)",
+            "configuration": "구성",
+            "appName": "앱 이름",
+            "description": "설명",
+            "appPort": "앱 포트",
+            "exposedPort": "노출 포트",
+            "contact": "연락처",
+            "runtime": "런타임",
+            "envVariables": "환경 변수",
+            "planAndResources": "플랜 및 리소스",
+            "plan": "플랜",
+            "resources": "리소스",
+            "activeDeployments": "활성 배포",
+            "builds": "빌드",
+            "branchPreviews": "브랜치 미리보기",
+            "enabled": "활성화됨",
+            "billing": "청구",
+            "geolocation": "지역",
+            "totalPrice": "총 가격",
+            "unlimited": "무제한",
+            "generatedSpec": "생성된 앱 사양",
+            "termsLabel": "다음에 동의합니다",
+            "termsOfService": "서비스 약관",
+            "termsAnd": "및",
+            "privacyPolicy": "개인정보 처리방침",
+            "deployNow": "지금 배포",
+            "proceedToPayment": "결제 진행"
+          },
+          "deploy": {
+            "stepTitle": "배포",
+            "registering": "애플리케이션 등록 중",
+            "waitingSignature": "서명 대기 중...",
+            "signMessage": "Flux 네트워크에 애플리케이션을 서명하고 등록하는 중...",
+            "propagating": "네트워크로 전파 중...",
+            "registrationFailed": "등록 실패",
+            "retry": "재시도",
+            "testingInstallation": "설치 테스트 중",
+            "verifyingDeployment": "Flux 네트워크에 애플리케이션을 배포할 수 있는지 확인 중...",
+            "runningTest": "설치 테스트 실행 중...",
+            "startTest": "테스트 시작",
+            "testOutput": "테스트 출력",
+            "testFailed": "설치 테스트 실패",
+            "retryTest": "테스트 재시도",
+            "editConfiguration": "구성 편집",
+            "paymentTitle": "결제 완료",
+            "paymentDescription": "프로 플랜을 활성화하려면 선호하는 결제 방법을 선택하세요.",
+            "processingPayment": "결제 처리 중...",
+            "waitingConfirmation": "결제 확인 대기 중...",
+            "cancel": "취소",
+            "paymentSummary": "결제 요약",
+            "discountApplied": "{percent}% 할인 적용됨",
+            "fiatPayment": "법정화폐 결제",
+            "fiatDescription": "신용카드, PayPal",
+            "cryptoPayment": "암호화폐 결제",
+            "cryptoDescription": "FLUX, BTC, ETH 등",
+            "payWithStripe": "Stripe로 결제",
+            "payWithPaypal": "PayPal로 결제",
+            "stripeNote": "Stripe를 통한 안전한 결제",
+            "payWithFlux": "FLUX로 결제",
+            "payWithZelcore": "Zelcore로 결제",
+            "payWithSSP": "SSP 지갑으로 결제",
+            "scanQR": "QR 코드를 스캔하거나 주소를 복사하세요",
+            "sendExactAmount": "정확한 금액을 보내세요",
+            "toAddress": "주소로",
+            "copyAddress": "주소 복사",
+            "copiedAddress": "주소가 복사되었습니다!",
+            "successTitle": "배포 성공!",
+            "successDescription": "애플리케이션이 Flux 네트워크에 배포 중입니다.",
+            "appAvailableSoon": "앱이 할당된 Flux URL에서 곧 사용 가능합니다.",
+            "appName": "앱 이름",
+            "appUrl": "앱 URL",
+            "openApp": "앱 열기",
+            "manageApplication": "애플리케이션 관리",
+            "deployAnother": "다른 앱 배포",
+            "freeMonthTitle": "첫 달 무료!",
+            "freeMonthDescription": "InFlux Technologies가 후원하는 첫 달 호스팅이 완전히 무료입니다.",
+            "sponsoredBy": "InFlux Technologies 후원",
+            "paymentSubmissionInfo": "애플리케이션 결제가 몇 분 내에 네트워크에 제출됩니다.",
+            "checkingRegistration": "결제 확인 중...",
+            "waitingForInstance": "노드 배포 대기 중...",
+            "firstMonthSponsoredBy": "첫 달 호스팅은 InFlux Technologies가 제공합니다.",
+            "freePlanSponsoredBy": "무료 플랜은 InFlux Technologies가 제공합니다.",
+            "checkingPaymentOnBlockchain": "블록체인에서 결제 확인 중.",
+            "blockchainConfirmationTime": "몇 분 정도 소요될 수 있습니다.",
+            "paymentConfirmedWaitingNodes": "네트워크에서 결제가 확인되었습니다.",
+            "waitingForNodesPickup": "노드가 앱을 가져와 설치하기를 기다리는 중입니다.",
+            "nodeDeploymentTime": "몇 분 정도 소요될 수 있습니다.",
+            "registrationCompleteTitle": "등록/결제 완료!",
+            "registrationCompleteDescription": "애플리케이션이 Flux 네트워크에 성공적으로 결제/등록되었습니다.",
+            "nodesSpawning": "네트워크 노드가 애플리케이션을 생성하고 있습니다. 곧 사용 가능합니다.",
+            "cancelPayment": "취소하고 돌아가기"
+          },
+          "navigation": {
+            "back": "뒤로",
+            "continue": "계속",
+            "next": "다음",
+            "previous": "이전"
+          },
+          "payment": {
+            "payWithCard": "카드로 결제",
+            "securePayment": "안전하고 즉시 결제",
+            "payWithFlux": "FLUX로 결제",
+            "cryptoPayment": "암호화폐 결제",
+            "notEligibleInfo": "이 등록에는 결제가 필요합니다. 계속하려면 결제 방법을 선택하세요.",
+            "selectPaymentMethod": "결제 방법 선택",
+            "secureProcessing": "안전한 결제 처리",
+            "instantConfirmation": "즉시 결제 확인",
+            "multipleCurrency": "다중 통화 지원",
+            "sendTo": "보낼 주소",
+            "message": "메시지"
+          },
+          "features": {
+            "title": "몇 분 만에 Git에서 배포",
+            "subtitle": "코드를 푸시하면 나머지는 저희가 처리합니다",
+            "howItWorks": {
+              "title": "Git 배포 작동 방식",
+              "step1": {
+                "title": "저장소 연결",
+                "description": "GitHub, GitLab 또는 Bitbucket 저장소를 연결하세요"
+              },
+              "step2": {
+                "title": "자동 감지",
+                "description": "Git 배포가 프레임워크와 의존성을 자동으로 감지합니다"
+              },
+              "step3": {
+                "title": "빌드 및 배포",
+                "description": "앱이 빌드되어 Flux 네트워크에 배포됩니다"
+              },
+              "step4": {
+                "title": "동기화 유지",
+                "description": "푸시 커밋이 웹훅을 통해 자동 재빌드를 트리거합니다"
+              }
+            },
+            "supported": {
+              "title": "100개 이상의 프레임워크 지원",
+              "javascript": "Node.js / JavaScript",
+              "javascriptFrameworks": "Next.js, Nuxt, Remix, Astro, Express, NestJS, Vite",
+              "python": "Python",
+              "pythonFrameworks": "Django, FastAPI, Flask, Streamlit",
+              "rust": "Rust",
+              "rustFrameworks": "Actix, Axum, Rocket",
+              "go": "Go",
+              "goFrameworks": "Gin, Echo, Fiber",
+              "java": "Java",
+              "javaFrameworks": "Spring Boot, Quarkus",
+              "dotnet": ".NET",
+              "dotnetFrameworks": "ASP.NET Core, Blazor",
+              "ruby": "Ruby",
+              "rubyFrameworks": "Rails, Sinatra",
+              "php": "PHP",
+              "phpFrameworks": "Laravel, Symfony",
+              "static": "정적 사이트",
+              "staticFrameworks": "HTML/CSS/JS, Hugo, Jekyll, Gatsby"
+            },
+            "benefits": {
+              "zeroDockertitle": "Docker 두통 제로",
+              "zeroDockerDesc": "Dockerfile이 필요 없습니다. Git 배포가 자동으로 컨테이너화를 처리합니다.",
+              "autoRollbackTitle": "자동 롤백",
+              "autoRollbackDesc": "실패한 배포는 자동으로 마지막 작동 버전으로 되돌아갑니다.",
+              "monorepoTitle": "모노레포 지원",
+              "monorepoDesc": "PROJECT_PATH를 사용하여 모노레포에서 특정 폴더를 배포하세요.",
+              "productionTitle": "프로덕션 준비",
+              "productionDesc": "상태 확인, 슈퍼바이저 관리, 로그 로테이션, 비루트 실행."
+            }
+          },
+          "faq": {
+            "title": "Git 배포 FAQ",
+            "whatIsOrbit": {
+              "question": "Git 배포란 무엇인가요?",
+              "answer": "Git 배포는 Docker 지식 없이도 애플리케이션을 자동으로 빌드하고 배포하는 Flux의 Git 기반 배포 플랫폼입니다. 저장소를 연결하기만 하면 Git 배포가 프레임워크 감지, 의존성 설치, 빌드 및 Flux 네트워크 전체 배포 등 모든 것을 처리합니다."
+            },
+            "whatFrameworks": {
+              "question": "어떤 프레임워크가 지원되나요?",
+              "answer": "Git 배포는 Next.js, Django, FastAPI, Rails, Spring Boot, ASP.NET Core 등 100개 이상의 프레임워크를 지원합니다. Node.js, Python, Rust, Go, Java, .NET, Ruby, PHP 프로젝트와 정적 사이트를 자동 감지합니다."
+            },
+            "howBuildsWork": {
+              "question": "빌드는 어떻게 작동하나요?",
+              "answer": "저장소에 새 커밋을 푸시할 때마다 빌드가 트리거됩니다. Git 배포는 웹훅을 통해 변경 사항을 감지하고, 코드를 가져와 감지된 프레임워크를 사용하여 빌드한 다음 네트워크 전체에 배포합니다. 무료 등급에는 월 50회 빌드가 포함됩니다."
+            },
+            "exceedLimit": {
+              "question": "빌드 한도를 초과하면 어떻게 되나요?",
+              "answer": "무료 등급 한도(월 50회 빌드)에 도달하면 이메일 알림을 받게 됩니다. 다음 빌드는 앱을 자동으로 프로 등급(월 $15)으로 업그레이드하고 신용카드로 청구됩니다."
+            },
+            "switchPlans": {
+              "question": "무료에서 프로로 전환할 수 있나요?",
+              "answer": "네! 앱 대시보드에서 언제든지 프로로 업그레이드할 수 있습니다. 새 앱을 등록할 때 3, 6 또는 12개월을 선불로 결제할 수도 있습니다."
+            },
+            "privateRepos": {
+              "question": "프라이빗 저장소가 지원되나요?",
+              "answer": "네, Git 배포는 프라이빗 저장소를 지원합니다. 설정 과정에서 Git 배포가 저장소에 액세스하도록 승인해야 합니다."
+            }
+          },
+          "landing": {
+            "badge": "새로운 기능: Git에서 배포",
+            "heroTitle": "당신의 코드. 우리의 마법.",
+            "heroSubtitle": "Docker 두통 제로.",
+            "heroDescription": "GitHub, GitLab 또는 Bitbucket에서 모든 웹 애플리케이션을 직접 배포하세요. Git 배포가 프레임워크를 자동 감지하고 나머지를 모두 처리합니다.",
+            "getStartedFree": "무료로 시작",
+            "viewPricing": "가격 보기"
+          },
+          "comparison": {
+            "title": "Git 배포 비교",
+            "subtitle": "Git 배포가 다른 Git 배포 플랫폼과 어떻게 비교되는지 확인하세요",
+            "provider": "제공업체",
+            "plan": "플랜",
+            "price": "가격",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "builds": "빌드",
+            "best": "최고의 가치",
+            "cores": "코어",
+            "core": "코어",
+            "unlimited": "무제한",
+            "shared": "공유",
+            "limited": "제한됨",
+            "creditBased": "크레딧 기반",
+            "usageBased": "사용량 기반",
+            "minutes": "분/월"
+          },
+          "signIn": {
+            "description": "Git에서 애플리케이션을 배포하려면 로그인하세요.",
+            "noDockerNeeded": "Docker 지식이 필요 없음",
+            "frameworksSupported": "100개 이상의 프레임워크 지원",
+            "builtInCicd": "내장 CI/CD",
+            "freeTierAvailable": "무료 등급 사용 가능",
+            "backToOptions": "옵션으로 돌아가기"
+          },
+          "header": {
+            "backToDeploymentOptions": "배포 옵션으로 돌아가기",
+            "deployWithOrbit": "Git으로 배포",
+            "connectAndDeploy": "Git 저장소를 연결하고 몇 분 만에 배포하세요"
+          },
+          "stepper": {
+            "overview": "개요",
+            "plan": "플랜",
+            "repository": "저장소",
+            "configure": "구성",
+            "review": "검토",
+            "register": "등록",
+            "payment": "결제"
+          },
+          "repository": {
+            "stepTitle": "저장소 연결",
+            "stepDescription": "Git 저장소 URL을 입력하세요. GitHub, GitLab, Bitbucket을 지원합니다.",
+            "repoUrlLabel": "저장소 URL *",
+            "repoUrlPlaceholder": "https://github.com/username/repo",
+            "repoUrlHint": "공개 또는 프라이빗 저장소 URL",
+            "checkingRepository": "저장소 확인 중...",
+            "publicRepository": "공개 저장소",
+            "privateRepoAuth": "프라이빗 저장소 - 인증 필요",
+            "errorCheckingRepo": "저장소 확인 중 오류 발생",
+            "detected": "감지됨",
+            "privateRepoDetected": "프라이빗 저장소 감지됨",
+            "privateRepoMessage": "이 저장소는 인증이 필요합니다. 앱이 자동으로 엔터프라이즈 애플리케이션으로 등록됩니다.",
+            "enterpriseFeatures": "엔터프라이즈 애플리케이션 혜택",
+            "enterpriseFeature1": "하드웨어 수준 암호화가 있는 ArcaneOS 노드에서만 실행",
+            "enterpriseFeature2": "소스 코드와 데이터가 완전히 암호화되어 보호됨",
+            "enterpriseFeature3": "독점 및 민감한 애플리케이션을 위한 강화된 보안",
+            "enterprisePricing": "엔터프라이즈는 무료 플랜에 월 $1.33, 스탠다드, 프로 및 커스텀 플랜에 월 $2.66가 추가됩니다.",
+            "usernameLabel": "사용자 이름 / 토큰 이름",
+            "usernamePlaceholder": "github-username 또는 token",
+            "usernameHint": "GitHub의 경우 사용자 이름 또는 'token'을 사용하세요",
+            "tokenLabel": "개인 액세스 토큰 *",
+            "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
+            "tokenHint": "Git 제공업체 설정에서 저장소 액세스 권한이 있는 토큰을 생성하세요",
+            "testConnection": "연결 테스트",
+            "connectionSuccess": "연결 성공!",
+            "connectionVerified": "저장소 액세스가 확인되었습니다.",
+            "branchLabel": "브랜치",
+            "branchPlaceholder": "브랜치 선택",
+            "loadingBranches": "브랜치 로딩 중...",
+            "noBranchesFound": "브랜치를 찾을 수 없습니다",
+            "default": "기본값",
+            "branchesAvailable": "개의 브랜치 사용 가능",
+            "defaultMain": "기본값: main",
+            "detectingMonorepo": "모노레포 구조 감지 중...",
+            "monorepoDetected": "모노레포 감지됨!",
+            "projectsFound": "개의 프로젝트 발견",
+            "selectProject": "배포할 프로젝트를 선택하세요:",
+            "projectPathLabel": "프로젝트 경로 (모노레포)",
+            "projectPathPlaceholder": "/",
+            "projectPathHint": "모노레포의 경우 앱이 포함된 폴더를 지정하세요 (예: /apps/frontend)",
+            "enterCredentialsHint": "계속하려면 위에 사용자 이름과 액세스 토큰을 입력하세요",
+            "enterTokenHint": "계속하려면 위에 액세스 토큰을 입력하세요",
+            "testConnectionHint": "계속하기 전에 위의 '연결 테스트'를 클릭하여 액세스를 확인하세요",
+            "testingConnectionHint": "저장소 액세스 확인 중..."
+          },
+          "config": {
+            "stepTitle": "애플리케이션 구성",
+            "stepDescription": "애플리케이션 설정을 구성하세요. Git 배포가 프레임워크를 자동 감지합니다.",
+            "appNameLabel": "애플리케이션 이름 *",
+            "appNamePlaceholder": "my-awesome-app",
+            "appNameHint": "소문자, 숫자 및 하이픈만 가능 (3-32자)",
+            "appPortLabel": "애플리케이션 포트 *",
+            "appPortPlaceholder": "3000",
+            "portListensOn": "애플리케이션이 수신 대기하는 포트",
+            "autoDetected": "자동 감지됨",
+            "autoDetectedFrom": "{framework}에서 자동 감지됨",
+            "contactEmailLabel": "연락처 이메일 *",
+            "contactEmailPlaceholder": "you{'@'}example.com",
+            "contactEmailHint": "배포 알림 및 경고용",
+            "showAdvancedOptions": "고급 옵션",
+            "pollingIntervalLabel": "자동 업데이트 폴링 간격",
+            "pollingIntervalHint": "Git 배포가 저장소에서 새 커밋을 확인하는 빈도입니다. 즉시 폴링을 위해 WEBHOOK_SECRET 환경 변수를 추가하세요",
+            "runtimeVersionTitle": "런타임 버전 (선택사항)",
+            "runtimeAutoDetect": "Git 배포가 런타임을 자동 감지합니다. 특정 버전이 필요한 경우에만 지정하세요.",
+            "runtimeLabel": "런타임",
+            "envVariablesTitle": "환경 변수",
+            "envVariablesInfo": "애플리케이션의 환경 변수를 구성하세요. 아래 Git 변수를 클릭하여 추가하세요.",
+            "availableOrbitVars": "사용 가능한 Git 변수",
+            "added": "추가됨",
+            "add": "추가",
+            "ifNotSet": "설정하지 않으면:",
+            "example": "예시:",
+            "yourEnvVariables": "환경 변수",
+            "noneAddedYet": "(아직 추가되지 않음)",
+            "keyLabel": "키",
+            "valueLabel": "값",
+            "addCustomVariable": "커스텀 변수 추가",
+            "deploymentLocationTitle": "배포 위치",
+            "deploymentLocationInfo": "애플리케이션이 배포될 위치를 선택하세요.",
+            "serverLocation": "서버 위치",
+            "continentLabel": "대륙",
+            "countryLabel": "국가",
+            "regionLabel": "지역",
+            "selectRegionInfo": "앱이 실행될 수 있는 허용 위치 또는 실행할 수 없는 금지 위치를 추가하세요. 전역 배포를 위해 비워두세요.",
+            "allowedLocations": "허용 위치",
+            "forbiddenLocations": "금지 위치",
+            "addAllowed": "허용 추가",
+            "addForbidden": "금지 추가",
+            "currentRules": "현재 지역 규칙",
+            "allowedLocationsColon": "허용:",
+            "forbiddenLocationsColon": "금지:",
+            "customDomainTitle": "커스텀 도메인",
+            "customDomainLabel": "커스텀 도메인",
+            "customDomainPlaceholder": "myapp.example.com",
+            "customDomainHint": "커스텀 도메인을 입력하세요 (DNS는 별도로 구성해야 합니다)",
+            "autoDetectionEnabled": "자동 감지 활성화됨",
+            "autoDetectionDescription": "Git 배포가 프레임워크(Next.js, Django, Rails, Spring Boot 등)를 자동 감지하고 빌드 프로세스를 구성합니다. Dockerfile이 필요 없습니다!",
+            "customResourcesTitle": "커스텀 리소스",
+            "customResourcesInfo": "커스텀 플랜의 CPU, RAM 및 스토리지를 구성하세요. 선택에 따라 가격이 계산됩니다.",
+            "cpuLabel": "CPU",
+            "ramLabel": "RAM",
+            "storageLabel": "스토리지",
+            "instancesLabel": "인스턴스",
+            "selected": "선택됨",
+            "selectPlan": "플랜 선택",
+            "registerApplication": "애플리케이션 등록",
+            "envVars": {
+              "buildCommand": {
+                "description": "자동 감지가 실패하거나 특정 빌드 스크립트가 필요한 경우의 커스텀 빌드 명령",
+                "autoValue": "package.json 스크립트(build, build:prod) 또는 프레임워크 규칙에서 자동 감지됨"
+              },
+              "runCommand": {
+                "description": "애플리케이션을 실행하기 위한 커스텀 시작 명령",
+                "autoValue": "package.json 스크립트(start, serve) 또는 프레임워크 규칙에서 자동 감지됨"
+              },
+              "installCommand": {
+                "description": "커스텀 의존성 설치 명령",
+                "autoValue": "자동 감지됨: lockfile 기반 npm install, yarn install 또는 pnpm install"
+              },
+              "webhookSecret": {
+                "description": "GitHub 웹훅 배포를 위한 시크릿 (엔터프라이즈 기능 활성화)",
+                "autoValue": "비활성화됨. 웹훅 트리거 배포를 활성화하려면 설정하세요"
+              },
+              "nodeVersion": {
+                "description": "Node.js 런타임 버전 지정 (자동 감지 재정의)",
+                "autoValue": ".nvmrc, .node-version 또는 package.json engines 필드에서 자동 감지됨. 최신 LTS로 대체"
+              },
+              "pythonVersion": {
+                "description": "Python 런타임 버전 지정",
+                "autoValue": "runtime.txt, .python-version 또는 Pipfile에서 자동 감지됨. 최신 안정 버전으로 대체"
+              },
+              "rubyVersion": {
+                "description": "Ruby 런타임 버전 지정",
+                "autoValue": ".ruby-version 또는 Gemfile에서 자동 감지됨. 최신 안정 버전으로 대체"
+              },
+              "goVersion": {
+                "description": "Go 런타임 버전 지정",
+                "autoValue": "go.mod에서 자동 감지됨. 최신 안정 버전으로 대체"
+              },
+              "javaVersion": {
+                "description": "Java 런타임 버전 지정",
+                "autoValue": "pom.xml 또는 build.gradle에서 자동 감지됨. 최신 LTS(21)로 대체"
+              },
+              "apiKey": {
+                "description": "상태, 로그 및 미리보기 엔드포인트를 보호하기 위한 API 키 (엔터프라이즈 기능 활성화)",
+                "autoValue": "비활성화됨. 보호된 엔드포인트에 대한 API 인증을 활성화하려면 설정하세요"
+              },
+              "prPreviewEnabled": {
+                "description": "정적 사이트에서 풀 리퀘스트 미리보기 배포 활성화",
+                "autoValue": "비활성화됨. PR 미리보기 배포를 활성화하려면 \"true\"로 설정하세요"
+              }
+            }
+          },
+          "register": {
+            "registrationComplete": "등록 완료",
+            "registrationCompleteMessage": "애플리케이션이 Flux 네트워크에 성공적으로 등록되었습니다.",
+            "proceedingToPayment": "결제 진행 중...",
+            "firstInstallInfo": "프로젝트에 따라 모든 의존성을 다운로드하고 설치해야 하므로 첫 설치에는 시간이 걸릴 수 있습니다. 애플리케이션 관리의 로그 섹션에서 확인할 수 있습니다. 앱이 노드에 설치되면 다음 주소에서 액세스할 수 있습니다:",
+            "appUrl": "앱 URL:",
+            "orbitApi": "GIT API:",
+            "orbitDocumentation": "GIT 문서:"
+          }
+        },
+        "docker": {
+          "header": {
+            "backToDeploymentOptions": "배포 옵션으로 돌아가기",
+            "deployWithDocker": "Docker로 배포",
+            "fullControlDeployment": "커스텀 Docker 컨테이너로 완전한 제어"
+          }
+        }
+      }
+    },
+    "costCalculator": {
+      "title": "앱 호스팅 비용 계산기",
+      "subtitle": "월 $0.99부터 시작하는 저렴한 분산 호스팅 - 정확한 비용을 계산하세요",
+      "description": "투명한 종량제 가격으로 Flux 분산 클라우드 네트워크에 애플리케이션을 배포하세요. 컴퓨트 리소스(CPU, RAM, 스토리지)를 선택하고, 인스턴스 수를 선택한 후 즉시 가격을 확인하세요. 숨겨진 수수료 없음, 벤더 종속 없음. Docker 컨테이너, 웹 앱, API, 데이터베이스 및 마이크로서비스에 완벽합니다. 기본 구성의 경우 월 $0.99부터 시작합니다.",
+      "learnMore": "자세히 보기",
+      "configuration": "구성",
+      "instancesQuestion": "몇 개의 인스턴스를 실행하시겠습니까?",
+      "instancesHint": "(최소 1 / 최대 100) 1 인스턴스 = 1 노드",
+      "instancesPlaceholder": "3",
+      "renewalPeriod": "갱신 기간",
+      "renewalHint": "(수동 갱신 필요)",
+      "hardwareResources": "하드웨어 리소스",
+      "cpuQuestion": "몇 개의 코어가 필요합니까?",
+      "cpuRange": "(최소 0.1 / 최대 15.0)",
+      "memoryQuestion": "앱에 얼마나 많은 메모리가 필요합니까?",
+      "storageQuestion": "얼마나 많은 스토리지를 원하십니까?",
+      "exposedPorts": "노출 포트",
+      "addExposedPort": "노출 포트 추가",
+      "portPlaceholder": "포트 번호를 입력하고 Enter를 누르세요",
+      "portFee": "+수수료",
+      "enterprisePort": "엔터프라이즈 포트",
+      "enterprisePortDetected": "감지됨",
+      "enterprisePortInfo": "포트 0-1023, 8080, 8081, 8443, 6667에는 추가 수수료가 적용됩니다",
+      "standardPorts": "표준 포트 - 추가 수수료 없음",
+      "addPortsHint": "애플리케이션이 공개로 노출할 포트를 추가하세요",
+      "additionalOptions": "추가 옵션",
+      "enterpriseApplication": "엔터프라이즈 애플리케이션",
+      "enterpriseDescription": "엔터프라이즈 애플리케이션은 향상된 개인 정보 보호, 암호화된 데이터 처리 및 전문 노드에서의 우선 배포가 포함된 Arcane OS에서 실행됩니다",
+      "enterpriseHttpsRequired": "엔터프라이즈 애플리케이션에는 HTTPS 또는 localhost가 필요합니다. 엔터프라이즈 기능에 액세스하려면 안전한 연결을 사용하세요.",
+      "enterpriseAuthRequired": "엔터프라이즈 애플리케이션에는 인증이 필요합니다. 엔터프라이즈 기능에 액세스하려면 로그인하세요.",
+      "memoryRange": "(최소 100 MB / 최대 59000 MB)",
+      "storageRange": "(최소 1 GB / 최대 820 GB)",
+      "staticIp": "고정 IP 주소",
+      "staticIpDescription": "애플리케이션에 전용 고정 IP 주소를 할당합니다",
+      "syncData": "인스턴스 간 데이터 동기화",
+      "syncDataDescription": "공유 스토리지가 있는 단계적 마스터-마스터(r) 또는 마스터-슬레이브(g) 모드를 사용하여 데이터 동기화를 활성화합니다. 비활성화하면 각 인스턴스가 자체 격리된 영구 스토리지를 사용합니다",
+      "estimatedCost": "예상 배포 비용",
+      "calculating": "계산 중...",
+      "withDiscount": "{discount}% 할인 적용",
+      "retry": "재시도",
+      "helpButton": "도움말",
+      "presetConfigurations": "사전 설정 구성",
+      "nodes": "노드",
+      "cpu": "CPU",
+      "ram": "RAM",
+      "ssd": "SSD/NVMe",
+      "cost": "비용",
+      "select": "선택",
+      "estimatedRate": "*예상 1 Flux = ${rate} USD",
+      "gotIt": "확인",
+      "validation": {
+        "instancesRequired": "인스턴스 수가 필요합니다",
+        "instancesMin": "최소 1개의 인스턴스가 필요합니다",
+        "instancesMinSync": "데이터 동기화가 활성화된 경우 최소 3개의 인스턴스가 필요합니다",
+        "instancesMinSyncInfo": "분산 영구 스토리지가 있는 앱의 최소 인스턴스는 3개입니다. 더 적은 인스턴스를 사용하려면 데이터 동기화를 비활성화하세요.",
+        "instancesWarningOne": "분산 네트워크에 권장되는 최소값은 3개 인스턴스입니다. 1개의 인스턴스만 있으면 앱을 실행하는 노드가 재부팅되거나 종료될 경우 몇 분의 다운타임이 발생할 수 있습니다.",
+        "instancesWarningTwo": "분산 네트워크에 권장되는 최소값은 3개 인스턴스입니다.",
+        "instancesMax": "최대 100개의 인스턴스가 허용됩니다"
+      },
+      "renewalOptions": {
+        "oneWeek": "1주",
+        "twoWeeks": "2주",
+        "oneMonth": "1개월",
+        "threeMonths": "3개월",
+        "sixMonths": "6개월",
+        "twelveMonths": "12개월"
+      },
+      "help": {
+        "instanceQuestion": "인스턴스란 무엇인가요?",
+        "instanceAnswer": "인스턴스는 애플리케이션이 실행될 노드 수를 나타냅니다. 각 인스턴스는 고가용성과 중복성을 위해 별도의 Flux 노드에서 실행됩니다. 최소 3개의 인스턴스가 필요합니다.",
+        "changeSpecsQuestion": "배포 후 사양을 변경할 수 있나요?",
+        "changeSpecsAnswer": "네, 언제든지 애플리케이션 사양을 업데이트할 수 있습니다. 변경 사항은 다음 갱신 기간 동안 또는 수동 재배포를 통해 적용됩니다.",
+        "componentQuestion": "컴포넌트란 무엇인가요?",
+        "componentAnswer": "컴포넌트는 컨테이너화된 애플리케이션 또는 서비스입니다. Docker 이미지, 필요한 리소스(CPU, RAM, 스토리지) 및 노출 포트를 지정할 수 있습니다.",
+        "syncDataQuestion": "데이터 동기화는 어떻게 작동하나요?",
+        "syncDataAnswer": "데이터 동기화는 마스터-마스터(r) 또는 마스터-슬레이브(g) 모드를 사용하여 인스턴스 간에 스토리지를 공유할 수 있게 합니다. 비활성화하면 각 인스턴스가 격리된 영구 스토리지를 사용합니다.",
+        "portsQuestion": "노출 포트란 무엇인가요?",
+        "portsAnswer": "노출 포트는 애플리케이션에 대한 외부 액세스를 허용합니다. 포트 0-1023, 8080, 8081, 8443 및 6667은 추가 수수료가 있는 엔터프라이즈 포트입니다. 다른 포트는 추가 비용 없는 표준 포트입니다."
+      },
+      "messages": {
+        "enterpriseHttpsWarning": "엔터프라이즈 기능에는 HTTPS 또는 localhost가 필요합니다. 안전한 연결을 사용하여 이 애플리케이션에 액세스하세요.",
+        "enterpriseCalculationWarning": "엔터프라이즈 비용 계산에는 Arcane OS 노드가 필요합니다. 대신 표준 가격을 표시합니다.",
+        "retrying": "재시도 중... ({count}/3)",
+        "apiUnavailable": "API 서버를 사용할 수 없습니다. 나중에 다시 시도해 주세요.",
+        "invalidConfig": "잘못된 구성입니다. 설정을 확인해 주세요.",
+        "calculationError": "계산 오류입니다. 다시 시도해 주세요.",
+        "httpsWarning": "엔터프라이즈 기능에는 HTTPS가 필요합니다. HTTP에서는 표준 배포만 사용할 수 있습니다."
+      },
+      "helpTitle": "도움말 및 FAQ",
+      "faq": {
+        "items": {
+          "pricing": {
+            "question": "Flux에서 애플리케이션을 호스팅하는 데 얼마나 드나요?",
+            "answer": "Flux 호스팅은 월 $0.99부터 시작합니다. 최종 가격은 리소스 요구 사항(CPU, RAM, 스토리지)과 인스턴스 수에 따라 다릅니다. 위의 비용 계산기를 사용하여 특정 요구 사항에 맞는 정확한 가격을 확인하세요. 숨겨진 수수료나 장기 계약 없이 투명한 종량제 가격을 제공합니다."
+          },
+          "comparison": {
+            "question": "Flux 가격은 기존 클라우드 제공업체와 어떻게 비교되나요?",
+            "answer": "Flux는 일반적으로 AWS, Google Cloud 또는 Azure와 같은 기존 클라우드 제공업체보다 50-80% 저렴합니다. 분산 네트워크는 중개인을 제거하고 절감액을 고객에게 전달합니다. 예를 들어, AWS에서 월 $50가 드는 기본 웹 앱 호스팅은 Flux에서 일반적으로 월 $10-15 정도입니다."
+          },
+          "paymentMethods": {
+            "question": "Flux는 어떤 결제 방법을 허용하나요?",
+            "answer": "Flux는 FLUX 암호화폐(메인 체인의 네이티브 FLUX 코인)와 통합 결제 게이트웨이를 통한 기존 결제 방법을 허용합니다. 장기 약정 없이 월 단위로 결제할 수 있습니다."
+          },
+          "hiddenFees": {
+            "question": "숨겨진 수수료나 추가 비용이 있나요?",
+            "answer": "없습니다. 비용 계산기에서 계산된 가격이 정확히 지불하는 금액입니다. 설정 수수료, 숨겨진 대역폭 요금, 예상치 못한 청구서가 없습니다. 모든 비용은 투명하며 표시된 월간 가격에 포함됩니다."
+          },
+          "planChanges": {
+            "question": "배포 후 호스팅 플랜을 변경할 수 있나요?",
+            "answer": "네! Flux는 유연한 확장을 제공합니다. 언제든지 CPU, RAM 및 스토리지를 쉽게 업그레이드하거나 다운그레이드할 수 있습니다. 사양을 조정하면 가격이 그에 따라 업데이트됩니다. 변경 사항은 즉시 적용되며 사용한 만큼만 지불합니다."
+          },
+          "resourceExceeded": {
+            "question": "앱이 할당된 리소스를 초과하면 어떻게 되나요?",
+            "answer": "애플리케이션은 할당된 것보다 더 많은 리소스를 사용하지 못하도록 제한됩니다. 이는 네트워크의 다른 사용자를 보호합니다. 더 많은 리소스가 필요하면 Flux 대시보드를 통해 쉽게 플랜을 업그레이드할 수 있습니다. 앱 사용량을 모니터링하고 사전에 리소스를 조정하는 것이 좋습니다."
+          }
+        }
+      },
+      "relatedResources": {
+        "title": "배포할 준비가 되셨나요?",
+        "subtitle": "마켓플레이스를 탐색하고 오늘 애플리케이션을 배포하세요",
+        "links": [
+          {
+            "title": "게임 서버 호스팅",
+            "description": "Minecraft, Palworld, Factorio 및 기타 인기 게임 서버를 즉시 배포하세요",
+            "url": "/marketplace/games",
+            "icon": "mdi-gamepad-variant"
+          },
+          {
+            "title": "WordPress 호스팅",
+            "description": "자동 백업과 DDoS 보호가 포함된 WordPress 사이트를 시작하세요",
+            "url": "/marketplace/wordpress",
+            "icon": "mdi-wordpress"
+          },
+          {
+            "title": "사용자 정의 애플리케이션",
+            "description": "Flux 네트워크에서 모든 Docker 애플리케이션을 등록하고 배포하세요",
+            "url": "/apps/register",
+            "icon": "mdi-docker"
+          },
+          {
+            "title": "마켓플레이스 둘러보기",
+            "description": "배포할 준비가 된 사전 구성된 애플리케이션을 살펴보세요",
+            "url": "/marketplace",
+            "icon": "mdi-apps"
+          }
+        ]
+      }
+    },
+    "fluxDrive": {
+      "intro": {
+        "title": "FluxDrive",
+        "subtitle": "IPFS 기반의 분산 클라우드 스토리지",
+        "description": "FluxDrive는 IPFS(행성 간 파일 시스템) 기술을 활용하여 FluxCloud 네트워크 위에 구축된 분산 클라우드 스토리지 솔루션입니다. 전 세계에 분산된 FluxNode 네트워크에 파일을 저장하여 중복성, 검열 저항 및 영구적인 가용성을 보장합니다. 기존 클라우드 스토리지와 달리 데이터는 암호화되고, 분할되고, 여러 노드에 분산되어 중앙 집중식 제공업체에 의존하지 않고 파일에 대한 진정한 소유권과 제어권을 제공합니다.",
+        "learnMore": "FluxDrive에 대해 자세히 알아보기"
+      },
+      "loading": "FluxDrive 로딩 중...",
+      "checkout": "결제",
+      "renewal": "갱신",
+      "upgrade": "업그레이드",
+      "downgrade": "다운그레이드",
+      "renewalSuccess": "구독이 성공적으로 갱신되었습니다!",
+      "renewalFailed": "갱신 실패: ",
+      "upgradeFailed": "업그레이드 실패: ",
+      "cancel": "취소",
+      "features": {
+        "title": "왜 FluxDrive를 선택해야 할까요",
+        "encryption": {
+          "title": "종단간 암호화",
+          "description": "파일은 업로드 전에 암호화되고 분산 네트워크 전체에서 안전하게 유지됩니다. 키는 오직 당신만 가지고 있습니다."
+        },
+        "distributed": {
+          "description": "파일은 전 세계 수천 개의 FluxNode에 분산되어 중복성과 어디서나 빠른 액세스를 보장합니다.",
+          "title": "글로벌 분산"
+        },
+        "censorship": {
+          "title": "검열 저항",
+          "description": "단일 장애점이나 제어 지점이 없습니다. 개별 노드가 오프라인이 되어도 파일에 계속 액세스할 수 있습니다."
+        },
+        "ipfs": {
+          "description": "영구적인 콘텐츠 주소 파일 저장을 위한 행성 간 파일 시스템 기술로 구동됩니다.",
+          "title": "IPFS 기반"
+        },
+        "permanent": {
+          "description": "파일은 구독 기간 동안 내장 중복성과 함께 계속 액세스할 수 있습니다.",
+          "title": "영구 스토리지"
+        },
+        "fast": {
+          "description": "가장 가까운 사용 가능한 노드에 분산된 파일로 글로벌 CDN과 같은 성능을 누리세요.",
+          "title": "빠르고 안정적"
+        },
+        "guarantee": {
+          "title": "30일 환불 보장",
+          "description": "만족하지 않으신가요? 30일 이내에 전액 환불받으세요. 묻지 않습니다. 저희 서비스를 좋아하실 것이라고 확신합니다."
+        }
+      },
+      "benefits": {
+        "noCentralized": "중앙 집중식 제공업체가 데이터에 액세스할 수 없습니다",
+        "fullControl": "파일의 완전한 소유권 및 제어",
+        "globalRedundancy": "2,600개 이상의 노드에 걸친 글로벌 중복성",
+        "transparentPricing": "숨겨진 수수료 없는 투명한 가격",
+        "noVendorLock": "벤더 종속 또는 독점 형식 없음",
+        "openSource": "오픈 소스 IPFS 기술 기반",
+        "title": "FluxDrive 혜택"
+      }
+    },
+    "marketplace": {
+      "wordpress": {
+        "loadingTitle": "WordPress 플랜 로딩 중...",
+        "maintenanceTitle": "WordPress 마켓플레이스\n점검 중",
+        "maintenanceSubtitle": "현재 WordPress 마켓플레이스에 기술적 문제가 발생했습니다. 저희 팀이 가능한 빨리 이 문제를 해결하기 위해 노력하고 있습니다.",
+        "maintenanceDescription": "나중에 다시 확인하시거나 즉각적인 지원이 필요하시면 고객 지원에 문의해 주세요.",
+        "pageTitle": "FluxCloud에서 WordPress 호스팅",
+        "landing": {
+          "title": "FluxCloud에서 WordPress 호스팅",
+          "subtitle": "자동 백업, SSL 인증서 및 글로벌 CDN이 포함된 분산 FluxCloud 네트워크에서 강력하고 확장 가능한 WordPress 웹사이트를 배포하세요.",
+          "description": {
+            "title": "왜 FluxCloud에서 WordPress를 선택해야 할까요?",
+            "content": "성능, 보안 및 신뢰성을 결합한 분산 인프라에서 WordPress 웹사이트를 호스팅하세요. 저희 관리형 WordPress 호스팅에는 자동 업데이트, 주간 백업 및 엔터프라이즈급 보안이 포함되어 있습니다 - 모두 FluxCloud 네트워크로 구동됩니다.",
+            "highlights": {
+              "security": {
+                "title": "엔터프라이즈 보안",
+                "description": "자동 업데이트, DDoS 보호 및 정기적인 보안 패치가 포함된 엔터프라이즈급 보안으로 WordPress 사이트를 위협으로부터 안전하게 보호합니다."
+              },
+              "performance": {
+                "title": "최적화된 성능",
+                "description": "고성능 SSD/NVMe 스토리지와 최적화된 서버로 WordPress 사이트가 빠르게 로드되고 트래픽을 효율적으로 처리합니다."
+              },
+              "updates": {
+                "title": "자동 업데이트",
+                "description": "자동 WordPress 코어 및 플러그인 업데이트로 수동 작업 없이 사이트를 안전하게 유지하고 최신 기능을 실행합니다."
+              },
+              "decentralized": {
+                "title": "분산 호스팅",
+                "description": "여러 글로벌 노드에 걸친 분산 호스팅은 더 나은 가동 시간, 중복성 및 단일 장애점에 대한 저항성을 제공합니다."
+              }
+            }
+          },
+          "plans": {
+            "title": "WordPress 플랜 선택",
+            "subtitle": "웹사이트 요구 사항에 맞는 완벽한 플랜을 선택하세요. 모든 플랜에는 MySQL 데이터베이스, SSL 인증서 및 전체 WordPress 기능이 포함됩니다.",
+            "recommended": "가장 인기",
+            "buyNow": "지금 구매",
+            "perMonth": "/월",
+            "cpu": "CPU",
+            "ram": "RAM",
+            "storage": "스토리지",
+            "instances": "노드",
+            "getStarted": "시작하기"
+          },
+          "features": {
+            "title": "WordPress에 필요한 모든 것",
+            "items": {
+              "quickDeploy": {
+                "title": "빠른 배포",
+                "description": "원클릭 배포 시스템으로 몇 분 안에 WordPress 사이트를 시작하세요."
+              },
+              "mysql": {
+                "title": "MySQL 데이터베이스",
+                "description": "자동 백업 및 최적화가 포함된 완전 관리형 MySQL 8.3 데이터베이스."
+              },
+              "ssl": {
+                "title": "무료 SSL 인증서",
+                "description": "안전한 HTTPS 연결을 위한 자동 SSL 인증서 프로비저닝 및 갱신."
+              },
+              "scalable": {
+                "title": "확장 가능한 리소스",
+                "description": "웹사이트가 성장함에 따라 증가된 트래픽을 처리할 수 있도록 쉽게 플랜을 업그레이드하세요."
+              },
+              "backup": {
+                "title": "자동 백업",
+                "description": "데이터를 보호하기 위한 쉬운 복원 기능이 있는 주간 자동 백업."
+              },
+              "pricing": {
+                "title": "투명한 가격",
+                "description": "숨겨진 수수료 없음. 유연한 월간 청구로 사용한 만큼만 지불하세요."
+              },
+              "guarantee": {
+                "title": "30일 환불 보장",
+                "description": "만족하지 않으신가요? 30일 이내에 전액 환불받으세요. 묻지 않습니다. 저희 서비스를 좋아하실 것이라고 확신합니다."
+              }
+            }
+          },
+          "serverNetwork": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "WordPress 사이트는 최대 신뢰성과 성능을 위해 전 세계 수천 개의 노드에 분산된 FluxCloud 분산 네트워크에서 호스팅됩니다.",
+            "noData": "서버 데이터를 사용할 수 없습니다",
+            "activeServers": "활성 서버",
+            "countries": "국가",
+            "global": "글로벌",
+            "coverage": "커버리지"
+          }
+        },
+        "form": {
+          "dappName": "WordPress Dapp 이름",
+          "dappNameTooltip": "WordPress 사이트의 표시 이름입니다. 고유한 Flux 앱 이름이 자동으로 생성됩니다.",
+          "dappNamePlaceholder": "Dapp 이름 입력",
+          "email": "이메일 주소",
+          "emailTooltip": "알림 및 업데이트를 위한 연락처 이메일",
+          "emailPlaceholder": "your{'@'}email.com",
+          "domainName": "도메인 이름",
+          "domainNameTooltip": "WordPress 사이트의 커스텀 도메인 (선택사항)",
+          "domainNamePlaceholder": "yourdomain.com",
+          "subscription": "구독",
+          "subscriptionTooltip": "WordPress 호스팅의 청구 기간을 선택하세요",
+          "whitelistIp": "화이트리스트 IP",
+          "whitelistIpLabel": "백업/복원을 위한 화이트리스트 IP (선택사항)",
+          "whitelistIpPlaceholder": "IP 주소 입력",
+          "performancePlan": "성능 플랜",
+          "performancePlanTooltip": "WordPress 사이트의 서버 리소스(CPU, RAM, SSD)를 선택하세요",
+          "deploymentLocation": "배포 위치",
+          "deploymentLocationTooltip": "WordPress 사이트를 배포할 지리적 지역을 선택하세요. 자동 선택을 위해 글로벌을 선택하세요.",
+          "instances": "인스턴스",
+          "instancesPlural": "인스턴스",
+          "instance": "인스턴스",
+          "perMonth": "/월",
+          "planDescriptions": {
+            "Free": "개인 및 소규모 비즈니스에 적합, 간단한 웹사이트 또는 블로그에 완벽",
+            "Standard": "성장하는 비즈니스에 이상적, 더 많은 콘텐츠가 있는 사이트에 적합",
+            "Pro": "더 높은 트래픽 요구가 있는 더 큰 사이트에 적합",
+            "Ultra": "속도 저하를 감당할 수 없는 리소스 집약적 프로젝트를 위한 궁극의 파워하우스",
+            "Enterprise": "대규모 기업에 이상적"
+          }
+        },
+        "durations": {
+          "oneMonth": "1개월",
+          "twoMonths": "2개월",
+          "threeMonths": "3개월",
+          "sixMonths": "6개월",
+          "twelveMonths": "12개월"
+        },
+        "locations": {
+          "global": "글로벌",
+          "northAmerica": "북미",
+          "europe": "유럽",
+          "asia": "아시아",
+          "southAmerica": "남미",
+          "oceania": "오세아니아",
+          "africa": "아프리카"
+        },
+        "summary": {
+          "title": "주문 요약",
+          "planDetails": "플랜 세부 정보",
+          "performancePlan": "성능 플랜",
+          "deployment": "배포",
+          "subscriptionPeriod": "구독 기간",
+          "month": "개월",
+          "months": "개월",
+          "subscription": "구독",
+          "pricing": "가격",
+          "subtotal": "소계",
+          "discount": "할인",
+          "total": "합계",
+          "install": "WordPress 설치",
+          "loginRequired": "로그인 필요",
+          "loginToInstall": "WordPress를 설치하려면 로그인하세요",
+          "dappNameTitle": "WordPress Dapp 이름",
+          "dappNameHelp": "내부 별명이며 외부에서 사용되지 않습니다.",
+          "emailTitle": "알림용 이메일",
+          "emailHelp": "WordPress Dapp 갱신이 필요할 때 알림을 보내드립니다.",
+          "domainTitle": "도메인 이름",
+          "domainHelp": "여기에 추가한 후 DNS 제공업체에서도 구성해야 합니다.",
+          "whitelistIpTitle": "화이트리스트 IP",
+          "whitelistIpHelp": "WordPress 데이터베이스에 액세스할 수 있는 유일한 장치로 IP 주소를 명시적으로 설정합니다. 고급 사용자만 해당됩니다.",
+          "performanceTitle": "성능",
+          "performanceHelp": "표준 사양은 최고의 성능을 제공하고 좋은 안정성을 보장합니다.",
+          "deploymentLocationTitle": "배포 위치",
+          "deploymentLocationHelp": "WordPress 사이트가 배포될 지리적 지역입니다. 최적의 성능을 위해 모든 노드는 동일한 지역에 있어야 합니다.",
+          "selectPlan": "플랜 선택"
+        },
+        "setup": {
+          "title": "설정 프로세스",
+          "stepsTitle": "중요 단계",
+          "stepPropagation": "등록 후 전파를 위해 최대 2시간 허용",
+          "stepInstall": "전파 후 즉시 설치 프로세스 시작",
+          "stepDomain": "DNS 제공업체를 사용하여 커스텀 도메인 연결",
+          "stepDnsProxy": "FDM이 인증서를 발급할 수 있도록 2시간 동안 DNS 프록시 비활성화",
+          "stepLaunch": "WordPress 사이트를 실행하고 만들기 시작",
+          "stepCaching": "사전 설치된 캐싱 플러그인 활성화",
+          "stepSecurity": "악성 플러그인이나 테마를 설치하지 마세요"
+        },
+        "bestPractices": {
+          "title": "모범 사례"
+        },
+        "faq": {
+          "title": "자주 묻는 질문"
+        },
+        "errors": {
+          "dappNameRequired": "Dapp 이름이 필요합니다",
+          "emailRequired": "이메일이 필요합니다",
+          "emailInvalid": "잘못된 이메일 형식입니다",
+          "domainInvalid": "잘못된 도메인 형식입니다",
+          "ipInvalid": "잘못된 IP 주소 형식입니다",
+          "launchNotImplemented": "API 통합과 함께 구현될 WordPress 실행 기능",
+          "launchFailed": "WordPress 사이트 실행에 실패했습니다. 다시 시도해 주세요.",
+          "tosLoadFailed": "서비스 약관을 로드하지 못했습니다. 다음을 방문해 주세요"
+        },
+        "actions": {
+          "add": "추가",
+          "calculatingPricing": "가격 계산 중..."
+        },
+        "termsOfService": {
+          "title": "서비스 약관",
+          "agreement": "다음을 읽고 동의합니다",
+          "link": "서비스 약관",
+          "agree": "동의합니다",
+          "disagree": "동의하지 않습니다",
+          "loadError": "서비스 약관을 로드하지 못했습니다. <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a>를 방문해 주세요"
+        },
+        "games": {
+          "index": {
+            "title": "게임 서버 호스팅",
+            "subtitle": "FluxCloud에서 게임 서버를 배포하고 관리하세요",
+            "loading": "사용 가능한 게임 로딩 중...",
+            "maintenanceTitle": "게임 마켓플레이스 일시적으로 사용 불가",
+            "maintenanceSubtitle": "일시적인 문제가 발생했습니다",
+            "hero": {
+              "title": "FluxCloud에서 프리미엄 게임 서버 호스팅",
+              "subtitle": "블록체인 기술로 구동되는 글로벌 배포, DDoS 보호 및 종량제 가격으로 몇 초 만에 좋아하는 게임 서버를 배포하세요.",
+              "cta": "게임 서버 둘러보기",
+              "benefits": {
+                "instant": "즉시 배포",
+                "global": "글로벌 서버",
+                "ddos": "DDoS 보호",
+                "pricing": "투명한 가격"
+              }
+            },
+            "trust": {
+              "servers": {
+                "value": "1000+",
+                "label": "활성 서버"
+              },
+              "uptime": {
+                "label": "가동 시간 SLA",
+                "value": "99.9%"
+              },
+              "deployment": {
+                "value": "< 30초",
+                "label": "배포 시간"
+              },
+              "locations": {
+                "label": "국가",
+                "value": "50+"
+              }
+            },
+            "features": {
+              "title": "게임 호스팅에 FluxPlay를 선택하는 이유",
+              "items": {
+                "instant": {
+                  "title": "즉시 배포",
+                  "description": "자동화된 배포 시스템으로 30초 이내에 게임 서버를 실행하세요. 기술 지식이 필요 없습니다."
+                },
+                "ddos": {
+                  "title": "DDoS 보호 포함",
+                  "description": "엔터프라이즈급 DDoS 보호로 공격 중에도 서버를 온라인 상태로 유지하고 플레이어 연결을 유지합니다."
+                },
+                "global": {
+                  "title": "글로벌 서버 네트워크",
+                  "description": "전 세계 50개 이상의 국가에서 선택하여 지연 시간을 최소화하고 플레이어에게 최고의 게임 경험을 제공하세요."
+                },
+                "monitoring": {
+                  "title": "24시간 모니터링",
+                  "description": "자동 알림이 포함된 실시간 성능 모니터링으로 서버가 건강하고 반응성을 유지하도록 합니다."
+                },
+                "paygo": {
+                  "description": "투명하고 유연한 가격으로 사용하는 리소스에 대해서만 지불하세요. 숨겨진 수수료나 장기 계약이 없습니다.",
+                  "title": "사용량 기반 과금"
+                },
+                "blockchain": {
+                  "description": "향상된 보안, 투명성 및 중앙 집중식 장애에 대한 저항성을 위해 분산 Flux 인프라를 기반으로 구축되었습니다.",
+                  "title": "블록체인 기반"
+                }
+              }
+            },
+            "content": {
+              "title": "전문 게임 서버 호스팅이 간단해졌습니다",
+              "body": "<p><strong>FluxPlay</strong>는 탈중앙화의 힘을 결합하여 게임 서버 호스팅을 혁신합니다."
+            },
+            "gamesTitle": "사용 가능한 게임 서버",
+            "gamesSubtitle": "게임을 선택하고 몇 초 만에 서버를 배포하세요",
+            "comparison": {
+              "title": "FluxPlay vs 기존 호스팅",
+              "traditional": "기존 호스팅",
+              "rows": {
+                "setup": "설정 시간",
+                "pricing": "가격 모델",
+                "ddos": "DDoS 보호",
+                "locations": "서버 위치",
+                "scaling": "확장 속도",
+                "decentralized": "탈중앙화"
+              },
+              "values": {
+                "instant": "< 30초",
+                "hours": "수 시간에서 수 일",
+                "hidden": "숨겨진 수수료 + 계약",
+                "extra": "추가 비용",
+                "countries": "50개 이상의 국가",
+                "limited": "제한된 지역",
+                "slow": "느린 수동 프로세스",
+                "transparent": "투명한 사용량 기반 과금"
+              },
+              "feature": "기능",
+              "fluxplay": "FluxPlay"
+            },
+            "faq": {
+              "title": "자주 묻는 질문",
+              "items": {
+                "what": {
+                  "question": "FluxPlay 게임 서버 호스팅이란 무엇인가요?",
+                  "answer": "<p>FluxPlay는 FluxCloud에 구축된 탈중앙화 게임 서버 호스팅 플랫폼입니다.</p>"
+                },
+                "different": {
+                  "question": "FluxPlay는 기존 게임 호스팅과 어떻게 다른가요?",
+                  "answer": "<p>FluxPlay는 중앙 집중식 데이터 센터 대신 <strong>탈중앙화 블록체인 인프라</strong>를 사용합니다.</p>"
+                },
+                "games": {
+                  "question": "FluxPlay에서 어떤 게임을 호스팅할 수 있나요?",
+                  "answer": "<p>FluxPlay는 현재 <strong>Minecraft</strong>, <strong>Palworld</strong> 등 인기 게임을 지원합니다.</p>"
+                },
+                "deploy": {
+                  "question": "게임 서버를 얼마나 빨리 배포할 수 있나요?",
+                  "answer": "<p>게임 서버는 평균 <strong>30초 이내</strong>에 배포됩니다. 게임을 선택하기만 하면 됩니다.</p>"
+                },
+                "ddosProtection": {
+                  "question": "DDoS 보호가 포함되어 있나요?",
+                  "answer": "<p>네! <strong>엔터프라이즈급 DDoS 보호</strong>가 모든 게임 서버에 포함되어 있습니다.</p>"
+                },
+                "pricing": {
+                  "question": "요금 체계는 어떻게 되나요?",
+                  "answer": "<p>FluxPlay는 <strong>투명한 사용량 기반 과금</strong>을 사용합니다. 사용한 만큼만 지불합니다.</p>"
+                },
+                "support": {
+                  "question": "어떤 지원을 받을 수 있나요?",
+                  "answer": "<p>모든 FluxPlay 서버에는 실시간 알림과 함께 <strong>24/7 자동 모니터링</strong>이 포함됩니다.</p>"
+                },
+                "blockchain": {
+                  "question": "FluxPlay를 사용하려면 암호화폐가 필요한가요?",
+                  "answer": "<p>FluxPlay는 블록체인 기술을 기반으로 하지만 <strong>기존 결제 방법</strong>으로도 결제할 수 있습니다.</p>"
+                }
+              }
+            },
+            "cta": {
+              "title": "게임 서버를 배포할 준비가 되셨나요?",
+              "subtitle": "탈중앙화된 Flux 네트워크에서 호스팅하는 수천 명의 게이머와 함께하세요",
+              "button": "지금 시작하기"
+            },
+            "relatedResources": {
+              "title": "다른 FluxCloud 서비스 살펴보기",
+              "subtitle": "탈중앙화 인프라를 활용하는 다른 방법을 알아보세요",
+              "links": [
+                {
+                  "title": "비용 계산기",
+                  "description": "투명한 가격으로 애플리케이션 호스팅 비용을 정확하게 계산하세요",
+                  "url": "/cost-calculator",
+                  "icon": "mdi-calculator"
+                },
+                {
+                  "title": "WordPress 호스팅",
+                  "description": "원클릭 설치로 탈중앙화 인프라에 WordPress 사이트를 배포하세요",
+                  "url": "/marketplace/wordpress",
+                  "icon": "mdi-wordpress"
+                },
+                {
+                  "title": "사용자 정의 앱 배포",
+                  "description": "Flux 네트워크에서 사용자 정의 Docker 애플리케이션을 등록하고 배포하세요",
+                  "url": "/apps/register",
+                  "icon": "mdi-application-cog"
+                },
+                {
+                  "title": "전체 마켓플레이스",
+                  "description": "FluxCloud에서 사용 가능한 모든 애플리케이션, 게임 및 서비스를 둘러보세요",
+                  "url": "/marketplace",
+                  "icon": "mdi-store"
+                }
+              ]
+            }
+          }
+        },
+        "wordpress": {
+          "loadingTitle": "WordPress 호스팅 플랜 로딩 중...",
+          "maintenanceTitle": "WordPress 호스팅 일시적으로 사용 불가",
+          "maintenanceSubtitle": "일시적인 문제가 발생했습니다",
+          "maintenanceDescription": "WordPress 호스팅 서비스가 현재 사용할 수 없습니다. 나중에 다시 시도해 주세요.",
+          "landing": {
+            "title": "Flux에서 WordPress 호스팅",
+            "subtitle": "탈중앙화된 Flux 네트워크에서 즉시 설정과 글로벌 가용성으로 WordPress 사이트를 배포하세요",
+            "plans": {
+              "title": "WordPress 호스팅 플랜 선택",
+              "subtitle": "개인 블로그부터 기업 사이트까지 모든 요구에 맞는 유연한 플랜",
+              "recommended": "추천",
+              "perMonth": "/월",
+              "cpu": "CPU",
+              "getStarted": "Get Started",
+              "storage": "Storage",
+              "ram": "RAM",
+              "instances": "Instances"
+            },
+            "relatedLinks": {
+              "gameServers": {
+                "description": "좋아하는 게임 서버를 호스팅하세요",
+                "title": "Game Servers"
+              },
+              "fluxDrive": {
+                "description": "탈중앙화 파일 저장소",
+                "title": "FluxDrive"
+              },
+              "costCalculator": {
+                "title": "비용 계산기",
+                "description": "호스팅 비용을 예상하세요"
+              },
+              "sectionTitle": "Explore More on FluxCloud",
+              "marketplace": {
+                "title": "Marketplace",
+                "description": "Browse all available applications"
+              }
+            },
+            "description": {
+              "content": "Experience the future of WordPress hosting with FluxPlay. Our decentralized infrastructure provides enterprise-grade performance, security, and reliability for your WordPress sites. Built on the Flux blockchain network, your site benefits from global distribution, automatic scaling, and superior uptime compared to traditional hosting providers.",
+              "title": "Professional WordPress Hosting Made Simple"
+            }
+          }
+        }
+      },
+      "games": {
+        "index": {
+          "title": "게임 서버 호스팅",
+          "subtitle": "FluxCloud에서 게임 서버를 배포하고 관리하세요",
+          "loading": "사용 가능한 게임 로딩 중...",
+          "maintenanceTitle": "게임 마켓플레이스 일시적으로 사용 불가",
+          "maintenanceSubtitle": "일시적인 문제가 발생했습니다",
+          "hero": {
+            "title": "FluxCloud에서 프리미엄 게임 서버 호스팅",
+            "subtitle": "블록체인 기술로 구동되는 글로벌 배포, DDoS 보호 및 종량제 가격으로 몇 초 만에 좋아하는 게임 서버를 배포하세요.",
+            "cta": "게임 서버 둘러보기",
+            "benefits": {
+              "instant": "즉시 배포",
+              "global": "글로벌 서버",
+              "ddos": "DDoS 보호",
+              "pricing": "투명한 가격"
+            }
+          },
+          "trust": {
+            "servers": {
+              "label": "활성 서버",
+              "value": "1000+"
+            },
+            "uptime": {
+              "value": "99.9%",
+              "label": "가동 시간 SLA"
+            },
+            "locations": {
+              "value": "50+",
+              "label": "국가"
+            },
+            "deployment": {
+              "value": "< 30초",
+              "label": "배포 시간"
+            }
+          },
+          "features": {
+            "title": "게임 호스팅에 FluxPlay를 선택하는 이유",
+            "items": {
+              "instant": {
+                "title": "즉시 배포",
+                "description": "자동화된 배포 시스템으로 30초 이내에 게임 서버를 실행하세요. 기술 지식이 필요 없습니다."
+              },
+              "ddos": {
+                "title": "DDoS 보호 포함",
+                "description": "엔터프라이즈급 DDoS 보호로 공격 중에도 서버를 온라인 상태로 유지하고 플레이어 연결을 유지합니다."
+              },
+              "global": {
+                "title": "글로벌 서버 네트워크",
+                "description": "전 세계 50개 이상의 국가에서 선택하여 지연 시간을 최소화하고 플레이어에게 최고의 게임 경험을 제공하세요."
+              },
+              "monitoring": {
+                "title": "24시간 모니터링",
+                "description": "자동 알림이 포함된 실시간 성능 모니터링으로 서버가 건강하고 반응성을 유지하도록 합니다."
+              },
+              "paygo": {
+                "title": "종량제 가격",
+                "description": "투명하고 유연한 가격으로 사용하는 리소스에 대해서만 지불하세요. 숨겨진 수수료나 장기 계약이 없습니다."
+              },
+              "blockchain": {
+                "title": "블록체인 기반",
+                "description": "향상된 보안, 투명성 및 중앙 집중식 장애에 대한 저항성을 위해 분산 Flux 인프라를 기반으로 구축되었습니다."
+              },
+              "uptime": {
+                "title": "99.9% 가동 시간 보장",
+                "description": "분산 인프라는 99.9% 가동 시간 SLA로 최대 신뢰성을 보장하여 플레이어가 필요할 때 게임 서버를 온라인 상태로 유지합니다."
+              },
+              "moneyback": {
+                "title": "30일 환불 보장",
+                "description": "30일 환불 보장으로 FluxPlay를 위험 없이 사용해 보세요. 만족하지 않으시면 질문 없이 결제를 환불해 드립니다."
+              }
+            }
+          },
+          "content": {
+            "title": "전문 게임 서버 호스팅이 간단해졌습니다",
+            "intro": "FluxPlay는 분산 인프라의 힘과 기존 호스팅의 단순함을 결합하여 게임 서버 호스팅을 혁신합니다. Minecraft, Palworld, Factorio, Satisfactory 또는 Enshrouded 서버를 호스팅하든 저희 플랫폼은 비교할 수 없는 성능과 신뢰성을 제공합니다.",
+            "features": {
+              "decentralized": {
+                "title": "엔터프라이즈급 분산 인프라",
+                "description": "FluxCloud를 기반으로 구축된 저희 플랫폼은 자동 확장 및 지리적 분산이 포함된 엔터프라이즈급 게임 호스팅을 제공합니다. 분산 아키텍처는 개별 노드가 실패해도 게임 서버가 온라인 상태를 유지하도록 하여 기존 중앙 집중식 호스팅 제공업체보다 뛰어난 가동 시간을 제공합니다."
+              },
+              "security": {
+                "title": "군사급 보안 및 DDoS 보호",
+                "description": "모든 게임 서버에는 포괄적인 DDoS 보호 및 군사급 보안 조치가 포함됩니다. 분산 네트워크 아키텍처는 항상 최적의 성능과 플레이어 연결을 유지하면서 공격에 대한 자연스러운 방어를 제공합니다."
+              },
+              "deployment": {
+                "title": "즉시 배포 및 투명한 가격",
+                "description": "자동화된 시스템으로 30초 이내에 게임 서버를 배포하세요. 숨겨진 수수료나 장기 계약 없이 투명한 종량제 가격을 즐기세요 - 최고를 요구하는 게이머, 커뮤니티 및 서버 관리자를 위한 현대적인 솔루션입니다."
+              }
+            }
+          },
+          "serverLocations": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "분산 인프라는 전 세계에 걸쳐 있어 플레이어가 어디에 있든 게임 서버의 낮은 지연 시간과 높은 가용성을 보장합니다."
+          },
+          "gamesTitle": "사용 가능한 게임 서버",
+          "gamesSubtitle": "게임을 선택하고 몇 초 만에 서버를 배포하세요",
+          "comparison": {
+            "title": "FluxPlay vs 기존 호스팅",
+            "feature": "기능",
+            "fluxplay": "FluxPlay",
+            "traditional": "기존 호스팅",
+            "rows": {
+              "setup": "설정 시간",
+              "pricing": "가격 모델",
+              "ddos": "DDoS 보호",
+              "decentralized": "분산화",
+              "locations": "서버 위치",
+              "scaling": "확장 속도"
+            },
+            "values": {
+              "instant": "< 30초",
+              "hours": "수 시간에서 수 일",
+              "transparent": "투명한 종량제",
+              "hidden": "숨겨진 수수료 + 계약",
+              "extra": "추가 비용",
+              "countries": "50개 이상의 국가",
+              "limited": "제한된 지역",
+              "slow": "느린 수동 프로세스"
+            }
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "items": {
+              "what": {
+                "question": "FluxPlay 게임 서버 호스팅이란 무엇인가요?",
+                "answer": "<p>FluxPlay는 FluxCloud를 기반으로 구축된 분산 게임 서버 호스팅 플랫폼입니다. Minecraft, Palworld, Factorio 등과 같은 게임 서버를 즉시 배포, 글로벌 분산 및 엔터프라이즈급 보안으로 배포하고 관리할 수 있습니다.</p>"
+              },
+              "different": {
+                "question": "FluxPlay는 기존 게임 호스팅과 어떻게 다른가요?",
+                "answer": "<p>FluxPlay는 중앙 집중식 데이터 센터 대신 <strong>분산 블록체인 인프라</strong>를 사용합니다. 이는 더 나은 가동 시간, 투명한 가격, 내장 DDoS 보호 및 단일 장애점에 대한 저항성을 제공합니다. 기존 제공업체의 수 시간 또는 수 일에 비해 30초 이내에 서버를 배포할 수 있습니다.</p>"
+              },
+              "games": {
+                "question": "FluxPlay에서 어떤 게임을 호스팅할 수 있나요?",
+                "answer": "<p>FluxPlay는 현재 <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Satisfactory</strong>, <strong>Enshrouded</strong>를 포함한 인기 게임을 지원합니다. 커뮤니티 요구에 따라 지속적으로 새로운 게임을 추가하고 있습니다.</p>"
+              },
+              "deploy": {
+                "question": "게임 서버를 얼마나 빨리 배포할 수 있나요?",
+                "answer": "<p>게임 서버는 평균 <strong>30초 이내</strong>에 배포됩니다. 게임, 구성 및 서버 위치를 선택한 다음 배포를 클릭하기만 하면 됩니다. 자동화된 시스템이 모든 기술적 설정을 처리합니다.</p>"
+              },
+              "ddosProtection": {
+                "question": "DDoS 보호가 포함되어 있나요?",
+                "answer": "<p>네! <strong>엔터프라이즈급 DDoS 보호가 추가 비용 없이 모든 게임 서버에 포함</strong>됩니다. 서버는 일반적인 공격 벡터로부터 보호되어 공격 중에도 플레이어가 연결 상태를 유지합니다.</p>"
+              },
+              "pricing": {
+                "question": "가격은 어떻게 책정되나요?",
+                "answer": "<p>FluxPlay는 <strong>투명한 종량제 가격</strong>을 사용합니다. 서버가 사용하는 컴퓨트 리소스(CPU, RAM, 스토리지)에 대해서만 지불합니다. 숨겨진 수수료, 설정 비용 또는 장기 계약이 없습니다. 가격은 게임과 구성에 따라 다르며, 소규모 서버의 경우 월 $__MIN_PRICE__부터 시작합니다.</p>"
+              },
+              "support": {
+                "question": "어떤 지원을 받을 수 있나요?",
+                "answer": "<p>모든 FluxPlay 서버에는 실시간 알림이 포함된 <strong>24시간 자동 모니터링</strong>이 포함됩니다. 기술 지원을 위해 문서, 커뮤니티 포럼 및 티켓 시스템에 액세스할 수 있습니다. 엔터프라이즈 고객을 위한 프리미엄 지원 패키지도 제공됩니다.</p>"
+              },
+              "blockchain": {
+                "question": "FluxPlay를 사용하려면 암호화폐가 필요한가요?",
+                "answer": "<p>FluxPlay는 블록체인 기술을 기반으로 구축되었지만 신용카드를 포함한 <strong>기존 결제 방법</strong>으로 결제할 수 있습니다. 블록체인 인프라는 암호화폐를 관리할 필요 없이 백그라운드에서 보안 및 분산화 이점을 제공합니다.</p>"
+              }
+            }
+          },
+          "cta": {
+            "title": "게임 서버를 배포할 준비가 되셨나요?",
+            "subtitle": "분산 Flux 네트워크에서 호스팅하는 수천 명의 게이머와 함께하세요",
+            "button": "지금 시작하기"
+          }
+        },
+        "detail": {
+          "loadingTitle": "게임 세부 정보 로딩 중...",
+          "backToGames": "게임으로 돌아가기",
+          "availableConfigurations": "사용 가능한 구성",
+          "installGame": "{name} 설치",
+          "gameNotFound": "게임을 찾을 수 없습니다",
+          "gameNotAvailable": "게임을 사용할 수 없습니다",
+          "failedToLoad": "게임 로드 실패"
+        },
+        "palworld": {
+          "description": {
+            "title": "Palworld 서버 호스팅 소개",
+            "content": "<p><strong>Palworld</strong>는 \"팔\"이라고 불리는 신비한 생물들이 서식하는 멀티플레이어 오픈 월드 서바이벌 크래프팅 게임입니다. 이 게임에서 팔을 친구로 사귀고 수집하고, 전투에 사용하고, 기지에서 일하게 하고, 심지어 팔을 수 있습니다!</p><p>Flux 네트워크에서 자신만의 Palworld 서버를 운영하면 게임 경험을 완전히 제어할 수 있습니다. 게임 설정을 사용자 지정하고, 플레이어 액세스를 관리하고, 친구들과 렉 없는 게임 플레이를 즐기세요. <strong>서버 호스팅은 월 [[minPrice]]부터 시작</strong>하며 플레이어 기반이 성장함에 따라 유연한 확장 옵션을 제공합니다.</p><p>궁극의 팔 보호구역을 건설하든 경쟁적인 PvP 환경을 만들든, Flux에서 호스팅하면 필요한 안정성과 성능을 제공합니다.</p>",
+            "highlights": [
+              "서버당 최대 32명 플레이어",
+              "완전한 커스터마이징 제어",
+              "지속적인 월드 저장",
+              "모드 지원 가능",
+              "자동 백업",
+              "DDoS 보호 포함"
+            ]
+          },
+          "features": {
+            "title": "왜 FluxCloud에서 호스팅해야 할까요?",
+            "subtitle": "게임 성능을 위해 구축된 분산 인프라",
+            "items": [
+              {
+                "title": "DDoS 보호",
+                "description": "내장된 보호 기능으로 공격 중에도 서버를 온라인 상태로 유지합니다."
+              },
+              {
+                "title": "즉시 배포",
+                "description": "몇 시간이 아닌 몇 분 만에 서버가 준비됩니다. 배포하고 구성하면 바로 플레이 가능합니다."
+              },
+              {
+                "title": "전 세계 낮은 지연 시간",
+                "description": "전 세계에 전략적으로 분산된 서버로 최소한의 지연과 최적의 게임 경험을 보장합니다."
+              },
+              {
+                "title": "쉬운 서버 관리",
+                "description": "직관적인 제어판으로 서버를 간편하게 관리할 수 있습니다."
+              },
+              {
+                "title": "자동 백업",
+                "description": "정기적인 자동 백업으로 진행 상황을 안전하게 보관합니다."
+              },
+              {
+                "title": "모드 지원",
+                "description": "좋아하는 모드를 설치하여 게임 경험을 향상시킬 수 있습니다."
+              },
+              {
+                "title": "24/7 가동",
+                "description": "분산 네트워크 덕분에 서버가 항상 온라인 상태를 유지합니다."
+              },
+              {
+                "title": "완전한 제어",
+                "description": "서버 설정을 완전히 제어할 수 있습니다."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "전 세계 여러 대륙에 서버가 있는 분산 인프라에서 게임을 호스팅하여 모든 곳의 플레이어에게 낮은 지연 시간과 높은 가용성을 보장합니다."
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "subtitle": "FluxCloud에서 Palworld 호스팅에 대해 알아야 할 모든 것",
+            "questions": [
+              {
+                "q": "FluxCloud에서 Palworld 서버를 어떻게 호스팅하나요?",
+                "a": "위의 옵션에서 원하는 서버 구성을 선택하고 \"설치\"를 클릭한 다음 배포 마법사를 따르세요. 몇 분 안에 서버가 준비됩니다!"
+              },
+              {
+                "q": "Palworld 호스팅 비용은 얼마인가요?",
+                "a": "가격은 <strong>[[minPrice]]/월</strong>부터 시작하며 용량에 따라 확장됩니다. 모든 가격에는 DDoS 보호와 자동 백업이 포함됩니다."
+              },
+              {
+                "q": "서버 설정을 커스터마이징할 수 있나요?",
+                "a": "물론이죠! 난이도, PvP 설정, 경험치 비율 등 서버 설정을 완전히 제어할 수 있습니다. SSH로 게임 서버에 접속하거나 애플리케이션 관리의 볼륨 브라우저 기능을 사용하여 구성할 수 있습니다."
+              },
+              {
+                "q": "최소 요구 사양은 무엇인가요?",
+                "a": "최대 8명: 2 CPU 코어, 4GB RAM, 10GB 저장소. 더 큰 서버(16-32명)는 상위 요금제를 선택하세요."
+              },
+              {
+                "q": "배포는 얼마나 걸리나요?",
+                "a": "서버 배포는 일반적으로 <strong>5-10분</strong> 내에 완료됩니다. 즉시 플레이어를 초대할 수 있습니다!"
+              },
+              {
+                "q": "환불이 가능한가요?",
+                "a": "네! <strong>30일 환불 보장</strong>을 제공합니다. 만족하지 않으시면 30일 이내에 지원팀에 연락하여 전액 환불받으세요."
+              }
+            ]
+          }
+        },
+        "minecraft": {
+          "description": {
+            "title": "Minecraft 서버 호스팅 소개",
+            "content": "<p><strong>Minecraft</strong>는 무한하게 절차적으로 생성되는 세계에서 건설하고, 탐험하고, 생존할 수 있는 세계에서 가장 인기 있는 샌드박스 게임입니다. 전 세계 1억 4천만 명 이상의 활성 플레이어와 함께하는 궁극의 창작 놀이터입니다.</p><p>Flux에서 자신만의 Minecraft 서버를 호스팅하여 궁극의 제어, 성능 및 안정성을 누리세요. 친구, 커뮤니티 또는 대규모 멀티플레이어 네트워크와 함께하는 바닐라, 모드 또는 커스텀 게임 플레이 경험에 완벽합니다. <strong>Minecraft 서버 호스팅은 월 [[minPrice]]부터 시작</strong>하며 플레이어 수에 맞게 확장 가능한 리소스를 제공합니다.</p><p>서바이벌 서버, 크리에이티브 빌딩 월드, 미니게임 허브 또는 모드 어드벤처를 운영하든, Flux는 잊을 수 없는 경험을 만들기 위해 필요한 인프라를 제공합니다.</p>",
+            "highlights": [
+              "무제한 플레이어 지원",
+              "모드 및 플러그인 지원 (Bukkit, Spigot, Paper, Forge, Fabric)",
+              "정기 자동 백업",
+              "24/7 서버 가동 보장",
+              "DDoS 보호 포함",
+              "쉬운 월드 관리"
+            ]
+          },
+          "features": {
+            "title": "왜 FluxCloud에서 호스팅해야 할까요?",
+            "subtitle": "게임 성능을 위해 구축된 분산 인프라",
+            "items": [
+              {
+                "title": "DDoS 보호",
+                "description": "내장된 보호 기능으로 공격 중에도 서버를 온라인 상태로 유지합니다."
+              },
+              {
+                "title": "즉시 배포",
+                "description": "몇 시간이 아닌 몇 분 만에 서버가 준비됩니다."
+              },
+              {
+                "title": "전 세계 낮은 지연 시간",
+                "description": "전 세계에 분산된 서버로 최적의 게임 경험을 보장합니다."
+              },
+              {
+                "title": "쉬운 서버 관리",
+                "description": "직관적인 제어판으로 서버를 간편하게 관리할 수 있습니다."
+              },
+              {
+                "title": "자동 백업",
+                "description": "정기적인 자동 백업으로 월드를 안전하게 보관합니다."
+              },
+              {
+                "title": "모드 지원",
+                "description": "좋아하는 모드와 플러그인을 자유롭게 설치할 수 있습니다."
+              },
+              {
+                "title": "24/7 가동",
+                "description": "서버가 항상 온라인 상태를 유지합니다."
+              },
+              {
+                "title": "완전한 제어",
+                "description": "서버 설정을 완전히 제어할 수 있습니다."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "전 세계 여러 대륙에 서버가 있는 분산 인프라에서 게임을 호스팅하여 모든 곳의 플레이어에게 낮은 지연 시간과 높은 가용성을 보장합니다."
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "subtitle": "FluxCloud에서 Minecraft 호스팅에 대해 알아야 할 모든 것",
+            "questions": [
+              {
+                "q": "FluxCloud에서 Minecraft 서버를 어떻게 호스팅하나요?",
+                "a": "예상 플레이어 수에 따라 원하는 서버 구성을 선택하고 \"설치\"를 클릭한 다음 배포 마법사를 따르세요. 몇 분 안에 서버가 준비됩니다!"
+              },
+              {
+                "q": "Minecraft 호스팅 비용은 얼마인가요?",
+                "a": "요금제는 <strong>[[minPrice]]/월</strong>부터 시작하며 용량에 따라 확장됩니다. 모든 가격에는 DDoS 보호와 자동 백업이 포함됩니다."
+              },
+              {
+                "q": "모드와 플러그인을 설치할 수 있나요?",
+                "a": "네! Bukkit, Spigot, Paper, Forge, Fabric 등을 완벽하게 지원합니다. 좋아하는 모드와 플러그인을 자유롭게 설치하세요."
+              },
+              {
+                "q": "어떤 Minecraft 버전이 지원되나요?",
+                "a": "1.8부터 최신 릴리스까지 모든 Minecraft Java Edition 버전이 지원됩니다."
+              },
+              {
+                "q": "백업은 어떻게 작동하나요?",
+                "a": "구독이 활성화된 동안 자동 주간 백업이 생성되고 유지됩니다. 필요할 때마다 수동 백업을 트리거할 수도 있습니다."
+              },
+              {
+                "q": "기존 Minecraft 월드를 이전할 수 있나요?",
+                "a": "물론이죠! SSH로 게임 서버에 접속하거나 볼륨 브라우저 기능을 사용하여 기존 월드 파일을 업로드할 수 있습니다."
+              }
+            ]
+          },
+          "gettingStarted": {
+            "title": "Minecraft 서버 호스팅 시작하기",
+            "subtitle": "3단계로 Minecraft 서버를 실행하세요",
+            "steps": [
+              {
+                "title": "구성 선택",
+                "description": "예상 플레이어 수와 모드/플러그인 사용 계획에 따라 RAM, CPU 및 저장소를 선택하세요."
+              },
+              {
+                "title": "서버 배포",
+                "description": "배포 버튼을 클릭하면 자동화 시스템이 몇 분 내에 서버를 설정합니다."
+              },
+              {
+                "title": "커스터마이징 및 플레이",
+                "description": "SSH 또는 볼륨 브라우저를 통해 서버에 접속하여 모드/플러그인을 설치하고 플레이를 시작하세요!"
+              }
+            ]
+          },
+          "technicalSpecs": {
+            "title": "기술 사양",
+            "subtitle": "FluxCloud에서 Minecraft 호스팅으로 얻는 것",
+            "specs": [
+              {
+                "label": "서버 유형",
+                "value": "Java Edition (모든 버전)"
+              },
+              {
+                "label": "지원 플랫폼",
+                "value": "Vanilla, Bukkit, Spigot, Paper, Forge, Fabric"
+              },
+              {
+                "label": "제어판",
+                "value": "웹 기반 볼륨 브라우저 + SSH 접속"
+              },
+              {
+                "label": "백업 빈도",
+                "value": "주간 자동 + 수동 온디맨드"
+              },
+              {
+                "label": "DDoS 보호",
+                "value": "엔터프라이즈급, 무료 포함"
+              },
+              {
+                "label": "가동 시간 SLA",
+                "value": "99.9% 보장"
+              },
+              {
+                "label": "배포 시간",
+                "value": "평균 5분 미만"
+              },
+              {
+                "label": "플레이어 확장",
+                "value": "5명에서 500명 이상 동시 접속"
+              }
+            ]
+          }
+        },
+        "factorio": {
+          "description": {
+            "title": "Factorio 서버 호스팅 소개",
+            "content": "<p><strong>Factorio</strong>는 점점 더 복잡한 아이템을 생산하는 자동화된 공장을 건설하고 만드는 것에 관한 호평받는 게임입니다. 복잡한 생산 라인을 설계하고, 물류를 자동화하고, 이 엔지니어링 걸작에서 외계인 공격으로부터 방어하세요.</p><p>친구 및 동료와 원활한 멀티플레이어 게임 플레이를 위해 Flux에서 Factorio 서버를 호스팅하세요. 신뢰할 수 있는 인프라에서 함께 거대한 공장을 건설하고, 청사진을 협업하고, 생산 체인을 최적화하세요. <strong>Factorio 서버 호스팅은 월 [[minPrice]]부터 시작</strong>하며 메가베이스 야망에 맞게 확장됩니다.</p><p>엔지니어링 열정가, 자동화 애호가 및 궁극의 공장을 건설하려는 팀에 완벽합니다. 겸손한 시작부터 로켓 발사까지, 공장의 성공은 신뢰할 수 있는 호스팅에 달려 있습니다.</p>",
+            "highlights": [
+              "복잡한 공장을 위한 안정적인 멀티플레이어 성능",
+              "완전한 모드 지원 (모드 포털 통해)",
+              "5분마다 자동 저장 기능",
+              "초저지연 연결",
+              "쉬운 서버 구성",
+              "DDoS 보호 포함"
+            ]
+          },
+          "features": {
+            "title": "왜 FluxCloud에서 호스팅해야 할까요?",
+            "subtitle": "게임 성능을 위해 구축된 분산 인프라",
+            "items": [
+              {
+                "title": "DDoS 보호",
+                "description": "내장된 보호 기능으로 공격 중에도 서버를 온라인 상태로 유지합니다."
+              },
+              {
+                "title": "즉시 배포",
+                "description": "몇 시간이 아닌 몇 분 만에 서버가 준비됩니다."
+              },
+              {
+                "title": "전 세계 낮은 지연 시간",
+                "description": "전 세계에 분산된 서버로 최적의 게임 경험을 보장합니다."
+              },
+              {
+                "title": "쉬운 서버 관리",
+                "description": "직관적인 제어판으로 서버를 간편하게 관리할 수 있습니다."
+              },
+              {
+                "title": "자동 저장",
+                "description": "5분마다 자동으로 게임을 저장합니다."
+              },
+              {
+                "title": "모드 지원",
+                "description": "모드 포털을 통해 좋아하는 모드를 설치할 수 있습니다."
+              },
+              {
+                "title": "24/7 가동",
+                "description": "서버가 항상 온라인 상태를 유지합니다."
+              },
+              {
+                "title": "완전한 제어",
+                "description": "서버 설정을 완전히 제어할 수 있습니다."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "전 세계 여러 대륙에 서버가 있는 분산 인프라에서 게임을 호스팅하여 모든 곳의 플레이어에게 낮은 지연 시간과 높은 가용성을 보장합니다."
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "subtitle": "FluxCloud에서 Factorio 호스팅에 대해 알아야 할 모든 것",
+            "questions": [
+              {
+                "q": "FluxCloud에서 Factorio 서버를 어떻게 호스팅하나요?",
+                "a": "원하는 서버 구성을 선택하고 \"설치\"를 클릭한 다음 배포 마법사를 따르세요. 몇 분 안에 서버가 준비됩니다!"
+              },
+              {
+                "q": "Factorio 호스팅 비용은 얼마인가요?",
+                "a": "가격은 <strong>[[minPrice]]/월</strong>부터 시작하며 용량에 따라 확장됩니다. 모든 가격에는 DDoS 보호와 자동 저장이 포함됩니다."
+              },
+              {
+                "q": "모드를 설치할 수 있나요?",
+                "a": "네! Factorio 모드 포털의 모든 모드를 지원합니다."
+              },
+              {
+                "q": "대규모 공장에서도 성능이 유지되나요?",
+                "a": "네! 고성능 서버로 가장 복잡한 공장도 원활하게 운영됩니다."
+              },
+              {
+                "q": "배포는 얼마나 걸리나요?",
+                "a": "서버 배포는 일반적으로 <strong>5분 이내</strong>에 완료됩니다."
+              },
+              {
+                "q": "환불이 가능한가요?",
+                "a": "네! <strong>30일 환불 보장</strong>을 제공합니다."
+              }
+            ]
+          }
+        },
+        "satisfactory": {
+          "description": {
+            "title": "Satisfactory 서버 호스팅 소개",
+            "content": "<p><strong>Satisfactory</strong>는 탐험과 전투가 가미된 1인칭 오픈 월드 공장 건설 게임입니다. 외계 행성을 탐험하고, 자원을 수확하고, 놀라운 3D 환경에서 거대한 자동화 공장을 건설하세요.</p><p>최대 4명의 플레이어와 원활한 협동 게임 플레이를 위해 Flux에서 전용 Satisfactory 서버를 호스팅하세요. 함께 메가 공장을 건설하고, 위험한 생물군계를 탐험하고, 신뢰할 수 있는 고성능 인프라에서 생산 체인을 자동화하세요. <strong>Satisfactory 서버 호스팅은 월 [[minPrice]]부터 시작</strong>하며 가장 복잡한 메가 공장도 처리할 수 있는 파워를 제공합니다.</p><p>기본 컨베이어로 시작하는 겸손한 시작부터 기차, 드론, 하이퍼튜브가 있는 광대한 다층 공장까지 - 산업 제국은 복잡성을 처리할 수 있는 견고한 호스팅이 필요합니다.</p>",
+            "highlights": [
+              "최대 4명 협동 멀티플레이어",
+              "세션 간 지속적인 월드 상태",
+              "5분마다 정기 자동 저장",
+              "메가 팩토리를 위한 고성능 호스팅",
+              "쉬운 세션 관리",
+              "DDoS 보호 포함"
+            ]
+          },
+          "features": {
+            "title": "왜 FluxCloud에서 호스팅해야 할까요?",
+            "subtitle": "게임 성능을 위해 구축된 분산 인프라",
+            "items": [
+              {
+                "title": "DDoS 보호",
+                "description": "내장된 보호 기능으로 공격 중에도 서버를 온라인 상태로 유지합니다."
+              },
+              {
+                "title": "즉시 배포",
+                "description": "몇 시간이 아닌 몇 분 만에 서버가 준비됩니다."
+              },
+              {
+                "title": "전 세계 낮은 지연 시간",
+                "description": "전 세계에 분산된 서버로 최적의 게임 경험을 보장합니다."
+              },
+              {
+                "title": "쉬운 서버 관리",
+                "description": "직관적인 제어판으로 서버를 간편하게 관리할 수 있습니다."
+              },
+              {
+                "title": "자동 저장",
+                "description": "5분마다 자동으로 게임을 저장합니다."
+              },
+              {
+                "title": "고성능",
+                "description": "대규모 팩토리도 원활하게 운영됩니다."
+              },
+              {
+                "title": "24/7 가동",
+                "description": "서버가 항상 온라인 상태를 유지합니다."
+              },
+              {
+                "title": "완전한 제어",
+                "description": "서버 설정을 완전히 제어할 수 있습니다."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "전 세계 여러 대륙에 서버가 있는 분산 인프라에서 게임을 호스팅하여 모든 곳의 플레이어에게 낮은 지연 시간과 높은 가용성을 보장합니다."
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "subtitle": "FluxCloud에서 Satisfactory 호스팅에 대해 알아야 할 모든 것",
+            "questions": [
+              {
+                "q": "FluxCloud에서 Satisfactory 서버를 어떻게 호스팅하나요?",
+                "a": "원하는 서버 구성을 선택하고 \"설치\"를 클릭한 다음 배포 마법사를 따르세요. 몇 분 안에 서버가 준비됩니다!"
+              },
+              {
+                "q": "Satisfactory 호스팅 비용은 얼마인가요?",
+                "a": "가격은 <strong>[[minPrice]]/월</strong>부터 시작하며 용량에 따라 확장됩니다. 모든 가격에는 DDoS 보호와 자동 저장이 포함됩니다."
+              },
+              {
+                "q": "몇 명이 함께 플레이할 수 있나요?",
+                "a": "최대 4명까지 협동 멀티플레이어를 지원합니다."
+              },
+              {
+                "q": "기존 세이브를 이전할 수 있나요?",
+                "a": "네! SSH 또는 볼륨 브라우저를 통해 기존 세이브 파일을 업로드할 수 있습니다."
+              },
+              {
+                "q": "배포는 얼마나 걸리나요?",
+                "a": "서버 배포는 일반적으로 <strong>5분 이내</strong>에 완료됩니다."
+              },
+              {
+                "q": "환불이 가능한가요?",
+                "a": "네! <strong>30일 환불 보장</strong>을 제공합니다."
+              }
+            ]
+          }
+        },
+        "enshrouded": {
+          "description": {
+            "title": "Enshrouded 서버 호스팅 소개",
+            "content": "<p><strong>Enshrouded</strong>는 솔로 또는 최대 16명의 플레이어와 협동 모드로 플레이할 수 있는 서바이벌 액션 RPG입니다. 복셀 기반의 광대한 Embervale 세계를 탐험하고, 치열한 적과 싸우고, 강력한 장비를 제작하고, 친구들과 함께 멋진 기지를 건설하세요.</p><p>몰입적인 협동 경험을 위해 Flux에서 자신만의 Enshrouded 서버를 운영하세요. 치명적인 Shroud로 모험을 떠나고, 고대 비밀을 밝히고, 웅장한 구조물을 건설하고, 아름답지만 위험한 이 세계에서 함께 생존하세요. <strong>Enshrouded 서버 호스팅은 월 [[minPrice]]부터 시작</strong>하며 최대 16명의 플레이어를 지원합니다.</p><p>전투, 건설, 탐험 또는 제작에 집중하든, Flux에서 호스팅하면 모험이 원활하고, 지속적이며, 전체 파티에서 항상 사용할 수 있습니다.</p>",
+            "highlights": [
+              "최대 16명 협동 멀티플레이어",
+              "완전한 월드 지속성과 진행 상황",
+              "사용자 정의 서버 설정 및 난이도",
+              "30분마다 자동 백업",
+              "복셀 월드를 위한 고성능 서버",
+              "DDoS 보호 포함"
+            ]
+          },
+          "features": {
+            "title": "왜 FluxCloud에서 호스팅해야 할까요?",
+            "subtitle": "게임 성능을 위해 구축된 분산 인프라",
+            "items": [
+              {
+                "title": "DDoS 보호",
+                "description": "내장된 보호 기능으로 공격 중에도 서버를 온라인 상태로 유지합니다."
+              },
+              {
+                "title": "즉시 배포",
+                "description": "몇 시간이 아닌 몇 분 만에 서버가 준비됩니다."
+              },
+              {
+                "title": "전 세계 낮은 지연 시간",
+                "description": "전 세계에 분산된 서버로 최적의 게임 경험을 보장합니다."
+              },
+              {
+                "title": "쉬운 서버 관리",
+                "description": "직관적인 제어판으로 서버를 간편하게 관리할 수 있습니다."
+              },
+              {
+                "title": "자동 백업",
+                "description": "30분마다 자동으로 월드를 백업합니다."
+              },
+              {
+                "title": "고성능",
+                "description": "복셀 기반 월드도 원활하게 운영됩니다."
+              },
+              {
+                "title": "24/7 가동",
+                "description": "서버가 항상 온라인 상태를 유지합니다."
+              },
+              {
+                "title": "완전한 제어",
+                "description": "서버 설정과 난이도를 완전히 제어할 수 있습니다."
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "글로벌 서버 네트워크",
+            "subtitle": "전 세계 여러 대륙에 서버가 있는 분산 인프라에서 게임을 호스팅하여 모든 곳의 플레이어에게 낮은 지연 시간과 높은 가용성을 보장합니다."
+          },
+          "faq": {
+            "title": "자주 묻는 질문",
+            "subtitle": "FluxCloud에서 Enshrouded 호스팅에 대해 알아야 할 모든 것",
+            "questions": [
+              {
+                "q": "FluxCloud에서 Enshrouded 서버를 어떻게 호스팅하나요?",
+                "a": "원하는 서버 구성을 선택하고 \"설치\"를 클릭한 다음 배포 마법사를 따르세요. 몇 분 안에 서버가 준비됩니다!"
+              },
+              {
+                "q": "Enshrouded 호스팅 비용은 얼마인가요?",
+                "a": "가격은 <strong>[[minPrice]]/월</strong>부터 시작하며 용량에 따라 확장됩니다. 모든 가격에는 DDoS 보호와 자동 백업이 포함됩니다."
+              },
+              {
+                "q": "몇 명이 함께 플레이할 수 있나요?",
+                "a": "최대 16명까지 협동 멀티플레이어를 지원합니다."
+              },
+              {
+                "q": "서버 설정을 커스터마이징할 수 있나요?",
+                "a": "네! 난이도, 게임 모드 등 서버 설정을 완전히 제어할 수 있습니다."
+              },
+              {
+                "q": "배포는 얼마나 걸리나요?",
+                "a": "서버 배포는 일반적으로 <strong>5-10분</strong> 내에 완료됩니다."
+              },
+              {
+                "q": "환불이 가능한가요?",
+                "a": "네! <strong>30일 환불 보장</strong>을 제공합니다."
+              }
+            ]
+          }
+        }
+      },
+      "loading": "마켓플레이스 로딩 중...",
+      "maintenanceTitle": "애플리케이션 마켓플레이스\n점검 중",
+      "maintenanceSubtitle": "현재 마켓플레이스에 기술적 문제가 발생했습니다. 저희 팀이 가능한 빨리 이 문제를 해결하기 위해 노력하고 있습니다.",
+      "hero": {
+        "title": "Flux 애플리케이션 마켓플레이스",
+        "subtitle": "Flux의 Web3 클라우드에서 사전 구성된 탈중앙화 애플리케이션을 배포하세요. Docker 컨테이너가 포함되어 있습니다."
+      },
+      "detail": {
+        "loadingTitle": "애플리케이션 로딩 중...",
+        "errorMessage": "애플리케이션 세부 정보를 로드하지 못했습니다: {error}",
+        "install": "지금 구매",
+        "minimumRequirements": "최소 요구 사항",
+        "screenshotAlt": "스크린샷 {number}",
+        "lastUpdate": "마지막 업데이트",
+        "sourceCode": "소스 코드",
+        "cpuPower": "CPU 성능",
+        "website": "웹사이트",
+        "support": "지원",
+        "memory": "메모리",
+        "storage": "저장소",
+        "screenshots": "스크린샷",
+        "developer": "개발자",
+        "version": "버전",
+        "downloads": "다운로드",
+        "about": "About",
+        "unitGB": "GB",
+        "priceLabel": "Price",
+        "unitMB": "MB",
+        "priceFree": "Free",
+        "links": "Links",
+        "unitCores": "vCores"
+      },
+      "common": {
+        "whyFlux": {
+          "subtitle": "Web3 기술을 기반으로 구축된 분산 클라우드 인프라의 힘을 경험하세요",
+          "title": "FluxCloud에서 호스팅하는 이유",
+          "benefits": [
+            {
+              "title": "글로벌 네트워크",
+              "description": "62개국 이상의 전 세계 탈중앙화 인프라에 배포하여 최적의 지연 시간을 확보하세요."
+            },
+            {
+              "title": "빠른 배포",
+              "description": "자동화된 배포 시스템으로 몇 분 만에 애플리케이션을 시작하세요."
+            },
+            {
+              "title": "비용 효율적",
+              "description": "투명하고 경쟁력 있는 가격으로 기존 클라우드 제공업체 대비 최대 70% 절감하세요."
+            },
+            {
+              "title": "99.9% 가동 시간",
+              "description": "분산 네트워크 아키텍처로 최대 가용성과 이중화를 보장합니다."
+            },
+            {
+              "title": "쉬운 확장",
+              "description": "다운타임 없이 수요에 맞게 리소스를 즉시 확장하거나 축소하세요."
+            },
+            {
+              "title": "종속 없음",
+              "description": "완전한 데이터 이식성과 개방형 표준으로 특정 제공업체에 종속되지 않습니다."
+            },
+            {
+              "title": "24/7 지원",
+              "description": "문제나 질문이 있을 때 언제든지 도움을 줄 수 있는 전문 지원팀이 있습니다."
+            },
+            {
+              "title": "30일 환불 보장",
+              "description": "만족하지 않으시면 30일 이내에 질문 없이 전액 환불해 드립니다."
+            }
+          ]
+        },
+        "genericFAQ": {
+          "title": "자주 묻는 질문",
+          "subtitle": "FluxCloud 호스팅에 대해 알아야 할 모든 것",
+          "questions": [
+            {
+              "q": "FluxCloud란 무엇인가요?",
+              "a": "FluxCloud는 Web3 기술로 구동되는 탈중앙화 클라우드 컴퓨팅 플랫폼입니다. 전 세계 노드 네트워크에서 애플리케이션, 게임 및 서비스를 위한 안전하고 확장 가능하며 비용 효율적인 호스팅을 제공합니다."
+            },
+            {
+              "q": "기존 호스팅과 어떻게 다른가요?",
+              "a": "기존 클라우드 제공업체와 달리 FluxCloud는 탈중앙화 노드 네트워크에서 운영되어 단일 장애 지점이 없고 더 나은 가동 시간과 보안을 제공합니다."
+            },
+            {
+              "q": "가격은 어떻게 책정되나요?",
+              "a": "FluxCloud는 사용한 만큼만 지불하는 투명한 가격 정책을 사용합니다. 숨겨진 수수료가 없으며 언제든지 취소할 수 있습니다."
+            },
+            {
+              "q": "어떤 결제 방법을 지원하나요?",
+              "a": "암호화폐(FLUX, BTC, ETH)와 Crypto.com을 통한 기존 결제 방법을 모두 지원합니다."
+            },
+            {
+              "q": "배포하는 데 얼마나 걸리나요?",
+              "a": "대부분의 애플리케이션은 몇 분 내에 배포됩니다. Docker 이미지가 준비되면 배포가 거의 즉시 이루어집니다."
+            },
+            {
+              "q": "DDoS 보호가 포함되어 있나요?",
+              "a": "네, 모든 배포에 엔터프라이즈급 DDoS 보호가 포함되어 있습니다."
+            },
+            {
+              "q": "애플리케이션을 확장할 수 있나요?",
+              "a": "물론이죠! 리소스를 즉시 확장하거나 더 많은 인스턴스를 배포하여 수요를 처리할 수 있습니다."
+            },
+            {
+              "q": "어떤 지원을 받을 수 있나요?",
+              "a": "Discord 커뮤니티와 기술 지원 티켓을 통해 24/7 지원을 제공합니다."
+            },
+            {
+              "q": "환불 정책이 있나요?",
+              "a": "네, 모든 유료 서비스에 대해 30일 환불 보장을 제공합니다."
+            }
+          ]
+        },
+        "appSpecificFAQ": {
+          "pricingQuestion": "FluxCloud에서 {appName}을(를) 호스팅하는 데 비용이 얼마나 드나요?",
+          "pricingAnswerPaid": "FluxCloud에서 <strong>{appName}</strong> 호스팅은 <strong>{priceText}/월</strong>부터 시작합니다.",
+          "pricingAnswerFree": "FluxCloud에서 <strong>{appName}</strong> 호스팅은 <strong>무료</strong>입니다. 탈중앙화 인프라가 포함되어 있습니다."
+        }
+      }
+    },
+    "dashboard": {
+      "overview": {
+        "intro": {
+          "title": "Flux 생태계에 오신 것을 환영합니다",
+          "blockchain": {
+            "description": "Flux는 자체 블록체인에서 운영되며 거버넌스, 토큰노믹스를 처리하고 병렬 자산을 통해 다른 블록체인과의 상호 운용성을 제공합니다. 네이티브 FLUX 암호화폐는 전체 생태계를 구동하여 분산 인프라와 DeFi 통합을 가능하게 합니다.",
+            "title": "Flux 블록체인"
+          },
+          "cloud": {
+            "description": "FluxCloud는 전 세계적으로 분산된 {nodes}개 이상의 FluxNode로 구동되는 분산 클라우드 컴퓨팅 플랫폼입니다. 애플리케이션 호스팅, 블록체인 노드 실행 및 AI/ML 워크로드 실행을 위한 Web3 지원 인프라를 제공하며, AWS나 Google Cloud와 같은 기존 클라우드 제공업체의 분산 대안을 제공합니다.",
+            "title": "FluxCloud Network"
+          },
+          "learnMore": "자세히 알아보기"
+        },
+        "nodes": "노드",
+        "errorFetchingHistoryStats": "이력 통계를 가져올 수 없습니다",
+        "totalNodes": "총 노드",
+        "nodeHistory": "노드 이력",
+        "lockedSupply": "락업 공급량",
+        "fluxSupply": "FLUX 공급량",
+        "maxSupply": "최대 공급량",
+        "circulatingSupply": "유통 공급량",
+        "versionBreakdown": "버전 분포",
+        "tierBreakdown": "등급 분포",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus",
+        "cumulus": "Cumulus",
+        "legacy": "Legacy"
+      },
+      "locations": {
+        "intro": {
+          "title": "글로벌 FluxCloud 네트워크",
+          "subtitle": "진정한 분산 인프라",
+          "description": "FluxCloud는 모든 대륙과 수백 개의 호스팅 제공업체에 분산된 FluxNode를 통해 세계 최대의 분산 클라우드 인프라 네트워크를 운영합니다. 이러한 지리적 다양성은 앱 소유자에게 비할 데 없는 이점을 제공합니다: 엣지 컴퓨팅으로 인한 낮은 지연 시간, 높은 중복성 및 내결함성, 검열 저항 및 진정한 분산화. 애플리케이션은 중앙 집중식 데이터 센터가 아닌 실제 독립적으로 운영되는 하드웨어에서 실행됩니다."
+        },
+        "geographicTitle": "지리적 위치",
+        "noGeographicData": "지리적 데이터를 사용할 수 없습니다.",
+        "noProviderData": "제공업체 데이터를 사용할 수 없습니다.",
+        "providersTitle": "제공업체",
+        "unknown": "알 수 없음"
+      },
+      "list": {
+        "errorLoading": "Flux 목록 로딩 오류:",
+        "perPage": "페이지당",
+        "filterPlaceholder": "검색어 입력",
+        "columns": {
+          "ip": "IP 주소",
+          "lastpaid": "마지막 지불",
+          "paymentAddress": "주소",
+          "locationCountry": "국가",
+          "locationOrg": "제공업체",
+          "tier": "Tier"
+        },
+        "filter": "필터",
+        "unknown": "알 수 없음",
+        "notAvailable": "N/A"
+      },
+      "resources": {
+        "intro": {
+          "title": "FluxCloud 네트워크 리소스",
+          "subtitle": "실시간 인프라 용량",
+          "description": "전체 FluxCloud 네트워크에서 현재 사용 가능한 총 컴퓨팅 리소스를 탐색하세요. 분산 인프라는 전 세계 수천 개의 FluxNode로 구동되어 기존 클라우드 제공업체에 의존하지 않고 애플리케이션 호스팅, 블록체인 노드 실행 및 워크로드 실행을 위한 확장 가능한 CPU, RAM 및 스토리지 용량을 제공합니다."
+        },
+        "summary": {
+          "title": "총 네트워크 용량"
+        },
+        "errorFetchHistory": "이력 통계를 가져올 수 없습니다",
+        "storageHistory": "스토리지 이력",
+        "cpuHistory": "CPU 기록",
+        "ramHistory": "RAM 기록",
+        "totalRam": "총 RAM",
+        "totalHdd": "총 HDD",
+        "totalVCores": "Total vCores",
+        "tierCumulus": "Cumulus",
+        "totalSsd": "Total SSD/NVMe",
+        "ssd": "SSD/NVMe",
+        "ram": "RAM",
+        "hdd": "HDD",
+        "close": "Close",
+        "vCores": "vCores",
+        "tierStratus": "Stratus",
+        "tierNimbus": "Nimbus"
+      },
+      "rewards": {
+        "intro": {
+          "title": "FluxNode 운영자 보상",
+          "subtitle": "네트워크 구동에 대한 FLUX 획득",
+          "description": "FluxNode 운영자는 전 세계 분산 애플리케이션을 구동하는 필수 컴퓨팅 인프라를 제공하는 FluxCloud 네트워크의 중추입니다. 기여에 대한 보상으로 운영자는 블록체인에서 직접 FLUX 암호화폐를 받습니다. 이러한 보상은 노드 등급과 성능에 따라 자동으로 분배되어 신뢰할 수 있는 고품질 인프라를 유지하기 위한 지속 가능한 인센티브 모델을 만듭니다.",
+          "learnMore": "FluxNode에 대해 자세히 알아보기"
+        },
+        "cumulusTotalRewards": "Cumulus 총 보상",
+        "nimbusTotalRewards": "Nimbus 총 보상",
+        "stratusTotalRewards": "Stratus 총 보상",
+        "historicalPriceChart": "과거 가격 차트",
+        "errors": {
+          "failedToFetchData": "데이터를 가져오지 못했습니다",
+          "failedToFetchRates": "환율을 가져오지 못했습니다",
+          "failedToFetchPriceData": "가격 데이터를 가져오지 못했습니다",
+          "failedToFetchNodeCount": "노드 수를 가져오지 못했습니다",
+          "failedToFetchBlockReward": "블록 보상을 가져오지 못했습니다"
+        },
+        "fluxCollateral": "FLUX 담보",
+        "perDay": "일당",
+        "perWeek": "주당",
+        "perMonth": "월당",
+        "price": "Price",
+        "usd": "USD",
+        "close": "Close"
+      }
+    },
+    "checkout": {
+      "subscriptionDetails": "구독 세부 정보",
+      "perMonth": "월간",
+      "header": {
+        "subtitle": "분산 스토리지를 잠금 해제하려면 구독을 완료하세요",
+        "title": "FluxDrive"
+      },
+      "fluxPay": {
+        "subtitle": "Zelcore 지갑을 사용한 안전한 결제",
+        "waitingForPayment": "결제 대기 중...",
+        "title": "Flux로 결제",
+        "openWallet": "Zelcore 지갑 열기",
+        "cancelPayment": "결제 취소",
+        "usdValue": "USD Value:",
+        "amount": "Amount:"
+      },
+      "cryptoCom": {
+        "subtitle": "Crypto.com Pay를 통한 정기 구독",
+        "continue": "Crypto.com으로 계속",
+        "title": "Crypto.com으로 결제"
+      },
+      "security": {
+        "message": "결제 정보는 암호화되어 안전합니다. 결제 세부 정보를 저장하지 않습니다.",
+        "title": "안전한 결제"
+      },
+      "loading": {
+        "planDetails": "플랜 세부 정보 로딩 중...",
+        "unableToLoad": "플랜 세부 정보를 로드할 수 없습니다"
+      },
+      "messages": {
+        "authenticationRequired": "인증이 필요합니다",
+        "invalidAuthData": "잘못된 인증 데이터 형식",
+        "planDetailsNotAvailable": "플랜 세부 정보를 사용할 수 없습니다",
+        "missingAuthFields": "인증 필드가 누락되었습니다",
+        "subscriptionLoadFailed": "구독 데이터를 불러오지 못했습니다",
+        "pleaseLoginFirst": "먼저 로그인해 주세요",
+        "invalidAuth": "잘못된 인증 데이터입니다",
+        "paymentInitFailed": "결제 초기화에 실패했습니다. 다시 시도해 주세요.",
+        "paymentFailed": "결제 초기화에 실패했습니다",
+        "cryptoComInitFailed": "Crypto.com 결제 초기화에 실패했습니다. 다시 시도해 주세요.",
+        "cryptoComPaymentFailed": "Crypto.com 결제 초기화에 실패했습니다",
+        "paymentFailedRetry": "결제에 실패했습니다. 다시 시도해 주세요.",
+        "paymentSuccessfulRedirecting": "결제가 성공했습니다! FluxDrive로 이동 중...",
+        "pleaseLoginToContinue": "구매를 계속하려면 로그인해 주세요",
+        "sessionExpired": "세션이 만료되었습니다. 다시 로그인해 주세요."
+      },
+      "selectPlan": "플랜 선택",
+      "paymentMethod": {
+        "title": "결제 방법",
+        "fluxPay": "Flux Pay",
+        "cryptoCom": "Crypto.com"
+      },
+      "orderSummary": {
+        "title": "주문 요약",
+        "currentPlan": "현재 플랜",
+        "plan": "Plan",
+        "billing": "Billing",
+        "total": "Total",
+        "monthly": "Monthly",
+        "status": "Status",
+        "storage": "Storage"
+      },
+      "billingCycle": "청구 주기",
+      "proceedToPayment": "결제 진행",
+      "paymentProcessing": "결제 처리 중",
+      "secureCheckout": "안전한 결제",
+      "plan": "Plan",
+      "price": "Price",
+      "total": "Total",
+      "title": "Checkout",
+      "monthly": "Monthly"
+    },
+    "xdao": {
+      "subtitle": "탈중앙화 거버넌스 플랫폼",
+      "description": "Flux XDAO(확장 탈중앙화 자율 조직)는 커뮤니티가 Flux 생태계의 미래를 형성할 수 있도록 권한을 부여합니다",
+      "learnMore": "XDAO에 대해 자세히 알아보기",
+      "loginToVote": "투표하려면 로그인",
+      "addProposal": "제안 추가",
+      "filterProposals": "제안 필터링",
+      "allProposals": "모든 제안",
+      "searchProposals": "제안 검색...",
+      "loadingProposals": "제안 로딩 중...",
+      "failedToLoad": "제안을 불러오지 못했습니다",
+      "noProposalsFound": "제안을 찾을 수 없습니다",
+      "noProposalsSubmitted": "아직 제출된 제안이 없습니다.",
+      "noOpenProposals": "진행 중인 제안 없음",
+      "noOpenProposalsMessage": "현재 투표할 수 있는 진행 중인 제안이 없습니다.",
+      "noPassedProposals": "통과된 제안 없음",
+      "noPassedProposalsMessage": "아직 통과된 제안이 없습니다.",
+      "noUnpaidProposals": "미지급 제안 없음",
+      "noUnpaidProposalsMessage": "모든 통과된 제안이 지급되었습니다.",
+      "noRejectedProposals": "거부된 제안 없음",
+      "noRejectedProposalsMessage": "거부된 제안이 없습니다.",
+      "tryDifferentFilter": "다른 필터를 선택해 보세요.",
+      "loginRequiredForVoting": "투표하려면 로그인이 필요합니다",
+      "loginRequiredMessage": "xDAO 투표에 참여하려면 로그인해야 합니다. 아래에서 원하는 로그인 방법을 선택하세요.",
+      "debugInfo": "디버그 정보:",
+      "errors": {
+        "loadProposalsServer": "서버에서 제안을 불러오지 못했습니다",
+        "networkFailed": "네트워크 연결에 실패했습니다. 인터넷 연결을 확인해 주세요.",
+        "timeout": "요청 시간이 초과되었습니다. 서버가 일시적으로 사용 불가능할 수 있습니다.",
+        "serverError": "서버 오류입니다. 나중에 다시 시도해 주세요.",
+        "serviceNotFound": "제안 서비스를 찾을 수 없습니다.",
+        "loadProposalsGeneric": "제안을 불러오지 못했습니다. 다시 시도해 주세요."
+      },
+      "latest": "Latest",
+      "filters": "Filters",
+      "total": "Total",
+      "sortBy": "Sort by",
+      "rejected": "Rejected",
+      "open": "Open",
+      "anonymous": "Anonymous",
+      "end": "End",
+      "no": "No",
+      "loggedIn": "Logged in",
+      "tryAgain": "Try Again",
+      "unpaid": "Unpaid",
+      "yes": "Yes",
+      "title": "Flux XDAO",
+      "passed": "Passed",
+      "titleDesc": "Title Z-A",
+      "required": "Required",
+      "titleAsc": "Title A-Z",
+      "endDate": "End Date",
+      "login": "Login"
+    },
+    "error": {
+      "pageNotFoundTitle": "페이지를 찾을 수 없습니다 ⚠️",
+      "pageNotFoundDescription": "찾으시는 페이지를 찾을 수 없습니다.",
+      "backToHome": "홈으로 돌아가기",
+      "error404Alt": "404 페이지를 찾을 수 없음 - 오류 일러스트",
+      "footerImageAlt": "장식용 푸터 이미지"
+    },
+    "successCheckout": {
+      "title": "결제가 성공적으로 완료되었습니다! 🎉",
+      "paymentProcessed": "애플리케이션 결제가 성공적으로 처리되었습니다.",
+      "deploymentTime": "최대 45분이 소요될 수 있습니다",
+      "deploymentMessage": "애플리케이션이 Flux 네트워크에 배포됩니다.",
+      "autoCloseMessage": "이 창은 {seconds}초 후에 자동으로 닫힙니다",
+      "safeToClose": "이제 이 창을 안전하게 닫을 수 있습니다",
+      "footerImageAlt": "성공 페이지 장식용 푸터 이미지"
+    },
+    "unauthorized": {
+      "title": "권한이 없습니다! 🔐",
+      "description": "이 페이지에 접근할 권한이 없습니다.",
+      "backToHome": "홈으로 돌아가기",
+      "footerImageAlt": "권한 없음 장식용 푸터 이미지"
     }
   },
   "$vuetify": {
@@ -2511,7 +5105,7 @@
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
+        "root": "루트",
         "previous": "이전",
         "first": "첫 번째",
         "last": "마지막",
@@ -2584,7 +5178,7 @@
       "fluxAI": {
         "name": "FluxAI",
         "description": "머신러닝 요구사항을 위해 분산 AI 컴퓨팅의 강력한 기능을 활용하세요",
-        "category": "AI & ML"
+        "category": "AI 및 ML"
       },
       "fluxDrive": {
         "name": "FluxDrive",
@@ -2609,5 +5203,3 @@
     }
   }
 }
-
-

@@ -6,12 +6,12 @@
       "close": "बंद करें",
       "save": "सहेजें",
       "delete": "हटाएं",
-      "submit": "जमा करें",
+      "submit": "सबमिट करें",
       "update": "अपडेट करें",
       "install": "इंस्टॉल करें",
       "start": "शुरू करें",
       "stop": "रोकें",
-      "remove": "निकालें",
+      "remove": "हटाएं",
       "download": "डाउनलोड करें",
       "upload": "अपलोड करें",
       "copy": "कॉपी करें",
@@ -20,8 +20,8 @@
       "import": "आयात करें",
       "edit": "संपादित करें",
       "view": "देखें",
-      "refresh": "ताज़ा करें",
-      "reload": "पुनः लोड करें",
+      "refresh": "रिफ्रेश करें",
+      "reload": "रीलोड करें",
       "back": "वापस",
       "next": "अगला",
       "previous": "पिछला",
@@ -31,10 +31,10 @@
       "clear": "साफ़ करें",
       "search": "खोजें",
       "filter": "फ़िल्टर करें",
-      "yes": "हां",
+      "yes": "हाँ",
       "no": "नहीं",
       "ok": "ठीक है",
-      "login": "लॉगिन करें"
+      "login": "लॉगिन"
     },
     "labels": {
       "name": "नाम",
@@ -63,9 +63,9 @@
       "price": "कीमत",
       "total": "कुल",
       "amount": "राशि",
-      "free": "निःशुल्क",
+      "free": "मुफ़्त",
       "memory": "मेमोरी",
-      "storage": "भंडारण",
+      "storage": "स्टोरेज",
       "screenshots": "स्क्रीनशॉट",
       "about": "के बारे में",
       "developer": "डेवलपर",
@@ -73,19 +73,19 @@
       "downloads": "डाउनलोड",
       "links": "लिंक",
       "website": "वेबसाइट",
-      "sourceCode": "स्रोत कोड",
-      "support": "समर्थन",
+      "sourceCode": "सोर्स कोड",
+      "support": "सपोर्ट",
       "plan": "योजना",
       "billing": "बिलिंग",
       "monthly": "मासिक",
-      "scrollLeft": "बाईं ओर स्क्रॉल करें",
-      "scrollRight": "दाईं ओर स्क्रॉल करें",
+      "scrollLeft": "बाएं स्क्रॉल करें",
+      "scrollRight": "दाएं स्क्रॉल करें",
       "optional": "वैकल्पिक"
     },
     "theme": {
-      "light": "हल्का",
-      "dark": "गहरा",
-      "switchTheme": "थीम स्विच करें"
+      "light": "लाइट",
+      "dark": "डार्क",
+      "switchTheme": "थीम बदलें"
     },
     "status": {
       "loading": "लोड हो रहा है...",
@@ -115,7 +115,7 @@
       "noData": "कोई डेटा उपलब्ध नहीं",
       "noResults": "कोई परिणाम नहीं मिला",
       "errorOccurred": "एक त्रुटि हुई",
-      "operationSuccess": "ऑपरेशन सफलतापूर्वक पूर्ण हुआ",
+      "operationSuccess": "ऑपरेशन सफल",
       "operationFailed": "ऑपरेशन विफल",
       "confirmDelete": "क्या आप निश्चित हैं कि आप हटाना चाहते हैं?",
       "unsavedChanges": "आपके पास अनसहेजे परिवर्तन हैं",
@@ -139,14 +139,14 @@
       "largeServers": "बड़े सर्वर"
     },
     "guarantee": {
-      "title": "30-दिन की मनी-बैक गारंटी",
+      "title": "30 दिन की मनी बैक गारंटी",
       "description": "हमारी सेवा को जोखिम मुक्त आजमाएं। यदि आप पहले 30 दिनों के भीतर पूरी तरह संतुष्ट नहीं हैं, तो हम आपका भुगतान वापस कर देंगे।",
       "shortTitle": "मनी-बैक गारंटी",
       "badge": "30-दिन की गारंटी",
       "trustMessage": "आपकी संतुष्टि हमारी प्राथमिकता है"
     },
     "trustpilot": {
-      "title": "हजारों द्वारा विश्वसनीय",
+      "title": "हजारों का भरोसा",
       "ratingLabel": "उत्कृष्ट",
       "rating": "5 में से 4.5",
       "reviews": "16 समीक्षाओं के आधार पर",
@@ -179,13 +179,13 @@
       "cpu": "CPU",
       "ram": "RAM",
       "memory": "मेमोरी",
-      "storage": "भंडारण",
+      "storage": "स्टोरेज",
       "disk": "डिस्क",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
       "bandwidth": "बैंडविड्थ",
       "cores": "कोर",
-      "threads": "थ्रेड"
+      "threads": "थ्रेड्स"
     },
     "time": {
       "second": "सेकंड",
@@ -236,20 +236,20 @@
       "title": "Flux नेटवर्क",
       "overview": "अवलोकन",
       "resources": "संसाधन",
-      "map": "नक्शा",
+      "map": "मानचित्र",
       "rewards": "पुरस्कार",
       "nodeList": "नोड सूची"
     },
     "application": {
-      "title": "अनुप्रयोग",
-      "myApplications": "मेरे अनुप्रयोग",
+      "title": "एप्लिकेशन",
+      "myApplications": "मेरे एप्लिकेशन",
       "management": "प्रबंधन",
-      "globalApps": "वैश्विक ऐप",
-      "localApps": "स्थानीय ऐप",
-      "registerNewApp": "नया ऐप रजिस्टर करें",
-      "marketplace": "ऐप बाजार",
-      "marketplaceApps": "अनुप्रयोग",
-      "marketplaceGames": "खेल",
+      "globalApps": "वैश्विक ऐप्स",
+      "localApps": "स्थानीय ऐप्स",
+      "registerNewApp": "नया ऐप पंजीकृत करें",
+      "marketplace": "ऐप मार्केटप्लेस",
+      "marketplaceApps": "एप्लिकेशन",
+      "marketplaceGames": "गेम्स",
       "marketplaceWordPress": "WordPress",
       "composition": "रचना",
       "locations": "स्थान",
@@ -300,13 +300,13 @@
     },
     "administration": {
       "title": "प्रशासन",
-      "systemInfo": "जानकारी",
-      "dockerEvents": "Docker इवेंट",
+      "systemInfo": "सिस्टम जानकारी",
+      "dockerEvents": "Docker इवेंट्स",
       "manageFlux": "Flux Gravity प्रबंधित करें",
-      "manageDaemon": "डेमन प्रबंधित करें",
-      "manageBenchmark": "बेंचमार्क प्रबंधित करें",
+      "manageDaemon": "Daemon प्रबंधित करें",
+      "manageBenchmark": "Benchmark प्रबंधित करें",
       "manageUsers": "उपयोगकर्ता प्रबंधित करें",
-      "loggedSessions": "लॉगिन किए गए सत्र",
+      "loggedSessions": "लॉग इन सत्र",
       "myFluxShare": "मेरा FluxShare",
       "fluxShare": "FluxShare"
     },
@@ -317,7 +317,7 @@
       "title": "लागत कैलकुलेटर"
     },
     "apiReference": {
-      "title": "मदद"
+      "title": "सहायता"
     },
     "fluxDrive": {
       "title": "FluxDrive"
@@ -325,25 +325,25 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "विकेंद्रीकृत अनुप्रयोग प्रबंधन",
-    "fluxCloudDescription": "Flux विकेंद्रीकृत क्लाउड नेटवर्क पर चल रहे सभी अपने Docker कंटेनरकृत अनुप्रयोगों को मॉनिटर और प्रबंधित करें। अपने वैश्विक ब्लॉकचेन-संचालित बुनियादी ढांचे में तैनात वितरित ऐप की वास्तविक समय स्थिति, संसाधन उपयोग और प्रदर्शन मेट्रिक्स देखें। किसी भी अनुप्रयोग पर क्लिक करके विस्तृत प्रबंधन नियंत्रण और विश्लेषण तक पहुंचें।"
+    "fluxCloudSubtitle": "विकेंद्रीकृत एप्लिकेशन प्रबंधन",
+    "fluxCloudDescription": "Flux विकेंद्रीकृत क्लाउड नेटवर्क पर चल रहे अपने सभी Docker कंटेनराइज्ड एप्लिकेशन की निगरानी और प्रबंधन करें। हमारे वैश्विक ब्लॉकचेन-संचालित इंफ्रास्ट्रक्चर पर तैनात आपके वितरित ऐप्स की रियल-टाइम स्थिति, संसाधन उपयोग और प्रदर्शन मेट्रिक्स देखें। विस्तृत प्रबंधन नियंत्रण और विश्लेषण तक पहुंचने के लिए किसी भी एप्लिकेशन पर क्लिक करें।"
   },
   "sections": {
     "dashboard": {
       "title": "Flux नेटवर्क",
-      "description": "Flux नेटवर्क की जानकारी, उपलब्ध संसाधन, या सर्वर स्थानों के साथ एक नक्शा जांचें।"
+      "description": "Flux नेटवर्क जानकारी, उपलब्ध संसाधन या सर्वर स्थानों का मानचित्र देखें।"
     },
     "application": {
-      "title": "अनुप्रयोग",
-      "description": "बाजार पर खरीदें, अपना खुद का ऐप पंजीकृत करें, अपने सक्रिय ऐप प्रबंधित करें।"
+      "title": "एप्लिकेशन",
+      "description": "मार्केटप्लेस पर खरीदें, अपना खुद का ऐप पंजीकृत करें, अपने सक्रिय ऐप्स प्रबंधित करें।"
     },
     "administration": {
       "title": "प्रशासन",
-      "description": "बुनियादी ढांचे प्रशासकों और नोड ऑपरेटरों के लिए उपकरण Flux Gravity को प्रबंधित करने की अनुमति देते हैं।"
+      "description": "इंफ्रास्ट्रक्चर एडमिनिस्ट्रेटर और नोड ऑपरेटर्स के लिए Flux Gravity प्रबंधन उपकरण।"
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "Flux नेटवर्क के लिए प्रस्तावित परिवर्तनों की सूची देखें, नए बनाएं और वोट दें।"
+      "description": "Flux नेटवर्क में प्रस्तावित परिवर्तनों की सूची देखें, नए बनाएं और वोट करें।"
     }
   },
   "core": {
@@ -351,26 +351,26 @@
       "general": "सामान्य",
       "copySpecification": "विनिर्देश कॉपी करें",
       "updateSubscription": "अपडेट करें",
-      "renewSubscription": "नवीकरण करें",
+      "renewSubscription": "नवीनीकरण करें",
       "cancelSubscription": "रद्द करें",
       "name": "नाम",
       "description": "विवरण",
-      "owner": "मालिक",
+      "owner": "स्वामी",
       "hash": "हैश",
       "contacts": "संपर्क",
-      "geolocation": "भौगोलिक स्थिति",
+      "geolocation": "भू-स्थान",
       "worldwide": "विश्वव्यापी",
       "instances": "इंस्टेंस",
       "specificationsVersion": "विनिर्देश संस्करण",
-      "registeredOnBlockheight": "ब्लॉकहाइट पर पंजीकृत",
-      "expiresOnBlockheight": "ब्लॉकहाइट पर समाप्त होता है",
-      "expiresIn": "में समाप्त होता है",
-      "enterpriseNodes": "एंटरप्राइज नोड",
-      "notScoped": "स्कोप नहीं किया गया",
+      "registeredOnBlockheight": "पंजीकृत ब्लॉक ऊंचाई",
+      "expiresOnBlockheight": "ब्लॉक ऊंचाई पर समाप्त",
+      "expiresIn": "समाप्ति",
+      "enterpriseNodes": "एंटरप्राइज नोड्स",
+      "notScoped": "स्कोप नहीं",
       "staticIp": "स्थिर IP",
-      "staticIpYes": "हां, केवल स्थिर IP नोड्स पर चल रहा है",
+      "staticIpYes": "हाँ, केवल स्थिर IP नोड्स पर चल रहा है",
       "staticIpNo": "नहीं, सभी नोड्स पर चल रहा है",
-      "specificationCopied": "अनुप्रयोग विनिर्देश क्लिपबोर्ड में कॉपी किया गया!",
+      "specificationCopied": "एप्लिकेशन विनिर्देश क्लिपबोर्ड पर कॉपी किया गया!",
       "specificationCopyFailed": "विनिर्देश कॉपी करने में विफल",
       "unknown": "अज्ञात",
       "continent": "महाद्वीप: {name}",
@@ -379,7 +379,7 @@
       "allowedContinent": "अनुमत: महाद्वीप: {name}",
       "forbiddenContinent": "निषिद्ध: महाद्वीप: {name}",
       "notAvailable": "उपलब्ध नहीं",
-      "applicationExpired": "अनुप्रयोग समाप्त"
+      "applicationExpired": "एप्लिकेशन समाप्त"
     },
     "componentDetails": {
       "name": "नाम",
@@ -390,13 +390,13 @@
       "public": "सार्वजनिक",
       "customDomains": "कस्टम डोमेन",
       "automaticDomains": "स्वचालित डोमेन",
-      "ports": "पोर्ट",
-      "containerPorts": "कंटेनर पोर्ट",
+      "ports": "पोर्ट्स",
+      "containerPorts": "कंटेनर पोर्ट्स",
       "containerData": "कंटेनर डेटा",
-      "environmentParameters": "पर्यावरण पैरामीटर",
-      "commands": "कमांड",
-      "secrets": "रहस्य",
-      "contentEncrypted": "सामग्री एन्क्रिप्ट की गई",
+      "environmentParameters": "एनवायरनमेंट पैरामीटर",
+      "commands": "कमांड्स",
+      "secrets": "सीक्रेट्स",
+      "contentEncrypted": "कंटेंट एन्क्रिप्टेड",
       "hardwareResources": "हार्डवेयर संसाधन",
       "cpu": "CPU",
       "ram": "RAM",
@@ -442,9 +442,9 @@
       "notifications": "सूचनाएं",
       "newCount": "{count} नई",
       "markAllAsUnread": "सभी को अपठित के रूप में चिह्नित करें",
-      "markAllAsRead": "सभी को पढ़े गए के रूप में चिह्नित करें",
+      "markAllAsRead": "सभी को पढ़ा गया के रूप में चिह्नित करें",
       "noNotificationFound": "कोई सूचना नहीं मिली!",
-      "removeAllNotifications": "सभी सूचनाएं निकालें"
+      "removeAllNotifications": "सभी सूचनाएं हटाएं"
     },
     "runningInstances": {
       "deployedInstances": "तैनात इंस्टेंस",
@@ -509,12 +509,12 @@
       }
     },
     "terminal": {
-      "title": "Secure Shell",
-      "selectComponent": "Select Component",
-      "selectCommand": "Select Command",
-      "connect": "Connect",
-      "disconnect": "Disconnect",
-      "newTerminal": "New Terminal",
+      "title": "सिक्योर शेल",
+      "selectComponent": "कॉम्पोनेंट चुनें",
+      "selectCommand": "कमांड चुनें",
+      "connect": "कनेक्ट करें",
+      "disconnect": "डिस्कनेक्ट करें",
+      "newTerminal": "नया टर्मिनल",
       "popOutAll": "Pin all terminals to manager",
       "user": "User",
       "environment": "Environment",
@@ -547,15 +547,15 @@
       }
     },
     "logViewer": {
-      "title": "Log Viewer",
-      "component": "Component",
+      "title": "लॉग व्यूअर",
+      "component": "कॉम्पोनेंट",
       "selectComponent": "Select Component",
       "lineCount": "Line Count",
       "logsSince": "Logs Since",
-      "filterLogs": "Filter Logs",
+      "filterLogs": "लॉग फ़िल्टर करें",
       "enterKeywords": "Enter keywords...",
       "advanceOptions": "Advanced Options",
-      "autoRefresh": "Auto Refresh",
+      "autoRefresh": "ऑटो रिफ्रेश",
       "displayAllLogs": "Display All Logs",
       "displayTimestamp": "Display Timestamp",
       "lineSelection": "Line Selection Mode",
@@ -571,15 +571,15 @@
       }
     },
     "backupAndRestore": {
-      "backup": "Backup",
-      "restore": "Restore",
-      "backupContainerData": "Backup Container Data",
-      "selectComponentsToBackup": "Select component(s) to backup",
-      "selectAll": "Select all",
-      "createBackup": "Create Backup",
-      "availableLocalBackups": "Available Local Backups",
-      "downloadSelected": "Download selected",
-      "downloadAll": "Download all",
+      "backup": "बैकअप",
+      "restore": "रिस्टोर करें",
+      "backupContainerData": "कंटेनर डेटा बैकअप करें",
+      "selectComponentsToBackup": "बैकअप के लिए कॉम्पोनेंट चुनें",
+      "selectAll": "सभी चुनें",
+      "createBackup": "बैकअप बनाएं",
+      "availableLocalBackups": "उपलब्ध लोकल बैकअप",
+      "downloadSelected": "चयनित डाउनलोड करें",
+      "downloadAll": "सभी डाउनलोड करें",
       "removeAllBackupFiles": "Remove all backup files",
       "backupListDescription": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime.",
       "downloadBackupFile": "Download backup file",
@@ -633,35 +633,35 @@
       "invalidUrlValidation": "Please enter a valid URL ending with .tar.gz"
     },
     "login": {
-      "automatedLogin": "Automated Login",
-      "thirdPartyLogin": "3rd Party Login",
-      "emailPassword": "Email/Password",
-      "finishingLogin": "Finishing Login",
+      "automatedLogin": "स्वचालित लॉगिन",
+      "thirdPartyLogin": "थर्ड पार्टी लॉगिन",
+      "emailPassword": "ईमेल/पासवर्ड",
+      "finishingLogin": "लॉगिन पूरा हो रहा है",
       "pleaseWait": "कृपया प्रतीक्षा करें...",
       "cancelVerification": "Cancel Verification",
       "finishingVerification": "Finishing verification",
       "checkEmail": "Check your email",
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
-      "bySigningIn": "By signing in, you agree to our",
-      "termsOfService": "Terms of Service",
-      "and": "and",
-      "privacyPolicy": "Privacy Policy",
+      "bySigningIn": "साइन इन करके, आप सहमत होते हैं",
+      "termsOfService": "सेवा की शर्तें",
+      "and": "और",
+      "privacyPolicy": "गोपनीयता नीति",
       "email": "ईमेल",
       "password": "पासवर्ड",
-      "login": "लॉगिन करें",
-      "signUp": "Sign Up",
-      "dontHaveAccount": "Don't have an account?",
-      "or": "OR",
-      "decentralizedLogin": "Decentralized Login",
-      "decentralizedWallets": "Wallets",
-      "walletLoginInfo": "Login using your crypto wallet",
-      "manualLogin": "Manual",
-      "loginWithZelcore": "Login with Zelcore",
-      "loginWithSSP": "Login with SSP",
-      "loginWithWalletConnect": "Login with WalletConnect",
-      "loginWithMetamask": "Login with Metamask",
-      "signWithWallet": "Sign message with your wallet",
+      "login": "लॉग इन",
+      "signUp": "साइन अप",
+      "dontHaveAccount": "खाता नहीं है?",
+      "or": "या",
+      "decentralizedLogin": "विकेंद्रीकृत लॉगिन",
+      "decentralizedWallets": "वॉलेट",
+      "walletLoginInfo": "अपने क्रिप्टो वॉलेट से लॉग इन करें",
+      "manualLogin": "मैनुअल",
+      "loginWithZelcore": "Zelcore से लॉग इन",
+      "loginWithSSP": "SSP से लॉग इन",
+      "loginWithWalletConnect": "WalletConnect से लॉग इन",
+      "loginWithMetamask": "Metamask से लॉग इन",
+      "signWithWallet": "अपने वॉलेट से संदेश साइन करें",
       "message": "संदेश",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
@@ -671,7 +671,7 @@
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
       "address": "पता",
       "insertAddress": "Insert address",
-      "signature": "Signature",
+      "signature": "हस्ताक्षर",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
@@ -685,7 +685,7 @@
       "passwordMismatch": "Passwords do not match",
       "googleError": "Google login failed",
       "appleError": "Apple login failed",
-      "loginFailed": "Login failed, please try again",
+      "loginFailed": "लॉगिन विफल, कृपया पुनः प्रयास करें",
       "invalidCredential": "Invalid email or password. Please check and try again.",
       "userNotFound": "No account found with this email. Please sign up first.",
       "wrongPassword": "Incorrect password. Please try again.",
@@ -711,35 +711,35 @@
       "customBackend": "Custom Backend"
     },
     "appControl": {
-      "title": "Application Control",
-      "control": "Control",
-      "manual": "Manual",
-      "component": "Component",
-      "local": "Local",
+      "title": "एप्लिकेशन नियंत्रण",
+      "control": "नियंत्रण",
+      "manual": "मैनुअल",
+      "component": "कॉम्पोनेंट",
+      "local": "स्थानीय",
       "global": "वैश्विक",
-      "manualSelection": "Manual Selection",
+      "manualSelection": "मैनुअल चयन",
       "available": "उपलब्ध",
-      "selected": "Selected",
-      "monitoring": "Monitoring",
-      "showLogs": "Show Logs",
-      "hideLogs": "Hide Logs",
+      "selected": "चयनित",
+      "monitoring": "मॉनिटरिंग",
+      "showLogs": "लॉग्स दिखाएं",
+      "hideLogs": "लॉग्स छुपाएं",
       "buttons": {
-        "startComponent": "Start Component",
-        "stopComponent": "Stop Component",
-        "restartComponent": "Restart Component",
-        "pauseComponent": "Pause Component",
-        "unpauseComponent": "Unpause Component",
-        "startApplication": "Start Application",
-        "stopApplication": "Stop Application",
-        "restartApplication": "Restart Application",
+        "startComponent": "कॉम्पोनेंट शुरू करें",
+        "stopComponent": "कॉम्पोनेंट रोकें",
+        "restartComponent": "कॉम्पोनेंट रीस्टार्ट करें",
+        "pauseComponent": "कॉम्पोनेंट पॉज़ करें",
+        "unpauseComponent": "कॉम्पोनेंट अनपॉज़ करें",
+        "startApplication": "एप्लिकेशन शुरू करें",
+        "stopApplication": "एप्लिकेशन रोकें",
+        "restartApplication": "एप्लिकेशन रीस्टार्ट करें",
         "pauseApplication": "Pause Application",
         "unpauseApplication": "Unpause Application",
-        "removeApplication": "Remove Application",
-        "softReinstall": "Soft Reinstall",
-        "hardReinstall": "Hard Reinstall",
-        "startMonitoring": "Start Monitoring",
-        "stopMonitoring": "Stop Monitoring",
-        "stopMonitoringDelete": "Stop & Delete Data"
+        "removeApplication": "एप्लिकेशन हटाएं",
+        "softReinstall": "सॉफ्ट रीइंस्टॉल",
+        "hardReinstall": "हार्ड रीइंस्टॉल",
+        "startMonitoring": "मॉनिटरिंग शुरू करें",
+        "stopMonitoring": "मॉनिटरिंग रोकें",
+        "stopMonitoringDelete": "रोकें और डेटा हटाएं"
       },
       "tooltips": {
         "addSelected": "Add selected items",
@@ -770,9 +770,9 @@
         "hardReinstall": "Hard reinstall will completely remove and redeploy the application. All application data will be deleted. This action cannot be undone."
       },
       "operations": {
-        "starting": "Starting",
-        "stopping": "Stopping",
-        "restarting": "Restarting",
+        "starting": "शुरू हो रहा है",
+        "stopping": "रुक रहा है",
+        "restarting": "रीस्टार्ट हो रहा है",
         "pausing": "Pausing",
         "unpausing": "Unpausing",
         "startingMonitoring": "Starting Monitoring",
@@ -1292,24 +1292,24 @@
       "loading": "Loading Terms of Service..."
     },
     "statusBar": {
-      "backend": "Backend",
-      "frontend": "Frontend",
-      "connected": "Connected",
-      "updateAvailable": "Update Available",
-      "upToDate": "Up to date",
+      "backend": "बैकएंड",
+      "frontend": "फ्रंटएंड",
+      "connected": "कनेक्टेड",
+      "updateAvailable": "अपडेट उपलब्ध",
+      "upToDate": "अपडेटेड",
       "statusMessage": "स्थिति",
-      "unreachable": "Unreachable",
-      "connecting": "Connecting...",
-      "disconnected": "Disconnected",
-      "notSynced": "Not Synced",
-      "checkingStatus": "Checking...",
+      "unreachable": "अनुपलब्ध",
+      "connecting": "कनेक्ट हो रहा है...",
+      "disconnected": "डिस्कनेक्टेड",
+      "notSynced": "सिंक नहीं",
+      "checkingStatus": "जाँच हो रही है...",
       "checkingStatusMessage": "Checking node status...",
       "notSyncedMessage": "Blockchain not synced (block {blocks}/{headers}, {blocksBehind} behind)",
       "connectedMessage": "Flux Gravity is operational and synced with the Flux network.",
       "connectingMessage": "Connecting to the Flux network. Flux Gravity is running with limited capabilities.",
       "disconnectedMessage": "Not connected to the Flux network. Flux Gravity is running with limited capabilities.",
-      "hideStatusBar": "Hide status bar",
-      "showStatusBar": "Show status bar",
+      "hideStatusBar": "स्टेटस बार छुपाएं",
+      "showStatusBar": "स्टेटस बार दिखाएं",
       "backendError": "Failed to fetch backend version",
       "error": "Unreachable",
       "manageCookiesTooltip": "Manage cookie preferences and privacy settings"
@@ -1322,14 +1322,14 @@
     "marketplace": {
       "discoverCard": {
         "title": "अपना Flux खोजें",
-        "subtitle": "Web3 बाजार"
+        "subtitle": "Web3 मार्केटप्लेस"
       },
       "appCard": {
         "install": "इंस्टॉल करें",
         "view": "देखें",
         "viewDetails": "विवरण देखें",
-        "defaultCategory": "ऐप",
-        "noDescription": "कोई विवरण उपलब्ध नहीं"
+        "defaultCategory": "ऐप्स",
+        "noDescription": "विवरण उपलब्ध नहीं"
       },
       "fluxCloudAppCard": {
         "unknownDeveloper": "अज्ञात डेवलपर",
@@ -1343,18 +1343,18 @@
       },
       "marketplaceAppCard": {
         "unknown": "अज्ञात",
-        "free": "निःशुल्क",
+        "free": "मुफ्त",
         "install": "इंस्टॉल करें",
         "viewDetails": "विवरण देखें",
         "noDescription": "कोई विवरण उपलब्ध नहीं",
         "other": "Other"
       },
       "appList": {
-        "featured": "विशेष",
+        "featured": "फीचर्ड",
         "by": "द्वारा",
         "free": "निःशुल्क",
-        "purchase": "खरीद",
-        "deploy": "तैनात करें",
+        "purchase": "खरीदें",
+        "deploy": "डिप्लॉय करें",
         "details": "विवरण"
       },
       "sponsoredAppCard": {
@@ -1394,18 +1394,18 @@
         "mostPopular": "सबसे लोकप्रिय"
       },
       "appsGrid": {
-        "title": "Flux अनुप्रयोग",
-        "searchPlaceholder": "ऐप खोजें...",
+        "title": "Flux एप्लिकेशन",
+        "searchPlaceholder": "ऐप्स खोजें...",
         "category": "श्रेणी",
-        "sortBy": "के अनुसार सॉर्ट करें",
+        "sortBy": "इसके अनुसार क्रमबद्ध करें",
         "allCategories": "सभी श्रेणियां",
-        "loadingApps": "बाजार ऐप लोड हो रहे हैं...",
-        "noAppsFound": "कोई ऐप नहीं मिली",
-        "adjustFilters": "अपनी खोज या फ़िल्टर को समायोजित करने का प्रयास करें",
+        "loadingApps": "मार्केटप्लेस ऐप्स लोड हो रहे हैं...",
+        "noAppsFound": "ऐप्स नहीं मिले",
+        "adjustFilters": "अपनी खोज या फ़िल्टर समायोजित करने का प्रयास करें",
         "resetFilters": "फ़िल्टर रीसेट करें",
         "noAppsAvailable": "कोई ऐप उपलब्ध नहीं",
         "marketplaceEmpty": "बाजार वर्तमान में खाली है",
-        "refresh": "ताज़ा करें",
+        "refresh": "रिफ्रेश करें",
         "previous": "पिछला",
         "next": "अगला",
         "sortDefault": "Default",
@@ -1601,13 +1601,13 @@
     },
     "xdao": {
       "addProposal": {
-        "title": "Add New Proposal",
-        "validated": "Validated",
+        "title": "नया प्रस्ताव जोड़ें",
+        "validated": "सत्यापित",
         "completeFormToValidate": "Complete Form to Validate",
-        "validateProposal": "Validate Proposal",
+        "validateProposal": "प्रस्ताव सत्यापित करें",
         "validatedSuccessfully": "Proposal Validated Successfully!",
-        "registrationFee": "Proposal Registration Fee",
-        "registerProposal": "Register Flux XDAO Proposal",
+        "registrationFee": "प्रस्ताव पंजीकरण शुल्क",
+        "registerProposal": "Flux XDAO प्रस्ताव पंजीकृत करें",
         "fields": {
           "topic": {
             "label": "Proposal Topic",
@@ -1664,10 +1664,10 @@
         }
       },
       "proposalDetail": {
-        "title": "Proposal Details",
-        "anonymous": "Anonymous",
-        "submitted": "Submitted",
-        "endDate": "End Date",
+        "title": "प्रस्ताव विवरण",
+        "anonymous": "गुमनाम",
+        "submitted": "जमा किया गया",
+        "endDate": "समाप्ति तिथि",
         "description": "विवरण",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
@@ -1690,15 +1690,15 @@
           }
         },
         "voting": {
-          "castYourVote": "Cast Your Vote",
+          "castYourVote": "अपना वोट डालें",
           "makeYourVoiceHeard": "Make your voice heard",
           "loginRequired": "लॉगिन आवश्यक",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
           "votesAvailable": "votes available",
-          "voteYes": "Vote YES",
-          "voteNo": "Vote NO",
+          "voteYes": "हाँ वोट करें",
+          "voteNo": "नहीं वोट करें",
           "youHaveVoted": "You have voted",
           "yes": "YES",
           "no": "NO",
@@ -1706,10 +1706,10 @@
           "votingEnds": "Voting ends"
         },
         "grant": {
-          "title": "Grant Information",
+          "title": "अनुदान जानकारी",
           "fundingDetails": "Funding Details",
-          "grantAmount": "Grant Amount",
-          "recipientAddress": "Recipient Address",
+          "grantAmount": "अनुदान राशि",
+          "recipientAddress": "प्राप्तकर्ता पता",
           "viewOnExplorer": "View on Explorer"
         },
         "technicalDetails": {
@@ -1941,37 +1941,37 @@
     "fluxDrive": {
       "fileManager": {
         "title": "FluxDrive",
-        "subtitle": "Secure decentralized storage",
-        "upgradePlan": "Upgrade Plan",
-        "searchPlaceholder": "Search files and folders...",
-        "listView": "List View",
-        "gridView": "Grid View",
+        "subtitle": "सुरक्षित विकेंद्रीकृत स्टोरेज",
+        "upgradePlan": "प्लान अपग्रेड करें",
+        "searchPlaceholder": "फ़ाइलें और फ़ोल्डर खोजें...",
+        "listView": "लिस्ट व्यू",
+        "gridView": "ग्रिड व्यू",
         "columnName": "नाम",
         "columnUpdated": "Updated",
         "columnSize": "आकार",
-        "newFolder": "New Folder",
+        "newFolder": "नया फ़ोल्डर",
         "upload": "अपलोड करें",
         "uploadFiles": "फ़ाइलें अपलोड करें",
-        "uploadFolder": "Upload Folder",
+        "uploadFolder": "फ़ोल्डर अपलोड करें",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
         "filesMissingDescription": "Some files totaling {storage} could not be located. This may indicate data corruption.",
         "showAllFilesRecovery": "Show All Files (Recovery Mode)",
         "backToNormalMode": "Back to Normal Mode",
-        "noFilesFound": "No Files Found",
-        "folderEmpty": "This Folder is Empty",
+        "noFilesFound": "फ़ाइलें नहीं मिलीं",
+        "folderEmpty": "यह फ़ोल्डर खाली है",
         "noFilesMatch": "No files match \"{query}\"",
-        "dropFilesHere": "Drop files here to upload",
+        "dropFilesHere": "अपलोड करने के लिए फ़ाइलें यहां छोड़ें",
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
-        "preview": "Preview",
+        "preview": "प्रीव्यू",
         "download": "डाउनलोड करें",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
-        "rename": "Rename",
-        "moveTo": "Move To",
-        "copyLink": "Copy Link",
+        "rename": "नाम बदलें",
+        "moveTo": "इसमें ले जाएं",
+        "copyLink": "लिंक कॉपी करें",
         "delete": "हटाएं",
         "paginationInfo": "Showing {start}-{end} of {total}",
         "edit": "संपादित करें",
@@ -1990,10 +1990,10 @@
         "commentValidation": "Comment must be less than 100 characters",
         "downloading": "Downloading",
         "downloadProgress": "Download progress: {progress}%",
-        "confirmDelete": "Confirm Delete",
+        "confirmDelete": "हटाना कन्फर्म करें",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "folder",
-        "file": "file",
+        "folder": "फ़ोल्डर",
+        "file": "फ़ाइल",
         "cancel": "रद्द करें",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
@@ -2114,35 +2114,35 @@
   "pages": {
     "administration": {
       "systemInfo": {
-        "loadingTitle": "Loading System Information...",
-        "errorTitle": "System Information Unavailable",
-        "errorSubtitle": "Unable to load system information at this time.",
-        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
-        "title": "System Information",
-        "subtitle": "View system resources and component versions",
-        "resourcesAllocated": "Resources Allocated",
-        "storage": "भंडारण",
-        "storageUsed": "{used} GB",
-        "storageTotal": "of {total} GB",
+        "title": "सिस्टम जानकारी",
+        "subtitle": "सिस्टम संसाधन और कॉम्पोनेंट वर्शन देखें",
+        "resourcesAllocated": "आवंटित संसाधन",
+        "storage": "स्टोरेज",
         "vcpu": "vCPU",
-        "vcpuUsed": "{used} vCores",
-        "vcpuTotal": "of {total} vCores",
         "ram": "RAM",
-        "ramUsed": "{used} GB",
+        "applications": "एप्लिकेशन",
+        "installedApps": "इंस्टॉल किए गए ऐप्स",
+        "appsHashes": "ऐप हैश",
+        "componentVersions": "कॉम्पोनेंट वर्शन",
+        "vcpuUsed": "{used} vCores",
         "ramTotal": "of {total} GB",
-        "applications": "अनुप्रयोग",
-        "installedApps": "स्थापित ऐप",
+        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
+        "errorSubtitle": "Unable to load system information at this time.",
         "installedAppsCount": "{count} application(s)",
-        "appsHashes": "Apps Hashes",
+        "loadingTitle": "Loading System Information...",
+        "ramUsed": "{used} GB",
+        "storageTotal": "of {total} GB",
         "notSynced": "{count} not synced",
-        "componentVersions": "Component Versions"
+        "storageUsed": "{used} GB",
+        "errorTitle": "System Information Unavailable",
+        "vcpuTotal": "of {total} vCores"
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Docker इवेंट",
-        "subtitle": "Monitor Docker container events and activity",
-        "recentEvents": "Recent Events",
-        "noEventsAvailable": "No Docker events available",
+        "title": "Docker इवेंट्स",
+        "subtitle": "Docker कंटेनर इवेंट्स और एक्टिविटी मॉनिटर करें",
+        "recentEvents": "हाल के इवेंट्स",
+        "noEventsAvailable": "Docker इवेंट्स उपलब्ध नहीं",
         "errorLoadingEvents": "Failed to load Docker events"
       },
       "fluxShare": {
@@ -2486,16 +2486,16 @@
     "apps": {
       "manage": {
         "tabs": {
-          "specifications": "Specifications",
+          "specifications": "विनिर्देश",
           "information": "जानकारी",
-          "fileChanges": "File Changes",
-          "monitoring": "Monitoring",
-          "logs": "Logs",
-          "terminal": "Secure Shell",
-          "control": "Control",
-          "backupRestore": "Backup & Restore",
+          "fileChanges": "फ़ाइल परिवर्तन",
+          "monitoring": "मॉनिटरिंग",
+          "logs": "लॉग्स",
+          "terminal": "सिक्योर शेल",
+          "control": "नियंत्रण",
+          "backupRestore": "बैकअप और रिस्टोर",
           "instances": "इंस्टेंस",
-          "subscription": "Subscription"
+          "subscription": "सब्सक्रिप्शन"
         },
         "tooltips": {
           "manage": "Manage",
@@ -3566,34 +3566,6 @@
       }
     },
     "dashboard": {
-      "overview": {
-        "intro": {
-          "title": "Welcome to Flux Ecosystem",
-          "blockchain": {
-            "title": "Flux Blockchain",
-            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
-          },
-          "cloud": {
-            "title": "FluxCloud Network",
-            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
-          },
-          "learnMore": "Learn More"
-        },
-        "totalNodes": "Total Nodes",
-        "nodeHistory": "Node History",
-        "lockedSupply": "Locked Supply",
-        "fluxSupply": "FLUX Supply",
-        "maxSupply": "Max Supply",
-        "circulatingSupply": "Circulating Supply",
-        "cumulus": "Cumulus",
-        "nimbus": "Nimbus",
-        "stratus": "Stratus",
-        "versionBreakdown": "Version Breakdown",
-        "tierBreakdown": "Tier Breakdown",
-        "legacy": "Legacy",
-        "nodes": "node | nodes",
-        "errorFetchingHistoryStats": "Unable to fetch history stats"
-      },
       "locations": {
         "intro": {
           "title": "Global FluxCloud Network",
@@ -3673,6 +3645,34 @@
           "failedToFetchNodeCount": "Failed to fetch node count",
           "failedToFetchBlockReward": "Failed to fetch block reward"
         }
+      },
+      "overview": {
+        "nodes": "node | nodes",
+        "cumulus": "Cumulus",
+        "intro": {
+          "learnMore": "Learn More",
+          "blockchain": {
+            "title": "Flux Blockchain",
+            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
+          },
+          "cloud": {
+            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud.",
+            "title": "FluxCloud Network"
+          },
+          "title": "Welcome to Flux Ecosystem"
+        },
+        "legacy": "Legacy",
+        "circulatingSupply": "Circulating Supply",
+        "fluxSupply": "FLUX Supply",
+        "nodeHistory": "Node History",
+        "tierBreakdown": "Tier Breakdown",
+        "maxSupply": "Max Supply",
+        "versionBreakdown": "Version Breakdown",
+        "errorFetchingHistoryStats": "Unable to fetch history stats",
+        "totalNodes": "Total Nodes",
+        "lockedSupply": "Locked Supply",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus"
       }
     },
     "fluxDrive": {
@@ -4981,7 +4981,7 @@
       }
     },
     "xdao": {
-      "title": "Flux XDAO",
+      "title": "Flux xDAO",
       "subtitle": "Decentralized Governance Platform",
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
@@ -4993,9 +4993,9 @@
       "filterProposals": "Filter Proposals",
       "allProposals": "All Proposals",
       "open": "Open",
-      "passed": "Passed",
+      "passed": "पारित",
       "unpaid": "Unpaid",
-      "rejected": "Rejected",
+      "rejected": "अस्वीकृत",
       "searchProposals": "Search proposals...",
       "sortBy": "के अनुसार सॉर्ट करें",
       "latest": "Latest",
@@ -5131,14 +5131,14 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "कोई डेटा उपलब्ध नहीं",
+    "noDataText": "कोई डेटा नहीं",
     "dataIterator": {
-      "loadingText": "Loading your data, please wait...",
-      "noResultsText": "No matching records found.",
+      "loadingText": "आइटम लोड हो रहे हैं...",
+      "noResultsText": "कोई मिलान रिकॉर्ड नहीं मिला",
       "noDataText": "No data available."
     },
     "close": "बंद करें",
-    "open": "open",
+    "open": "खोलें",
     "loading": "लोड हो रहा है...",
     "carousel": {
       "ariaLabel": {
@@ -5146,29 +5146,29 @@
       }
     },
     "dataFooter": {
-      "itemsPerPageText": "Items per page:",
+      "itemsPerPageText": "प्रति पृष्ठ आइटम:",
       "itemsPerPageAll": "सभी",
-      "pageText": "{0}-{1} of {2}",
-      "firstPage": "First Page",
-      "prevPage": "Previous Page",
-      "nextPage": "Next Page",
-      "lastPage": "Last Page"
+      "pageText": "{2} में से {0}-{1}",
+      "firstPage": "पहला पृष्ठ",
+      "prevPage": "पिछला पृष्ठ",
+      "nextPage": "अगला पृष्ठ",
+      "lastPage": "अंतिम पृष्ठ"
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
-        "previous": "पिछला",
+        "root": "पृष्ठांकन नेविगेशन",
+        "previous": "पिछला पृष्ठ",
         "first": "first",
         "last": "last",
-        "next": "अगला",
-        "currentPage": "currentPage",
-        "page": "page"
+        "next": "अगला पृष्ठ",
+        "currentPage": "पृष्ठ {0}, वर्तमान पृष्ठ",
+        "page": "पृष्ठ {0} पर जाएं"
       }
     },
     "input": {
-      "clear": "साफ़ करें",
-      "appendAction": "appendAction",
-      "prependAction": "prependAction",
+      "clear": "{0} साफ़ करें",
+      "appendAction": "{0} एपेंड एक्शन",
+      "prependAction": "{0} प्रीपेंड एक्शन",
       "counterSize": "counterSize",
       "otp": "otp"
     },

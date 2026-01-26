@@ -1,6 +1,6 @@
 {
   "common": {
-    "off": "off",
+    "off": "tắt",
     "buttons": {
       "cancel": "Hủy",
       "close": "Đóng",
@@ -18,7 +18,7 @@
       "paste": "Dán",
       "export": "Xuất",
       "import": "Nhập",
-      "edit": "Chỉnh sửa",
+      "edit": "Sửa",
       "view": "Xem",
       "refresh": "Làm mới",
       "reload": "Tải lại",
@@ -44,9 +44,9 @@
       "type": "Loại",
       "version": "Phiên bản",
       "size": "Kích thước",
-      "value": "Value",
+      "value": "Giá trị",
       "url": "URL",
-      "message": "Thông báo",
+      "message": "Tin nhắn",
       "owner": "Chủ sở hữu",
       "date": "Ngày",
       "time": "Thời gian",
@@ -59,7 +59,7 @@
       "address": "Địa chỉ",
       "port": "Cổng",
       "ip": "Địa chỉ IP",
-      "tier": "Tier",
+      "tier": "Cấp",
       "price": "Giá",
       "total": "Tổng",
       "amount": "Số tiền",
@@ -67,25 +67,25 @@
       "memory": "Bộ nhớ",
       "storage": "Lưu trữ",
       "screenshots": "Ảnh chụp màn hình",
-      "about": "Về",
+      "about": "Giới thiệu",
       "developer": "Nhà phát triển",
-      "lastUpdate": "Last Update",
-      "downloads": "Tải xuống",
+      "lastUpdate": "Cập nhật lần cuối",
+      "downloads": "Lượt tải",
       "links": "Liên kết",
       "website": "Trang web",
-      "sourceCode": "Source Code",
+      "sourceCode": "Mã nguồn",
       "support": "Hỗ trợ",
       "plan": "Gói",
       "billing": "Thanh toán",
       "monthly": "Hàng tháng",
-      "scrollLeft": "Scroll left",
-      "scrollRight": "Scroll right",
+      "scrollLeft": "Cuộn sang trái",
+      "scrollRight": "Cuộn sang phải",
       "optional": "Tùy chọn"
     },
     "theme": {
-      "light": "Light",
-      "dark": "Dark",
-      "switchTheme": "Switch theme"
+      "light": "Sáng",
+      "dark": "Tối",
+      "switchTheme": "Đổi giao diện"
     },
     "status": {
       "loading": "Đang tải...",
@@ -115,22 +115,22 @@
       "noData": "No data available",
       "noResults": "No results found",
       "errorOccurred": "An error occurred",
-      "operationSuccess": "Operation completed successfully",
-      "operationFailed": "Operation failed",
+      "operationSuccess": "Thao tác thành công",
+      "operationFailed": "Thao tác thất bại",
       "confirmDelete": "Are you sure you want to delete?",
       "unsavedChanges": "You have unsaved changes",
       "invalidInput": "Invalid input",
-      "required": "This field is required",
+      "required": "Trường này là bắt buộc",
       "connectionError": "Connection error. Please try again.",
       "unauthorized": "Unauthorized access",
       "notFound": "Not found",
       "serverError": "Server error. Please try again later.",
       "copiedToClipboard": "Đã sao chép vào clipboard!",
       "failedToCopy": "Failed to copy to clipboard",
-      "loginRequired": "Cần đăng nhập",
+      "loginRequired": "Yêu cầu đăng nhập",
       "loggedOutSuccessfully": "Logged out successfully"
     },
-    "itemsPerPage": "Items per page",
+    "itemsPerPage": "Mục mỗi trang",
     "of": "of",
     "selectServerConfiguration": "Select Server Configuration",
     "groups": {
@@ -139,14 +139,14 @@
       "largeServers": "Large Servers"
     },
     "guarantee": {
-      "title": "30-Day Money-Back Guarantee",
+      "title": "Bảo đảm hoàn tiền 30 ngày",
       "description": "Try our service risk-free. If you're not completely satisfied within the first 30 days, we'll refund your payment—no questions asked.",
       "shortTitle": "Money-Back Guarantee",
       "badge": "30-Day Guarantee",
       "trustMessage": "Your satisfaction is our priority"
     },
     "trustpilot": {
-      "title": "Trusted by Thousands",
+      "title": "Được hàng ngàn người tin tưởng",
       "ratingLabel": "Excellent",
       "rating": "4.5 out of 5",
       "reviews": "Based on 16 reviews",
@@ -180,12 +180,12 @@
       "ram": "RAM",
       "memory": "Bộ nhớ",
       "storage": "Lưu trữ",
-      "disk": "Disk",
+      "disk": "Đĩa",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
-      "bandwidth": "Bandwidth",
-      "cores": "Cores",
-      "threads": "Threads"
+      "bandwidth": "Băng thông",
+      "cores": "Lõi",
+      "threads": "Luồng"
     },
     "time": {
       "second": "giây",
@@ -202,7 +202,7 @@
       "months": "tháng",
       "year": "năm",
       "years": "năm",
-      "ago": "trước đó",
+      "ago": "trước",
       "now": "now"
     },
     "units": {
@@ -233,21 +233,21 @@
       "title": "Trang chủ"
     },
     "dashboard": {
-      "title": "Flux Network",
+      "title": "Mạng Flux",
       "overview": "Tổng quan",
-      "resources": "Resources",
-      "map": "Map",
-      "rewards": "Rewards",
-      "nodeList": "Node List"
+      "resources": "Tài nguyên",
+      "map": "Bản đồ",
+      "rewards": "Phần thưởng",
+      "nodeList": "Danh sách Node"
     },
     "application": {
       "title": "Ứng dụng",
       "myApplications": "Ứng dụng của tôi",
       "management": "Quản lý",
-      "globalApps": "Global Apps",
-      "localApps": "Local Apps",
-      "registerNewApp": "Register New App",
-      "marketplace": "App Marketplace",
+      "globalApps": "Ứng dụng toàn cầu",
+      "localApps": "Ứng dụng cục bộ",
+      "registerNewApp": "Đăng ký ứng dụng mới",
+      "marketplace": "Chợ ứng dụng",
       "marketplaceApps": "Ứng dụng",
       "marketplaceGames": "Trò chơi",
       "marketplaceWordPress": "WordPress",
@@ -299,25 +299,25 @@
       "marketplaceAppsTab": "Marketplace Apps"
     },
     "administration": {
-      "title": "Administration",
-      "systemInfo": "Information",
-      "dockerEvents": "Docker Events",
-      "manageFlux": "Manage Flux Gravity",
-      "manageDaemon": "Manage Daemon",
-      "manageBenchmark": "Manage Benchmark",
-      "manageUsers": "Manage Users",
-      "loggedSessions": "Logged Sessions",
-      "myFluxShare": "My FluxShare",
+      "title": "Quản trị",
+      "systemInfo": "Thông tin hệ thống",
+      "dockerEvents": "Sự kiện Docker",
+      "manageFlux": "Quản lý Flux Gravity",
+      "manageDaemon": "Quản lý Daemon",
+      "manageBenchmark": "Quản lý Benchmark",
+      "manageUsers": "Quản lý người dùng",
+      "loggedSessions": "Phiên đăng nhập",
+      "myFluxShare": "FluxShare của tôi",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flux XDAO"
     },
     "costCalculator": {
-      "title": "Máy tính chi phí"
+      "title": "Công cụ tính chi phí"
     },
     "apiReference": {
-      "title": "Help"
+      "title": "Trợ giúp"
     },
     "fluxDrive": {
       "title": "FluxDrive"
@@ -325,84 +325,84 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "Decentralized Application Management",
-    "fluxCloudDescription": "Monitor and manage all your Docker containerized applications running on the Flux decentralized cloud network. View real-time status, resource usage, and performance metrics of your distributed apps deployed across our global blockchain-powered infrastructure. Click on any application to access detailed management controls and analytics."
+    "fluxCloudSubtitle": "Quản lý Ứng dụng Phi tập trung",
+    "fluxCloudDescription": "Giám sát và quản lý tất cả các ứng dụng Docker containerized của bạn đang chạy trên mạng đám mây phi tập trung Flux. Xem trạng thái thời gian thực, sử dụng tài nguyên và các chỉ số hiệu suất của các ứng dụng phân tán được triển khai trên cơ sở hạ tầng blockchain toàn cầu của chúng tôi. Nhấp vào bất kỳ ứng dụng nào để truy cập điều khiển quản lý chi tiết và phân tích."
   },
   "sections": {
     "dashboard": {
-      "title": "Flux Network",
-      "description": "Check Flux network information, resources available, or a map with server locations."
+      "title": "Mạng Flux",
+      "description": "Kiểm tra thông tin mạng Flux, tài nguyên có sẵn hoặc bản đồ với vị trí máy chủ."
     },
     "application": {
       "title": "Ứng dụng",
-      "description": "Buy on marketplace, register your own app, manage your active apps."
+      "description": "Mua trên marketplace, đăng ký ứng dụng của bạn, quản lý các ứng dụng đang hoạt động."
     },
     "administration": {
-      "title": "Administration",
-      "description": "Tools for infrastructure administrators and node operators allow for managing Flux Gravity."
+      "title": "Quản trị",
+      "description": "Công cụ quản lý Flux Gravity cho quản trị viên hạ tầng và người vận hành node."
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "See the list of changes proposed to Flux network, create new ones and vote."
+      "description": "Xem danh sách các thay đổi được đề xuất cho mạng Flux, tạo mới và bỏ phiếu."
     }
   },
   "core": {
     "appDetailsCard": {
       "general": "Chung",
-      "copySpecification": "Copy Specification",
+      "copySpecification": "Sao chép Thông số kỹ thuật",
       "updateSubscription": "Cập nhật",
-      "renewSubscription": "Renew",
+      "renewSubscription": "Gia hạn",
       "cancelSubscription": "Hủy",
       "name": "Tên",
       "description": "Mô tả",
       "owner": "Chủ sở hữu",
       "hash": "Hash",
-      "contacts": "Contacts",
-      "geolocation": "Geolocation",
-      "worldwide": "Worldwide",
-      "instances": "Instanc",
-      "specificationsVersion": "Specifications version",
-      "registeredOnBlockheight": "Registered on Blockheight",
-      "expiresOnBlockheight": "Expires on Blockheight",
-      "expiresIn": "Expires in",
-      "enterpriseNodes": "Enterprise Nodes",
-      "notScoped": "Not scoped",
-      "staticIp": "Static IP",
-      "staticIpYes": "Yes, Running only on Static IP nodes",
-      "staticIpNo": "No, Running on all nodes",
-      "specificationCopied": "Application specification copied to clipboard!",
-      "specificationCopyFailed": "Failed to copy specification",
+      "contacts": "Liên hệ",
+      "geolocation": "Vị trí địa lý",
+      "worldwide": "Toàn cầu",
+      "instances": "Phiên bản",
+      "specificationsVersion": "Phiên bản Thông số",
+      "registeredOnBlockheight": "Đăng ký tại Blockheight",
+      "expiresOnBlockheight": "Hết hạn tại Blockheight",
+      "expiresIn": "Hết hạn trong",
+      "enterpriseNodes": "Node Enterprise",
+      "notScoped": "Không xác định phạm vi",
+      "staticIp": "IP Tĩnh",
+      "staticIpYes": "Có, Chỉ chạy trên node IP Tĩnh",
+      "staticIpNo": "Không, Chạy trên tất cả các node",
+      "specificationCopied": "Đã sao chép thông số ứng dụng vào clipboard!",
+      "specificationCopyFailed": "Không thể sao chép thông số",
       "unknown": "Không xác định",
       "continent": "Continent: {name}",
       "country": ", Country: {name}",
       "region": ", Region: {name}",
       "allowedContinent": "Allowed: Continent: {name}",
       "forbiddenContinent": "Forbidden: Continent: {name}",
-      "notAvailable": "Not available",
-      "applicationExpired": "Application Expired"
+      "notAvailable": "Không có sẵn",
+      "applicationExpired": "Ứng dụng đã hết hạn"
     },
     "componentDetails": {
       "name": "Tên",
       "description": "Mô tả",
-      "repository": "Repository",
-      "repositoryAuthentication": "Repository Authentication",
-      "private": "Private",
-      "public": "Public",
-      "customDomains": "Custom Domains",
-      "automaticDomains": "Automatic Domains",
-      "ports": "Ports",
-      "containerPorts": "Container Ports",
-      "containerData": "Container Data",
-      "environmentParameters": "Environment Parameters",
-      "commands": "Commands",
-      "secrets": "Secrets",
-      "contentEncrypted": "Content Encrypted",
-      "hardwareResources": "Hardware Resources",
+      "repository": "Kho lưu trữ",
+      "repositoryAuthentication": "Xác thực Kho lưu trữ",
+      "private": "Riêng tư",
+      "public": "Công khai",
+      "customDomains": "Tên miền Tùy chỉnh",
+      "automaticDomains": "Tên miền Tự động",
+      "ports": "Cổng",
+      "containerPorts": "Cổng Container",
+      "containerData": "Dữ liệu Container",
+      "environmentParameters": "Tham số Môi trường",
+      "commands": "Lệnh",
+      "secrets": "Bí mật",
+      "contentEncrypted": "Nội dung Đã mã hóa",
+      "hardwareResources": "Tài nguyên Phần cứng",
       "cpu": "CPU",
       "ram": "RAM",
       "ssd": "SSD/NVMe",
       "vCore": "vCore",
-      "vCores": "vCore",
+      "vCores": "vCores",
       "ramValue": "{value} MB",
       "ssdValue": "{value} GB"
     },
@@ -439,12 +439,12 @@
       "removeFile": "Remove File"
     },
     "notifications": {
-      "notifications": "Notifications",
+      "notifications": "Thông báo",
       "newCount": "{count} New",
       "markAllAsUnread": "Mark all as unread",
-      "markAllAsRead": "Mark all as read",
-      "noNotificationFound": "No Notification Found!",
-      "removeAllNotifications": "Remove All Notifications"
+      "markAllAsRead": "Đánh dấu tất cả đã đọc",
+      "noNotificationFound": "Không tìm thấy Thông báo!",
+      "removeAllNotifications": "Xóa tất cả Thông báo"
     },
     "runningInstances": {
       "deployedInstances": "Deployed Instances",
@@ -510,11 +510,11 @@
     },
     "terminal": {
       "title": "Secure Shell",
-      "selectComponent": "Select Component",
-      "selectCommand": "Select Command",
-      "connect": "Connect",
-      "disconnect": "Disconnect",
-      "newTerminal": "New Terminal",
+      "selectComponent": "Chọn Thành phần",
+      "selectCommand": "Chọn Lệnh",
+      "connect": "Kết nối",
+      "disconnect": "Ngắt kết nối",
+      "newTerminal": "Terminal Mới",
       "popOutAll": "Pin all terminals to manager",
       "user": "User",
       "environment": "Environment",
@@ -547,15 +547,15 @@
       }
     },
     "logViewer": {
-      "title": "Log Viewer",
+      "title": "Trình xem Nhật ký",
       "component": "Thành phần",
       "selectComponent": "Select Component",
       "lineCount": "Line Count",
       "logsSince": "Logs Since",
-      "filterLogs": "Filter Logs",
+      "filterLogs": "Lọc Nhật ký",
       "enterKeywords": "Enter keywords...",
       "advanceOptions": "Advanced Options",
-      "autoRefresh": "Auto Refresh",
+      "autoRefresh": "Tự động Làm mới",
       "displayAllLogs": "Display All Logs",
       "displayTimestamp": "Display Timestamp",
       "lineSelection": "Line Selection Mode",
@@ -571,15 +571,15 @@
       }
     },
     "backupAndRestore": {
-      "backup": "Backup",
+      "backup": "Sao lưu",
       "restore": "Khôi phục",
-      "backupContainerData": "Backup Container Data",
-      "selectComponentsToBackup": "Select component(s) to backup",
-      "selectAll": "Select all",
-      "createBackup": "Create Backup",
-      "availableLocalBackups": "Available Local Backups",
-      "downloadSelected": "Download selected",
-      "downloadAll": "Download all",
+      "backupContainerData": "Sao lưu Dữ liệu Container",
+      "selectComponentsToBackup": "Chọn thành phần để sao lưu",
+      "selectAll": "Chọn tất cả",
+      "createBackup": "Tạo Bản sao lưu",
+      "availableLocalBackups": "Bản sao lưu Cục bộ Có sẵn",
+      "downloadSelected": "Tải xuống đã chọn",
+      "downloadAll": "Tải xuống tất cả",
       "removeAllBackupFiles": "Remove all backup files",
       "backupListDescription": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime.",
       "downloadBackupFile": "Download backup file",
@@ -633,36 +633,36 @@
       "invalidUrlValidation": "Please enter a valid URL ending with .tar.gz"
     },
     "login": {
-      "automatedLogin": "Automated Login",
-      "thirdPartyLogin": "3rd Party Login",
-      "emailPassword": "Email/Password",
-      "finishingLogin": "Finishing Login",
-      "pleaseWait": "Please wait...",
+      "automatedLogin": "Đăng nhập Tự động",
+      "thirdPartyLogin": "Đăng nhập Bên thứ ba",
+      "emailPassword": "Email/Mật khẩu",
+      "finishingLogin": "Đang hoàn tất Đăng nhập",
+      "pleaseWait": "Vui lòng đợi...",
       "cancelVerification": "Cancel Verification",
       "finishingVerification": "Finishing verification",
       "checkEmail": "Check your email",
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
-      "bySigningIn": "By signing in, you agree to our",
-      "termsOfService": "Điều khoản dịch vụ",
-      "and": "and",
-      "privacyPolicy": "Privacy Policy",
+      "bySigningIn": "Bằng cách đăng nhập, bạn đồng ý với",
+      "termsOfService": "Điều khoản Dịch vụ",
+      "and": "và",
+      "privacyPolicy": "Chính sách Bảo mật",
       "email": "Email",
       "password": "Mật khẩu",
       "login": "Đăng nhập",
-      "signUp": "Sign Up",
-      "dontHaveAccount": "Don't have an account?",
-      "or": "OR",
-      "decentralizedLogin": "Decentralized Login",
-      "decentralizedWallets": "Wallets",
-      "walletLoginInfo": "Login using your crypto wallet",
-      "manualLogin": "Manual",
-      "loginWithZelcore": "Login with Zelcore",
-      "loginWithSSP": "Login with SSP",
-      "loginWithWalletConnect": "Login with WalletConnect",
-      "loginWithMetamask": "Login with Metamask",
-      "signWithWallet": "Sign message with your wallet",
-      "message": "Thông báo",
+      "signUp": "Đăng ký",
+      "dontHaveAccount": "Chưa có tài khoản?",
+      "or": "HOẶC",
+      "decentralizedLogin": "Đăng nhập Phi tập trung",
+      "decentralizedWallets": "Ví",
+      "walletLoginInfo": "Đăng nhập bằng ví crypto của bạn",
+      "manualLogin": "Thủ công",
+      "loginWithZelcore": "Đăng nhập bằng Zelcore",
+      "loginWithSSP": "Đăng nhập bằng SSP",
+      "loginWithWalletConnect": "Đăng nhập bằng WalletConnect",
+      "loginWithMetamask": "Đăng nhập bằng Metamask",
+      "signWithWallet": "Ký tin nhắn bằng ví của bạn",
+      "message": "Tin nhắn",
       "insertMessage": "Insert message",
       "clickToGetMessage": "Click refresh to get a new login phrase",
       "getNewLoginPhrase": "Get new login phrase",
@@ -671,7 +671,7 @@
       "noLoginPhraseToDownload": "No login phrase to copy. Click refresh first.",
       "address": "Địa chỉ",
       "insertAddress": "Insert address",
-      "signature": "Signature",
+      "signature": "Chữ ký",
       "insertSignature": "Insert signature",
       "createSSO": "Create SSO Account",
       "confirmPassword": "Confirm Password",
@@ -685,7 +685,7 @@
       "passwordMismatch": "Passwords do not match",
       "googleError": "Google login failed",
       "appleError": "Apple login failed",
-      "loginFailed": "Login failed, please try again",
+      "loginFailed": "Đăng nhập thất bại, vui lòng thử lại",
       "invalidCredential": "Invalid email or password. Please check and try again.",
       "userNotFound": "No account found with this email. Please sign up first.",
       "wrongPassword": "Incorrect password. Please try again.",
@@ -711,35 +711,35 @@
       "customBackend": "Custom Backend"
     },
     "appControl": {
-      "title": "Application Control",
-      "control": "Control",
-      "manual": "Manual",
+      "title": "Điều khiển Ứng dụng",
+      "control": "Điều khiển",
+      "manual": "Thủ công",
       "component": "Thành phần",
-      "local": "Local",
+      "local": "Cục bộ",
       "global": "Toàn cầu",
-      "manualSelection": "Manual Selection",
+      "manualSelection": "Chọn Thủ công",
       "available": "Có sẵn",
-      "selected": "Selected",
-      "monitoring": "Monitoring",
-      "showLogs": "Show Logs",
-      "hideLogs": "Hide Logs",
+      "selected": "Đã chọn",
+      "monitoring": "Giám sát",
+      "showLogs": "Hiện Nhật ký",
+      "hideLogs": "Ẩn Nhật ký",
       "buttons": {
-        "startComponent": "Start Component",
-        "stopComponent": "Stop Component",
-        "restartComponent": "Restart Component",
-        "pauseComponent": "Pause Component",
-        "unpauseComponent": "Unpause Component",
-        "startApplication": "Start Application",
-        "stopApplication": "Stop Application",
-        "restartApplication": "Restart Application",
+        "startComponent": "Khởi động Thành phần",
+        "stopComponent": "Dừng Thành phần",
+        "restartComponent": "Khởi động lại Thành phần",
+        "pauseComponent": "Tạm dừng Thành phần",
+        "unpauseComponent": "Tiếp tục Thành phần",
+        "startApplication": "Khởi động Ứng dụng",
+        "stopApplication": "Dừng Ứng dụng",
+        "restartApplication": "Khởi động lại Ứng dụng",
         "pauseApplication": "Pause Application",
         "unpauseApplication": "Unpause Application",
-        "removeApplication": "Remove Application",
-        "softReinstall": "Soft Reinstall",
-        "hardReinstall": "Hard Reinstall",
-        "startMonitoring": "Start Monitoring",
-        "stopMonitoring": "Stop Monitoring",
-        "stopMonitoringDelete": "Stop & Delete Data"
+        "removeApplication": "Xóa Ứng dụng",
+        "softReinstall": "Cài đặt lại Nhẹ",
+        "hardReinstall": "Cài đặt lại Hoàn toàn",
+        "startMonitoring": "Bắt đầu Giám sát",
+        "stopMonitoring": "Dừng Giám sát",
+        "stopMonitoringDelete": "Dừng & Xóa Dữ liệu"
       },
       "tooltips": {
         "addSelected": "Add selected items",
@@ -770,9 +770,9 @@
         "hardReinstall": "Hard reinstall will completely remove and redeploy the application. All application data will be deleted. This action cannot be undone."
       },
       "operations": {
-        "starting": "Starting",
-        "stopping": "Stopping",
-        "restarting": "Restarting",
+        "starting": "Đang khởi động",
+        "stopping": "Đang dừng",
+        "restarting": "Đang khởi động lại",
         "pausing": "Pausing",
         "unpausing": "Unpausing",
         "startingMonitoring": "Starting Monitoring",
@@ -1294,22 +1294,22 @@
     "statusBar": {
       "backend": "Backend",
       "frontend": "Frontend",
-      "connected": "Connected",
-      "updateAvailable": "Update Available",
-      "upToDate": "Up to date",
+      "connected": "Đã kết nối",
+      "updateAvailable": "Có bản cập nhật",
+      "upToDate": "Đã cập nhật",
       "statusMessage": "Trạng thái",
-      "unreachable": "Unreachable",
-      "connecting": "Connecting...",
-      "disconnected": "Disconnected",
-      "notSynced": "Not Synced",
-      "checkingStatus": "Checking...",
+      "unreachable": "Không thể truy cập",
+      "connecting": "Đang kết nối...",
+      "disconnected": "Đã ngắt kết nối",
+      "notSynced": "Chưa đồng bộ",
+      "checkingStatus": "Đang kiểm tra...",
       "checkingStatusMessage": "Checking node status...",
       "notSyncedMessage": "Blockchain not synced (block {blocks}/{headers}, {blocksBehind} behind)",
       "connectedMessage": "Flux Gravity is operational and synced with the Flux network.",
       "connectingMessage": "Connecting to the Flux network. Flux Gravity is running with limited capabilities.",
       "disconnectedMessage": "Not connected to the Flux network. Flux Gravity is running with limited capabilities.",
-      "hideStatusBar": "Hide status bar",
-      "showStatusBar": "Show status bar",
+      "hideStatusBar": "Ẩn thanh trạng thái",
+      "showStatusBar": "Hiện thanh trạng thái",
       "backendError": "Failed to fetch backend version",
       "error": "Unreachable",
       "manageCookiesTooltip": "Manage cookie preferences and privacy settings"
@@ -1321,25 +1321,25 @@
     },
     "marketplace": {
       "discoverCard": {
-        "title": "Discover Your Flux",
-        "subtitle": "Web3 Marketplace"
+        "title": "Khám phá Flux của bạn",
+        "subtitle": "Chợ Web3"
       },
       "appCard": {
         "install": "Cài đặt",
         "view": "Xem",
-        "viewDetails": "Xem chi tiết",
+        "viewDetails": "Xem Chi tiết",
         "defaultCategory": "Ứng dụng",
-        "noDescription": "No description available"
+        "noDescription": "Không có mô tả"
       },
       "fluxCloudAppCard": {
-        "unknownDeveloper": "Unknown Developer",
+        "unknownDeveloper": "Nhà phát triển không xác định",
         "install": "Cài đặt",
-        "viewApp": "View App",
-        "sponsored": "Sponsored"
+        "viewApp": "Xem Ứng dụng",
+        "sponsored": "Được tài trợ"
       },
       "gameCard": {
         "startingAt": "Starting at ${price} / month",
-        "viewDetails": "Xem chi tiết"
+        "viewDetails": "Xem Chi tiết"
       },
       "marketplaceAppCard": {
         "unknown": "Không xác định",
@@ -1350,12 +1350,12 @@
         "other": "Other"
       },
       "appList": {
-        "featured": "Featured",
-        "by": "by",
+        "featured": "Nổi bật",
+        "by": "bởi",
         "free": "Miễn phí",
-        "purchase": "Purchase",
+        "purchase": "Mua",
         "deploy": "Triển khai",
-        "details": "Details"
+        "details": "Chi tiết"
       },
       "sponsoredAppCard": {
         "unknown": "Không xác định",
@@ -1394,19 +1394,19 @@
         "mostPopular": "Phổ biến nhất"
       },
       "appsGrid": {
-        "title": "Flux Applications",
-        "searchPlaceholder": "Search apps...",
-        "category": "Category",
-        "sortBy": "Sort by",
-        "allCategories": "All Categories",
-        "loadingApps": "Loading marketplace apps...",
-        "noAppsFound": "No apps found",
-        "adjustFilters": "Try adjusting your search or filters",
-        "resetFilters": "Reset Filters",
+        "title": "Ứng dụng Flux",
+        "searchPlaceholder": "Tìm kiếm ứng dụng...",
+        "category": "Danh mục",
+        "sortBy": "Sắp xếp theo",
+        "allCategories": "Tất cả Danh mục",
+        "loadingApps": "Đang tải ứng dụng marketplace...",
+        "noAppsFound": "Không tìm thấy ứng dụng",
+        "adjustFilters": "Thử điều chỉnh tìm kiếm hoặc bộ lọc",
+        "resetFilters": "Đặt lại Bộ lọc",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
         "refresh": "Làm mới",
-        "previous": "Trước đó",
+        "previous": "Trước",
         "next": "Tiếp theo",
         "sortDefault": "Default",
         "sortDate": "Ngày",
@@ -1559,7 +1559,7 @@
         "paymentType": "Payment Type",
         "crypto": "Crypto",
         "fiat": "Fiat",
-        "paymentMethod": "Payment Method",
+        "paymentMethod": "Phương thức Thanh toán",
         "totalPaid": "Total Paid",
         "subscriptionValidUntil": "Subscription Valid Until",
         "manageApplication": "Manage Application",
@@ -1601,13 +1601,13 @@
     },
     "xdao": {
       "addProposal": {
-        "title": "Add New Proposal",
-        "validated": "Validated",
+        "title": "Thêm Đề xuất Mới",
+        "validated": "Đã xác thực",
         "completeFormToValidate": "Complete Form to Validate",
-        "validateProposal": "Validate Proposal",
+        "validateProposal": "Xác thực Đề xuất",
         "validatedSuccessfully": "Proposal Validated Successfully!",
-        "registrationFee": "Proposal Registration Fee",
-        "registerProposal": "Register Flux XDAO Proposal",
+        "registrationFee": "Phí Đăng ký Đề xuất",
+        "registerProposal": "Đăng ký Đề xuất Flux XDAO",
         "fields": {
           "topic": {
             "label": "Proposal Topic",
@@ -1664,10 +1664,10 @@
         }
       },
       "proposalDetail": {
-        "title": "Proposal Details",
-        "anonymous": "Anonymous",
-        "submitted": "Submitted",
-        "endDate": "End Date",
+        "title": "Chi tiết Đề xuất",
+        "anonymous": "Ẩn danh",
+        "submitted": "Đã gửi",
+        "endDate": "Ngày Kết thúc",
         "description": "Mô tả",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
@@ -1690,15 +1690,15 @@
           }
         },
         "voting": {
-          "castYourVote": "Cast Your Vote",
+          "castYourVote": "Bỏ Phiếu của Bạn",
           "makeYourVoiceHeard": "Make your voice heard",
           "loginRequired": "Cần đăng nhập",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
           "votesAvailable": "votes available",
-          "voteYes": "Vote YES",
-          "voteNo": "Vote NO",
+          "voteYes": "Bỏ phiếu CÓ",
+          "voteNo": "Bỏ phiếu KHÔNG",
           "youHaveVoted": "You have voted",
           "yes": "Có",
           "no": "Không",
@@ -1706,10 +1706,10 @@
           "votingEnds": "Voting ends"
         },
         "grant": {
-          "title": "Grant Information",
+          "title": "Thông tin Tài trợ",
           "fundingDetails": "Funding Details",
-          "grantAmount": "Grant Amount",
-          "recipientAddress": "Recipient Address",
+          "grantAmount": "Số tiền Tài trợ",
+          "recipientAddress": "Địa chỉ Người nhận",
           "viewOnExplorer": "View on Explorer"
         },
         "technicalDetails": {
@@ -1941,37 +1941,37 @@
     "fluxDrive": {
       "fileManager": {
         "title": "FluxDrive",
-        "subtitle": "Secure decentralized storage",
-        "upgradePlan": "Upgrade Plan",
-        "searchPlaceholder": "Search files and folders...",
-        "listView": "List View",
-        "gridView": "Grid View",
+        "subtitle": "Lưu trữ phi tập trung an toàn",
+        "upgradePlan": "Nâng cấp Gói",
+        "searchPlaceholder": "Tìm kiếm tệp và thư mục...",
+        "listView": "Chế độ Danh sách",
+        "gridView": "Chế độ Lưới",
         "columnName": "Tên",
         "columnUpdated": "Updated",
         "columnSize": "Kích thước",
-        "newFolder": "New Folder",
+        "newFolder": "Thư mục Mới",
         "upload": "Tải lên",
-        "uploadFiles": "Tải lên tệp",
-        "uploadFolder": "Upload Folder",
+        "uploadFiles": "Tải lên Tệp",
+        "uploadFolder": "Tải lên Thư mục",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
         "filesMissingDescription": "Some files totaling {storage} could not be located. This may indicate data corruption.",
         "showAllFilesRecovery": "Show All Files (Recovery Mode)",
         "backToNormalMode": "Back to Normal Mode",
-        "noFilesFound": "No Files Found",
-        "folderEmpty": "This Folder is Empty",
+        "noFilesFound": "Không Tìm Thấy Tệp",
+        "folderEmpty": "Thư mục Này Trống",
         "noFilesMatch": "No files match \"{query}\"",
-        "dropFilesHere": "Drop files here to upload",
+        "dropFilesHere": "Thả tệp vào đây để tải lên",
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
-        "preview": "Preview",
+        "preview": "Xem trước",
         "download": "Tải xuống",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
         "rename": "Đổi tên",
-        "moveTo": "Move To",
-        "copyLink": "Copy Link",
+        "moveTo": "Di chuyển đến",
+        "copyLink": "Sao chép Liên kết",
         "delete": "Xóa",
         "paginationInfo": "Showing {start}-{end} of {total}",
         "edit": "Chỉnh sửa",
@@ -1990,10 +1990,10 @@
         "commentValidation": "Comment must be less than 100 characters",
         "downloading": "Downloading",
         "downloadProgress": "Download progress: {progress}%",
-        "confirmDelete": "Confirm Delete",
+        "confirmDelete": "Xác nhận Xóa",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "Thư mục",
-        "file": "Tệp",
+        "folder": "thư mục",
+        "file": "tệp",
         "cancel": "Hủy",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
@@ -2114,35 +2114,35 @@
   "pages": {
     "administration": {
       "systemInfo": {
-        "loadingTitle": "Loading System Information...",
-        "errorTitle": "System Information Unavailable",
-        "errorSubtitle": "Unable to load system information at this time.",
-        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
-        "title": "System Information",
-        "subtitle": "View system resources and component versions",
-        "resourcesAllocated": "Resources Allocated",
+        "title": "Thông tin Hệ thống",
+        "subtitle": "Xem tài nguyên hệ thống và phiên bản thành phần",
+        "resourcesAllocated": "Tài nguyên Được phân bổ",
         "storage": "Lưu trữ",
-        "storageUsed": "{used} GB",
-        "storageTotal": "of {total} GB",
         "vcpu": "vCPU",
-        "vcpuUsed": "{used} vCores",
-        "vcpuTotal": "of {total} vCores",
         "ram": "RAM",
-        "ramUsed": "{used} GB",
-        "ramTotal": "of {total} GB",
         "applications": "Ứng dụng",
-        "installedApps": "Installed Apps",
+        "installedApps": "Ứng dụng Đã cài đặt",
+        "appsHashes": "Hash Ứng dụng",
+        "componentVersions": "Phiên bản Thành phần",
+        "vcpuUsed": "{used} vCores",
+        "ramTotal": "of {total} GB",
+        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
+        "errorSubtitle": "Unable to load system information at this time.",
         "installedAppsCount": "{count} application(s)",
-        "appsHashes": "Apps Hashes",
+        "loadingTitle": "Loading System Information...",
+        "ramUsed": "{used} GB",
+        "storageTotal": "of {total} GB",
         "notSynced": "{count} not synced",
-        "componentVersions": "Component Versions"
+        "storageUsed": "{used} GB",
+        "errorTitle": "System Information Unavailable",
+        "vcpuTotal": "of {total} vCores"
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Docker Events",
-        "subtitle": "Monitor Docker container events and activity",
-        "recentEvents": "Recent Events",
-        "noEventsAvailable": "No Docker events available",
+        "title": "Sự kiện Docker",
+        "subtitle": "Giám sát sự kiện và hoạt động container Docker",
+        "recentEvents": "Sự kiện Gần đây",
+        "noEventsAvailable": "Không có sự kiện Docker",
         "errorLoadingEvents": "Failed to load Docker events"
       },
       "fluxShare": {
@@ -2486,15 +2486,15 @@
     "apps": {
       "manage": {
         "tabs": {
-          "specifications": "Specifications",
-          "information": "Information",
-          "fileChanges": "File Changes",
-          "monitoring": "Monitoring",
-          "logs": "Logs",
+          "specifications": "Thông số kỹ thuật",
+          "information": "Thông tin",
+          "fileChanges": "Thay đổi Tệp",
+          "monitoring": "Giám sát",
+          "logs": "Nhật ký",
           "terminal": "Secure Shell",
-          "control": "Control",
-          "backupRestore": "Backup & Restore",
-          "instances": "Instanc",
+          "control": "Điều khiển",
+          "backupRestore": "Sao lưu & Khôi phục",
+          "instances": "Phiên bản",
           "subscription": "Đăng ký"
         },
         "tooltips": {
@@ -3566,34 +3566,6 @@
       }
     },
     "dashboard": {
-      "overview": {
-        "intro": {
-          "title": "Welcome to Flux Ecosystem",
-          "blockchain": {
-            "title": "Flux Blockchain",
-            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
-          },
-          "cloud": {
-            "title": "FluxCloud Network",
-            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
-          },
-          "learnMore": "Tìm hiểu thêm"
-        },
-        "totalNodes": "Total Nodes",
-        "nodeHistory": "Node History",
-        "lockedSupply": "Locked Supply",
-        "fluxSupply": "FLUX Supply",
-        "maxSupply": "Max Supply",
-        "circulatingSupply": "Circulating Supply",
-        "cumulus": "Cumulus",
-        "nimbus": "Nimbus",
-        "stratus": "Stratus",
-        "versionBreakdown": "Version Breakdown",
-        "tierBreakdown": "Tier Breakdown",
-        "legacy": "Legacy",
-        "nodes": "node | nodes",
-        "errorFetchingHistoryStats": "Unable to fetch history stats"
-      },
       "locations": {
         "intro": {
           "title": "Global FluxCloud Network",
@@ -3673,6 +3645,34 @@
           "failedToFetchNodeCount": "Failed to fetch node count",
           "failedToFetchBlockReward": "Failed to fetch block reward"
         }
+      },
+      "overview": {
+        "nodes": "node | nodes",
+        "cumulus": "Cumulus",
+        "intro": {
+          "learnMore": "Learn More",
+          "blockchain": {
+            "title": "Flux Blockchain",
+            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
+          },
+          "cloud": {
+            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud.",
+            "title": "FluxCloud Network"
+          },
+          "title": "Welcome to Flux Ecosystem"
+        },
+        "legacy": "Legacy",
+        "circulatingSupply": "Circulating Supply",
+        "fluxSupply": "FLUX Supply",
+        "nodeHistory": "Node History",
+        "tierBreakdown": "Tier Breakdown",
+        "maxSupply": "Max Supply",
+        "versionBreakdown": "Version Breakdown",
+        "errorFetchingHistoryStats": "Unable to fetch history stats",
+        "totalNodes": "Total Nodes",
+        "lockedSupply": "Locked Supply",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus"
       }
     },
     "fluxDrive": {
@@ -4981,7 +4981,7 @@
       }
     },
     "xdao": {
-      "title": "Flux XDAO",
+      "title": "Flux xDAO",
       "subtitle": "Decentralized Governance Platform",
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
@@ -4993,9 +4993,9 @@
       "filterProposals": "Filter Proposals",
       "allProposals": "All Proposals",
       "open": "Mở",
-      "passed": "Passed",
+      "passed": "Đã thông qua",
       "unpaid": "Unpaid",
-      "rejected": "Rejected",
+      "rejected": "Đã bị từ chối",
       "searchProposals": "Search proposals...",
       "sortBy": "Sort by",
       "latest": "Latest",
@@ -5131,10 +5131,10 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "No data available",
+    "noDataText": "Không có dữ liệu",
     "dataIterator": {
-      "loadingText": "Loading your data, please wait...",
-      "noResultsText": "No matching records found.",
+      "loadingText": "Đang tải các mục...",
+      "noResultsText": "Không tìm thấy bản ghi phù hợp",
       "noDataText": "No data available."
     },
     "close": "Đóng",
@@ -5146,29 +5146,29 @@
       }
     },
     "dataFooter": {
-      "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "All",
-      "pageText": "{0}-{1} of {2}",
-      "firstPage": "First Page",
-      "prevPage": "Previous Page",
-      "nextPage": "Next Page",
-      "lastPage": "Last Page"
+      "itemsPerPageText": "Số mục mỗi trang:",
+      "itemsPerPageAll": "Tất cả",
+      "pageText": "{0}-{1} trong {2}",
+      "firstPage": "Trang đầu",
+      "prevPage": "Trang trước",
+      "nextPage": "Trang sau",
+      "lastPage": "Trang cuối"
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
-        "previous": "Trước đó",
+        "root": "Điều hướng phân trang",
+        "previous": "Trang trước",
         "first": "first",
         "last": "last",
-        "next": "Tiếp theo",
-        "currentPage": "currentPage",
-        "page": "page"
+        "next": "Trang sau",
+        "currentPage": "Trang {0}, trang hiện tại",
+        "page": "Đi đến trang {0}"
       }
     },
     "input": {
-      "clear": "Xóa",
-      "appendAction": "appendAction",
-      "prependAction": "prependAction",
+      "clear": "Xóa {0}",
+      "appendAction": "Hành động hậu tố {0}",
+      "prependAction": "Hành động tiền tố {0}",
       "counterSize": "counterSize",
       "otp": "otp"
     },

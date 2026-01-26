@@ -1,6 +1,6 @@
 {
   "common": {
-    "off": "off",
+    "off": "kapalı",
     "buttons": {
       "cancel": "İptal",
       "close": "Kapat",
@@ -8,7 +8,7 @@
       "delete": "Sil",
       "submit": "Gönder",
       "update": "Güncelle",
-      "install": "Kur",
+      "install": "Yükle",
       "start": "Başlat",
       "stop": "Durdur",
       "remove": "Kaldır",
@@ -30,11 +30,11 @@
       "reset": "Sıfırla",
       "clear": "Temizle",
       "search": "Ara",
-      "filter": "Filtre",
+      "filter": "Filtrele",
       "yes": "Evet",
       "no": "Hayır",
       "ok": "Tamam",
-      "login": "Giriş Yap"
+      "login": "Giriş"
     },
     "labels": {
       "name": "Ad",
@@ -46,7 +46,7 @@
       "size": "Boyut",
       "value": "Değer",
       "url": "URL",
-      "message": "İleti",
+      "message": "Mesaj",
       "owner": "Sahip",
       "date": "Tarih",
       "time": "Zaman",
@@ -54,38 +54,38 @@
       "country": "Ülke",
       "city": "Şehir",
       "email": "E-posta",
-      "password": "Parola",
-      "username": "Kullanıcı Adı",
+      "password": "Şifre",
+      "username": "Kullanıcı adı",
       "address": "Adres",
       "port": "Port",
       "ip": "IP Adresi",
-      "tier": "Tier",
+      "tier": "Kademe",
       "price": "Fiyat",
       "total": "Toplam",
       "amount": "Miktar",
       "free": "Ücretsiz",
       "memory": "Bellek",
       "storage": "Depolama",
-      "screenshots": "Ekran Görüntüleri",
+      "screenshots": "Ekran görüntüleri",
       "about": "Hakkında",
       "developer": "Geliştirici",
-      "lastUpdate": "Son Güncelleme",
+      "lastUpdate": "Son güncelleme",
       "downloads": "İndirmeler",
       "links": "Bağlantılar",
-      "website": "Web Sitesi",
-      "sourceCode": "Kaynak Kodu",
+      "website": "Web sitesi",
+      "sourceCode": "Kaynak kod",
       "support": "Destek",
       "plan": "Plan",
-      "billing": "Fatura",
+      "billing": "Faturalandırma",
       "monthly": "Aylık",
-      "scrollLeft": "Sola Kaydır",
-      "scrollRight": "Sağa Kaydır",
-      "optional": "İsteğe Bağlı"
+      "scrollLeft": "Sola kaydır",
+      "scrollRight": "Sağa kaydır",
+      "optional": "İsteğe bağlı"
     },
     "theme": {
       "light": "Açık",
       "dark": "Koyu",
-      "switchTheme": "Temayı Değiştir"
+      "switchTheme": "Tema değiştir"
     },
     "status": {
       "loading": "Yükleniyor...",
@@ -116,23 +116,23 @@
       "noResults": "Sonuç bulunamadı",
       "errorOccurred": "Bir hata oluştu",
       "operationSuccess": "İşlem başarıyla tamamlandı",
-      "operationFailed": "İşlem başarısız",
+      "operationFailed": "İşlem başarısız oldu",
       "confirmDelete": "Silmek istediğinizden emin misiniz?",
       "unsavedChanges": "Kaydedilmemiş değişiklikleriniz var",
       "invalidInput": "Geçersiz giriş",
       "required": "Bu alan gereklidir",
-      "connectionError": "Bağlantı hatası. Lütfen yeniden deneyin.",
+      "connectionError": "Bağlantı hatası. Lütfen tekrar deneyin.",
       "unauthorized": "Yetkisiz erişim",
       "notFound": "Bulunamadı",
       "serverError": "Sunucu hatası. Lütfen daha sonra tekrar deneyin.",
       "copiedToClipboard": "Panoya kopyalandı!",
-      "failedToCopy": "Panoya kopyalama başarısız",
+      "failedToCopy": "Panoya kopyalama başarısız oldu",
       "loginRequired": "Giriş Gerekli",
       "loggedOutSuccessfully": "Başarıyla çıkış yapıldı"
     },
-    "itemsPerPage": "Sayfa Başına Öğe",
-    "of": "of",
-    "selectServerConfiguration": "Sunucu Yapılandırması Seç",
+    "itemsPerPage": "Sayfa başına öğe",
+    "of": "toplam",
+    "selectServerConfiguration": "Sunucu yapılandırması seçin",
     "groups": {
       "smallServers": "Küçük Sunucular",
       "mediumServers": "Orta Sunucular",
@@ -140,23 +140,23 @@
     },
     "guarantee": {
       "title": "30 Günlük Para İade Garantisi",
-      "description": "Hizmetimizi risksiz deneyin. İlk 30 gün içinde tamamen memnun kalmazsanız, ödemenizi iade edeceğiz - soru sorulmaz.",
+      "description": "Hizmetimizi risksiz deneyin. 30 gün içinde memnun kalmazsanız para iadesi alın.",
       "shortTitle": "Para İade Garantisi",
-      "badge": "30 Günlük Garanti",
-      "trustMessage": "Memnuniyetiniz bizim önceliğimiz"
+      "badge": "30 Gün Garanti",
+      "trustMessage": "Memnuniyetiniz önceliğimizdir"
     },
     "trustpilot": {
-      "title": "Binlerce Kişi Tarafından Güvenilir",
+      "title": "Binlerce Kişi Güveniyor",
       "ratingLabel": "Mükemmel",
       "rating": "5 üzerinden 4.5",
-      "reviews": "16 yorum temel alınarak",
-      "basedOn": "{count} yorum temel alınarak",
+      "reviews": "16 değerlendirmeye dayanarak",
+      "basedOn": "{count} değerlendirmeye dayanarak",
       "reviewsCount": "16",
       "score": "4.5",
-      "outOf": "üzerinden 5",
+      "outOf": "5 üzerinden",
       "verifiedCustomer": "Doğrulanmış Müşteri",
       "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
-      "viewAllReviews": "Trustpilot'ta tüm yorumları görüntüleyin",
+      "viewAllReviews": "Trustpilot'ta tüm değerlendirmeleri görüntüle",
       "sampleReviews": {
         "review1": {
           "text": "Runonflux'ta hosting ne kadar ucuz olduğuna şaştım. Şimdiye kadar hiçbir sorun yok.",
@@ -184,8 +184,8 @@
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
       "bandwidth": "Bant Genişliği",
-      "cores": "Çekirdekler",
-      "threads": "İşlemler"
+      "cores": "Çekirdek",
+      "threads": "İş Parçacığı"
     },
     "time": {
       "second": "saniye",
@@ -230,10 +230,10 @@
   },
   "menu": {
     "home": {
-      "title": "Anasayfa"
+      "title": "Ana Sayfa"
     },
     "dashboard": {
-      "title": "Flux Network",
+      "title": "Flux Ağı",
       "overview": "Genel Bakış",
       "resources": "Kaynaklar",
       "map": "Harita",
@@ -244,10 +244,10 @@
       "title": "Uygulamalar",
       "myApplications": "Uygulamalarım",
       "management": "Yönetim",
-      "globalApps": "Genel Uygulamalar",
+      "globalApps": "Global Uygulamalar",
       "localApps": "Yerel Uygulamalar",
       "registerNewApp": "Yeni Uygulama Kaydet",
-      "marketplace": "Uygulama Pazarı",
+      "marketplace": "Uygulama Marketi",
       "marketplaceApps": "Uygulamalar",
       "marketplaceGames": "Oyunlar",
       "marketplaceWordPress": "WordPress",
@@ -290,7 +290,7 @@
       "loading": "Loading...",
       "unableToConnect": "Unable to connect to the server. Please check your internet or try again later.",
       "myActiveApps": "My Active Apps",
-      "activeApps": "Active Apps",
+      "activeApps": "Aktif Uygulamalar",
       "myExpiredApps": "My Expired Apps",
       "failedToLoadActiveApps": "Failed to load active apps",
       "failedToLoadExpiredApps": "Failed to load expired apps",
@@ -300,14 +300,14 @@
     },
     "administration": {
       "title": "Yönetim",
-      "systemInfo": "Bilgi",
+      "systemInfo": "Sistem Bilgisi",
       "dockerEvents": "Docker Olayları",
-      "manageFlux": "Flux Gravity'yi Yönet",
-      "manageDaemon": "Daemon'u Yönet",
-      "manageBenchmark": "Benchmark'u Yönet",
+      "manageFlux": "Flux Gravity Yönet",
+      "manageDaemon": "Daemon Yönet",
+      "manageBenchmark": "Benchmark Yönet",
       "manageUsers": "Kullanıcıları Yönet",
-      "loggedSessions": "Oturum Açmış Oturumlar",
-      "myFluxShare": "Benim FluxShare",
+      "loggedSessions": "Oturum Geçmişi",
+      "myFluxShare": "FluxShare'im",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -325,25 +325,25 @@
   },
   "myApps": {
     "fluxCloudTitle": "FluxCloud",
-    "fluxCloudSubtitle": "Merkeziyetsiz Uygulama Yönetimi",
-    "fluxCloudDescription": "Flux merkeziyetsiz bulut ağında çalışan tüm Docker konteynerli uygulamalarınızı izleyin ve yönetin. Küresel blockchain tarafından desteklenen altyapımızda dağıtılan dağıtılmış uygulamalarınızın gerçek zamanlı durumunu, kaynak kullanımını ve performans metriklerini görüntüleyin. Ayrıntılı yönetim denetimleri ve analitiklere erişmek için herhangi bir uygulamaya tıklayın."
+    "fluxCloudSubtitle": "Merkezi Olmayan Uygulama Yönetimi",
+    "fluxCloudDescription": "Flux merkezi olmayan bulut ağında çalışan tüm Docker konteynerli uygulamalarınızı izleyin ve yönetin. Küresel blockchain destekli altyapımız üzerinde dağıtılan uygulamalarınızın gerçek zamanlı durumunu, kaynak kullanımını ve performans metriklerini görüntüleyin. Detaylı yönetim kontrolleri ve analizlere erişmek için herhangi bir uygulamaya tıklayın."
   },
   "sections": {
     "dashboard": {
-      "title": "Flux Network",
-      "description": "Flux ağı bilgisini, mevcut kaynakları veya sunucu konumlarıyla bir haritayı kontrol edin."
+      "title": "Flux Ağı",
+      "description": "Flux ağ bilgilerini, mevcut kaynakları veya sunucu konumlarının haritasını kontrol edin."
     },
     "application": {
       "title": "Uygulamalar",
-      "description": "Pazardan satın alın, kendi uygulamanızı kaydedin, etkin uygulamalarınızı yönetin."
+      "description": "Marketplace'ten satın alın, kendi uygulamanızı kaydedin, aktif uygulamalarınızı yönetin."
     },
     "administration": {
       "title": "Yönetim",
-      "description": "Altyapı yöneticileri ve düğüm operatörleri için Flux Gravity'yi yönetmeye olanak tanıyan araçlar."
+      "description": "Altyapı yöneticileri ve düğüm operatörleri için Flux Gravity yönetim araçları."
     },
     "fluxXdao": {
       "title": "Flux XDAO",
-      "description": "Flux ağına önerilen değişikliklerin listesini görün, yenilerini oluşturun ve oy verin."
+      "description": "Flux ağına önerilen değişikliklerin listesini görün, yeni öneriler oluşturun ve oy verin."
     }
   },
   "core": {
@@ -357,18 +357,18 @@
       "description": "Açıklama",
       "owner": "Sahip",
       "hash": "Hash",
-      "contacts": "Kişiler",
+      "contacts": "İletişim",
       "geolocation": "Coğrafi Konum",
       "worldwide": "Dünya Çapında",
       "instances": "Örnekler",
-      "specificationsVersion": "Spesifikasyon sürümü",
-      "registeredOnBlockheight": "Blok Yüksekliğinde Kayıtlı",
+      "specificationsVersion": "Spesifikasyon Sürümü",
+      "registeredOnBlockheight": "Kayıtlı Blok Yüksekliği",
       "expiresOnBlockheight": "Blok Yüksekliğinde Sona Erer",
-      "expiresIn": "İçinde Sona Erer",
-      "enterpriseNodes": "Kurumsal Düğümler",
-      "notScoped": "Kapsamı Belirlenmeyen",
+      "expiresIn": "Sona Erme",
+      "enterpriseNodes": "Enterprise Düğümler",
+      "notScoped": "Kapsamda Değil",
       "staticIp": "Statik IP",
-      "staticIpYes": "Evet, Yalnızca Statik IP düğümlerinde çalışıyor",
+      "staticIpYes": "Evet, Sadece Statik IP düğümlerinde çalışıyor",
       "staticIpNo": "Hayır, Tüm düğümlerde çalışıyor",
       "specificationCopied": "Uygulama spesifikasyonu panoya kopyalandı!",
       "specificationCopyFailed": "Spesifikasyon kopyalanamadı",
@@ -378,24 +378,24 @@
       "region": ", Bölge: {name}",
       "allowedContinent": "İzin Verilen: Kıta: {name}",
       "forbiddenContinent": "Yasak: Kıta: {name}",
-      "notAvailable": "Mevcut değil",
+      "notAvailable": "Mevcut Değil",
       "applicationExpired": "Uygulama Süresi Doldu"
     },
     "componentDetails": {
       "name": "Ad",
       "description": "Açıklama",
-      "repository": "Havuz",
-      "repositoryAuthentication": "Havuz Kimlik Doğrulaması",
+      "repository": "Depo",
+      "repositoryAuthentication": "Depo Kimlik Doğrulaması",
       "private": "Özel",
       "public": "Genel",
-      "customDomains": "Özel Alanlar",
-      "automaticDomains": "Otomatik Alanlar",
+      "customDomains": "Özel Alan Adları",
+      "automaticDomains": "Otomatik Alan Adları",
       "ports": "Portlar",
       "containerPorts": "Konteyner Portları",
-      "containerData": "Konteyner Verileri",
+      "containerData": "Konteyner Verisi",
       "environmentParameters": "Ortam Parametreleri",
       "commands": "Komutlar",
-      "secrets": "Sırlar",
+      "secrets": "Gizli Anahtarlar",
       "contentEncrypted": "İçerik Şifreli",
       "hardwareResources": "Donanım Kaynakları",
       "cpu": "CPU",
@@ -442,7 +442,7 @@
       "notifications": "Bildirimler",
       "newCount": "{count} Yeni",
       "markAllAsUnread": "Tümünü Okunmamış Olarak İşaretle",
-      "markAllAsRead": "Tümünü Okundu Olarak İşaretле",
+      "markAllAsRead": "Tümünü okundu olarak işaretle",
       "noNotificationFound": "Bildirim Bulunamadı!",
       "removeAllNotifications": "Tüm Bildirimleri Kaldır"
     },
@@ -510,8 +510,8 @@
     },
     "terminal": {
       "title": "Güvenli Kabuk",
-      "selectComponent": "Bileşeni Seç",
-      "selectCommand": "Komut Seç",
+      "selectComponent": "Bileşen Seçin",
+      "selectCommand": "Komut Seçin",
       "connect": "Bağlan",
       "disconnect": "Bağlantıyı Kes",
       "newTerminal": "Yeni Terminal",
@@ -547,7 +547,7 @@
       }
     },
     "logViewer": {
-      "title": "Log Görüntüleyici",
+      "title": "Günlük Görüntüleyici",
       "component": "Bileşen",
       "selectComponent": "Bileşeni Seç",
       "lineCount": "Satır Sayısı",
@@ -555,7 +555,7 @@
       "filterLogs": "Günlükleri Filtrele",
       "enterKeywords": "Anahtar kelimeleri girin...",
       "advanceOptions": "Gelişmiş Seçenekler",
-      "autoRefresh": "Otomatik Yenile",
+      "autoRefresh": "Otomatik Yenileme",
       "displayAllLogs": "Tüm Günlükleri Görüntüle",
       "displayTimestamp": "Zaman Damgasını Görüntüle",
       "lineSelection": "Satır Seçim Modu",
@@ -571,15 +571,15 @@
       }
     },
     "backupAndRestore": {
-      "backup": "Backup",
-      "restore": "Restore",
-      "backupContainerData": "Backup Container Data",
-      "selectComponentsToBackup": "Select component(s) to backup",
-      "selectAll": "Select all",
-      "createBackup": "Create Backup",
-      "availableLocalBackups": "Available Local Backups",
-      "downloadSelected": "Download selected",
-      "downloadAll": "Download all",
+      "backup": "Yedekleme",
+      "restore": "Geri Yükle",
+      "backupContainerData": "Konteyner Verilerini Yedekle",
+      "selectComponentsToBackup": "Yedeklenecek bileşen(ler)i seçin",
+      "selectAll": "Tümünü seç",
+      "createBackup": "Yedek Oluştur",
+      "availableLocalBackups": "Mevcut Yerel Yedekler",
+      "downloadSelected": "Seçilenleri İndir",
+      "downloadAll": "Tümünü İndir",
       "removeAllBackupFiles": "Remove all backup files",
       "backupListDescription": "Automatic weekly backups are created and maintained while your app is active. The latest backup is always preserved until app expiration. You can also create manual backups anytime.",
       "downloadBackupFile": "Download backup file",
@@ -634,8 +634,8 @@
     },
     "login": {
       "automatedLogin": "Otomatik Giriş",
-      "thirdPartyLogin": "3. Taraf Giriş",
-      "emailPassword": "E-posta/Parola",
+      "thirdPartyLogin": "Üçüncü Taraf Girişi",
+      "emailPassword": "E-posta/Şifre",
       "finishingLogin": "Giriş Tamamlanıyor",
       "pleaseWait": "Lütfen bekleyin...",
       "cancelVerification": "Doğrulamayı İptal Et",
@@ -643,26 +643,26 @@
       "checkEmail": "E-postanızı kontrol edin",
       "googleLogin": "Google",
       "appleLogin": "Apple ID",
-      "bySigningIn": "Giriş yaparak, şartlarını kabul etmiş olursunuz",
+      "bySigningIn": "Giriş yaparak, şunları kabul edersiniz",
       "termsOfService": "Hizmet Şartları",
       "and": "ve",
       "privacyPolicy": "Gizlilik Politikası",
       "email": "E-posta",
-      "password": "Parola",
-      "login": "Giriş Yap",
-      "signUp": "Kaydol",
+      "password": "Şifre",
+      "login": "Giriş",
+      "signUp": "Kayıt Ol",
       "dontHaveAccount": "Hesabınız yok mu?",
       "or": "VEYA",
-      "decentralizedLogin": "Merkeziyetsiz Giriş",
+      "decentralizedLogin": "Merkezi Olmayan Giriş",
       "decentralizedWallets": "Cüzdanlar",
-      "walletLoginInfo": "Kripto cüzdanınızı kullanarak giriş yapın",
+      "walletLoginInfo": "Kripto cüzdanınızla giriş yapın",
       "manualLogin": "Manuel",
-      "loginWithZelcore": "Zelcore ile Giriş Yap",
-      "loginWithSSP": "SSP ile Giriş Yap",
-      "loginWithWalletConnect": "WalletConnect ile Giriş Yap",
-      "loginWithMetamask": "Metamask ile Giriş Yap",
-      "signWithWallet": "Cüzdanınızla iletiyi imzalayın",
-      "message": "İleti",
+      "loginWithZelcore": "Zelcore ile Giriş",
+      "loginWithSSP": "SSP ile Giriş",
+      "loginWithWalletConnect": "WalletConnect ile Giriş",
+      "loginWithMetamask": "Metamask ile Giriş",
+      "signWithWallet": "Cüzdanınızla mesajı imzalayın",
+      "message": "Mesaj",
       "insertMessage": "İleti ekle",
       "clickToGetMessage": "Yeni bir giriş ifadesi almak için yenile'yi tıklatın",
       "getNewLoginPhrase": "Yeni giriş ifadesi al",
@@ -685,7 +685,7 @@
       "passwordMismatch": "Passwords do not match",
       "googleError": "Google login failed",
       "appleError": "Apple login failed",
-      "loginFailed": "Login failed, please try again",
+      "loginFailed": "Giriş başarısız, lütfen tekrar deneyin",
       "invalidCredential": "Invalid email or password. Please check and try again.",
       "userNotFound": "No account found with this email. Please sign up first.",
       "wrongPassword": "Incorrect password. Please try again.",
@@ -711,35 +711,35 @@
       "customBackend": "Custom Backend"
     },
     "appControl": {
-      "title": "Application Control",
-      "control": "Control",
-      "manual": "Manual",
-      "component": "Component",
-      "local": "Local",
+      "title": "Uygulama Kontrolü",
+      "control": "Kontrol",
+      "manual": "Manuel",
+      "component": "Bileşen",
+      "local": "Yerel",
       "global": "Global",
-      "manualSelection": "Manual Selection",
-      "available": "Available",
-      "selected": "Selected",
-      "monitoring": "Monitoring",
-      "showLogs": "Show Logs",
-      "hideLogs": "Hide Logs",
+      "manualSelection": "Manuel Seçim",
+      "available": "Mevcut",
+      "selected": "Seçili",
+      "monitoring": "İzleme",
+      "showLogs": "Günlükleri Göster",
+      "hideLogs": "Günlükleri Gizle",
       "buttons": {
-        "startComponent": "Start Component",
-        "stopComponent": "Stop Component",
-        "restartComponent": "Restart Component",
-        "pauseComponent": "Pause Component",
-        "unpauseComponent": "Unpause Component",
-        "startApplication": "Start Application",
-        "stopApplication": "Stop Application",
-        "restartApplication": "Restart Application",
+        "startComponent": "Bileşeni Başlat",
+        "stopComponent": "Bileşeni Durdur",
+        "restartComponent": "Bileşeni Yeniden Başlat",
+        "pauseComponent": "Bileşeni Duraklat",
+        "unpauseComponent": "Bileşeni Devam Ettir",
+        "startApplication": "Uygulamayı Başlat",
+        "stopApplication": "Uygulamayı Durdur",
+        "restartApplication": "Uygulamayı Yeniden Başlat",
         "pauseApplication": "Pause Application",
         "unpauseApplication": "Unpause Application",
-        "removeApplication": "Remove Application",
-        "softReinstall": "Soft Reinstall",
-        "hardReinstall": "Hard Reinstall",
-        "startMonitoring": "Start Monitoring",
-        "stopMonitoring": "Stop Monitoring",
-        "stopMonitoringDelete": "Stop & Delete Data"
+        "removeApplication": "Uygulamayı Kaldır",
+        "softReinstall": "Yumuşak Yeniden Kurulum",
+        "hardReinstall": "Sert Yeniden Kurulum",
+        "startMonitoring": "İzlemeyi Başlat",
+        "stopMonitoring": "İzlemeyi Durdur",
+        "stopMonitoringDelete": "Durdur ve Verileri Sil"
       },
       "tooltips": {
         "addSelected": "Add selected items",
@@ -770,9 +770,9 @@
         "hardReinstall": "Hard reinstall will completely remove and redeploy the application. All application data will be deleted. This action cannot be undone."
       },
       "operations": {
-        "starting": "Starting",
-        "stopping": "Stopping",
-        "restarting": "Restarting",
+        "starting": "Başlatılıyor",
+        "stopping": "Durduruluyor",
+        "restarting": "Yeniden Başlatılıyor",
         "pausing": "Pausing",
         "unpausing": "Unpausing",
         "startingMonitoring": "Starting Monitoring",
@@ -1321,41 +1321,41 @@
     },
     "marketplace": {
       "discoverCard": {
-        "title": "Discover Your Flux",
+        "title": "Flux'unuzu Keşfedin",
         "subtitle": "Web3 Marketplace"
       },
       "appCard": {
-        "install": "Kur",
+        "install": "Yükle",
         "view": "Görüntüle",
-        "viewDetails": "Ayrıntıları Görüntüle",
+        "viewDetails": "Detayları Görüntüle",
         "defaultCategory": "Uygulamalar",
-        "noDescription": "Açıklama yok"
+        "noDescription": "Açıklama mevcut değil"
       },
       "fluxCloudAppCard": {
-        "unknownDeveloper": "Unknown Developer",
+        "unknownDeveloper": "Bilinmeyen Geliştirici",
         "install": "Install",
-        "viewApp": "View App",
-        "sponsored": "Sponsored"
+        "viewApp": "Uygulamayı Görüntüle",
+        "sponsored": "Sponsorlu"
       },
       "gameCard": {
         "startingAt": "Starting at ${price} / month",
-        "viewDetails": "View Details"
+        "viewDetails": "Detayları Görüntüle"
       },
       "marketplaceAppCard": {
-        "unknown": "Unknown",
-        "free": "Free",
+        "unknown": "Bilinmeyen",
+        "free": "Ücretsiz",
         "install": "Install",
         "viewDetails": "View Details",
         "noDescription": "No description available",
         "other": "Other"
       },
       "appList": {
-        "featured": "Featured",
-        "by": "by",
+        "featured": "Öne Çıkan",
+        "by": "tarafından",
         "free": "Free",
-        "purchase": "Purchase",
-        "deploy": "Deploy",
-        "details": "Details"
+        "purchase": "Satın Al",
+        "deploy": "Dağıt",
+        "details": "Detaylar"
       },
       "sponsoredAppCard": {
         "unknown": "Unknown",
@@ -1394,20 +1394,20 @@
         "mostPopular": "Most Popular"
       },
       "appsGrid": {
-        "title": "Flux Applications",
-        "searchPlaceholder": "Search apps...",
-        "category": "Category",
-        "sortBy": "Sort by",
-        "allCategories": "All Categories",
-        "loadingApps": "Loading marketplace apps...",
-        "noAppsFound": "No apps found",
-        "adjustFilters": "Try adjusting your search or filters",
-        "resetFilters": "Reset Filters",
+        "title": "Flux Uygulamaları",
+        "searchPlaceholder": "Uygulama ara...",
+        "category": "Kategori",
+        "sortBy": "Sıralama",
+        "allCategories": "Tüm Kategoriler",
+        "loadingApps": "Marketplace uygulamaları yükleniyor...",
+        "noAppsFound": "Uygulama bulunamadı",
+        "adjustFilters": "Arama veya filtrelerinizi değiştirmeyi deneyin",
+        "resetFilters": "Filtreleri Sıfırla",
         "noAppsAvailable": "No apps available",
         "marketplaceEmpty": "The marketplace is currently empty",
-        "refresh": "Refresh",
-        "previous": "Previous",
-        "next": "Next",
+        "refresh": "Yenile",
+        "previous": "Önceki",
+        "next": "Sonraki",
         "sortDefault": "Default",
         "sortDate": "Date",
         "sortName": "Name"
@@ -1559,7 +1559,7 @@
         "paymentType": "Payment Type",
         "crypto": "Crypto",
         "fiat": "Fiat",
-        "paymentMethod": "Payment Method",
+        "paymentMethod": "Ödeme Yöntemi",
         "totalPaid": "Total Paid",
         "subscriptionValidUntil": "Subscription Valid Until",
         "manageApplication": "Manage Application",
@@ -1601,13 +1601,13 @@
     },
     "xdao": {
       "addProposal": {
-        "title": "Add New Proposal",
-        "validated": "Validated",
+        "title": "Yeni Öneri Ekle",
+        "validated": "Doğrulandı",
         "completeFormToValidate": "Complete Form to Validate",
-        "validateProposal": "Validate Proposal",
+        "validateProposal": "Öneriyi Doğrula",
         "validatedSuccessfully": "Proposal Validated Successfully!",
-        "registrationFee": "Proposal Registration Fee",
-        "registerProposal": "Register Flux XDAO Proposal",
+        "registrationFee": "Öneri Kayıt Ücreti",
+        "registerProposal": "Flux XDAO Önerisini Kaydet",
         "fields": {
           "topic": {
             "label": "Proposal Topic",
@@ -1664,11 +1664,11 @@
         }
       },
       "proposalDetail": {
-        "title": "Proposal Details",
-        "anonymous": "Anonymous",
-        "submitted": "Submitted",
-        "endDate": "End Date",
-        "description": "Description",
+        "title": "Öneri Detayları",
+        "anonymous": "Anonim",
+        "submitted": "Gönderildi",
+        "endDate": "Bitiş Tarihi",
+        "description": "Açıklama",
         "viewAddressOnExplorer": "View Address on Explorer",
         "charts": {
           "voteProgress": "Vote Progress",
@@ -1690,15 +1690,15 @@
           }
         },
         "voting": {
-          "castYourVote": "Cast Your Vote",
+          "castYourVote": "Oyunuzu Kullanın",
           "makeYourVoiceHeard": "Make your voice heard",
           "loginRequired": "Login Required",
           "loginRequiredMessage": "You need to be logged in to participate in voting. Please log in with your Flux wallet to continue.",
           "voteWarning": "Remember: You can't change your vote after voting!",
           "yourVotingPower": "Your Voting Power",
           "votesAvailable": "votes available",
-          "voteYes": "Vote YES",
-          "voteNo": "Vote NO",
+          "voteYes": "EVET Oy Ver",
+          "voteNo": "HAYIR Oy Ver",
           "youHaveVoted": "You have voted",
           "yes": "YES",
           "no": "NO",
@@ -1706,10 +1706,10 @@
           "votingEnds": "Voting ends"
         },
         "grant": {
-          "title": "Grant Information",
+          "title": "Hibe Bilgisi",
           "fundingDetails": "Funding Details",
-          "grantAmount": "Grant Amount",
-          "recipientAddress": "Recipient Address",
+          "grantAmount": "Hibe Miktarı",
+          "recipientAddress": "Alıcı Adresi",
           "viewOnExplorer": "View on Explorer"
         },
         "technicalDetails": {
@@ -1941,38 +1941,38 @@
     "fluxDrive": {
       "fileManager": {
         "title": "FluxDrive",
-        "subtitle": "Secure decentralized storage",
-        "upgradePlan": "Upgrade Plan",
-        "searchPlaceholder": "Search files and folders...",
-        "listView": "List View",
-        "gridView": "Grid View",
+        "subtitle": "Güvenli merkezi olmayan depolama",
+        "upgradePlan": "Planı Yükselt",
+        "searchPlaceholder": "Dosya ve klasörleri ara...",
+        "listView": "Liste Görünümü",
+        "gridView": "Izgara Görünümü",
         "columnName": "Name",
         "columnUpdated": "Updated",
         "columnSize": "Size",
-        "newFolder": "New Folder",
-        "upload": "Upload",
-        "uploadFiles": "Upload Files",
-        "uploadFolder": "Upload Folder",
+        "newFolder": "Yeni Klasör",
+        "upload": "Yükle",
+        "uploadFiles": "Dosyaları Yükle",
+        "uploadFolder": "Klasör Yükle",
         "goToRoot": "Go to Root",
         "filesMissing": "Files Missing",
         "filesMissingDescription": "Some files totaling {storage} could not be located. This may indicate data corruption.",
         "showAllFilesRecovery": "Show All Files (Recovery Mode)",
         "backToNormalMode": "Back to Normal Mode",
-        "noFilesFound": "No Files Found",
-        "folderEmpty": "This Folder is Empty",
+        "noFilesFound": "Dosya Bulunamadı",
+        "folderEmpty": "Bu Klasör Boş",
         "noFilesMatch": "No files match \"{query}\"",
-        "dropFilesHere": "Drop files here to upload",
+        "dropFilesHere": "Dosyaları yüklemek için buraya bırakın",
         "noFilesOrFolders": "No files or folders",
         "goBackToParent": "Go back to parent folder",
-        "preview": "Preview",
-        "download": "Download",
+        "preview": "Önizleme",
+        "download": "İndir",
         "addVersion": "Add Version",
         "addVersionDescription": "This will create a new version of \"{fileName}\" while keeping the original file accessible through version history.",
         "viewVersions": "View Versions",
-        "rename": "Rename",
-        "moveTo": "Move To",
-        "copyLink": "Copy Link",
-        "delete": "Delete",
+        "rename": "Yeniden Adlandır",
+        "moveTo": "Taşı",
+        "copyLink": "Bağlantıyı Kopyala",
+        "delete": "Sil",
         "paginationInfo": "Showing {start}-{end} of {total}",
         "edit": "Edit",
         "browserNoVideoSupport": "Your browser does not support the video tag.",
@@ -1990,11 +1990,11 @@
         "commentValidation": "Comment must be less than 100 characters",
         "downloading": "Downloading",
         "downloadProgress": "Download progress: {progress}%",
-        "confirmDelete": "Confirm Delete",
+        "confirmDelete": "Silmeyi Onayla",
         "confirmDeleteMessage": "Are you sure you want to delete this {type}?",
-        "folder": "folder",
-        "file": "file",
-        "cancel": "Cancel",
+        "folder": "klasör",
+        "file": "dosya",
+        "cancel": "İptal",
         "upgradeYourPlan": "Upgrade Your Plan",
         "renameItem": "Rename {type}",
         "newName": "New Name",
@@ -2114,35 +2114,35 @@
   "pages": {
     "administration": {
       "systemInfo": {
-        "loadingTitle": "Loading System Information...",
-        "errorTitle": "System Information Unavailable",
-        "errorSubtitle": "Unable to load system information at this time.",
-        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
-        "title": "System Information",
-        "subtitle": "View system resources and component versions",
-        "resourcesAllocated": "Resources Allocated",
-        "storage": "Storage",
-        "storageUsed": "{used} GB",
-        "storageTotal": "of {total} GB",
+        "title": "Sistem Bilgisi",
+        "subtitle": "Sistem kaynaklarını ve bileşen sürümlerini görüntüleyin",
+        "resourcesAllocated": "Ayrılan Kaynaklar",
+        "storage": "Depolama",
         "vcpu": "vCPU",
-        "vcpuUsed": "{used} vCores",
-        "vcpuTotal": "of {total} vCores",
         "ram": "RAM",
-        "ramUsed": "{used} GB",
+        "applications": "Uygulamalar",
+        "installedApps": "Yüklü Uygulamalar",
+        "appsHashes": "Uygulama Hash'leri",
+        "componentVersions": "Bileşen Sürümleri",
+        "vcpuUsed": "{used} vCores",
         "ramTotal": "of {total} GB",
-        "applications": "Applications",
-        "installedApps": "Installed Apps",
+        "errorDescription": "The system is currently unavailable or experiencing connectivity issues. Please check your connection and try again in a few moments. If the problem persists, contact your system administrator.",
+        "errorSubtitle": "Unable to load system information at this time.",
         "installedAppsCount": "{count} application(s)",
-        "appsHashes": "Apps Hashes",
+        "loadingTitle": "Loading System Information...",
+        "ramUsed": "{used} GB",
+        "storageTotal": "of {total} GB",
         "notSynced": "{count} not synced",
-        "componentVersions": "Component Versions"
+        "storageUsed": "{used} GB",
+        "errorTitle": "System Information Unavailable",
+        "vcpuTotal": "of {total} vCores"
       },
       "dockerEvents": {
         "loadingTitle": "Loading Docker Events...",
-        "title": "Docker Events",
-        "subtitle": "Monitor Docker container events and activity",
-        "recentEvents": "Recent Events",
-        "noEventsAvailable": "No Docker events available",
+        "title": "Docker Olayları",
+        "subtitle": "Docker konteyner olaylarını ve aktivitelerini izleyin",
+        "recentEvents": "Son Olaylar",
+        "noEventsAvailable": "Docker olayı mevcut değil",
         "errorLoadingEvents": "Failed to load Docker events"
       },
       "fluxShare": {
@@ -2486,16 +2486,16 @@
     "apps": {
       "manage": {
         "tabs": {
-          "specifications": "Specifications",
-          "information": "Information",
-          "fileChanges": "File Changes",
-          "monitoring": "Monitoring",
-          "logs": "Logs",
-          "terminal": "Secure Shell",
-          "control": "Control",
-          "backupRestore": "Backup & Restore",
-          "instances": "Instances",
-          "subscription": "Subscription"
+          "specifications": "Spesifikasyonlar",
+          "information": "Bilgi",
+          "fileChanges": "Dosya Değişiklikleri",
+          "monitoring": "İzleme",
+          "logs": "Günlükler",
+          "terminal": "Güvenli Kabuk",
+          "control": "Kontrol",
+          "backupRestore": "Yedekleme ve Geri Yükleme",
+          "instances": "Örnekler",
+          "subscription": "Abonelik"
         },
         "tooltips": {
           "manage": "Manage",
@@ -3566,34 +3566,6 @@
       }
     },
     "dashboard": {
-      "overview": {
-        "intro": {
-          "title": "Welcome to Flux Ecosystem",
-          "blockchain": {
-            "title": "Flux Blockchain",
-            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
-          },
-          "cloud": {
-            "title": "FluxCloud Network",
-            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud."
-          },
-          "learnMore": "Learn More"
-        },
-        "totalNodes": "Total Nodes",
-        "nodeHistory": "Node History",
-        "lockedSupply": "Locked Supply",
-        "fluxSupply": "FLUX Supply",
-        "maxSupply": "Max Supply",
-        "circulatingSupply": "Circulating Supply",
-        "cumulus": "Cumulus",
-        "nimbus": "Nimbus",
-        "stratus": "Stratus",
-        "versionBreakdown": "Version Breakdown",
-        "tierBreakdown": "Tier Breakdown",
-        "legacy": "Legacy",
-        "nodes": "node | nodes",
-        "errorFetchingHistoryStats": "Unable to fetch history stats"
-      },
       "locations": {
         "intro": {
           "title": "Global FluxCloud Network",
@@ -3673,6 +3645,34 @@
           "failedToFetchNodeCount": "Failed to fetch node count",
           "failedToFetchBlockReward": "Failed to fetch block reward"
         }
+      },
+      "overview": {
+        "nodes": "node | nodes",
+        "cumulus": "Cumulus",
+        "intro": {
+          "learnMore": "Learn More",
+          "blockchain": {
+            "title": "Flux Blockchain",
+            "description": "Flux operates on its own proprietary blockchain, handling governance, tokenomics, and providing interoperability with other blockchains through parallel assets. The native FLUX cryptocurrency powers the entire ecosystem, enabling decentralized infrastructure and DeFi integration."
+          },
+          "cloud": {
+            "description": "FluxCloud is a decentralized cloud computing platform powered by over {nodes} globally distributed FluxNodes. It provides Web3-ready infrastructure for hosting applications, running blockchain nodes, and executing AI/ML workloads—offering a decentralized alternative to traditional cloud providers like AWS or Google Cloud.",
+            "title": "FluxCloud Network"
+          },
+          "title": "Welcome to Flux Ecosystem"
+        },
+        "legacy": "Legacy",
+        "circulatingSupply": "Circulating Supply",
+        "fluxSupply": "FLUX Supply",
+        "nodeHistory": "Node History",
+        "tierBreakdown": "Tier Breakdown",
+        "maxSupply": "Max Supply",
+        "versionBreakdown": "Version Breakdown",
+        "errorFetchingHistoryStats": "Unable to fetch history stats",
+        "totalNodes": "Total Nodes",
+        "lockedSupply": "Locked Supply",
+        "nimbus": "Nimbus",
+        "stratus": "Stratus"
       }
     },
     "fluxDrive": {
@@ -4981,7 +4981,7 @@
       }
     },
     "xdao": {
-      "title": "Flux XDAO",
+      "title": "Flux xDAO",
       "subtitle": "Decentralized Governance Platform",
       "description": "Flux XDAO (Extended Decentralized Autonomous Organization) empowers the community to shape the future of the Flux ecosystem through on-chain governance. FluxNode operators can submit proposals, discuss initiatives, and vote on critical decisions affecting network development, funding allocations, and protocol upgrades. Every vote is recorded on the blockchain, ensuring transparency and immutability.",
       "learnMore": "Learn More About XDAO",
@@ -4993,9 +4993,9 @@
       "filterProposals": "Filter Proposals",
       "allProposals": "All Proposals",
       "open": "Open",
-      "passed": "Passed",
+      "passed": "Kabul Edildi",
       "unpaid": "Unpaid",
-      "rejected": "Rejected",
+      "rejected": "Reddedildi",
       "searchProposals": "Search proposals...",
       "sortBy": "Sort by",
       "latest": "Latest",
@@ -5131,14 +5131,14 @@
   },
   "$vuetify": {
     "badge": "Badge",
-    "noDataText": "No data available",
+    "noDataText": "Veri yok",
     "dataIterator": {
-      "loadingText": "Loading your data, please wait...",
-      "noResultsText": "No matching records found.",
+      "loadingText": "Öğeler yükleniyor...",
+      "noResultsText": "Eşleşen kayıt bulunamadı",
       "noDataText": "No data available."
     },
-    "close": "Close",
-    "open": "open",
+    "close": "Kapat",
+    "open": "Aç",
     "loading": "loading",
     "carousel": {
       "ariaLabel": {
@@ -5146,29 +5146,29 @@
       }
     },
     "dataFooter": {
-      "itemsPerPageText": "Items per page:",
-      "itemsPerPageAll": "All",
-      "pageText": "{0}-{1} of {2}",
-      "firstPage": "First Page",
-      "prevPage": "Previous Page",
-      "nextPage": "Next Page",
-      "lastPage": "Last Page"
+      "itemsPerPageText": "Sayfa başına öğe:",
+      "itemsPerPageAll": "Tümü",
+      "pageText": "{0}-{1} / {2}",
+      "firstPage": "İlk sayfa",
+      "prevPage": "Önceki sayfa",
+      "nextPage": "Sonraki sayfa",
+      "lastPage": "Son sayfa"
     },
     "pagination": {
       "ariaLabel": {
-        "root": "root",
-        "previous": "previous",
+        "root": "Sayfalama gezinmesi",
+        "previous": "Önceki sayfa",
         "first": "first",
         "last": "last",
-        "next": "next",
-        "currentPage": "currentPage",
-        "page": "page"
+        "next": "Sonraki sayfa",
+        "currentPage": "Sayfa {0}, mevcut sayfa",
+        "page": "Sayfa {0}'a git"
       }
     },
     "input": {
-      "clear": "clear",
-      "appendAction": "appendAction",
-      "prependAction": "prependAction",
+      "clear": "{0} temizle",
+      "appendAction": "{0} son ekleme işlemi",
+      "prependAction": "{0} ön ekleme işlemi",
       "counterSize": "counterSize",
       "otp": "otp"
     },

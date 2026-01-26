@@ -1997,73 +1997,117 @@
         "cancel": "取消",
         "upgradeYourPlan": "升级您的计划",
         "renameItem": "重命名{type}",
-        "renameItemNewName": "输入{type}的新名称",
-        "renameCancel": "取消",
-        "renameSubmit": "重命名",
         "moveItem": "将{type}移至",
-        "selectFolder": "选择目标文件夹",
-        "moveCancel": "取消",
-        "moveSubmit": "移至",
-        "moveToRoot": "移至根目录",
-        "itemAlreadyExists": "{name}已存在于此位置",
-        "cannotCreateFolder": "无法创建文件夹",
-        "cannotRenameItem": "无法重命名{type}",
-        "cannotDeleteItem": "无法删除{type}",
-        "folderCreationFailed": "文件夹创建失败",
-        "cannotMoveItem": "无法移动{type}",
-        "newFolderName": "新文件夹名称",
-        "createFolderCancel": "取消",
-        "createFolderSubmit": "创建",
-        "invalidFolderName": "文件夹名称无效",
-        "newVersionComment": "版本注释",
-        "uploadingNewVersion": "上传新版本中...",
-        "creatingNewVersion": "创建新版本中...",
-        "newVersionCreated": "新版本已创建",
-        "errorCreatingVersion": "创建版本出错",
-        "storageQuotaExceeded": "存储配额已超出。请升级您的计划或删除未使用的文件。",
-        "connectionError": "连接错误。请检查您的互联网。",
-        "loadingTimeout": "加载超时。请重试。",
-        "operationFailed": "操作失败",
-        "operationSuccessful": "操作成功",
-        "selectSourceFile": "选择源文件",
-        "selectDestinationFolder": "选择目标文件夹",
-        "copyingFile": "复制文件中...",
-        "fileCopied": "文件已复制",
-        "copyingFolder": "复制文件夹中...",
-        "folderCopied": "文件夹已复制",
-        "fileCopyFailed": "文件复制失败",
-        "folderCopyFailed": "文件夹复制失败",
-        "errorMessage": "错误:{message}",
-        "successMessage": "成功:{message}",
-        "retryOperation": "重试操作",
-        "confirmOperation": "确认操作",
-        "storageStatus": {
-          "title": "存储状态",
-          "used": "已使用",
-          "available": "可用",
-          "total": "总计",
-          "percentageUsed": "已使用{percentage}%",
-          "upgradeMessage": "您的存储已{percentage}%满。考虑升级您的计划或删除未使用的文件。",
-          "statusMessage": "您正在使用可用存储空间的{percentage}%。"
+        "cancelSubscription": "取消订阅",
+        "cancelSubscriptionCancel": "保留订阅",
+        "cancelSubscriptionConfirm": "是的，取消订阅",
+        "cancelSubscriptionError": "取消订阅失败",
+        "cancelSubscriptionMessage": "您确定要取消订阅吗？您的访问权限将保留到当前计费周期结束。",
+        "cancelSubscriptionNote": "取消后您可以随时重新订阅。",
+        "cancelSubscriptionSuccess": "订阅已成功取消。您的访问权限将保留到当前计费周期结束。",
+        "cancelSubscriptionTitle": "取消您的订阅",
+        "close": "关闭",
+        "createFolder": "创建文件夹",
+        "createNewFolder": "创建新文件夹",
+        "cryptoComManageInfo": "您的订阅通过 Crypto.com 管理。您可以在其平台上取消或更新付款方式。",
+        "currentVersion": "当前版本",
+        "destinationFolder": "目标文件夹",
+        "destinationPlaceholder": "输入目标路径",
+        "extend": "延长",
+        "fileVersionsDescription": "{count} 个版本可用",
+        "fileVersionsTitle": "文件版本：{name}",
+        "filesDeleteWarning": "如果您不续订，您的文件将很快被删除",
+        "folderName": "文件夹名称",
+        "latest": "最新",
+        "loadingFileContent": "正在加载文件内容...",
+        "manageCryptoCom": "在 Crypto.com 管理",
+        "manageSubscription": "管理订阅",
+        "manageSubscriptionInfo": "在下方管理或取消您的订阅。",
+        "manageSubscriptionTitle": "管理您的订阅",
+        "move": "移动",
+        "newName": "新名称",
+        "noPreviousVersions": "没有以前的版本",
+        "renewNow": "立即续订",
+        "selectFileToUpload": "选择要上传为新版本的文件",
+        "subscriptionActive": "订阅有效",
+        "subscriptionExpired": "订阅已过期",
+        "subscriptionExpiresToday": "订阅今天到期",
+        "subscriptionExpiringSoon": "订阅即将到期",
+        "versionComment": "版本备注（可选）",
+        "versionNumber": "版本 {number}"
+      },
+      "pricingPlans": {
+        "badges": {
+          "bestValue": "最佳价值",
+          "enterprise": "企业版",
+          "mostPopular": "最受欢迎"
         },
-        "versionsDialog": {
-          "title": "文件版本",
-          "current": "当前",
-          "currentVersion": "当前版本(最后更新)",
-          "previous": "之前",
-          "original": "原始",
-          "versionNumber": "版本{number}",
-          "preview": "预览",
-          "download": "下载",
-          "copyLink": "复制链接",
-          "noPreviousVersions": "没有之前的版本",
-          "noPreviousVersionsMessage": "此文件没有之前的版本",
-          "noFileSelected": "未选择文件",
-          "noFileSelectedMessage": "请选择文件以查看其版本",
-          "downloadProgress": "下载进度",
-          "progress": "进度",
-          "downloadSuccess": "{name}下载成功"
-        }
+        "billedMonthly": "按月计费",
+        "contactUs": "联系我们",
+        "current": "当前",
+        "currentPlan": "当前套餐",
+        "customPricing": "定制",
+        "customizable": "可定制",
+        "dailyCost": "每日费用",
+        "dailyCostValue": "每GB $0.0017",
+        "downgrade": "降级",
+        "downgradeBlocked": "无法降级",
+        "features": {
+          "decentralizedStorage": "去中心化存储",
+          "globalDistribution": "全球分发",
+          "unlimitedBandwidth": "无限带宽",
+          "web3Infrastructure": "Web 3 基础设施"
+        },
+        "getStarted": "开始使用",
+        "perDay": "/ 天",
+        "perMonth": "/ 月",
+        "plans": {
+          "elite": "精英版",
+          "fluxDrivePro": "FluxDrive Pro",
+          "standard": "标准版",
+          "starter": "入门版"
+        },
+        "popular": "热门",
+        "pricing": "定价",
+        "renew": "续订",
+        "signIn": "登录",
+        "signUp": "注册",
+        "storage": "存储",
+        "subtitle": "选择您理想的存储套餐。",
+        "title": "FluxDrive 存储套餐",
+        "upgrade": "升级"
+      },
+      "storageInfo": {
+        "almostFull": "存储空间即将满",
+        "almostFullMessage": "您的存储空间已使用 {percentage}%。考虑升级套餐或删除未使用的文件。",
+        "available": "可用",
+        "statusMessage": "您正在使用 {percentage}% 的可用存储空间。",
+        "statusTitle": "存储状态",
+        "title": "存储使用情况",
+        "total": "总计",
+        "usedOf": "已使用 {used}（共 {total}）",
+        "usedSpace": "已用空间"
+      },
+      "versionsDialog": {
+        "copyLink": "复制链接",
+        "current": "当前",
+        "currentVersion": "当前版本（最后更新）",
+        "download": "下载",
+        "downloadFailed": "下载 \"{name}\" 失败：{error}",
+        "downloadProgress": "下载进度",
+        "downloadSuccess": "{name} 下载成功",
+        "linkCopied": "链接已复制到剪贴板",
+        "linkCopyFailed": "复制链接到剪贴板失败",
+        "noFileSelected": "未选择文件",
+        "noFileSelectedMessage": "请选择一个文件以查看其版本",
+        "noPreviousVersions": "没有以前的版本",
+        "noPreviousVersionsMessage": "此文件没有以前的版本",
+        "original": "原始",
+        "preview": "预览",
+        "previous": "以前",
+        "progress": "进度",
+        "title": "文件版本",
+        "versionNumber": "版本 {number}"
       }
     }
   },
@@ -5091,15 +5135,12 @@
     "dataIterator": {
       "noResultsText": "未找到匹配的记录",
       "noDataText": "无可用数据",
-      "loadingText": "加载项中...",
-      "pageText": "{0}-{1},共{2}"
+      "loadingText": "加载项中..."
     },
     "close": "关闭",
     "open": "打开",
     "loading": "加载中...",
     "carousel": {
-      "prev": "上一个视觉",
-      "next": "下一个视觉",
       "ariaLabel": {
         "delimiter": "幻灯片{0}的{1}"
       }
@@ -5112,25 +5153,6 @@
       "prevPage": "上一页",
       "firstPage": "首页",
       "lastPage": "末页"
-    },
-    "datePicker": {
-      "itemsSelected": "已选择{0}项",
-      "range": {
-        "title": "选择范围",
-        "header": "输入日期"
-      },
-      "title": "选择日期"
-    },
-    "dataTable": {
-      "itemsPerPageText": "每页行数:",
-      "ariaLabel": {
-        "sortDescending": "按降序排列。",
-        "sortAscending": "按升序排列。",
-        "activateNone": "激活以删除排序。",
-        "activateDescending": "激活以按降序排列。",
-        "activateAscending": "激活以按升序排列。"
-      },
-      "sortBy": "排序方式"
     },
     "pagination": {
       "ariaLabel": {
@@ -5151,20 +5173,7 @@
       "counterSize": "已输入{0}个字符"
     },
     "fileInput": {
-      "counter": "{0}个文件",
       "counterSize": "{0}个文件({1})"
-    },
-    "timePicker": {
-      "am": "上午",
-      "pm": "下午"
-    },
-    "calendar": {
-      "moreEvents": "还有{0}个",
-      "today": "今天"
-    },
-    "stepper": {
-      "next": "下一步",
-      "prev": "上一步"
     },
     "rating": {
       "ariaLabel": {
