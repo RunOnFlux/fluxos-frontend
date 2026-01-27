@@ -7689,6 +7689,12 @@ async function propagateSignedMessage() {
     if (response.data?.status === 'success') {
       registrationHash.value = response.data.data
 
+      // Sync appDetails.name with the lowercased name from appSpecFormated
+      // This ensures the "Manage Application" button URL matches the registered app name
+      if (appSpecFormated.value?.name) {
+        appDetails.value.name = appSpecFormated.value.name
+      }
+
       // Save snapshot of spec at signing time to detect changes if user goes back
       signedSpecSnapshot.value = JSON.stringify(props.appSpec)
       showToast('success', 'Application registered successfully! Redirecting to Test & Pay...')
