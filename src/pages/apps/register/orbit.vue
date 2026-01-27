@@ -1331,14 +1331,10 @@
 
                       <!-- Custom Plan -->
                       <div
-                        class="plan-card custom-plan"
+                        class="plan-card"
                         :class="{ 'selected': selectedPlan === 'custom' }"
                         @click="selectPlanAndContinue('custom')"
                       >
-                        <div class="custom-badge">
-                          {{ t('pages.apps.register.orbit.pricing.customizable') }}
-                        </div>
-
                         <div class="plan-price-badge custom-price-badge">
                           <span class="price-amount price-starting">{{ t('pages.apps.register.orbit.pricing.startingAt') }} $0.99</span>
                           <span class="price-period">{{ t('pages.apps.register.orbit.pricing.perMonth') }}</span>
