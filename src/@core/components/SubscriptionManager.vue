@@ -3959,7 +3959,7 @@ const NON_TESTABLE_FIELDS = [
 const applicationPrice = ref(null)
 const applicationPriceFluxDiscount = ref(0)
 const stripeEnabled = ref(true)
-const paypalEnabled = ref(true)
+const paypalEnabled = ref(false) // PayPal currently not available
 const subscribedTill = computed(() => {
   const now = new Date()
   now.setDate(now.getDate() + 30) // Default 30 days

@@ -2358,7 +2358,7 @@ const { privilege } = storeToRefs(fluxStore)
 const zelidauth = ref(null)
 const isWalletUser = ref(false)
 
-// Payment methods - 2 fiat + 2 crypto options for all users
+// Payment methods - 1 fiat + 2 crypto options for all users (PayPal currently not available)
 const paymentMethods = computed(() => {
   return [
     {
@@ -2367,12 +2367,13 @@ const paymentMethods = computed(() => {
       description: t('components.marketplace.installDialog.payWithCreditCard'),
       image: stripeLogo,
     },
-    {
-      id: 'paypal',
-      name: 'PayPal',
-      description: t('components.marketplace.installDialog.payWithPayPal'),
-      image: paypalLogo,
-    },
+    // PayPal currently not available
+    // {
+    //   id: 'paypal',
+    //   name: 'PayPal',
+    //   description: t('components.marketplace.installDialog.payWithPayPal'),
+    //   image: paypalLogo,
+    // },
     {
       id: 'flux',
       name: 'ZelCore',

@@ -1908,6 +1908,7 @@
                                   </VCardText>
                                 </VCard>
 
+                                <!-- PayPal currently not available
                                 <VCard
                                   variant="outlined"
                                   class="payment-icon-card-horizontal"
@@ -1923,6 +1924,7 @@
                                     />
                                   </VCardText>
                                 </VCard>
+                                -->
                               </div>
 
                               <!-- USD Price Display -->
