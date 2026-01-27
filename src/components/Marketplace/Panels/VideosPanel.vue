@@ -177,9 +177,20 @@ const getYouTubeVideoId = url => {
   return null
 }
 
-// Filter valid YouTube URLs
+// Default videos to always show at the end (add more URLs here as needed)
+const DEFAULT_VIDEOS = [
+  'https://www.youtube.com/watch?v=BroiO5hPQng',
+]
+
+// Filter valid YouTube URLs and append default videos at the end
 const validVideos = computed(() => {
-  return videosList.value.filter(url => getYouTubeVideoId(url) !== null)
+  const videos = videosList.value.filter(url => getYouTubeVideoId(url) !== null)
+  const existingIds = new Set(videos.map(url => getYouTubeVideoId(url)))
+
+  // Filter out default videos that are already in the list (avoid duplicates)
+  const newDefaultVideos = DEFAULT_VIDEOS.filter(url => !existingIds.has(getYouTubeVideoId(url)))
+
+  return [...videos, ...newDefaultVideos]
 })
 
 // Get YouTube thumbnail URL
@@ -287,25 +298,12 @@ watch(validVideos, fetchAllVideoTitles, { deep: true })
 
 .videos-grid {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 12px;
-  overflow-x: auto;
   padding-bottom: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: rgba(var(--v-theme-on-surface), 0.2) transparent;
 }
 
-.videos-grid::-webkit-scrollbar {
-  height: 6px;
-}
-
-.videos-grid::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-.videos-grid::-webkit-scrollbar-thumb {
-  background: rgba(var(--v-theme-on-surface), 0.2);
-  border-radius: 3px;
-}
 
 .video-item {
   position: relative;
@@ -339,6 +337,7 @@ watch(validVideos, fetchAllVideoTitles, { deep: true })
 .video-title-text {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
