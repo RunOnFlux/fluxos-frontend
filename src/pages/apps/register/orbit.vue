@@ -510,9 +510,18 @@
                             type="number"
                             :rules="[rules.required, rules.port]"
                             variant="outlined"
-                            :hint="t('pages.apps.register.orbit.config.portListensOn')"
                             persistent-hint
-                          />
+                          >
+                            <template #details>
+                              <div class="v-messages app-port-hint">
+                                <span class="v-messages__message">{{ t('pages.apps.register.orbit.config.portListensOn') }}</span>
+                                <VChip v-if="portAutoDetected" color="success" size="x-small" variant="flat" class="ml-2">
+                                  <VIcon start size="12">mdi-auto-fix</VIcon>
+                                  {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
+                                </VChip>
+                              </div>
+                            </template>
+                          </VTextField>
                         </VCol>
                         <VCol cols="12" md="6">
                           <VTextField
@@ -8133,5 +8142,25 @@ onMounted(() => {
 
 .terms-link:hover {
   text-decoration: underline;
+}
+
+/* App port hint styling to match other field hints */
+.app-port-hint {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.app-port-hint .v-messages__message {
+  line-height: 1.2;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+}
+
+/* Fix alignment for the port field details slot */
+.v-input__details:has(.app-port-hint) {
+  justify-content: flex-start !important;
+  padding-inline-start: 16px;
 }
 </style>
