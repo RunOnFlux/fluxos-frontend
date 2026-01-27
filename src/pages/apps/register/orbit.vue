@@ -6092,6 +6092,13 @@ watch(selectedGeo, () => {
 
 // Initialize contact email from user if available
 onMounted(() => {
+  // Twitter conversion tracking event for plan step
+  if (typeof window.twq === 'function') {
+    window.twq('event', 'tw-pfazs-r2n3b', {
+      email_address: null,
+    })
+  }
+
   // Fetch geolocation data
   fetchGeolocationData()
 

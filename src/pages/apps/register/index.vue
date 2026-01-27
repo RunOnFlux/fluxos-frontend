@@ -765,6 +765,13 @@ useHead({
 })
 
 onMounted(async () => {
+  // Twitter conversion tracking event
+  if (typeof window.twq === 'function') {
+    window.twq('event', 'tw-pfazs-r2n2v', {
+      email_address: null,
+    })
+  }
+
   // Load pricing and network data in parallel
   try {
     await Promise.all([
