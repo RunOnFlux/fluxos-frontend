@@ -548,6 +548,7 @@
                       :app-locations="appLocationsMap[item.name] || []"
                       :expanded="expanded.includes(item.name)"
                       :app-spec="item"
+                      show-location
                     />
                   </div>
                 </div>
@@ -1497,11 +1498,33 @@ onUnmounted(() => {
   }
 
   .myapps-table td:not(.expanded-row td),
-  .myapps-table th {
+  .myapps-table th:not(.expanded-row th) {
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
   }
+
+  /* Allow locations table cells to wrap and display full content */
+  .myapps-table .expanded-row .locations-table td,
+  .myapps-table .expanded-row .locations-table th,
+  .myapps-table .locations-table td,
+  .myapps-table .locations-table th {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+  }
+}
+
+/* Override for locations table with deep selector */
+::v-deep(.myapps-table .locations-table td),
+::v-deep(.myapps-table .locations-table th) {
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  max-width: none !important;
+  min-width: auto !important;
+  width: auto !important;
+  padding: 8px 16px !important;
 }
 
 ::v-deep(.small-checkbox .v-label) {
