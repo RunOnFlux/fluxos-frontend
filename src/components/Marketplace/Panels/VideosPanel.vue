@@ -308,7 +308,7 @@ watch(validVideos, fetchAllVideoTitles, { deep: true })
 .video-item {
   position: relative;
   flex-shrink: 0;
-  width: 320px;
+  width: 420px;
   cursor: pointer;
   border-radius: 12px;
   overflow: hidden;
@@ -441,7 +441,7 @@ watch(validVideos, fetchAllVideoTitles, { deep: true })
 /* Responsive */
 @media (max-width: 600px) {
   .video-item {
-    width: 260px;
+    width: 320px;
   }
 
   .play-icon {

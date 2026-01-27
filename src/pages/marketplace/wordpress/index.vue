@@ -96,7 +96,6 @@
 
       <!-- Videos Section -->
       <VideosPanel
-        v-if="videos.length > 0"
         :videos="videos"
         :title="t('components.marketplace.panels.videosPanel.title')"
       />

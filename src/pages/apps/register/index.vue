@@ -101,6 +101,9 @@
       <!-- Trustpilot Reviews Section -->
       <TrustpilotPanel :star-size="32" show-rating-label use-live-data />
 
+      <!-- Videos Section -->
+      <VideosPanel :title="t('components.marketplace.panels.videosPanel.title')" />
+
       <!-- Global Server Network Section -->
       <ServerLocationsPanel
         :panel="serverLocationsPanel"
@@ -149,6 +152,7 @@ import Api from '@/services/ApiClient'
 import { useFluxStore } from '@/stores/flux'
 import ServerLocationsPanel from '@/components/Marketplace/Panels/ServerLocationsPanel.vue'
 import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
+import VideosPanel from '@/components/Marketplace/Panels/VideosPanel.vue'
 import FAQPanel from '@/components/Marketplace/Panels/FAQPanel.vue'
 import FeatureShowcase from '@/components/FeatureShowcase.vue'
 import RelatedLinksGrid from '@/components/RelatedLinksGrid.vue'
