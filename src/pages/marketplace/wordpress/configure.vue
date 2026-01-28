@@ -592,6 +592,7 @@ import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
 import { useWordPress } from '@/composables/useWordPress'
 import AppsService from '@/services/AppsService'
+import { getUser } from '@/utils/firebase'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import MaintenanceCard from '@/components/Marketplace/MaintenanceCard.vue'
 import InstallDialog from '@/components/Marketplace/InstallDialog.vue'
@@ -1122,6 +1123,15 @@ const loadPlans = async () => {
 
 onMounted(() => {
   loadPlans()
+
+  // Auto-fill contact email for SSO users
+  const loginType = localStorage.getItem('loginType')
+  if (loginType === 'sso') {
+    const firebaseUser = getUser()
+    if (firebaseUser?.email) {
+      formData.value.email = firebaseUser.email
+    }
+  }
 })
 </script>
 

@@ -2358,7 +2358,7 @@ const { privilege } = storeToRefs(fluxStore)
 const zelidauth = ref(null)
 const isWalletUser = ref(false)
 
-// Payment methods - 2 fiat + 2 crypto options for all users
+// Payment methods - 1 fiat + 2 crypto options for all users (PayPal currently not available)
 const paymentMethods = computed(() => {
   return [
     {
@@ -2367,12 +2367,13 @@ const paymentMethods = computed(() => {
       description: t('components.marketplace.installDialog.payWithCreditCard'),
       image: stripeLogo,
     },
-    {
-      id: 'paypal',
-      name: 'PayPal',
-      description: t('components.marketplace.installDialog.payWithPayPal'),
-      image: paypalLogo,
-    },
+    // PayPal currently not available
+    // {
+    //   id: 'paypal',
+    //   name: 'PayPal',
+    //   description: t('components.marketplace.installDialog.payWithPayPal'),
+    //   image: paypalLogo,
+    // },
     {
       id: 'flux',
       name: 'ZelCore',
@@ -5130,6 +5131,15 @@ watch(() => props.modelValue, (newValue, oldValue) => {
 
     // Re-fetch deployment info
     fetchDeploymentInfo()
+
+    // Auto-fill contact email for SSO users (after resetDialog clears the form)
+    const loginType = localStorage.getItem('loginType')
+    if (loginType === 'sso') {
+      const firebaseUser = getUser()
+      if (firebaseUser?.email) {
+        emailNotifications.value.email = firebaseUser.email
+      }
+    }
   }
 })
 

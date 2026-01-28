@@ -15,6 +15,14 @@
 
     <!-- Content -->
     <div class="hero-content">
+      <!-- Badge -->
+      <div v-if="badgeText" class="hero-badge-wrapper mb-3">
+        <div class="hero-badge-modern">
+          <VIcon class="badge-icon" size="20">mdi-git</VIcon>
+          <span class="badge-text">{{ resolvedBadgeText }}</span>
+        </div>
+      </div>
+
       <h1 class="hero-title">{{ resolvedTitle }}</h1>
       <p v-if="resolvedSubtitle" class="hero-subtitle">{{ resolvedSubtitle }}</p>
 
@@ -146,6 +154,16 @@ const props = defineProps({
     type: String,
     default: undefined,
   },
+
+  // Badge
+  badgeText: {
+    type: String,
+    default: '',
+  },
+  badgeColor: {
+    type: String,
+    default: 'success',
+  },
 })
 
 const emit = defineEmits(['ctaClick'])
@@ -172,6 +190,7 @@ const resolveI18nValue = value => {
 
 const resolvedTitle = computed(() => resolveI18nValue(props.title))
 const resolvedSubtitle = computed(() => resolveI18nValue(props.subtitle))
+const resolvedBadgeText = computed(() => resolveI18nValue(props.badgeText))
 
 // Use optimized image (WebP with PNG fallback)
 const { url: optimizedBackgroundUrl } = useOptimizedImage(props.backgroundImage)
@@ -248,6 +267,166 @@ const handleCtaClick = event => {
   max-width: 800px;
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-badge-wrapper {
+  display: inline-flex;
+  position: relative;
+  animation: fadeInDown 0.6s ease-out;
+}
+
+.hero-badge-wrapper::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50px;
+  background: linear-gradient(135deg,
+    rgba(74, 222, 128, 0.4),
+    rgba(34, 197, 94, 0.4),
+    rgba(59, 130, 246, 0.4),
+    rgba(139, 92, 246, 0.4)
+  );
+  background-size: 300% 300%;
+  animation: shimmer 3s ease-in-out infinite;
+  opacity: 0.6;
+  filter: blur(8px);
+  z-index: -1;
+}
+
+.hero-badge-modern {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.1) 100%
+  );
+  backdrop-filter: blur(16px) saturate(180%);
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.15) inset,
+    0 4px 12px rgba(74, 222, 128, 0.2);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.hero-badge-modern::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transform: rotate(45deg);
+  animation: shine 3s ease-in-out infinite;
+}
+
+.hero-badge-modern::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50px;
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 70%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-badge-modern:hover {
+  background: linear-gradient(135deg,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0.15) 100%
+  );
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.4),
+    0 0 0 1px rgba(255, 255, 255, 0.2) inset,
+    0 8px 24px rgba(74, 222, 128, 0.4),
+    0 0 30px rgba(74, 222, 128, 0.3);
+}
+
+.hero-badge-modern:hover::after {
+  opacity: 1;
+}
+
+.badge-icon {
+  color: #4ade80;
+  filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.8));
+  animation: iconPulse 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+@keyframes iconPulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.8));
+  }
+  50% {
+    filter: drop-shadow(0 0 16px rgba(74, 222, 128, 1));
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.badge-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: white;
+  letter-spacing: 0.5px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 .hero-title {

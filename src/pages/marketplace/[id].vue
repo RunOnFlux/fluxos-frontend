@@ -294,13 +294,6 @@
         </div>
       </div>
 
-      <!-- Videos Section -->
-      <VideosPanel
-        v-if="app.videos && app.videos.length > 0"
-        :videos="app.videos"
-        :title="t('components.marketplace.panels.videosPanel.title')"
-      />
-
       <!-- Why Host on FluxCloud Section -->
       <FeatureShowcase
         :title="t('pages.apps.register.landing.benefits.title')"
@@ -320,6 +313,12 @@
         :panel="serverLocationsPanel"
         :app="app"
         class="network-section"
+      />
+
+      <!-- Videos Section -->
+      <VideosPanel
+        :videos="app.videos || []"
+        :title="t('components.marketplace.panels.videosPanel.title')"
       />
 
       <!-- Frequently Asked Questions Section -->

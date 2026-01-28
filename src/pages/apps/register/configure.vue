@@ -95,14 +95,35 @@
             </div>
 
             <!-- Show registration form if logged in -->
-            <SubscriptionManager
-              v-else
-              :app-spec="adaptedAppSpec"
-              new-app
-              :is-redeploy="isRedeploy"
-              :execute-local-command="executeLocalCommand"
-              @spec-converted="handleSpecConverted"
-            />
+            <div v-else class="docker-setup">
+              <!-- Header -->
+              <div class="docker-header">
+                <VBtn
+                  variant="text"
+                  size="small"
+                  :to="{ name: 'apps-register' }"
+                  class="back-btn"
+                >
+                  <VIcon start>mdi-arrow-left</VIcon>
+                  {{ t('pages.apps.register.docker.header.backToDeploymentOptions') }}
+                </VBtn>
+                <div class="docker-header-content">
+                  <VIcon size="32" color="info" class="mr-3">mdi-docker</VIcon>
+                  <div>
+                    <h1 class="docker-title">{{ t('pages.apps.register.docker.header.deployWithDocker') }}</h1>
+                    <p class="docker-subtitle">{{ t('pages.apps.register.docker.header.fullControlDeployment') }}</p>
+                  </div>
+                </div>
+              </div>
+
+              <SubscriptionManager
+                :app-spec="adaptedAppSpec"
+                new-app
+                :is-redeploy="isRedeploy"
+                :execute-local-command="executeLocalCommand"
+                @spec-converted="handleSpecConverted"
+              />
+            </div>
           </VCardText>
         </VCard>
       </VCol>
@@ -438,6 +459,48 @@ onMounted(async () => {
   50% {
     transform: scale(1.2);
     opacity: 0.8;
+  }
+}
+
+/* Docker setup header styles */
+.docker-setup {
+  width: 100%;
+}
+
+.docker-header {
+  margin-bottom: 1.5rem;
+}
+
+.back-btn {
+  margin-bottom: 1rem;
+  padding-left: 0;
+}
+
+.docker-header-content {
+  display: flex;
+  align-items: center;
+}
+
+.docker-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.docker-subtitle {
+  font-size: 0.875rem;
+  margin: 0;
+  opacity: 0.7;
+}
+
+@media (max-width: 600px) {
+  .docker-title {
+    font-size: 1.25rem;
+  }
+
+  .docker-subtitle {
+    font-size: 0.8rem;
   }
 }
 </style>

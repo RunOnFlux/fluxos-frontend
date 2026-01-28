@@ -96,9 +96,9 @@
 
       <!-- Videos Section -->
       <VideosPanel
-        v-if="videos.length > 0"
         :videos="videos"
         :title="t('components.marketplace.panels.videosPanel.title')"
+        class="wordpress-videos-panel"
       />
 
       <!-- Description Section -->
@@ -558,6 +558,11 @@ onMounted(() => {
 /* Remove bottom margin from last child */
 .landing-content > *:last-child {
   margin-bottom: 0;
+}
+
+/* Override VideosPanel margin to prevent double spacing */
+.wordpress-videos-panel {
+  margin-top: 0 !important;
 }
 
 /* Section Cards */

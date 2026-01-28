@@ -35,6 +35,7 @@ const STATIC_ROUTES = [
   '/marketplace/games',
   '/flux-drive',
   '/apps/register',
+  '/apps/register/orbit',
   '/cost-calculator',
   '/dashboards/overview',
   '/dashboards/resources',
