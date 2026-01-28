@@ -403,8 +403,8 @@
       "ssd": "SSD/NVMe",
       "vCore": "ভিকোর",
       "vCores": "vCores",
-      "ramValue": "{মান} এমবি",
-      "ssdValue": "{মান} জিবি"
+      "ramValue": "{value} এমবি",
+      "ssdValue": "{value} জিবি"
     },
     "confirmCustomDialog": {
       "confirmation": "নিশ্চিতকরণ",
@@ -623,7 +623,7 @@
       "initializingBackupJobs": "ব্যাকআপ কাজ শুরু করা হচ্ছে...",
       "downloadingBackupFiles": "ব্যাকআপ ফাইল ডাউনলোড হচ্ছে...",
       "backupUploadedSuccessfully": "FluxDrive-এ {component} ব্যাকআপ আপলোড করা হয়েছে।",
-      "backupUploadFailed": "FluxDrive-এ {component} ব্যাকআপ আপলোড করা যায়নি। {বার্তা}",
+      "backupUploadFailed": "FluxDrive-এ {component} ব্যাকআপ আপলোড করা যায়নি। {message}",
       "errorRegisteringFiles": "আপলোডের জন্য ফাইল(গুলি) নিবন্ধন করার সময় ত্রুটি৷",
       "errorReceivingFluxDriveBackupList": "FluxDrive ব্যাকআপ তালিকা গ্রহণে ত্রুটি৷",
       "urlAlreadyInQueue": "'{url}' ইতিমধ্যেই অন্য একটি উপাদানের জন্য ডাউনলোড সারিতে রয়েছে৷",
@@ -889,7 +889,7 @@
       "validationReservedSubdir": "সাবডিরেক্টরি নাম সংরক্ষিত (ব্যবহার করা যাবে না: অ্যাপডেটা, ব্যাকআপ, ., ..)",
       "validationFilenameTooLong": "ফাইলের নাম 255 অক্ষর সীমা অতিক্রম করেছে৷",
       "validationSubdirTooLong": "সাবডিরেক্টরি নাম 255 অক্ষর সীমা অতিক্রম করেছে৷",
-      "validationContainerDataTooLong": "মোট মাউন্ট কনফিগারেশন খুব দীর্ঘ ({বর্তমান} অক্ষর, সর্বাধিক {max}) - মাউন্টের সংখ্যা কম করুন বা ছোট নাম/পাথ ব্যবহার করুন",
+      "validationContainerDataTooLong": "মোট মাউন্ট কনফিগারেশন খুব দীর্ঘ ({current} অক্ষর, সর্বাধিক {max}) - মাউন্টের সংখ্যা কম করুন বা ছোট নাম/পাথ ব্যবহার করুন",
       "validationOnlyFirstCanBePrimary": "শুধুমাত্র প্রথম মাউন্ট প্রাথমিক প্রকার হতে পারে - টাইপকে ডিরেক্টরি, ফাইল বা উপাদানে পরিবর্তন করুন",
       "addPath": "পথ যোগ করুন",
       "validationLogs": "বৈধতা লগ",
@@ -1052,7 +1052,7 @@
       "message": "বার্তা",
       "selected": "নির্বাচিত",
       "nodesSelected": "{count}টি বেছে নেওয়া হয়েছে",
-      "pageOf": "{total} এর {চলতি} পৃষ্ঠা",
+      "pageOf": "{total} এর {current} পৃষ্ঠা",
       "autoSelectedNodes": "স্বয়ং-নির্বাচিত {count} উচ্চ-মানের এন্টারপ্রাইজ নোড",
       "additionalOptions": "অতিরিক্ত বিকল্প",
       "forbiddenGeolocation": "নিষিদ্ধ ভূ-অবস্থান",
@@ -1446,7 +1446,7 @@
           "title": "ভিডিও",
           "watchOnYouTube": "ইউটিউবে দেখুন",
           "openOnYouTube": "ইউটিউবে খুলুন",
-          "videoLabel": "ভিডিও {সংখ্যা}"
+          "videoLabel": "ভিডিও {number}"
         }
       },
       "installDialog": {
@@ -1519,7 +1519,7 @@
         "cancel": "বাতিল করুন",
         "manualSigningCancelled": "ম্যানুয়াল স্বাক্ষর বাতিল করা হয়েছে৷",
         "signingAndRegistrationComplete": "স্বাক্ষর এবং নিবন্ধন সম্পূর্ণ",
-        "redirectIn": "আপনাকে {সেকেন্ড} সেকেন্ডের মধ্যে পুনঃনির্দেশিত করা হবে...",
+        "redirectIn": "আপনাকে {seconds} সেকেন্ডের মধ্যে পুনঃনির্দেশিত করা হবে...",
         "proceedToNextStep": "পেমেন্ট সম্পূর্ণ করতে পরবর্তী ধাপে এগিয়ে যান",
         "signingApplicationMessage": "আবেদন বার্তা স্বাক্ষর করা হচ্ছে...",
         "registeringApplication": "Flux নেটওয়ার্কে আবেদন নিবন্ধন করা হচ্ছে...",
@@ -1540,11 +1540,11 @@
         "paymentInstructionsZelCore": "ZelCore পেমেন্ট নির্দেশাবলী",
         "paymentInstructionsSSP": "এসএসপি পেমেন্ট নির্দেশাবলী",
         "copiedToClipboard": "ক্লিপবোর্ডে কপি করা হয়েছে!",
-        "openWallet": "{walet} খুলুন",
+        "openWallet": "{wallet} খুলুন",
         "paymentConfirmed": "পেমেন্ট নিশ্চিত!",
         "waitingForPayment": "পেমেন্টের জন্য অপেক্ষা করা হচ্ছে",
         "completePaymentInWallet": "অনুগ্রহ করে আপনার {wallet} ওয়ালেটে অর্থপ্রদান সম্পূর্ণ করুন৷<br>অর্থপ্রদান স্বয়ংক্রিয়ভাবে নিশ্চিত হয়ে যাবে৷<br><span class=\"text-warning\">এতে ৪৫ মিনিট পর্যন্ত সময় লাগতে পারে৷</span>",
-        "advancingToDeployment": "{সেকেন্ড} সেকেন্ডের মধ্যে স্থাপনার সারাংশে অগ্রসর হচ্ছে...",
+        "advancingToDeployment": "{seconds} সেকেন্ডের মধ্যে স্থাপনার সারাংশে অগ্রসর হচ্ছে...",
         "cancelMonitoring": "মনিটরিং বাতিল করুন",
         "paymentServiceMaintenance": "পেমেন্ট সেবা রক্ষণাবেক্ষণ",
         "maintenanceMessage": "অর্থপ্রদান পরিষেবা বর্তমানে রক্ষণাবেক্ষণাধীন। অনুগ্রহ করে পরে আবার চেষ্টা করুন বা ক্রিপ্টো পেমেন্ট অপশন ব্যবহার করুন (ZelCore বা SSP)।",
@@ -1632,7 +1632,7 @@
         },
         "validation": {
           "fieldRequired": "এই ক্ষেত্রটি প্রয়োজন",
-          "minCharactersRequired": "ন্যূনতম {মিনিট} অক্ষর প্রয়োজন৷",
+          "minCharactersRequired": "ন্যূনতম {min} অক্ষর প্রয়োজন৷",
           "grantMustBeWholeNumber": "অনুদানের পরিমাণ অবশ্যই পূর্ণ সংখ্যা হতে হবে",
           "addressNoSpaces": "ঠিকানায় স্পেস থাকতে পারে না"
         },
@@ -1702,7 +1702,7 @@
           "youHaveVoted": "আপনি ভোট দিয়েছেন",
           "yes": "হ্যাঁ",
           "no": "না",
-          "voteCount": "{গণনা}টি ভোট(গুলি)",
+          "voteCount": "{count}টি ভোট(গুলি)",
           "votingEnds": "ভোট শেষ হয়"
         },
         "grant": {
@@ -1983,7 +1983,7 @@
         "uploadingFile": "ফাইল আপলোড করা হচ্ছে",
         "uploadWait": "অনুগ্রহ করে অপেক্ষা করুন...",
         "uploadProgress": "আপলোড অগ্রগতি: {progress}%",
-        "fileOfTotal": "{total} এর {চলতি} ফাইল",
+        "fileOfTotal": "{total} এর {current} ফাইল",
         "debugInfo": "ডিবাগ তথ্য:",
         "displayLogicDebug": "ডিসপ্লে লজিক ডিবাগ:",
         "versionCommentPlaceholder": "যেমন, বাগ সংশোধন, নতুন বৈশিষ্ট্য...",
@@ -2006,7 +2006,7 @@
         "fileVersionsDescription": "{count} সংস্করণ উপলব্ধ",
         "currentVersion": "বর্তমান সংস্করণ",
         "latest": "সর্বশেষ",
-        "versionNumber": "সংস্করণ {সংখ্যা}",
+        "versionNumber": "সংস্করণ {number}",
         "noPreviousVersions": "কোন পূর্ববর্তী সংস্করণ",
         "close": "বন্ধ",
         "createNewFolder": "নতুন ফোল্ডার তৈরি করুন",
@@ -2053,7 +2053,7 @@
         "currentVersion": "বর্তমান সংস্করণ (শেষ আপডেট)",
         "previous": "আগের",
         "original": "আসল",
-        "versionNumber": "সংস্করণ {সংখ্যা}",
+        "versionNumber": "সংস্করণ {number}",
         "preview": "পূর্বরূপ",
         "download": "ডাউনলোড করুন",
         "copyLink": "লিংক কপি করুন",
@@ -2122,14 +2122,14 @@
         "subtitle": "সিস্টেম সম্পদ এবং উপাদান সংস্করণ দেখুন",
         "resourcesAllocated": "সম্পদ বরাদ্দ",
         "storage": "স্টোরেজ",
-        "storageUsed": "{ব্যবহৃত} জিবি",
-        "storageTotal": "{মোট} জিবি",
+        "storageUsed": "{used} জিবি",
+        "storageTotal": "{total} জিবি",
         "vcpu": "vCPU",
-        "vcpuUsed": "{ব্যবহৃত} vCores",
+        "vcpuUsed": "{used} vCores",
         "vcpuTotal": "{total} vCores",
         "ram": "RAM",
-        "ramUsed": "{ব্যবহৃত} জিবি",
-        "ramTotal": "{মোট} জিবি",
+        "ramUsed": "{used} জিবি",
+        "ramTotal": "{total} জিবি",
         "applications": "অ্যাপ্লিকেশন",
         "installedApps": "ইনস্টল করা অ্যাপস",
         "installedAppsCount": "{count}টি আবেদন(গুলি)",
@@ -2189,7 +2189,7 @@
           "folderCreated": "ফোল্ডার সফলভাবে তৈরি করা হয়েছে",
           "fileDeleted": "\"{name}\" সফলভাবে মুছে ফেলা হয়েছে৷",
           "folderDeleted": "\"{name}\" সফলভাবে মুছে ফেলা হয়েছে৷",
-          "renamed": "\"{পুরানো}\" নাম পরিবর্তন করে \"{নতুন}\" করা হয়েছে",
+          "renamed": "\"{old}\" নাম পরিবর্তন করে \"{new}\" করা হয়েছে",
           "fileShared": "\"{name}\" এখন শেয়ার করা হয়েছে৷",
           "fileUnshared": "\"{name}\" আর শেয়ার করা নেই৷",
           "fileUploaded": "\"{name}\" সফলভাবে আপলোড হয়েছে৷"
@@ -3465,7 +3465,7 @@
       "ssd": "SSD/NVMe",
       "cost": "খরচ",
       "select": "নির্বাচন করুন",
-      "estimatedRate": "*আনুমানিক 1 ফ্লাক্স = ${রেট} USD",
+      "estimatedRate": "*আনুমানিক 1 ফ্লাক্স = ${rate} USD",
       "gotIt": "বুঝেছি",
       "validation": {
         "instancesRequired": "দৃষ্টান্ত প্রয়োজন",
@@ -3575,7 +3575,7 @@
           },
           "cloud": {
             "title": "ফ্লাক্সক্লাউড নেটওয়ার্ক",
-            "description": "ফ্লাক্সক্লাউড হল একটি বিকেন্দ্রীকৃত ক্লাউড কম্পিউটিং প্ল্যাটফর্ম যা বিশ্বব্যাপী বিতরণ করা ফ্লাক্সনোডের উপর {নোডস} দ্বারা চালিত হয়। এটি অ্যাপ হোস্টিং, ব্লকচেইন নোড চালানো এবং AI/ML ওয়ার্কলোড চালানোর জন্য Web3-প্রস্তুত পরিকাঠামো প্রদান করে- AWS বা Google ক্লাউডের মতো ঐতিহ্যবাহী ক্লাউড প্রদানকারীদের একটি বিকেন্দ্রীকৃত বিকল্প অফার করে।"
+            "description": "ফ্লাক্সক্লাউড হল একটি বিকেন্দ্রীকৃত ক্লাউড কম্পিউটিং প্ল্যাটফর্ম যা বিশ্বব্যাপী বিতরণ করা ফ্লাক্সনোডের উপর {nodes} দ্বারা চালিত হয়। এটি অ্যাপ হোস্টিং, ব্লকচেইন নোড চালানো এবং AI/ML ওয়ার্কলোড চালানোর জন্য Web3-প্রস্তুত পরিকাঠামো প্রদান করে- AWS বা Google ক্লাউডের মতো ঐতিহ্যবাহী ক্লাউড প্রদানকারীদের একটি বিকেন্দ্রীকৃত বিকল্প অফার করে।"
           },
           "learnMore": "আরও জানুন"
         },
@@ -3754,7 +3754,7 @@
         "memory": "স্মৃতি",
         "storage": "স্টোরেজ",
         "screenshots": "স্ক্রিনশট",
-        "screenshotAlt": "স্ক্রিনশট {সংখ্যা}",
+        "screenshotAlt": "স্ক্রিনশট {number}",
         "about": "সম্পর্কে",
         "developer": "বিকাশকারী",
         "lastUpdate": "শেষ আপডেট",
@@ -5046,7 +5046,7 @@
       "paymentProcessed": "আপনার আবেদন পেমেন্ট সফলভাবে প্রক্রিয়া করা হয়েছে.",
       "deploymentTime": "এটি 45 মিনিট পর্যন্ত সময় নিতে পারে",
       "deploymentMessage": "আপনার অ্যাপ্লিকেশন Flux নেটওয়ার্কে স্থাপন করার জন্য।",
-      "autoCloseMessage": "এই উইন্ডোটি স্বয়ংক্রিয়ভাবে {সেকেন্ড} সেকেন্ডের মধ্যে বন্ধ হয়ে যাবে",
+      "autoCloseMessage": "এই উইন্ডোটি স্বয়ংক্রিয়ভাবে {seconds} সেকেন্ডের মধ্যে বন্ধ হয়ে যাবে",
       "safeToClose": "আপনি এখন এই উইন্ডোটি নিরাপদে বন্ধ করতে পারেন৷",
       "footerImageAlt": "সাফল্য পৃষ্ঠা আলংকারিক ফুটার ইমেজ"
     },

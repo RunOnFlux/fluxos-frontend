@@ -623,7 +623,7 @@
       "initializingBackupJobs": "காப்புப் பிரதி வேலைகளைத் தொடங்குதல்...",
       "downloadingBackupFiles": "காப்புப் பிரதி கோப்புகளைப் பதிவிறக்குகிறது...",
       "backupUploadedSuccessfully": "FluxDrive இல் {component} காப்புப் பிரதி வெற்றிகரமாகப் பதிவேற்றப்பட்டது.",
-      "backupUploadFailed": "FluxDrive இல் {component} காப்புப்பிரதியைப் பதிவேற்றுவதில் தோல்வி. {செய்தி}",
+      "backupUploadFailed": "FluxDrive இல் {component} காப்புப்பிரதியைப் பதிவேற்றுவதில் தோல்வி. {message}",
       "errorRegisteringFiles": "பதிவேற்றத்திற்கான கோப்பு(களை) பதிவு செய்வதில் பிழை.",
       "errorReceivingFluxDriveBackupList": "FluxDrive காப்புப் பிரதிப் பட்டியலைப் பெறுவதில் பிழை",
       "urlAlreadyInQueue": "'{url}' ஏற்கனவே மற்றொரு கூறுக்கான பதிவிறக்க வரிசையில் உள்ளது.",
@@ -882,14 +882,14 @@
       "quickAddConfig": "கட்டமைப்பைச் சேர்க்கவும்",
       "quickAddData": "தரவு கோப்புறையைச் சேர்க்கவும்",
       "advancedMode": "மேம்பட்ட பயன்முறை",
-      "entryNumber": "மவுண்ட் #{எண்}",
+      "entryNumber": "மவுண்ட் #{number}",
       "validationSubdirRequired": "துணை அடைவு தேவை",
       "validationInvalidSubdir": "துணை அடைவில் இருக்கக்கூடாது / அல்லது ..",
       "validationDuplicateSubdir": "துணை அடைவு/கோப்புப் பெயர்",
       "validationReservedSubdir": "துணை அடைவு பெயர் ஒதுக்கப்பட்டுள்ளது (பயன்படுத்த முடியாது: ஆப்டேட்டா, காப்புப்பிரதி, ., ..)",
       "validationFilenameTooLong": "கோப்பின் பெயர் 255 எழுத்து வரம்பை மீறுகிறது",
       "validationSubdirTooLong": "துணை அடைவு பெயர் 255 எழுத்து வரம்பை மீறுகிறது",
-      "validationContainerDataTooLong": "மொத்த மவுண்ட் உள்ளமைவு மிக நீளமாக உள்ளது ({தற்போதைய} எழுத்துகள், அதிகபட்சம் {max}) - மவுண்ட்களின் எண்ணிக்கையைக் குறைக்கவும் அல்லது குறுகிய பெயர்கள்/பாதைகளைப் பயன்படுத்தவும்",
+      "validationContainerDataTooLong": "மொத்த மவுண்ட் உள்ளமைவு மிக நீளமாக உள்ளது ({current} எழுத்துகள், அதிகபட்சம் {max}) - மவுண்ட்களின் எண்ணிக்கையைக் குறைக்கவும் அல்லது குறுகிய பெயர்கள்/பாதைகளைப் பயன்படுத்தவும்",
       "validationOnlyFirstCanBePrimary": "முதல் மவுண்ட் மட்டுமே முதன்மை வகையாக இருக்க முடியும் - வகையை டைரக்டரி, கோப்பு அல்லது பாகமாக மாற்றவும்",
       "addPath": "பாதையைச் சேர்க்கவும்",
       "validationLogs": "சரிபார்ப்பு பதிவுகள்",
@@ -1052,7 +1052,7 @@
       "message": "செய்தி",
       "selected": "தேர்ந்தெடுக்கப்பட்டது",
       "nodesSelected": "{count} தேர்ந்தெடுக்கப்பட்டது",
-      "pageOf": "{total} இல் {தற்போதைய} பக்கம்",
+      "pageOf": "{total} இல் {current} பக்கம்",
       "autoSelectedNodes": "தானாகத் தேர்ந்தெடுக்கப்பட்ட {count} உயர்தர நிறுவன முனைகள்",
       "additionalOptions": "கூடுதல் விருப்பங்கள்",
       "forbiddenGeolocation": "தடைசெய்யப்பட்ட புவிஇருப்பிடம்",
@@ -1446,7 +1446,7 @@
           "title": "வீடியோக்கள்",
           "watchOnYouTube": "YouTube இல் பார்க்கவும்",
           "openOnYouTube": "YouTube இல் திறக்கவும்",
-          "videoLabel": "வீடியோ {நம்பர்}"
+          "videoLabel": "வீடியோ {number}"
         }
       },
       "installDialog": {
@@ -1519,7 +1519,7 @@
         "cancel": "ரத்து செய்",
         "manualSigningCancelled": "கைமுறையாக கையொப்பமிடுதல் ரத்துசெய்யப்பட்டது",
         "signingAndRegistrationComplete": "கையொப்பமிடுதல் மற்றும் பதிவு செய்தல் முடிந்தது",
-        "redirectIn": "நீங்கள் {வினாடிகள்} வினாடிகளில் திருப்பி விடப்படுவீர்கள்...",
+        "redirectIn": "நீங்கள் {seconds} வினாடிகளில் திருப்பி விடப்படுவீர்கள்...",
         "proceedToNextStep": "கட்டணத்தை முடிக்க அடுத்த படிக்குச் செல்லவும்",
         "signingApplicationMessage": "விண்ணப்ப செய்தியில் கையொப்பமிடுகிறது...",
         "registeringApplication": "ஃப்ளக்ஸ் நெட்வொர்க்கில் விண்ணப்பத்தை பதிவு செய்கிறது...",
@@ -1544,7 +1544,7 @@
         "paymentConfirmed": "பணம் செலுத்துவது உறுதிசெய்யப்பட்டது!",
         "waitingForPayment": "பணம் செலுத்த காத்திருக்கிறது",
         "completePaymentInWallet": "உங்கள் {wallet} வாலட்டில் பணம் செலுத்தவும்.<br>கட்டணம் தானாக உறுதிப்படுத்தப்படும்.<br><span class=\"text-warning\">இதற்கு 45 நிமிடங்கள் வரை ஆகலாம்.</span>",
-        "advancingToDeployment": "வரிசைப்படுத்தல் சுருக்கத்திற்கு {விநாடிகளில்} முன்னேறுகிறது...",
+        "advancingToDeployment": "வரிசைப்படுத்தல் சுருக்கத்திற்கு {seconds} முன்னேறுகிறது...",
         "cancelMonitoring": "கண்காணிப்பை ரத்துசெய்",
         "paymentServiceMaintenance": "கட்டண சேவை பராமரிப்பு",
         "maintenanceMessage": "கட்டணச் சேவை தற்போது பராமரிப்பில் உள்ளது. பிறகு முயற்சிக்கவும் அல்லது கிரிப்டோ கட்டண விருப்பங்களைப் பயன்படுத்தவும் (ZelCore அல்லது SSP).",
@@ -1979,11 +1979,11 @@
         "browserNoAudioSupport": "உங்கள் உலாவி ஆடியோ உறுப்பை ஆதரிக்கவில்லை.",
         "previewNotAvailable": "இந்தக் கோப்பு வகைக்கு முன்னோட்டம் கிடைக்கவில்லை",
         "downloadFile": "கோப்பைப் பதிவிறக்கவும்",
-        "uploadingFiles": "{total} இல் {தற்போதைய} கோப்புகளைப் பதிவேற்றுகிறது",
+        "uploadingFiles": "{total} இல் {current} கோப்புகளைப் பதிவேற்றுகிறது",
         "uploadingFile": "கோப்பை பதிவேற்றுகிறது",
         "uploadWait": "தயவுசெய்து காத்திருங்கள்...",
         "uploadProgress": "பதிவேற்ற முன்னேற்றம்: {progress}%",
-        "fileOfTotal": "{total} இல் {தற்போதைய} கோப்பு",
+        "fileOfTotal": "{total} இல் {current} கோப்பு",
         "debugInfo": "பிழைத்திருத்த தகவல்:",
         "displayLogicDebug": "காட்சி லாஜிக் பிழைத்திருத்தம்:",
         "versionCommentPlaceholder": "எ.கா., பிழை திருத்தங்கள், புதிய அம்சங்கள்...",
@@ -2122,13 +2122,13 @@
         "subtitle": "கணினி வளங்கள் மற்றும் கூறு பதிப்புகளைப் பார்க்கவும்",
         "resourcesAllocated": "ஒதுக்கப்பட்ட வளங்கள்",
         "storage": "சேமிப்பு",
-        "storageUsed": "{பயன்படுத்தப்பட்ட} ஜிபி",
+        "storageUsed": "{used} ஜிபி",
         "storageTotal": "{total} GB",
         "vcpu": "vCPU",
-        "vcpuUsed": "{பயன்படுத்தப்பட்ட} vCores",
+        "vcpuUsed": "{used} vCores",
         "vcpuTotal": "{total} vCores",
         "ram": "ரேம்",
-        "ramUsed": "{பயன்படுத்தப்பட்ட} ஜிபி",
+        "ramUsed": "{used} ஜிபி",
         "ramTotal": "{total} GB",
         "applications": "விண்ணப்பங்கள்",
         "installedApps": "நிறுவப்பட்ட பயன்பாடுகள்",
@@ -2189,7 +2189,7 @@
           "folderCreated": "கோப்புறை வெற்றிகரமாக உருவாக்கப்பட்டது",
           "fileDeleted": "\"{name}\" வெற்றிகரமாக நீக்கப்பட்டது",
           "folderDeleted": "\"{name}\" வெற்றிகரமாக நீக்கப்பட்டது",
-          "renamed": "\"{பழைய}\" \"{புதிய}\" என மறுபெயரிடப்பட்டது",
+          "renamed": "\"{old}\" \"{new}\" என மறுபெயரிடப்பட்டது",
           "fileShared": "\"{name}\" இப்போது பகிரப்பட்டது",
           "fileUnshared": "\"{name}\" இனி பகிரப்படாது",
           "fileUploaded": "\"{name}\" வெற்றிகரமாக பதிவேற்றப்பட்டது"
@@ -2211,7 +2211,7 @@
           "fileTooLarge": "கோப்பு \"{name}\" 5ஜிபி வரம்பை மீறுகிறது",
           "uploadFailed": "பதிவேற்றம் தோல்வியடைந்தது",
           "storageFull": "சேமிப்பகம் நிரம்பியுள்ளது - பதிவேற்றங்கள் அனுமதிக்கப்படவில்லை",
-          "insufficientStorage": "\"{name}\" கோப்பு ({fileSize} MB) கிடைக்கக்கூடிய சேமிப்பகத்தை விட அதிகமாக உள்ளது ({கிடைக்கும்} MB)"
+          "insufficientStorage": "\"{name}\" கோப்பு ({fileSize} MB) கிடைக்கக்கூடிய சேமிப்பகத்தை விட அதிகமாக உள்ளது ({available} MB)"
         }
       },
       "manageUsers": {
@@ -3575,7 +3575,7 @@
           },
           "cloud": {
             "title": "FluxCloud நெட்வொர்க்",
-            "description": "FluxCloud என்பது பரவலாக்கப்பட்ட கிளவுட் கம்ப்யூட்டிங் தளமாகும். இது பயன்பாடுகளை ஹோஸ்ட் செய்வதற்கும், பிளாக்செயின் நோட்களை இயக்குவதற்கும், AI/ML பணிச்சுமைகளைச் செயல்படுத்துவதற்கும் Web3-ரெடி உள்கட்டமைப்பை வழங்குகிறது - AWS அல்லது Google Cloud போன்ற பாரம்பரிய கிளவுட் வழங்குநர்களுக்கு ஒரு பரவலாக்கப்பட்ட மாற்றீட்டை வழங்குகிறது."
+            "description": "FluxCloud என்பது உலகளாவிய அளவில் விநியோகிக்கப்பட்ட {nodes}க்கும் மேற்பட்ட FluxNodes மூலம் இயங்கும் பரவலாக்கப்பட்ட கிளவுட் கம்ப்யூட்டிங் தளமாகும், இது பயன்பாடுகளை ஹோஸ்ட் செய்ய நம்பகமான மற்றும் நம்பகமான சூழலை வழங்குகிறது."
           },
           "learnMore": "மேலும் அறிக"
         },
