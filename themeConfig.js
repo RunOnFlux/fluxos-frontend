@@ -38,6 +38,7 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
         { label: 'বাংলা', i18nLang: 'bn', isRTL: false },              // ~270M speakers
         { label: 'Português', i18nLang: 'pt', isRTL: false },         // ~260M speakers
         { label: 'Русский', i18nLang: 'ru', isRTL: false },           // ~250M speakers
+        { label: 'Bahasa Indonesia', i18nLang: 'id', isRTL: false },  // ~200M speakers
         { label: 'ਪੰਜਾਬੀ', i18nLang: 'pa', isRTL: false },             // ~150M speakers
         { label: 'Deutsch', i18nLang: 'de', isRTL: false },           // ~130M speakers
         { label: '日本語', i18nLang: 'ja', isRTL: false },             // ~125M speakers
