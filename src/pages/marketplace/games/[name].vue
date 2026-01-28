@@ -596,6 +596,11 @@ onMounted(async () => {
   padding-top: 20px;
 }
 
+/* Override VideosPanel margin to prevent double spacing */
+.panels-container :deep(.videos-panel) {
+  margin-top: 0 !important;
+}
+
 /* Fallback Basic Info Styling */
 .basic-game-info {
   margin-top: 24px;

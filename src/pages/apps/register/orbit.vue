@@ -515,7 +515,7 @@
                             <template #details>
                               <div class="v-messages app-port-hint">
                                 <span class="v-messages__message">{{ t('pages.apps.register.orbit.config.portListensOn') }}</span>
-                                <VChip v-if="portAutoDetected" color="success" size="x-small" variant="flat" class="ml-2">
+                                <VChip v-if="portAutoDetected" color="success" size="x-small" variant="tonal" class="ml-2">
                                   <VIcon start size="12">mdi-auto-fix</VIcon>
                                   {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
                                 </VChip>
