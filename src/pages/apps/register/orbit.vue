@@ -237,22 +237,20 @@
                             :append-inner-icon="showToken ? 'mdi-eye-off' : 'mdi-eye'"
                             variant="outlined"
                             :rules="repoCheckStatus === 'private' ? [rules.required] : []"
-                            persistent-hint
                             @click:append-inner="showToken = !showToken"
-                          >
-                            <template #message>
-                              {{ t('pages.apps.register.orbit.repository.tokenHint') }}
-                              <a
-                                v-if="providerTokenUrl"
-                                :href="providerTokenUrl"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="text-primary"
-                              >
-                                {{ t('pages.apps.register.orbit.repository.createToken', { provider: detectedProvider }) }}
-                              </a>
-                            </template>
-                          </VTextField>
+                          />
+                          <div class="text-caption text-medium-emphasis mt-1 mb-1">
+                            {{ t('pages.apps.register.orbit.repository.tokenHint') }}
+                            <a
+                              v-if="providerTokenUrl"
+                              :href="providerTokenUrl"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="text-primary"
+                            >
+                              {{ t('pages.apps.register.orbit.repository.createToken', { provider: detectedProvider }) }}
+                            </a>
+                          </div>
 
                           <!-- Test Connection Button -->
                           <div class="test-connection-section mt-4">
