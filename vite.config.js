@@ -682,9 +682,11 @@ export default defineConfig(({ mode }) => {
             // QR code - keep in vendor-misc to avoid CommonJS module.exports issues
             // (qrcode uses process which is bundled in vendor-misc)
 
-            // Perfect scrollbar
+            // Perfect scrollbar - DO NOT chunk, keep in main bundle
+            // PerfectScrollbar CSS must load before component
+            // Returning undefined keeps it in the main entry chunk
             if (id.includes('perfect-scrollbar')) {
-              return 'scrollbar'
+              return undefined
             }
 
             // Clipboard
