@@ -1,5 +1,6 @@
 <script setup>
 import { useI18n } from 'vue-i18n'
+import 'vue3-perfect-scrollbar/style.css'
 import {
   staticPrimaryColor,
   staticPrimaryDarkenColor,
