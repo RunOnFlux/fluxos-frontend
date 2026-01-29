@@ -224,6 +224,13 @@ export default defineConfig(({ mode }) => {
             /^vjs-/, // vue-json-pretty classes
             /^drv-/, // draggable-resizable-vue3 classes
             /data-v-/, // Vue scoped styles
+            /^ps/, // PerfectScrollbar classes
+            /ps__/, // PerfectScrollbar classes
+            'ps',
+            'ps__rail-x',
+            'ps__rail-y',
+            'ps__thumb-x',
+            'ps__thumb-y',
           ],
           deep: [
             /v-application/,
