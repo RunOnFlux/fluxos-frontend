@@ -512,6 +512,17 @@
                       {{ t('pages.apps.register.orbit.config.stepDescription') }}
                     </p>
 
+                    <VAlert
+                      v-if="requiresRunCommand"
+                      type="info"
+                      variant="tonal"
+                      class="mb-4"
+                      prominent
+                    >
+                      <div class="font-weight-medium mb-1">{{ t('pages.apps.register.orbit.config.runCommandRequired') }}</div>
+                      <div>{{ t('pages.apps.register.orbit.config.runCommandRequiredDescription') }}</div>
+                    </VAlert>
+
                     <VForm ref="configForm">
                       <VRow class="mb-4">
                         <VCol cols="12" md="6">
@@ -2620,6 +2631,7 @@ const repoCheckStatus = ref('idle') // idle, checking, public, private, error
 const repoCheckError = ref('')
 const detectedPort = ref(null)
 const detectedFramework = ref(null)
+const requiresRunCommand = ref(false)
 
 // Compatibility check state
 const compatibilityStatus = ref('idle') // idle, checking, compatible, warning, incompatible
@@ -2776,6 +2788,7 @@ const checkRepoAccess = async () => {
   repoCheckError.value = ''
   detectedPort.value = null
   detectedFramework.value = null
+  requiresRunCommand.value = false
   compatibilityStatus.value = 'idle'
   compatibilityMessage.value = ''
 
@@ -3068,6 +3081,7 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
 
   compatibilityStatus.value = 'checking'
   compatibilityMessage.value = ''
+  requiresRunCommand.value = false
 
   const branchName = branch.value || 'main'
   const basePath = projectPath.value && projectPath.value !== '/' ? projectPath.value.replace(/^\//, '') + '/' : ''
@@ -3093,22 +3107,28 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   ]
 
   let foundAnyMarker = false
+  let foundMarkerFile = null
+
+  const getRawUrl = filePath => {
+    if (parsed.provider === 'github.com') {
+      return `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
+    } else if (parsed.provider === 'gitlab.com') {
+      return `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
+    } else if (parsed.provider === 'bitbucket.org') {
+      return `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
+    }
+
+    return ''
+  }
 
   for (const filePath of markerFiles) {
     try {
-      let rawUrl = ''
-
-      if (parsed.provider === 'github.com') {
-        rawUrl = `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
-      } else if (parsed.provider === 'gitlab.com') {
-        rawUrl = `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
-      } else if (parsed.provider === 'bitbucket.org') {
-        rawUrl = `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
-      }
+      const rawUrl = getRawUrl(filePath)
 
       const response = await fetch(rawUrl, { method: 'HEAD', headers: authHeaders })
       if (response.ok) {
         foundAnyMarker = true
+        foundMarkerFile = filePath
         break
       }
     } catch {
@@ -3127,11 +3147,53 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   if (!detectedPort.value && !detectedFramework.value) {
     compatibilityStatus.value = 'warning'
     compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityWarning')
+  } else {
+    compatibilityStatus.value = 'compatible'
+  }
+
+  // Determine if RUN_COMMAND is required
+  // Not needed when: framework detected, Dockerfile found, or package.json has a start script
+  if (detectedFramework.value) {
+    requiresRunCommand.value = false
 
     return
   }
 
-  compatibilityStatus.value = 'compatible'
+  const markerBaseName = foundMarkerFile?.replace(basePath, '')
+
+  if (markerBaseName === 'Dockerfile') {
+    requiresRunCommand.value = false
+
+    return
+  }
+
+  if (markerBaseName === 'package.json') {
+    // Fetch package.json content to check for start script
+    try {
+      const rawUrl = getRawUrl(foundMarkerFile)
+      const response = await fetch(rawUrl, { headers: authHeaders })
+      if (response.ok) {
+        const content = await response.text()
+        const pkg = JSON.parse(content)
+        if (pkg.scripts?.start) {
+          requiresRunCommand.value = false
+
+          return
+        }
+      }
+    } catch {
+      // If we can't read it, assume run command is needed
+    }
+
+    requiresRunCommand.value = true
+
+    return
+  }
+
+  // Non-Node.js markers (Python, Rust, Go, Java, PHP, Ruby, .NET) or index.html without framework
+  if (markerBaseName !== 'index.html') {
+    requiresRunCommand.value = true
+  }
 }
 
 // Detect port from package.json
@@ -5272,10 +5334,34 @@ const nextStep = async () => {
 
     // Start background check for duplicate git repo when moving from step 2 to step 3
     checkDuplicateGitRepo()
+
+    // Auto-setup RUN_COMMAND for non-standard projects
+    if (requiresRunCommand.value) {
+      nextTick(() => {
+        showAdvancedOptions.value = true
+        const hasRunCommand = customEnvVars.value.some(env => env.key === 'RUN_COMMAND')
+        if (!hasRunCommand) {
+          customEnvVars.value.push({
+            key: 'RUN_COMMAND',
+            value: '',
+            placeholder: 'npm start',
+            isOrbitVar: true,
+          })
+        }
+      })
+    }
   } else if (currentStep.value === 3) {
     // Step 3: Configuration - validate config form
     const { valid } = await configForm.value.validate()
     if (!valid) return
+
+    // Block advancement if RUN_COMMAND is required but not provided
+    if (requiresRunCommand.value) {
+      const runCmd = customEnvVars.value.find(env => env.key === 'RUN_COMMAND')
+      if (!runCmd || !runCmd.value.trim()) {
+        return
+      }
+    }
   }
   currentStep.value++
 }
@@ -6147,6 +6233,7 @@ const resetForm = () => {
   selectedRuntime.value = null
   runtimeVersion.value = ''
   customEnvVars.value = []
+  requiresRunCommand.value = false
 
   // Reset plan
   selectedPlan.value = 'free'
