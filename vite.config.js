@@ -225,12 +225,11 @@ export default defineConfig(({ mode }) => {
             /^drv-/, // draggable-resizable-vue3 classes
             /data-v-/, // Vue scoped styles
             /^ps/, // PerfectScrollbar classes
-            /ps__/, // PerfectScrollbar classes
-            'ps',
-            'ps__rail-x',
-            'ps__rail-y',
-            'ps__thumb-x',
-            'ps__thumb-y',
+            /^ps__/, // PerfectScrollbar internal classes
+            /^ps--/, // PerfectScrollbar state classes
+            /\.ps/, // PerfectScrollbar with dot prefix
+            /\.ps__/, // PerfectScrollbar rails/thumbs
+            /\.ps--/, // PerfectScrollbar states (active, focus, scrolling, clicking)
           ],
           deep: [
             /v-application/,
