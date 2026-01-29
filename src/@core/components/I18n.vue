@@ -1,5 +1,7 @@
 <script setup>
 import { loadLocale } from '@/plugins/i18n'
+import { useConfigStore } from '@core/stores/config'
+import { themeConfig } from '@themeConfig'
 
 const props = defineProps({
   languages: {
@@ -14,11 +16,19 @@ const props = defineProps({
 })
 
 const { locale } = useI18n({ useScope: 'global' })
+const configStore = useConfigStore()
 
 // Load locale on language change
 const changeLocale = async (newLocale) => {
   await loadLocale(newLocale)
   locale.value = newLocale
+
+  // Sync RTL with language
+  const langConfig = themeConfig.app.i18n.langConfig.find(l => l.i18nLang === newLocale)
+  if (langConfig) {
+    console.log(`[I18n] Changing language to: ${newLocale}, RTL: ${langConfig.isRTL}`)
+    configStore.isAppRTL = langConfig.isRTL
+  }
 }
 
 // Map language codes to flag icons

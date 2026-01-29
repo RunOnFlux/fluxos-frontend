@@ -806,6 +806,8 @@
       "content": "Isi",
       "compact": "Kompak",
       "wide": "Lebar",
+      "direction": "Arah",
+      "directionHint": "Sinkronisasi otomatis dengan bahasa",
       "leftToRight": "Kiri ke kanan",
       "rightToLeft": "Kanan ke kiri"
     },

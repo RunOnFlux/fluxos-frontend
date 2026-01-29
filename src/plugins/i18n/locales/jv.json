@@ -806,6 +806,8 @@
       "content": "Konten",
       "compact": "Compact",
       "wide": "Wide",
+      "direction": "Arah",
+      "directionHint": "Sinkronisasi otomatis karo basa",
       "leftToRight": "Kiwa menyang tengen",
       "rightToLeft": "Tengen menyang kiwa"
     },

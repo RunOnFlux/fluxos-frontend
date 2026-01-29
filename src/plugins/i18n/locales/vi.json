@@ -806,6 +806,8 @@
       "content": "Nội dung",
       "compact": "Nhỏ gọn",
       "wide": "Rộng",
+      "direction": "Hướng",
+      "directionHint": "Tự động đồng bộ với ngôn ngữ",
       "leftToRight": "Trái sang phải",
       "rightToLeft": "Phải sang trái"
     },

@@ -806,6 +806,8 @@
       "content": "বিষয়বস্তু",
       "compact": "কমপ্যাক্ট",
       "wide": "প্রশস্ত",
+      "direction": "দিক",
+      "directionHint": "ভাষার সাথে স্বয়ংক্রিয়-সিঙ্ক",
       "leftToRight": "বাম থেকে ডানে",
       "rightToLeft": "ডান থেকে বাম"
     },

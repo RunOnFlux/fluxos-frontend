@@ -806,6 +806,8 @@
       "content": "सामग्री",
       "compact": "संक्षिप्त",
       "wide": "रुंद",
+      "direction": "दिशा",
+      "directionHint": "भाषेसह स्वयं-समक्रमण",
       "leftToRight": "डावीकडून उजवीकडे",
       "rightToLeft": "उजवीकडून डावीकडे"
     },

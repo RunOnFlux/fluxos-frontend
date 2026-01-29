@@ -806,6 +806,8 @@
       "content": "콘텐츠",
       "compact": "콤팩트",
       "wide": "넓은",
+      "direction": "방향",
+      "directionHint": "언어와 자동 동기화",
       "leftToRight": "왼쪽에서 오른쪽으로",
       "rightToLeft": "오른쪽에서 왼쪽으로"
     },

@@ -806,6 +806,8 @@
       "content": "İçerik",
       "compact": "Kompakt",
       "wide": "Geniş",
+      "direction": "Yön",
+      "directionHint": "Dille otomatik senkronizasyon",
       "leftToRight": "Soldan sağa",
       "rightToLeft": "Sağdan sola"
     },

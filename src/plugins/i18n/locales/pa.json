@@ -806,6 +806,8 @@
       "content": "ਸਮੱਗਰੀ",
       "compact": "ਸੰਖੇਪ",
       "wide": "ਚੌੜਾ",
+      "direction": "ਦਿਸ਼ਾ",
+      "directionHint": "ਭਾਸ਼ਾ ਨਾਲ ਆਟੋ-ਸਿੰਕ",
       "leftToRight": "ਖੱਬੇ ਤੋਂ ਸੱਜੇ",
       "rightToLeft": "ਸੱਜੇ ਤੋਂ ਖੱਬੇ"
     },

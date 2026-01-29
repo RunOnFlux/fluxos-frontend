@@ -806,6 +806,8 @@
       "content": "Contenu",
       "compact": "Compact",
       "wide": "Large",
+      "direction": "Direction",
+      "directionHint": "Se synchronise automatiquement avec la langue",
       "leftToRight": "De gauche à droite",
       "rightToLeft": "De droite à gauche"
     },

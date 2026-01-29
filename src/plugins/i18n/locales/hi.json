@@ -806,6 +806,8 @@
       "content": "सामग्री",
       "compact": "सघन",
       "wide": "चौड़ा",
+      "direction": "दिशा",
+      "directionHint": "भाषा के साथ ऑटो-सिंक",
       "leftToRight": "बाएं से दायां",
       "rightToLeft": "दाएं से बाएं"
     },

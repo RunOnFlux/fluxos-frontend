@@ -806,6 +806,8 @@
       "content": "కంటెంట్",
       "compact": "కాంపాక్ట్",
       "wide": "వెడల్పు",
+      "direction": "దిశ",
+      "directionHint": "భాషతో స్వయంచాలకంగా సింక్",
       "leftToRight": "ఎడమ నుండి కుడికి",
       "rightToLeft": "కుడి నుండి ఎడమ"
     },

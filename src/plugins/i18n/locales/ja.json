@@ -806,6 +806,8 @@
       "content": "コンテンツ",
       "compact": "コンパクト",
       "wide": "広い",
+      "direction": "方向",
+      "directionHint": "言語と自動同期",
       "leftToRight": "左から右へ",
       "rightToLeft": "右から左へ"
     },

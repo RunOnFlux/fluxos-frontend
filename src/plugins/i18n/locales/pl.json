@@ -158,6 +158,8 @@
       "compact": "Kompaktowy",
       "default": "Domyślny",
       "wide": "Szeroki",
+      "direction": "Kierunek",
+      "directionHint": "Automatyczna synchronizacja z językiem",
       "menuNavigation": "Menu (Nawigacja)",
       "horizontal": "Poziomy",
       "vertical": "Pionowy",

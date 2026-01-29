@@ -806,6 +806,8 @@
       "content": "உள்ளடக்கம்",
       "compact": "கச்சிதமான",
       "wide": "பரந்த",
+      "direction": "திசை",
+      "directionHint": "மொழியுடன் தானாக ஒத்திசைவு",
       "leftToRight": "இடமிருந்து வலம்",
       "rightToLeft": "வலமிருந்து இடமாக"
     },
