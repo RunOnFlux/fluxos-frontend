@@ -237,10 +237,22 @@
                             :append-inner-icon="showToken ? 'mdi-eye-off' : 'mdi-eye'"
                             variant="outlined"
                             :rules="repoCheckStatus === 'private' ? [rules.required] : []"
-                            :hint="t('pages.apps.register.orbit.repository.tokenHint')"
                             persistent-hint
                             @click:append-inner="showToken = !showToken"
-                          />
+                          >
+                            <template #message>
+                              {{ t('pages.apps.register.orbit.repository.tokenHint') }}
+                              <a
+                                v-if="providerTokenUrl"
+                                :href="providerTokenUrl"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                class="text-primary"
+                              >
+                                {{ t('pages.apps.register.orbit.repository.createToken', { provider: detectedProvider }) }}
+                              </a>
+                            </template>
+                          </VTextField>
 
                           <!-- Test Connection Button -->
                           <div class="test-connection-section mt-4">
@@ -4922,6 +4934,15 @@ const providerColor = computed(() => {
   case 'GitLab': return 'orange'
   case 'Bitbucket': return 'blue'
   default: return 'primary'
+  }
+})
+
+const providerTokenUrl = computed(() => {
+  switch (detectedProvider.value) {
+  case 'GitHub': return 'https://github.com/settings/tokens/new'
+  case 'GitLab': return 'https://gitlab.com/-/user_settings/personal_access_tokens'
+  case 'Bitbucket': return 'https://bitbucket.org/account/settings/app-passwords/new'
+  default: return null
   }
 })
 

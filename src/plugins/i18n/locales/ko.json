@@ -3270,6 +3270,7 @@
             "tokenLabel": "개인 액세스 토큰 *",
             "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
             "tokenHint": "Git 제공자 설정에서 저장소 액세스로 토큰을 생성하세요.",
+            "createToken": "Create {provider} token →",
             "testConnection": "연결 테스트",
             "connectionSuccess": "연결 성공!",
             "connectionVerified": "저장소 액세스가 확인되었습니다.",

@@ -3270,6 +3270,7 @@
             "tokenLabel": "Токен личного доступа *",
             "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
             "tokenHint": "Создайте токен с доступом к репозиторию в настройках вашего провайдера Git.",
+            "createToken": "Create {provider} token →",
             "testConnection": "Тестовое соединение",
             "connectionSuccess": "Подключение успешно!",
             "connectionVerified": "Доступ к репозиторию подтвержден.",
