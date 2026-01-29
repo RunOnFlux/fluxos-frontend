@@ -3290,7 +3290,11 @@
             "enterCredentialsHint": "在上面输入您的用户名和访问令牌以继续",
             "enterTokenHint": "在上面输入您的访问令牌以继续",
             "testConnectionHint": "单击上面的“测试连接”以验证访问权限，然后再继续",
-            "testingConnectionHint": "正在验证存储库访问..."
+            "testingConnectionHint": "正在验证存储库访问...",
+            "compatibilityChecking": "正在分析项目兼容性...",
+            "compatibilityIncompatible": "此存储库似乎不包含受支持的项目。FluxCloud Git 支持 Node.js、Python、Rust、Go、Java、PHP、Ruby、.NET 和静态 HTML 站点。",
+            "compatibilityWarning": "我们未能在此存储库中检测到 Web 框架。FluxCloud Git 专为 Web 应用程序和 API 设计。CLI 工具和基于 Shell 的安装程序不受支持。",
+            "compatibilityLearnMore": "了解有关受支持项目的更多信息"
           },
           "config": {
             "stepTitle": "应用程序配置",

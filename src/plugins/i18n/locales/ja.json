@@ -3290,7 +3290,11 @@
             "enterCredentialsHint": "続行するには、上記のユーザー名とアクセス トークンを入力してください",
             "enterTokenHint": "続行するには、上にアクセス トークンを入力してください",
             "testConnectionHint": "続行する前に、上の「接続をテスト」をクリックしてアクセスを確認してください",
-            "testingConnectionHint": "リポジトリへのアクセスを確認しています..."
+            "testingConnectionHint": "リポジトリへのアクセスを確認しています...",
+            "compatibilityChecking": "プロジェクトの互換性を分析しています...",
+            "compatibilityIncompatible": "このリポジトリにはサポートされているプロジェクトが含まれていないようです。FluxCloud Git は Node.js、Python、Rust、Go、Java、PHP、Ruby、.NET、静的HTMLサイトをサポートしています。",
+            "compatibilityWarning": "このリポジトリでWebフレームワークを検出できませんでした。FluxCloud Git はWebアプリケーションとAPI向けに設計されています。CLIツールやシェルベースのインストーラーはサポートされていません。",
+            "compatibilityLearnMore": "サポートされているプロジェクトの詳細"
           },
           "config": {
             "stepTitle": "アプリケーション構成",

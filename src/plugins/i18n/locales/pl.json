@@ -1467,7 +1467,11 @@
             "projectPathHint": "Dla monorepo, określ folder zawierający Twoją aplikację (np. /apps/frontend)",
             "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
             "enterpriseFeature3": "Zwiększone bezpieczeństwo dla aplikacji własnościowych i wrażliwych",
-            "selectProject": "Wybierz projekt do wdrożenia:"
+            "selectProject": "Wybierz projekt do wdrożenia:",
+            "compatibilityChecking": "Analizowanie kompatybilności projektu...",
+            "compatibilityIncompatible": "To repozytorium nie wydaje się zawierać obsługiwanego projektu. FluxCloud Git obsługuje Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET oraz statyczne strony HTML.",
+            "compatibilityWarning": "Nie wykryliśmy frameworka webowego w tym repozytorium. FluxCloud Git jest przeznaczony do aplikacji webowych i API. Narzędzia CLI i instalatory powłoki nie są obsługiwane.",
+            "compatibilityLearnMore": "Dowiedz się więcej o obsługiwanych projektach"
           },
           "choice": {
             "newBadge": "NOWY",

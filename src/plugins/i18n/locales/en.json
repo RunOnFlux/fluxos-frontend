@@ -3290,7 +3290,11 @@
             "enterCredentialsHint": "Enter your username and access token above to continue",
             "enterTokenHint": "Enter your access token above to continue",
             "testConnectionHint": "Click 'Test Connection' above to verify access before continuing",
-            "testingConnectionHint": "Verifying repository access..."
+            "testingConnectionHint": "Verifying repository access...",
+            "compatibilityChecking": "Analyzing project compatibility...",
+            "compatibilityIncompatible": "This repository doesn't appear to contain a supported project. FluxCloud Git supports Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET, and static HTML sites.",
+            "compatibilityWarning": "We couldn't detect a web framework in this repository. FluxCloud Git is designed for web applications and APIs. CLI tools and shell-based installers are not supported.",
+            "compatibilityLearnMore": "Learn more about supported projects"
           },
           "config": {
             "stepTitle": "Application Configuration",

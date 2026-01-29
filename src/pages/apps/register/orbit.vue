@@ -459,6 +459,47 @@
                           </div>
                         </div>
                       </VExpandTransition>
+
+                      <!-- Compatibility check alerts -->
+                      <div v-if="compatibilityStatus === 'checking'" class="d-flex align-center mt-4">
+                        <VProgressCircular indeterminate size="18" width="2" class="mr-2" />
+                        <span class="text-body-2">{{ t('pages.apps.register.orbit.repository.compatibilityChecking') }}</span>
+                      </div>
+
+                      <VAlert
+                        v-else-if="compatibilityStatus === 'incompatible'"
+                        type="error"
+                        variant="tonal"
+                        class="mt-4"
+                        prominent
+                      >
+                        <div>{{ t('pages.apps.register.orbit.repository.compatibilityIncompatible') }}</div>
+                        <a
+                          href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary mt-1 d-inline-block"
+                        >
+                          {{ t('pages.apps.register.orbit.repository.compatibilityLearnMore') }}
+                        </a>
+                      </VAlert>
+
+                      <VAlert
+                        v-else-if="compatibilityStatus === 'warning'"
+                        type="warning"
+                        variant="tonal"
+                        class="mt-4"
+                      >
+                        <div>{{ t('pages.apps.register.orbit.repository.compatibilityWarning') }}</div>
+                        <a
+                          href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary mt-1 d-inline-block"
+                        >
+                          {{ t('pages.apps.register.orbit.repository.compatibilityLearnMore') }}
+                        </a>
+                      </VAlert>
                     </VForm>
                   </div>
                 </template>
@@ -2579,6 +2620,10 @@ const repoCheckStatus = ref('idle') // idle, checking, public, private, error
 const repoCheckError = ref('')
 const detectedPort = ref(null)
 const detectedFramework = ref(null)
+
+// Compatibility check state
+const compatibilityStatus = ref('idle') // idle, checking, compatible, warning, incompatible
+const compatibilityMessage = ref('')
 const isEnterpriseApp = computed(() => {
   const isPrivateRepo = repoCheckStatus.value === 'private' && repoToken.value
   const hasWebhookSecret = customEnvVars.value.some(env => env.key === 'WEBHOOK_SECRET' && env.value)
@@ -2731,6 +2776,8 @@ const checkRepoAccess = async () => {
   repoCheckError.value = ''
   detectedPort.value = null
   detectedFramework.value = null
+  compatibilityStatus.value = 'idle'
+  compatibilityMessage.value = ''
 
   try {
     let apiUrl = ''
@@ -2757,6 +2804,7 @@ const checkRepoAccess = async () => {
       await fetchBranches(parsed)
       await detectMonorepoStructure(parsed)
       await detectPortFromRepo(parsed)
+      await checkProjectCompatibility(parsed)
     } else if (response.status === 404 || response.status === 403) {
       repoCheckStatus.value = 'private'
     } else {
@@ -3012,6 +3060,78 @@ const detectPortFromRepo = async parsed => {
       console.debug(`Could not fetch ${check.path}:`, error.message)
     }
   }
+}
+
+// Check project compatibility with Orbit
+const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
+  if (!parsed) return
+
+  compatibilityStatus.value = 'checking'
+  compatibilityMessage.value = ''
+
+  const branchName = branch.value || 'main'
+  const basePath = projectPath.value && projectPath.value !== '/' ? projectPath.value.replace(/^\//, '') + '/' : ''
+
+  // Project marker files to check
+  const markerFiles = [
+    `${basePath}package.json`,
+    `${basePath}requirements.txt`,
+    `${basePath}pyproject.toml`,
+    `${basePath}Pipfile`,
+    `${basePath}setup.py`,
+    `${basePath}setup.cfg`,
+    `${basePath}Cargo.toml`,
+    `${basePath}go.mod`,
+    `${basePath}pom.xml`,
+    `${basePath}build.gradle`,
+    `${basePath}build.gradle.kts`,
+    `${basePath}composer.json`,
+    `${basePath}Gemfile`,
+    `${basePath}global.json`,
+    `${basePath}index.html`,
+    `${basePath}Dockerfile`,
+  ]
+
+  let foundAnyMarker = false
+
+  for (const filePath of markerFiles) {
+    try {
+      let rawUrl = ''
+
+      if (parsed.provider === 'github.com') {
+        rawUrl = `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
+      } else if (parsed.provider === 'gitlab.com') {
+        rawUrl = `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
+      } else if (parsed.provider === 'bitbucket.org') {
+        rawUrl = `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
+      }
+
+      const response = await fetch(rawUrl, { method: 'HEAD', headers: authHeaders })
+      if (response.ok) {
+        foundAnyMarker = true
+        break
+      }
+    } catch {
+      // Continue checking other files
+    }
+  }
+
+  if (!foundAnyMarker) {
+    compatibilityStatus.value = 'incompatible'
+    compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityIncompatible')
+
+    return
+  }
+
+  // Markers found — check if we detected a web framework/port
+  if (!detectedPort.value && !detectedFramework.value) {
+    compatibilityStatus.value = 'warning'
+    compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityWarning')
+
+    return
+  }
+
+  compatibilityStatus.value = 'compatible'
 }
 
 // Detect port from package.json
@@ -3733,6 +3853,7 @@ const testAuthConnection = async () => {
       // Also detect monorepo and port
       await detectMonorepoStructureWithAuth(parsed)
       await detectPortFromPrivateRepo(parsed)
+      await checkProjectCompatibility(parsed, headers)
     } else {
       authTestStatus.value = 'error'
       if (response.status === 401) {
@@ -5133,6 +5254,9 @@ const nextStep = async () => {
     // Step 2: Repository - validate repo form
     const { valid } = await repoForm.value.validate()
     if (!valid) return
+
+    // Block advancement if project is incompatible with Orbit
+    if (compatibilityStatus.value === 'incompatible') return
 
     // For private repos, require successful auth test before continuing
     if (repoCheckStatus.value === 'private') {

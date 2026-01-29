@@ -3290,7 +3290,11 @@
             "enterCredentialsHint": "Enter your Jeneng pangguna and access Token above to Terusake",
             "enterTokenHint": "Enter your access Token above to Terusake",
             "testConnectionHint": "Click 'Tes Connection' above to Verifikasi access before continuing",
-            "testingConnectionHint": "Nverifikasi Repositori access..."
+            "testingConnectionHint": "Nverifikasi Repositori access...",
+            "compatibilityChecking": "Nganalisis kompatibilitas proyek...",
+            "compatibilityIncompatible": "Repositori iki kayane ora ngemot proyek sing didhukung. FluxCloud Git ndhukung Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET, lan situs HTML statis.",
+            "compatibilityWarning": "Kita ora bisa ndeteksi framework web ing repositori iki. FluxCloud Git dirancang kanggo aplikasi web lan API. Alat CLI lan installer berbasis shell ora didhukung.",
+            "compatibilityLearnMore": "Sinau luwih lengkap babagan proyek sing didhukung"
           },
           "config": {
             "stepTitle": "Aplikasi Configuration",

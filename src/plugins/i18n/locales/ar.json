@@ -3290,7 +3290,11 @@
             "enterCredentialsHint": "أدخل اسم المستخدم الخاص بك ورمز الوصول أعلاه للمتابعة",
             "enterTokenHint": "أدخل رمز الوصول الخاص بك أعلاه للمتابعة",
             "testConnectionHint": "انقر فوق \"اختبار الاتصال\" أعلاه للتحقق من الوصول قبل المتابعة",
-            "testingConnectionHint": "جارٍ التحقق من الوصول إلى المستودع..."
+            "testingConnectionHint": "جارٍ التحقق من الوصول إلى المستودع...",
+            "compatibilityChecking": "جارٍ تحليل توافق المشروع...",
+            "compatibilityIncompatible": "لا يبدو أن هذا المستودع يحتوي على مشروع مدعوم. يدعم FluxCloud Git كلاً من Node.js و Python و Rust و Go و Java و PHP و Ruby و .NET ومواقع HTML الثابتة.",
+            "compatibilityWarning": "لم نتمكن من اكتشاف إطار عمل ويب في هذا المستودع. تم تصميم FluxCloud Git لتطبيقات الويب وواجهات API. أدوات سطر الأوامر ومثبتات الصدفة غير مدعومة.",
+            "compatibilityLearnMore": "تعرف على المزيد حول المشاريع المدعومة"
           },
           "config": {
             "stepTitle": "تكوين التطبيق",
