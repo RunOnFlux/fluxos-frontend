@@ -1,0 +1,5258 @@
+{
+  "common": {
+    "off": "离开",
+    "buttons": {
+      "cancel": "取消",
+      "close": "关闭",
+      "save": "节省",
+      "delete": "删除",
+      "submit": "提交",
+      "update": "更新",
+      "install": "安装",
+      "start": "开始",
+      "stop": "停止",
+      "remove": "消除",
+      "download": "下载",
+      "upload": "上传",
+      "copy": "复制",
+      "paste": "粘贴",
+      "export": "出口",
+      "import": "进口",
+      "edit": "编辑",
+      "view": "看法",
+      "refresh": "刷新",
+      "reload": "重新加载",
+      "back": "后退",
+      "next": "下一个",
+      "previous": "以前的",
+      "confirm": "确认",
+      "apply": "申请",
+      "reset": "重置",
+      "clear": "清除",
+      "search": "搜索",
+      "filter": "筛选",
+      "yes": "是的",
+      "no": "不",
+      "ok": "好的",
+      "login": "登录"
+    },
+    "labels": {
+      "name": "姓名",
+      "title": "标题",
+      "description": "描述",
+      "status": "地位",
+      "type": "类型",
+      "version": "版本",
+      "size": "尺寸",
+      "value": "价值",
+      "url": "网址",
+      "message": "信息",
+      "owner": "所有者",
+      "date": "日期",
+      "time": "时间",
+      "location": "地点",
+      "country": "国家",
+      "city": "城市",
+      "email": "电子邮件",
+      "password": "密码",
+      "username": "用户名",
+      "address": "地址",
+      "port": "港口",
+      "ip": "IP地址",
+      "tier": "等级",
+      "price": "价格",
+      "total": "全部的",
+      "amount": "数量",
+      "free": "自由的",
+      "memory": "记忆",
+      "storage": "贮存",
+      "screenshots": "截图",
+      "about": "关于",
+      "developer": "开发商",
+      "lastUpdate": "最后更新",
+      "downloads": "下载",
+      "links": "链接",
+      "website": "网站",
+      "sourceCode": "源代码",
+      "support": "支持",
+      "plan": "计划",
+      "billing": "计费",
+      "monthly": "每月",
+      "scrollLeft": "向左滚动",
+      "scrollRight": "向右滚动",
+      "optional": "选修的"
+    },
+    "theme": {
+      "light": "光",
+      "dark": "黑暗的",
+      "switchTheme": "切换主题"
+    },
+    "status": {
+      "loading": "加载中...",
+      "success": "成功",
+      "error": "错误",
+      "warning": "警告",
+      "info": "信息",
+      "active": "积极的",
+      "inactive": "不活跃",
+      "enabled": "启用",
+      "disabled": "残疾人",
+      "online": "在线的",
+      "offline": "离线",
+      "available": "可用的",
+      "unavailable": "不可用",
+      "running": "跑步",
+      "stopped": "已停止",
+      "pending": "待办的",
+      "processing": "加工",
+      "completed": "完全的",
+      "failed": "失败的",
+      "unknown": "未知"
+    },
+    "messages": {
+      "pleaseWait": "请稍等...",
+      "loadingData": "正在加载数据...",
+      "noData": "无可用数据",
+      "noResults": "没有找到结果",
+      "errorOccurred": "发生错误",
+      "operationSuccess": "操作成功完成",
+      "operationFailed": "操作失败",
+      "confirmDelete": "您确定要删除吗？",
+      "unsavedChanges": "您有未保存的更改",
+      "invalidInput": "输入无效",
+      "required": "此字段是必需的",
+      "connectionError": "连接错误。请再试一次。",
+      "unauthorized": "未经授权的访问",
+      "notFound": "未找到",
+      "serverError": "服务器错误。请稍后重试。",
+      "copiedToClipboard": "已复制到剪贴板！",
+      "failedToCopy": "无法复制到剪贴板",
+      "loginRequired": "需要登录",
+      "loggedOutSuccessfully": "退出成功"
+    },
+    "itemsPerPage": "每页项目数",
+    "of": "的",
+    "selectServerConfiguration": "选择服务器配置",
+    "groups": {
+      "smallServers": "小型服务器",
+      "mediumServers": "中型服务器",
+      "largeServers": "大型服务器"
+    },
+    "guarantee": {
+      "title": "30 天退款保证",
+      "description": "无风险地尝试我们的服务。如果您在前 30 天内不完全满意，我们将无理由退款。",
+      "shortTitle": "退款保证",
+      "badge": "30 天保证",
+      "trustMessage": "您的满意是我们的首要任务"
+    },
+    "trustpilot": {
+      "title": "受到数千人的信赖",
+      "ratingLabel": "出色的",
+      "rating": "4.5 分（满分 5 分）",
+      "reviews": "基于 16 条评论",
+      "basedOn": "基于 {count} 条评论",
+      "reviewsCount": "16",
+      "score": "4.5",
+      "outOf": "满分 5",
+      "verifiedCustomer": "已验证客户",
+      "profileUrl": "https://www.trustpilot.com/review/runonflux.com",
+      "viewAllReviews": "查看 Trustpilot 的所有评论",
+      "sampleReviews": {
+        "review1": {
+          "text": "我很惊讶 Runonflux 上的托管如此便宜。到目前为止没有问题。",
+          "author": "图卡·廷卡拉",
+          "rating": "5"
+        },
+        "review2": {
+          "text": "正常运行时间令人难以置信，并且内置冗余。与超大规模提供商相比，价格无与伦比。",
+          "author": "英石",
+          "rating": "5"
+        },
+        "review3": {
+          "text": "在 Flux 云中无缝部署我们的应用程序。非常容易使用，无麻烦。无需 kyc",
+          "author": "赛博飞",
+          "rating": "5"
+        }
+      }
+    },
+    "resources": {
+      "cpu": "中央处理器",
+      "ram": "内存",
+      "memory": "记忆",
+      "storage": "贮存",
+      "disk": "磁盘",
+      "hdd": "硬盘",
+      "ssd": "固态硬盘/NVMe",
+      "bandwidth": "带宽",
+      "cores": "核心",
+      "threads": "线程数"
+    },
+    "time": {
+      "second": "第二",
+      "seconds": "秒",
+      "minute": "分钟",
+      "minutes": "分钟",
+      "hour": "小时",
+      "hours": "小时",
+      "day": "天",
+      "days": "天",
+      "week": "星期",
+      "weeks": "周",
+      "month": "月",
+      "months": "月",
+      "year": "年",
+      "years": "年",
+      "ago": "前",
+      "now": "现在"
+    },
+    "units": {
+      "vCores": "vCores",
+      "mb": "MB",
+      "gb": "国标"
+    },
+    "cookieConsent": {
+      "title": "我们重视您的隐私",
+      "description": "我们使用 cookie 来增强您的浏览体验并分析我们的流量。单击全部接受即表示您同意我们使用 cookie。",
+      "learnMore": "了解更多",
+      "accept": "接受",
+      "acceptAll": "全部接受",
+      "onlyNecessary": "仅必要",
+      "close": "关闭",
+      "customize": "定制",
+      "manageCookies": "管理 Cookie",
+      "settingsTitle": "Cookie 偏好设置",
+      "settingsDescription": "我们使用 cookie 来改善您在我们网站上的体验。您可以选择允许哪些类型的 cookie。",
+      "necessary": "必要的 Cookie",
+      "necessaryDescription": "这些 cookie 对于网站的正常运行至关重要。它们不能被禁用。",
+      "analytics": "分析 Cookie",
+      "analyticsDescription": "这些 cookie 通过匿名收集和报告信息帮助我们了解访问者如何与我们的网站互动。"
+    }
+  },
+  "menu": {
+    "home": {
+      "title": "家"
+    },
+    "dashboard": {
+      "title": "通量网络",
+      "overview": "概述",
+      "resources": "资源",
+      "map": "地图",
+      "rewards": "奖励",
+      "nodeList": "节点列表"
+    },
+    "application": {
+      "title": "应用领域",
+      "myApplications": "我的应用程序",
+      "management": "管理",
+      "globalApps": "全球应用程序",
+      "localApps": "本地应用程序",
+      "registerNewApp": "注册新应用程序",
+      "marketplace": "应用市场",
+      "marketplaceApps": "应用领域",
+      "marketplaceGames": "游戏",
+      "marketplaceWordPress": "WordPress",
+      "composition": "作品",
+      "locations": "地点",
+      "perPage": "每页",
+      "filter": "筛选",
+      "typeToSearch": "输入搜索",
+      "openAdvancedFilter": "打开高级过滤选项",
+      "appType": "应用程序类型",
+      "all": "全部",
+      "marketplaceOnly": "市场",
+      "marketplaceExcluded": "市场排除",
+      "version": "版本",
+      "allVersions": "所有版本",
+      "minHdd": "最小硬盘 (GB)",
+      "minRam": "最小内存 (MB)",
+      "minCpu": "最小 CPU（核心数）",
+      "minInstances": "最小实例数",
+      "repotags": "重新定位标签",
+      "includeAllTags": "包括所有标签（匹配所有）",
+      "clearAllFilters": "清除所有过滤器",
+      "noMatchingApps": "未找到匹配的应用程序。",
+      "noApps": "您没有任何应用程序。",
+      "signInRequired": "需要登录",
+      "signInDescription": "要管理和监控 Flux 网络上的应用程序，您需要使用您的 Flux 身份进行身份验证。",
+      "viewYourApps": "查看您的应用程序",
+      "manageResources": "管理资源",
+      "monitorPerformance": "监控性能",
+      "controlDeployments": "控制部署",
+      "deployDistributedApps": "部署分布式应用程序",
+      "scaleGlobally": "全球扩展",
+      "signIn": "登录",
+      "learnMore": "了解更多",
+      "newToFlux": "刚接触 Flux？",
+      "checkDocumentation": "检查我们的文档",
+      "toGetStarted": "开始吧。",
+      "status": "地位",
+      "checking": "检查...",
+      "loading": "加载中...",
+      "unableToConnect": "无法连接到服务器。请检查您的互联网或稍后重试。",
+      "myActiveApps": "我的活跃应用程序",
+      "activeApps": "活跃应用程序",
+      "myExpiredApps": "我的过期应用程序",
+      "failedToLoadActiveApps": "无法加载活动应用程序",
+      "failedToLoadExpiredApps": "无法加载过期的应用程序",
+      "installedApps": "已安装的应用程序",
+      "availableApps": "可用的应用程序",
+      "marketplaceAppsTab": "市场应用程序"
+    },
+    "administration": {
+      "title": "行政",
+      "systemInfo": "信息",
+      "dockerEvents": "码头工人事件",
+      "manageFlux": "管理通量重力",
+      "manageDaemon": "管理守护进程",
+      "manageBenchmark": "管理基准",
+      "manageUsers": "管理用户",
+      "loggedSessions": "记录的会话",
+      "myFluxShare": "我的 FluxShare",
+      "fluxShare": "通量共享"
+    },
+    "fluxXdao": {
+      "title": "助焊剂 XDAO"
+    },
+    "costCalculator": {
+      "title": "成本计算器"
+    },
+    "apiReference": {
+      "title": "帮助"
+    },
+    "fluxDrive": {
+      "title": "磁通驱动"
+    }
+  },
+  "myApps": {
+    "fluxCloudTitle": "通量云",
+    "fluxCloudSubtitle": "分散式应用程序管理",
+    "fluxCloudDescription": "监控和管理在 Flux 去中心化云网络上运行的所有 Docker 容器化应用程序。查看在我们的全球区块链支持的基础设施中部署的分布式应用程序的实时状态、资源使用情况和性能指标。单击任何应用程序即可访问详细的管理控制和分析。"
+  },
+  "sections": {
+    "dashboard": {
+      "title": "通量网络",
+      "description": "检查 Flux 网络信息、可用资源或包含服务器位置的地图。"
+    },
+    "application": {
+      "title": "应用领域",
+      "description": "在市场上购买、注册您自己的应用程序、管理您的活动应用程序。"
+    },
+    "administration": {
+      "title": "行政",
+      "description": "基础设施管理员和节点操作员的工具允许管理通量重力。"
+    },
+    "fluxXdao": {
+      "title": "助焊剂 XDAO",
+      "description": "查看对 Flux 网络提出的更改列表，创建新的更改并投票。"
+    }
+  },
+  "core": {
+    "appDetailsCard": {
+      "general": "一般的",
+      "copySpecification": "复制规格",
+      "updateSubscription": "更新",
+      "renewSubscription": "更新",
+      "cancelSubscription": "取消",
+      "name": "姓名",
+      "description": "描述",
+      "owner": "所有者",
+      "hash": "哈希值",
+      "contacts": "联系方式",
+      "geolocation": "地理定位",
+      "worldwide": "全世界",
+      "instances": "实例",
+      "specificationsVersion": "规格版本",
+      "registeredOnBlockheight": "已在 Blockheight 上注册",
+      "expiresOnBlockheight": "区块高度到期",
+      "expiresIn": "到期时间",
+      "enterpriseNodes": "企业节点",
+      "notScoped": "未限定范围",
+      "staticIp": "静态IP",
+      "staticIpYes": "是，仅在静态 IP 节点上运行",
+      "staticIpNo": "否，在所有节点上运行",
+      "specificationCopied": "应用程序规范已复制到剪贴板！",
+      "specificationCopyFailed": "复制规格失败",
+      "unknown": "未知",
+      "continent": "大陆：{name}",
+      "country": "，国家/地区：{name}",
+      "region": "，区域：{name}",
+      "allowedContinent": "允许：大陆：{name}",
+      "forbiddenContinent": "禁止：大陆：{name}",
+      "notAvailable": "无法使用",
+      "applicationExpired": "申请已过期"
+    },
+    "componentDetails": {
+      "name": "姓名",
+      "description": "描述",
+      "repository": "存储库",
+      "repositoryAuthentication": "存储库验证",
+      "private": "私人的",
+      "public": "民众",
+      "customDomains": "自定义域",
+      "automaticDomains": "自动域",
+      "ports": "港口",
+      "containerPorts": "集装箱港口",
+      "containerData": "集装箱数据",
+      "environmentParameters": "环境参数",
+      "commands": "命令",
+      "secrets": "秘密",
+      "contentEncrypted": "内容加密",
+      "hardwareResources": "硬件资源",
+      "cpu": "中央处理器",
+      "ram": "内存",
+      "ssd": "固态硬盘/NVMe",
+      "vCore": "核心",
+      "vCores": "vCores",
+      "ramValue": "{value} MB",
+      "ssdValue": "{value} GB"
+    },
+    "confirmCustomDialog": {
+      "confirmation": "确认",
+      "areYouSure": "你确定吗？",
+      "cancel": "取消",
+      "confirm": "确认"
+    },
+    "manualSignDialog": {
+      "title": "手动签名",
+      "instructions": "复制下面的消息，在外部签名，然后粘贴签名。",
+      "messageToSign": "签名消息：",
+      "pasteSignature": "粘贴签名：",
+      "signaturePlaceholder": "在此输入签名",
+      "cancel": "取消",
+      "submit": "提交"
+    },
+    "fileUpload": {
+      "dropFilesHere": "将文件拖放到此处或",
+      "clickToUpload": "点击上传",
+      "fileSizeLimit": "（文件大小限制为 5 GB）",
+      "uploadFiles": "上传文件",
+      "alreadyInQueue": "“{fileName}”已在上传队列中",
+      "uploadSuccess": "“{fileName}”已上传",
+      "uploadError": "上传“{fileName}”时出错：状态 {status}",
+      "uploadFailed": "“{fileName}”上传失败"
+    },
+    "dropZone": {
+      "onlyImageFiles": "仅允许图像文件",
+      "dragAndDropImage": "将您的图像拖放到此处。",
+      "or": "或者",
+      "browseImages": "浏览图片",
+      "removeFile": "删除文件"
+    },
+    "notifications": {
+      "notifications": "通知",
+      "newCount": "{count} 新",
+      "markAllAsUnread": "全部标记为未读",
+      "markAllAsRead": "全部标记为已读",
+      "noNotificationFound": "没有找到通知！",
+      "removeAllNotifications": "删除所有通知"
+    },
+    "runningInstances": {
+      "deployedInstances": "已部署实例",
+      "primaryServerIpAddress": "主服务器IP地址"
+    },
+    "locations": {
+      "perPage": "每页",
+      "filter": "筛选",
+      "typeToSearch": "输入搜索",
+      "selectActiveInstance": "选择活动实例",
+      "noInstancesFound": "未找到实例...",
+      "systemUptimeTooltip": "自上次重新启动以来的系统正常运行时间",
+      "timeElapsedTooltip": "自安装以来经过的时间",
+      "visitApp": "访问应用程序",
+      "visitFluxNode": "访问 FluxNode",
+      "ipAddress": "IP地址",
+      "uptime": "正常运行时间",
+      "running": "跑步",
+      "continent": "大陆",
+      "country": "国家",
+      "region": "地区",
+      "notAvailable": "不适用"
+    },
+    "volumeBrowser": {
+      "title": "卷浏览器",
+      "selectComponent": "选择组件",
+      "downloading": "正在下载...",
+      "downloadCompleted": "下载完成",
+      "path": "小路",
+      "createFolder": "创建文件夹",
+      "folderName": "文件夹名称",
+      "create": "创造",
+      "uploadFiles": "上传文件",
+      "close": "关闭",
+      "rename": "重命名",
+      "newName": "新名称",
+      "editing": "编辑：{file}",
+      "saving": "保存...",
+      "save": "节省",
+      "name": "姓名",
+      "size": "尺寸",
+      "modifiedAt": "修改于",
+      "downloadFolderAsArchive": "下载文件夹作为存档",
+      "downloadFile": "下载文件",
+      "edit": "编辑",
+      "delete": "删除",
+      "fileTooLarge": "文件超出了基于浏览器的编辑的最大大小。请使用基于终端的编辑器。",
+      "initializing": "正在初始化...",
+      "loadingFile": "正在加载{file}...",
+      "errorLoadingFile": "加载文件进行编辑时出错",
+      "errorClosingEditor": "无法完全关闭编辑器。",
+      "editorNotReady": "编辑器还没有准备好。请重新打开该文件。",
+      "fileUpdated": "文件更新成功！",
+      "errorSavingFile": "保存文件时出错：{error}",
+      "directoryDownloadInitiated": "目录下载已启动。请稍等...",
+      "folderAlreadyExists": "文件夹 {folder} 已存在",
+      "folderCreated": "文件夹{folder}已创建！",
+      "renamedSuccess": "{oldName} 重命名为 {newName}",
+      "deleted": "{name}已删除",
+      "files": {
+        "emptyDirectory": "空目录"
+      }
+    },
+    "terminal": {
+      "title": "安全外壳",
+      "selectComponent": "选择组件",
+      "selectCommand": "选择命令",
+      "connect": "连接",
+      "disconnect": "断开",
+      "newTerminal": "新航站楼",
+      "popOutAll": "将所有终端固定到管理器",
+      "user": "用户",
+      "environment": "环境",
+      "customCommand": "自定义命令",
+      "userUid": "用户UID",
+      "environmentVariables": "环境变量（例如，VAR1=值1，VAR2=值2）",
+      "copiedToClipboard": "已复制到剪贴板！",
+      "manager": {
+        "title": "终端经理",
+        "layoutGrid": "网格",
+        "layoutHorizontal": "水平分割",
+        "layoutVertical": "垂直分割",
+        "unpinToTabs": "取消固定到选项卡",
+        "closeTerminal": "关闭终端"
+      },
+      "errors": {
+        "selectContainer": "请选择一个容器",
+        "enterCustomCommand": "请输入自定义命令",
+        "noCommandSelected": "请选择一个命令",
+        "connectionError": "连接错误：{error}",
+        "connectionErrorWithMessage": "连接错误：{message}",
+        "connectionTimeout": "连接超时",
+        "commandNotSupported": "此容器不支持命令 {cmd}",
+        "clipboardInaccessible": "剪贴板无法访问。请再试一次。",
+        "clipboardError": "复制到剪贴板时出错"
+      },
+      "warnings": {
+        "clipboardHttps": "复制失败 - 剪贴板访问需要 HTTPS。尝试再次选择。",
+        "disconnected": "与终端断开连接"
+      }
+    },
+    "logViewer": {
+      "title": "日志查看器",
+      "component": "成分",
+      "selectComponent": "选择组件",
+      "lineCount": "行数",
+      "logsSince": "自记录以来",
+      "filterLogs": "过滤日志",
+      "enterKeywords": "输入关键词...",
+      "advanceOptions": "高级选项",
+      "autoRefresh": "自动刷新",
+      "displayAllLogs": "显示所有日志",
+      "displayTimestamp": "显示时间戳",
+      "lineSelection": "选线模式",
+      "autoScroll": "自动滚动",
+      "copied": "已复制",
+      "copy": "复制",
+      "unselect": "取消选择",
+      "download": "下载",
+      "noMatchingLogs": "未找到“{keyword}”的匹配日志",
+      "noLogsFound": "没有找到日志",
+      "errors": {
+        "noLogsToDownload": "没有可供下载的日志"
+      }
+    },
+    "backupAndRestore": {
+      "backup": "备份",
+      "restore": "恢复",
+      "backupContainerData": "备份容器数据",
+      "selectComponentsToBackup": "选择要备份的组件",
+      "selectAll": "选择全部",
+      "createBackup": "创建备份",
+      "availableLocalBackups": "可用的本地备份",
+      "downloadSelected": "下载选定的",
+      "downloadAll": "下载全部",
+      "removeAllBackupFiles": "删除所有备份文件",
+      "backupListDescription": "当您的应用程序处于活动状态时，会创建并维护每周自动备份。始终保留最新的备份，直到应用程序过期。您还可以随时创建手动备份。",
+      "downloadBackupFile": "下载备份文件",
+      "removeBackupFile": "删除备份文件",
+      "selectComponentsToUpload": "选择您要上传的应用程序组件",
+      "chooseStorageMethod": "选择您的存储方式",
+      "freeFluxDriveInfo": "免费 FluxDrive 备份！每个用户总共可使用最多 10 GB",
+      "fluxDriveDownloadInfo": "FluxDrive 备份可以在恢复页面下载",
+      "uploadSelectedComponents": "上传选定的组件",
+      "selectRestoreMethod": "选择恢复方法",
+      "fluxDrive": "磁通驱动",
+      "uploadFile": "上传文件",
+      "remoteUrl": "远程网址",
+      "backupsInventory": "备份库存",
+      "removeBackup": "删除备份",
+      "addAllToRestoreList": "将全部添加到恢复列表",
+      "addToRestoreList": "添加到恢复列表",
+      "noBackupRecords": "没有可用的备份记录",
+      "restoreOverview": "恢复概述",
+      "removeRestoreJob": "删除恢复作业",
+      "selectComponent": "选择组件",
+      "enterRemoteBackupUrl": "输入远程备份存档的 URL",
+      "component": "成分",
+      "size": "尺寸",
+      "created": "已创建",
+      "expires": "过期",
+      "actions": "行动",
+      "name": "姓名",
+      "time": "时间",
+      "url": "网址",
+      "timestamp": "时间戳",
+      "file": "文件",
+      "googleDrive": "谷歌云端硬盘",
+      "as3Storage": "AS3存储",
+      "checkpointBackupRemovedSuccessfully": "检查点备份已成功删除。",
+      "errorRemovingCheckpoint": "删除检查点时出错",
+      "uploading": "正在上传...",
+      "initializingRestoreJobs": "正在初始化恢复作业...",
+      "restoreCompletedSuccessfully": "恢复成功完成",
+      "restoreFailed": "恢复失败",
+      "initializingBackupJobs": "正在初始化备份作业...",
+      "downloadingBackupFiles": "正在下载备份文件...",
+      "backupUploadedSuccessfully": "{component} 备份已成功上传到 FluxDrive。",
+      "backupUploadFailed": "无法将 {component} 备份上传到 FluxDrive。 {message}",
+      "errorRegisteringFiles": "注册要上传的文件时出错。",
+      "errorReceivingFluxDriveBackupList": "接收 FluxDrive 备份列表时出错",
+      "urlAlreadyInQueue": "“{url}”已位于另一个组件的下载队列中。",
+      "fileAlreadyInQueue": "“{fileName}”已位于另一个组件的上传队列中。",
+      "uploadError": "上传{fileName}时出错，请尝试重新登录",
+      "uploadErrorWithStatus": "上传“{fileName}”时出错 - 状态代码：{status}",
+      "invalidUrlValidation": "请输入以 .tar.gz 结尾的有效 URL"
+    },
+    "login": {
+      "automatedLogin": "自动登录",
+      "thirdPartyLogin": "第 3 方登录",
+      "emailPassword": "邮箱/密码",
+      "finishingLogin": "完成登录",
+      "pleaseWait": "请稍等...",
+      "cancelVerification": "取消验证",
+      "finishingVerification": "整理验证",
+      "checkEmail": "检查您的电子邮件",
+      "googleLogin": "谷歌",
+      "appleLogin": "苹果ID",
+      "bySigningIn": "登录即表示您同意我们的",
+      "termsOfService": "服务条款",
+      "and": "和",
+      "privacyPolicy": "隐私政策",
+      "email": "电子邮件",
+      "password": "密码",
+      "login": "登录",
+      "signUp": "报名",
+      "dontHaveAccount": "没有帐户？",
+      "or": "或者",
+      "decentralizedLogin": "去中心化登录",
+      "decentralizedWallets": "钱包",
+      "walletLoginInfo": "使用您的加密钱包登录",
+      "manualLogin": "手动的",
+      "loginWithZelcore": "使用 Zelcore 登录",
+      "loginWithSSP": "使用 SSP 登录",
+      "loginWithWalletConnect": "使用 WalletConnect 登录",
+      "loginWithMetamask": "使用 Metamask 登录",
+      "signWithWallet": "用你的钱包签署消息",
+      "message": "信息",
+      "insertMessage": "插入消息",
+      "clickToGetMessage": "单击刷新以获取新的登录短语",
+      "getNewLoginPhrase": "获取新的登录短语",
+      "copyLoginPhrase": "复制登录短语",
+      "copiedToClipboard": "已复制到剪贴板！",
+      "noLoginPhraseToDownload": "无需复制登录短语。先点击刷新。",
+      "address": "地址",
+      "insertAddress": "插入地址",
+      "signature": "签名",
+      "insertSignature": "插入签名",
+      "createSSO": "创建单点登录帐户",
+      "confirmPassword": "确认密码",
+      "cancel": "取消",
+      "ok": "好的",
+      "emailRequired": "电子邮件为必填项",
+      "emailInvalid": "电子邮件格式无效",
+      "passwordRequired": "需要密码",
+      "passwordTooShort": "密码必须至少为 8 个字符",
+      "passwordConfirmRequired": "需要确认密码",
+      "passwordMismatch": "密码不匹配",
+      "googleError": "谷歌登录失败",
+      "appleError": "苹果登录失败",
+      "loginFailed": "登录失败，请重试",
+      "invalidCredential": "电子邮件或密码无效。请检查并重试。",
+      "userNotFound": "未找到此电子邮件的帐户。请先注册。",
+      "wrongPassword": "密码不正确。请再试一次。",
+      "userDisabled": "该帐户已被禁用。请联系支持人员。",
+      "emailVerified": "电子邮件已验证",
+      "emailVerificationFailed": "邮箱验证失败",
+      "accountCreationFailed": "创建帐户失败，请重试",
+      "emailAlreadyInUse": "此邮箱号已被注册。请改为登录。",
+      "weakPassword": "密码太弱。请使用更强的密码。",
+      "operationNotAllowed": "电子邮件/密码帐户未启用。请联系支持人员。",
+      "networkError": "网络错误。请检查您的连接并重试。",
+      "tooManyRequests": "尝试次数太多。请稍后重试。",
+      "walletConnectError": "无法连接 WalletConnect",
+      "metamaskPendingRequest": "请完成之前的 MetaMask 请求",
+      "metamaskError": "MetaMask 登录失败",
+      "sspNotInstalled": "SSP 钱包未安装",
+      "signMessageFailed": "消息签名失败，请重试"
+    },
+    "mapComponent": {
+      "loading": "加载中..."
+    },
+    "backendSelector": {
+      "customBackend": "自定义后端"
+    },
+    "appControl": {
+      "title": "应用控制",
+      "control": "控制",
+      "manual": "手动的",
+      "component": "成分",
+      "local": "当地的",
+      "global": "全球的",
+      "manualSelection": "手动选择",
+      "available": "可用的",
+      "selected": "已选择",
+      "monitoring": "监控",
+      "showLogs": "显示日志",
+      "hideLogs": "隐藏日志",
+      "buttons": {
+        "startComponent": "启动组件",
+        "stopComponent": "停止组件",
+        "restartComponent": "重启组件",
+        "pauseComponent": "暂停组件",
+        "unpauseComponent": "取消暂停组件",
+        "startApplication": "开始申请",
+        "stopApplication": "停止申请",
+        "restartApplication": "重新启动应用程序",
+        "pauseApplication": "暂停申请",
+        "unpauseApplication": "取消暂停应用程序",
+        "removeApplication": "删除应用程序",
+        "softReinstall": "软重装",
+        "hardReinstall": "硬重装",
+        "startMonitoring": "开始监控",
+        "stopMonitoring": "停止监控",
+        "stopMonitoringDelete": "停止并删除数据"
+      },
+      "tooltips": {
+        "addSelected": "添加选定的项目",
+        "addAll": "添加所有项目",
+        "removeSelected": "删除选定的项目",
+        "refreshAvailable": "刷新可用项目"
+      },
+      "confirmButtons": {
+        "startComponent": "启动组件",
+        "stopComponent": "停止组件",
+        "restartComponent": "重启组件",
+        "pauseComponent": "暂停组件",
+        "unpauseComponent": "取消暂停组件",
+        "startMonitoring": "开始监控",
+        "stopMonitoring": "停止监控",
+        "stopMonitoringDelete": "停止监控并删除数据",
+        "startApplication": "开始申请",
+        "stopApplication": "停止申请",
+        "restartApplication": "重新启动应用程序",
+        "pauseApplication": "暂停申请",
+        "unpauseApplication": "取消暂停应用程序",
+        "removeApplication": "删除应用程序",
+        "softReinstall": "软重装应用程序",
+        "hardReinstall": "硬重装应用程序"
+      },
+      "confirmMessages": {
+        "softReinstall": "软重新安装将重新部署应用程序，同时保留现有数据。",
+        "hardReinstall": "硬重新安装将完全删除并重新部署应用程序。所有应用程序数据将被删除。此操作无法撤消。"
+      },
+      "operations": {
+        "starting": "开始",
+        "stopping": "停止",
+        "restarting": "正在重启",
+        "pausing": "暂停",
+        "unpausing": "取消暂停",
+        "startingMonitoring": "开始监控",
+        "stoppingMonitoring": "停止监控",
+        "stoppingMonitoringAndDeleting": "停止监控并删除数据",
+        "removing": "去除",
+        "softReinstalling": "软重装",
+        "hardReinstalling": "硬重装"
+      }
+    },
+    "theCustomizer": {
+      "title": "主题定制器",
+      "subtitle": "实时定制和预览",
+      "theming": "主题化",
+      "primaryColor": "原色",
+      "theme": "主题",
+      "light": "光",
+      "dark": "黑暗的",
+      "skins": "皮肤",
+      "default": "默认",
+      "bordered": "有边框",
+      "semiDarkMenu": "半暗菜单",
+      "layout": "布局",
+      "menuNavigation": "菜单（导航）",
+      "vertical": "垂直的",
+      "collapsed": "倒塌",
+      "horizontal": "水平的",
+      "navbarType": "导航栏类型",
+      "sticky": "黏",
+      "static": "静止的",
+      "content": "内容",
+      "compact": "袖珍的",
+      "wide": "宽的",
+      "direction": "方向",
+      "directionHint": "自动与语言同步",
+      "leftToRight": "从左到右",
+      "rightToLeft": "从右到左"
+    },
+    "volumePathBuilder": {
+      "syncTitle": "跨实例数据同步",
+      "syncDescription": "如果您希望数据在不同 Flux 节点上运行的多个应用程序实例之间保持同步，请启用此选项。",
+      "syncEnableLabel": "跨实例同步数据",
+      "syncEnabledHint": "您的数据将在所有实例之间同步",
+      "syncDisabledHint": "每个实例都会有其持久数据",
+      "syncModeLabel": "同步策略",
+      "modePhasedMasterMasterDesc": "所有实例都可以读写，并具有受控的分阶段同步",
+      "modePrimaryStandbyDesc": "一个主实例处理写入，其他实例处理只读备份",
+      "modeMasterMasterDesc": "所有实例可以同时读写",
+      "modeNone": "没有任何",
+      "modePhasedMasterMaster": "阶段性大师-大师 (r)",
+      "modePrimaryStandby": "主备 (g)",
+      "modeMasterMaster": "硕士-硕士",
+      "remountFromSameComponent": "从同一组件重新安装 ({index}:)",
+      "mountFromComponent": "从组件 {index} 挂载 ({index}:)",
+      "validationPathEmpty": "路径为空",
+      "validationBaseCannotBeMount": "基础条目不能是坐骑",
+      "validationDuplicatePath": "重复路径",
+      "validationPathMustStartWithSlash": "路径必须以 / 开头",
+      "validationInvalidCharacters": "路径包含无效字符",
+      "validationMountFutureComponent": "Mount指的是未来的组件",
+      "validationMixedSyncModes": "检测到混合同步模式",
+      "validationSyncMustBeSubpath": "同步路径必须是基本路径 ({basePath}) 的子路径",
+      "validationPathCannotEqualBase": "路径不能等于基本路径",
+      "validationConflictsSyncPath": "与其他同步路径冲突",
+      "validationMountOverlapsSyncRoot": "安装与同步根重叠",
+      "validationFilenameRequired": "文件挂载需要文件名",
+      "validationInvalidFilename": "文件名不能包含/或..",
+      "validationFilePathMustHaveFilename": "文件挂载路径必须包含文件名（例如 /etc/config.yaml，而不仅仅是 /etc）",
+      "validationFilePathShouldHaveExtension": "文件挂载路径应包含带扩展名的文件名（例如 /etc/config.yaml）",
+      "validationComponentMountRequiresNumber": "组件安装类型需要模式中的组件编号",
+      "validationPathContainsColon": "从路径中删除 : - 使用不同的路径名",
+      "validationPathContainsPipe": "从路径中删除 {'|'} - 使用不同的路径名",
+      "validationFilenameContainsColon": "从文件名中删除 : - 使用不同的名称",
+      "validationFilenameContainsPipe": "从文件名中删除 {'|'} - 使用不同的名称",
+      "validationSubdirContainsColon": "从子目录名称中删除 :",
+      "validationSubdirContainsPipe": "从子目录名称中删除 {'|'}",
+      "validationModeConflictsWithPrefix": "选择不同的模式 - 不允许使用 m、f、c、cf",
+      "labelMode": "模式",
+      "labelMountType": "类型",
+      "labelPath": "小路",
+      "typePrimary": "基本的",
+      "typePrimaryDesc": "您的应用程序的主要持久存储",
+      "typeDirectory": "目录",
+      "typeDirectoryDesc": "将特定主机文件夹挂载到容器路径",
+      "typeFile": "文件",
+      "typeFileDesc": "将特定主机文件挂载到容器路径",
+      "typeComponentPrimary": "组件初级",
+      "typeComponentPrimaryDesc": "从另一个组件引用主存储",
+      "typeComponentDirectory": "组件目录",
+      "typeComponentDirectoryDesc": "从另一个组件引用目录",
+      "typeComponentFile": "组件文件",
+      "typeComponentFileDesc": "从另一个组件引用文件",
+      "filename": "文件名",
+      "subdirLabel": "子目录",
+      "filenamePlaceholder": "配置.yaml",
+      "subdirPlaceholder": "日志",
+      "pathPlaceholder": "/数据",
+      "primaryMountLabel": "主要安装",
+      "modeTooltip": "使用组件编号从另一个组件安装数据（例如，0、1、2）。",
+      "typeTooltip": "要安装的内容：主要（主文件夹）、目录/文件（附加存储）、组件（与其他应用程序共享）",
+      "outputPreviewEmpty": "（空的）",
+      "outputPreviewLabel": "输出（将保存什么）：",
+      "treeViewLabel": "视觉树：",
+      "hostPath": "主持人",
+      "containerPath": "容器",
+      "separateMount": "独立安装",
+      "hostAppDir": "主机：/apps/{appname}/",
+      "quickAddLogs": "添加日志",
+      "quickAddConfig": "添加配置",
+      "quickAddData": "添加数据文件夹",
+      "advancedMode": "高级模式",
+      "entryNumber": "装载 #{number}",
+      "validationSubdirRequired": "需要子目录",
+      "validationInvalidSubdir": "子目录不能包含 / 或 ..",
+      "validationDuplicateSubdir": "重复的子目录/文件名",
+      "validationReservedSubdir": "子目录名称被保留（不能使用：appdata、backup、.、..）",
+      "validationFilenameTooLong": "文件名超过 255 个字符限制",
+      "validationSubdirTooLong": "子目录名称超过 255 个字符限制",
+      "validationContainerDataTooLong": "总挂载配置太长（{current} 个字符，最大 {max}） - 减少挂载数量或使用较短的名称/路径",
+      "validationOnlyFirstCanBePrimary": "只有第一个安装可以是主要类型 - 将类型更改为目录、文件或组件",
+      "addPath": "添加路径",
+      "validationLogs": "验证日志",
+      "noValidationErrors": "无验证错误",
+      "entryLabel": "条目#{index}（模式：{mode}，路径：{path}）",
+      "detailedInfoTitle": "详细信息和同步行为",
+      "generalInfoTitle": "常见问题 (FAQ)",
+      "mountTypesTitle": "安装类型",
+      "mountTypePrimaryLabel": "基本的：",
+      "mountTypePrimaryDesc": "使用组件的 appdata 目录安装主卷。这始终是第一个条目。可以选择使用同步模式（r、g、s）。示例：/data 或 r:/data",
+      "mountTypeDirectoryLabel": "目录：",
+      "mountTypeDirectoryDesc": "作为 appdata 的同级目录挂载。需要子目录名称。对于分离日志、缓存或备份很有用。示例：Subdir='logs', Path='/var/log' 创建 /apps/component/logs/",
+      "mountTypeFileLabel": "文件：",
+      "mountTypeFileDesc": "单个文件作为 appdata 的同级文件安装。需要一个文件名。对于在更新后持续存在的配置文件很有用。示例：文件名='config.yaml'，路径='/etc/app/config.yaml'",
+      "mountTypeComponentPrimaryLabel": "主要组件：",
+      "mountTypeComponentPrimaryDesc": "从另一个组件挂载整个 appdata 目录。在模式中选择元件编号。对于在组件之间共享所有数据很有用。示例：Mode='0:'，Path='/shared-data'",
+      "mountTypeComponentDirectoryLabel": "组件目录：",
+      "mountTypeComponentDirectoryDesc": "从另一个组件安装特定的子目录。在Mode中选择组件，指定子目录名称。示例：Mode='0:'、Subdir='backups'、Path='/restore-from'",
+      "mountTypeComponentFileLabel": "组件文件：",
+      "mountTypeComponentFileDesc": "从另一个组件挂载特定文件。在模式中选择组件，指定文件名。示例：模式='0:'，文件名='cert.pem'，路径='/etc/ssl/cert.pem'",
+      "syncModesTitle": "同步模式",
+      "syncModeDifferencesTitle": "同步模式（用于主安装）：",
+      "syncModesMasterMasterLabel": "大师-大师[s]：",
+      "syncModesMasterMasterDesc": "所有参与者之间完全实时双向同步。任何一方的更改都会立即传播到所有其他方。",
+      "syncModesPhasedMasterMasterLabel": "阶段性大师-大师[r]：",
+      "syncModesPhasedMasterMasterDesc": "所有参与者之间的双向同步，其中同步发生在启动期间的受控阶段。 r 模式可防止启动新实例时覆盖现有数据。",
+      "syncModesPrimaryStandbyLabel": "主备[g]：",
+      "syncModesPrimaryStandbyDesc": "从主设备到备用设备的单向同步。基础组件是事实来源，其他组件接收更新但不修改数据。",
+      "examplesTitle": "常见示例",
+      "exampleBasicLabel": "基本应用程序",
+      "exampleBasicDesc": "appdata/ 中的简单持久存储",
+      "exampleDirectoryLabel": "带日志的应用程序",
+      "exampleDirectoryDesc": "数据同步+单独的日志目录",
+      "exampleFileLabel": "带有配置文件的应用程序",
+      "exampleFileDesc": "持久化配置文件",
+      "exampleMixedLabel": "具有混合安装的应用程序",
+      "exampleMixedDesc": "数据与附加缓存目录和设置文件同步",
+      "exampleComponentLabel": "共享数据库",
+      "exampleComponentDesc": "备份访问数据库数据",
+      "rulesTitle": "规则与限制",
+      "ruleBaseCannotBeMount": "第一个条目必须是主要类型（不能引用其他组件）",
+      "ruleOnlyOneSyncMode": "每个组件仅允许一种同步模式 (r/g/s)",
+      "ruleAllSyncPathsWithinBase": "使用同步模式时，所有路径必须位于主路径层次结构内",
+      "ruleSyncFoldersSharedParent": "所有同步文件夹必须共享相同的父目录",
+      "ruleSameComponentRemounts": "组件引用可以指向相同的组件或更早的组件",
+      "ruleOtherMountsReferPrevious": "组件引用不能指向未来的组件（例如，组件 1 不能引用组件 2）",
+      "ruleNoDuplicatePaths": "每个容器路径必须是唯一的（不能重复）",
+      "ruleSubdirsUnique": "每个子目录/文件名在组件内必须是唯一的",
+      "ruleAllPathsStartSlash": "所有容器路径必须以/开头且不能包含无效字符"
+    },
+    "subscriptionManager": {
+      "title": "订阅管理器",
+      "registerNewApplication": "注册新申请",
+      "upgradeToLatest": "升级至最新规格",
+      "importSpec": "进口规格",
+      "exportSpec": "出口规格",
+      "reviewAndSign": "审查并签署",
+      "component": "成分",
+      "review": "审查",
+      "reviewTooltip": "签名前检查应用程序配置",
+      "name": "应用名称",
+      "nameTooltip": "您的应用程序的名称",
+      "description": "描述",
+      "descriptionTooltip": "您的申请的简要说明",
+      "owner": "所有者",
+      "ownerTooltip": "应用程序的所有者",
+      "specVersion": "规格版本",
+      "usingLatestSpec": "使用最新规格版本",
+      "olderSpecWarning": "旧规格版本 - 考虑升级",
+      "currentSpecVersion": "当前规格版本",
+      "contact": "接触",
+      "contactTooltip": "通知的联系电子邮件地址",
+      "uploadContactsTooltip": "上传联系信息",
+      "contactRequired": "至少需要一封联系电子邮件",
+      "instances": "实例",
+      "instancesCount": "{count} 个实例 | {count} 个实例",
+      "instancesWarningTwo": "建议去中心化网络的最少实例数为 3 个。",
+      "instancesWarningOne": "建议去中心化网络的最少实例数为 3 个。如果只有 1 个实例，如果运行应用程序的节点重新启动或关闭，您的应用程序可能会遇到几分钟的停机时间。",
+      "instancesWarningSyncthing": "具有去中心化持久存储的应用程序的最小实例数为 3。要使用更少的实例，请在卷路径设置中禁用数据同步。",
+      "instancesWarningLegacy": "将实例减少到 3 以下仅适用于规范版本 8 或更高版本的应用程序。更新您的应用程序规范以启用此功能。",
+      "period": "时期",
+      "renewal": "更新",
+      "subscriptionNotExtended": "启用续订以延长订阅期限。",
+      "managementAction": "管理行动",
+      "renewalAction": "更新",
+      "updateAction": "更新",
+      "cancelAction": "取消",
+      "cancelSubscription": "取消订阅",
+      "cancelWarning": "这将使您的申请过期。",
+      "currentlySubscribedUntil": "目前您的申请已被订阅，直到",
+      "afterCancellationExpire": "取消后，您的应用程序将在大约到期日",
+      "blocksFromNow": "从现在起块",
+      "afterExpirationNotAccessible": "过期后，您的应用程序将不再可访问，除非您重新部署它。",
+      "staticIp": "静态IP",
+      "staticIpTooltip": "为您的应用程序启用静态 IP 地址",
+      "enterprise": "企业",
+      "enterpriseTooltip": "为您的应用程序启用企业功能",
+      "allowedGeolocation": "允许的地理位置",
+      "continent": "大陆",
+      "country": "国家",
+      "addAllowed": "添加允许的位置",
+      "addForbidden": "添加禁止地点",
+      "tabGeneral": "一般的",
+      "tabGeolocation": "地理定位",
+      "tabComponents": "成分",
+      "tabEnterpriseNodes": "企业节点",
+      "tabPriorityNodes": "优先节点",
+      "region": "地区",
+      "componentName": "姓名",
+      "componentDescription": "描述",
+      "repositoryTag": "存储库标签",
+      "repositoryAuthentication": "存储库验证",
+      "secrets": "秘密",
+      "containerDataPath": "容器数据路径",
+      "environmentVariables": "环境变量",
+      "commands": "命令",
+      "portBindings": "端口绑定",
+      "exposedPort": "暴露端口",
+      "containerPort": "集装箱港口",
+      "customDomains": "自定义域",
+      "portDomainConfiguration": "端口和域配置",
+      "enterDomainForPort": "输入此端口的域",
+      "key": "钥匙",
+      "value": "价值",
+      "keyPlaceholder": "钥匙",
+      "valuePlaceholder": "价值",
+      "newCommand": "新命令",
+      "command": "命令",
+      "enterCommand": "输入命令",
+      "hardwareResource": "硬件资源",
+      "cpu": "中央处理器",
+      "vCore": "核心",
+      "ram": "内存",
+      "mb": "MB",
+      "ssd": "固态硬盘/NVMe",
+      "gb": "国标",
+      "searchNodes": "搜索节点",
+      "searchNodesPlaceholder": "IP、地址、级别...",
+      "perPage": "每页",
+      "ipAddress": "IP地址",
+      "ipAddressLabel": "IP 地址：",
+      "publicKey": "公钥",
+      "publicKeyLabel": "公钥：",
+      "nodeAddress": "节点地址",
+      "nodeAddressLabel": "节点地址：",
+      "collateral": "抵押品",
+      "collateralLabel": "抵押品：",
+      "tier": "等级",
+      "tierLabel": "等级：",
+      "overallScore": "总分",
+      "collateralScore": "抵押品分数：",
+      "collateralScoreLabel": "抵押品分数：",
+      "maturityScore": "成熟度分数：",
+      "publicKeyScore": "公钥分数：",
+      "publicKeyScoreLabel": "公钥分数：",
+      "appsAssigned": "分配的应用程序：",
+      "status": "地位",
+      "statusLabel": "地位：",
+      "sendTo": "发送至",
+      "message": "信息",
+      "selected": "已选择",
+      "nodesSelected": "已选择 {count} 个",
+      "pageOf": "第 {current} 页，共 {total} 页",
+      "autoSelectedNodes": "自动筛选{count}个优质企业节点",
+      "additionalOptions": "附加选项",
+      "forbiddenGeolocation": "禁止的地理位置",
+      "general": "一般的",
+      "dataPathBuilder": "数据路径生成器",
+      "environment": "环境",
+      "containerCommands": "容器命令",
+      "enterpriseNodes": "企业节点",
+      "priorityNodes": "优先节点",
+      "reviewAndValidate": "审查和验证",
+      "validateAppSpec": "验证应用程序规范",
+      "totalCost": "总成本",
+      "expiry": "到期日",
+      "signature": "签名",
+      "registered": "挂号的",
+      "testApplicationInstallation": "测试应用程序安装",
+      "selectPaymentMethod": "选择付款方式",
+      "payWithCard": "用卡支付",
+      "secureInstantPayment": "安全即时付款",
+      "payWithFlux": "使用 FLUX 支付",
+      "cryptocurrencyPayment": "加密货币支付",
+      "selectEnterpriseNodes": "选择企业节点",
+      "selectPriorityNodes": "选择优先节点",
+      "priorityNodesVersionWarning": "优先级节点仅适用于版本 7 或更高版本的应用程序。",
+      "enterpriseNodesRequired": "企业应用程序需要选定的优先节点。请转到“优先级节点”选项卡并选择节点。",
+      "enterpriseNodesLabel": "企业节点：",
+      "enterpriseNodesTabDescription": "只有选定的企业节点才能运行您的应用程序并用于加密。只有这些节点才能访问您的私有图像和秘密。",
+      "enterpriseNodesDescription": "只有选定的企业节点才能运行您的应用程序并用于加密。只有这些节点才能访问您的私有图像和秘密。",
+      "priorityNodesLabel": "优先节点：",
+      "priorityNodesTabDescription": "如果需要优先节点来运行您的应用程序，请选择。该应用程序仍然可以部署在网络上的其他节点上。",
+      "priorityNodesDescription": "如果需要优先节点来运行您的应用程序，请选择。该应用程序仍然可以部署在网络上的其他节点上。",
+      "subscriptionPeriodDecreaseWarning": "您选择的订阅周期将会减少当前的订阅时间！",
+      "maxSubscriptionInfo": "最长订阅期限为 1 年。续订选项会根据您当前的剩余时间进行调整。",
+      "currentSubscriptionUntil": "当前订阅截止日期：",
+      "timeLeft": "剩余时间：",
+      "renewalPeriod": "续订期",
+      "afterRenewalSubscriptionUntil": "续订订阅后直至：",
+      "cancel": "取消",
+      "save": "节省",
+      "autoSelect": "自动选择",
+      "chooseEnterpriseNodes": "选择企业节点",
+      "choosePriorityNodes": "选择优先节点",
+      "removeNode": "删除节点",
+      "visitFluxNode": "访问 FluxNode",
+      "signMessage": "签名留言",
+      "retrySigning": "重试签名",
+      "cancelSigning": "取消签名",
+      "enablePaymentAnyway": "无论如何启用付款",
+      "testCompleted": "测试完成",
+      "testInstallation": "测试安装",
+      "testAndPay": "测试与付款",
+      "manageApplication": "管理应用程序",
+      "saveSelection": "保存选择",
+      "copyAddress": "复制地址",
+      "copyMessage": "复制留言",
+      "openPayment": "开放式支付",
+      "componentNameTooltip": "组件名称（在应用程序内必须是唯一的）",
+      "componentDescriptionTooltip": "该组件用途的简要描述",
+      "repositoryTagTooltipNew": "Docker 镜像存储库和标签（例如 nginx:latest）",
+      "repositoryTagTooltipUpdate": "Docker 镜像存储库和标签（例如 nginx:latest）",
+      "enableEnterpriseHint": "在常规部分启用企业模式以使用此功能",
+      "enterpriseFeatureTooltip": "企业功能 - 启用企业模式以使用私有存储库身份验证",
+      "dockerRegistryCredentialsTooltip": "Docker 注册表凭据（格式：用户名:密码或用户名:令牌）",
+      "secretsTooltip": "将加密并安全存储的敏感数据（例如 API 密钥、密码）",
+      "environmentVariablesTooltip": "为容器设置环境变量（例如 API 密钥、配置）",
+      "commandsTooltip1": "创建容器时映射到 Docker API 的“Cmd”字段。为容器的 ENTRYPOINT 提供默认参数。每个条目都是一个单独的参数。",
+      "commandsTooltip2": "示例：[“--端口”、“8080”、“--verbose”]",
+      "commandsTooltipWarning": "不适用于环境变量或设置说明！",
+      "exposedPortTooltip": "可从外部访问外部端口",
+      "containerPortTooltip": "容器内的内部端口",
+      "uploadEnvToFluxStorage": "将环境变量上传到 Flux Storage",
+      "uploadCmdToFluxStorage": "将命令上传到 Flux 存储",
+      "importFromJson": "从 JSON 导入",
+      "enterpriseNodesAlertV7": "只有选定的企业节点才能运行您的应用程序。这些节点用于加密，可以访问您的私人图像和秘密。",
+      "changingNodesWarning": "加密后更改节点将需要重新设置机密和存储库身份验证。",
+      "priorityNodesAlertV8": "您的应用程序将优先部署在选定的节点上，但仍然可以在其他网络节点上运行。",
+      "applicationSubscribedUntil": "您的申请将被订阅，直到",
+      "newSubscriptionEndsOn": "您新调整后的订阅结束于",
+      "noNodesSelected": "未选择节点",
+      "page": "页",
+      "of": "的",
+      "validationError": "验证错误：",
+      "freeUpdate": "免费更新",
+      "failedToCalculatePrice": "无法计算价格",
+      "subscription": "订阅：",
+      "expiresInUnderWeek": "一周内到期。续订即可更新。",
+      "notAvailable": "无法使用",
+      "testApplicationDescription": "测试您的应用程序安装/启动，以确保您的规范正常工作。",
+      "installationLogAppears": "完成后，安装日志将出现在下面。",
+      "warning": "警告：",
+      "testFailedCheckLogs": "测试失败！在付款前检查下面的日志并确定您的规格。",
+      "testCompletedSuccessfully": "测试成功完成",
+      "testFailedCheckLogsRetry": "测试失败。检查日志并重试或切换后端。",
+      "installationProgress": "安装进度",
+      "testWarnings": "测试警告：",
+      "testWarningsMessage": "您的应用程序测试已完成，但出现一些警告。请查看上面的安装日志。您仍然可以继续付款，但请考虑解决这些警告以获得最佳性能。",
+      "payment": "支付",
+      "registrationSuccessful": "注册成功！",
+      "appReadyForDeployment": "您的应用程序已准备好部署",
+      "paymentWindow": "付款窗口：",
+      "thirtyMinutesRemaining": "还剩 30 分钟",
+      "subscriptionUntil": "订阅截止日期：",
+      "deploymentTime": "部署时间：",
+      "upToFortyFiveMinutes": "付款后最多 45 分钟",
+      "deploymentSuccessful": "部署成功！",
+      "updateSuccessful": "更新成功！",
+      "applicationActiveRunning": "您的应用程序现已激活并在 Flux 网络上运行。",
+      "specificationUpdatedSuccessfully": "您的应用程序规范已在 Flux 网络上成功更新。",
+      "waitingForDeployment": "等待部署...",
+      "paymentAutoDetectedNewApp": "将自动检测付款确认和部署。",
+      "updateAutoDetected": "将自动检测更新。",
+      "paymentAutoDetectedUpdate": "将自动检测付款确认和更新。",
+      "canTakeFortyFiveMinutes": "这最多可能需要 45 分钟。",
+      "usdPlusVat": "${price} 美元 + 增值税",
+      "securePaymentProcessing": "安全支付处理",
+      "instantPaymentConfirmation": "即时付款确认",
+      "multipleCurrencySupport": "多币种支持",
+      "fiatGatewaysUnavailable": "法币支付网关暂时不可用",
+      "loading": "加载中...",
+      "searchNodesIpAddressTier": "搜索节点（IP、地址、层）",
+      "noNodesMatchSearch": "没有节点与您的搜索匹配",
+      "noNodesAvailable": "没有可用节点",
+      "browserBlockedCheckout": "您的浏览器阻止了 {blockedPaymentType} 结帐窗口。",
+      "clickToOpenPayment": "单击下面的按钮可在新选项卡中打开付款页面。",
+      "commandCannotBeEmpty": "命令不能为空。",
+      "portMustBeNumber": "端口必须是 1 到 65535 之间的数字。",
+      "portAlreadyUsed": "端口 {port} 已在另一个组件中使用。",
+      "invalidOrDuplicatePort": "端口值无效或重复。",
+      "duplicateKey": "重复的键“{key}”",
+      "keyAndValueRequired": "键和值是必需的。",
+      "marketplaceAppRestricted": "“{repotag}”必须从市场购买。",
+      "noEnvToUpload": "没有要上传的环境变量",
+      "envAlreadyInStorage": "环境参数已在 Flux Storage 中",
+      "noCmdsToUpload": "没有要上传的命令",
+      "cmdsAlreadyInStorage": "命令已经在 Flux 存储中",
+      "noContactsToUpload": "没有联系人可上传",
+      "contactsAlreadyInStorage": "联系人已在 Flux 存储中",
+      "none": "没有任何",
+      "global": "全球的",
+      "allCountries": "所有国家",
+      "allRegions": "所有地区",
+      "confirmed": "确认的",
+      "enterpriseNodesInfo": "企业节点：",
+      "priorityNodesInfo": "优先节点：",
+      "paymentDetection": "将自动检测付款确认和部署。",
+      "updateDetection": "将自动检测更新。",
+      "paymentUpdateDetection": "将自动检测付款确认和更新。",
+      "detectionTime": "这最多可能需要 45 分钟。",
+      "cancelMonitoring": "取消监控",
+      "select": "选择",
+      "dockerAuthPlaceholder": "Docker认证用户名：apikey",
+      "secretsPlaceholder": "输入机密（将被加密）",
+      "yourApplicationWillBeSubscribedUntil": "您的申请将被订阅，直到",
+      "currentlyYourApplicationIsSubscribedUntil": "目前您的申请已被订阅，直到",
+      "yourNewAdjustedSubscriptionEndsOn": "您新调整后的订阅结束于",
+      "renewal1Week": "1周",
+      "renewal2Weeks": "2周",
+      "renewal1Month": "1个月",
+      "fixedRenewalPeriod": "固定旧应用程序版本的续订期",
+      "timeRemaining": "剩余时间",
+      "afterRenewalSubscriptionEndsOn": "续订后，订阅结束于",
+      "expired": "已到期",
+      "renewal3Months": "3个月",
+      "renewal6Months": "6个月",
+      "renewal1Year": "1年",
+      "testInstallationDescription": "测试您的应用程序安装/启动，以确保您的规范正常工作。",
+      "warningLabel": "警告：",
+      "testFailedWarning": "测试失败！在付款前检查下面的日志并确定您的规格。",
+      "testWarningsTitle": "测试警告：",
+      "paymentWindowTime": "还剩 30 分钟",
+      "deploymentTimeEstimate": "付款后最多 45 分钟",
+      "deploymentSuccessMessage": "您的应用程序现已激活并在 Flux 网络上运行。",
+      "updateSuccessMessage": "您的应用程序规范已在 Flux 网络上成功更新。",
+      "autoDetectDeployment": "将自动检测付款确认和部署。",
+      "autoDetectUpdate": "将自动检测更新。",
+      "autoDetectPaymentUpdate": "将自动检测付款确认和更新。",
+      "detectionTimeEstimate": "这可能需要几分钟的时间。",
+      "checkingBlockchainConfirmation": "正在检查付款确认...",
+      "waitingForNodeDeployment": "等待节点部署...",
+      "checkingPaymentOnBlockchain": "检查区块链上的付款确认。",
+      "blockchainConfirmationTime": "这可能需要几分钟的时间。",
+      "paymentConfirmedOnNetwork": "网络上确认付款！",
+      "paymentConfirmedWaitingNodes": "网络上确认付款。",
+      "waitingForNodesPickup": "等待节点拾取并安装您的应用程序。",
+      "nodeDeploymentTime": "这可能需要几分钟的时间。",
+      "updateConfirmedNodesWillUpdate": "更新已确认！运行您的应用程序的节点需要几分钟时间才能更新到最新规范。",
+      "freeUpdateSponsoredBy": "Influx Technologies 提供网络免费更新",
+      "noNodesMatch": "没有与您的搜索匹配的节点",
+      "popupBlocked": "弹出窗口被阻止",
+      "popupBlockedMessage": "您的浏览器阻止了{type}结账窗口。",
+      "popupBlockedInstruction": "单击下面的按钮可在新选项卡中打开付款页面。",
+      "testStarting": "开始应用程序测试安装...",
+      "testInitializing": "正在初始化测试安装...",
+      "testPreparingEnvironment": "准备测试环境...",
+      "testConnectingNetwork": "正在连接到 Flux 网络...",
+      "testValidatingImage": "正在验证 Docker 映像...",
+      "testProcessingResults": "处理测试结果...",
+      "testInstallationFailed": "测试安装失败",
+      "testAnalyzingResults": "正在分析安装结果...",
+      "testStepCompleted": "处理步骤完成",
+      "testCompletedWithErrors": "测试已完成，但有错误",
+      "testFailedCheckInstallationLogs": "测试失败 - 检查安装日志",
+      "testCompletedWithWarnings": "测试完成，但有警告",
+      "testWarningsReviewLogs": "测试已完成，但有警告 - 查看日志，但可以付款",
+      "testInstallationSuccessful": "测试安装成功！",
+      "testPassedReady": "测试通过！应用程序已准备好部署。",
+      "testInstallationCompletedSuccessfully": "测试安装成功完成",
+      "testCompletedReady": "测试完成！应用程序已准备好部署。",
+      "testProcessCompleted": "测试过程完成",
+      "redirectingToStripe": "正在重定向至条纹...",
+      "redirectingToPayPal": "正在重定向至 PayPal...",
+      "pleaseWaitCheckout": "我们正在准备您的结帐会话，请稍候",
+      "loadingStripeCheckout": "正在加载 Stripe 结帐...",
+      "loadingPayPalCheckout": "正在加载 PayPal 结账...",
+      "cardPaymentCompletedSuccessfully": "刷卡支付成功！",
+      "deploymentSuccessfulRunning": "部署成功！您的应用程序现在正在运行。",
+      "paymentConfirmedActive": "付款已确认！您的应用程序现在处于活动状态并在网络上运行。",
+      "updateDeployedSuccessfully": "更新部署成功！",
+      "paymentConfirmedSpecUpdated": "付款已确认！您的应用程序规范已更新。",
+      "testPaymentConfirmed": "测试：付款已确认！您的应用程序现已激活并正在运行。",
+      "sspPaymentInitiated": "已启动 SSP 付款：{txid}",
+      "tos": {
+        "title": "服务条款协议",
+        "dialogTitle": "Flux 服务条款",
+        "description": "在注册您的应用程序之前，您必须阅读并接受我们的服务条款。这可确保您了解使用我们平台的准则和责任。",
+        "agreement": "我已阅读并接受",
+        "link": "服务条款",
+        "agree": "我同意",
+        "disagree": "我不同意",
+        "errorMessage": "在进入其他选项卡之前，请阅读并接受服务条款。",
+        "loadError": "无法加载服务条款。请访问：",
+        "loading": "Loading Terms of Service...",
+        "acceptFirst": "首先接受服务条款才能导入"
+      }
+    },
+    "tosDialog": {
+      "loading": "正在加载服务条款..."
+    },
+    "statusBar": {
+      "backend": "后端",
+      "frontend": "前端",
+      "connected": "已连接",
+      "updateAvailable": "可用更新",
+      "upToDate": "最新",
+      "statusMessage": "地位",
+      "unreachable": "无法到达",
+      "connecting": "正在连接...",
+      "disconnected": "已断开连接",
+      "notSynced": "未同步",
+      "checkingStatus": "检查...",
+      "checkingStatusMessage": "正在检查节点状态...",
+      "notSyncedMessage": "区块链未同步（区块 {blocks}/{headers}、{blocksBehind} 落后）",
+      "connectedMessage": "Flux Gravity 已投入运行并与 Flux 网络同步。",
+      "connectingMessage": "连接到 Flux 网络。 Flux Gravity 正在以有限的能力运行。",
+      "disconnectedMessage": "未连接到 Flux 网络。 Flux Gravity 正在以有限的能力运行。",
+      "hideStatusBar": "隐藏状态栏",
+      "showStatusBar": "显示状态栏",
+      "backendError": "获取后端版本失败",
+      "error": "无法到达",
+      "manageCookiesTooltip": "管理 cookie 首选项和隐私设置"
+    }
+  },
+  "components": {
+    "loginDialog": {
+      "title": "需要登录"
+    },
+    "marketplace": {
+      "discoverCard": {
+        "title": "发现你的通量",
+        "subtitle": "Web3 市场"
+      },
+      "appCard": {
+        "install": "安装",
+        "view": "看法",
+        "viewDetails": "查看详情",
+        "defaultCategory": "应用程序",
+        "noDescription": "无可用描述"
+      },
+      "fluxCloudAppCard": {
+        "unknownDeveloper": "未知开发者",
+        "install": "安装",
+        "viewApp": "查看应用程序",
+        "sponsored": "赞助"
+      },
+      "gameCard": {
+        "startingAt": "起价为 ${price}/月",
+        "viewDetails": "查看详情"
+      },
+      "marketplaceAppCard": {
+        "unknown": "未知",
+        "free": "自由的",
+        "install": "安装",
+        "viewDetails": "查看详情",
+        "noDescription": "无可用描述",
+        "other": "其他"
+      },
+      "appList": {
+        "featured": "精选",
+        "by": "经过",
+        "free": "自由的",
+        "purchase": "购买",
+        "deploy": "部署",
+        "details": "细节"
+      },
+      "sponsoredAppCard": {
+        "unknown": "未知",
+        "free": "自由的",
+        "other": "其他"
+      },
+      "sponsoredCard": {
+        "sponsored": "赞助",
+        "install": "安装",
+        "view": "看法",
+        "viewDetails": "查看详情",
+        "noSponsoredApps": "没有可用的赞助应用程序",
+        "free": "自由的"
+      },
+      "newListedCard": {
+        "title": "新列出的应用程序",
+        "noNewApps": "没有可用的新应用程序",
+        "unknownApp": "未知应用程序",
+        "noDescription": "无可用描述",
+        "view": "看法"
+      },
+      "maintenanceCard": {
+        "defaultTitle": "维护中",
+        "defaultSubtitle": "我们目前遇到技术困难。我们的团队正在努力尽快解决此问题。",
+        "defaultDescription": "如果您需要立即帮助，请稍后再回来查看或联系支持人员。",
+        "refresh": "刷新"
+      },
+      "appConfigCard": {
+        "cpu": "中央处理器",
+        "ram": "内存",
+        "storage": "贮存",
+        "installNow": "立即购买",
+        "perMonth": "/月",
+        "core": "核",
+        "cores": "核心",
+        "mostPopular": "最受欢迎"
+      },
+      "appsGrid": {
+        "title": "助焊剂应用",
+        "searchPlaceholder": "搜索应用程序...",
+        "category": "类别",
+        "sortBy": "排序方式",
+        "allCategories": "所有类别",
+        "loadingApps": "正在加载市场应用程序...",
+        "noAppsFound": "没有找到应用程序",
+        "adjustFilters": "尝试调整您的搜索或过滤器",
+        "resetFilters": "重置过滤器",
+        "noAppsAvailable": "没有可用的应用程序",
+        "marketplaceEmpty": "市场目前空无一人",
+        "refresh": "刷新",
+        "previous": "以前的",
+        "next": "下一个",
+        "sortDefault": "默认",
+        "sortDate": "日期",
+        "sortName": "姓名"
+      },
+      "panels": {
+        "screenshotsPanel": {
+          "noScreenshots": "没有可用的屏幕截图"
+        },
+        "headerPanel": {
+          "serverHosting": "{name} 服务器托管"
+        },
+        "descriptionPanel": {
+          "keyFeatures": "主要特点"
+        },
+        "serverLocationsPanel": {
+          "noData": "没有可用的服务器数据",
+          "activeServers": "活跃服务器",
+          "countries": "国家",
+          "global": "全球的",
+          "coverage": "覆盖范围"
+        },
+        "relatedGamesPanel": {
+          "title": "举办更多比赛",
+          "subtitle": "探索您可以在 FluxCloud 上部署的其他流行游戏服务器",
+          "startingAt": "开始于"
+        },
+        "whyFluxPanel": {
+          "title": "为什么在 FluxCloud 上托管",
+          "subtitle": "体验由 Web3 技术支持的去中心化云基础设施的优势"
+        },
+        "genericFAQPanel": {
+          "title": "常见问题解答",
+          "subtitle": "有关在 FluxCloud 上托管的常见问题"
+        },
+        "videosPanel": {
+          "title": "视频",
+          "watchOnYouTube": "在 YouTube 上观看",
+          "openOnYouTube": "在 YouTube 上打开",
+          "videoLabel": "视频{number}"
+        }
+      },
+      "installDialog": {
+        "termsAcceptanceRequired": "需要接受条款",
+        "pleaseScrollAndAccept": "请向下滚动并接受使用条款以继续安装。",
+        "hardwareRequirements": "硬件要求",
+        "cpuCores": "CPU核心",
+        "memoryMb": "内存（MB）",
+        "storageGb": "存储空间（GB）",
+        "subscriptionDuration": "订阅期限",
+        "deploymentOptions": "部署选项",
+        "instances": "{count} 个实例 | {count} 个实例",
+        "estimatedPricing": "预计定价",
+        "loading": "加载中...",
+        "wordPressPlanTitle": "WordPress {planName}",
+        "walletAltZelcore": "通量 ID (ZelCore)",
+        "walletAltSSP": "固相磷酸盐",
+        "walletAltMetaMask": "元掩码",
+        "walletAltWalletConnect": "钱包连接",
+        "agreeToTerms": "我同意<a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color:继承;text-decoration:none;font-weight:bold;\">使用条款</a>",
+        "oneMonth": "1个月",
+        "threeMonths": "3个月",
+        "sixMonths": "6个月",
+        "twelveMonths": "12 个月",
+        "showAdvanced": "显示高级",
+        "configurationParameter": "配置参数",
+        "containers": "集装箱",
+        "allSet": "一切就绪！",
+        "noAdditionalConfig": "无需额外配置",
+        "deploymentLocation": "部署地点",
+        "allowedLocations": "允许的地点",
+        "forbiddenLocations": "禁止地点",
+        "continent": "大陆",
+        "country": "国家",
+        "global": "全球的",
+        "globalAllContinents": "全球（各大洲）",
+        "allCountries": "所有国家",
+        "noContinentsForbidden": "没有禁止的大陆",
+        "noCountriesForbidden": "没有国家禁止",
+        "noneNoRestrictions": "无（无限制）",
+        "addAllowed": "添加允许",
+        "addForbidden": "添加禁止",
+        "currentRules": "现行规则",
+        "allowedLocationsColon": "允许的地点：",
+        "forbiddenLocationsColon": "禁止地点：",
+        "allowedColon": "允许",
+        "allowedGeoInfo": "您的应用程序将仅部署在选定位置的节点上",
+        "forbiddenColon": "禁止",
+        "forbiddenGeoInfo": "您的应用程序将避免部署在选定位置的节点上",
+        "globalColon": "全球的",
+        "globalGeoInfo": "无地理限制（建议获得最佳可用性）",
+        "emailNotifications": "电子邮件通知",
+        "notificationSettings": "通知设置",
+        "emailAddress": "电子邮件",
+        "enterEmailOptional": "输入您的通知电子邮件（可选）",
+        "enterEmailRequired": "输入您的通知电子邮件（必填）",
+        "emailMustBeValid": "电子邮件必须有效",
+        "emailRequired": "电子邮件为必填项",
+        "notificationInfo1": "当您的应用程序在网络上完成启动时，应用程序通知将通知您",
+        "notificationInfo2": "当您的应用程序的主服务器发生更改时，通知还会通知您",
+        "notificationInfo3": "当您的应用程序到期日期临近时，您还会收到通知",
+        "launchingApplication": "启动应用程序",
+        "applicationNeedsSignature": "您的应用程序需要在 Flux 网络上签名并注册。",
+        "secureSigning": "安全签名",
+        "networkRegistration": "网络注册",
+        "signAndRegister": "签名并注册",
+        "noCompatibleWallets": "未检测到兼容的钱包。请安装 ZelCore、SSP、MetaMask，确保您通过 SSO 登录，或手动登录。",
+        "signingApp": "签署应用程序...",
+        "registeringApp": "正在注册应用程序...",
+        "cancel": "取消",
+        "manualSigningCancelled": "手动签名已取消",
+        "signingAndRegistrationComplete": "签约并注册完成",
+        "redirectIn": "您将在 {seconds} 秒后被重定向...",
+        "proceedToNextStep": "继续下一步完成付款",
+        "signingApplicationMessage": "签署申请消息...",
+        "registeringApplication": "正在 Flux 网络上注册应用程序...",
+        "applicationReadyForPayment": "申请已准备好付款",
+        "waitingToStart": "等待开始...",
+        "paymentInformation": "付款信息",
+        "paymentLinksValid": "一切准备就绪，您的支付选项链接（无论是<strong class=\"text-no-wrap\">法币</strong>还是<strong class=\"text-no-wrap\">flux</strong>）均在接下来的<strong class=\"text-warning text-no-wrap\">30 分钟</strong>内有效。",
+        "subscribedUntil": "该应用程序将在 <strong class=\"text-no-wrap\" style=\"color: Orange;\">{date}</strong> 之前订阅。",
+        "finishRegistrationInfo": "要完成申请注册，请使用您首选的付款方式支付申请费用，或查看下面如何使用 <strong class=\"text-no-wrap\">Flux</strong> 加密货币付款。",
+        "choosePaymentMethod": "选择付款方式",
+        "payWithCreditCard": "使用信用卡支付",
+        "payWithPayPal": "使用贝宝支付",
+        "payWithFlux": "使用 FLUX 支付",
+        "vat": "增值税",
+        "paymentAddress": "付款地址",
+        "paymentMessage": "付款留言",
+        "generating": "生成...",
+        "paymentInstructionsZelCore": "ZelCore 付款说明",
+        "paymentInstructionsSSP": "SSP 付款说明",
+        "copiedToClipboard": "已复制到剪贴板！",
+        "openWallet": "打开{wallet}",
+        "paymentConfirmed": "付款已确认！",
+        "waitingForPayment": "等待付款",
+        "completePaymentInWallet": "请在您的 {wallet} 钱包中完成付款。<br>付款将自动确认。<br><span class=\"text-warning\">这最多可能需要 45 分钟。</span>",
+        "advancingToDeployment": "{seconds} 秒后将进入部署摘要...",
+        "cancelMonitoring": "取消监控",
+        "paymentServiceMaintenance": "支付服务维护",
+        "maintenanceMessage": "支付服务目前正在维护中。请稍后重试或使用加密支付选项（ZelCore 或 SSP）。",
+        "tryAgain": "再试一次",
+        "secureCheckout": "由 {provider} 提供支持的安全结账",
+        "continueTo": "继续前往{provider}",
+        "completePaymentInCheckout": "在 {provider} 结帐窗口中完成付款。<br>付款将自动确认。<br><span class=\"text-warning\">这最多可能需要 45 分钟。</span>",
+        "deploymentSummary": "部署总结",
+        "paymentConfirmedExclaim": "付款已确认！",
+        "applicationActiveAndRunning": "您的应用程序现已激活并正在运行",
+        "coresCount": "{count} 个核心",
+        "paymentType": "付款方式",
+        "crypto": "加密货币",
+        "fiat": "菲亚特",
+        "paymentMethod": "付款方式",
+        "totalPaid": "总付费",
+        "subscriptionValidUntil": "订阅有效期至",
+        "manageApplication": "管理应用程序",
+        "deployingYourApplication": "正在部署您的应用程序...",
+        "popupBlocked": "弹出窗口被阻止",
+        "browserBlockedCheckout": "您的浏览器阻止了{type}结账窗口。",
+        "clickButtonToOpenPayment": "单击下面的按钮可在新选项卡中打开付款页面。",
+        "openPaymentType": "打开{type}",
+        "signing": "签约",
+        "payment": "支付",
+        "deploy": "部署",
+        "config": "配置",
+        "params": "参数",
+        "location": "地点",
+        "alerts": "警报",
+        "sign": "符号",
+        "messages": {
+          "usingGlobalDeployment": "使用全球部署 - 地理位置数据不可用",
+          "failedToCopyToClipboard": "无法复制到剪贴板",
+          "paymentMonitoringTimedOut": "付款监控超时。请检查您的申请状态。",
+          "paymentConfirmedActive": "付款已确认！您的应用程序现在处于活动状态并在网络上运行。",
+          "openingZelCoreWallet": "正在打开 ZelCore 钱包进行付款...",
+          "failedToOpenZelCoreWallet": "无法打开ZelCore钱包",
+          "pleaseLoginToMakePayments": "请登录Flux Gravity进行支付",
+          "invalidAuthenticationData": "验证数据无效 - 请重新登录",
+          "stripeCheckoutOpened": "Stripe 结帐已开放。在弹出的窗口中完成支付。",
+          "payPalCheckoutOpened": "PayPal 结账已开通。在弹出的窗口中完成支付。",
+          "sspWalletNotInstalled": "SSP 钱包未安装",
+          "paymentMonitoringCancelled": "付款监控已取消",
+          "locationAlreadyInAllowedList": "该位置已在允许列表中",
+          "locationAlreadyInForbiddenList": "该位置已在禁止列表中",
+          "configurationChanged": "配置已更改。请重新发起付款。",
+          "addedAllowedLocation": "添加了允许的位置：{location}",
+          "addedForbiddenLocation": "添加了禁止地点：{location}",
+          "removedAllowedLocation": "已删除允许的位置：{location}",
+          "removedForbiddenLocation": "已删除禁止地点：{location}"
+        }
+      }
+    },
+    "xdao": {
+      "addProposal": {
+        "title": "添加新提案",
+        "validated": "已验证",
+        "completeFormToValidate": "填写表格进行验证",
+        "validateProposal": "验证提案",
+        "validatedSuccessfully": "提案已成功验证！",
+        "registrationFee": "提案登记费",
+        "registerProposal": "注册 Flux XDAO 提案",
+        "fields": {
+          "topic": {
+            "label": "提案主题",
+            "placeholder": "输入清晰且描述性的提案标题"
+          },
+          "description": {
+            "label": "提案说明",
+            "placeholder": "提供您提案的详细描述（至少 50 个字符）"
+          },
+          "grantInformation": "拨款信息",
+          "grantAmount": {
+            "label": "拨款金额 (FLUX)"
+          },
+          "grantAddress": {
+            "label": "授予付款地址",
+            "placeholder": "接收补助金的 Flux 地址"
+          },
+          "nickname": {
+            "label": "姓名/昵称",
+            "placeholder": "您的姓名或昵称（可选）"
+          }
+        },
+        "validation": {
+          "fieldRequired": "此字段是必需的",
+          "minCharactersRequired": "最少需要 {min} 个字符",
+          "grantMustBeWholeNumber": "赠款金额必须为整数",
+          "addressNoSpaces": "地址不能包含空格"
+        },
+        "payment": {
+          "completePayment": "完成付款",
+          "paymentRequired": "需要付款",
+          "toCompleteRegistration": "完成您的提案注册",
+          "walletPayment": "钱包支付",
+          "chooseWallet": "选择您喜欢的钱包",
+          "manualPayment": "手动付款",
+          "foundationAddress": "基金会地址",
+          "transactionMessage": "交易信息",
+          "viewOnExplorer": "在资源管理器上查看"
+        },
+        "messages": {
+          "completeRequiredFields": "请正确填写所有必填字段",
+          "proposalValidatedSuccess": "提案通过成功！",
+          "failedToValidate": "未能验证提案：{error}",
+          "proposalRegisteredSuccess": "提案已登记！请完成付款。",
+          "failedToRegister": "未能注册提案：{error}",
+          "paymentDetailsNotAvailable": "付款详情不可用。请尝试重新注册。",
+          "zelcorePaymentInitiated": "Zelcore 付款已启动 - 请在 Zelcore 钱包中完成付款",
+          "failedToOpenZelcore": "无法打开 Zelcore",
+          "sspWalletNotInstalled": "SSP 钱包未安装",
+          "sspPaymentInitiated": "已启动 SSP 付款",
+          "failedToInitiateSSP": "发起 SSP 付款失败：{error}",
+          "copiedToClipboard": "已复制到剪贴板！",
+          "failedToCopy": "无法复制到剪贴板"
+        }
+      },
+      "proposalDetail": {
+        "title": "提案详情",
+        "anonymous": "匿名的",
+        "submitted": "已提交",
+        "endDate": "结束日期",
+        "description": "描述",
+        "viewAddressOnExplorer": "在资源管理器上查看地址",
+        "charts": {
+          "voteProgress": "投票进度",
+          "voteSplit": "投票分割",
+          "required": "必需的",
+          "received": "已收到",
+          "yesVotes": "赞成票",
+          "noVotes": "没有投票",
+          "votingCompletePassed": "投票完成 - 通过",
+          "votingCompleteRejected": "投票完成 - 被拒绝",
+          "percentageOfVotesReceived": "收到的所需票数的 {percentage}%",
+          "status": {
+            "open": "打开",
+            "passed": "通过",
+            "rejected": "被拒绝",
+            "unpaid": "未付",
+            "voting": "表决",
+            "notEnoughVotes": "票数不足"
+          }
+        },
+        "voting": {
+          "castYourVote": "投票",
+          "makeYourVoiceHeard": "让你的声音被听到",
+          "loginRequired": "需要登录",
+          "loginRequiredMessage": "您需要登录才能参与投票。请使用您的 Flux 钱包登录以继续。",
+          "voteWarning": "请记住：投票后您将无法更改您的投票！",
+          "yourVotingPower": "您的投票权",
+          "votesAvailable": "可用投票",
+          "voteYes": "投赞成票",
+          "voteNo": "投反对票",
+          "youHaveVoted": "您已投票",
+          "yes": "是的",
+          "no": "不",
+          "voteCount": "{count} 票",
+          "votingEnds": "投票结束"
+        },
+        "grant": {
+          "title": "拨款信息",
+          "fundingDetails": "资金详情",
+          "grantAmount": "资助金额",
+          "recipientAddress": "收件人地址",
+          "viewOnExplorer": "在资源管理器上查看"
+        },
+        "technicalDetails": {
+          "title": "技术细节",
+          "proposalHash": "提案哈希",
+          "copy": "复制",
+          "submitDate": "提交日期",
+          "voteEndDate": "投票结束日期",
+          "currentStatus": "目前状态"
+        },
+        "messages": {
+          "copiedToClipboard": "已复制到剪贴板！",
+          "successfullySignedWithSSP": "与SSP成功签约",
+          "failedToSignWithSSP": "无法使用 SSP 签名",
+          "failedToInitiateZelcore": "启动 Zelcore 签名失败",
+          "pleaseLogInFirst": "请先登录",
+          "alreadyVoted": "您已经对此提案进行了投票！",
+          "proposalHashNotAvailable": "提案哈希不可用",
+          "missingSignature": "缺少签名。请先使用钱包登录。",
+          "voteRecordedSuccess": "您的投票已成功记录！",
+          "voteFailed": "投票失败",
+          "failedToCastVote": "投票失败"
+        }
+      }
+    },
+    "dialogs": {
+      "importJsonDialog": {
+        "title": "导入{type}",
+        "environmentVariables": "环境变量",
+        "commands": "命令",
+        "uploadFile": "上传文件",
+        "pasteSpecification": "浆料规格",
+        "dropFileHere": "将文件拖放到此处或单击浏览",
+        "fileTypeHint": "应用程序规范或 Docker Compose (JSON/YAML)",
+        "pasteHint": "粘贴应用程序规范或 Docker Compose (JSON/YAML)",
+        "reviewAndEdit": "导入前检查和编辑",
+        "import": "进口",
+        "cancel": "取消",
+        "loadSpecification": "负载规格",
+        "pasteFromClipboard": "从剪贴板粘贴",
+        "contentPasted": "内容从剪贴板粘贴！",
+        "clipboardFailed": "无法读取剪贴板。请使用 Ctrl+V 进行粘贴。",
+        "format": "格式",
+        "formatHint": "JSON 字符串数组",
+        "example": "例子",
+        "placeholder": "将 JSON 数组粘贴到此处...",
+        "browse": "浏览文件",
+        "invalidFileType": "请选择 JSON 文件",
+        "failedToReadFile": "读取文件失败：{message}",
+        "invalidJsonArray": "需要一个 JSON 数组",
+        "emptyArray": "数组不能为空",
+        "invalidEnvFormat": "格式无效：{item}",
+        "invalidEnvEntry": "无效条目（必须是 KEY=值）：{item}",
+        "noValidCommands": "未找到有效命令",
+        "invalidJsonFormat": "JSON 格式无效：{message}",
+        "invalidName": "规范无效：“名称”字段为必填字段且必须是字符串",
+        "invalidCompose": "规范无效：“compose”字段为必填字段且必须是数组",
+        "emptyCompose": "无效规范：“compose”数组不能为空",
+        "loadingEditor": "正在加载编辑器..."
+      },
+      "upgradeSpecDialog": {
+        "title": "升级应用规范",
+        "upgradeInfo": "您即将将此应用程序规范从 v{currentVersion} 升级到 v{targetVersion}。",
+        "dataLossWarning": "以下数据将丢失或重置：",
+        "nextSteps": "接下来会发生什么：",
+        "step1": "规范格式将更新为 v{targetVersion}",
+        "step2": "您可以查看并修改升级后的规格",
+        "step3": "您必须验证并签署更新的规范",
+        "upgrade": "升级",
+        "warnings": {
+          "tieredPricing": "分级定价配置（分级字段）",
+          "customContacts": "自定义联系人（重置为空）",
+          "customGeolocation": "自定义地理位置（重置为空）",
+          "customExpire": "自定义过期值（重置为 22000）",
+          "portConversion": "端口类型转换（字符串→数字）"
+        }
+      }
+    },
+    "appPricing": {
+      "title": "定价计划",
+      "subtitle1": "所有计划均包含 40 多种高级工具和功能来提升您的产品。",
+      "subtitle2": "选择最适合您需求的计划。",
+      "monthly": "每月",
+      "annually": "每年",
+      "saveUpTo": "节省高达 10%",
+      "popular": "受欢迎的",
+      "perMonth": "/月",
+      "free": "自由的",
+      "yearlyPrice": "美元{price}/年",
+      "currentPlan": "您目前的计划",
+      "upgrade": "升级",
+      "plans": {
+        "basic": {
+          "name": "基本的",
+          "tagLine": "对每个人来说都是一个简单的开始",
+          "features": {
+            "0": "每月 100 条回复",
+            "1": "无限的表格和调查",
+            "2": "无限领域",
+            "3": "基本表单创建工具",
+            "4": "最多 2 个子域"
+          }
+        },
+        "standard": {
+          "name": "标准",
+          "tagLine": "对于中小型企业",
+          "features": {
+            "0": "无限回复",
+            "1": "无限的表格和调查",
+            "2": "Instagram 个人资料页面",
+            "3": "谷歌文档集成",
+            "4": "自定义“谢谢”页面"
+          }
+        },
+        "enterprise": {
+          "name": "企业",
+          "tagLine": "大型组织的解决方案",
+          "features": {
+            "0": "贝宝付款",
+            "1": "逻辑跳跃",
+            "2": "5 GB 存储空间的文件上传",
+            "3": "自定义域支持",
+            "4": "条纹集成"
+          }
+        }
+      }
+    },
+    "fluxAIToggler": {
+      "askFluxAI": "询问 FluxAI",
+      "tooltip": "获取有关 Flux 产品、部署和应用程序管理的即时答案",
+      "disclaimer": "获取有关 Flux 产品、部署和应用程序管理的即时答案。由经过官方文档、白皮书和支持资源培训的人工智能提供支持。"
+    },
+    "checkoutContent": {
+      "loadingPlanDetails": "正在加载计划详细信息...",
+      "unableToLoadPlan": "无法加载计划详细信息",
+      "tryAgainOrContactSupport": "如果问题仍然存在，请重试或联系支持人员。",
+      "tryAgain": "再试一次",
+      "renewal": "更新",
+      "upgrade": "升级",
+      "downgrade": "降级",
+      "order": "命令",
+      "summary": "概括",
+      "planComparison": "方案比较",
+      "yourCurrentPlan": "您目前的计划",
+      "newPlan": "新计划",
+      "storage": "贮存",
+      "plan": "计划",
+      "duration": "期间",
+      "oneMonth": "1个月",
+      "total": "全部的",
+      "downgradeTo": "降级至",
+      "upgradeTo": "升级至",
+      "renewingYourCurrentPlan": "更新您当前的计划",
+      "upgradingToHigherPlan": "升级到更高的计划",
+      "downgradingToLowerPlan": "降级至较低计划",
+      "newSubscription": "新订阅",
+      "youWillSave": "您将节省：",
+      "priceDifference": "价格差异：",
+      "paymentMethod": "付款方式",
+      "fluxPay": "通量支付",
+      "calculatingFlux": "计算通量...",
+      "manualPaymentDetails": "手动付款详情",
+      "address": "地址",
+      "amount": "数量",
+      "message": "信息",
+      "loadingPaymentDetails": "正在加载付款详细信息...",
+      "paymentDetailsWillAppear": "付款详情将显示在此处",
+      "fluxPriceEstimated": "*FLUX 价格为预估价格，并将在 ZelCore 中最终确定",
+      "nextAutomaticSubscription": "下一个自动订阅",
+      "generateSubscription": "生成订阅",
+      "subscriptionsChargedMonthly": "订阅费用将按月收取",
+      "monitoringPayment": "监控付款...",
+      "waitingForPaymentConfirmation": "等待 Flux 区块链上的付款确认。",
+      "canTakeUpTo20Minutes": "这最多可能需要 20 分钟",
+      "cancelMonitoring": "取消监控",
+      "pendingPayment": "待付款",
+      "cancel": "取消",
+      "sspPaymentInitiated": "SSP 付款已启动，正在监控确认...",
+      "sspPaymentFailed": "SSP 付款失败：{error}",
+      "zelcorePaymentFailed": "Zelcore 付款失败：{error}",
+      "openingZelcoreWallet": "正在打开 ZelCore 钱包进行付款...",
+      "redirectedToCryptoCom": "重定向至 Crypto.com 进行付款。在此完成付款并退货。",
+      "cryptoComPaymentCancelled": "Crypto.com 付款已取消",
+      "paymentMonitoringCancelledCanPayManually": "付款监控已取消。您仍然可以使用上述详细信息手动付款。",
+      "copiedToClipboard": "已复制到剪贴板！",
+      "noLoginCredentials": "未找到登录凭据",
+      "failedToPrepareManualSigning": "无法准备手动签名：{error}",
+      "pleaseEnterSignature": "请输入签名",
+      "paymentConfirmedSubscriptionActive": "付款已确认！您的订阅现已激活。",
+      "paymentConfirmedRenewed": "付款已确认！您的订阅已续订。",
+      "paymentConfirmedUpgraded": "付款已确认！您的订阅已升级。",
+      "paymentConfirmedDowngraded": "付款已确认！您的订阅已降级。",
+      "currentEnds": "当前结束",
+      "ends": "结束",
+      "pleaseLoginToContinue": "请登录以继续购买",
+      "invalidAuthenticationData": "验证数据无效",
+      "authenticationRequired": "需要身份验证。请重新登录。",
+      "planNotFoundOrInvalidResponse": "未找到计划或服务器响应无效",
+      "failedToLoadPlanDetails": "无法加载计划详细信息。请再试一次。",
+      "failedToInitializePayment": "初始化支付失败",
+      "failedToInitializePaymentTryAgain": "初始化支付失败。请再试一次。",
+      "failedToInitializeCryptoCom": "无法初始化 Crypto.com 付款",
+      "failedToInitializeCryptoComTryAgain": "无法初始化 Crypto.com 付款。请再试一次。",
+      "paymentInitializedNoUrl": "付款已初始化，但未收到结帐 URL。请联系支持人员。",
+      "serverErrorContactSupport": "服务器错误 - 请联系支持人员。",
+      "paymentServiceNotFound": "未找到付款服务 - 请联系支持人员。",
+      "paymentServiceNotConfigured": "付款服务未正确配置 - 请联系支持人员。",
+      "cryptoComTimeoutCheckManually": "Crypto.com 支付监控超时。请手动检查您的订阅状态。",
+      "fluxPayTimeoutCheckManually": "FluxPay支付监控超时。请手动检查您的订阅状态。",
+      "failedToCopy": "复制失败",
+      "cryptoCom": "加密网",
+      "zelcore": "泽尔科",
+      "ssp": "固相磷酸盐",
+      "currentSubscription": "当前订阅",
+      "currentPlanFallback": "当前计划",
+      "currentStorage": "当前存储",
+      "general": "一般的",
+      "planNames": {
+        "starter": "起动机",
+        "standard": "标准",
+        "pro": "精英",
+        "enterprise": "磁通驱动专业版",
+        "fluxDrivePro": "磁通驱动专业版"
+      },
+      "messages": {
+        "paymentSuccessfulRedirecting": "付款成功！正在重定向..."
+      }
+    },
+    "fluxDrive": {
+      "fileManager": {
+        "title": "磁通驱动",
+        "subtitle": "安全的去中心化存储",
+        "upgradePlan": "升级计划",
+        "searchPlaceholder": "搜索文件和文件夹...",
+        "listView": "列表视图",
+        "gridView": "网格视图",
+        "columnName": "姓名",
+        "columnUpdated": "已更新",
+        "columnSize": "尺寸",
+        "newFolder": "新建文件夹",
+        "upload": "上传",
+        "uploadFiles": "上传文件",
+        "uploadFolder": "上传文件夹",
+        "goToRoot": "转到根目录",
+        "filesMissing": "文件丢失",
+        "filesMissingDescription": "无法找到某些总计为 {storage} 的文件。这可能表明数据损坏。",
+        "showAllFilesRecovery": "显示所有文件（恢复模式）",
+        "backToNormalMode": "返回正常模式",
+        "noFilesFound": "未找到文件",
+        "folderEmpty": "该文件夹是空的",
+        "noFilesMatch": "没有文件与“{query}”匹配",
+        "dropFilesHere": "将文件拖放到此处进行上传",
+        "noFilesOrFolders": "没有文件或文件夹",
+        "goBackToParent": "返回父文件夹",
+        "preview": "预览",
+        "download": "下载",
+        "addVersion": "添加版本",
+        "addVersionDescription": "这将创建“{fileName}”的新版本，同时保持原始文件可通过版本历史记录进行访问。",
+        "viewVersions": "查看版本",
+        "rename": "重命名",
+        "moveTo": "移至",
+        "copyLink": "复制链接",
+        "delete": "删除",
+        "paginationInfo": "显示 {start}-{end}（共 {total}）",
+        "edit": "编辑",
+        "browserNoVideoSupport": "您的浏览器不支持视频标签。",
+        "browserNoAudioSupport": "您的浏览器不支持音频元素。",
+        "previewNotAvailable": "预览不适用于此文件类型",
+        "downloadFile": "下载文件",
+        "uploadingFiles": "正在上传 {current} 个文件（共 {total} 个）",
+        "uploadingFile": "上传文件",
+        "uploadWait": "请稍等...",
+        "uploadProgress": "上传进度：{progress}%",
+        "fileOfTotal": "文件 {current}（共 {total}）",
+        "debugInfo": "调试信息：",
+        "displayLogicDebug": "显示逻辑调试：",
+        "versionCommentPlaceholder": "例如，错误修复、新功能...",
+        "commentValidation": "评论必须少于 100 个字符",
+        "downloading": "正在下载",
+        "downloadProgress": "下载进度：{progress}%",
+        "confirmDelete": "确认删除",
+        "confirmDeleteMessage": "您确定要删除此{type}吗？",
+        "folder": "文件夹",
+        "file": "文件",
+        "cancel": "取消",
+        "upgradeYourPlan": "升级您的计划",
+        "renameItem": "重命名{type}",
+        "newName": "新名称",
+        "moveItem": "移动{type}",
+        "destinationFolder": "目标文件夹",
+        "destinationPlaceholder": "输入目标路径",
+        "move": "移动",
+        "fileVersionsTitle": "文件版本：{name}",
+        "fileVersionsDescription": "{count} 个版本可用",
+        "currentVersion": "当前版本",
+        "latest": "最新的",
+        "versionNumber": "版本{number}",
+        "noPreviousVersions": "没有以前的版本",
+        "close": "关闭",
+        "createNewFolder": "创建新文件夹",
+        "folderName": "文件夹名称",
+        "createFolder": "创建文件夹",
+        "loadingFileContent": "正在加载文件内容...",
+        "selectFileToUpload": "选择要上传为新版本的文件",
+        "versionComment": "版本注释（可选）",
+        "filesDeleteWarning": "如果您不续订，您的文件很快就会被删除",
+        "subscriptionExpired": "订阅已过期",
+        "subscriptionExpiresToday": "订阅今天到期",
+        "subscriptionExpiringSoon": "Subscription Expiring Soon",
+        "subscriptionActive": "订阅活跃",
+        "renewNow": "立即续订",
+        "extend": "延长",
+        "manageSubscription": "管理订阅",
+        "manageSubscriptionTitle": "管理您的订阅",
+        "manageSubscriptionInfo": "在下面管理或取消您的订阅。",
+        "cryptoComManageInfo": "您的订阅是通过 Crypto.com 管理的。您可以在他们的平台上取消或更新您的付款方式。",
+        "manageCryptoCom": "在 Crypto.com 上管理",
+        "cancelSubscription": "取消订阅",
+        "cancelSubscriptionTitle": "取消您的订阅",
+        "cancelSubscriptionMessage": "您确定要取消订阅吗？您的访问权限将保持有效，直到当前计费周期结束。",
+        "cancelSubscriptionNote": "取消后您可以随时重新订阅。",
+        "cancelSubscriptionConfirm": "是，取消订阅",
+        "cancelSubscriptionCancel": "保持订阅",
+        "cancelSubscriptionSuccess": "订阅已成功取消。您的访问权限将保留到当前计费周期结束为止。",
+        "cancelSubscriptionError": "取消订阅失败"
+      },
+      "storageInfo": {
+        "title": "存储使用情况",
+        "usedOf": "已使用 {used}（共 {total}）",
+        "usedSpace": "已用空间",
+        "available": "可用的",
+        "total": "全部的",
+        "almostFull": "存储空间即将满",
+        "almostFullMessage": "您的存储空间已满 {percentage}%。考虑升级您的计划或删除未使用的文件。",
+        "statusTitle": "存储状态",
+        "statusMessage": "您正在使用可用存储空间的 {percentage}%。"
+      },
+      "versionsDialog": {
+        "title": "文件版本",
+        "current": "当前的",
+        "currentVersion": "当前版本（最后更新）",
+        "previous": "以前的",
+        "original": "原来的",
+        "versionNumber": "版本{number}",
+        "preview": "预览",
+        "download": "下载",
+        "copyLink": "复制链接",
+        "noPreviousVersions": "没有以前的版本",
+        "noPreviousVersionsMessage": "该文件没有以前的版本",
+        "noFileSelected": "未选择文件",
+        "noFileSelectedMessage": "请选择一个文件以查看其版本",
+        "downloadProgress": "下载进度",
+        "progress": "进步",
+        "downloadSuccess": "{name} 下载成功",
+        "downloadFailed": "无法下载“{name}”：{error}",
+        "linkCopied": "链接已复制到剪贴板",
+        "linkCopyFailed": "无法将链接复制到剪贴板"
+      },
+      "pricingPlans": {
+        "title": "FluxDrive 存储计划",
+        "subtitle": "选择您完美的存储计划。",
+        "storage": "贮存",
+        "contactUs": "联系我们",
+        "signIn": "登录",
+        "current": "当前的",
+        "renew": "更新",
+        "upgrade": "升级",
+        "downgrade": "降级",
+        "signUp": "报名",
+        "perDay": "/ 天",
+        "perMonth": "/ 月",
+        "billedMonthly": "按月计费",
+        "popular": "受欢迎的",
+        "customPricing": "风俗",
+        "pricing": "定价",
+        "dailyCost": "每日费用",
+        "dailyCostValue": "每 GB 0.0017 美元",
+        "currentPlan": "当前计划",
+        "getStarted": "开始使用",
+        "downgradeBlocked": "无法降级",
+        "plans": {
+          "starter": "起动机",
+          "standard": "标准",
+          "elite": "精英",
+          "fluxDrivePro": "磁通驱动专业版"
+        },
+        "badges": {
+          "mostPopular": "最受欢迎",
+          "bestValue": "最超值",
+          "enterprise": "企业"
+        },
+        "features": {
+          "web3Infrastructure": "Web 3 基础设施",
+          "decentralizedStorage": "去中心化存储",
+          "globalDistribution": "全球分布",
+          "unlimitedBandwidth": "无限带宽"
+        },
+        "customizable": "可定制"
+      }
+    }
+  },
+  "pages": {
+    "administration": {
+      "systemInfo": {
+        "loadingTitle": "正在加载系统信息...",
+        "errorTitle": "系统信息不可用",
+        "errorSubtitle": "此时无法加载系统信息。",
+        "errorDescription": "系统当前不可用或遇到连接问题。请检查您的连接并稍后重试。如果问题仍然存在，请联系您的系统管理员。",
+        "title": "系统信息",
+        "subtitle": "查看系统资源和组件版本",
+        "resourcesAllocated": "资源分配",
+        "storage": "贮存",
+        "storageUsed": "{used} GB",
+        "storageTotal": "共 {total} GB",
+        "vcpu": "虚拟CPU",
+        "vcpuUsed": "{used} 个 vCore",
+        "vcpuTotal": "{total} 个 vCore 数",
+        "ram": "内存",
+        "ramUsed": "{used} GB",
+        "ramTotal": "共 {total} GB",
+        "applications": "应用领域",
+        "installedApps": "已安装的应用程序",
+        "installedAppsCount": "{count} 个申请",
+        "appsHashes": "应用程序哈希",
+        "notSynced": "{count} 未同步",
+        "componentVersions": "组件版本"
+      },
+      "dockerEvents": {
+        "loadingTitle": "正在加载 Docker 事件...",
+        "title": "码头工人事件",
+        "subtitle": "监控 Docker 容器事件和活动",
+        "recentEvents": "近期活动",
+        "noEventsAvailable": "没有可用的 Docker 事件",
+        "errorLoadingEvents": "无法加载 Docker 事件"
+      },
+      "fluxShare": {
+        "loadingTitle": "正在加载 FluxShare...",
+        "title": "通量共享",
+        "subtitle": "管理您的文件并与他人共享",
+        "storageUsage": "存储使用情况",
+        "used": "用过的",
+        "available": "可用的",
+        "fileManager": "文件管理器",
+        "upload": "上传",
+        "newFolder": "新建文件夹",
+        "emptyFolder": "该文件夹是空的",
+        "folder": "文件夹",
+        "file": "文件",
+        "columns": {
+          "name": "姓名",
+          "modified": "修改的",
+          "type": "类型",
+          "size": "尺寸",
+          "actions": "行动"
+        },
+        "download": "下载",
+        "downloadZip": "下载为 ZIP",
+        "rename": "重命名",
+        "share": "分享",
+        "unshare": "取消分享",
+        "copyLink": "复制分享链接",
+        "delete": "删除",
+        "createFolder": "创建文件夹",
+        "folderName": "文件夹名称",
+        "renameItem": "重命名",
+        "newName": "新名称",
+        "confirmDelete": "确认删除",
+        "deleteConfirmMessage": "您确定要删除“{name}”吗？",
+        "confirmDownload": "确认下载",
+        "downloadFileConfirm": "下载文件“{name}”？",
+        "downloadFolderConfirm": "下载 ZIP 文件夹“{name}”？",
+        "uploadFiles": "上传文件",
+        "dropFilesHere": "将文件拖放到此处",
+        "clickToUpload": "或点击上传",
+        "maxFileSize": "最大文件大小：5GB",
+        "messages": {
+          "folderCreated": "文件夹创建成功",
+          "fileDeleted": "“{name}”已成功删除",
+          "folderDeleted": "“{name}”已成功删除",
+          "renamed": "“{old}”重命名为“{new}”",
+          "fileShared": "“{name}”现已共享",
+          "fileUnshared": "“{name}”不再共享",
+          "fileUploaded": "“{name}”上传成功"
+        },
+        "errors": {
+          "storageStatsFailed": "无法加载存储统计信息",
+          "loadFolderFailed": "加载文件夹失败",
+          "folderExists": "文件夹“{name}”已存在",
+          "createFolderFailed": "创建文件夹失败",
+          "deleteFileFailed": "删除文件失败",
+          "folderNotEmpty": "文件夹“{name}”不为空",
+          "deleteFolderFailed": "删除文件夹失败",
+          "invalidName": "名称不能包含“/”",
+          "renameFailed": "重命名失败",
+          "shareFailed": "共享文件失败",
+          "unshareFailed": "无法取消共享文件",
+          "downloadFailed": "下载失败",
+          "duplicateFile": "文件“{name}”已在上传队列中",
+          "fileTooLarge": "文件“{name}”超出 5GB 限制",
+          "uploadFailed": "上传失败",
+          "storageFull": "存储已满 - 不允许上传",
+          "insufficientStorage": "文件“{name}”({fileSize} MB) 超出可用存储空间 ({available} MB)"
+        }
+      },
+      "manageUsers": {
+        "title": "管理用户",
+        "subtitle": "查看和管理登录的用户和活动会话",
+        "searchUsers": "搜索用户",
+        "refresh": "刷新",
+        "logOut": "退出",
+        "logOutAll": "全部注销",
+        "logOutAllUsers": "注销所有用户",
+        "current": "当前的",
+        "yourCurrentSession": "您当前的会话",
+        "activeSessions": "活跃会话",
+        "cancel": "取消",
+        "areYouSureProceed": "您确定要继续吗？",
+        "confirmLogoutUser": "确认注销用户",
+        "confirmLogoutAllUsers": "确认注销所有用户",
+        "logoutUserWarning": "这将注销所选用户。",
+        "logoutAllUsersWarning": "这将注销所有用户，包括您自己！",
+        "table": {
+          "fluxId": "通量ID",
+          "loginPhrase": "登录短语"
+        },
+        "errors": {
+          "failedToLoadUsers": "加载用户失败",
+          "failedToLogoutUser": "无法注销用户",
+          "failedToLogoutAllUsers": "无法注销所有用户"
+        }
+      },
+      "manageFlux": {
+        "title": "管理通量重力",
+        "subtitle": "配置和管理您的 Flux 节点设置",
+        "tabs": {
+          "settings": "设置",
+          "logs": "日志",
+          "daemon": "守护进程",
+          "benchmark": "基准"
+        },
+        "sections": {
+          "systemUpdates": {
+            "title": "系统更新",
+            "fluxUpdate": {
+              "title": "通量重力更新",
+              "process": "标准更新流程",
+              "description": "将您的 Flux Gravity 更新到最新版本。每个 Flux Gravity 都必须运行最新版本才能与网络保持一致。",
+              "button": "更新通量重力"
+            }
+          },
+          "nodeConfiguration": {
+            "title": "节点配置",
+            "routerIp": {
+              "title": "路由器IP",
+              "subtitle": "网络配置",
+              "tooltip": "配置路由器的 IP 地址以进行 UPNP 端口转发。如果不使用 UPNP，请保留空白。",
+              "hint": "如果不使用 UPNP，请保留空白",
+              "button": "更新路由器IP"
+            },
+            "apiPort": {
+              "title": "API端口",
+              "subtitle": "服务端口配置",
+              "tooltip": "配置Flux Gravity API服务的端口号。默认值为 16127。",
+              "hint": "默认值：16127",
+              "button": "更新API端口"
+            },
+            "restartFluxOs": {
+              "title": "重新启动通量重力",
+              "subtitle": "重新启动应用程序",
+              "warning": "重新启动将关闭并立即重新启动 Flux Gravity。您需要刷新并再次登录。",
+              "button": "重新启动通量重力"
+            }
+          },
+          "securityAccess": {
+            "title": "安全与访问控制",
+            "blockedPorts": {
+              "title": "被阻止的端口",
+              "subtitle": "端口访问控制",
+              "tooltip": "阻止应用程序使用特定端口。您最多可以添加 100 个端口。",
+              "hint": "按 Enter 添加端口（最多 100 个）",
+              "button": "更新被阻止的端口"
+            },
+            "blockedRepos": {
+              "title": "被阻止的存储库",
+              "subtitle": "存储库限制",
+              "tooltip": "排除在您的节点上部署的特定 Docker 存储库。",
+              "hint": "按 Enter 添加存储库",
+              "button": "更新被阻止的仓库"
+            }
+          }
+        },
+        "logs": {
+          "flux": "通量测井",
+          "daemon": "守护进程日志",
+          "benchmark": "基准日志",
+          "download": "下载",
+          "refresh": "刷新",
+          "loading": "正在加载日志..."
+        },
+        "daemon": {
+          "control": {
+            "title": "守护进程控制",
+            "start": {
+              "title": "开始",
+              "subtitle": "启动守护进程",
+              "button": "启动守护进程"
+            },
+            "restart": {
+              "title": "重新启动",
+              "subtitle": "重新启动守护进程",
+              "button": "重新启动守护进程"
+            },
+            "stop": {
+              "title": "停止",
+              "subtitle": "停止守护进程",
+              "button": "停止守护进程"
+            }
+          },
+          "info": {
+            "title": "守护进程信息",
+            "refresh": "刷新",
+            "loadingMessage": "正在加载守护进程信息...",
+            "versionInfo": "版本信息",
+            "networkStatus": "网络状态",
+            "walletInfo": "钱包信息",
+            "errorStatus": "错误状态",
+            "noErrors": "未检测到错误",
+            "noInfoLoaded": "未加载守护程序信息。点击“刷新”即可获取。",
+            "difficulty": "困难",
+            "timeOffset": "时间偏移",
+            "testnet": "测试网",
+            "balance": "平衡",
+            "keyPoolSize": "密钥池大小",
+            "keyPoolOldest": "最旧的密钥池",
+            "payTxFee": "支付交易费用",
+            "relayFee": "接力费"
+          }
+        },
+        "benchmark": {
+          "control": {
+            "title": "基准控制",
+            "start": {
+              "title": "开始",
+              "subtitle": "启动基准测试",
+              "button": "启动基准测试"
+            },
+            "restart": {
+              "title": "重新启动",
+              "subtitle": "重新启动基准测试",
+              "button": "重启基准测试"
+            },
+            "stop": {
+              "title": "停止",
+              "subtitle": "停止基准测试",
+              "button": "停止基准"
+            }
+          },
+          "info": {
+            "title": "基准信息",
+            "refresh": "刷新",
+            "loadingMessage": "正在加载基准信息...",
+            "thunder": "雷",
+            "runningWarning": "基准测试当前正在运行。请稍后重试。",
+            "hardwareSpecs": "硬件规格",
+            "performanceMetrics": "绩效指标",
+            "networkSpeed": "网络速度",
+            "systemInfo": "系统信息",
+            "noInfoLoaded": "未加载基准信息。点击“刷新”即可获取。"
+          }
+        },
+        "labels": {
+          "routerIpAddress": "路由器IP地址",
+          "apiPort": "API端口",
+          "blockedPorts": "被阻止的端口",
+          "blockedRepositories": "被阻止的存储库",
+          "type": "类型"
+        },
+        "placeholders": {
+          "routerIpPlaceholder": "192.168.1.1",
+          "portPlaceholder": "输入端口号并按 Enter 键",
+          "repositoryPlaceholder": "输入存储库名称并按 Enter"
+        },
+        "messages": {
+          "notAuthenticated": "未经过身份验证",
+          "checkingForFluxUpdates": "正在检查 Flux 更新...",
+          "fluxUpdatingInBackground": "Flux 现在正在后台更新",
+          "updateCompletedFluxWillReload": "更新完成。 Flux 现在将重新加载",
+          "fluxAlreadyUpToDate": "Flux 已经是最新的",
+          "errorCheckingFluxVersion": "检查 Flux 版本时出错",
+          "apiPortNotValid": "API 端口无效",
+          "errorLoadingFluxLogs": "加载 Flux 日志时出错",
+          "errorLoadingDaemonLogs": "加载守护进程日志时出错",
+          "errorLoadingBenchmarkLogs": "加载基准日志时出错",
+          "failedToDownloadLogFile": "下载日志文件失败",
+          "errorLoadingDaemonInfo": "加载守护进程信息时出错",
+          "errorLoadingBenchmarkInfo": "加载基准信息时出错"
+        },
+        "dialogs": {
+          "cancel": "取消",
+          "update": "更新",
+          "restart": "重新启动",
+          "start": "开始",
+          "stop": "停止",
+          "confirmProceed": "您确定要继续吗？",
+          "updateFlux": {
+            "title": "确认通量重力更新",
+            "message": "您确定要更新 Flux Gravity 吗？这将重新启动应用程序。",
+            "button": "更新通量重力"
+          },
+          "updateRouterIp": {
+            "title": "更新路由器IP",
+            "message": "您确定要更新路由器 IP 地址吗？",
+            "button": "更新"
+          },
+          "updateBlockedPorts": {
+            "title": "更新被阻止的端口",
+            "message": "您确定要更新被阻止的端口吗？",
+            "button": "更新"
+          },
+          "updateApiPort": {
+            "title": "更新API端口",
+            "message": "您确定要更新 API 端口吗？",
+            "button": "更新"
+          },
+          "updateBlockedRepos": {
+            "title": "更新被阻止的存储库",
+            "message": "您确定要更新被阻止的存储库吗？",
+            "button": "更新"
+          },
+          "restartFluxOs": {
+            "title": "确认重启",
+            "message": "您确定要重新启动 Flux Gravity 吗？这将暂时中断所有服务。",
+            "button": "重新启动"
+          },
+          "updateProgress": {
+            "title": "更新中",
+            "updating": "更新中...",
+            "pleaseWait": "正在应用更新，请稍候。这可能需要几分钟。",
+            "doNotClose": "不要关闭此窗口或导航离开。"
+          },
+          "downloadProgress": {
+            "downloading": "正在下载...",
+            "complete": "下载完成",
+            "fileSize": "文件大小：",
+            "done": "完毕"
+          },
+          "startDaemon": {
+            "title": "启动守护进程",
+            "confirm": "您确定要启动守护进程吗？"
+          },
+          "restartDaemon": {
+            "title": "重新启动守护进程",
+            "confirm": "您确定要重新启动守护进程吗？"
+          },
+          "stopDaemon": {
+            "title": "停止守护进程",
+            "warning": "这将停止守护进程。"
+          },
+          "startBenchmark": {
+            "title": "启动基准测试",
+            "confirm": "您确定要开始基准测试吗？"
+          },
+          "restartBenchmark": {
+            "title": "重启基准测试",
+            "confirm": "您确定要重新启动基准测试吗？"
+          },
+          "stopBenchmark": {
+            "title": "停止基准",
+            "warning": "这将停止基准测试。"
+          }
+        }
+      }
+    },
+    "apps": {
+      "manage": {
+        "tabs": {
+          "specifications": "规格",
+          "information": "信息",
+          "fileChanges": "文件变更",
+          "monitoring": "监控",
+          "logs": "日志",
+          "terminal": "安全外壳",
+          "control": "控制",
+          "backupRestore": "备份与恢复",
+          "instances": "实例",
+          "subscription": "订阅"
+        },
+        "tooltips": {
+          "manage": "管理",
+          "install": "安装",
+          "remove": "消除",
+          "visit": "访问"
+        },
+        "searchIpPlaceholder": "搜索IP...",
+        "persistentStorage": "持久存储",
+        "persistentStorageTooltip": "跟踪容器重新启动后持续存在的存储。防止磁盘过度使用。",
+        "rootFilesystem": "根文件系统 (rootfs)",
+        "rootFilesystemTooltip": "临时集装箱存放。监控 rootfs 有助于避免空间问题。",
+        "confirmButton": "管理",
+        "dialog": {
+          "installingTitle": "正在安装应用程序...",
+          "installingAppName": "正在安装 {appName}...",
+          "removingAppName": "正在删除 {appName}...",
+          "currentTask": "当前任务：",
+          "overallProgress": "总体进展",
+          "fullLogs": "完整日志",
+          "showLogs": "显示日志",
+          "hideLogs": "隐藏日志",
+          "close": "关闭"
+        },
+        "specification": {
+          "local": "当地规格",
+          "global": "全球规格"
+        },
+        "composition": "作品",
+        "messages": {
+          "awaitingLaunch": "应用程序正在等待启动...",
+          "fileChangesDescription": "Docker 容器内的文件更改（种类：0 = 修改，种类：1 = 添加，种类：2 = 删除）",
+          "noRecordsAvailable": "无可用记录。",
+          "dataRetrievalError": "我们无法检索数据。请稍后重试或切换到不同的后端实例。",
+          "instanceNotFound": "未找到实例。它可能正在初始化。请刷新或稍后重试。",
+          "applicationExpired": "申请已过期",
+          "cannotCalculateExpiration": "无法计算到期时间",
+          "failedToCheck": "检查失败",
+          "definingNewPrimary": "定义新的主要正在进行中",
+          "sessionExpired": "会话已过期，正在退出...",
+          "noInstancesAvailableTitle": "无可用实例",
+          "noInstancesAvailableMessage": "该应用程序没有正在运行的实例。应用程序可能正在部署、重新部署、尚未部署，或者所有实例都处于脱机状态。",
+          "retry": "重试",
+          "loadingTitle": "加载中...",
+          "loadingMessage": "正在检索应用程序信息...",
+          "noInstancesWarningTitle": "功能有限 - 没有运行实例",
+          "noInstancesWarningMessage": "此应用程序没有活动实例。某些功能不可用。您仍然可以管理订阅并查看规格。",
+          "noInstancesChip": "无实例"
+        },
+        "placeholders": {
+          "searchProcesses": "搜索过程..."
+        },
+        "titles": {
+          "inspectDetails": "检查详情",
+          "fileChanges": "文件变更",
+          "loadingFileContent": "正在加载文件内容...",
+          "historyStatsOverview": "历史统计概览",
+          "statsProcessesOverview": "统计数据和流程概述"
+        },
+        "labels": {
+          "historyStatistics": "历史统计",
+          "points": "积分",
+          "refreshRate": "刷新率",
+          "timeRange": "时间范围",
+          "component": "成分",
+          "selectComponent": "选择组件",
+          "itemsPerPage": "每页项目数"
+        },
+        "timeRange": {
+          "last15Minutes": "最后 15 分钟",
+          "last30Minutes": "最后 30 分钟",
+          "last1Hour": "最后 1 小时",
+          "last2Hours": "最后 2 小时",
+          "last3Hours": "最后 3 小时",
+          "last5Hours": "过去 5 小时",
+          "last1Day": "最后 1 天",
+          "last2Days": "过去 2 天",
+          "last3Days": "过去 3 天",
+          "last7Days": "过去 7 天"
+        },
+        "charts": {
+          "bind": "绑定",
+          "volume": "体积",
+          "fileSystem": "文件系统（RootFS）",
+          "memoryAllocated": "内存分配",
+          "memoryUtilization": "内存利用率（%）",
+          "cpuAllocated": "CPU分配",
+          "cpuUtilization": "CPU 利用率 (%)",
+          "networkRx": "eth0 上的 RX",
+          "networkTx": "eth0 上的 TX",
+          "ioRead": "读",
+          "ioWrite": "写"
+        }
+      },
+      "redeploy": {
+        "tooltip": "重新部署",
+        "confirmButton": "重新部署"
+      },
+      "table": {
+        "perPage": "每页",
+        "filter": "筛选",
+        "filterPlaceholder": "输入搜索",
+        "advancedFilterTooltip": "打开高级过滤选项",
+        "appType": "应用程序类型",
+        "version": "版本",
+        "minHdd": "最小硬盘 (GB)",
+        "minRam": "最小内存 (MB)",
+        "minCpu": "最小 CPU（核心数）",
+        "minInstances": "最小实例数",
+        "repotags": "重新定位标签",
+        "repotagsPlaceholder": "输入并按 Enter 键",
+        "matchAllTags": "包括所有标签（匹配所有）",
+        "clearFilters": "清除所有过滤器",
+        "loading": "加载中...",
+        "signInRequired": "需要登录",
+        "signInDescription": "要管理和监控 Flux 网络上的应用程序，您需要使用您的 Flux 身份进行身份验证。",
+        "features": {
+          "viewApps": "查看您的应用程序",
+          "manageResources": "管理资源",
+          "monitorPerformance": "监控性能",
+          "controlDeployments": "控制部署"
+        },
+        "signIn": "登录",
+        "learnMore": "了解更多",
+        "noMatchingApps": "未找到匹配的应用程序。",
+        "connectionError": "无法连接到服务器。请检查您的互联网或稍后重试。",
+        "noApps": "您没有任何应用程序。",
+        "checking": "检查...",
+        "composition": "作品",
+        "locations": "地点",
+        "loginRequired": "需要登录",
+        "applicationExpired": "申请已过期",
+        "cannotCalculateExpiration": "无法计算到期时间",
+        "modeOptions": {
+          "all": "全部",
+          "marketplace": "市场",
+          "marketplaceExcluded": "市场排除"
+        },
+        "versionOptions": {
+          "all": "所有版本",
+          "v3": "版本3",
+          "v4": "版本4",
+          "v5": "版本5",
+          "v6": "版本6",
+          "v7": "版本7",
+          "v8": "版本8"
+        },
+        "headers": {
+          "name": "姓名",
+          "status": "地位",
+          "description": "描述"
+        }
+      },
+      "register": {
+        "landing": {
+          "title": "在 FluxCloud 上部署您的应用程序",
+          "subtitle": "体验真正去中心化云计算的力量。在我们遍布 {countryCount} 个国家/地区的 {nodeCount} 个节点的全球网络上部署 Docker 容器、Web 应用、数据库、API 和微服务。",
+          "getStarted": "开始部署",
+          "documentation": "查看文档",
+          "appTypes": {
+            "title": "您可以部署什么？",
+            "subtitle": "FluxCloud 支持任何 Docker 化应用程序。从简单的 Web 应用程序到复杂的多容器部署。",
+            "web": {
+              "title": "网络应用程序",
+              "description": "部署具有前端和后端服务的全栈 Web 应用程序。非常适合 React、Vue、Angular、Next.js 等。"
+            },
+            "api": {
+              "title": "API 和微服务",
+              "description": "轻松构建和部署 RESTful API、GraphQL 端点和微服务架构。"
+            },
+            "database": {
+              "title": "数据库",
+              "description": "托管 PostgreSQL、MongoDB、MySQL 和其他具有持久存储的数据库服务。"
+            },
+            "blockchain": {
+              "title": "区块链节点",
+              "description": "在我们的去中心化基础设施上运行区块链节点、验证器和 DeFi 应用程序。"
+            },
+            "custom": {
+              "title": "定制应用程序",
+              "description": "部署任何 Docker 容器。机器学习模型、数据处理管道或自定义业务应用程序。"
+            },
+            "docker": {
+              "title": "Docker 组合",
+              "description": "支持 Docker Compose 的多容器应用程序。复杂的堆栈变得简单。"
+            }
+          },
+          "benefits": {
+            "title": "为什么选择FluxCloud？",
+            "decentralized": {
+              "title": "真正去中心化",
+              "description": "无单点故障。您的应用程序在全球数千个独立运行的节点上运行。"
+            },
+            "affordable": {
+              "title": "价格便宜 70%",
+              "description": "与 AWS、Google Cloud 或 Azure 相比，可显着节省成本。无隐藏费用，定价透明。"
+            },
+            "global": {
+              "title": "全球分布",
+              "description": "通过自动地理路由在超过 {countryCount} 个国家/地区进行部署，以在任何地方实现最佳性能。"
+            },
+            "censorship": {
+              "title": "抗审查",
+              "description": "基于 Web3 原则构建。您的应用程序仍然可以访问，并且不能被任何单个实体删除。"
+            },
+            "scalable": {
+              "title": "即时可扩展",
+              "description": "立即从 1 个实例扩展到 100 个实例。只需按使用量付费，资源分配灵活。"
+            },
+            "noVendor": {
+              "title": "无供应商锁定",
+              "description": "标准 Docker 容器意味着您可以随时迁移。完全控制您的应用程序和数据。"
+            },
+            "guarantee": {
+              "title": "30 天退款保证",
+              "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+            },
+            "freeDomain": {
+              "title": "免费域名托管服务",
+              "description": "包括自动域管理和 SSL 证书。指向您的域名，我们以零配置处理其余的事情。"
+            },
+            "loadBalancer": {
+              "title": "集成负载平衡器",
+              "description": "所有实例之间的内置负载平衡。自动流量分配可确保最佳性能和可靠性。"
+            },
+            "dedicatedResources": {
+              "title": "专用资源",
+              "description": "获得有保证的 CPU、RAM 和存储。没有共享基础设施或冷启动。"
+            }
+          },
+          "pricing": {
+            "title": "透明且实惠的定价",
+            "subtitle": "了解 FluxCloud 与传统云提供商的比较。相同的资源，成本的一小部分。",
+            "provider": "提供者",
+            "cpu": "中央处理器",
+            "ram": "内存",
+            "storage": "贮存",
+            "pricePerMonth": "价格/月",
+            "note": "价格为近似值，基于类似配置的公开定价。 *Akash Network 使用竞价市场，因此实际价格可能会有所不同。 FluxCloud 价格是通过我们的定价 API 实时计算的。"
+          },
+          "serverNetwork": {
+            "title": "全球服务器网络",
+            "subtitle": "您的应用程序部署在全球分散的基础设施中，节点遍布各大洲。",
+            "activeServers": "活跃服务器",
+            "countries": "国家",
+            "global": "全球的",
+            "coverage": "覆盖范围",
+            "noData": "服务器地图数据当前不可用"
+          },
+          "features": {
+            "title": "企业级功能",
+            "performance": {
+              "title": "高性能",
+              "description": "SSD/NVMe 存储、高速网络和优化的路由可确保您的应用程序在任何地方都能快速运行。"
+            },
+            "security": {
+              "title": "设计安全",
+              "description": "内置 DDoS 防护、加密数据传输和隔离的容器环境。"
+            },
+            "redundancy": {
+              "title": "自动冗余",
+              "description": "跨不同节点的多个实例通过自动故障转移确保 99.9% 的正常运行时间。"
+            },
+            "monitoring": {
+              "title": "实时监控",
+              "description": "实时跟踪 CPU、RAM、存储和网络使用情况。包括详细的日志和指标。"
+            },
+            "updates": {
+              "title": "零停机更新",
+              "description": "使用我们的滚动部署策略不间断地更新您的应用程序。"
+            },
+            "support": {
+              "title": "24/7 支持",
+              "description": "社区 Discord、文档和票务系统全天候可用。"
+            }
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "questions": {
+              "whatIsFlux": {
+                "question": "什么是 FluxCloud？",
+                "answer": "FluxCloud 是一个基于 Web3 技术的去中心化云计算平台。与依赖集中式数据中心的传统云提供商不同，FluxCloud 将您的应用程序分布在 {countryCount} 个以上国家/地区的 {nodeCount} 个以上独立运营的节点上。这提供了更好的冗余、抗审查性和显着降低的成本。"
+              },
+              "howToDeploy": {
+                "question": "如何部署应用程序？",
+                "answer": "在 FluxCloud 上部署非常简单：<ol><li>单击“开始部署”访问配置页面</li><li>指定您的 Docker 映像和配置</li><li>选择您的资源（CPU、RAM、存储）</li><li>选择实例数量和部署位置</li><li>部署后您的应用程序将在几分钟内上线</li></ol><p>我们支持来自任何注册表（包括 Docker Hub、GitHub 容器注册表和私有注册表）的 Docker 映像注册表。</p>"
+              },
+              "pricing": {
+                "question": "它要多少钱？",
+                "answer": "FluxCloud 提供透明的按需付费定价，基本配置起价仅为 0.99 美元/月。定价取决于：<ul><li>分配的 CPU 内核</li><li>RAM 数量</li><li>存储大小</li><li>实例数量</li><li>端口要求</li></ul><p>使用我们的<a href=\"/cost-calculator\" target=\"_blank\">成本计算器</a>根据您的需求估算准确的价格。没有隐藏费用，没有意外费用。</p>"
+              },
+              "support": {
+                "question": "可以获得什么样的支持？",
+                "answer": "我们提供多种支持渠道：<ul><li><strong>文档：</strong><a href=\"https://docs.runonflux.io\" target=\"_blank\">docs.runonflux.io</a></li><li><strong>Discord 社区：</strong> 活跃的 24/7 社区支持</li><li><strong>电子邮件支持：</strong> 来自我们的直接帮助团队</li><li><strong>票务系统：</strong>在<a href=\"https://support.runonflux.io\" target=\"_blank\">support.runonflux.io</a></li><li><strong>AI助手：</strong>内置AI助手快速提问</li></ul>"
+              },
+              "requirements": {
+                "question": "部署需要什么条件？",
+                "answer": "要在 FluxCloud 上部署应用程序，您需要：<ul><li><strong>Flux ID：</strong>使用任何与 Flux 兼容的钱包免费创建一个</li><li><strong>Docker 映像：</strong>您的应用程序打包为 Docker 容器</li><li><strong>FLUX 代币或美元：</strong>支付托管费用（我们通过 Stripe 和 PayPal 接受信用卡）</li><li><strong>至少 3 个实例：</strong>去中心化和冗余</li></ul><p>每个实例的最低资源：0.1 个 CPU 核心、100 MB RAM、1 GB 存储</p>"
+              },
+              "security": {
+                "question": "FluxCloud 的安全性如何？",
+                "answer": "FluxCloud 实现了多个安全层：<ul><li><strong>容器隔离：</strong>每个应用程序都在自己隔离的 Docker 容器中运行</li><li><strong>加密传输：</strong>所有传输中的数据都经过加密</li><li><strong>DDoS 防护：</strong>针对攻击的内置防护</li><li><strong>定期审核：</strong>定期代码和基础架构已审核</li><li><strong>去中心化：</strong>无单点故障</li><li><strong>隐私选项：</strong>增强隐私的企业模式</li></ul><p>您可以完全控制应用程序代码和数据。</p>"
+              }
+            }
+          },
+          "cta": {
+            "title": "准备好部署了吗？",
+            "subtitle": "加入已经在 FluxCloud 上构建的数千名开发人员的行列。立即开始部​​署您的应用程序。",
+            "button": "配置您的部署"
+          },
+          "relatedLinks": {
+            "title": "在 FluxCloud 上探索更多信息",
+            "marketplace": "市场",
+            "marketplaceDesc": "浏览预配置的应用程序",
+            "wordpress": "WordPress 托管",
+            "wordpressDesc": "在 FluxCloud 上部署 WordPress 网站",
+            "gaming": "游戏服务器",
+            "gamingDesc": "托管您最喜欢的游戏服务器",
+            "calculator": "成本计算器",
+            "calculatorDesc": "估算您的托管成本"
+          }
+        },
+        "orbit": {
+          "choice": {
+            "title": "您想如何部署？",
+            "subtitle": "选择最适合您的工作流程的部署方法",
+            "newBadge": "新的",
+            "betaBadge": "测试版",
+            "orbitSubtitle": "基于Git的部署",
+            "orbitDescription": "只需连接您的存储库，剩下的事情就由我们来处理。无需 Docker 知识。",
+            "orbitFeature1": "无需 Docker 知识",
+            "orbitFeature2": "自动检测 100 多个框架",
+            "orbitFeature3": "内置 CI/CD 管道",
+            "orbitFeature4": "自动回滚",
+            "orbitFeature5": "GitHub/GitLab/Bitbucket 支持",
+            "orbitCta": "使用 Git 进行部署",
+            "dockerSubtitle": "基于容器的部署",
+            "dockerDescription": "使用自定义 Docker 容器进行完全控制。非常适合复杂的部署。",
+            "dockerFeature1": "任何 Docker 镜像",
+            "dockerFeature2": "私人登记处",
+            "dockerFeature3": "多容器组合",
+            "dockerFeature4": "全面的资源控制",
+            "dockerFeature5": "企业特色",
+            "dockerCta": "使用 Docker 进行部署",
+            "startingAt": "开始于",
+            "dockerPriceDetail": "3 个实例、2 个 vCPU、4GB RAM",
+            "comparisonHint": "不确定该选择哪个？ Git 非常适合大多数网络应用程序。 Docker 为您提供最大程度的控制。",
+            "deployment": "部署",
+            "deployments": "部署"
+          },
+          "overview": {
+            "stepTitle": "FluxCloud Git 概述",
+            "stepDescription": "了解 FluxCloud Git 提供的功能以及它与其他平台的比较。"
+          },
+          "pricing": {
+            "title": "Git 计划",
+            "subtitle": "基于 Git 的部署的简单定价",
+            "stepTitle": "选择您的计划",
+            "stepDescription": "根据您的资源需求选择您的计划。",
+            "allPlansInclude": "选择您的资源",
+            "poweredByFluxCloud": "由 FluxCloud 提供支持",
+            "sharedFeatures": {
+              "title": "FluxCloud Git 功能",
+              "subtitle": "你的代码。我们的魔法。零 Docker 头痛。",
+              "unlimitedBuilds": "无限构建",
+              "frameworks": "100+ 框架",
+              "frameworksDetail": "Node.js、Python、Rust、Go、Java、.NET、PHP 等",
+              "zeroConfig": "零配置",
+              "zeroConfigDetail": "自动检测项目类型、安装依赖项、自动构建",
+              "cicd": "内置 CI/CD",
+              "cicdDetail": "GitHub、GitLab、Bitbucket webhooks + 轮询模式",
+              "customDomain": "自定义域",
+              "customDomainDetail": "使用 SSL 连接您自己的域",
+              "geolocation": "地理位置选择",
+              "geolocationDetail": "部署到全球特定区域",
+              "branchPreviews": "部署预览",
+              "branchPreviewsDetail": "预览分支和 PR 的部署",
+              "autoRollback": "自动回滚",
+              "autoRollbackDetail": "失败的部署恢复到上一个​​工作版本",
+              "monorepo": "Monorepo 支持",
+              "monorepoDetail": "使用 PROJECT_PATH 部署特定文件夹",
+              "healthChecks": "健康监测",
+              "healthChecksDetail": "内置健康检查和流程监督",
+              "security": "增强安全性",
+              "securityDetail": "非 root 执行和自动日志轮换",
+              "unlimitedBuildsDetail": "构建数量或构建持续时间没有限制",
+              "dedicatedResources": "专用资源",
+              "dedicatedResourcesDetail": "没有共享硬件 - 您租用的资源仅供您的应用程序使用"
+            },
+            "free": "自由的",
+            "developer": "标准",
+            "pro": "专业版",
+            "beta": "贝塔",
+            "comingSoon": "即将推出",
+            "freeBuilds": "50 次构建/月",
+            "developerBuilds": "无限构建",
+            "proBuilds": "无限构建",
+            "freePriceDetail": "非常适合业余项目和学习",
+            "developerPriceDetail": "对于不断增长的项目和小型应用程序",
+            "proPriceDetail": "适用于活跃的开发和生产应用程序",
+            "betaPriceDetail": "测试期间完全访问",
+            "perMonth": "/月",
+            "billingOptions": "计费选项",
+            "billingPeriod": "计费周期",
+            "billingMonthly": "每月",
+            "billing1Month": "1个月",
+            "billing3Months": "3个月",
+            "billing6Months": "6个月",
+            "billing12Months": "12 个月",
+            "savings": "节省 {percent}%",
+            "total": "全部的",
+            "customDomain": "自定义域",
+            "customDomainPlaceholder": "app.yourdomain.com",
+            "customDomainHint": "将您域的 CNAME 记录指向您的 Flux 应用程序 URL",
+            "preferredGeolocation": "首选地理位置",
+            "geolocationHint": "选择应部署您的应用程序的区域。保留为“全球”以获得最佳可用性。",
+            "addLocation": "添加位置",
+            "noLocationsSelected": "没有选择具体地点。应用程序将在全球部署。",
+            "freeFeatures": {
+              "deployments": "1 主动部署",
+              "builds": "无限",
+              "cpu": "0.5 核",
+              "ram": "1GB",
+              "storage": "5 GB 固态硬盘/NVMe",
+              "support": "社区支持",
+              "frameworks": "支持 100 多个框架"
+            },
+            "developerFeatures": {
+              "deployments": "3 个活跃部署",
+              "builds": "无限",
+              "cpu": "1.5 核心",
+              "ram": "4GB",
+              "storage": "15 GB 固态硬盘/NVMe",
+              "support": "优先支持",
+              "frameworks": "支持 100 多个框架"
+            },
+            "proFeatures": {
+              "deployments": "5 个活跃部署",
+              "deploymentsExtra": "+$3/额外",
+              "builds": "无限",
+              "cpu": "2.0核心",
+              "ram": "6GB",
+              "storage": "20 GB 固态硬盘/NVMe",
+              "support": "优先支持",
+              "frameworks": "支持 100 多个框架",
+              "branchPreviews": "为分支机构部署预览",
+              "customDomain": "自定义域支持",
+              "geolocation": "地理位置选择",
+              "cicd": "完整的 CI/CD 管道"
+            },
+            "betaFeatures": {
+              "deployments": "无限的活动部署",
+              "builds": "无限构建",
+              "cpu": "2.0核心",
+              "ram": "6GB",
+              "storage": "40 GB 固态硬盘/NVMe",
+              "support": "优先支持",
+              "frameworks": "支持 100 多个框架",
+              "branchPreviews": "为分支机构部署预览",
+              "customDomain": "自定义域支持",
+              "geolocation": "地理位置选择",
+              "cicd": "完整的 CI/CD 管道"
+            },
+            "custom": "风俗",
+            "customizable": "可定制",
+            "customPriceDetail": "配置您自己的资源和定价",
+            "startingAt": "开始于",
+            "priceAfterFirstMonth": "第一个月后的价格",
+            "customFeatures": {
+              "cpu": "0.1 - 15 核",
+              "ram": "100MB - 59GB",
+              "storage": "1 - 820 GB",
+              "instances": "1 - 3 个实例"
+            },
+            "buildLimitWarning": "当达到免费套餐限制时，下一个版本将自动升级到专业版",
+            "currentPlan": "当前计划",
+            "selectPlan": "选择计划",
+            "recommended": "受到推崇的",
+            "mostPopular": "最受欢迎",
+            "firstMonthFree": "第一个月免费*",
+            "freeForever": "永久免费*",
+            "freePlanExplainer": "免费计划通过 1 个 Git 应用程序自动续订。添加更多应用程序的费用为 0.99 美元/月。",
+            "startDeploying": "开始部署",
+            "startFreeTrial": "开始免费试用",
+            "freeTrialDisclaimer": "可能会施加限制以防止滥用。",
+            "beginnerDisclaimer": "免费计划是免费的，只要您在网络上仅运行一个 Git 应用程序，InFlux Technologies 就会自动续订。如果您部署其他 Git 应用程序，每个免费计划应用程序将每月收取 0.99 美元。",
+            "beginnerDowntimeNote": "免费计划在单个实例上运行。由于 Flux 是一个去中心化网络，如果托管节点重新启动或离线，可能会出现短暂的停机时间（通常是几分钟）。对于高可用性应用程序，我们建议在多个实例上运行的标准或专业计划。",
+            "privateRepoDisclaimer": "私有 GitHub 存储库自动部署为企业应用程序，专门在 ArcaneOS 节点上运行，并对源代码和数据进行完全加密。 Enterprise 免费计划增加 1.33 美元/月，标准、专业和自定义计划增加 2.66 美元/月。",
+            "competitive": {
+              "savings": "比 Vercel/Render 便宜高达 85%",
+              "dedicated": "资源专用，不共享",
+              "unlimitedBuilds": "包含无限构建"
+            }
+          },
+          "review": {
+            "stepTitle": "审查和部署",
+            "stepDescription": "在部署到 Flux 网络之前检查您的配置。",
+            "checkingEligibility": "检查第一个月免费的资格...",
+            "notEligibleTitle": "此 FluxCloud Git 不符合首月免费资格",
+            "notEligibleDescription": "需要付款才能继续。",
+            "repository": "存储库",
+            "url": "网址",
+            "branch": "分支",
+            "projectPath": "项目路径",
+            "accessToken": "验证",
+            "configured": "已配置",
+            "appType": "应用程序类型",
+            "enterprisePrivate": "企业（私人回购）",
+            "configuration": "配置",
+            "appName": "应用程序名称",
+            "description": "描述",
+            "appPort": "应用程序端口",
+            "exposedPort": "暴露端口",
+            "contact": "接触",
+            "runtime": "运行时",
+            "envVariables": "环境变量",
+            "planAndResources": "计划与资源",
+            "plan": "计划",
+            "resources": "资源",
+            "activeDeployments": "主动部署",
+            "builds": "构建",
+            "branchPreviews": "分支机构预览",
+            "enabled": "启用",
+            "billing": "计费",
+            "geolocation": "地理定位",
+            "totalPrice": "总价",
+            "unlimited": "无限",
+            "generatedSpec": "生成的应用程序规范",
+            "termsLabel": "我接受",
+            "termsOfService": "服务条款",
+            "termsAnd": "和",
+            "privacyPolicy": "隐私政策",
+            "deployNow": "立即部署",
+            "proceedToPayment": "继续付款"
+          },
+          "deploy": {
+            "stepTitle": "部署",
+            "registering": "注册您的应用程序",
+            "waitingSignature": "等待签名...",
+            "signMessage": "在 Flux 网络上签名并注册您的应用程序...",
+            "propagating": "正在向网络传播...",
+            "registrationFailed": "注册失败",
+            "retry": "重试",
+            "testingInstallation": "测试安装",
+            "verifyingDeployment": "验证您的应用程序可以部署在 Flux 网络上...",
+            "runningTest": "运行安装测试...",
+            "startTest": "开始测试",
+            "testOutput": "测试输出",
+            "testFailed": "安装测试失败",
+            "retryTest": "重试测试",
+            "editConfiguration": "编辑配置",
+            "paymentTitle": "完成付款",
+            "paymentDescription": "选择您首选的付款方式来激活您的专业计划。",
+            "processingPayment": "正在处理付款...",
+            "waitingConfirmation": "等待付款确认...",
+            "cancel": "取消",
+            "paymentSummary": "付款摘要",
+            "discountApplied": "已应用 {percent}% 折扣",
+            "fiatPayment": "法币支付",
+            "fiatDescription": "信用卡、贝宝",
+            "cryptoPayment": "加密支付",
+            "cryptoDescription": "FLUX、BTC、ETH 等",
+            "payWithStripe": "使用 Stripe 支付",
+            "payWithPaypal": "使用贝宝支付",
+            "stripeNote": "通过 Stripe 进行安全支付",
+            "payWithFlux": "使用 FLUX 支付",
+            "payWithZelcore": "使用 Zelcore 支付",
+            "payWithSSP": "使用 SSP 钱包支付",
+            "scanQR": "扫描二维码或复制地址",
+            "sendExactAmount": "准确发送",
+            "toAddress": "解决",
+            "copyAddress": "复制地址",
+            "copiedAddress": "地址已复制！",
+            "successTitle": "部署成功！",
+            "successDescription": "您的应用程序现在正在部署到 Flux 网络。",
+            "appAvailableSoon": "您的应用程序很快就会在分配的 Flux URL 上可用。",
+            "appName": "应用程序名称",
+            "appUrl": "应用程序网址",
+            "openApp": "打开应用程序",
+            "manageApplication": "管理应用程序",
+            "deployAnother": "部署另一个",
+            "freeMonthTitle": "第一个月免费！",
+            "freeMonthDescription": "您第一个月的托管是完全免费的，由 InFlux Technologies 赞助。",
+            "sponsoredBy": "由 Influx 技术赞助",
+            "paymentSubmissionInfo": "您的申请付款将在接下来的几分钟内提交到网络。",
+            "checkingRegistration": "正在检查付款确认...",
+            "waitingForInstance": "等待节点部署...",
+            "firstMonthSponsoredBy": "第一个月的托管由 InFlux Technologies 提供。",
+            "freePlanSponsoredBy": "免费计划由 InFlux Technologies 提供。",
+            "checkingPaymentOnBlockchain": "检查区块链上的付款确认。",
+            "blockchainConfirmationTime": "这可能需要几分钟的时间。",
+            "paymentConfirmedWaitingNodes": "网络上确认付款。",
+            "waitingForNodesPickup": "等待节点拾取并安装您的应用程序。",
+            "nodeDeploymentTime": "这可能需要几分钟的时间。",
+            "registrationCompleteTitle": "注册/付款完成！",
+            "registrationCompleteDescription": "您的申请已在 Flux 网络上成功支付/注册。",
+            "nodesSpawning": "网络节点现在正在生成您的应用程序。它将很快推出。",
+            "cancelPayment": "取消并返回"
+          },
+          "navigation": {
+            "back": "后退",
+            "continue": "继续",
+            "next": "下一个",
+            "previous": "以前的"
+          },
+          "payment": {
+            "payWithCard": "用卡支付",
+            "securePayment": "安全即时付款",
+            "payWithFlux": "使用 FLUX 支付",
+            "cryptoPayment": "加密货币支付",
+            "notEligibleInfo": "此注册需要付费。选择付款方式以继续。",
+            "selectPaymentMethod": "选择付款方式",
+            "secureProcessing": "Secure payment processing",
+            "instantConfirmation": "即时付款确认",
+            "multipleCurrency": "多币种支持",
+            "sendTo": "发送至",
+            "message": "信息"
+          },
+          "features": {
+            "title": "只需几分钟即可从 Git 进行部署",
+            "subtitle": "推送您的代码，剩下的由我们处理",
+            "howItWorks": {
+              "title": "Git 部署的工作原理",
+              "step1": {
+                "title": "连接存储库",
+                "description": "链接您的 GitHub、GitLab 或 Bitbucket 存储库"
+              },
+              "step2": {
+                "title": "自动检测",
+                "description": "Git 部署自动检测您的框架和依赖项"
+              },
+              "step3": {
+                "title": "构建和部署",
+                "description": "您的应用程序是在 Flux 网络上构建和部署的"
+              },
+              "step4": {
+                "title": "保持同步",
+                "description": "推送提交通过 webhooks 触发自动重建"
+              }
+            },
+            "supported": {
+              "title": "支持 100 多个框架",
+              "javascript": "Node.js / JavaScript",
+              "javascriptFrameworks": "Next.js、Nuxt、Remix、Astro、Express、NestJS、Vite",
+              "python": "Python",
+              "pythonFrameworks": "Django、FastAPI、Flask、Streamlit",
+              "rust": "锈",
+              "rustFrameworks": "Actix、阿克苏姆、火箭",
+              "go": "去",
+              "goFrameworks": "金酒、回声、纤维",
+              "java": "爪哇",
+              "javaFrameworks": "Spring Boot、Quarkus",
+              "dotnet": "。网",
+              "dotnetFrameworks": "ASP.NET 核心、Blazor",
+              "ruby": "红宝石",
+              "rubyFrameworks": "铁路，西纳特拉",
+              "php": "PHP",
+              "phpFrameworks": "拉拉维尔、交响乐",
+              "static": "静态站点",
+              "staticFrameworks": "HTML/CSS/JS、雨果、杰基尔、盖茨比"
+            },
+            "benefits": {
+              "zeroDockertitle": "零 Docker 头痛",
+              "zeroDockerDesc": "不需要 Dockerfile。 Git 部署自动处理容器化。",
+              "autoRollbackTitle": "自动回滚",
+              "autoRollbackDesc": "失败的部署会自动恢复到上一个​​工作版本。",
+              "monorepoTitle": "Monorepo 支持",
+              "monorepoDesc": "使用 PROJECT_PATH 从 monorepos 部署特定文件夹。",
+              "productionTitle": "生产就绪",
+              "productionDesc": "健康检查、supervisor管理、日志轮转、非root执行。"
+            }
+          },
+          "faq": {
+            "title": "Git 部署常见问题解答",
+            "whatIsOrbit": {
+              "question": "什么是 Git 部署？",
+              "answer": "Git Deployment 是 Fl​​ux 基于 Git 的部署平台，无需 Docker 知识即可自动构建和部署您的应用程序。只需连接您的存储库，Git 部署就会处理其他一切 - 框架检测、依赖项安装、构建以及跨 Flux 网络的部署。"
+            },
+            "whatFrameworks": {
+              "question": "支持哪些框架？",
+              "answer": "Git 部署支持 100 多个框架，包括 Next.js、Django、FastAPI、Rails、Spring Boot、ASP.NET Core 等等。它自动检测 Node.js、Python、Rust、Go、Java、.NET、Ruby、PHP 项目和静态站点。"
+            },
+            "howBuildsWork": {
+              "question": "构建如何工作？",
+              "answer": "每次将新提交推送到存储库时都会触发构建。 Git 部署通过 Webhooks 检测更改，拉取代码，使用检测到的框架构建代码，然后将其部署到网络上。免费套餐包括每月 50 次构建。"
+            },
+            "exceedLimit": {
+              "question": "当我超过构建限制时会发生什么？",
+              "answer": "当您达到免费套餐限制（50 个版本/月）时，您将收到一封电子邮件通知。下一个版本将自动将您的应用程序升级到专业级别（15 美元/月），并且将从您的信用卡中扣费。"
+            },
+            "switchPlans": {
+              "question": "我可以从免费版切换到专业版吗？",
+              "answer": "是的！您可以随时从应用程序仪表板升级到专业版。注册新应用程序时，您还可以预付 3、6 或 12 个月的费用。"
+            },
+            "privateRepos": {
+              "question": "是否支持私有存储库？",
+              "answer": "是的，Git 部署支持私有存储库。您需要授权 Git 部署在设置过程中访问您的存储库。"
+            }
+          },
+          "landing": {
+            "badge": "新功能：从 Git 部署",
+            "heroTitle": "你的代码。我们的魔法。",
+            "heroSubtitle": "零 Docker 头痛。",
+            "heroDescription": "直接从 GitHub、GitLab 或 Bitbucket 部署任何 Web 应用程序。 Git 部署会自动检测您的框架并处理其他一切。",
+            "getStartedFree": "免费开始",
+            "viewPricing": "查看定价"
+          },
+          "comparison": {
+            "title": "Git 部署的比较",
+            "subtitle": "了解 Git 部署与其他 Git 部署平台的比较",
+            "provider": "提供者",
+            "plan": "计划",
+            "price": "价格",
+            "cpu": "中央处理器",
+            "ram": "内存",
+            "builds": "构建",
+            "best": "最超值",
+            "cores": "核心",
+            "core": "核",
+            "unlimited": "无限",
+            "shared": "共享",
+            "limited": "有限的",
+            "creditBased": "信用为本",
+            "usageBased": "基于使用情况",
+            "minutes": "分钟/月"
+          },
+          "signIn": {
+            "description": "登录以从 Git 部署您的应用程序。",
+            "noDockerNeeded": "无需 Docker 知识",
+            "frameworksSupported": "支持 100 多个框架",
+            "builtInCicd": "内置 CI/CD",
+            "freeTierAvailable": "提供免费套餐",
+            "backToOptions": "返回选项"
+          },
+          "header": {
+            "backToDeploymentOptions": "返回部署选项",
+            "deployWithOrbit": "使用 Git 进行部署",
+            "connectAndDeploy": "连接您的 Git 存储库并在几分钟内完成部署"
+          },
+          "stepper": {
+            "overview": "概述",
+            "plan": "计划",
+            "repository": "存储库",
+            "configure": "配置",
+            "review": "审查",
+            "register": "登记",
+            "payment": "支付"
+          },
+          "repository": {
+            "stepTitle": "连接您的存储库",
+            "stepDescription": "输入您的 Git 存储库 URL。我们支持 GitHub、GitLab 和 Bitbucket。",
+            "repoUrlLabel": "存储库网址 *",
+            "repoUrlPlaceholder": "https://github.com/用户名/repo",
+            "repoUrlHint": "公共或私有存储库 URL",
+            "checkingRepository": "正在检查存储库...",
+            "publicRepository": "公共存储库",
+            "privateRepoAuth": "私有存储库 - 需要身份验证",
+            "errorCheckingRepo": "检查存储库时出错",
+            "detected": "检测到",
+            "privateRepoDetected": "检测到私人存储库",
+            "privateRepoMessage": "该存储库需要身份验证。您的应用程序将自动注册为企业应用程序。",
+            "enterpriseFeatures": "企业应用优势",
+            "enterpriseFeature1": "仅在具有硬件级加密的 ArcaneOS 节点上运行",
+            "enterpriseFeature2": "您的源代码和数据已完全加密和保护",
+            "enterpriseFeature3": "增强专有和敏感应用程序的安全性",
+            "enterprisePricing": "Enterprise 免费计划增加 1.33 美元/月，标准、专业和自定义计划增加 2.66 美元/月。",
+            "usernameLabel": "用户名/令牌名称",
+            "usernamePlaceholder": "github-用户名或令牌",
+            "usernameHint": "对于 GitHub，请使用您的用户名或“令牌”",
+            "tokenLabel": "个人访问令牌 *",
+            "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
+            "tokenHint": "从 Git 提供商设置生成具有存储库访问权限的令牌",
+            "testConnection": "测试连接",
+            "connectionSuccess": "连接成功！",
+            "connectionVerified": "存储库访问已验证。",
+            "branchLabel": "分支",
+            "branchPlaceholder": "选择分行",
+            "loadingBranches": "正在加载分支...",
+            "noBranchesFound": "没有找到分支机构",
+            "default": "默认",
+            "branchesAvailable": "可用分行",
+            "defaultMain": "默认：主",
+            "detectingMonorepo": "检测单一仓库结构...",
+            "monorepoDetected": "检测到 Monorepo！",
+            "projectsFound": "找到项目",
+            "selectProject": "选择要部署的项目：",
+            "projectPathLabel": "项目路径（Monorepo）",
+            "projectPathPlaceholder": "/",
+            "projectPathHint": "对于 monorepos，指定包含您的应用程序的文件夹（例如 /apps/frontend）",
+            "enterCredentialsHint": "在上面输入您的用户名和访问令牌以继续",
+            "enterTokenHint": "在上面输入您的访问令牌以继续",
+            "testConnectionHint": "单击上面的“测试连接”以验证访问权限，然后再继续",
+            "testingConnectionHint": "正在验证存储库访问..."
+          },
+          "config": {
+            "stepTitle": "应用程序配置",
+            "stepDescription": "配置您的应用程序设置。 Git 部署将自动检测您的框架。",
+            "appNameLabel": "应用程序名称 *",
+            "appNamePlaceholder": "我的很棒的应用程序",
+            "appNameHint": "仅限小写字母、数字和连字符（3-32 个字符）",
+            "appPortLabel": "应用端口 *",
+            "appPortPlaceholder": "3000",
+            "portListensOn": "您的应用程序侦听的端口",
+            "autoDetected": "自动检测",
+            "autoDetectedFrom": "从 {framework} 自动检测到",
+            "contactEmailLabel": "联系邮箱 *",
+            "contactEmailPlaceholder": "你{'@'}example.com",
+            "contactEmailHint": "用于部署通知和警报",
+            "showAdvancedOptions": "高级选项",
+            "pollingIntervalLabel": "自动更新轮询间隔",
+            "pollingIntervalHint": "Git 部署检查存储库中是否有新提交的频率。对于即时轮询，添加 WEBHOOK_SECRET 环境变量",
+            "runtimeVersionTitle": "运行时版本（可选）",
+            "runtimeAutoDetect": "Git 部署会自动检测您的运行时。仅在需要特定版本时指定。",
+            "runtimeLabel": "运行时",
+            "envVariablesTitle": "环境变量",
+            "envVariablesInfo": "为您的应用程序配置环境变量。单击下面的任意 Git 变量进行添加。",
+            "availableOrbitVars": "可用的 Git 变量",
+            "added": "额外",
+            "add": "添加",
+            "ifNotSet": "如果没有设置：",
+            "example": "例子：",
+            "yourEnvVariables": "您的环境变量",
+            "noneAddedYet": "（尚未添加）",
+            "keyLabel": "钥匙",
+            "valueLabel": "价值",
+            "addCustomVariable": "添加自定义变量",
+            "deploymentLocationTitle": "部署地点",
+            "deploymentLocationInfo": "选择您的应用程序的部署位置。",
+            "serverLocation": "服务器位置",
+            "continentLabel": "大陆",
+            "countryLabel": "国家",
+            "regionLabel": "地区",
+            "selectRegionInfo": "添加应用程序可以运行的允许位置或无法运行的禁止位置。留空以进行全局部署。",
+            "allowedLocations": "允许的地点",
+            "forbiddenLocations": "禁止地点",
+            "addAllowed": "添加允许",
+            "addForbidden": "添加禁止",
+            "currentRules": "当前的地理位置规则",
+            "allowedLocationsColon": "允许：",
+            "forbiddenLocationsColon": "禁止：",
+            "customDomainTitle": "自定义域",
+            "customDomainLabel": "自定义域",
+            "customDomainPlaceholder": "myapp.example.com",
+            "customDomainHint": "输入您的自定义域（您需要单独配置 DNS）",
+            "autoDetectionEnabled": "启用自动检测",
+            "autoDetectionDescription": "Git 部署会自动检测您的框架（Next.js、Django、Rails、Spring Boot 等）并配置构建过程。无需 Dockerfile！",
+            "customResourcesTitle": "定制资源",
+            "customResourcesInfo": "为您的自定义计划配置 CPU、RAM 和存储。价格将根据您的选择计算。",
+            "cpuLabel": "中央处理器",
+            "ramLabel": "内存",
+            "storageLabel": "贮存",
+            "instancesLabel": "实例",
+            "selected": "已选择",
+            "selectPlan": "选择计划",
+            "registerApplication": "注册申请",
+            "envVars": {
+              "buildCommand": {
+                "description": "如果自动检测失败或者您需要特定的构建脚本，则自定义构建命令",
+                "autoValue": "从 package.json 脚本（build、build:prod）或框架约定自动检测"
+              },
+              "runCommand": {
+                "description": "自定义启动命令来运行您的应用程序",
+                "autoValue": "从 package.json 脚本（启动、服务）或框架约定自动检测"
+              },
+              "installCommand": {
+                "description": "自定义依赖安装命令",
+                "autoValue": "自动检测：基于锁定文件的 npm install、yarn install 或 pnpm install"
+              },
+              "webhookSecret": {
+                "description": "GitHub webhook 部署的秘密（启用企业功能）",
+                "autoValue": "残疾人。设置为启用 webhook 触发的部署"
+              },
+              "nodeVersion": {
+                "description": "指定 Node.js 运行时版本（覆盖自动检测）",
+                "autoValue": "从 .nvmrc、.node-version 或 package.json 引擎字段自动检测。回退到最新的 LTS"
+              },
+              "pythonVersion": {
+                "description": "指定Python运行时版本",
+                "autoValue": "从runtime.txt、.python-version 或Pipfile 自动检测。回落到最新的稳定状态"
+              },
+              "rubyVersion": {
+                "description": "指定 Ruby 运行时版本",
+                "autoValue": "从 .ruby-version 或 Gemfile 自动检测。回落到最新的稳定状态"
+              },
+              "goVersion": {
+                "description": "指定Go运行时版本",
+                "autoValue": "从 go.mod 自动检测到。回落到最新的稳定状态"
+              },
+              "javaVersion": {
+                "description": "指定Java运行时版本",
+                "autoValue": "从 pom.xml 或 build.gradle 自动检测。回退到最新的 LTS (21)"
+              },
+              "apiKey": {
+                "description": "用于保护状态、日志和预览端点的 API 密钥（启用企业功能）",
+                "autoValue": "残疾人。设置为受保护端点启用 API 身份验证"
+              },
+              "prPreviewEnabled": {
+                "description": "为静态站点上的拉取请求启用预览部署",
+                "autoValue": "残疾人。设置为“true”以启用 PR 预览部署"
+              }
+            }
+          },
+          "register": {
+            "registrationComplete": "注册完成",
+            "registrationCompleteMessage": "您的应用程序已在 Flux 网络上成功注册。",
+            "proceedingToPayment": "正在进行付款...",
+            "firstInstallInfo": "首次安装可能需要一段时间，具体取决于您的项目需要下载并安装所有依赖项。您可以在应用程序管理的日志部分进行检查。将应用程序安装在节点上后，您可以通过以下位置访问它：",
+            "appUrl": "应用程序网址：",
+            "orbitApi": "吉特API：",
+            "orbitDocumentation": "GIT 文档："
+          }
+        },
+        "docker": {
+          "header": {
+            "backToDeploymentOptions": "返回部署选项",
+            "deployWithDocker": "使用 Docker 进行部署",
+            "fullControlDeployment": "完全控制自定义 Docker 容器"
+          }
+        }
+      }
+    },
+    "costCalculator": {
+      "title": "应用程序托管成本计算器",
+      "subtitle": "经济实惠的去中心化托管，起价 0.99 美元/月 - 计算您的确切成本",
+      "description": "通过透明的按需付费定价将您的应用程序部署在 Flux 去中心化云网络上。选择您的计算资源（CPU、RAM、存储）、选择实例数量并获取即时定价。没有隐藏费用，没有供应商锁定。非常适合 Docker 容器、Web 应用程序、API、数据库和微服务。基本配置起价仅为 0.99 美元/月。",
+      "learnMore": "了解更多",
+      "configuration": "配置",
+      "instancesQuestion": "您将运行多少个实例？",
+      "instancesHint": "（最少 1 / 最多 100）1 个实例 = 1 个节点",
+      "instancesPlaceholder": "3",
+      "renewalPeriod": "续订期",
+      "renewalHint": "（需要手动续订）",
+      "hardwareResources": "硬件资源",
+      "cpuQuestion": "您需要多少个核心？",
+      "cpuRange": "（最小 0.1/最大 15.0）",
+      "memoryQuestion": "您的应用程序需要多少内存？",
+      "memoryRange": "（最小 100 MB / 最大 59000 MB）",
+      "storageQuestion": "您想要多少存储空间？",
+      "storageRange": "（最小 1 GB/最大 820 GB）",
+      "exposedPorts": "暴露端口",
+      "addExposedPort": "添加暴露端口",
+      "portPlaceholder": "输入端口号并按 Enter",
+      "portFee": "+费用",
+      "enterprisePort": "企业港|企业端口",
+      "enterprisePortDetected": "检测到",
+      "enterprisePortInfo": "端口 0-1023、8080、8081、8443、6667 需支付额外费用",
+      "standardPorts": "标准端口 - 无额外费用",
+      "addPortsHint": "添加您的应用程序将向公众公开的端口",
+      "additionalOptions": "附加选项",
+      "enterpriseApplication": "企业应用",
+      "enterpriseDescription": "企业应用程序在 Arcane OS 上运行，具有增强的隐私保护、加密数据处理以及在专用节点上优先部署的功能",
+      "enterpriseHttpsRequired": "企业应用程序需要 HTTPS 或 localhost。请使用安全连接来访问企业功能。",
+      "enterpriseAuthRequired": "企业应用程序需要身份验证。请登录以访问企业功能。",
+      "staticIp": "静态IP地址",
+      "staticIpDescription": "为您的应用程序分配专用的静态 IP 地址",
+      "syncData": "跨实例同步数据",
+      "syncDataDescription": "使用具有共享存储的分相主-主 (r) 或主-从 (g) 模式启用数据同步。禁用时，每个实例都使用自己独立的持久存储",
+      "estimatedCost": "预计部署成本",
+      "calculating": "正在计算...",
+      "withDiscount": "享受 {discount}% 折扣",
+      "retry": "重试",
+      "helpButton": "帮助",
+      "presetConfigurations": "预设配置",
+      "nodes": "节点",
+      "cpu": "中央处理器",
+      "ram": "内存",
+      "ssd": "固态硬盘/NVMe",
+      "cost": "成本",
+      "select": "选择",
+      "estimatedRate": "*估计 1 通量 = ${rate} USD",
+      "gotIt": "知道了",
+      "validation": {
+        "instancesRequired": "需要实例",
+        "instancesMin": "至少需要 1 个实例",
+        "instancesMinSync": "启用数据同步时至少需要3个实例",
+        "instancesMinSyncInfo": "具有去中心化持久存储的应用程序的最小实例数为 3。要使用更少的实例，请禁用数据同步。",
+        "instancesWarningOne": "建议去中心化网络的最少实例数为 3 个。如果只有 1 个实例，如果运行应用程序的节点重新启动或关闭，您的应用程序可能会遇到几分钟的停机时间。",
+        "instancesWarningTwo": "建议去中心化网络的最少实例数为 3 个。",
+        "instancesMax": "最多允许 100 个实例"
+      },
+      "renewalOptions": {
+        "oneWeek": "1周",
+        "twoWeeks": "2周",
+        "oneMonth": "1个月",
+        "threeMonths": "3个月",
+        "sixMonths": "6个月",
+        "twelveMonths": "12 个月"
+      },
+      "help": {
+        "instanceQuestion": "什么是实例？",
+        "instanceAnswer": "实例代表您的应用程序将在其上运行的节点数。每个实例都在单独的 Flux 节点上运行，以实现高可用性和冗余。至少需要 3 个实例。",
+        "changeSpecsQuestion": "部署后可以更改规格吗？",
+        "changeSpecsAnswer": "是的，您可以随时更新您的应用程序规范。更改将在下一个续订期间或通过手动重新部署应用。",
+        "componentQuestion": "什么是组件？",
+        "componentAnswer": "组件是容器化的应用程序或服务。您可以指定 Docker 映像、所需的资源（CPU、RAM、存储）和公开的端口。",
+        "syncDataQuestion": "数据同步如何进行？",
+        "syncDataAnswer": "数据同步支持使用主-主 (r) 或主-从 (g) 模式在实例之间共享存储。禁用后，每个实例都使用独立的持久存储。",
+        "portsQuestion": "什么是暴露端口？",
+        "portsAnswer": "暴露的端口允许外部访问您的应用程序。 0-1023、8080、8081、8443、6667端口为企业端口，需要额外付费。其他端口均为标准端口，无需额外费用。"
+      },
+      "messages": {
+        "enterpriseHttpsWarning": "企业功能需要 HTTPS 或 localhost。请使用安全连接访问此应用程序。",
+        "enterpriseCalculationWarning": "企业成本计算需要 Arcane OS 节点。显示标准定价。",
+        "retrying": "正在重试... ({count}/3)",
+        "apiUnavailable": "API 服务器不可用。请稍后重试。",
+        "invalidConfig": "配置无效。请检查您的设置。",
+        "calculationError": "计算错误。请再试一次。",
+        "httpsWarning": "企业功能需要 HTTPS。仅可在 HTTP 上使用标准部署。"
+      },
+      "helpTitle": "帮助和常见问题解答",
+      "faq": {
+        "items": {
+          "pricing": {
+            "question": "在 Flux 上托管应用程序需要多少钱？",
+            "answer": "Flux 上的托管起价仅为 0.99 美元/月。最终定价取决于您的资源需求（CPU、RAM、存储）和实例数量。使用上面的成本计算器来获取满足您特定需求的准确价格。我们提供透明的按需付费定价，没有隐藏费用或长期合同。"
+          },
+          "comparison": {
+            "question": "Flux 定价与传统云提供商相比如何？",
+            "answer": "Flux 的成本通常比 AWS、Google Cloud 或 Azure 等传统云提供商低 50-80%。我们的去中心化网络消除了中间商，并将节省的成本转移给您。例如，在 AWS 上托管一个基本 Web 应用程序的费用为每月 50 美元，在 Flux 上的费用通常约为每月 10-15 美元。"
+          },
+          "paymentMethods": {
+            "question": "Flux 接受哪些付款方式？",
+            "answer": "Flux 接受 FLUX 加密货币（主链上的原生 FLUX 币）以及通过我们的集成支付网关的传统支付方式。您可以按月付款，无需长期承诺。"
+          },
+          "hiddenFees": {
+            "question": "是否有任何隐藏费用或额外费用？",
+            "answer": "不会。我们的成本计算器中计算出的价格就是您支付的确切金额。没有安装费，没有隐藏的带宽费用，也没有意外的账单。所有费用都是透明的，并包含在显示的每月价格中。"
+          },
+          "planChanges": {
+            "question": "部署后我可以更改托管计划吗？",
+            "answer": "是的！ Flux 提供灵活的缩放。您可以随时轻松升级或降级 CPU、RAM 和存储。只需调整您的规格，价格就会相应更新。更改立即生效，您只需为使用的内容付费。"
+          },
+          "resourceExceeded": {
+            "question": "如果我的应用程序超出了分配的资源，会发生什么情况？",
+            "answer": "您的应用程序将受到限制，以防止其使用比分配的资源更多的资源。这可以保护网络上的其他用户。如果您需要更多资源，您可以通过 Flux 仪表板轻松升级您的计划。我们建议监控您的应用程序使用情况并主动调整资源。"
+          }
+        }
+      },
+      "relatedResources": {
+        "title": "准备好部署了吗？",
+        "subtitle": "立即探索我们的市场并部署您的应用程序",
+        "links": [
+          {
+            "title": "游戏服务器托管",
+            "description": "立即部署 Minecraft、Palworld、Factorio 和其他流行游戏服务器",
+            "url": "/市场/游戏",
+            "icon": "mdi 游戏手柄变体"
+          },
+          {
+            "title": "WordPress 托管",
+            "description": "启动具有自动备份和 DDoS 防护功能的 WordPress 网站",
+            "url": "/市场/wordpress",
+            "icon": "mdi-wordpress"
+          },
+          {
+            "title": "定制应用程序",
+            "description": "在 Flux 网络上注册并部署任何 Docker 应用程序",
+            "url": "/应用程序/注册",
+            "icon": "mdi-docker"
+          },
+          {
+            "title": "浏览市场",
+            "description": "探索准备部署的预配置应用程序",
+            "url": "/市场",
+            "icon": "MDI应用程序"
+          }
+        ]
+      }
+    },
+    "dashboard": {
+      "overview": {
+        "intro": {
+          "title": "欢迎来到 Flux 生态系统",
+          "blockchain": {
+            "title": "Flux区块链",
+            "description": "Flux 在自己的专有区块链上运行，处理治理、代币经济学，并通过并行资产提供与其他区块链的互操作性。原生 FLUX 加密货币为整个生态系统提供动力，实现去中心化基础设施和 DeFi 集成。"
+          },
+          "cloud": {
+            "title": "Flux云网络",
+            "description": "FluxCloud 是一个去中心化的云计算平台，由超过 {nodes} 个全球分布的 FluxNode 提供支持。它提供了 Web3 就绪的基础设施，用于托管应用程序、运行区块链节点和执行 AI/ML 工作负载，为 AWS 或 Google Cloud 等传统云提供商提供了去中心化的替代方案。"
+          },
+          "learnMore": "了解更多"
+        },
+        "totalNodes": "节点总数",
+        "nodeHistory": "节点历史记录",
+        "lockedSupply": "锁定供应",
+        "fluxSupply": "助焊剂供应",
+        "maxSupply": "最大供应量",
+        "circulatingSupply": "循环供应",
+        "cumulus": "积云",
+        "nimbus": "雨云",
+        "stratus": "层云",
+        "versionBreakdown": "版本细目",
+        "tierBreakdown": "等级划分",
+        "legacy": "遗产",
+        "nodes": "节点|节点",
+        "errorFetchingHistoryStats": "无法获取历史统计数据"
+      },
+      "locations": {
+        "intro": {
+          "title": "全球FluxCloud网络",
+          "subtitle": "真正去中心化的基础设施",
+          "description": "FluxCloud 运营着全球最大的去中心化云基础设施网络，FluxNode 分布在各大洲和数百家托管提供商。这种地理多样性为应用程序所有者提供了无与伦比的好处：边缘计算的低延迟、高冗余和容错能力、抗审查性和真正的去中心化。您的应用程序运行在真实的、独立操作的硬件上，而不是集中式数据中心。"
+        },
+        "geographicTitle": "地理位置",
+        "providersTitle": "供应商",
+        "noGeographicData": "没有可用的地理数据。",
+        "noProviderData": "没有可用的提供商数据。",
+        "unknown": "未知"
+      },
+      "list": {
+        "perPage": "每页",
+        "filter": "筛选",
+        "filterPlaceholder": "输入搜索",
+        "notAvailable": "不适用",
+        "unknown": "未知",
+        "errorLoading": "加载通量列表时出错：",
+        "columns": {
+          "ip": "IP地址",
+          "paymentAddress": "地址",
+          "locationCountry": "国家",
+          "locationOrg": "提供者",
+          "lastpaid": "最后付款",
+          "tier": "等级"
+        }
+      },
+      "resources": {
+        "intro": {
+          "title": "FluxCloud 网络资源",
+          "subtitle": "实时基础设施能力",
+          "description": "探索整个 FluxCloud 网络当前可用的总计算资源。我们的去中心化基础设施由全球数千个 FluxNode 提供支持，为托管应用程序、运行区块链节点和执行工作负载提供可扩展的 CPU、RAM 和存储容量，而无需依赖传统云提供商。"
+        },
+        "summary": {
+          "title": "网络总容量"
+        },
+        "vCores": "vCores",
+        "ram": "内存",
+        "ssd": "固态硬盘/NVMe",
+        "hdd": "硬盘",
+        "cpuHistory": "CPU历史",
+        "ramHistory": "内存历史",
+        "storageHistory": "存储历史记录",
+        "totalVCores": "vCore 总数",
+        "totalRam": "总内存",
+        "totalSsd": "SSD/NVMe 总计",
+        "totalHdd": "硬盘总数",
+        "tierCumulus": "积云",
+        "tierNimbus": "雨云",
+        "tierStratus": "层云",
+        "errorFetchHistory": "无法获取历史统计数据",
+        "close": "关闭"
+      },
+      "rewards": {
+        "intro": {
+          "title": "FluxNode 运营者奖励",
+          "subtitle": "赚取 FLUX 为网络供电",
+          "description": "FluxNode 运营商是 FluxCloud 网络的支柱，提供必要的计算基础设施，为全球去中心化应用程序提供动力。作为对他们贡献的奖励，运营商直接从区块链中赚取 FLUX 加密货币。这些奖励根据节点等级和性能自动分配，创建可持续的激励模型来维护可靠、高质量的基础设施。",
+          "learnMore": "了解有关 FluxNode 的更多信息"
+        },
+        "cumulusTotalRewards": "Cumulus 总奖励",
+        "nimbusTotalRewards": "Nimbus 总奖励",
+        "stratusTotalRewards": "Stratus 总奖励",
+        "fluxCollateral": "FLUX 抵押品",
+        "perDay": "每天",
+        "perWeek": "每周",
+        "perMonth": "每月",
+        "usd": "美元",
+        "historicalPriceChart": "历史价格图表",
+        "price": "价格",
+        "close": "关闭",
+        "errors": {
+          "failedToFetchData": "获取数据失败",
+          "failedToFetchRates": "获取费率失败",
+          "failedToFetchPriceData": "获取价格数据失败",
+          "failedToFetchNodeCount": "获取节点数失败",
+          "failedToFetchBlockReward": "获取区块奖励失败"
+        }
+      }
+    },
+    "fluxDrive": {
+      "intro": {
+        "title": "磁通驱动",
+        "subtitle": "由 IPFS 提供支持的去中心化云存储",
+        "description": "FluxDrive 是一个建立在 FluxCloud 网络之上的去中心化云存储解决方案，利用 IPFS（星际文件系统）技术。将您的文件存储在全球 FluxNode 的分布式网络中，确保冗余、抗审查性和永久可用性。与传统的云存储不同，您的数据经过加密、碎片化并分布在多个节点上，让您能够真正拥有和控制文件，而无需依赖集中式提供商。",
+        "learnMore": "了解有关 FluxDrive 的更多信息"
+      },
+      "loading": "正在加载 FluxDrive...",
+      "checkout": "查看",
+      "renewal": "更新",
+      "upgrade": "升级",
+      "downgrade": "降级",
+      "renewalSuccess": "订阅续订成功！",
+      "renewalFailed": "续订失败：",
+      "upgradeFailed": "升级失败：",
+      "cancel": "取消",
+      "features": {
+        "title": "为什么选择 FluxDrive",
+        "encryption": {
+          "title": "端到端加密",
+          "description": "您的文件在上传前已加密，并在分布式网络中保持安全。只有你掌握着钥匙。"
+        },
+        "distributed": {
+          "title": "全球分布",
+          "description": "文件分布在全球数千个 FluxNode 上，确保从任何地方进行冗余和快速访问。"
+        },
+        "censorship": {
+          "title": "抗审查",
+          "description": "无单点故障或控制。即使个别节点离线，您的文件仍然可以访问。"
+        },
+        "ipfs": {
+          "title": "基于 IPFS 构建",
+          "description": "由星际文件系统技术提供支持，可实现永久的内容寻址文件存储。"
+        },
+        "permanent": {
+          "title": "永久存储",
+          "description": "您的文件在订阅期间仍然可以通过内置冗余进行访问。"
+        },
+        "fast": {
+          "title": "快速可靠",
+          "description": "文件分布在最近的可用节点上，受益于类似于 CDN 的全局性能。"
+        },
+        "guarantee": {
+          "title": "30 天退款保证",
+          "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+        }
+      },
+      "benefits": {
+        "title": "FluxDrive 的优点",
+        "noCentralized": "没有集中的提供商可以访问您的数据",
+        "fullControl": "您的文件的完全所有权和控制权",
+        "globalRedundancy": "跨 2,600 多个节点的全局冗余",
+        "transparentPricing": "定价透明，无隐藏费用",
+        "noVendorLock": "没有供应商锁定或专有格式",
+        "openSource": "基于开源 IPFS 技术构建"
+      }
+    },
+    "marketplace": {
+      "loading": "正在加载市场...",
+      "maintenanceTitle": "应用市场\n维护中",
+      "maintenanceSubtitle": "我们目前在市场上遇到技术困难。我们的团队正在努力尽快解决此问题。",
+      "hero": {
+        "title": "助焊剂应用市场",
+        "subtitle": "在 Flux 的 Web3 云上部署分散的预配置应用程序。全球 {nodeCount}+ FluxNode 上的 Docker 容器、Web 应用程序和 API。"
+      },
+      "detail": {
+        "loadingTitle": "正在加载应用程序...",
+        "errorMessage": "无法加载应用程序详细信息：{error}",
+        "priceLabel": "价格",
+        "priceFree": "自由的",
+        "install": "立即购买",
+        "minimumRequirements": "最低要求",
+        "unitCores": "vCores",
+        "unitMB": "MB",
+        "unitGB": "国标",
+        "cpuPower": "中央处理器功率",
+        "memory": "记忆",
+        "storage": "贮存",
+        "screenshots": "截图",
+        "screenshotAlt": "屏幕截图 {number}",
+        "about": "关于",
+        "developer": "开发商",
+        "lastUpdate": "最后更新",
+        "version": "版本",
+        "downloads": "下载",
+        "links": "链接",
+        "website": "网站",
+        "sourceCode": "源代码",
+        "support": "支持"
+      },
+      "common": {
+        "whyFlux": {
+          "title": "为什么在 FluxCloud 上托管",
+          "subtitle": "体验基于 Web3 技术构建的去中心化云基础设施的强大功能",
+          "benefits": [
+            {
+              "icon": "MDI-网络",
+              "title": "全球网络",
+              "description": "借助我们的全球分散式基础设施在超过 62 个国家/地区进行部署，以实现无处不在的低延迟。"
+            },
+            {
+              "icon": "mdi闪存",
+              "title": "闪电般的快速部署",
+              "description": "使用我们的自动化部署系统在几分钟内启动并运行您的应用程序。"
+            },
+            {
+              "icon": "Mdi-货币-美元-off",
+              "title": "成本效益",
+              "description": "与传统云提供商相比，价格透明且具有竞争力，可节省高达 70% 的费用。"
+            },
+            {
+              "icon": "MDI 服务器网络",
+              "title": "99.9% 正常运行时间",
+              "description": "分布式网络架构确保最大的可用性和冗余。"
+            },
+            {
+              "icon": "MDI 图表线",
+              "title": "轻松扩展",
+              "description": "立即扩展或缩减资源以满足需求，无需停机。"
+            },
+            {
+              "icon": "mdi-锁定-打开",
+              "title": "无供应商锁定",
+              "description": "完整的数据可移植性和开放标准意味着您永远不会被某一提供商锁定。"
+            },
+            {
+              "icon": "MDI 帐户心",
+              "title": "24/7 支持",
+              "description": "专家支持团队全天候提供帮助解决任何问题。"
+            },
+            {
+              "icon": "MDI 现金退款",
+              "title": "30 天退款保证",
+              "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+            }
+          ]
+        },
+        "genericFAQ": {
+          "title": "常见问题解答",
+          "subtitle": "关于在 FluxCloud 上托管您需要了解的一切",
+          "questions": [
+            {
+              "q": "什么是 FluxCloud？",
+              "a": "FluxCloud 是一个基于 Web3 技术的去中心化云计算平台。它为全球节点网络中的应用程序、游戏和服务提供安全、可扩展且经济高效的托管。"
+            },
+            {
+              "q": "我该如何开始？",
+              "a": "只需浏览市场，选择您所需的应用程序或游戏，选择您的配置，然后进行部署。您的实例将在几分钟内上线。无需复杂的设置！"
+            },
+            {
+              "q": "你们接受什么付款方式？",
+              "a": "我们接受 FLUX 代币以及通过我们的集成支付处理器（Stripe 和 Paypal）的传统支付方式。"
+            },
+            {
+              "q": "我可以升级或降级我的计划吗？",
+              "a": "是的！您可以随时通过仪表板轻松扩展或缩减资源。更改立即生效，无需停机。"
+            },
+            {
+              "q": "如果我需要更多资源会怎样？",
+              "a": "您可以随时立即升级到更高级别的配置。只需在仪表板中选择新配置，更改就会自动应用。"
+            },
+            {
+              "q": "如何保证正常运行时间？",
+              "a": "我们的去中心化架构将您的应用程序分布在多个节点上，确保 99.9% 的正常运行时间。如果一个节点遇到问题，您的应用程序会自动故障转移到健康的节点。"
+            },
+            {
+              "q": "我可以随时取消吗？",
+              "a": "是的，没有长期合同或取消费用。您可以在前 30 天内随时取消订阅并要求退款。"
+            },
+            {
+              "q": "你们提供备份吗？",
+              "a": "是的，所有具有分散式持久数据的应用程序都包含自动备份。您的数据每周备份一次，并且可以随时通过仪表板恢复。"
+            },
+            {
+              "q": "可以获得什么样的支持？",
+              "a": "我们通过 Discord 社区、电子邮件支持、AI 内置工具以及 <a href=\"https://support.runonflux.io/\" target=\"_blank\" rel=\"noopener noreferrer\">support.runonflux.io</a> 上的支持票证系统提供 24/7 支持。"
+            }
+          ]
+        },
+        "appSpecificFAQ": {
+          "pricingQuestion": "在 FluxCloud 上托管 {appName} 需要多少钱？",
+          "pricingAnswerPaid": "在 FluxCloud 上托管 <strong>{appName}</strong> 起价为 <strong>{priceText}/月</strong>。这包括跨全球节点网络的去中心化基础设施、自动备份、内置 DDoS 保护、99.9% 的正常运行时间保证和 24/7 支持。您可以利用我们灵活的定价选项随时扩大或缩小资源规模。无需隐藏费用或长期合同。",
+          "pricingAnswerFree": "在 FluxCloud 上托管 <strong>{appName}</strong> 是<strong>免费</strong>的。 This includes decentralized infrastructure across a global network of nodes, automatic backups, built-in DDoS protection, 99.9% uptime guarantee, and 24/7 support.您可以利用我们灵活的定价选项随时扩大或缩小资源规模。无需隐藏费用或长期合同。"
+        }
+      },
+      "games": {
+        "index": {
+          "title": "游戏服务器托管",
+          "subtitle": "在 FluxCloud 上部署和管理游戏服务器",
+          "loading": "正在加载可用的游戏...",
+          "maintenanceTitle": "游戏市场暂时不可用",
+          "maintenanceSubtitle": "我们遇到暂时的问题",
+          "hero": {
+            "title": "FluxCloud 上的高级游戏服务器托管",
+            "subtitle": "通过区块链技术支持的全球分发、DDoS 保护和即用即付定价，在几秒钟内部署您最喜欢的游戏服务器。",
+            "cta": "浏览游戏服务器",
+            "benefits": {
+              "instant": "即时部署",
+              "global": "全球服务器",
+              "ddos": "DDoS 防护",
+              "pricing": "透明定价"
+            }
+          },
+          "trust": {
+            "servers": {
+              "value": "1000+",
+              "label": "活跃服务器"
+            },
+            "uptime": {
+              "value": "99.9%",
+              "label": "正常运行时间服务等级协议"
+            },
+            "locations": {
+              "value": "50+",
+              "label": "国家"
+            },
+            "deployment": {
+              "value": "< 30秒",
+              "label": "部署时间"
+            }
+          },
+          "features": {
+            "title": "为什么选择 FluxPlay 进行游戏托管？",
+            "items": {
+              "instant": {
+                "title": "即时部署",
+                "description": "使用我们的自动部署系统在 30 秒内启动您的游戏服务器。无需技术知识。"
+              },
+              "ddos": {
+                "title": "包含 DDoS 保护",
+                "description": "企业级 DDoS 防护使您的服务器保持在线并让您的玩家保持连接，即使在攻击期间也是如此。"
+              },
+              "global": {
+                "title": "全球服务器网络",
+                "description": "从全球 50 多个国家/地区中进行选择，以最大限度地减少延迟并为您的玩家提供最佳的游戏体验。"
+              },
+              "monitoring": {
+                "title": "24/7 监控",
+                "description": "具有自动警报功能的实时性能监控可确保您的服务器保持健康且响应迅速。"
+              },
+              "paygo": {
+                "title": "按量付费定价",
+                "description": "只需通过透明、灵活的定价为您使用的资源付费。没有隐藏费用或长期合同。"
+              },
+              "blockchain": {
+                "title": "区块链驱动",
+                "description": "建立在去中心化的 Flux 基础设施之上，以增强安全性、透明度和对中心化故障的抵抗力。"
+              },
+              "uptime": {
+                "title": "99.9% 的正常运行时间保证",
+                "description": "我们的去中心化基础设施通过 99.9% 的正常运行时间 SLA 确保最大的可靠性，让您的游戏服务器在玩家需要时保持在线。"
+              },
+              "moneyback": {
+                "title": "30 天退款",
+                "description": "通过我们的 30 天退款保证，无风险地尝试 FluxPlay。如果您不满意，我们将无条件退款。"
+              }
+            }
+          },
+          "content": {
+            "title": "专业游戏服务器托管变得简单",
+            "intro": "FluxPlay 将去中心化基础设施的强大功能与传统托管的简单性相结合，彻底改变了游戏服务器托管。无论您托管的是 Minecraft、Palworld、Factorio、Satisfactory 还是 Enshrouded 服务器，我们的平台都能提供无与伦比的性能和可靠性。",
+            "features": {
+              "decentralized": {
+                "title": "企业级去中心化基础设施",
+                "description": "我们的平台基于 FluxCloud 构建，提供具有自动扩展和地理分布功能的企业级游戏托管。我们的去中心化架构可确保您的游戏服务器即使在个别节点发生故障时也保持在线，与传统的集中式托管提供商相比，可提供卓越的正常运行时间。"
+              },
+              "security": {
+                "title": "军用级安全和 DDoS 防护",
+                "description": "每个游戏服务器都包含全面的 DDoS 防护和军事级安全措施。我们的分布式网络架构提供了针对攻击的自然防御，同时始终保持最佳性能和玩家连接。"
+              },
+              "deployment": {
+                "title": "即时部署和透明定价",
+                "description": "使用我们的自动化系统在 30 秒内部署您的游戏服务器。享受透明的即用即付定价，没有隐藏费用或长期合同 - 适合需要最好的游戏玩家、社区和服务器管理员的现代解决方案。"
+              }
+            }
+          },
+          "serverLocations": {
+            "title": "全球服务器网络",
+            "subtitle": "我们的去中心化基础设施遍布全球，无论玩家身在何处，都能确保游戏服务器的低延迟和高可用性。"
+          },
+          "gamesTitle": "可用的游戏服务器",
+          "gamesSubtitle": "选择一个游戏并在几秒钟内部署您的服务器",
+          "comparison": {
+            "title": "为什么 FluxPlay 与传统托管相比",
+            "feature": "特征",
+            "fluxplay": "通量播放",
+            "traditional": "传统托管",
+            "rows": {
+              "setup": "设置时间",
+              "pricing": "定价模型",
+              "ddos": "DDoS 防护",
+              "decentralized": "去中心化",
+              "locations": "服务器位置",
+              "scaling": "缩放速度"
+            },
+            "values": {
+              "instant": "< 30 秒",
+              "hours": "几小时到几天",
+              "transparent": "透明的即用即付",
+              "hidden": "隐藏费用+合同",
+              "extra": "额外费用",
+              "countries": "50+国家",
+              "limited": "有限地区",
+              "slow": "手动过程缓慢"
+            }
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "items": {
+              "what": {
+                "question": "什么是 FluxPlay 游戏服务器托管？",
+                "answer": "<p>FluxPlay是一个基于FluxCloud构建的去中心化游戏服务器托管平台。它允许您通过即时部署、全球分发和企业级安全性来部署和管理 Minecraft、Palworld、Factorio 等游戏服务器。</p>"
+              },
+              "different": {
+                "question": "FluxPlay 与传统游戏托管有何不同？",
+                "answer": "<p>FluxPlay 使用<strong>去中心化区块链基础设施</strong>而不是集中式数据中心。这提供了更好的正常运行时间、透明的定价、内置的 DDoS 保护以及对单点故障的抵抗力。与传统提供商的数小时或数天相比，您可以在 30 秒内部署服务器。</p>"
+              },
+              "games": {
+                "question": "我可以在 FluxPlay 上托管哪些游戏？",
+                "answer": "<p>FluxPlay 目前支持的热门游戏包括<strong>Minecraft</strong>、<strong>Palworld</strong>、<strong>Factorio</strong>、<strong>Satisfactory</strong> 和<strong>Enshrouded</strong>。我们根据社区需求不断添加新游戏。</p>"
+              },
+              "deploy": {
+                "question": "部署游戏服务器的速度有多快？",
+                "answer": "<p>游戏服务器平均部署时间<strong>不到 30 秒</strong>。只需选择您的游戏、配置和服务器位置，然后单击部署。我们的自动化系统会为您处理所有技术设置。</p>"
+              },
+              "ddosProtection": {
+                "question": "是否包含 DDoS 防护？",
+                "answer": "<p>是的！所有游戏服务器均包含<strong>企业级 DDoS 保护</strong>，无需额外付费。您的服务器受到保护，免受常见攻击媒介的侵害，确保玩家即使在攻击期间也能保持连接。</p>"
+              },
+              "pricing": {
+                "question": "定价如何运作？",
+                "answer": "<p>FluxPlay 使用<strong>透明的即用即付定价</strong>。您只需为服务器使用的计算资源（CPU、RAM、存储）付费。没有隐藏费用、安装成本或长期合同。价格因游戏和配置而异，小型服务器从 $__MIN_PRICE__/月起。</p>"
+              },
+              "support": {
+                "question": "有什么支持？",
+                "answer": "<p>所有 FluxPlay 服务器均包含带有实时警报的<strong>自动 24/7 监控</strong>。如需技术支持，您可以访问我们的文档、社区论坛和票务系统。为企业客户提供高级支持包。</p>"
+              },
+              "blockchain": {
+                "question": "我需要加密货币才能使用 FluxPlay 吗？",
+                "answer": "<p>虽然 FluxPlay 是基于区块链技术构建的，但您可以使用包括信用卡在内的<strong>传统支付方式</strong>进行支付。区块链基础设施在后台提供安全性和去中心化优势，而无需您管理加密货币。</p>"
+              }
+            }
+          },
+          "cta": {
+            "title": "准备好部署您的游戏服务器了吗？",
+            "subtitle": "加入托管在去中心化 Flux 网络上的数千名游戏玩家",
+            "button": "立即开始"
+          }
+        },
+        "detail": {
+          "loadingTitle": "正在加载游戏详细信息...",
+          "backToGames": "返回游戏",
+          "availableConfigurations": "可用配置",
+          "installGame": "安装{name}",
+          "gameNotFound": "找不到游戏",
+          "gameNotAvailable": "游戏不可用",
+          "failedToLoad": "无法加载游戏"
+        },
+        "palworld": {
+          "description": {
+            "title": "关于 Palworld 服务器托管",
+            "content": "<p><strong>Palworld</strong> 是一款多人开放世界生存制作游戏，其中栖息着名为“Pals”的神秘生物。在这款游戏中，您可以与好友交友并收集好友，在战斗中使用他们，让他们在您的基地工作，甚至出售他们！</p><p>在 Flux 网络上运行您自己的 Palworld 服务器可让您完全掌控自己的游戏体验。自定义游戏设置、管理玩家访问并与朋友一起享受无延迟的游戏体验。 <strong>服务器托管起价仅为 [[minPrice]]/月</strong>，随着玩家群体的增长，提供灵活的扩展选项。</p><p>无论您是要构建终极 Pal 庇护所还是创建竞争性的 PvP 环境，Flux 上的托管都可以提供您所需的可靠性和性能。</p>",
+            "highlights": [
+              "每台服务器最多 32 名玩家",
+              "完全定制控制",
+              "持久的世界拯救",
+              "模组支持就绪",
+              "自动备份",
+              "包括 DDoS 保护"
+            ]
+          },
+          "features": {
+            "title": "为什么在 FluxCloud 上托管？",
+            "subtitle": "为游戏性能而构建的去中心化基础设施",
+            "items": [
+              {
+                "icon": "MDI 屏蔽检查",
+                "title": "DDoS 防护",
+                "description": "即使在受到攻击时，内置保护也能让您的服务器保持在线状态，确保游戏不间断。"
+              },
+              {
+                "icon": "mdi闪存",
+                "title": "即时部署",
+                "description": "您的服务器在几分钟内即可准备就绪，而不是几小时。部署、配置并开始播放，无需等待。"
+              },
+              {
+                "icon": "MDI 接入点网络",
+                "title": "全球低延迟",
+                "description": "服务器战略性地分布在全球各地，确保世界各地的玩家能够享受最小的 ping 和无延迟的游戏体验。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "去中心化网络",
+                "description": "通过全球 Flux 网络托管，以实现最大程度的正常运行时间和恢复能力。"
+              },
+              {
+                "icon": "Mdi-货币-美元-off",
+                "title": "价格实惠",
+                "description": "定价透明，无隐藏费用。通过灵活的定价等级，只需按使用量付费。"
+              },
+              {
+                "icon": "MDI 图表线",
+                "title": "可扩展的资源",
+                "description": "随着玩家群的增长，轻松升级服务器资源。随时放大或缩小。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "99.9% 正常运行时间",
+                "description": "分布式基础设施确保您的服务器保持在线。包括自动故障转移。"
+              },
+              {
+                "icon": "MDI 现金退款",
+                "title": "30 天退款保证",
+                "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "全球服务器网络",
+            "subtitle": "您的游戏托管在全球分散的基础设施上，服务器遍布多个大洲，确保世界各地玩家的低延迟和高可用性。"
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "subtitle": "关于在 FluxCloud 上托管 Palworld 所需了解的一切",
+            "questions": [
+              {
+                "q": "如何在 FluxCloud 上托管 Palworld 服务器？",
+                "a": "只需从上面的选项中选择您首选的服务器配置，单击“安装”，然后按照部署向导进行操作即可。您的服务器将在几分钟内准备就绪！"
+              },
+              {
+                "q": "Palworld 托管费用是多少？",
+                "a": "定价起价仅为<strong>[[minPrice]]/月</strong>，并根据容量进行调整。所有价格均包含 DDoS 保护和自动备份。"
+              },
+              {
+                "q": "我可以自定义我的服务器设置吗？",
+                "a": "绝对地！您可以完全控制服务器设置，包括难度、PvP 设置、经验率等。通过 SSH 连接到游戏服务器或使用应用程序管理中的卷浏览器功能来配置游戏。"
+              },
+              {
+                "q": "最低要求是什么？",
+                "a": "最多可供 8 名玩家使用：2 个 CPU 核心、4GB RAM、10GB 存储空间。对于较大的服务器（16-32 名玩家），请选择我们的更高级别的计划。"
+              },
+              {
+                "q": "部署需要多长时间？",
+                "a": "服务器部署通常在<strong>5-10 分钟</strong>内完成。您可以立即开始邀请玩家！"
+              },
+              {
+                "q": "你们提供退款吗？",
+                "a": "是的！我们提供<strong>30 天退款保证</strong>。如果您不满意，请在 30 天内联系支持人员以获得全额退款。"
+              }
+            ]
+          }
+        },
+        "minecraft": {
+          "description": {
+            "title": "关于 Minecraft 服务器托管",
+            "content": "<p><strong>Minecraft</strong> 是世界上最受欢迎的沙盒游戏，让您可以在程序生成的无限世界中建造、探索和生存。它在全球拥有超过 1.4 亿活跃玩家，是终极创意游乐场。</p><p>在 Flux 上托管您自己的 Minecraft 服务器，以获得终极控制、性能和可靠性。非常适合与朋友、社区或大型多人网络一起进行原版、改装或自定义游戏体验。 <strong>Minecraft 服务器托管起价为 [[minPrice]]/月</strong>，并提供可扩展的资源来匹配您的玩家数量。</p><p>无论您是运行生存服务器、创意建筑世界、迷你游戏中心还是模组化冒险，Flux 都能为您提供创造难忘体验所需的基础设施。</p>",
+            "highlights": [
+              "无限玩家支持",
+              "Mod 和插件支持（Bukkit、Spigot、Paper、Forge、Fabric）",
+              "定期自动备份",
+              "24/7 服务器正常运行时间保证",
+              "包括 DDoS 保护",
+              "轻松的世界管理"
+            ]
+          },
+          "features": {
+            "title": "为什么在 FluxCloud 上托管？",
+            "subtitle": "为游戏性能而构建的去中心化基础设施",
+            "items": [
+              {
+                "icon": "MDI 屏蔽检查",
+                "title": "DDoS 防护",
+                "description": "即使在受到攻击时，内置保护也能让您的服务器保持在线状态，确保游戏不间断。"
+              },
+              {
+                "icon": "mdi闪存",
+                "title": "即时部署",
+                "description": "您的服务器在几分钟内即可准备就绪，而不是几小时。部署、配置并开始播放，无需等待。"
+              },
+              {
+                "icon": "MDI 接入点网络",
+                "title": "全球低延迟",
+                "description": "服务器战略性地分布在全球各地，确保世界各地的玩家能够享受最小的 ping 和无延迟的游戏体验。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "去中心化网络",
+                "description": "通过全球 Flux 网络托管，以实现最大程度的正常运行时间和恢复能力。"
+              },
+              {
+                "icon": "Mdi-货币-美元-off",
+                "title": "价格实惠",
+                "description": "定价透明，无隐藏费用。通过灵活的定价等级，只需按使用量付费。"
+              },
+              {
+                "icon": "MDI 图表线",
+                "title": "可扩展的资源",
+                "description": "随着玩家群的增长，轻松升级服务器资源。随时放大或缩小。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "99.9% 正常运行时间",
+                "description": "Distributed infrastructure ensures your server stays online. Automatic failover included."
+              },
+              {
+                "icon": "MDI 现金退款",
+                "title": "30 天退款保证",
+                "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "全球服务器网络",
+            "subtitle": "您的游戏托管在全球分散的基础设施上，服务器遍布多个大洲，确保世界各地玩家的低延迟和高可用性。"
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "subtitle": "关于在 FluxCloud 上托管 Minecraft 所需了解的一切",
+            "questions": [
+              {
+                "q": "如何在 FluxCloud 上托管 Minecraft 服务器？",
+                "a": "根据玩家数量选择您首选的服务器配置，单击“安装”，然后按照我们的简单部署向导进行操作。您的服务器将在几分钟内上线！"
+              },
+              {
+                "q": "Minecraft 托管费用是多少？",
+                "a": "套餐起价为<strong>[[minPrice]]/月</strong>，并根据 RAM、CPU 和玩家容量进行扩展。所有计划都包括 DDoS 保护和自动备份。"
+              },
+              {
+                "q": "我可以安装模组和插件吗？",
+                "a": "是的！完全支持 Bukkit、Spigot、Paper、Forge、Fabric 和所有主要模组加载器。通过 SSH 将自定义插件和模组包上传并配置到您的游戏服务器或使用应用程序管理中的卷浏览器功能。"
+              },
+              {
+                "q": "支持哪些 Minecraft 版本？",
+                "a": "从 1.8 到最新版本的所有 Minecraft Java 版版本。通过 SSH 或应用程序管理中的卷浏览器随时切换版本。"
+              },
+              {
+                "q": "备份如何进行？",
+                "a": "当您的应用程序处于活动状态时，会创建并维护每周自动备份。始终保留最新的备份，直到应用程序过期。您还可以随时创建手动备份并一键恢复。"
+              },
+              {
+                "q": "我可以转移现有的 Minecraft 世界吗？",
+                "a": "绝对地！通过 SSH 将现有的世界文件上传到游戏服务器或使用应用程序管理中的卷浏览器功能。我们还为其他地方托管的服务器提供免费迁移帮助。"
+              }
+            ]
+          },
+          "gettingStarted": {
+            "title": "如何开始使用 Minecraft 服务器托管",
+            "subtitle": "只需 3 个简单步骤即可启动您的 Minecraft 服务器",
+            "steps": [
+              {
+                "number": "1",
+                "title": "选择您的配置",
+                "description": "根据您预期的玩家数量选择 RAM、CPU 和存储。我们提供从小型私人服务器（5-10 名玩家）到大型多人游戏网络（100 名以上玩家）的配置。"
+              },
+              {
+                "number": "2",
+                "title": "部署您的服务器",
+                "description": "单击部署按钮，我们的自动化系统将通过 Flux 去中心化网络配置您的 Minecraft 服务器。您的服务器将在 5 分钟内准备好最新的 Minecraft 版本。"
+              },
+              {
+                "number": "3",
+                "title": "自定义和播放",
+                "description": "通过 SSH 或 Volume Browser 访问您的服务器以安装模组、配置设置并上传自定义世界。与朋友分享您的服务器IP并立即开始玩！"
+              }
+            ]
+          },
+          "technicalSpecs": {
+            "title": "技术规格",
+            "subtitle": "通过 FluxCloud 托管 Minecraft，您可以获得什么",
+            "specs": [
+              {
+                "label": "服务器类型",
+                "value": "Java版（所有版本）"
+              },
+              {
+                "label": "支持的平台",
+                "value": "香草、Bukkit、龙头、纸张、锻造、织物"
+              },
+              {
+                "label": "控制面板",
+                "value": "基于 Web 的卷浏览器 + SSH 访问"
+              },
+              {
+                "label": "备份频率",
+                "value": "每周自动+手动按需"
+              },
+              {
+                "label": "DDoS 防护",
+                "value": "企业级，免费提供"
+              },
+              {
+                "label": "正常运行时间服务等级协议",
+                "value": "99.9% 保证"
+              },
+              {
+                "label": "部署时间",
+                "value": "平均 < 5 分钟"
+              },
+              {
+                "label": "玩家缩放",
+                "value": "5 至 500 多名并发玩家"
+              }
+            ]
+          }
+        },
+        "factorio": {
+          "description": {
+            "title": "关于异星工厂服务器托管",
+            "content": "<p><strong>异星工厂</strong>是一款广受好评的游戏，涉及建造和创建自动化工厂来生产日益复杂的物品。在这款工程杰作中设计复杂的生产线、自动化物流并防御外星攻击。</p><p>在 Flux 上托管异星工厂服务器，与朋友和同事无缝进行多人游戏。建造大型工厂，协作制定蓝图，并在可靠的基础设施上共同优化生产链。 <strong>Factorio 服务器托管起价为 [[minPrice]]/月</strong>，并可根据您的大型基地野心进行扩展。</p><p>非常适合工程爱好者、自动化爱好者和希望构建终极工厂的团队。从不起眼的起步到发射火箭，您工厂的成功取决于可靠的托管。</p>",
+            "highlights": [
+              "复杂工厂的稳定多人游戏性能",
+              "完整的模组支持（通过模组门户）",
+              "每 5 分钟自动保存一次",
+              "超低延迟连接",
+              "简单的服务器配置",
+              "包括 DDoS 保护"
+            ]
+          },
+          "features": {
+            "title": "为什么在 FluxCloud 上托管？",
+            "subtitle": "为游戏性能而构建的去中心化基础设施",
+            "items": [
+              {
+                "icon": "MDI 屏蔽检查",
+                "title": "DDoS 防护",
+                "description": "即使在受到攻击时，内置保护也能让您的服务器保持在线状态，确保游戏不间断。"
+              },
+              {
+                "icon": "mdi闪存",
+                "title": "即时部署",
+                "description": "您的服务器在几分钟内即可准备就绪，而不是几小时。部署、配置并开始播放，无需等待。"
+              },
+              {
+                "icon": "MDI 接入点网络",
+                "title": "全球低延迟",
+                "description": "服务器战略性地分布在全球各地，确保世界各地的玩家能够享受最小的 ping 和无延迟的游戏体验。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "去中心化网络",
+                "description": "通过全球 Flux 网络托管，以实现最大程度的正常运行时间和恢复能力。"
+              },
+              {
+                "icon": "Mdi-货币-美元-off",
+                "title": "价格实惠",
+                "description": "定价透明，无隐藏费用。通过灵活的定价等级，只需按使用量付费。"
+              },
+              {
+                "icon": "MDI 图表线",
+                "title": "可扩展的资源",
+                "description": "随着玩家群的增长，轻松升级服务器资源。随时放大或缩小。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "99.9% 正常运行时间",
+                "description": "分布式基础设施确保您的服务器保持在线。包括自动故障转移。"
+              },
+              {
+                "icon": "MDI 现金退款",
+                "title": "30 天退款保证",
+                "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "全球服务器网络",
+            "subtitle": "您的游戏托管在全球分散的基础设施上，服务器遍布多个大洲，确保世界各地玩家的低延迟和高可用性。"
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "subtitle": "关于在 FluxCloud 上托管 Factorio 所需了解的一切",
+            "questions": [
+              {
+                "q": "如何在 FluxCloud 上托管异星工厂服务器？",
+                "a": "选择您的服务器配置，单击“安装”，然后在几分钟内完成部署。上传您的保存文件或重新开始。在虫子到达你的墙壁之前，你的工厂就会开始运转！"
+              },
+              {
+                "q": "异星工厂托管费用是多少？",
+                "a": "从<strong>[[minPrice]]/月</strong>开始，并扩展到大型巨型基地的企业计划。所有计划都包括自动备份和 DDoS 防护。"
+              },
+              {
+                "q": "我可以在我的服务器上使用模组吗？",
+                "a": "是的！完全支持异星工厂 mod 门户。通过 SSH 到您的游戏服务器或使用应用程序管理中的卷浏览器功能安装和配置 mod。 Space Exploration 和 Krastorio 2 等热门模组包可以完美运行。"
+              },
+              {
+                "q": "如果我的工厂变得太大会怎样？",
+                "a": "轻松升级到具有更多 CPU 和 RAM 的更高级别计划。您的服务器可以根据您的大型基地野心进行扩展。实时升级，停机时间最短。"
+              },
+              {
+                "q": "保存的备份频率是多少？",
+                "a": "当您的应用程序处于活动状态时，会创建并维护每周自动备份。始终保留最新的备份，直到应用程序过期。您还可以随时创建手动备份。"
+              },
+              {
+                "q": "我可以迁移现有工厂吗？",
+                "a": "绝对地！通过 SSH 将现有的保存文件上传到游戏服务器或使用应用程序管理中的卷浏览器功能。所有模组、蓝图和研究进度都可以无缝传输。"
+              }
+            ]
+          }
+        },
+        "satisfactory": {
+          "description": {
+            "title": "关于满意的服务器托管",
+            "content": "<p><strong>Satisfactory</strong>是一款第一人称开放世界工厂建造游戏，充满探索和战斗。探索外星球，收获资源，并在令人惊叹的 3D 环境中建造大型自动化工厂。</p><p>在 Flux 上托管您的专用 Satisfactory 服务器，最多可与 4 名玩家进行流畅的合作游戏。共同建造大型工厂，探索危险的生物群落，并在可靠的高性能基础设施上实现生产链自动化。 <strong>令人满意的服务器托管起价为 [[minPrice]]/月</strong>，甚至能够处理最复杂的大型工厂。</p><p>从基本传送带的简陋开始，到拥有火车、无人机和超管道的庞大多层工厂 - 您的工业帝国需要坚如磐石的托管来处理复杂性。</p>",
+            "highlights": [
+              "最多 4 名玩家合作多人游戏",
+              "跨会话的持久世界状态",
+              "定期每 5 分钟自动保存一次",
+              "大型工厂的高性能托管",
+              "轻松的会话管理",
+              "包括 DDoS 保护"
+            ]
+          },
+          "features": {
+            "title": "为什么在 FluxCloud 上托管？",
+            "subtitle": "为游戏性能而构建的去中心化基础设施",
+            "items": [
+              {
+                "icon": "MDI 屏蔽检查",
+                "title": "DDoS 防护",
+                "description": "即使在受到攻击时，内置保护也能让您的服务器保持在线状态，确保游戏不间断。"
+              },
+              {
+                "icon": "mdi闪存",
+                "title": "即时部署",
+                "description": "您的服务器在几分钟内即可准备就绪，而不是几小时。部署、配置并开始播放，无需等待。"
+              },
+              {
+                "icon": "MDI 接入点网络",
+                "title": "全球低延迟",
+                "description": "服务器战略性地分布在全球各地，确保世界各地的玩家能够享受最小的 ping 和无延迟的游戏体验。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "去中心化网络",
+                "description": "通过全球 Flux 网络托管，以实现最大程度的正常运行时间和恢复能力。"
+              },
+              {
+                "icon": "Mdi-货币-美元-off",
+                "title": "价格实惠",
+                "description": "定价透明，无隐藏费用。通过灵活的定价等级，只需按使用量付费。"
+              },
+              {
+                "icon": "MDI 图表线",
+                "title": "可扩展的资源",
+                "description": "随着玩家群的增长，轻松升级服务器资源。随时放大或缩小。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "99.9% 正常运行时间",
+                "description": "分布式基础设施确保您的服务器保持在线。包括自动故障转移。"
+              },
+              {
+                "icon": "MDI 现金退款",
+                "title": "30 天退款保证",
+                "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "全球服务器网络",
+            "subtitle": "您的游戏托管在全球分散的基础设施上，服务器遍布多个大洲，确保世界各地玩家的低延迟和高可用性。"
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "subtitle": "关于在 FluxCloud 上托管 Satisfactory 所需了解的所有信息",
+            "questions": [
+              {
+                "q": "如何在 FluxCloud 上托管 Satisfactory 服务器？",
+                "a": "选择您的服务器计划，单击“安装”，然后在几分钟内进行部署。加载您现有的保存或重新开始。您的工厂将上线并准备合作建设！"
+              },
+              {
+                "q": "满意的托管费用是多少？",
+                "a": "标准服务器的计划从<strong>[[minPrice]]/月</strong>开始，并可扩展以处理最复杂的大型工厂。包括 DDoS 保护和备份。"
+              },
+              {
+                "q": "我可以在我的服务器上使用模组吗？",
+                "a": "是的！完全支持 Satisfactory Mod Manager (SMM) mod。通过 SSH 上传并配置模组到您的游戏服务器或使用应用程序管理中的卷浏览器功能。 Refined Power、Smart! 和 MAM Enhancer 等热门模组可以完美运行。所有玩家都需要安装匹配的模组。"
+              },
+              {
+                "q": "服务器要求是什么？",
+                "a": "最低：入门工厂需要 4GB RAM。推荐：游戏中期使用 8GB RAM。高级：16GB RAM 适用于带有火车和无人机的大型游戏后期工厂。 CPU 随着工厂的复杂性而扩展。"
+              },
+              {
+                "q": "保存文件如何工作？",
+                "a": "当您的应用程序处于活动状态时，会创建并维护每周自动备份。始终保留最新的备份，直到应用程序过期。您还可以随时创建手动备份。下载存档以离线播放或在服务器之间传输。"
+              },
+              {
+                "q": "我可以转移我的单人游戏存档吗？",
+                "a": "绝对地！通过 SSH 将单人游戏保存文件上传到游戏服务器或使用应用程序管理中的卷浏览器功能。与朋友一起继续你的工厂，从你离开的地方开始，所有建筑物和进度都完好无损。"
+              }
+            ]
+          }
+        },
+        "enshrouded": {
+          "description": {
+            "title": "关于隐藏服务器托管",
+            "content": "<p><strong>Enshrouded</strong> 是一款生存动作角色扮演游戏，您可以单人游戏，也可以在合作模式下与最多 16 名玩家一起玩。探索基于体素的 Embervale 广阔世界，与凶猛的敌人战斗，制作强大的装备，并与您的朋友一起建造史诗般的基地。</p><p>在 Flux 上运行您自己的 Enshrouded 服务器，以获得身临其境的合作体验。冒险进入致命的裹尸布，揭开古老的秘密，建造宏伟的建筑，并在这个美丽而危险的世界中共同生存。 <strong>隐藏服务器托管起价为 [[minPrice]]/月</strong>，最多支持 16 名玩家。</p><p>无论您专注于战斗、建造、探索还是制作，Flux 上的托管都可以确保您的冒险顺利、持久，并且始终可供整个团队使用。</p>",
+            "highlights": [
+              "最多 16 名玩家合作多人游戏",
+              "整个世界的坚持和进步",
+              "自定义服务器设置和难度",
+              "每 30 分钟自动备份一次",
+              "适用于体素世界的高性能服务器",
+              "包括 DDoS 保护"
+            ]
+          },
+          "features": {
+            "title": "为什么在 FluxCloud 上托管？",
+            "subtitle": "为游戏性能而构建的去中心化基础设施",
+            "items": [
+              {
+                "icon": "MDI 屏蔽检查",
+                "title": "DDoS 防护",
+                "description": "即使在受到攻击时，内置保护也能让您的服务器保持在线状态，确保游戏不间断。"
+              },
+              {
+                "icon": "mdi闪存",
+                "title": "即时部署",
+                "description": "您的服务器在几分钟内即可准备就绪，而不是几小时。部署、配置并开始播放，无需等待。"
+              },
+              {
+                "icon": "MDI 接入点网络",
+                "title": "全球低延迟",
+                "description": "服务器战略性地分布在全球各地，确保世界各地的玩家能够享受最小的 ping 和无延迟的游戏体验。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "去中心化网络",
+                "description": "通过全球 Flux 网络托管，以实现最大程度的正常运行时间和恢复能力。"
+              },
+              {
+                "icon": "Mdi-货币-美元-off",
+                "title": "价格实惠",
+                "description": "定价透明，无隐藏费用。通过灵活的定价等级，只需按使用量付费。"
+              },
+              {
+                "icon": "MDI 图表线",
+                "title": "可扩展的资源",
+                "description": "随着玩家群的增长，轻松升级服务器资源。随时放大或缩小。"
+              },
+              {
+                "icon": "MDI 服务器网络",
+                "title": "99.9% 正常运行时间",
+                "description": "分布式基础设施确保您的服务器保持在线。包括自动故障转移。"
+              },
+              {
+                "icon": "MDI 现金退款",
+                "title": "30 天退款保证",
+                "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+              }
+            ]
+          },
+          "serverLocations": {
+            "title": "全球服务器网络",
+            "subtitle": "您的游戏托管在全球分散的基础设施上，服务器遍布多个大洲，确保世界各地玩家的低延迟和高可用性。"
+          },
+          "faq": {
+            "title": "常见问题解答",
+            "subtitle": "关于在 FluxCloud 上托管 Enshrouded 您需要了解的所有信息",
+            "questions": [
+              {
+                "q": "如何在 FluxCloud 上托管 Enshrouded 服务器？",
+                "a": "根据玩家数量选择服务器配置，单击“安装”，然后在几分钟内完成部署。您的 Embervale 世界将立即为合作冒险做好准备！"
+              },
+              {
+                "q": "隐藏式托管的费用是多少？",
+                "a": "从<strong>[[minPrice]]/月</strong>开始，并根据玩家容量进行扩展（最多 16 名玩家）。所有计划都包括 DDoS 保护、自动备份和高性能 SSD/NVMe 存储。"
+              },
+              {
+                "q": "我可以自定义服务器设置吗？",
+                "a": "是的！完全控制难度、战斗设置、资源生成率、昼/夜周期长度等。通过 SSH 连接到游戏服务器或使用应用程序管理中的卷浏览器功能来配置您的游戏，以匹配您的游戏风格。"
+              },
+              {
+                "q": "最低要求是什么？",
+                "a": "适合 8 名玩家：8GB RAM，4 个 CPU 核心。对于 16 名玩家：建议使用 16GB RAM、6 个 CPU 核心。基于体素的世界受益于地形生成的强大 CPU 性能。"
+              },
+              {
+                "q": "备份如何进行？",
+                "a": "当您的应用程序处于活动状态时，会创建并维护每周自动备份。始终保留最新的备份，直到应用程序过期。您还可以随时创建手动备份并一键恢复。"
+              },
+              {
+                "q": "我可以转移我的单人游戏世界吗？",
+                "a": "是的！通过 SSH 将单人游戏保存文件上传到游戏服务器或使用应用程序管理中的卷浏览器功能。你的角色、基地、进程和探索的区域无缝转移到多人游戏。和朋友一起继续你的旅程！"
+              }
+            ]
+          }
+        }
+      },
+      "wordpress": {
+        "loadingTitle": "正在加载 WordPress 计划...",
+        "maintenanceTitle": "WordPress 市场\n维护中",
+        "maintenanceSubtitle": "我们目前在 WordPress 市场上遇到技术困难。我们的团队正在努力尽快解决此问题。",
+        "maintenanceDescription": "如果您需要立即帮助，请稍后再回来查看或联系支持人员。",
+        "pageTitle": "FluxCloud 上的 WordPress 托管",
+        "landing": {
+          "title": "FluxCloud 上的 WordPress 托管",
+          "subtitle": "在去中心化 FluxCloud 网络上部署功能强大、可扩展的 WordPress 网站，并具有自动备份、SSL 证书和全球 CDN。",
+          "description": {
+            "title": "为什么选择 FluxCloud 上的 WordPress？",
+            "content": "在集性能、安全性和可靠性于一体的去中心化基础设施上托管您的 WordPress 网站。我们的托管 WordPress 托管包括自动更新、每周备份和企业级安全性 - 所有这些均由 FluxCloud 网络提供支持。",
+            "highlights": {
+              "security": {
+                "title": "企业安全",
+                "description": "企业级安全性，具有自动更新、DDoS 防护和定期安全补丁，可确保您的 WordPress 网站免受威胁。"
+              },
+              "performance": {
+                "title": "优化性能",
+                "description": "高性能 SSD/NVMe 存储和优化的服务器可确保您的 WordPress 网站快速加载并有效处理流量。"
+              },
+              "updates": {
+                "title": "自动更新",
+                "description": "自动 WordPress 核心和插件更新可确保您的网站安全并运行最新功能，无需手动干预。"
+              },
+              "decentralized": {
+                "title": "去中心化托管",
+                "description": "跨多个全球节点的分散托管可提供更好的正常运行时间、冗余性和抗单点故障能力。"
+              }
+            }
+          },
+          "plans": {
+            "title": "选择您的 WordPress 计划",
+            "subtitle": "选择适合您网站需求的完美计划。所有计划均包括 MySQL 数据库、SSL 证书和完整的 WordPress 功能。",
+            "recommended": "最受欢迎",
+            "buyNow": "立即购买",
+            "perMonth": "/月",
+            "cpu": "中央处理器",
+            "ram": "内存",
+            "storage": "贮存",
+            "instances": "节点",
+            "getStarted": "开始使用"
+          },
+          "features": {
+            "title": "WordPress 所需的一切",
+            "items": {
+              "quickDeploy": {
+                "title": "快速部署",
+                "description": "使用我们的一键部署系统在几分钟内启动并运行您的 WordPress 网站。"
+              },
+              "mysql": {
+                "title": "MySQL数据库",
+                "description": "完全托管的 MySQL 8.3 数据库，具有自动备份和优化功能。"
+              },
+              "ssl": {
+                "title": "免费 SSL 证书",
+                "description": "自动 SSL 证书配置和续订以实现安全 HTTPS 连接。"
+              },
+              "scalable": {
+                "title": "可扩展的资源",
+                "description": "随着您的网站不断发展以处理增加的流量，轻松升级您的计划。"
+              },
+              "backup": {
+                "title": "自动备份",
+                "description": "每周自动备份并具有轻松恢复功能，可保护您的数据。"
+              },
+              "pricing": {
+                "title": "透明定价",
+                "description": "无隐藏费用。通过灵活的按月计费，只需按使用量付费。"
+              },
+              "guarantee": {
+                "title": "30 天退款保证",
+                "description": "不满意？ 30 天内获得全额退款，无任何疑问。我们相信您会喜欢我们的服务。"
+              }
+            }
+          },
+          "serverNetwork": {
+            "title": "全球服务器网络",
+            "subtitle": "您的 WordPress 网站托管在 FluxCloud 去中心化网络上，分布在全球数千个节点上，以实现最大的可靠性和性能。",
+            "noData": "没有可用的服务器数据",
+            "activeServers": "活跃服务器",
+            "countries": "国家",
+            "global": "全球的",
+            "coverage": "覆盖范围"
+          }
+        },
+        "form": {
+          "dappName": "WordPress Dapp 名称",
+          "dappNameTooltip": "您的 WordPress 站点的显示名称。将自动生成唯一的 Flux 应用程序名称。",
+          "dappNamePlaceholder": "输入 Dapp 名称",
+          "email": "电子邮件",
+          "emailTooltip": "联系电子邮件以获取通知和更新",
+          "emailPlaceholder": "您的{'@'}email.com",
+          "domainName": "域名",
+          "domainNameTooltip": "您的 WordPress 网站的自定义域（可选）",
+          "domainNamePlaceholder": "yourdomain.com",
+          "subscription": "订阅",
+          "subscriptionTooltip": "选择您的 WordPress 托管的计费周期",
+          "whitelistIp": "白名单IP",
+          "whitelistIpLabel": "用于备份/恢复的白名单IP（可选）",
+          "whitelistIpPlaceholder": "输入IP地址",
+          "performancePlan": "绩效计划",
+          "performancePlanTooltip": "为您的 WordPress 网站选择服务器资源（CPU、RAM、SSD）",
+          "deploymentLocation": "部署地点",
+          "deploymentLocationTooltip": "选择一个地理区域来部署您的 WordPress 网站。选择全局进行自动选择。",
+          "instances": "实例",
+          "instancesPlural": "实例",
+          "instance": "实例",
+          "perMonth": "/月",
+          "planDescriptions": {
+            "Free": "适合个人和小型企业，非常适合简单的网站或博客",
+            "Standard": "非常适合成长型企业，适合内容更多的网站",
+            "Pro": "非常适合流量需求较高的大型网站",
+            "Ultra": "无法放缓的资源密集型项目的终极动力源",
+            "Enterprise": "大型企业的理想选择"
+          }
+        },
+        "durations": {
+          "oneMonth": "1个月",
+          "twoMonths": "2个月",
+          "threeMonths": "3个月",
+          "sixMonths": "6个月",
+          "twelveMonths": "12 个月"
+        },
+        "locations": {
+          "global": "全球的",
+          "northAmerica": "北美",
+          "europe": "欧洲",
+          "asia": "亚洲",
+          "southAmerica": "南美洲",
+          "oceania": "大洋洲",
+          "africa": "非洲"
+        },
+        "summary": {
+          "title": "订单摘要",
+          "planDetails": "计划详情",
+          "performancePlan": "绩效计划",
+          "deployment": "部署",
+          "subscriptionPeriod": "认购期",
+          "month": "月",
+          "months": "月",
+          "subscription": "订阅",
+          "pricing": "定价",
+          "subtotal": "小计",
+          "discount": "折扣",
+          "total": "全部的",
+          "install": "安装WordPress",
+          "loginRequired": "需要登录",
+          "loginToInstall": "请登录以安装 WordPress",
+          "dappNameTitle": "WordPress Dapp 名称",
+          "dappNameHelp": "内部昵称，外部不使用。",
+          "emailTitle": "警报电子邮件",
+          "emailHelp": "当您的 WordPress Dapp 需要续订时，我们会向您发送提醒。",
+          "domainTitle": "域名",
+          "domainHelp": "在此处添加后，您还需要使用 DNS 提供商对其进行配置。",
+          "whitelistIpTitle": "白名单IP",
+          "whitelistIpHelp": "明确将您的 IP 地址设置为可以访问 WordPress 数据库的唯一设备。仅限高级用户。",
+          "performanceTitle": "表现",
+          "performanceHelp": "标准规格提供最佳性能并确保良好的稳定性。",
+          "deploymentLocationTitle": "部署地点",
+          "deploymentLocationHelp": "WordPress 站点将部署的地理区域。为了获得最佳性能，所有节点必须位于同一区域。",
+          "selectPlan": "选择一个计划"
+        },
+        "setup": {
+          "title": "设置过程",
+          "stepsTitle": "重要步骤",
+          "stepPropagation": "注册传播后最多需要 2 小时",
+          "stepInstall": "传播后立即开始安装过程",
+          "stepDomain": "使用 DNS 提供商连接您的自定义域",
+          "stepDnsProxy": "禁用 DNS 代理 2 小时以允许 FDM 颁发证书",
+          "stepLaunch": "启动您的 WordPress 网站并开始创建",
+          "stepCaching": "激活预装的缓存插件",
+          "stepSecurity": "不要安装恶意插件或主题"
+        },
+        "bestPractices": {
+          "title": "最佳实践"
+        },
+        "faq": {
+          "title": "常见问题解答"
+        },
+        "errors": {
+          "dappNameRequired": "Dapp 名称为必填项",
+          "emailRequired": "电子邮件为必填项",
+          "emailInvalid": "电子邮件格式无效",
+          "domainInvalid": "域名格式无效",
+          "ipInvalid": "IP 地址格式无效",
+          "launchNotImplemented": "WordPress 启动功能将通过 API 集成来实现",
+          "launchFailed": "无法启动 WordPress 网站。请再试一次。",
+          "tosLoadFailed": "无法加载服务条款。请访问"
+        },
+        "actions": {
+          "add": "添加",
+          "calculatingPricing": "正在计算定价..."
+        },
+        "termsOfService": {
+          "title": "服务条款",
+          "agreement": "我已阅读并同意",
+          "link": "服务条款",
+          "agree": "我同意",
+          "disagree": "我不同意",
+          "loadError": "无法加载服务条款。请访问<a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\">https://cdn.runonflux.io/Flux_Terms_of_Service.pdf</a>"
+        },
+        "games": {
+          "index": {
+            "title": "游戏服务器托管",
+            "subtitle": "在 FluxCloud 上部署和管理游戏服务器",
+            "loading": "正在加载可用的游戏...",
+            "maintenanceTitle": "游戏市场暂时不可用",
+            "maintenanceSubtitle": "我们遇到暂时的问题",
+            "hero": {
+              "title": "FluxCloud 上的高级游戏服务器托管",
+              "subtitle": "通过区块链技术支持的全球分发、DDoS 保护和即用即付定价，在几秒钟内部署您最喜欢的游戏服务器。",
+              "cta": "浏览游戏服务器",
+              "benefits": {
+                "instant": "即时部署",
+                "global": "全球服务器",
+                "ddos": "DDoS 防护",
+                "pricing": "透明定价"
+              }
+            },
+            "trust": {
+              "servers": {
+                "value": "1000+",
+                "label": "活跃服务器"
+              },
+              "uptime": {
+                "value": "99.9%",
+                "label": "正常运行时间服务等级协议"
+              },
+              "locations": {
+                "value": "50+",
+                "label": "国家"
+              },
+              "deployment": {
+                "value": "< 30秒",
+                "label": "部署时间"
+              }
+            },
+            "features": {
+              "title": "为什么选择 FluxPlay 进行游戏托管？",
+              "items": {
+                "instant": {
+                  "title": "即时部署",
+                  "description": "使用我们的自动部署系统在 30 秒内启动您的游戏服务器。无需技术知识。"
+                },
+                "ddos": {
+                  "title": "包含 DDoS 保护",
+                  "description": "企业级 DDoS 防护使您的服务器保持在线并让您的玩家保持连接，即使在攻击期间也是如此。"
+                },
+                "global": {
+                  "title": "全球服务器网络",
+                  "description": "从全球 50 多个国家/地区中进行选择，以最大限度地减少延迟并为您的玩家提供最佳的游戏体验。"
+                },
+                "monitoring": {
+                  "title": "24/7 监控",
+                  "description": "具有自动警报功能的实时性能监控可确保您的服务器保持健康且响应迅速。"
+                },
+                "paygo": {
+                  "title": "按量付费定价",
+                  "description": "只需通过透明、灵活的定价为您使用的资源付费。没有隐藏费用或长期合同。"
+                },
+                "blockchain": {
+                  "title": "区块链驱动",
+                  "description": "建立在去中心化的 Flux 基础设施之上，以增强安全性、透明度和对中心化故障的抵抗力。"
+                }
+              }
+            },
+            "content": {
+              "title": "专业游戏服务器托管变得简单",
+              "body": "<p><strong>FluxPlay</strong> 通过将去中心化基础设施的强大功能与传统托管的简单性相结合，彻底改变了游戏服务器托管。无论您托管的是 <strong>Minecraft</strong>、<strong>Palworld</strong>、<strong>Factorio</strong>、<strong>Satisfactory</strong> 还是 <strong>Enshrouded</strong> 服务器，我们的平台都能提供无与伦比的性能和可靠性。</p><p>FluxPlay 构建于 <strong>FluxCloud</strong> 之上，提供企业级游戏托管，具有自动扩展、地理分布和军用级安全性。我们的去中心化架构确保您的游戏服务器即使在个别节点发生故障时也能保持在线，与传统的集中式托管提供商相比，可提供卓越的正常运行时间。</p><p>凭借即时部署、透明的定价和包含的 DDoS 保护，FluxPlay 是适合需要最佳性能的游戏玩家、社区和服务器管理员的现代解决方案。</p>"
+            },
+            "gamesTitle": "可用的游戏服务器",
+            "gamesSubtitle": "选择您的游戏并在几秒钟内部署服务器",
+            "comparison": {
+              "title": "为什么 FluxPlay 与传统托管相比",
+              "feature": "特征",
+              "fluxplay": "通量播放",
+              "traditional": "传统托管",
+              "rows": {
+                "setup": "设置时间",
+                "pricing": "定价模型",
+                "ddos": "DDoS 防护",
+                "decentralized": "去中心化",
+                "locations": "服务器位置",
+                "scaling": "缩放速度"
+              },
+              "values": {
+                "instant": "< 30 秒",
+                "hours": "几小时到几天",
+                "transparent": "透明的即用即付",
+                "hidden": "隐藏费用+合同",
+                "extra": "额外费用",
+                "countries": "50+国家",
+                "limited": "有限地区",
+                "slow": "手动过程缓慢"
+              }
+            },
+            "faq": {
+              "title": "常见问题解答",
+              "items": {
+                "what": {
+                  "question": "什么是 FluxPlay 游戏服务器托管？",
+                  "answer": "<p>FluxPlay是一个基于FluxCloud构建的去中心化游戏服务器托管平台。它允许您通过即时部署、全球分发和企业级安全性来部署和管理 Minecraft、Palworld、Factorio 等游戏服务器。</p>"
+                },
+                "different": {
+                  "question": "FluxPlay 与传统游戏托管有何不同？",
+                  "answer": "<p>FluxPlay 使用<strong>去中心化区块链基础设施</strong>而不是集中式数据中心。这提供了卓越的正常运行时间、透明的定价、包括 DDoS 保护和抗单点故障能力。与传统提供商的数小时或数天相比，您可以在 30 秒内部署服务器。</p>"
+                },
+                "games": {
+                  "question": "我可以在 FluxPlay 上托管哪些游戏？",
+                  "answer": "<p>FluxPlay 目前支持的热门游戏包括<strong>Minecraft</strong>、<strong>Palworld</strong>、<strong>Factorio</strong>、<strong>Satisfactory</strong> 和<strong>Enshrouded</strong>。我们根据社区需求不断添加新游戏。</p>"
+                },
+                "deploy": {
+                  "question": "我可以多快部署游戏服务器？",
+                  "answer": "<p>游戏服务器平均部署时间<strong>不到 30 秒</strong>。只需选择您的游戏，选择您的配置和服务器位置，然后单击部署。我们的自动化系统会为您处理所有技术设置。</p>"
+                },
+                "ddosProtection": {
+                  "question": "是否包含 DDoS 防护？",
+                  "answer": "<p>是的！所有游戏服务器均包含<strong>企业级 DDoS 防护</strong>，无需额外付费。您的服务器受到保护，免受常见攻击媒介的影响，确保您的玩家即使在攻击期间也能保持连接。</p>"
+                },
+                "pricing": {
+                  "question": "定价如何运作？",
+                  "answer": "<p>FluxPlay 使用<strong>透明的即用即付定价</strong>。您只需为服务器使用的计算资源（CPU、RAM、存储）付费。没有隐藏费用、安装成本或长期合同。定价因游戏和配置而异，小型服务器的起价通常约为 10-15 美元/月。</p>"
+                },
+                "support": {
+                  "question": "有什么支持？",
+                  "answer": "<p>所有 FluxPlay 服务器均包含带有实时警报的<strong>24/7 自动监控</strong>。如需技术支持，您可以访问我们的文档、社区论坛和票务系统。为企业客户提供高级支持包。</p>"
+                },
+                "blockchain": {
+                  "question": "我需要加密货币才能使用 FluxPlay 吗？",
+                  "answer": "<p>虽然 FluxPlay 是基于区块链技术构建的，但您可以使用包括信用卡在内的<strong>传统支付方式</strong>进行支付。区块链基础设施在幕后提供安全性和去中心化优势，无需您管理加密货币。</p>"
+                }
+              }
+            },
+            "cta": {
+              "title": "准备好部署您的游戏服务器了吗？",
+              "subtitle": "加入托管在去中心化 Flux 网络上的数千名游戏玩家",
+              "button": "立即开始"
+            },
+            "relatedResources": {
+              "title": "探索更多 FluxCloud 服务",
+              "subtitle": "探索利用去中心化基础设施的其他方法",
+              "links": [
+                {
+                  "title": "成本计算器",
+                  "description": "通过透明的定价计算应用程序的准确托管成本",
+                  "url": "/成本计算器",
+                  "icon": "mdi计算器"
+                },
+                {
+                  "title": "WordPress 托管",
+                  "description": "通过一键安装在去中心化基础设施上部署 WordPress 网站",
+                  "url": "/市场/wordpress",
+                  "icon": "mdi-wordpress"
+                },
+                {
+                  "title": "自定义应用程序部署",
+                  "description": "在 Flux 网络上注册并部署自定义 Docker 应用程序",
+                  "url": "/应用程序/注册",
+                  "icon": "MDI 应用程序 cog"
+                },
+                {
+                  "title": "完整市场",
+                  "description": "浏览 FluxCloud 上所有可用的应用程序、游戏和服务",
+                  "url": "/市场",
+                  "icon": "mdi商店"
+                }
+              ]
+            }
+          }
+        },
+        "wordpress": {
+          "loadingTitle": "正在加载 WordPress 托管计划...",
+          "maintenanceTitle": "WordPress 托管暂时不可用",
+          "maintenanceSubtitle": "我们遇到暂时的问题",
+          "maintenanceDescription": "我们的 WordPress 托管服务目前不可用。请稍后重试。",
+          "landing": {
+            "title": "Flux 上的 WordPress 托管",
+            "subtitle": "在去中心化 Flux 网络上部署您的 WordPress 网站，并进行即时设置和全球分发",
+            "plans": {
+              "title": "选择您的 WordPress 托管计划",
+              "subtitle": "满足各种需求的灵活计划 - 从个人博客到企业网站",
+              "recommended": "受到推崇的",
+              "perMonth": "/月",
+              "cpu": "中央处理器",
+              "ram": "内存",
+              "storage": "贮存",
+              "instances": "实例",
+              "getStarted": "开始使用"
+            },
+            "description": {
+              "title": "专业 WordPress 托管变得简单",
+              "content": "通过 FluxPlay 体验 WordPress 托管的未来。我们的去中心化基础设施为您的 WordPress 网站提供企业级性能、安全性和可靠性。与传统托管提供商相比，您的网站建立在 Flux 区块链网络之上，可受益于全球分布、自动扩展和卓越的正常运行时间。"
+            },
+            "relatedLinks": {
+              "sectionTitle": "在 FluxCloud 上探索更多信息",
+              "marketplace": {
+                "title": "市场",
+                "description": "浏览所有可用的应用程序"
+              },
+              "gameServers": {
+                "title": "游戏服务器",
+                "description": "托管您最喜欢的游戏服务器"
+              },
+              "fluxDrive": {
+                "title": "磁通驱动",
+                "description": "分散式文件存储"
+              },
+              "costCalculator": {
+                "title": "成本计算器",
+                "description": "估算您的托管成本"
+              }
+            }
+          }
+        }
+      }
+    },
+    "xdao": {
+      "title": "助焊剂 XDAO",
+      "subtitle": "去中心化治理平台",
+      "description": "Flux XDAO（扩展去中心化自治组织）使社区能够通过链上治理塑造 Flux 生态系统的未来。 FluxNode 运营商可以提交提案、讨论倡议并对影响网络开发、资金分配和协议升级的关键决策进行投票。每一次投票都记录在区块链上，确保透明度和不变性。",
+      "learnMore": "了解有关 XDAO 的更多信息",
+      "loggedIn": "已登录",
+      "login": "登录",
+      "loginToVote": "登录投票",
+      "filters": "过滤器",
+      "addProposal": "添加提案",
+      "filterProposals": "过滤提案",
+      "allProposals": "所有提案",
+      "open": "打开",
+      "passed": "通过",
+      "unpaid": "未付",
+      "rejected": "被拒绝",
+      "searchProposals": "搜索提案...",
+      "sortBy": "排序方式",
+      "latest": "最新的",
+      "titleAsc": "标题 A-Z",
+      "titleDesc": "标题 Z-A",
+      "endDate": "结束日期",
+      "loadingProposals": "正在加载提案...",
+      "failedToLoad": "无法加载提案",
+      "tryAgain": "再试一次",
+      "noProposalsFound": "未找到提案",
+      "noProposalsSubmitted": "尚未提交任何提案。",
+      "noOpenProposals": "没有公开提案",
+      "noOpenProposalsMessage": "目前没有可供投票的公开提案。",
+      "noPassedProposals": "没有通过提案",
+      "noPassedProposalsMessage": "尚未通过任何提案。",
+      "noUnpaidProposals": "没有未付的提案",
+      "noUnpaidProposalsMessage": "所有通过的提案均已付款。",
+      "noRejectedProposals": "没有被拒绝的提案",
+      "noRejectedProposalsMessage": "没有提案被拒绝。",
+      "tryDifferentFilter": "尝试选择不同的过滤器。",
+      "anonymous": "匿名的",
+      "end": "结尾",
+      "required": "必需的",
+      "total": "全部的",
+      "yes": "是的",
+      "no": "不",
+      "loginRequiredForVoting": "投票需要登录",
+      "loginRequiredMessage": "您需要登录才能参与 xDAO 投票。请在下面选择您首选的登录方式。",
+      "debugInfo": "调试信息：",
+      "errors": {
+        "loadProposalsServer": "无法从服务器加载提案",
+        "networkFailed": "网络连接失败。请检查您的互联网连接。",
+        "timeout": "请求超时。服务器可能暂时不可用。",
+        "serverError": "服务器错误。请稍后重试。",
+        "serviceNotFound": "未找到提案服务。",
+        "loadProposalsGeneric": "无法加载提案。请再试一次。"
+      }
+    },
+    "error": {
+      "pageNotFoundTitle": "找不到页面⚠️",
+      "pageNotFoundDescription": "我们找不到您要查找的页面。",
+      "backToHome": "返回首页",
+      "error404Alt": "404 页面未找到 - 错误说明",
+      "footerImageAlt": "装饰页脚图像"
+    },
+    "successCheckout": {
+      "title": "付款成功完成！ 🎉",
+      "paymentProcessed": "您的申请付款已成功处理。",
+      "deploymentTime": "最多可能需要 45 分钟",
+      "deploymentMessage": "让您的应用程序部署在 Flux 网络上。",
+      "autoCloseMessage": "此窗口将在 {seconds} 秒后自动关闭",
+      "safeToClose": "您现在可以安全地关闭此窗口",
+      "footerImageAlt": "成功页面装饰页脚图像"
+    },
+    "unauthorized": {
+      "title": "您没有被授权！ 🔐",
+      "description": "您无权访问此页面。",
+      "backToHome": "返回首页",
+      "footerImageAlt": "未经授权访问装饰页脚图像"
+    },
+    "checkout": {
+      "title": "查看",
+      "selectPlan": "选择计划",
+      "paymentMethod": {
+        "title": "付款方式",
+        "fluxPay": "通量支付",
+        "cryptoCom": "加密网"
+      },
+      "orderSummary": {
+        "title": "订单摘要",
+        "plan": "计划",
+        "storage": "贮存",
+        "billing": "计费",
+        "monthly": "每月",
+        "total": "全部的",
+        "currentPlan": "当前计划",
+        "status": "地位"
+      },
+      "subscriptionDetails": "订阅详情",
+      "billingCycle": "计费周期",
+      "monthly": "每月",
+      "total": "全部的",
+      "proceedToPayment": "继续付款",
+      "paymentProcessing": "处理付款",
+      "secureCheckout": "安全结账",
+      "plan": "计划",
+      "price": "价格",
+      "perMonth": "每月",
+      "header": {
+        "title": "磁通驱动",
+        "subtitle": "完成订阅以解锁去中心化存储"
+      },
+      "fluxPay": {
+        "title": "使用 Flux 支付",
+        "subtitle": "使用您的 Zelcore 钱包进行安全支付",
+        "amount": "数量：",
+        "usdValue": "美元价值：",
+        "openWallet": "打开 Zelcore 钱包",
+        "waitingForPayment": "等待付款...",
+        "cancelPayment": "取消付款"
+      },
+      "cryptoCom": {
+        "title": "使用 Crypto.com 支付",
+        "subtitle": "通过 Crypto.com Pay 定期订阅",
+        "continue": "继续使用 Crypto.com"
+      },
+      "security": {
+        "title": "安全支付",
+        "message": "您的付款信息已加密且安全。我们从不存储您的付款详细信息。"
+      },
+      "loading": {
+        "planDetails": "正在加载计划详细信息...",
+        "unableToLoad": "无法加载计划详细信息"
+      },
+      "messages": {
+        "authenticationRequired": "需要身份验证",
+        "invalidAuthData": "验证数据格式无效",
+        "missingAuthFields": "缺少授权字段",
+        "planDetailsNotAvailable": "计划详细信息不可用",
+        "subscriptionLoadFailed": "加载订阅数据失败",
+        "pleaseLoginFirst": "请先登录",
+        "invalidAuth": "验证数据无效",
+        "paymentInitFailed": "支付初始化失败。请再试一次。",
+        "paymentFailed": "初始化支付失败",
+        "cryptoComInitFailed": "Crypto.com 支付初始化失败。请再试一次。",
+        "cryptoComPaymentFailed": "无法初始化 Crypto.com 付款",
+        "paymentFailedRetry": "付款失败。请再试一次。",
+        "paymentSuccessfulRedirecting": "付款成功！正在重定向至 FluxDrive...",
+        "pleaseLoginToContinue": "请登录以继续购买",
+        "sessionExpired": "会话已过期。请重新登录。"
+      }
+    }
+  },
+  "$vuetify": {
+    "badge": "徽章",
+    "noDataText": "无可用数据",
+    "dataIterator": {
+      "loadingText": "正在加载数据，请稍候...",
+      "noResultsText": "没有找到匹配的记录。",
+      "noDataText": "无可用数据。"
+    },
+    "close": "关闭",
+    "open": "打开",
+    "loading": "加载中",
+    "carousel": {
+      "ariaLabel": {
+        "delimiter": "分隔符"
+      }
+    },
+    "dataFooter": {
+      "itemsPerPageText": "每页项目：",
+      "itemsPerPageAll": "全部",
+      "pageText": "第 {0}-{1} 个，共 {2} 个",
+      "firstPage": "第一页",
+      "prevPage": "上一页",
+      "nextPage": "下一页",
+      "lastPage": "最后一页"
+    },
+    "pagination": {
+      "ariaLabel": {
+        "root": "根",
+        "previous": "以前的",
+        "first": "第一的",
+        "last": "最后的",
+        "next": "下一个",
+        "currentPage": "当前页",
+        "page": "页"
+      }
+    },
+    "input": {
+      "clear": "清除",
+      "appendAction": "追加动作",
+      "prependAction": "前置动作",
+      "counterSize": "柜台尺寸",
+      "otp": "奥特普"
+    },
+    "fileInput": {
+      "counterSize": "柜台尺寸"
+    },
+    "rating": {
+      "ariaLabel": {
+        "item": "物品"
+      }
+    }
+  },
+  "memoryMonitor": {
+    "title": "内存监视器",
+    "currentUsage": "当前使用情况",
+    "statistics": "统计数据",
+    "breakdown": "内存故障",
+    "minimum": "最低限度",
+    "maximum": "最大限度",
+    "average": "平均的",
+    "samples": "样品",
+    "trend": "趋势",
+    "used": "用过的",
+    "limit": "限制",
+    "refresh": "刷新",
+    "forceGC": "强制GC",
+    "clearHistory": "清除历史记录",
+    "notAvailable": "性能内存 API 在此浏览器中不可用。",
+    "notAvailableHint": "在 Chrome/Edge 中可用，带有 --enable-precise-memory-info 标志",
+    "loading": "正在加载内存数据...",
+    "statusHigh": "内存占用非常高！",
+    "statusWarning": "内存使用率高",
+    "statusNormal": "内存占用正常",
+    "categories": {
+      "usedHeap": "使用的 JS 堆",
+      "usedHeapDesc": "JavaScript 对象主动使用的内存",
+      "freeHeap": "空闲堆",
+      "freeHeapDesc": "已分配但未使用的堆空间",
+      "available": "可用的",
+      "availableDesc": "堆空间尚未分配",
+      "domNodes": "DOM 节点（估计）",
+      "domNodesDesc": "大约 {count} 个 DOM 元素",
+      "eventListeners": "事件监听器（预计）",
+      "eventListenersDesc": "大约 {count} 个事件侦听器",
+      "vueApps": "Vue应用程序",
+      "vueAppsDesc": "{count} 个 Vue 应用程序实例"
+    }
+  },
+  "landingServices": {
+    "title": "我们的服务",
+    "explore": "探索",
+    "services": {
+      "fluxCloud": {
+        "name": "通量云",
+        "description": "在分散的云基础设施上部署和扩展您的应用程序",
+        "category": "基础设施"
+      },
+      "fluxAI": {
+        "name": "通量人工智能",
+        "description": "利用分布式 AI 计算的力量来满足您的机器学习需求",
+        "category": "人工智能和机器学习"
+      },
+      "fluxDrive": {
+        "name": "磁通驱动",
+        "description": "为您的数据提供安全、分散的存储解决方案",
+        "category": "贮存"
+      },
+      "fluxEdge": {
+        "name": "通量边缘",
+        "description": "使用 Flux 网络进行大规模边缘计算",
+        "category": "网络"
+      },
+      "fluxMarketplace": {
+        "name": "通量市场",
+        "description": "从我们的市场发现并部署应用程序",
+        "category": "应用程序"
+      },
+      "wordPressOnFlux": {
+        "name": "Flux 上的 WordPress",
+        "description": "以企业级性能和安全性运行 WordPress",
+        "category": "内容管理系统"
+      }
+    }
+  }
+}

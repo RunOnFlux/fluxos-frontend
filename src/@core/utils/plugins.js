@@ -37,29 +37,29 @@
  * app.mount('#app')
  * ```
  */
-export const registerPlugins = app => {
+export const registerPlugins = async app => {
   // Dynamically import all plugin files
   const imports = import.meta.glob(['../../plugins/*.{ts,js}', '../../plugins/*/index.{ts,js}'], { eager: true })
-  
+
   // Sort and log import paths for debugging
   const importPaths = Object.keys(imports).sort()
 
   console.log('Registering plugins from paths:', importPaths)
 
-  importPaths.forEach(path => {
+  for (const path of importPaths) {
     const pluginImportModule = imports[path]
 
     try {
       // If the plugin has a default export that is a function, call it with the app instance
       if (pluginImportModule.default) {
         console.log(`Initializing plugin: ${path}`)
-        pluginImportModule.default(app)
+        await pluginImportModule.default(app)
       } else {
         console.warn(`Plugin at ${path} does not have a default export`)
       }
     } catch (error) {
       console.error(`Error initializing plugin at ${path}:`, error)
     }
-  })
+  }
 }
 

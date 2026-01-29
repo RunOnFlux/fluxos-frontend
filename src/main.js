@@ -225,8 +225,8 @@ const app = createApp(App)
 const head = createHead()
 app.use(head)
 
-// Register other plugins
-registerPlugins(app)
+// Register other plugins (async to support lazy-loaded translations)
+await registerPlugins(app)
 app.directive('sanitize-html', sanitizeHtml)
 
 // Mount vue app

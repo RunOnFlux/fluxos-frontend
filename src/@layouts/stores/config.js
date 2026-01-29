@@ -88,12 +88,13 @@ export const useLayoutConfigStore = defineStore('layoutConfig', () => {
 
 
   // 👉 RTL
-  // const isAppRTL = ref(layoutConfig.app.isRTL)
-  const isAppRTL = ref(false)
+  // Initialize from cookie if available, otherwise default to false
+  // The actual RTL value will be synced with language in initCore.js
+  const isAppRTL = cookieRef('isAppRTL', false)
 
   watch(isAppRTL, val => {
     _setDirAttr(val ? 'rtl' : 'ltr')
-  })
+  }, { immediate: true })
 
 
   // 👉 Is Vertical Nav Mini
