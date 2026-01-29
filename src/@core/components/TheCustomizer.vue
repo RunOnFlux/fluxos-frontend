@@ -739,12 +739,13 @@ defineExpose({
     display: flex;
     flex-direction: column;
     overflow: hidden;
+    height: 100%;
   }
 
   .ps {
-    flex: 1;
-    overflow: hidden;
-    max-height: 100%;
+    flex: 1 1 auto;
+    overflow: auto;
+    min-height: 0;
   }
 
   .v-label.custom-input.active {
