@@ -741,6 +741,43 @@
                           persistent-hint
                         />
 
+                        <!-- Enterprise App Toggle -->
+                        <VCard variant="outlined" class="mb-4">
+                          <VCardText class="py-3">
+                            <div class="d-flex align-center justify-space-between">
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" class="mr-2">mdi-shield-lock</VIcon>
+                                <div>
+                                  <div class="text-subtitle-2 font-weight-medium">
+                                    {{ t('pages.apps.register.orbit.config.enterpriseAppLabel') }}
+                                  </div>
+                                  <div class="text-caption text-medium-emphasis">
+                                    {{ t('pages.apps.register.orbit.config.enterpriseAppDescription') }}
+                                  </div>
+                                </div>
+                              </div>
+                              <VSwitch
+                                v-model="userEnabledEnterprise"
+                                :model-value="isEnterpriseApp"
+                                :disabled="autoDetectedEnterprise"
+                                hide-details
+                                density="compact"
+                                color="warning"
+                                @update:model-value="val => { if (!autoDetectedEnterprise) userEnabledEnterprise = val }"
+                              />
+                            </div>
+                            <VAlert
+                              v-if="autoDetectedEnterprise"
+                              type="info"
+                              variant="tonal"
+                              density="compact"
+                              class="mt-3"
+                            >
+                              {{ t('pages.apps.register.orbit.config.enterpriseAutoDetected') }}
+                            </VAlert>
+                          </VCardText>
+                        </VCard>
+
                         <!-- Runtime Version Selection -->
                         <VExpansionPanels class="mb-4">
                           <VExpansionPanel>
@@ -2636,12 +2673,18 @@ const requiresRunCommand = ref(false)
 // Compatibility check state
 const compatibilityStatus = ref('idle') // idle, checking, compatible, warning, incompatible
 const compatibilityMessage = ref('')
-const isEnterpriseApp = computed(() => {
+const userEnabledEnterprise = ref(false)
+
+const autoDetectedEnterprise = computed(() => {
   const isPrivateRepo = repoCheckStatus.value === 'private' && repoToken.value
   const hasWebhookSecret = customEnvVars.value.some(env => env.key === 'WEBHOOK_SECRET' && env.value)
   const hasApiKey = customEnvVars.value.some(env => env.key === 'API_KEY' && env.value)
 
   return isPrivateRepo || hasWebhookSecret || hasApiKey
+})
+
+const isEnterpriseApp = computed(() => {
+  return autoDetectedEnterprise.value || userEnabledEnterprise.value
 })
 
 // Auth test state
@@ -6234,6 +6277,7 @@ const resetForm = () => {
   runtimeVersion.value = ''
   customEnvVars.value = []
   requiresRunCommand.value = false
+  userEnabledEnterprise.value = false
 
   // Reset plan
   selectedPlan.value = 'free'
