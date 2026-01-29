@@ -742,13 +742,6 @@ defineExpose({
     height: 100%;
   }
 
-  .ps {
-    flex: 1 1 auto;
-    overflow-y: auto;
-    overflow-x: hidden;
-    min-height: 0;
-  }
-
   .v-label.custom-input.active {
     border-color: transparent;
     outline: 2px solid rgb(var(--v-theme-primary));
