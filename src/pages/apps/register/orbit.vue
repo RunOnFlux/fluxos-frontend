@@ -4223,9 +4223,30 @@ const debouncedRepoCheck = () => {
   }, 800)
 }
 
+// Normalize repo URL to strip extra path segments (e.g. /blob/main/file.js)
+const normalizeRepoUrl = url => {
+  if (!url) return url
+  const match = url.match(/^(https:\/\/(?:github\.com|gitlab\.com|bitbucket\.org)\/[^/]+\/[^/]+?)(?:\.git)?(\/.*)?$/)
+  if (match && match[2]) {
+    // URL has extra path segments beyond owner/repo — trim them
+    return match[1]
+  }
+
+  return url
+}
+
 // Watch for repo URL changes
-watch(repoUrl, () => {
+watch(repoUrl, newVal => {
   portAutoDetected.value = false
+
+  // Auto-trim URLs that point to files/branches/subdirectories
+  const normalized = normalizeRepoUrl(newVal)
+  if (normalized !== newVal) {
+    repoUrl.value = normalized
+    showToast('warning', 'URL was trimmed to the repository root. Use the branch and path fields for specific branches or subdirectories.')
+
+    return // the watcher will re-fire with the cleaned value
+  }
 
   // Reset auth test status and branches when URL changes
   authTestStatus.value = 'idle'
