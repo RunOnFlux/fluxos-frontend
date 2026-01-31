@@ -3166,10 +3166,21 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   let foundAnyMarker = false
   let foundMarkerFile = null
 
-  const getRawUrl = filePath => {
+  const hasAuth = authHeaders && (authHeaders['Authorization'] || authHeaders['PRIVATE-TOKEN'])
+
+  // For private repos use the provider API (raw URLs don't accept auth headers on GitHub)
+  const getCheckUrl = filePath => {
     if (parsed.provider === 'github.com') {
+      if (hasAuth) {
+        return `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${filePath}?ref=${branchName}`
+      }
+
       return `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
     } else if (parsed.provider === 'gitlab.com') {
+      if (hasAuth) {
+        return `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(filePath)}?ref=${branchName}`
+      }
+
       return `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
     } else if (parsed.provider === 'bitbucket.org') {
       return `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
@@ -3180,9 +3191,9 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
 
   for (const filePath of markerFiles) {
     try {
-      const rawUrl = getRawUrl(filePath)
+      const checkUrl = getCheckUrl(filePath)
 
-      const response = await fetch(rawUrl, { method: 'HEAD', headers: authHeaders })
+      const response = await fetch(checkUrl, { method: 'HEAD', headers: authHeaders })
       if (response.ok) {
         foundAnyMarker = true
         foundMarkerFile = filePath
