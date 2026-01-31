@@ -3293,7 +3293,7 @@
             "testConnectionHint": "계속하기 전에 위의 '연결 테스트'를 클릭하여 액세스를 확인하세요.",
             "testingConnectionHint": "저장소 액세스 확인 중...",
             "compatibilityChecking": "프로젝트 호환성 분석 중...",
-            "compatibilityIncompatible": "이 저장소에 지원되는 프로젝트가 포함되어 있지 않은 것 같습니다. FluxCloud Git은 Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET 및 정적 HTML 사이트를 지원합니다.",
+            "compatibilityIncompatible": "이 저장소에 지원되는 프로젝트가 포함되어 있지 않은 것 같습니다.",
             "compatibilityWarning": "이 저장소에서 웹 프레임워크를 감지하지 못했습니다. FluxCloud Git은 웹 애플리케이션과 API용으로 설계되었습니다. CLI 도구와 셸 기반 설치 프로그램은 지원되지 않습니다.",
             "compatibilityLearnMore": "지원되는 프로젝트에 대해 자세히 알아보기"
           },

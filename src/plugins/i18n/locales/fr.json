@@ -3293,7 +3293,7 @@
             "testConnectionHint": "Cliquez sur « Tester la connexion » ci-dessus pour vérifier l'accès avant de continuer.",
             "testingConnectionHint": "Vérification de l'accès au référentiel...",
             "compatibilityChecking": "Analyse de la compatibilité du projet...",
-            "compatibilityIncompatible": "Ce référentiel ne semble pas contenir un projet pris en charge. FluxCloud Git prend en charge Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET et les sites HTML statiques.",
+            "compatibilityIncompatible": "Ce référentiel ne semble pas contenir un projet pris en charge.",
             "compatibilityWarning": "Nous n'avons pas pu détecter de framework web dans ce référentiel. FluxCloud Git est conçu pour les applications web et les API. Les outils CLI et les installateurs shell ne sont pas pris en charge.",
             "compatibilityLearnMore": "En savoir plus sur les projets pris en charge"
           },

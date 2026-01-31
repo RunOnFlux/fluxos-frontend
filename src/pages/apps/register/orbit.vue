@@ -470,14 +470,14 @@
                         </div>
                       </VExpandTransition>
 
-                      <!-- Compatibility check alerts -->
-                      <div v-if="compatibilityStatus === 'checking'" class="d-flex align-center mt-4">
+                      <!-- Compatibility check alerts (hidden for private repos until authenticated) -->
+                      <div v-if="compatibilityStatus === 'checking' && showCompatibilityAlerts" class="d-flex align-center mt-4">
                         <VProgressCircular indeterminate size="18" width="2" class="mr-2" />
                         <span class="text-body-2">{{ t('pages.apps.register.orbit.repository.compatibilityChecking') }}</span>
                       </div>
 
                       <VAlert
-                        v-else-if="compatibilityStatus === 'incompatible'"
+                        v-else-if="compatibilityStatus === 'incompatible' && showCompatibilityAlerts"
                         type="error"
                         variant="tonal"
                         class="mt-4"
@@ -495,7 +495,7 @@
                       </VAlert>
 
                       <VAlert
-                        v-else-if="compatibilityStatus === 'warning'"
+                        v-else-if="compatibilityStatus === 'warning' && showCompatibilityAlerts"
                         type="warning"
                         variant="tonal"
                         class="mt-4"
@@ -2683,6 +2683,7 @@ const requiresRunCommand = ref(false)
 // Compatibility check state
 const compatibilityStatus = ref('idle') // idle, checking, compatible, warning, incompatible
 const compatibilityMessage = ref('')
+const showCompatibilityAlerts = computed(() => !(repoCheckStatus.value === 'private' && authTestStatus.value !== 'success'))
 const userEnabledEnterprise = ref(false)
 
 const autoDetectedEnterprise = computed(() => {
@@ -3131,6 +3132,9 @@ const detectPortFromRepo = async parsed => {
 // Check project compatibility with Orbit
 const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   if (!parsed) return
+
+  // For private repos, only analyze after a valid connection is established
+  if (repoCheckStatus.value === 'private' && authTestStatus.value !== 'success') return
 
   compatibilityStatus.value = 'checking'
   compatibilityMessage.value = ''

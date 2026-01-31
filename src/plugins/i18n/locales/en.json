@@ -3293,7 +3293,7 @@
             "testConnectionHint": "Click 'Test Connection' above to verify access before continuing",
             "testingConnectionHint": "Verifying repository access...",
             "compatibilityChecking": "Analyzing project compatibility...",
-            "compatibilityIncompatible": "This repository doesn't appear to contain a supported project. FluxCloud Git supports Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET, and static HTML sites.",
+            "compatibilityIncompatible": "This repository doesn't appear to contain a supported project.",
             "compatibilityWarning": "We couldn't detect a web framework in this repository. FluxCloud Git is designed for web applications and APIs. CLI tools and shell-based installers are not supported.",
             "compatibilityLearnMore": "Learn more about supported projects"
           },

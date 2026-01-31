@@ -3293,7 +3293,7 @@
             "testConnectionHint": "Devam etmeden önce erişimi doğrulamak için yukarıdaki 'Bağlantıyı Test Et'i tıklayın",
             "testingConnectionHint": "Depo erişimi doğrulanıyor...",
             "compatibilityChecking": "Proje uyumluluğu analiz ediliyor...",
-            "compatibilityIncompatible": "Bu depo desteklenen bir proje içermiyor gibi görünüyor. FluxCloud Git; Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET ve statik HTML sitelerini destekler.",
+            "compatibilityIncompatible": "Bu depo desteklenen bir proje içermiyor gibi görünüyor.",
             "compatibilityWarning": "Bu depoda bir web çerçevesi tespit edemedik. FluxCloud Git, web uygulamaları ve API'ler için tasarlanmıştır. CLI araçları ve kabuk tabanlı yükleyiciler desteklenmez.",
             "compatibilityLearnMore": "Desteklenen projeler hakkında daha fazla bilgi edinin"
           },

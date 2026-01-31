@@ -3293,7 +3293,7 @@
             "testConnectionHint": "ਜਾਰੀ ਰੱਖਣ ਤੋਂ ਪਹਿਲਾਂ ਪਹੁੰਚ ਦੀ ਪੁਸ਼ਟੀ ਕਰਨ ਲਈ ਉੱਪਰ 'ਟੈਸਟ ਕਨੈਕਸ਼ਨ' 'ਤੇ ਕਲਿੱਕ ਕਰੋ",
             "testingConnectionHint": "ਰਿਪੋਜ਼ਟਰੀ ਪਹੁੰਚ ਦੀ ਪੁਸ਼ਟੀ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
             "compatibilityChecking": "ਪ੍ਰੋਜੈਕਟ ਅਨੁਕੂਲਤਾ ਦਾ ਵਿਸ਼ਲੇਸ਼ਣ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
-            "compatibilityIncompatible": "ਇਹ ਰਿਪੋਜ਼ਟਰੀ ਕਿਸੇ ਸਮਰਥਿਤ ਪ੍ਰੋਜੈਕਟ ਵਾਲੀ ਨਹੀਂ ਲੱਗਦੀ। FluxCloud Git Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET ਅਤੇ ਸਥਿਰ HTML ਸਾਈਟਾਂ ਦਾ ਸਮਰਥਨ ਕਰਦਾ ਹੈ।",
+            "compatibilityIncompatible": "ਇਹ ਰਿਪੋਜ਼ਟਰੀ ਕਿਸੇ ਸਮਰਥਿਤ ਪ੍ਰੋਜੈਕਟ ਵਾਲੀ ਨਹੀਂ ਲੱਗਦੀ।",
             "compatibilityWarning": "ਅਸੀਂ ਇਸ ਰਿਪੋਜ਼ਟਰੀ ਵਿੱਚ ਕੋਈ ਵੈੱਬ ਫਰੇਮਵਰਕ ਨਹੀਂ ਲੱਭ ਸਕੇ। FluxCloud Git ਵੈੱਬ ਐਪਲੀਕੇਸ਼ਨਾਂ ਅਤੇ API ਲਈ ਤਿਆਰ ਕੀਤਾ ਗਿਆ ਹੈ। CLI ਟੂਲ ਅਤੇ ਸ਼ੈੱਲ-ਅਧਾਰਿਤ ਇੰਸਟਾਲਰ ਸਮਰਥਿਤ ਨਹੀਂ ਹਨ।",
             "compatibilityLearnMore": "ਸਮਰਥਿਤ ਪ੍ਰੋਜੈਕਟਾਂ ਬਾਰੇ ਹੋਰ ਜਾਣੋ"
           },

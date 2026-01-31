@@ -3293,7 +3293,7 @@
             "testConnectionHint": "続行する前に、上の「接続をテスト」をクリックしてアクセスを確認してください",
             "testingConnectionHint": "リポジトリへのアクセスを確認しています...",
             "compatibilityChecking": "プロジェクトの互換性を分析しています...",
-            "compatibilityIncompatible": "このリポジトリにはサポートされているプロジェクトが含まれていないようです。FluxCloud Git は Node.js、Python、Rust、Go、Java、PHP、Ruby、.NET、静的HTMLサイトをサポートしています。",
+            "compatibilityIncompatible": "このリポジトリにはサポートされているプロジェクトが含まれていないようです。",
             "compatibilityWarning": "このリポジトリでWebフレームワークを検出できませんでした。FluxCloud Git はWebアプリケーションとAPI向けに設計されています。CLIツールやシェルベースのインストーラーはサポートされていません。",
             "compatibilityLearnMore": "サポートされているプロジェクトの詳細"
           },

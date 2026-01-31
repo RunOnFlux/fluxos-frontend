@@ -3293,7 +3293,7 @@
             "testConnectionHint": "Nhấp vào 'Kiểm tra kết nối' ở trên để xác minh quyền truy cập trước khi tiếp tục",
             "testingConnectionHint": "Đang xác minh quyền truy cập kho lưu trữ...",
             "compatibilityChecking": "Đang phân tích khả năng tương thích của dự án...",
-            "compatibilityIncompatible": "Kho lưu trữ này dường như không chứa dự án được hỗ trợ. FluxCloud Git hỗ trợ Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET và các trang HTML tĩnh.",
+            "compatibilityIncompatible": "Kho lưu trữ này dường như không chứa dự án được hỗ trợ.",
             "compatibilityWarning": "Chúng tôi không thể phát hiện framework web trong kho lưu trữ này. FluxCloud Git được thiết kế cho các ứng dụng web và API. Các công cụ CLI và trình cài đặt dựa trên shell không được hỗ trợ.",
             "compatibilityLearnMore": "Tìm hiểu thêm về các dự án được hỗ trợ"
           },

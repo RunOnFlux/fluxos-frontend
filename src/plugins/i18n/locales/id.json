@@ -3293,7 +3293,7 @@
             "testConnectionHint": "Klik 'Uji Koneksi' di atas untuk memverifikasi akses sebelum melanjutkan",
             "testingConnectionHint": "Memverifikasi akses repositori...",
             "compatibilityChecking": "Menganalisis kompatibilitas proyek...",
-            "compatibilityIncompatible": "Repositori ini tampaknya tidak berisi proyek yang didukung. FluxCloud Git mendukung Node.js, Python, Rust, Go, Java, PHP, Ruby, .NET, dan situs HTML statis.",
+            "compatibilityIncompatible": "Repositori ini tampaknya tidak berisi proyek yang didukung.",
             "compatibilityWarning": "Kami tidak dapat mendeteksi framework web di repositori ini. FluxCloud Git dirancang untuk aplikasi web dan API. Alat CLI dan installer berbasis shell tidak didukung.",
             "compatibilityLearnMore": "Pelajari lebih lanjut tentang proyek yang didukung"
           },
