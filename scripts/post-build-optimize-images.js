@@ -45,7 +45,8 @@ async function optimizeImage(filePath) {
   let optimized
 
   try {
-    const image = sharpLib(filePath)
+    const buffer = await fs.readFile(filePath)
+    const image = sharpLib(buffer)
 
     switch (ext) {
       case '.png':
