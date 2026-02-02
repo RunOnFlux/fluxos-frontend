@@ -3270,6 +3270,7 @@
             "tokenLabel": "Токен личного доступа *",
             "tokenPlaceholder": "ghp_xxxxxxxxxxxx",
             "tokenHint": "Создайте токен с доступом к репозиторию в настройках вашего провайдера Git.",
+            "createToken": "Create {provider} token →",
             "testConnection": "Тестовое соединение",
             "connectionSuccess": "Подключение успешно!",
             "connectionVerified": "Доступ к репозиторию подтвержден.",
@@ -3290,7 +3291,11 @@
             "enterCredentialsHint": "Введите свое имя пользователя и токен доступа выше, чтобы продолжить.",
             "enterTokenHint": "Введите свой токен доступа выше, чтобы продолжить.",
             "testConnectionHint": "Нажмите «Проверить соединение» выше, чтобы подтвердить доступ, прежде чем продолжить.",
-            "testingConnectionHint": "Проверка доступа к репозиторию..."
+            "testingConnectionHint": "Проверка доступа к репозиторию...",
+            "compatibilityChecking": "Анализ совместимости проекта...",
+            "compatibilityIncompatible": "Этот репозиторий, похоже, не содержит поддерживаемого проекта.",
+            "compatibilityWarning": "Не удалось обнаружить веб-фреймворк в этом репозитории. FluxCloud Git предназначен для веб-приложений и API. CLI-инструменты и установщики на основе оболочки не поддерживаются.",
+            "compatibilityLearnMore": "Узнайте больше о поддерживаемых проектах"
           },
           "config": {
             "stepTitle": "Конфигурация приложения",
@@ -3307,6 +3312,12 @@
             "contactEmailPlaceholder": "вы{'@'}example.com",
             "contactEmailHint": "Для уведомлений и оповещений о развертывании",
             "showAdvancedOptions": "Расширенные параметры",
+            "enterpriseAppLabel": "Enterprise App",
+            "enterpriseAppDescription": "Encrypt app specifications and run exclusively on ArcaneOS nodes for enhanced security and privacy.",
+            "enterpriseAutoDetected": "Enterprise mode is automatically enabled because your configuration includes a private repository, webhook secret, or API key.",
+            "runCommandRequired": "Custom run command required",
+            "runCommandRequiredDescription": "We couldn't detect a standard framework in your repository. Please specify the command to start your application (e.g., python app.py, go run main.go, cargo run).",
+            "runCommandMissing": "Please provide a run command before continuing",
             "pollingIntervalLabel": "Интервал опроса автоматического обновления",
             "pollingIntervalHint": "Как часто Git при развертывании проверяет ваш репозиторий на наличие новых коммитов. Для мгновенного опроса добавьте переменную среды WEBHOOK_SECRET.",
             "runtimeVersionTitle": "Версия времени выполнения (необязательно)",

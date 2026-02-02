@@ -237,10 +237,20 @@
                             :append-inner-icon="showToken ? 'mdi-eye-off' : 'mdi-eye'"
                             variant="outlined"
                             :rules="repoCheckStatus === 'private' ? [rules.required] : []"
-                            :hint="t('pages.apps.register.orbit.repository.tokenHint')"
-                            persistent-hint
                             @click:append-inner="showToken = !showToken"
                           />
+                          <div class="text-caption text-medium-emphasis mt-1 mb-1">
+                            {{ t('pages.apps.register.orbit.repository.tokenHint') }}
+                            <a
+                              v-if="providerTokenUrl"
+                              :href="providerTokenUrl"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="text-primary"
+                            >
+                              {{ t('pages.apps.register.orbit.repository.createToken', { provider: detectedProvider }) }}
+                            </a>
+                          </div>
 
                           <!-- Test Connection Button -->
                           <div class="test-connection-section mt-4">
@@ -459,6 +469,47 @@
                           </div>
                         </div>
                       </VExpandTransition>
+
+                      <!-- Compatibility check alerts (hidden for private repos until authenticated) -->
+                      <div v-if="compatibilityStatus === 'checking' && showCompatibilityAlerts" class="d-flex align-center mt-4">
+                        <VProgressCircular indeterminate size="18" width="2" class="mr-2" />
+                        <span class="text-body-2">{{ t('pages.apps.register.orbit.repository.compatibilityChecking') }}</span>
+                      </div>
+
+                      <VAlert
+                        v-else-if="compatibilityStatus === 'incompatible' && showCompatibilityAlerts"
+                        type="error"
+                        variant="tonal"
+                        class="mt-4"
+                        prominent
+                      >
+                        <div>{{ t('pages.apps.register.orbit.repository.compatibilityIncompatible') }}</div>
+                        <a
+                          href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary mt-1 d-inline-block"
+                        >
+                          {{ t('pages.apps.register.orbit.repository.compatibilityLearnMore') }}
+                        </a>
+                      </VAlert>
+
+                      <VAlert
+                        v-else-if="compatibilityStatus === 'warning' && showCompatibilityAlerts"
+                        type="warning"
+                        variant="tonal"
+                        class="mt-4"
+                      >
+                        <div>{{ t('pages.apps.register.orbit.repository.compatibilityWarning') }}</div>
+                        <a
+                          href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-primary mt-1 d-inline-block"
+                        >
+                          {{ t('pages.apps.register.orbit.repository.compatibilityLearnMore') }}
+                        </a>
+                      </VAlert>
                     </VForm>
                   </div>
                 </template>
@@ -470,6 +521,17 @@
                     <p class="step-description">
                       {{ t('pages.apps.register.orbit.config.stepDescription') }}
                     </p>
+
+                    <VAlert
+                      v-if="requiresRunCommand"
+                      type="info"
+                      variant="tonal"
+                      class="mb-4"
+                      prominent
+                    >
+                      <div class="font-weight-medium mb-1">{{ t('pages.apps.register.orbit.config.runCommandRequired') }}</div>
+                      <div>{{ t('pages.apps.register.orbit.config.runCommandRequiredDescription') }}</div>
+                    </VAlert>
 
                     <VForm ref="configForm">
                       <VRow class="mb-4">
@@ -688,6 +750,43 @@
                           :hint="t('pages.apps.register.orbit.config.pollingIntervalHint')"
                           persistent-hint
                         />
+
+                        <!-- Enterprise App Toggle -->
+                        <VCard variant="outlined" class="mb-4">
+                          <VCardText class="py-3">
+                            <div class="d-flex align-center justify-space-between">
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" class="mr-2">mdi-shield-lock</VIcon>
+                                <div>
+                                  <div class="text-subtitle-2 font-weight-medium">
+                                    {{ t('pages.apps.register.orbit.config.enterpriseAppLabel') }}
+                                  </div>
+                                  <div class="text-caption text-medium-emphasis">
+                                    {{ t('pages.apps.register.orbit.config.enterpriseAppDescription') }}
+                                  </div>
+                                </div>
+                              </div>
+                              <VSwitch
+                                v-model="userEnabledEnterprise"
+                                :model-value="isEnterpriseApp"
+                                :disabled="autoDetectedEnterprise"
+                                hide-details
+                                density="compact"
+                                color="warning"
+                                @update:model-value="val => { if (!autoDetectedEnterprise) userEnabledEnterprise = val }"
+                              />
+                            </div>
+                            <VAlert
+                              v-if="autoDetectedEnterprise"
+                              type="info"
+                              variant="tonal"
+                              density="compact"
+                              class="mt-3"
+                            >
+                              {{ t('pages.apps.register.orbit.config.enterpriseAutoDetected') }}
+                            </VAlert>
+                          </VCardText>
+                        </VCard>
 
                         <!-- Runtime Version Selection -->
                         <VExpansionPanels class="mb-4">
@@ -2579,12 +2678,24 @@ const repoCheckStatus = ref('idle') // idle, checking, public, private, error
 const repoCheckError = ref('')
 const detectedPort = ref(null)
 const detectedFramework = ref(null)
-const isEnterpriseApp = computed(() => {
+const requiresRunCommand = ref(false)
+
+// Compatibility check state
+const compatibilityStatus = ref('idle') // idle, checking, compatible, warning, incompatible
+const compatibilityMessage = ref('')
+const showCompatibilityAlerts = computed(() => !(repoCheckStatus.value === 'private' && authTestStatus.value !== 'success'))
+const userEnabledEnterprise = ref(false)
+
+const autoDetectedEnterprise = computed(() => {
   const isPrivateRepo = repoCheckStatus.value === 'private' && repoToken.value
   const hasWebhookSecret = customEnvVars.value.some(env => env.key === 'WEBHOOK_SECRET' && env.value)
   const hasApiKey = customEnvVars.value.some(env => env.key === 'API_KEY' && env.value)
 
   return isPrivateRepo || hasWebhookSecret || hasApiKey
+})
+
+const isEnterpriseApp = computed(() => {
+  return autoDetectedEnterprise.value || userEnabledEnterprise.value
 })
 
 // Auth test state
@@ -2731,6 +2842,9 @@ const checkRepoAccess = async () => {
   repoCheckError.value = ''
   detectedPort.value = null
   detectedFramework.value = null
+  requiresRunCommand.value = false
+  compatibilityStatus.value = 'idle'
+  compatibilityMessage.value = ''
 
   try {
     let apiUrl = ''
@@ -2757,6 +2871,7 @@ const checkRepoAccess = async () => {
       await fetchBranches(parsed)
       await detectMonorepoStructure(parsed)
       await detectPortFromRepo(parsed)
+      await checkProjectCompatibility(parsed)
     } else if (response.status === 404 || response.status === 403) {
       repoCheckStatus.value = 'private'
     } else {
@@ -3011,6 +3126,141 @@ const detectPortFromRepo = async parsed => {
       // File not found or error, continue to next
       console.debug(`Could not fetch ${check.path}:`, error.message)
     }
+  }
+}
+
+// Check project compatibility with Orbit
+const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
+  if (!parsed) return
+
+  // For private repos, only analyze after a valid connection is established
+  if (repoCheckStatus.value === 'private' && authTestStatus.value !== 'success') return
+
+  compatibilityStatus.value = 'checking'
+  compatibilityMessage.value = ''
+  requiresRunCommand.value = false
+
+  const branchName = branch.value || 'main'
+  const basePath = projectPath.value && projectPath.value !== '/' ? projectPath.value.replace(/^\//, '') + '/' : ''
+
+  // Project marker files to check
+  const markerFiles = [
+    `${basePath}package.json`,
+    `${basePath}requirements.txt`,
+    `${basePath}pyproject.toml`,
+    `${basePath}Pipfile`,
+    `${basePath}setup.py`,
+    `${basePath}setup.cfg`,
+    `${basePath}Cargo.toml`,
+    `${basePath}go.mod`,
+    `${basePath}pom.xml`,
+    `${basePath}build.gradle`,
+    `${basePath}build.gradle.kts`,
+    `${basePath}composer.json`,
+    `${basePath}Gemfile`,
+    `${basePath}global.json`,
+    `${basePath}index.html`,
+    `${basePath}Dockerfile`,
+  ]
+
+  let foundAnyMarker = false
+  let foundMarkerFile = null
+
+  const hasAuth = authHeaders && (authHeaders['Authorization'] || authHeaders['PRIVATE-TOKEN'])
+
+  // For private repos use the provider API (raw URLs don't accept auth headers on GitHub)
+  const getCheckUrl = filePath => {
+    if (parsed.provider === 'github.com') {
+      if (hasAuth) {
+        return `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${filePath}?ref=${branchName}`
+      }
+
+      return `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
+    } else if (parsed.provider === 'gitlab.com') {
+      if (hasAuth) {
+        return `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(filePath)}?ref=${branchName}`
+      }
+
+      return `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
+    } else if (parsed.provider === 'bitbucket.org') {
+      return `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
+    }
+
+    return ''
+  }
+
+  for (const filePath of markerFiles) {
+    try {
+      const checkUrl = getCheckUrl(filePath)
+
+      const response = await fetch(checkUrl, { method: 'HEAD', headers: authHeaders })
+      if (response.ok) {
+        foundAnyMarker = true
+        foundMarkerFile = filePath
+        break
+      }
+    } catch {
+      // Continue checking other files
+    }
+  }
+
+  if (!foundAnyMarker) {
+    compatibilityStatus.value = 'incompatible'
+    compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityIncompatible')
+
+    return
+  }
+
+  // Markers found — check if we detected a web framework/port
+  if (!detectedPort.value && !detectedFramework.value) {
+    compatibilityStatus.value = 'warning'
+    compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityWarning')
+  } else {
+    compatibilityStatus.value = 'compatible'
+  }
+
+  // Determine if RUN_COMMAND is required
+  // Not needed when: framework detected, Dockerfile found, or package.json has a start script
+  if (detectedFramework.value) {
+    requiresRunCommand.value = false
+
+    return
+  }
+
+  const markerBaseName = foundMarkerFile?.replace(basePath, '')
+
+  if (markerBaseName === 'Dockerfile') {
+    requiresRunCommand.value = false
+
+    return
+  }
+
+  if (markerBaseName === 'package.json') {
+    // Fetch package.json content to check for start script
+    try {
+      const rawUrl = getRawUrl(foundMarkerFile)
+      const response = await fetch(rawUrl, { headers: authHeaders })
+      if (response.ok) {
+        const content = await response.text()
+        const pkg = JSON.parse(content)
+        if (pkg.scripts?.start) {
+          requiresRunCommand.value = false
+
+          return
+        }
+      }
+    } catch {
+      // If we can't read it, assume run command is needed
+    }
+
+    requiresRunCommand.value = true
+
+    return
+  }
+
+  // Non-Node.js markers (Python, Rust, Go, Java, PHP, Ruby, .NET) or index.html without framework
+  if (markerBaseName !== 'index.html') {
+    requiresRunCommand.value = true
   }
 }
 
@@ -3733,6 +3983,7 @@ const testAuthConnection = async () => {
       // Also detect monorepo and port
       await detectMonorepoStructureWithAuth(parsed)
       await detectPortFromPrivateRepo(parsed)
+      await checkProjectCompatibility(parsed, headers)
     } else {
       authTestStatus.value = 'error'
       if (response.status === 401) {
@@ -3987,9 +4238,30 @@ const debouncedRepoCheck = () => {
   }, 800)
 }
 
+// Normalize repo URL to strip extra path segments (e.g. /blob/main/file.js)
+const normalizeRepoUrl = url => {
+  if (!url) return url
+  const match = url.match(/^(https:\/\/(?:github\.com|gitlab\.com|bitbucket\.org)\/[^/]+\/[^/]+?)(?:\.git)?(\/.*)?$/)
+  if (match && match[2]) {
+    // URL has extra path segments beyond owner/repo — trim them
+    return match[1]
+  }
+
+  return url
+}
+
 // Watch for repo URL changes
-watch(repoUrl, () => {
+watch(repoUrl, newVal => {
   portAutoDetected.value = false
+
+  // Auto-trim URLs that point to files/branches/subdirectories
+  const normalized = normalizeRepoUrl(newVal)
+  if (normalized !== newVal) {
+    repoUrl.value = normalized
+    showToast('warning', 'URL was trimmed to the repository root. Use the branch and path fields for specific branches or subdirectories.')
+
+    return // the watcher will re-fire with the cleaned value
+  }
 
   // Reset auth test status and branches when URL changes
   authTestStatus.value = 'idle'
@@ -4699,6 +4971,15 @@ const providerColor = computed(() => {
   }
 })
 
+const providerTokenUrl = computed(() => {
+  switch (detectedProvider.value) {
+  case 'GitHub': return 'https://github.com/settings/tokens/new'
+  case 'GitLab': return 'https://gitlab.com/-/user_settings/personal_access_tokens'
+  case 'Bitbucket': return 'https://bitbucket.org/account/settings/app-passwords/new'
+  default: return null
+  }
+})
+
 // Billing calculations
 const billingPeriodLabel = computed(() => {
   const labels = { '1': '1 Month', '3': '3 Months', '6': '6 Months', '12': '12 Months' }
@@ -5134,6 +5415,9 @@ const nextStep = async () => {
     const { valid } = await repoForm.value.validate()
     if (!valid) return
 
+    // Block advancement if project is incompatible with Orbit
+    if (compatibilityStatus.value === 'incompatible') return
+
     // For private repos, require successful auth test before continuing
     if (repoCheckStatus.value === 'private') {
       if (!repoToken.value) {
@@ -5148,10 +5432,34 @@ const nextStep = async () => {
 
     // Start background check for duplicate git repo when moving from step 2 to step 3
     checkDuplicateGitRepo()
+
+    // Auto-setup RUN_COMMAND for non-standard projects
+    if (requiresRunCommand.value) {
+      nextTick(() => {
+        showAdvancedOptions.value = true
+        const hasRunCommand = customEnvVars.value.some(env => env.key === 'RUN_COMMAND')
+        if (!hasRunCommand) {
+          customEnvVars.value.push({
+            key: 'RUN_COMMAND',
+            value: '',
+            placeholder: 'npm start',
+            isOrbitVar: true,
+          })
+        }
+      })
+    }
   } else if (currentStep.value === 3) {
     // Step 3: Configuration - validate config form
     const { valid } = await configForm.value.validate()
     if (!valid) return
+
+    // Block advancement if RUN_COMMAND is required but not provided
+    if (requiresRunCommand.value) {
+      const runCmd = customEnvVars.value.find(env => env.key === 'RUN_COMMAND')
+      if (!runCmd || !runCmd.value.trim()) {
+        return
+      }
+    }
   }
   currentStep.value++
 }
@@ -6023,6 +6331,8 @@ const resetForm = () => {
   selectedRuntime.value = null
   runtimeVersion.value = ''
   customEnvVars.value = []
+  requiresRunCommand.value = false
+  userEnabledEnterprise.value = false
 
   // Reset plan
   selectedPlan.value = 'free'
