@@ -22,6 +22,14 @@ import { aliases } from './aliases.mjs';
 
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
+  // Phased build mode: disable heavy post-processing plugins to reduce memory
+  // Post-processing runs as separate scripts after the main build
+  // Usage: PHASED_BUILD=1 vite build
+  const phasedBuild = process.env.PHASED_BUILD === '1';
+
+  if (phasedBuild) {
+    console.log('\n⚡ Phased build: compression & image optimization will run as separate processes\n');
+  }
 
   return {
     plugins: [
@@ -90,8 +98,8 @@ export default defineConfig(({ mode }) => {
       svgLoader(),
       // Monaco Editor - bundle editor files locally instead of loading from CDN
       monacoEditorPlugin.default({}),
-      // Image optimization for production builds
-      ViteImageOptimizer({
+      // Image optimization for production builds (skip in phased build - runs separately)
+      !phasedBuild && ViteImageOptimizer({
         // Test patterns for which images to include
         test: /\.(jpe?g|png|gif|tiff|webp|svg|avif)$/i,
         // Exclude patterns - exclude PWA manifest icons to avoid cache conflicts
@@ -153,23 +161,23 @@ export default defineConfig(({ mode }) => {
           ],
         },
       }),
-      // Bundle analyzer - generates stats.html
+      // Bundle analyzer - generates stats.html (skip gzip/brotli size calc in phased build)
       visualizer({
         filename: 'dist/stats.html',
         open: false, // Set to true to auto-open in browser
-        gzipSize: true,
-        brotliSize: true,
+        gzipSize: !phasedBuild,
+        brotliSize: !phasedBuild,
         template: 'treemap', // 'sunburst', 'treemap', 'network'
       }),
-      // Gzip compression for production builds
-      !isDev && compression({
+      // Gzip compression for production builds (skip in phased build - runs separately)
+      !isDev && !phasedBuild && compression({
         algorithm: 'gzip',
         ext: '.gz',
         threshold: 1024, // Only compress files > 1KB
         deleteOriginFile: false, // Keep original files for fallback
       }),
-      // Brotli compression for production builds (better compression than gzip)
-      !isDev && compression({
+      // Brotli compression for production builds (skip in phased build - runs separately)
+      !isDev && !phasedBuild && compression({
         algorithm: 'brotliCompress',
         ext: '.br',
         threshold: 1024,
