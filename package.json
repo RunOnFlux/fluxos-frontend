@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite --logLevel info",
-    "build": "npm run generate:sitemap && cross-env PHASED_BUILD=1 vite build && node scripts/post-build-optimize-images.js && node scripts/post-build-compress.js",
+    "build": "npm run generate:sitemap && cross-env PHASED_BUILD=1 node --max-old-space-size=1536 ./node_modules/.bin/vite build && node scripts/post-build-optimize-images.js && node scripts/post-build-compress.js",
     "build:seo": "npm run build && npm run fetch:routes && npm run prerender",
     "build:analyze": "vite build && start dist/stats.html",
     "preview": "vite preview --host 0.0.0.0 --port 3005",
