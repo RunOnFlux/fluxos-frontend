@@ -59,6 +59,11 @@ const sharedState = {
 
   // Track active XHR requests for cleanup
   activeXHRs: ref([]),
+
+  // Folder upload tracking
+  currentUploadFileName: ref(''),
+  totalFilesToUpload: ref(0),
+  currentUploadIndex: ref(0),
 }
 
 export function useFluxDrive() {
@@ -1726,6 +1731,13 @@ export function useFluxDrive() {
           }
 
           // Pass 2: Upload all files to their respective folders like FluxCloud
+          const totalFiles = folderFiles.length
+          let uploadedFiles = 0
+
+          // Set upload tracking for UI
+          sharedState.totalFilesToUpload.value = totalFiles
+          sharedState.currentUploadIndex.value = 0
+
           for (let i = 0; i < folderFiles.length; i++) {
             const file = folderFiles[i]
             if (file.size > 100000000) {
@@ -1734,15 +1746,21 @@ export function useFluxDrive() {
             }
 
             const targetFolder = folderMap.get(file) || mainFolder
-            console.log(`📤 Uploading file ${i + 1}/${folderFiles.length} to folder UUID: ${targetFolder.uuid || targetFolder.id}`)
-            resultMessage.value = `<div class="alert alert-info">Uploading "${file.name}" (${i + 1}/${folderFiles.length})...</div>`
-
-            // Reset progress for this file
-            uploadProgress.value = 0
 
             // Extract just the filename (not the full path) like FluxCloud does
             const pathParts = file.webkitRelativePath.split('/')
             const justFileName = pathParts[pathParts.length - 1] // Get the last part (actual filename)
+
+            // Update UI tracking
+            sharedState.currentUploadIndex.value = i
+            sharedState.currentUploadFileName.value = justFileName
+
+            console.log(`📤 Uploading file ${i + 1}/${folderFiles.length} to folder UUID: ${targetFolder.uuid || targetFolder.id}`)
+            resultMessage.value = `<div class="alert alert-info">Uploading "${justFileName}" (${i + 1}/${folderFiles.length})...</div>`
+
+            // Calculate overall progress: (completed files / total files) * 100
+            // For the current file being uploaded, we'll add its individual progress
+            const baseProgress = (uploadedFiles / totalFiles) * 100
 
             // Debug file info
             console.log(`📋 File ${i + 1} details:`)
@@ -1754,7 +1772,7 @@ export function useFluxDrive() {
 
             // Use FluxCloud's exact approach: pass folder UUID and clean filename
             try {
-              const uploadResult = await uploadFileToFluxCloudFolder(targetFolder.uuid || targetFolder.id, justFileName, file)
+              const uploadResult = await uploadFileToFluxCloudFolder(targetFolder.uuid || targetFolder.id, justFileName, file, baseProgress, totalFiles)
               console.log(`✅ Upload complete for: ${justFileName}`)
               console.log(`📄 Full server response for "${justFileName}":`, JSON.stringify(uploadResult, null, 2))
 
@@ -1770,8 +1788,15 @@ export function useFluxDrive() {
               if (uploadResult.message) {
                 console.log(`📝 Server message: ${uploadResult.message}`)
               }
+
+              // Increment uploaded files counter and update overall progress
+              uploadedFiles++
+              uploadProgress.value = Math.round((uploadedFiles / totalFiles) * 100)
             } catch (uploadError) {
               console.error(`❌ Upload failed for: ${justFileName}`, uploadError)
+              // Still increment counter even on failure to keep progress moving
+              uploadedFiles++
+              uploadProgress.value = Math.round((uploadedFiles / totalFiles) * 100)
             }
           }
 
@@ -1799,6 +1824,9 @@ export function useFluxDrive() {
       // Reset upload state
       uploading.value = false
       uploadProgress.value = 0
+      sharedState.currentUploadFileName.value = ''
+      sharedState.totalFilesToUpload.value = 0
+      sharedState.currentUploadIndex.value = 0
 
       // Clear the folder input
       e.target.value = ''
@@ -1879,7 +1907,7 @@ export function useFluxDrive() {
   }
 
   // FluxCloud's exact uploadFile implementation (FluxDriveService.uploadFile)
-  const uploadFileToFluxCloudFolder = async (folderUuid, fileName, file) => {
+  const uploadFileToFluxCloudFolder = async (folderUuid, fileName, file, baseProgress = 0, totalFiles = 1) => {
     try {
       const zelidauth = localStorage.getItem('zelidauth')
       const authData = zelidauth ?
@@ -1912,7 +1940,11 @@ export function useFluxDrive() {
 
         xhr.upload.onprogress = e => {
           if (e.lengthComputable) {
-            uploadProgress.value = Math.round((e.loaded / e.total) * 100)
+            // Calculate progress for current file (0-100%)
+            const fileProgress = (e.loaded / e.total) * 100
+            // Calculate overall progress: base progress + (current file progress / total files)
+            const overallProgress = baseProgress + (fileProgress / totalFiles)
+            uploadProgress.value = Math.round(overallProgress)
           }
         }
 
@@ -2999,6 +3031,7 @@ export function useFluxDrive() {
     activeXHRs: sharedState.activeXHRs,
     loading,
     currentFolder,
+    currentFolderUuid: sharedState.currentFolderUuid,
     breadcrumbs,
     loadingStorage,
     searching,
@@ -3012,6 +3045,9 @@ export function useFluxDrive() {
     isDragOver,
     uploading,
     uploadProgress,
+    currentUploadFileName: sharedState.currentUploadFileName,
+    totalFilesToUpload: sharedState.totalFilesToUpload,
+    currentUploadIndex: sharedState.currentUploadIndex,
     showFileModal,
     previewingFile,
     resultMessage,
