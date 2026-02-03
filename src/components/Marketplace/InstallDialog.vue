@@ -2367,6 +2367,7 @@ const paymentMethods = computed(() => {
       description: t('components.marketplace.installDialog.payWithCreditCard'),
       image: stripeLogo,
     },
+
     // PayPal currently not available
     // {
     //   id: 'paypal',

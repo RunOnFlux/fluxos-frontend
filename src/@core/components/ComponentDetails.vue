@@ -362,7 +362,7 @@ onMounted(() => {
 
     console.log('ClipboardJS initialized, found elements:', document.querySelectorAll('.copy-domain-icon').length)
 
-    clipboard.on('success', (e) => {
+    clipboard.on('success', e => {
       console.log('✅ Copy success:', e.text)
       e.clearSelection()
       snackbar.value.message = t('common.messages.copiedToClipboard')
@@ -371,7 +371,7 @@ onMounted(() => {
       snackbar.value.show = true
     })
 
-    clipboard.on('error', (e) => {
+    clipboard.on('error', e => {
       console.error('❌ Copy failed:', e)
       snackbar.value.message = t('common.messages.failedToCopy')
       snackbar.value.color = 'error'
@@ -380,7 +380,7 @@ onMounted(() => {
     })
 
     // Add click listener to prevent link navigation
-    document.addEventListener('click', (e) => {
+    document.addEventListener('click', e => {
       if (e.target.closest('.copy-domain-icon')) {
         e.preventDefault()
         e.stopPropagation()

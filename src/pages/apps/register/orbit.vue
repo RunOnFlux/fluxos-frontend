@@ -2012,22 +2012,23 @@
                                   </VCardText>
                                 </VCard>
 
-                                <!-- PayPal currently not available
-                                <VCard
+                                <!--
+                                  PayPal currently not available
+                                  <VCard
                                   variant="outlined"
                                   class="payment-icon-card-horizontal"
                                   @click="initPaypalPay"
                                   :loading="checkoutLoading && paymentMethod === 'paypal'"
                                   hover
-                                >
+                                  >
                                   <VCardText class="d-flex align-center justify-center pa-4">
-                                    <img
-                                      class="payment-brand-icon-small"
-                                      :src="PayPalImg"
-                                      alt="PayPal"
-                                    />
+                                  <img
+                                  class="payment-brand-icon-small"
+                                  :src="PayPalImg"
+                                  alt="PayPal"
+                                  />
                                   </VCardText>
-                                </VCard>
+                                  </VCard>
                                 -->
                               </div>
 
@@ -5251,6 +5252,7 @@ const getEnvVarIcon = key => {
     'INSTALL_COMMAND': 'mdi-download',
     'OUTPUT_DIR': 'mdi-folder-open',
   }
+  
   return iconMap[key] || 'mdi-code-braces'
 }
 
@@ -5402,7 +5404,7 @@ const rules = {
 }
 
 // Select plan and continue to next step
-const selectPlanAndContinue = (plan) => {
+const selectPlanAndContinue = plan => {
   selectedPlan.value = plan
   currentStep.value++
 }
@@ -6048,6 +6050,7 @@ const initStripePay = async () => {
     if (!zelidauthData) {
       showToast('error', 'Please login to FluxOS to make payments')
       checkoutLoading.value = false
+      
       return
     }
 
@@ -6058,6 +6061,7 @@ const initStripePay = async () => {
     if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
       showToast('error', 'Invalid authentication data - please login again')
       checkoutLoading.value = false
+      
       return
     }
 
@@ -6123,6 +6127,7 @@ const initPaypalPay = async () => {
     if (!zelidauthData) {
       showToast('error', 'Please login to FluxOS to make payments')
       checkoutLoading.value = false
+      
       return
     }
 
@@ -6133,6 +6138,7 @@ const initPaypalPay = async () => {
     if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
       showToast('error', 'Invalid authentication data - please login again')
       checkoutLoading.value = false
+      
       return
     }
 

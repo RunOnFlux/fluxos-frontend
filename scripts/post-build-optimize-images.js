@@ -18,6 +18,7 @@ async function loadSharp() {
     const module = await import('sharp')
     sharp = module.default
   }
+  
   return sharp
 }
 
@@ -34,6 +35,7 @@ async function getAllImages(dir, files = []) {
       files.push(fullPath)
     }
   }
+  
   return files
 }
 
@@ -49,32 +51,34 @@ async function optimizeImage(filePath) {
     const image = sharpLib(buffer)
 
     switch (ext) {
-      case '.png':
-        optimized = await image.png({ quality: 75, compressionLevel: 9 }).toBuffer()
-        break
-      case '.jpg':
-      case '.jpeg':
-        optimized = await image.jpeg({ quality: 75, progressive: true }).toBuffer()
-        break
-      case '.webp':
-        optimized = await image.webp({ quality: 75 }).toBuffer()
-        break
-      case '.gif':
-        optimized = await image.gif().toBuffer()
-        break
-      default:
-        return null
+    case '.png':
+      optimized = await image.png({ quality: 75, compressionLevel: 9 }).toBuffer()
+      break
+    case '.jpg':
+    case '.jpeg':
+      optimized = await image.jpeg({ quality: 75, progressive: true }).toBuffer()
+      break
+    case '.webp':
+      optimized = await image.webp({ quality: 75 }).toBuffer()
+      break
+    case '.gif':
+      optimized = await image.gif().toBuffer()
+      break
+    default:
+      return null
     }
 
     // Only write if smaller
     if (optimized.length < originalSize) {
       await fs.writeFile(filePath, optimized)
+      
       return { originalSize, optimizedSize: optimized.length }
     }
 
     return { originalSize, optimizedSize: originalSize, skipped: true }
   } catch (err) {
     console.warn(`  Warning: Could not optimize ${path.basename(filePath)}: ${err.message}`)
+    
     return null
   }
 }

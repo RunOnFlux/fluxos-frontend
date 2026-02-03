@@ -30,6 +30,7 @@ async function getAllFiles(dir, files = []) {
       }
     }
   }
+  
   return files
 }
 
@@ -40,6 +41,7 @@ async function compressFile(filePath, algorithm) {
   // Skip if already exists
   try {
     await fs.access(outPath)
+    
     return null // Already compressed
   } catch {
     // File doesn't exist, proceed
@@ -51,10 +53,10 @@ async function compressFile(filePath, algorithm) {
   const compressor = algorithm === 'gzip'
     ? createGzip({ level: 9 })
     : createBrotliCompress({
-        params: {
-          [constants.BROTLI_PARAM_QUALITY]: 11,
-        }
-      })
+      params: {
+        [constants.BROTLI_PARAM_QUALITY]: 11,
+      },
+    })
 
   await pipeline(readStream, compressor, writeStream)
 

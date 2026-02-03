@@ -2591,7 +2591,7 @@ const {
 } = useFluxDrive()
 
 // Watch uploadProgress from useFluxDrive and sync to localUploadProgress
-watch(uploadProgress, (newValue) => {
+watch(uploadProgress, newValue => {
   if (sharedTotalFilesToUpload.value > 0) {
     // Folder upload in progress - sync the progress
     localUploadProgress.value = newValue
@@ -2599,7 +2599,7 @@ watch(uploadProgress, (newValue) => {
 })
 
 // Watch currentUploadFileName and sync to currentFileName for display
-watch(currentUploadFileName, (newValue) => {
+watch(currentUploadFileName, newValue => {
   if (newValue && sharedTotalFilesToUpload.value > 0) {
     currentFileName.value = newValue
   }
@@ -2608,10 +2608,10 @@ watch(currentUploadFileName, (newValue) => {
 // Computed properties that combine local and shared upload tracking
 // Use shared values from folder uploads (useFluxDrive) or local values from file uploads (FileManager)
 const currentUploadIndex = computed(() =>
-  sharedTotalFilesToUpload.value > 0 ? sharedCurrentUploadIndex.value : localCurrentUploadIndex.value
+  sharedTotalFilesToUpload.value > 0 ? sharedCurrentUploadIndex.value : localCurrentUploadIndex.value,
 )
 const totalFilesToUpload = computed(() =>
-  sharedTotalFilesToUpload.value > 0 ? sharedTotalFilesToUpload.value : localTotalFilesToUpload.value
+  sharedTotalFilesToUpload.value > 0 ? sharedTotalFilesToUpload.value : localTotalFilesToUpload.value,
 )
 
 // Calculate days left until subscription expires

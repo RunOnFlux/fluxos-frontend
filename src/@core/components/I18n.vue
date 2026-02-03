@@ -19,7 +19,7 @@ const { locale } = useI18n({ useScope: 'global' })
 const configStore = useConfigStore()
 
 // Load locale on language change
-const changeLocale = async (newLocale) => {
+const changeLocale = async newLocale => {
   await loadLocale(newLocale)
   locale.value = newLocale
 
@@ -32,7 +32,7 @@ const changeLocale = async (newLocale) => {
 }
 
 // Map language codes to flag icons
-const getFlagIcon = (i18nLang) => {
+const getFlagIcon = i18nLang => {
   const flagMap = {
     'en': 'flag:us-4x3',
     'zh-CN': 'flag:cn-4x3',
@@ -57,6 +57,7 @@ const getFlagIcon = (i18nLang) => {
     'it': 'flag:it-4x3',
     'pl': 'flag:pl-4x3',
   }
+  
   return flagMap[i18nLang] || 'flag:un-4x3'
 }
 </script>

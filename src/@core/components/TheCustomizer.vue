@@ -259,7 +259,7 @@ watch(currentDir, () => {
 })
 
 // Sync currentDir with configStore changes (e.g., from language change)
-watch(() => configStore.isAppRTL, (newVal) => {
+watch(() => configStore.isAppRTL, newVal => {
   currentDir.value = newVal ? 'rtl' : 'ltr'
 })
 
@@ -331,6 +331,7 @@ const resetCustomizer = async () => {
     cookieRef('darkThemePrimaryColor', null).value = null
     cookieRef('lightThemePrimaryDarkenColor', null).value = null
     cookieRef('darkThemePrimaryDarkenColor', null).value = null
+
     // Clear manual RTL override so it syncs with language
     cookieRef('manualRtlOverride', null).value = null
     currentDir.value = isActiveLangRTL.value ? 'rtl' : 'ltr'

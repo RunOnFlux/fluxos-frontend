@@ -32,6 +32,7 @@ export async function loadLocale(locale) {
       return module.default
     } catch (error) {
       console.error(`Failed to load locale ${locale}:`, error)
+      
       return null
     }
   }

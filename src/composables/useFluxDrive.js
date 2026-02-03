@@ -1794,6 +1794,7 @@ export function useFluxDrive() {
               uploadProgress.value = Math.round((uploadedFiles / totalFiles) * 100)
             } catch (uploadError) {
               console.error(`❌ Upload failed for: ${justFileName}`, uploadError)
+
               // Still increment counter even on failure to keep progress moving
               uploadedFiles++
               uploadProgress.value = Math.round((uploadedFiles / totalFiles) * 100)
@@ -1942,6 +1943,7 @@ export function useFluxDrive() {
           if (e.lengthComputable) {
             // Calculate progress for current file (0-100%)
             const fileProgress = (e.loaded / e.total) * 100
+
             // Calculate overall progress: base progress + (current file progress / total files)
             const overallProgress = baseProgress + (fileProgress / totalFiles)
             uploadProgress.value = Math.round(overallProgress)
