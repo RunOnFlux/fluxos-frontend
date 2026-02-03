@@ -1,11 +1,11 @@
 {
   "name": "flux-gravity",
-  "version": "2.7.0",
+  "version": "3.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite --logLevel info",
-    "build": "npm run generate:sitemap && vite build",
+    "build": "npm run generate:sitemap && cross-env PHASED_BUILD=1 vite build && node scripts/post-build-optimize-images.js && node scripts/post-build-compress.js",
     "build:seo": "npm run build && npm run fetch:routes && npm run prerender",
     "build:analyze": "vite build && start dist/stats.html",
     "preview": "vite preview --host 0.0.0.0 --port 3005",
@@ -116,6 +116,7 @@
     "@types/qs": "^6.9.18",
     "@vitejs/plugin-vue": "^6.0.0",
     "@vitejs/plugin-vue-jsx": "^5.0.1",
+    "cross-env": "^10.1.0",
     "eslint": "^9.30.1",
     "eslint-import-resolver-alias": "^1.1.2",
     "eslint-import-resolver-typescript": "3.7.0",

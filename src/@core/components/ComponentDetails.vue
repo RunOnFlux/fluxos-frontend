@@ -1,5 +1,17 @@
 <template>
   <div v-if="component" class="component-details-root">
+    <!-- Snackbar for copy notifications -->
+    <VSnackbar
+      v-model="snackbar.show"
+      :color="snackbar.color"
+      :timeout="snackbar.timeout"
+      location="top"
+    >
+      <div class="d-flex align-center">
+        <VIcon :icon="snackbar.icon" class="mr-2" />
+        {{ snackbar.message }}
+      </div>
+    </VSnackbar>
     <ListEntry
       :title="t('core.componentDetails.name')"
       :data="component.name"
@@ -61,16 +73,32 @@
     >
       <template #default>
         <div class="kbd-list">
-          <a
+          <div
             v-for="(domain, dIndex) in sanitized(component?.domains)"
             :key="dIndex"
-            :href="`https://${domain}`"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="d-inline-block"
+            class="domain-item-wrapper"
           >
-            <kbd class="alert-info resource-kbd animated-link">{{ domain }}</kbd>
-          </a>
+            <a
+              :href="`https://${domain}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="d-inline-block domain-link"
+            >
+              <kbd class="alert-info resource-kbd animated-link">
+                {{ domain }}
+                <button
+                  type="button"
+                  class="copy-domain-icon"
+                  :data-clipboard-text="`https://${domain}`"
+                >
+                  <VIcon size="14">mdi-content-copy</VIcon>
+                  <VTooltip activator="parent" location="top">
+                    {{ t('common.buttons.copy') }}
+                  </VTooltip>
+                </button>
+              </kbd>
+            </a>
+          </div>
         </div>
       </template>
     </ListEntry>
@@ -84,19 +112,36 @@
     >
       <template #default>
         <div class="kbd-list">
-          <a
+          <div
             v-for="(domain, aIndex) in constructAutomaticDomains(
               component?.ports,
               appName,
               index
             )"
             :key="aIndex"
-            :href="`https://${domain}`"
-            target="_blank"
-            rel="noopener noreferrer"
+            class="domain-item-wrapper"
           >
-            <kbd class="alert-info resource-kbd animated-link">{{ domain }}</kbd>
-          </a>
+            <a
+              :href="`https://${domain}`"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="domain-link"
+            >
+              <kbd class="alert-info resource-kbd animated-link">
+                {{ domain }}
+                <button
+                  type="button"
+                  class="copy-domain-icon"
+                  :data-clipboard-text="`https://${domain}`"
+                >
+                  <VIcon size="14">mdi-content-copy</VIcon>
+                  <VTooltip activator="parent" location="top">
+                    {{ t('common.buttons.copy') }}
+                  </VTooltip>
+                </button>
+              </kbd>
+            </a>
+          </div>
         </div>
       </template>
     </ListEntry>
@@ -289,7 +334,9 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
+import ClipboardJS from 'clipboard'
 
 const props = defineProps({
   component: Object,
@@ -298,6 +345,53 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+
+const snackbar = ref({
+  show: false,
+  message: '',
+  color: 'success',
+  icon: 'mdi-content-copy',
+  timeout: 3000,
+})
+
+let clipboard = null
+
+onMounted(() => {
+  nextTick(() => {
+    clipboard = new ClipboardJS('.copy-domain-icon')
+
+    console.log('ClipboardJS initialized, found elements:', document.querySelectorAll('.copy-domain-icon').length)
+
+    clipboard.on('success', e => {
+      console.log('✅ Copy success:', e.text)
+      e.clearSelection()
+      snackbar.value.message = t('common.messages.copiedToClipboard')
+      snackbar.value.color = 'success'
+      snackbar.value.icon = 'mdi-content-copy'
+      snackbar.value.show = true
+    })
+
+    clipboard.on('error', e => {
+      console.error('❌ Copy failed:', e)
+      snackbar.value.message = t('common.messages.failedToCopy')
+      snackbar.value.color = 'error'
+      snackbar.value.icon = 'mdi-alert-circle'
+      snackbar.value.show = true
+    })
+
+    // Add click listener to prevent link navigation
+    document.addEventListener('click', e => {
+      if (e.target.closest('.copy-domain-icon')) {
+        e.preventDefault()
+        e.stopPropagation()
+      }
+    })
+  })
+})
+
+onBeforeUnmount(() => {
+  if (clipboard) clipboard.destroy()
+})
 
 function getColorHex(color) {
   const colors = {
@@ -433,6 +527,39 @@ function constructAutomaticDomains(ports, name, index = 0) {
 </script>
 
 <style scoped>
+/* Domain item wrapper with copy icon */
+.domain-item-wrapper {
+  display: inline-block;
+  margin-right: 5px;
+  margin-bottom: 4px;
+}
+
+.domain-link {
+  text-decoration: none;
+}
+
+.resource-kbd {
+  position: relative;
+  display: inline-block;
+}
+
+.copy-domain-icon {
+  display: none;
+  vertical-align: middle;
+  cursor: pointer;
+  border: none;
+  background: none;
+  padding: 0;
+  margin-left: 2px;
+  color: inherit;
+  font: inherit;
+  outline: none;
+}
+
+.resource-kbd:hover .copy-domain-icon {
+  display: inline-block;
+}
+
 .hardware-chip {
   display: inline-flex;
   align-items: center;

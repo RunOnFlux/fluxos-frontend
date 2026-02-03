@@ -7,11 +7,28 @@ import { themeConfig } from '@themeConfig'
 const _syncAppRtl = () => {
   const configStore = useConfigStore()
   const storedLang = cookieRef('language', null)
+  const storedManualRtl = cookieRef('manualRtlOverride', null)
   const { locale } = useI18n({ useScope: 'global' })
+
+  // Helper function to get RTL value for a language
+  const getLangRtl = langCode => {
+    if (themeConfig.app.i18n.langConfig && themeConfig.app.i18n.langConfig.length) {
+      const lang = themeConfig.app.i18n.langConfig.find(l => l.i18nLang === langCode)
+      
+      return lang?.isRTL ?? false
+    }
+    
+    return false
+  }
 
   // TODO: Handle case where i18n can't read persisted value
   if (locale.value !== storedLang.value && storedLang.value)
     locale.value = storedLang.value
+
+  // Initialize RTL based on current language if no manual override exists
+  if (storedManualRtl.value === null && locale.value) {
+    configStore.isAppRTL = getLangRtl(locale.value)
+  }
 
   // watch and change lang attribute of html on language change
   watch(locale, val => {
@@ -22,13 +39,13 @@ const _syncAppRtl = () => {
     // Store selected language in cookie
     storedLang.value = val
 
-    // set isAppRtl value based on selected language
-    if (themeConfig.app.i18n.langConfig && themeConfig.app.i18n.langConfig.length) {
-      themeConfig.app.i18n.langConfig.forEach(lang => {
-        if (lang.i18nLang === storedLang.value)
-          configStore.isAppRTL = lang.isRTL
-      })
-    }
+    // Only auto-update RTL if there's no manual override
+    // When user changes language, clear manual override and sync with language's RTL
+    const rtlValue = getLangRtl(val)
+    console.log(`[RTL Sync] Language changed to: ${val}, RTL should be: ${rtlValue}`)
+    storedManualRtl.value = null
+    configStore.isAppRTL = rtlValue
+    console.log(`[RTL Sync] Set isAppRTL to: ${configStore.isAppRTL}`)
   }, { immediate: true })
 }
 

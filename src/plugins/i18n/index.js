@@ -2,17 +2,43 @@ import { createI18n } from 'vue-i18n'
 import { cookieRef } from '@layouts/stores/config'
 import { themeConfig } from '@themeConfig'
 
-const messages = Object.fromEntries(
-  Object.entries(
-    import.meta.glob('./locales/*.json', { eager: true }),
-  )
-    .filter(([key]) => !key.includes('.backup') && !key.includes('-comprehensive'))
-    .map(([key, value]) => {
-      const locale = key.match(/\.\/locales\/(.+)\.json$/)[1]
+// Lazy load translation files instead of eager loading
+const localeFiles = import.meta.glob('./locales/*.json')
 
-      return [locale, value.default]
-    }),
-)
+// Load only the default locale eagerly (English)
+const messages = {
+  en: (await localeFiles['./locales/en.json']()).default,
+}
+
+// Async function to load a locale on demand
+export async function loadLocale(locale) {
+  // Skip if already loaded
+  if (messages[locale]) {
+    return messages[locale]
+  }
+
+  // Find the locale file
+  const localeFile = `./locales/${locale}.json`
+  if (localeFiles[localeFile]) {
+    try {
+      const module = await localeFiles[localeFile]()
+      messages[locale] = module.default
+
+      // If i18n is already initialized, add the new locale
+      if (_i18n) {
+        _i18n.global.setLocaleMessage(locale, module.default)
+      }
+
+      return module.default
+    } catch (error) {
+      console.error(`Failed to load locale ${locale}:`, error)
+      
+      return null
+    }
+  }
+
+  return null
+}
 
 // Polish pluralization rules
 // Returns: 0 for singular, 1 for few (2-4), 2 for many (5+)
@@ -54,8 +80,15 @@ export const getI18n = () => {
 
   return _i18n
 }
-export default function (app) {
+export default async function (app) {
   const i18n = getI18n()
+  const userLocale = i18n.global.locale.value
+
+  // Load the user's preferred locale if it's not already loaded
+  if (userLocale !== 'en' && !messages[userLocale]) {
+    await loadLocale(userLocale)
+  }
+
   app.use(i18n)
 
   // Emit i18n-ready event for index.html Kapa AI widget initialization

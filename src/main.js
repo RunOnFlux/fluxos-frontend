@@ -225,9 +225,19 @@ const app = createApp(App)
 const head = createHead()
 app.use(head)
 
-// Register other plugins
-registerPlugins(app)
+// Register other plugins (async to support lazy-loaded translations)
+await registerPlugins(app)
 app.directive('sanitize-html', sanitizeHtml)
 
 // Mount vue app
 app.mount('#app')
+
+// Auto-reload when new build is deployed (service worker update)
+// This silently reloads the page when a new SW activates - no user prompt
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    // New service worker has taken control, reload to get fresh assets
+    console.log('[PWA] New service worker activated, reloading page for fresh assets...')
+    setTimeout(() => window.location.reload(), 2000)
+  })
+}

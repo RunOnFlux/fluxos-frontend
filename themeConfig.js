@@ -29,16 +29,28 @@ export const { themeConfig, layoutConfig } = defineThemeConfig({
       enable: true,
       defaultLocale: 'en',
       langConfig: [
-        {
-          label: 'English',
-          i18nLang: 'en',
-          isRTL: false,
-        },
-        {
-          label: 'Polish',
-          i18nLang: 'pl',
-          isRTL: false,
-        },
+        { label: 'English', i18nLang: 'en', isRTL: false },           // ~1.5B speakers
+        { label: '中文', i18nLang: 'zh-CN', isRTL: false },            // ~1.1B speakers
+        { label: 'हिन्दी', i18nLang: 'hi', isRTL: false },              // ~600M speakers
+        { label: 'Español', i18nLang: 'es', isRTL: false },           // ~550M speakers
+        { label: 'العربية', i18nLang: 'ar', isRTL: true },             // ~420M speakers
+        { label: 'Français', i18nLang: 'fr', isRTL: false },          // ~320M speakers
+        { label: 'বাংলা', i18nLang: 'bn', isRTL: false },              // ~270M speakers
+        { label: 'Português', i18nLang: 'pt', isRTL: false },         // ~260M speakers
+        { label: 'Русский', i18nLang: 'ru', isRTL: false },           // ~250M speakers
+        { label: 'Bahasa Indonesia', i18nLang: 'id', isRTL: false },  // ~200M speakers
+        { label: 'ਪੰਜਾਬੀ', i18nLang: 'pa', isRTL: false },             // ~150M speakers
+        { label: 'Deutsch', i18nLang: 'de', isRTL: false },           // ~130M speakers
+        { label: '日本語', i18nLang: 'ja', isRTL: false },             // ~125M speakers
+        { label: 'Basa Jawa', i18nLang: 'jv', isRTL: false },         // ~98M speakers
+        { label: 'मराठी', i18nLang: 'mr', isRTL: false },              // ~95M speakers
+        { label: 'తెలుగు', i18nLang: 'te', isRTL: false },             // ~95M speakers
+        { label: 'Türkçe', i18nLang: 'tr', isRTL: false },            // ~90M speakers
+        { label: 'Tiếng Việt', i18nLang: 'vi', isRTL: false },        // ~85M speakers
+        { label: '한국어', i18nLang: 'ko', isRTL: false },             // ~80M speakers
+        { label: 'தமிழ்', i18nLang: 'ta', isRTL: false },              // ~80M speakers
+        { label: 'Italiano', i18nLang: 'it', isRTL: false },          // ~68M speakers
+        { label: 'Polski', i18nLang: 'pl', isRTL: false },            // ~45M speakers
       ],
     },
     theme: 'dark',

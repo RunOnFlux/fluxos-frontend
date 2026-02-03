@@ -250,10 +250,17 @@ const direction = computed(() => {
 })
 
 watch(currentDir, () => {
-  if (currentDir.value === 'rtl')
-    configStore.isAppRTL = true
-  else
-    configStore.isAppRTL = false
+  const newRtlValue = currentDir.value === 'rtl'
+  configStore.isAppRTL = newRtlValue
+
+  // Set manual override flag when user manually changes direction
+  const manualRtlOverride = cookieRef('manualRtlOverride', null)
+  manualRtlOverride.value = newRtlValue
+})
+
+// Sync currentDir with configStore changes (e.g., from language change)
+watch(() => configStore.isAppRTL, newVal => {
+  currentDir.value = newVal ? 'rtl' : 'ltr'
 })
 
 const isCookieHasAnyValue = ref(false)
@@ -324,6 +331,10 @@ const resetCustomizer = async () => {
     cookieRef('darkThemePrimaryColor', null).value = null
     cookieRef('lightThemePrimaryDarkenColor', null).value = null
     cookieRef('darkThemePrimaryDarkenColor', null).value = null
+
+    // Clear manual RTL override so it syncs with language
+    cookieRef('manualRtlOverride', null).value = null
+    currentDir.value = isActiveLangRTL.value ? 'rtl' : 'ltr'
     await nextTick()
     isCookieHasAnyValue.value = false
     customPrimaryColor.value = '#ffffff'
@@ -661,6 +672,27 @@ defineExpose({
               </template>
             </CustomRadiosWithImage>
           </div>
+
+          <!-- 👉 Direction (RTL/LTR) -->
+          <div class="d-flex flex-column gap-2">
+            <h6 class="text-base font-weight-medium">
+              {{ t('core.theCustomizer.direction') }}
+            </h6>
+            <p class="text-sm text-medium-emphasis mb-0">
+              {{ t('core.theCustomizer.directionHint') }}
+            </p>
+
+            <CustomRadiosWithImage
+              :key="currentDir"
+              v-model:selected-radio="currentDir"
+              :radio-content="direction"
+              :grid-column="{ cols: '4' }"
+            >
+              <template #label="item">
+                <span class="text-sm text-medium-emphasis">{{ item.label }}</span>
+              </template>
+            </CustomRadiosWithImage>
+          </div>
         </CustomizerSection>
         <!-- !SECTION -->
       </PerfectScrollbar>
@@ -707,6 +739,8 @@ defineExpose({
   .v-navigation-drawer__content {
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    height: 100%;
   }
 
   .v-label.custom-input.active {
