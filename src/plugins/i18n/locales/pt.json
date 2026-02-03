@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "NOVO: Implantar a partir do Git",
+            "badge": "NOVO:Implantar com Git",
             "heroTitle": "Seu código. Nossa magia.",
             "heroSubtitle": "Zero dores de cabeça no Docker.",
             "heroDescription": "Implante qualquer aplicativo web diretamente do GitHub, GitLab ou Bitbucket. A implantação do Git detecta automaticamente sua estrutura e cuida de todo o resto.",

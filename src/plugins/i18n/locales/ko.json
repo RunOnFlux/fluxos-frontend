@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "새로운 기능: Git에서 배포",
+            "badge": "새로운 기능:Git으로 배포",
             "heroTitle": "귀하의 코드. 우리의 마술.",
             "heroSubtitle": "Docker 두통 제로.",
             "heroDescription": "GitHub, GitLab 또는 Bitbucket에서 직접 웹 애플리케이션을 배포하세요. Git 배포는 프레임워크를 자동으로 감지하고 다른 모든 것을 처리합니다.",

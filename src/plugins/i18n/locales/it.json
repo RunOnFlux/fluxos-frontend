@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "NOVITÀ: distribuzione da Git",
+            "badge": "NOVITÀ:distribuzione con Git",
             "heroTitle": "Il tuo codice. La nostra magia.",
             "heroSubtitle": "Zero mal di testa da Docker.",
             "heroDescription": "Distribuisci qualsiasi applicazione web direttamente da GitHub, GitLab o Bitbucket. La distribuzione Git rileva automaticamente il tuo framework e gestisce tutto il resto.",

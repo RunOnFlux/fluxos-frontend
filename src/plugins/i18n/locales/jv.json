@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "Anyar: Deploy from Git",
+            "badge": "Anyar:Deploy with Git",
             "heroTitle": "Your Kode. Our Magic.",
             "heroSubtitle": "Tanpa Masalah Docker.",
             "heroDescription": "Deploy any web Aplikasi directly from GitHub, GitLab, or Bitbucket. Git deployment auto-detects your framework and handles everything else.",

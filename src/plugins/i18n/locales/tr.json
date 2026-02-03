@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "YENİ: Git'ten dağıtın",
+            "badge": "YENİ:Git ile dağıtın",
             "heroTitle": "Kodunuz. Bizim Büyümüz.",
             "heroSubtitle": "Sıfır Docker Baş Ağrısı.",
             "heroDescription": "Herhangi bir web uygulamasını doğrudan GitHub, GitLab veya Bitbucket'ten dağıtın. Git dağıtımı, çerçevenizi otomatik olarak algılar ve geri kalan her şeyi yönetir.",

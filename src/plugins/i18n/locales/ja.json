@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "新規: Git からのデプロイ",
+            "badge": "新規:Git でデプロイ",
             "heroTitle": "あなたのコード。私たちの魔法。",
             "heroSubtitle": "ドッカー頭痛ゼロ。",
             "heroDescription": "GitHub、GitLab、または Bitbucket から直接 Web アプリケーションをデプロイします。 Git デプロイメントはフレームワークを自動検出し、その他すべてを処理します。",

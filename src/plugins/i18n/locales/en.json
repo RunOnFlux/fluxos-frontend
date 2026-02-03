@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "NEW: Deploy from Git",
+            "badge": "NEW:Deploy with Git",
             "heroTitle": "Your Code. Our Magic.",
             "heroSubtitle": "Zero Docker Headaches.",
             "heroDescription": "Deploy any web application directly from GitHub, GitLab, or Bitbucket. Git deployment auto-detects your framework and handles everything else.",

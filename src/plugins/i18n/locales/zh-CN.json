@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "新功能：从 Git 部署",
+            "badge": "新功能：使用 Git 部署",
             "heroTitle": "你的代码。我们的魔法。",
             "heroSubtitle": "零 Docker 头痛。",
             "heroDescription": "直接从 GitHub、GitLab 或 Bitbucket 部署任何 Web 应用程序。 Git 部署会自动检测您的框架并处理其他一切。",

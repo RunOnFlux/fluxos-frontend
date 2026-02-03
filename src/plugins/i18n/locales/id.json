@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "BARU: Terapkan dari Git",
+            "badge": "BARU:Terapkan dengan Git",
             "heroTitle": "Kode Anda. Keajaiban kami.",
             "heroSubtitle": "Nol Sakit Kepala Docker.",
             "heroDescription": "Terapkan aplikasi web apa pun langsung dari GitHub, GitLab, atau Bitbucket. Penerapan Git secara otomatis mendeteksi kerangka kerja Anda dan menangani yang lainnya.",

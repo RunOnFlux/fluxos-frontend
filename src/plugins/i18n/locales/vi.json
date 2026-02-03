@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "MỚI: Triển khai từ Git",
+            "badge": "MỚI:Triển khai với Git",
             "heroTitle": "Mã của bạn. Phép thuật của chúng tôi.",
             "heroSubtitle": "Không đau đầu về Docker.",
             "heroDescription": "Triển khai bất kỳ ứng dụng web nào trực tiếp từ GitHub, GitLab hoặc Bitbucket. Triển khai Git tự động phát hiện khung của bạn và xử lý mọi thứ khác.",

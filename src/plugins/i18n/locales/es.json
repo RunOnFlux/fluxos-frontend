@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "NUEVO: Implementación desde Git",
+            "badge": "NUEVO:Implementación con Git",
             "heroTitle": "Tu código. Nuestra Magia.",
             "heroSubtitle": "Cero dolores de cabeza de Docker.",
             "heroDescription": "Implemente cualquier aplicación web directamente desde GitHub, GitLab o Bitbucket. La implementación de Git detecta automáticamente su marco y maneja todo lo demás.",

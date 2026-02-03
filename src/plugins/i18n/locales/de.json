@@ -3198,7 +3198,7 @@
             }
           },
           "landing": {
-            "badge": "NEU: Bereitstellung über Git",
+            "badge": "NEU:Bereitstellung mit Git",
             "heroTitle": "Ihr Code. Unsere Magie.",
             "heroSubtitle": "Keine Docker-Kopfschmerzen.",
             "heroDescription": "Stellen Sie jede Webanwendung direkt über GitHub, GitLab oder Bitbucket bereit. Die Git-Bereitstellung erkennt Ihr Framework automatisch und kümmert sich um alles andere.",
