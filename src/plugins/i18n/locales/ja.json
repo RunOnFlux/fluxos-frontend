@@ -226,6 +226,10 @@
       "necessaryDescription": "これらの Cookie は、Web サイトが適切に機能するために不可欠です。これらを無効にすることはできません。",
       "analytics": "分析クッキー",
       "analyticsDescription": "これらの Cookie は、情報を匿名で収集および報告することで、訪問者が当社 Web サイトとどのようにやり取りするかを理解するのに役立ちます。"
+    },
+    "validation": {
+      "required": "このフィールドは必須です",
+      "invalidEmail": "有効なメールアドレスを入力してください"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "ストレージがいっぱいです - アップロードは許可されません",
           "insufficientStorage": "ファイル「{name}」（{fileSize} MB）が利用可能なストレージ（{available} MB）を超えています"
         }
+      },
+      "support": {
+        "loadingTitle": "サポートを読み込んでいます...",
+        "title": "サポートを受ける",
+        "subtitle": "ニーズに基づいてヘルプを得る最適な方法を選択してください",
+        "supportChannels": "サポートチャンネル",
+        "documentation": "ドキュメント",
+        "documentationDesc": "包括的なドキュメントとガイドを参照する",
+        "visitDocs": "ドキュメントを訪問",
+        "community": "コミュニティサポート",
+        "communityDesc": "コミュニティからヘルプを得る",
+        "joinDiscord": "Discordに参加",
+        "github": "GitHubの問題",
+        "githubDesc": "GitHubでバグを報告し、機能をリクエストする",
+        "viewGithub": "GitHubを表示",
+        "directSupport": "直接サポート",
+        "directSupportDesc": "パーソナライズされた技術支援を受ける",
+        "contactSupport": "サポートに連絡",
+        "quickContact": "迅速な支援については、次の方法でお問い合わせください:",
+        "ticketSystem": "チケットシステム",
+        "issueType": "問題の種類",
+        "subject": "件名",
+        "description": "説明",
+        "types": {
+          "question": "一般的な質問",
+          "blockApp": "アプリケーションをブロック",
+          "blockPort": "ポートをブロック",
+          "reportMalicious": "悪意のあるアプリを報告",
+          "reportIssue": "問題を報告"
+        },
+        "successTitle": "メッセージが正常に送信されました!",
+        "successMessage": "お問い合わせいただきありがとうございます。できるだけ早くご連絡いたします。",
+        "errorMessage": "サポートチケットの送信に失敗しました。後でもう一度お試しください。",
+        "completeDocs": "完全なドキュメント",
+        "fluxosGuide": "FluxOSガイド",
+        "apiReference": "APIリファレンス",
+        "githubDiscussions": "GitHubディスカッション",
+        "discordCommunity": "Discordコミュニティ",
+        "supportTicketingSystem": "サポートチケットシステム",
+        "emailSupport": "メールサポート"
       },
       "manageUsers": {
         "title": "ユーザーの管理",

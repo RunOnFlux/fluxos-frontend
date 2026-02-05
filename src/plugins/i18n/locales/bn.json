@@ -226,6 +226,10 @@
       "necessaryDescription": "ওয়েবসাইট সঠিকভাবে কাজ করার জন্য এই কুকিগুলি অপরিহার্য। তাদের অক্ষম করা যাবে না।",
       "analytics": "বিশ্লেষণ কুকিজ",
       "analyticsDescription": "এই কুকিগুলি আমাদের বুঝতে সাহায্য করে যে কীভাবে ভিজিটররা বেনামে তথ্য সংগ্রহ এবং রিপোর্ট করার মাধ্যমে আমাদের ওয়েবসাইটের সাথে যোগাযোগ করে।"
+    },
+    "validation": {
+      "required": "এই ক্ষেত্রটি প্রয়োজনীয়",
+      "invalidEmail": "অনুগ্রহ করে একটি বৈধ ইমেল ঠিকানা লিখুন"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "সঞ্চয়স্থান পূর্ণ - কোন আপলোড অনুমোদিত",
           "insufficientStorage": "ফাইল \"{name}\" ({fileSize} MB) উপলব্ধ সঞ্চয়স্থান ছাড়িয়ে গেছে ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "সাপোর্ট লোড হচ্ছে...",
+        "title": "সাপোর্ট পান",
+        "subtitle": "আপনার প্রয়োজনের উপর ভিত্তি করে সাহায্য পাওয়ার সেরা উপায় বেছে নিন",
+        "supportChannels": "সাপোর্ট চ্যানেল",
+        "documentation": "ডকুমেন্টেশন",
+        "documentationDesc": "আমাদের সম্পূর্ণ ডকুমেন্টেশন এবং গাইড ব্রাউজ করুন",
+        "visitDocs": "ডক্স দেখুন",
+        "community": "কমিউনিটি সাপোর্ট",
+        "communityDesc": "আমাদের কমিউনিটি থেকে সাহায্য পান",
+        "joinDiscord": "Discord যোগ দিন",
+        "github": "GitHub সমস্যা",
+        "githubDesc": "GitHub এ বাগ রিপোর্ট করুন এবং বৈশিষ্ট্যের অনুরোধ করুন",
+        "viewGithub": "GitHub দেখুন",
+        "directSupport": "সরাসরি সাপোর্ট",
+        "directSupportDesc": "ব্যক্তিগত প্রযুক্তিগত সহায়তা পান",
+        "contactSupport": "সাপোর্টের সাথে যোগাযোগ করুন",
+        "quickContact": "দ্রুত সহায়তার জন্য, আপনি আমাদের সাথে যোগাযোগ করতে পারেন:",
+        "ticketSystem": "টিকিট সিস্টেম",
+        "issueType": "সমস্যার ধরন",
+        "subject": "বিষয়",
+        "description": "বর্ণনা",
+        "types": {
+          "question": "সাধারণ প্রশ্ন",
+          "blockApp": "অ্যাপ্লিকেশন ব্লক করুন",
+          "blockPort": "পোর্ট ব্লক করুন",
+          "reportMalicious": "ক্ষতিকারক অ্যাপ রিপোর্ট করুন",
+          "reportIssue": "সমস্যা রিপোর্ট করুন"
+        },
+        "successTitle": "বার্তা সফলভাবে পাঠানো হয়েছে!",
+        "successMessage": "আমাদের সাথে যোগাযোগ করার জন্য ধন্যবাদ। আমরা যত তাড়াতাড়ি সম্ভব আপনার সাথে যোগাযোগ করব।",
+        "errorMessage": "সাপোর্ট টিকিট জমা দিতে ব্যর্থ হয়েছে। পরে আবার চেষ্টা করুন।",
+        "completeDocs": "সম্পূর্ণ ডকুমেন্টেশন",
+        "fluxosGuide": "FluxOS গাইড",
+        "apiReference": "API রেফারেন্স",
+        "githubDiscussions": "GitHub আলোচনা",
+        "discordCommunity": "Discord কমিউনিটি",
+        "supportTicketingSystem": "সাপোর্ট টিকিটিং সিস্টেম",
+        "emailSupport": "ইমেল সাপোর্ট"
       },
       "manageUsers": {
         "title": "ব্যবহারকারীদের পরিচালনা করুন",

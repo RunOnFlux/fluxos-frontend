@@ -43,6 +43,29 @@
         margin-inline-start: 0.125rem;
       }
     }
+
+    // Fix: Make nested nav items (children) use same icon size as parent items
+    .nav-group {
+      .nav-link,
+      .nav-group {
+        .nav-item-icon {
+          font-size: variables.$vertical-nav-items-icon-size !important;
+          margin-inline-end: variables.$vertical-nav-items-icon-margin-inline-end !important;
+        }
+
+        .nav-item-title {
+          opacity: 1 !important;
+          font-weight: inherit !important;
+        }
+      }
+
+      // Make active children nav items use primary color for icons
+      .nav-link > .router-link-exact-active {
+        .nav-item-icon {
+          color: rgb(var(--v-theme-on-primary)) !important;
+        }
+      }
+    }
   }
 
   &.layout-vertical-nav-collapsed {

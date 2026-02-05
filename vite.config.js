@@ -223,6 +223,11 @@ export default defineConfig(({ mode }) => {
             /^overflow-/, // Overflow utilities
             /^position-/, // Position utilities
             /^cursor-/, // Cursor utilities
+            /^pointer-/, // Pointer events utilities
+            /^transition-/, // Transition utilities
+            /^transform/, // Transform utilities
+            /^layout-/, // Layout classes (vertical nav, etc.)
+            /^nav-/, // Navigation classes (nav-group, nav-link, nav-item, etc.)
             /^el-/, // Element Plus classes
             /^leaflet-/, // Leaflet map classes
             /^apexcharts/, // ApexCharts classes
@@ -256,6 +261,8 @@ export default defineConfig(({ mode }) => {
             /v-data-table/,
             /v-select/,
             /v-autocomplete/,
+            /v-field/,
+            /v-input/,
             /v-text-field/,
             /v-textarea/,
             /v-checkbox/,

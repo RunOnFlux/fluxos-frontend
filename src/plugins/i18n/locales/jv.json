@@ -226,6 +226,10 @@
       "necessaryDescription": "These cookies are essential for the Situs web to function properly. They cannot be dipateni.",
       "analytics": "Cookie Analitik",
       "analyticsDescription": "These cookies Bantuan us understand how visitors interact with our Situs web by collecting and reporting information anonymously."
+    },
+    "validation": {
+      "required": "Kolom iki kudu diisi",
+      "invalidEmail": "Mangga lebokake alamat email sing bener"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "Panyimpenan is full - Ora uploads allowed",
           "insufficientStorage": "Panyimpenan ora cukup. Kasedhiya: {available}. Dibutuhake kanggo {name}."
         }
+      },
+      "support": {
+        "loadingTitle": "Ngisi Dhukungan...",
+        "title": "Entuk Dhukungan",
+        "subtitle": "Pilih cara paling apik kanggo njaluk bantuan miturut kabutuhan sampeyan",
+        "supportChannels": "Saluran Dhukungan",
+        "documentation": "Dokumentasi",
+        "documentationDesc": "Telusuri dokumentasi lan pandhuan lengkap kita",
+        "visitDocs": "Bukak Dokumen",
+        "community": "Dhukungan Komunitas",
+        "communityDesc": "Entuk bantuan saka komunitas kita",
+        "joinDiscord": "Gabung Discord",
+        "github": "Masalah GitHub",
+        "githubDesc": "Laporake bug lan njaluk fitur ing GitHub",
+        "viewGithub": "Deleng GitHub",
+        "directSupport": "Dhukungan Langsung",
+        "directSupportDesc": "Entuk pitulungan teknis pribadi",
+        "contactSupport": "Hubungi Dhukungan",
+        "quickContact": "Kanggo bantuan cepet, sampeyan bisa hubungi kita liwat:",
+        "ticketSystem": "Sistem Tiket",
+        "issueType": "Jinis Masalah",
+        "subject": "Subjek",
+        "description": "Katrangan",
+        "types": {
+          "question": "Pitakonan umum",
+          "blockApp": "Blokir aplikasi",
+          "blockPort": "Blokir port",
+          "reportMalicious": "Laporake aplikasi mbebayani",
+          "reportIssue": "Laporake masalah"
+        },
+        "successTitle": "Pesen Kasil Dikirim!",
+        "successMessage": "Matur nuwun wis hubungi kita. Kita bakal hubungi sampeyan sakcepete.",
+        "errorMessage": "Gagal ngirim tiket dhukungan. Mangga coba maneh mengko.",
+        "completeDocs": "Dokumentasi Lengkap",
+        "fluxosGuide": "Pandhuan FluxOS",
+        "apiReference": "Referensi API",
+        "githubDiscussions": "Diskusi GitHub",
+        "discordCommunity": "Komunitas Discord",
+        "supportTicketingSystem": "Sistem Tiket Dhukungan",
+        "emailSupport": "Dhukungan Email"
       },
       "manageUsers": {
         "title": "Kelola Users",

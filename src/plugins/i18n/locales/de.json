@@ -226,6 +226,10 @@
       "necessaryDescription": "Diese Cookies sind für die ordnungsgemäße Funktion der Website unerlässlich. Sie können nicht deaktiviert werden.",
       "analytics": "Analyse-Cookies",
       "analyticsDescription": "Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und melden."
+    },
+    "validation": {
+      "required": "Dieses Feld ist erforderlich",
+      "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "Der Speicher ist voll – keine Uploads erlaubt",
           "insufficientStorage": "Datei „{name}“ ({fileSize} MB) überschreitet den verfügbaren Speicher ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "Support wird geladen...",
+        "title": "Unterstützung erhalten",
+        "subtitle": "Wählen Sie den besten Weg, um Hilfe basierend auf Ihren Bedürfnissen zu erhalten",
+        "supportChannels": "Support-Kanäle",
+        "documentation": "Dokumentation",
+        "documentationDesc": "Durchsuchen Sie unsere umfassende Dokumentation und Anleitungen",
+        "visitDocs": "Dokumente besuchen",
+        "community": "Community-Support",
+        "communityDesc": "Holen Sie sich Hilfe von unserer Community",
+        "joinDiscord": "Discord beitreten",
+        "github": "GitHub-Probleme",
+        "githubDesc": "Fehler melden und Funktionen auf GitHub anfordern",
+        "viewGithub": "GitHub anzeigen",
+        "directSupport": "Direkter Support",
+        "directSupportDesc": "Erhalten Sie personalisierte technische Unterstützung",
+        "contactSupport": "Support kontaktieren",
+        "quickContact": "Für schnelle Hilfe können Sie uns über folgende Kanäle erreichen:",
+        "ticketSystem": "Ticketsystem",
+        "issueType": "Problemtyp",
+        "subject": "Betreff",
+        "description": "Beschreibung",
+        "types": {
+          "question": "Allgemeine Frage",
+          "blockApp": "Anwendung blockieren",
+          "blockPort": "Port blockieren",
+          "reportMalicious": "Schädliche App melden",
+          "reportIssue": "Problem melden"
+        },
+        "successTitle": "Nachricht erfolgreich gesendet!",
+        "successMessage": "Vielen Dank, dass Sie uns kontaktiert haben. Wir werden uns so schnell wie möglich bei Ihnen melden.",
+        "errorMessage": "Support-Ticket konnte nicht übermittelt werden. Bitte versuchen Sie es später erneut.",
+        "completeDocs": "Vollständige Dokumentation",
+        "fluxosGuide": "FluxOS-Handbuch",
+        "apiReference": "API-Referenz",
+        "githubDiscussions": "GitHub-Diskussionen",
+        "discordCommunity": "Discord-Community",
+        "supportTicketingSystem": "Support-Ticketsystem",
+        "emailSupport": "E-Mail-Support"
       },
       "manageUsers": {
         "title": "Benutzer verwalten",

@@ -3730,6 +3730,46 @@
         "storageUsage": "Użycie pamięci",
         "folderName": "Nazwa folderu"
       },
+      "support": {
+        "loadingTitle": "Ładowanie wsparcia...",
+        "title": "Uzyskaj wsparcie",
+        "subtitle": "Wybierz najlepszy sposób uzyskania pomocy w zależności od Twoich potrzeb",
+        "supportChannels": "Kanały wsparcia",
+        "documentation": "Dokumentacja",
+        "documentationDesc": "Przeglądaj naszą kompleksową dokumentację i przewodniki",
+        "visitDocs": "Odwiedź dokumentację",
+        "community": "Wsparcie społeczności",
+        "communityDesc": "Uzyskaj pomoc od naszej społeczności",
+        "joinDiscord": "Dołącz do Discord",
+        "github": "Problemy GitHub",
+        "githubDesc": "Zgłaszaj błędy i proś o funkcje na GitHub",
+        "viewGithub": "Zobacz GitHub",
+        "directSupport": "Bezpośrednie wsparcie",
+        "directSupportDesc": "Uzyskaj spersonalizowaną pomoc techniczną",
+        "contactSupport": "Skontaktuj się z pomocą techniczną",
+        "quickContact": "Aby uzyskać szybką pomoc, możesz skontaktować się z nami za pośrednictwem:",
+        "ticketSystem": "System zgłoszeń",
+        "issueType": "Typ problemu",
+        "subject": "Temat",
+        "description": "Opis",
+        "types": {
+          "question": "Ogólne pytanie",
+          "blockApp": "Blokuj aplikację",
+          "blockPort": "Blokuj port",
+          "reportMalicious": "Zgłoś złośliwą aplikację",
+          "reportIssue": "Zgłoś problem"
+        },
+        "successTitle": "Wiadomość wysłana pomyślnie!",
+        "successMessage": "Dziękujemy za kontakt. Skontaktujemy się z Tobą tak szybko, jak to możliwe.",
+        "errorMessage": "Nie udało się przesłać zgłoszenia do pomocy technicznej. Spróbuj ponownie później.",
+        "completeDocs": "Pełna dokumentacja",
+        "fluxosGuide": "Przewodnik FluxOS",
+        "apiReference": "Dokumentacja API",
+        "githubDiscussions": "Dyskusje GitHub",
+        "discordCommunity": "Społeczność Discord",
+        "supportTicketingSystem": "System zgłoszeń wsparcia",
+        "emailSupport": "Wsparcie e-mail"
+      },
       "systemInfo": {
         "resourcesAllocated": "Przydzielone zasoby",
         "installedApps": "Zainstalowane aplikacje",
@@ -5062,7 +5102,11 @@
       "shortTitle": "Gwarancja zwrotu pieniędzy",
       "description": "Wypróbuj naszą usługę bez ryzyka. Jeśli nie będziesz w pełni zadowolony w ciągu pierwszych 30 dni, zwrócimy Ci pieniądze bez zadawania pytań."
     },
-    "off": "taniej"
+    "off": "taniej",
+    "validation": {
+      "required": "To pole jest wymagane",
+      "invalidEmail": "Proszę wprowadzić poprawny adres e-mail"
+    }
   },
   "menu": {
     "application": {

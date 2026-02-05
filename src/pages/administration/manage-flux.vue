@@ -40,45 +40,6 @@
     <VWindow v-model="currentTab">
       <!-- Settings Tab -->
       <VWindowItem value="settings">
-        <!-- System Updates Section -->
-        <VCard class="mb-3" elevation="1">
-          <VCardTitle class="d-flex align-center pa-4 bg-surface">
-            <VAvatar color="primary" variant="flat" size="28" class="mr-2">
-              <VIcon icon="mdi-update" size="18" color="white" />
-            </VAvatar>
-            <span class="text-body-1">{{ t('pages.administration.manageFlux.sections.systemUpdates.title') }}</span>
-          </VCardTitle>
-          <VDivider />
-          <VCardText class="pa-3">
-            <VCard variant="tonal" color="primary">
-              <VCardText class="pa-3">
-                <div class="d-flex align-center mb-3">
-                  <VAvatar color="primary" variant="flat" size="36" class="mr-2">
-                    <VIcon icon="mdi-cloud-sync" size="22" />
-                  </VAvatar>
-                  <div>
-                    <h3 class="text-body-1 mb-1">{{ t('pages.administration.manageFlux.sections.systemUpdates.fluxUpdate.title') }}</h3>
-                    <p class="text-body-2 text-medium-emphasis mb-0">{{ t('pages.administration.manageFlux.sections.systemUpdates.fluxUpdate.process') }}</p>
-                  </div>
-                </div>
-                <p class="text-body-2 mb-3">
-                  {{ t('pages.administration.manageFlux.sections.systemUpdates.fluxUpdate.description') }}
-                </p>
-                <VBtn
-                  block
-                  color="primary"
-                  variant="flat"
-                  size="default"
-                  @click="updateFluxDialog = true"
-                >
-                  <VIcon icon="mdi-download" size="20" class="mr-2" />
-                  {{ t('pages.administration.manageFlux.sections.systemUpdates.fluxUpdate.button') }}
-                </VBtn>
-              </VCardText>
-            </VCard>
-          </VCardText>
-        </VCard>
-
         <!-- Node Configuration Section -->
         <VCard class="mb-3" elevation="1">
           <VCardTitle class="d-flex align-center pa-4 bg-surface">
@@ -214,7 +175,7 @@
         </VCard>
 
         <!-- Security & Access Control Section -->
-        <VCard class="mb-3" elevation="1">
+        <VCard v-if="fluxStore.privilege === 'fluxteam'" class="mb-3" elevation="1">
           <VCardTitle class="d-flex align-center pa-4 bg-surface">
             <VAvatar color="primary" variant="flat" size="28" class="mr-2">
               <VIcon icon="mdi-shield-lock" size="18" color="white" />

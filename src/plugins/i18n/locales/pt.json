@@ -226,6 +226,10 @@
       "necessaryDescription": "Estes cookies são essenciais para o bom funcionamento do site. Eles não podem ser desativados.",
       "analytics": "Cookies analíticos",
       "analyticsDescription": "Estes cookies ajudam-nos a compreender como os visitantes interagem com o nosso website, recolhendo e reportando informações de forma anónima."
+    },
+    "validation": {
+      "required": "Este campo é obrigatório",
+      "invalidEmail": "Por favor, insira um endereço de e-mail válido"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "O armazenamento está cheio. Nenhum upload é permitido",
           "insufficientStorage": "O arquivo \"{name}\" ({fileSize} MB) excede o armazenamento disponível ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "Carregando suporte...",
+        "title": "Obter suporte",
+        "subtitle": "Escolha a melhor maneira de obter ajuda com base em suas necessidades",
+        "supportChannels": "Canais de suporte",
+        "documentation": "Documentação",
+        "documentationDesc": "Navegue por nossa documentação e guias abrangentes",
+        "visitDocs": "Visitar documentação",
+        "community": "Suporte da comunidade",
+        "communityDesc": "Obtenha ajuda de nossa comunidade",
+        "joinDiscord": "Junte-se ao Discord",
+        "github": "Problemas do GitHub",
+        "githubDesc": "Relate bugs e solicite recursos no GitHub",
+        "viewGithub": "Ver GitHub",
+        "directSupport": "Suporte direto",
+        "directSupportDesc": "Obtenha assistência técnica personalizada",
+        "contactSupport": "Entrar em contato com o suporte",
+        "quickContact": "Para assistência rápida, você pode entrar em contato conosco através de:",
+        "ticketSystem": "Sistema de tickets",
+        "issueType": "Tipo de problema",
+        "subject": "Assunto",
+        "description": "Descrição",
+        "types": {
+          "question": "Pergunta geral",
+          "blockApp": "Bloquear aplicativo",
+          "blockPort": "Bloquear porta",
+          "reportMalicious": "Relatar aplicativo malicioso",
+          "reportIssue": "Relatar problema"
+        },
+        "successTitle": "Mensagem enviada com sucesso!",
+        "successMessage": "Obrigado por entrar em contato conosco. Entraremos em contato o mais breve possível.",
+        "errorMessage": "Falha ao enviar o ticket de suporte. Por favor, tente novamente mais tarde.",
+        "completeDocs": "Documentação completa",
+        "fluxosGuide": "Guia FluxOS",
+        "apiReference": "Referência da API",
+        "githubDiscussions": "Discussões do GitHub",
+        "discordCommunity": "Comunidade Discord",
+        "supportTicketingSystem": "Sistema de tickets de suporte",
+        "emailSupport": "Suporte por e-mail"
       },
       "manageUsers": {
         "title": "Gerenciar usuários",

@@ -36,6 +36,12 @@ export default [
         privilege: ['admin', 'fluxteam'],
       },
       {
+        title: 'menu.administration.support',
+        to: 'administration-support',
+        icon: { icon: 'mdi-help-circle-outline', size: 20 },
+        privilege: ['admin', 'fluxteam'],
+      },
+      {
         title: 'menu.application.globalApps',
         icon: { icon: 'tabler-world-search', size: 20 },
         to: 'apps-global',

@@ -226,6 +226,10 @@
       "necessaryDescription": "Ces cookies sont indispensables au bon fonctionnement du site Internet. Ils ne peuvent pas être désactivés.",
       "analytics": "Cookies d'analyse",
       "analyticsDescription": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site Web en collectant et en signalant des informations de manière anonyme."
+    },
+    "validation": {
+      "required": "Ce champ est requis",
+      "invalidEmail": "Veuillez entrer une adresse e-mail valide"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "Le stockage est plein – aucun téléchargement n'est autorisé",
           "insufficientStorage": "Le fichier \"{name}\" ({fileSize} Mo) dépasse l'espace de stockage disponible ({available} Mo)"
         }
+      },
+      "support": {
+        "loadingTitle": "Chargement du support...",
+        "title": "Obtenir de l'aide",
+        "subtitle": "Choisissez la meilleure façon d'obtenir de l'aide en fonction de vos besoins",
+        "supportChannels": "Canaux d'assistance",
+        "documentation": "Documentation",
+        "documentationDesc": "Parcourez notre documentation et nos guides complets",
+        "visitDocs": "Visiter les documents",
+        "community": "Soutien communautaire",
+        "communityDesc": "Obtenez de l'aide de notre communauté",
+        "joinDiscord": "Rejoignez Discord",
+        "github": "Problèmes GitHub",
+        "githubDesc": "Signaler des bugs et demander des fonctionnalités sur GitHub",
+        "viewGithub": "Voir GitHub",
+        "directSupport": "Support direct",
+        "directSupportDesc": "Obtenez une assistance technique personnalisée",
+        "contactSupport": "Contacter le support",
+        "quickContact": "Pour une assistance rapide, vous pouvez nous contacter via:",
+        "ticketSystem": "Système de tickets",
+        "issueType": "Type de problème",
+        "subject": "Sujet",
+        "description": "Description",
+        "types": {
+          "question": "Question générale",
+          "blockApp": "Bloquer l'application",
+          "blockPort": "Bloquer le port",
+          "reportMalicious": "Signaler une application malveillante",
+          "reportIssue": "Signaler un problème"
+        },
+        "successTitle": "Message envoyé avec succès!",
+        "successMessage": "Merci de nous avoir contactés. Nous vous répondrons dans les plus brefs délais.",
+        "errorMessage": "Échec de l'envoi du ticket de support. Veuillez réessayer plus tard.",
+        "completeDocs": "Documentation complète",
+        "fluxosGuide": "Guide FluxOS",
+        "apiReference": "Référence API",
+        "githubDiscussions": "Discussions GitHub",
+        "discordCommunity": "Communauté Discord",
+        "supportTicketingSystem": "Système de tickets de support",
+        "emailSupport": "Support par e-mail"
       },
       "manageUsers": {
         "title": "Gérer les utilisateurs",

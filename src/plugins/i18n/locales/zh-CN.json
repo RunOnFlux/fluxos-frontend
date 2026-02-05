@@ -226,6 +226,10 @@
       "necessaryDescription": "这些 cookie 对于网站的正常运行至关重要。它们不能被禁用。",
       "analytics": "分析 Cookie",
       "analyticsDescription": "这些 cookie 通过匿名收集和报告信息帮助我们了解访问者如何与我们的网站互动。"
+    },
+    "validation": {
+      "required": "此字段为必填项",
+      "invalidEmail": "请输入有效的电子邮件地址"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "存储已满 - 不允许上传",
           "insufficientStorage": "文件“{name}”({fileSize} MB) 超出可用存储空间 ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "正在加载支持...",
+        "title": "获取支持",
+        "subtitle": "根据您的需求选择最佳的获取帮助的方式",
+        "supportChannels": "支持渠道",
+        "documentation": "文档",
+        "documentationDesc": "浏览我们全面的文档和指南",
+        "visitDocs": "访问文档",
+        "community": "社区支持",
+        "communityDesc": "从我们的社区获取帮助",
+        "joinDiscord": "加入 Discord",
+        "github": "GitHub 问题",
+        "githubDesc": "在 GitHub 上报告错误和请求功能",
+        "viewGithub": "查看 GitHub",
+        "directSupport": "直接支持",
+        "directSupportDesc": "获取个性化的技术援助",
+        "contactSupport": "联系支持",
+        "quickContact": "如需快速帮助,您可以通过以下方式联系我们:",
+        "ticketSystem": "工单系统",
+        "issueType": "问题类型",
+        "subject": "主题",
+        "description": "描述",
+        "types": {
+          "question": "一般问题",
+          "blockApp": "阻止应用程序",
+          "blockPort": "阻止端口",
+          "reportMalicious": "报告恶意应用",
+          "reportIssue": "报告问题"
+        },
+        "successTitle": "消息已成功发送!",
+        "successMessage": "感谢您联系我们。我们会尽快与您联系。",
+        "errorMessage": "提交支持工单失败。请稍后再试。",
+        "completeDocs": "完整文档",
+        "fluxosGuide": "FluxOS 指南",
+        "apiReference": "API 参考",
+        "githubDiscussions": "GitHub 讨论",
+        "discordCommunity": "Discord 社区",
+        "supportTicketingSystem": "支持工单系统",
+        "emailSupport": "电子邮件支持"
       },
       "manageUsers": {
         "title": "管理用户",

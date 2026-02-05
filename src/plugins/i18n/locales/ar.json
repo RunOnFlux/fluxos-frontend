@@ -226,6 +226,10 @@
       "necessaryDescription": "تعد ملفات تعريف الارتباط هذه ضرورية لكي يعمل موقع الويب بشكل صحيح. لا يمكن تعطيلهم.",
       "analytics": "ملفات تعريف الارتباط التحليلية",
       "analyticsDescription": "تساعدنا ملفات تعريف الارتباط هذه على فهم كيفية تفاعل الزوار مع موقعنا على الويب من خلال جمع المعلومات والإبلاغ عنها بشكل مجهول."
+    },
+    "validation": {
+      "required": "هذا الحقل مطلوب",
+      "invalidEmail": "يرجى إدخال عنوان بريد إلكتروني صالح"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "مساحة التخزين ممتلئة - لا يسمح بالتحميلات",
           "insufficientStorage": "الملف \"{name}\" ({fileSize} ميغابايت) يتجاوز مساحة التخزين المتوفرة ({available} ميغابايت)"
         }
+      },
+      "support": {
+        "loadingTitle": "جاري تحميل الدعم...",
+        "title": "احصل على الدعم",
+        "subtitle": "اختر أفضل طريقة للحصول على المساعدة بناءً على احتياجاتك",
+        "supportChannels": "قنوات الدعم",
+        "documentation": "التوثيق",
+        "documentationDesc": "تصفح توثيقنا وأدلتنا الشاملة",
+        "visitDocs": "زيارة المستندات",
+        "community": "دعم المجتمع",
+        "communityDesc": "احصل على المساعدة من مجتمعنا",
+        "joinDiscord": "انضم إلى Discord",
+        "github": "مشكلات GitHub",
+        "githubDesc": "الإبلاغ عن الأخطاء وطلب الميزات على GitHub",
+        "viewGithub": "عرض GitHub",
+        "directSupport": "الدعم المباشر",
+        "directSupportDesc": "احصل على مساعدة تقنية شخصية",
+        "contactSupport": "اتصل بالدعم",
+        "quickContact": "للحصول على مساعدة سريعة، يمكنك الاتصال بنا من خلال:",
+        "ticketSystem": "نظام التذاكر",
+        "issueType": "نوع المشكلة",
+        "subject": "الموضوع",
+        "description": "الوصف",
+        "types": {
+          "question": "سؤال عام",
+          "blockApp": "حظر التطبيق",
+          "blockPort": "حظر المنفذ",
+          "reportMalicious": "الإبلاغ عن تطبيق ضار",
+          "reportIssue": "الإبلاغ عن مشكلة"
+        },
+        "successTitle": "تم إرسال الرسالة بنجاح!",
+        "successMessage": "شكرًا لك على الاتصال بنا. سنعاود الاتصال بك في أقرب وقت ممكن.",
+        "errorMessage": "فشل إرسال تذكرة الدعم. يرجى المحاولة مرة أخرى لاحقًا.",
+        "completeDocs": "الوثائق الكاملة",
+        "fluxosGuide": "دليل FluxOS",
+        "apiReference": "مرجع API",
+        "githubDiscussions": "مناقشات GitHub",
+        "discordCommunity": "مجتمع Discord",
+        "supportTicketingSystem": "نظام تذاكر الدعم",
+        "emailSupport": "دعم البريد الإلكتروني"
       },
       "manageUsers": {
         "title": "إدارة المستخدمين",

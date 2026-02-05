@@ -226,6 +226,10 @@
       "necessaryDescription": "Cookies ini penting agar situs web dapat berfungsi dengan baik. Mereka tidak dapat dinonaktifkan.",
       "analytics": "Cookie Analisis",
       "analyticsDescription": "Cookies ini membantu kami memahami bagaimana pengunjung berinteraksi dengan situs web kami dengan mengumpulkan dan melaporkan informasi secara anonim."
+    },
+    "validation": {
+      "required": "Bidang ini wajib diisi",
+      "invalidEmail": "Silakan masukkan alamat email yang valid"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "Penyimpanan penuh - tidak diperbolehkan mengunggah",
           "insufficientStorage": "File \"{name}\" ({fileSize} MB) melebihi penyimpanan yang tersedia ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "Memuat Dukungan...",
+        "title": "Dapatkan Dukungan",
+        "subtitle": "Pilih cara terbaik untuk mendapatkan bantuan berdasarkan kebutuhan Anda",
+        "supportChannels": "Saluran Dukungan",
+        "documentation": "Dokumentasi",
+        "documentationDesc": "Jelajahi dokumentasi dan panduan komprehensif kami",
+        "visitDocs": "Kunjungi Dokumen",
+        "community": "Dukungan Komunitas",
+        "communityDesc": "Dapatkan bantuan dari komunitas kami",
+        "joinDiscord": "Bergabung dengan Discord",
+        "github": "Masalah GitHub",
+        "githubDesc": "Laporkan bug dan minta fitur di GitHub",
+        "viewGithub": "Lihat GitHub",
+        "directSupport": "Dukungan Langsung",
+        "directSupportDesc": "Dapatkan bantuan teknis yang dipersonalisasi",
+        "contactSupport": "Hubungi Dukungan",
+        "quickContact": "Untuk bantuan cepat, Anda dapat menghubungi kami melalui:",
+        "ticketSystem": "Sistem Tiket",
+        "issueType": "Jenis Masalah",
+        "subject": "Subjek",
+        "description": "Deskripsi",
+        "types": {
+          "question": "Pertanyaan umum",
+          "blockApp": "Blokir aplikasi",
+          "blockPort": "Blokir port",
+          "reportMalicious": "Laporkan aplikasi berbahaya",
+          "reportIssue": "Laporkan masalah"
+        },
+        "successTitle": "Pesan Berhasil Dikirim!",
+        "successMessage": "Terima kasih telah menghubungi kami. Kami akan menghubungi Anda sesegera mungkin.",
+        "errorMessage": "Gagal mengirim tiket dukungan. Silakan coba lagi nanti.",
+        "completeDocs": "Dokumentasi Lengkap",
+        "fluxosGuide": "Panduan FluxOS",
+        "apiReference": "Referensi API",
+        "githubDiscussions": "Diskusi GitHub",
+        "discordCommunity": "Komunitas Discord",
+        "supportTicketingSystem": "Sistem Tiket Dukungan",
+        "emailSupport": "Dukungan Email"
       },
       "manageUsers": {
         "title": "Kelola Pengguna",

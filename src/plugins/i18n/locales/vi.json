@@ -226,6 +226,10 @@
       "necessaryDescription": "Những cookie này rất cần thiết để trang web hoạt động bình thường. Họ không thể bị vô hiệu hóa.",
       "analytics": "Cookie phân tích",
       "analyticsDescription": "Những cookie này giúp chúng tôi hiểu cách khách truy cập tương tác với trang web của chúng tôi bằng cách thu thập và báo cáo thông tin ẩn danh."
+    },
+    "validation": {
+      "required": "Trường này là bắt buộc",
+      "invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "Bộ nhớ đã đầy - không được phép tải lên",
           "insufficientStorage": "Tệp \"{name}\" ({fileSize} MB) vượt quá dung lượng lưu trữ khả dụng ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "Đang tải hỗ trợ...",
+        "title": "Nhận hỗ trợ",
+        "subtitle": "Chọn cách tốt nhất để nhận trợ giúp dựa trên nhu cầu của bạn",
+        "supportChannels": "Kênh hỗ trợ",
+        "documentation": "Tài liệu",
+        "documentationDesc": "Duyệt tài liệu và hướng dẫn toàn diện của chúng tôi",
+        "visitDocs": "Truy cập tài liệu",
+        "community": "Hỗ trợ cộng đồng",
+        "communityDesc": "Nhận trợ giúp từ cộng đồng của chúng tôi",
+        "joinDiscord": "Tham gia Discord",
+        "github": "Vấn đề GitHub",
+        "githubDesc": "Báo cáo lỗi và yêu cầu tính năng trên GitHub",
+        "viewGithub": "Xem GitHub",
+        "directSupport": "Hỗ trợ trực tiếp",
+        "directSupportDesc": "Nhận trợ giúp kỹ thuật được cá nhân hóa",
+        "contactSupport": "Liên hệ hỗ trợ",
+        "quickContact": "Để được hỗ trợ nhanh chóng, bạn có thể liên hệ với chúng tôi qua:",
+        "ticketSystem": "Hệ thống vé",
+        "issueType": "Loại vấn đề",
+        "subject": "Chủ đề",
+        "description": "Mô tả",
+        "types": {
+          "question": "Câu hỏi chung",
+          "blockApp": "Chặn ứng dụng",
+          "blockPort": "Chặn cổng",
+          "reportMalicious": "Báo cáo ứng dụng độc hại",
+          "reportIssue": "Báo cáo vấn đề"
+        },
+        "successTitle": "Tin nhắn đã được gửi thành công!",
+        "successMessage": "Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể.",
+        "errorMessage": "Không thể gửi phiếu hỗ trợ. Vui lòng thử lại sau.",
+        "completeDocs": "Tài liệu đầy đủ",
+        "fluxosGuide": "Hướng dẫn FluxOS",
+        "apiReference": "Tài liệu tham khảo API",
+        "githubDiscussions": "Thảo luận GitHub",
+        "discordCommunity": "Cộng đồng Discord",
+        "supportTicketingSystem": "Hệ thống vé hỗ trợ",
+        "emailSupport": "Hỗ trợ qua email"
       },
       "manageUsers": {
         "title": "Quản lý người dùng",

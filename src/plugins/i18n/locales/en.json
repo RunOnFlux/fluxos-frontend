@@ -130,6 +130,10 @@
       "loginRequired": "Login Required",
       "loggedOutSuccessfully": "Logged out successfully"
     },
+    "validation": {
+      "required": "This field is required",
+      "invalidEmail": "Please enter a valid email address"
+    },
     "itemsPerPage": "Items per page",
     "of": "of",
     "selectServerConfiguration": "Select Server Configuration",
@@ -308,7 +312,8 @@
       "manageUsers": "Manage Users",
       "loggedSessions": "Logged Sessions",
       "myFluxShare": "My FluxShare",
-      "fluxShare": "FluxShare"
+      "fluxShare": "FluxShare",
+      "support": "Support"
     },
     "fluxXdao": {
       "title": "Flux XDAO"
@@ -2215,6 +2220,46 @@
           "storageFull": "Storage is full - no uploads allowed",
           "insufficientStorage": "File \"{name}\" ({fileSize} MB) exceeds available storage ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "Loading Support...",
+        "title": "Get Support",
+        "subtitle": "Choose the best way to get help based on your needs",
+        "supportChannels": "Support Channels",
+        "documentation": "Documentation",
+        "documentationDesc": "Browse our comprehensive documentation and guides",
+        "completeDocs": "Complete Documentation",
+        "fluxosGuide": "FluxOS Guide",
+        "apiReference": "API Reference",
+        "visitDocs": "Visit Docs",
+        "community": "Community Support",
+        "communityDesc": "Get help from our community",
+        "githubDiscussions": "GitHub Discussions",
+        "discordCommunity": "Discord Community",
+        "joinDiscord": "Join Discord",
+        "github": "GitHub Issues",
+        "githubDesc": "Report bugs and request features on GitHub",
+        "viewGithub": "View GitHub",
+        "directSupport": "Direct Support",
+        "directSupportDesc": "Get personalized technical assistance",
+        "supportTicketingSystem": "Support Ticketing System",
+        "emailSupport": "Email Support",
+        "contactSupport": "Contact Support",
+        "quickContact": "For quick assistance, you can reach us through:",
+        "ticketSystem": "Ticket System",
+        "issueType": "Issue Type",
+        "subject": "Subject",
+        "description": "Description",
+        "types": {
+          "question": "General question",
+          "blockApp": "Block application",
+          "blockPort": "Block port",
+          "reportMalicious": "Report malicious app",
+          "reportIssue": "Report issue"
+        },
+        "successTitle": "Message Sent Successfully!",
+        "successMessage": "Thank you for contacting us. We'll get back to you as soon as possible.",
+        "errorMessage": "Failed to submit support ticket. Please try again later."
       },
       "manageUsers": {
         "title": "Manage Users",

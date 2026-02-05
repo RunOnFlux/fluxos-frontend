@@ -226,6 +226,10 @@
       "necessaryDescription": "ਵੈੱਬਸਾਈਟ ਨੂੰ ਸਹੀ ਢੰਗ ਨਾਲ ਕੰਮ ਕਰਨ ਲਈ ਇਹ ਕੂਕੀਜ਼ ਜ਼ਰੂਰੀ ਹਨ। ਉਹਨਾਂ ਨੂੰ ਅਯੋਗ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।",
       "analytics": "ਵਿਸ਼ਲੇਸ਼ਣ ਕੂਕੀਜ਼",
       "analyticsDescription": "ਇਹ ਕੂਕੀਜ਼ ਸਾਨੂੰ ਇਹ ਸਮਝਣ ਵਿੱਚ ਮਦਦ ਕਰਦੀਆਂ ਹਨ ਕਿ ਕਿਵੇਂ ਵਿਜ਼ਟਰ ਗੁਮਨਾਮ ਰੂਪ ਵਿੱਚ ਜਾਣਕਾਰੀ ਇਕੱਠੀ ਕਰਕੇ ਅਤੇ ਰਿਪੋਰਟ ਕਰਕੇ ਸਾਡੀ ਵੈੱਬਸਾਈਟ ਨਾਲ ਗੱਲਬਾਤ ਕਰਦੇ ਹਨ।"
+    },
+    "validation": {
+      "required": "ਇਹ ਖੇਤਰ ਲੋੜੀਂਦਾ ਹੈ",
+      "invalidEmail": "ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਵੈਧ ਈਮੇਲ ਪਤਾ ਦਾਖਲ ਕਰੋ"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "ਸਟੋਰੇਜ ਭਰ ਗਈ ਹੈ - ਕੋਈ ਅੱਪਲੋਡ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ",
           "insufficientStorage": "ਫ਼ਾਈਲ \"{name}\" ({fileSize} MB) ਉਪਲਬਧ ਸਟੋਰੇਜ ({available} MB) ਤੋਂ ਵੱਧ ਹੈ"
         }
+      },
+      "support": {
+        "loadingTitle": "ਸਹਾਇਤਾ ਲੋਡ ਹੋ ਰਹੀ ਹੈ...",
+        "title": "ਸਹਾਇਤਾ ਪ੍ਰਾਪਤ ਕਰੋ",
+        "subtitle": "ਆਪਣੀਆਂ ਲੋੜਾਂ ਦੇ ਆਧਾਰ 'ਤੇ ਮਦਦ ਪ੍ਰਾਪਤ ਕਰਨ ਦਾ ਸਭ ਤੋਂ ਵਧੀਆ ਤਰੀਕਾ ਚੁਣੋ",
+        "supportChannels": "ਸਹਾਇਤਾ ਚੈਨਲ",
+        "documentation": "ਦਸਤਾਵੇਜ਼ੀਕਰਨ",
+        "documentationDesc": "ਸਾਡੇ ਵਿਆਪਕ ਦਸਤਾਵੇਜ਼ ਅਤੇ ਗਾਈਡ ਬ੍ਰਾਊਜ਼ ਕਰੋ",
+        "visitDocs": "ਦਸਤਾਵੇਜ਼ ਦੇਖੋ",
+        "community": "ਭਾਈਚਾਰਕ ਸਹਾਇਤਾ",
+        "communityDesc": "ਸਾਡੇ ਭਾਈਚਾਰੇ ਤੋਂ ਮਦਦ ਪ੍ਰਾਪਤ ਕਰੋ",
+        "joinDiscord": "Discord ਵਿੱਚ ਸ਼ਾਮਲ ਹੋਵੋ",
+        "github": "GitHub ਸਮੱਸਿਆਵਾਂ",
+        "githubDesc": "GitHub 'ਤੇ ਬੱਗ ਰਿਪੋਰਟ ਕਰੋ ਅਤੇ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਦੀ ਬੇਨਤੀ ਕਰੋ",
+        "viewGithub": "GitHub ਦੇਖੋ",
+        "directSupport": "ਸਿੱਧੀ ਸਹਾਇਤਾ",
+        "directSupportDesc": "ਨਿੱਜੀ ਤਕਨੀਕੀ ਸਹਾਇਤਾ ਪ੍ਰਾਪਤ ਕਰੋ",
+        "contactSupport": "ਸਹਾਇਤਾ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+        "quickContact": "ਤੇਜ਼ ਸਹਾਇਤਾ ਲਈ, ਤੁਸੀਂ ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰ ਸਕਦੇ ਹੋ:",
+        "ticketSystem": "ਟਿਕਟ ਸਿਸਟਮ",
+        "issueType": "ਸਮੱਸਿਆ ਦੀ ਕਿਸਮ",
+        "subject": "ਵਿਸ਼ਾ",
+        "description": "ਵੇਰਵਾ",
+        "types": {
+          "question": "ਆਮ ਸਵਾਲ",
+          "blockApp": "ਐਪਲੀਕੇਸ਼ਨ ਬਲੌਕ ਕਰੋ",
+          "blockPort": "ਪੋਰਟ ਬਲੌਕ ਕਰੋ",
+          "reportMalicious": "ਖਤਰਨਾਕ ਐਪ ਦੀ ਰਿਪੋਰਟ ਕਰੋ",
+          "reportIssue": "ਸਮੱਸਿਆ ਦੀ ਰਿਪੋਰਟ ਕਰੋ"
+        },
+        "successTitle": "ਸੁਨੇਹਾ ਸਫਲਤਾਪੂਰਵਕ ਭੇਜਿਆ ਗਿਆ!",
+        "successMessage": "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। ਅਸੀਂ ਜਿੰਨੀ ਜਲਦੀ ਹੋ ਸਕੇ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਾਂਗੇ।",
+        "errorMessage": "ਸਹਾਇਤਾ ਟਿਕਟ ਸਪੁਰਦ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+        "completeDocs": "ਸੰਪੂਰਨ ਦਸਤਾਵੇਜ਼ੀਕਰਨ",
+        "fluxosGuide": "FluxOS ਗਾਈਡ",
+        "apiReference": "API ਸੰਦਰਭ",
+        "githubDiscussions": "GitHub ਚਰਚਾਵਾਂ",
+        "discordCommunity": "Discord ਭਾਈਚਾਰਾ",
+        "supportTicketingSystem": "ਸਹਾਇਤਾ ਟਿਕਟਿੰਗ ਸਿਸਟਮ",
+        "emailSupport": "ਈਮੇਲ ਸਹਾਇਤਾ"
       },
       "manageUsers": {
         "title": "ਉਪਭੋਗਤਾਵਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ",

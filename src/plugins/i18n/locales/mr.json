@@ -226,6 +226,10 @@
       "necessaryDescription": "वेबसाइट योग्यरित्या कार्य करण्यासाठी या कुकीज आवश्यक आहेत. ते अक्षम केले जाऊ शकत नाहीत.",
       "analytics": "Analytics कुकीज",
       "analyticsDescription": "या कुकीज अज्ञातपणे माहिती गोळा करून आणि अहवाल देऊन अभ्यागत आमच्या वेबसाइटशी कसा संवाद साधतात हे समजून घेण्यात आम्हाला मदत करतात."
+    },
+    "validation": {
+      "required": "हे फील्ड आवश्यक आहे",
+      "invalidEmail": "कृपया वैध ईमेल पत्ता प्रविष्ट करा"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "स्टोरेज भरले आहे - अपलोड करण्याची परवानगी नाही",
           "insufficientStorage": "फाइल \"{name}\" ({fileSize} MB) उपलब्ध स्टोरेजपेक्षा जास्त आहे ({available} MB)"
         }
+      },
+      "support": {
+        "loadingTitle": "समर्थन लोड करत आहे...",
+        "title": "समर्थन मिळवा",
+        "subtitle": "आपल्या गरजेनुसार मदत मिळवण्याचा सर्वोत्तम मार्ग निवडा",
+        "supportChannels": "समर्थन चॅनेल",
+        "documentation": "दस्तऐवजीकरण",
+        "documentationDesc": "आमचे सर्वसमावेशक दस्तऐवजीकरण आणि मार्गदर्शक पहा",
+        "visitDocs": "दस्तऐवज पहा",
+        "community": "समुदाय समर्थन",
+        "communityDesc": "आमच्या समुदायाकडून मदत मिळवा",
+        "joinDiscord": "Discord मध्ये सामील व्हा",
+        "github": "GitHub समस्या",
+        "githubDesc": "GitHub वर बग अहवाल द्या आणि वैशिष्ट्यांची विनंती करा",
+        "viewGithub": "GitHub पहा",
+        "directSupport": "प्रत्यक्ष समर्थन",
+        "directSupportDesc": "वैयक्तिक तांत्रिक सहाय्य मिळवा",
+        "contactSupport": "समर्थनाशी संपर्क साधा",
+        "quickContact": "त्वरित सहाय्यासाठी, आपण आमच्याशी संपर्क साधू शकता:",
+        "ticketSystem": "तिकीट प्रणाली",
+        "issueType": "समस्या प्रकार",
+        "subject": "विषय",
+        "description": "वर्णन",
+        "types": {
+          "question": "सामान्य प्रश्न",
+          "blockApp": "अॅप्लिकेशन ब्लॉक करा",
+          "blockPort": "पोर्ट ब्लॉक करा",
+          "reportMalicious": "दुर्भावनापूर्ण अॅप अहवाल द्या",
+          "reportIssue": "समस्या अहवाल द्या"
+        },
+        "successTitle": "संदेश यशस्वीरित्या पाठवला!",
+        "successMessage": "आमच्याशी संपर्क साधल्याबद्दल धन्यवाद. आम्ही शक्य तितक्या लवकर आपल्याशी संपर्क साधू.",
+        "errorMessage": "समर्थन तिकीट सबमिट करण्यात अयशस्वी. कृपया नंतर पुन्हा प्रयत्न करा.",
+        "completeDocs": "संपूर्ण दस्तऐवजीकरण",
+        "fluxosGuide": "FluxOS मार्गदर्शक",
+        "apiReference": "API संदर्भ",
+        "githubDiscussions": "GitHub चर्चा",
+        "discordCommunity": "Discord समुदाय",
+        "supportTicketingSystem": "समर्थन तिकिटिंग प्रणाली",
+        "emailSupport": "ईमेल समर्थन"
       },
       "manageUsers": {
         "title": "वापरकर्ते व्यवस्थापित करा",

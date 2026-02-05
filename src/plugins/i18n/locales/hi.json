@@ -226,6 +226,10 @@
       "necessaryDescription": "वेबसाइट के ठीक से काम करने के लिए ये कुकीज़ आवश्यक हैं। उन्हें अक्षम नहीं किया जा सकता.",
       "analytics": "विश्लेषिकी कुकीज़",
       "analyticsDescription": "ये कुकीज़ हमें यह समझने में मदद करती हैं कि विज़िटर गुमनाम रूप से जानकारी एकत्र और रिपोर्ट करके हमारी वेबसाइट के साथ कैसे इंटरैक्ट करते हैं।"
+    },
+    "validation": {
+      "required": "यह फ़ील्ड आवश्यक है",
+      "invalidEmail": "कृपया एक वैध ईमेल पता दर्ज करें"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "संग्रहण पूर्ण है - अपलोड की अनुमति नहीं है",
           "insufficientStorage": "फ़ाइल \"{name}\" ({fileSize} एमबी) उपलब्ध संग्रहण ({available} एमबी) से अधिक है"
         }
+      },
+      "support": {
+        "loadingTitle": "समर्थन लोड हो रहा है...",
+        "title": "समर्थन प्राप्त करें",
+        "subtitle": "अपनी आवश्यकताओं के आधार पर मदद प्राप्त करने का सबसे अच्छा तरीका चुनें",
+        "supportChannels": "समर्थन चैनल",
+        "documentation": "दस्तावेज़ीकरण",
+        "documentationDesc": "हमारे व्यापक दस्तावेज़ीकरण और गाइड ब्राउज़ करें",
+        "visitDocs": "दस्तावेज़ देखें",
+        "community": "सामुदायिक समर्थन",
+        "communityDesc": "हमारे समुदाय से मदद प्राप्त करें",
+        "joinDiscord": "Discord में शामिल हों",
+        "github": "GitHub समस्याएं",
+        "githubDesc": "GitHub पर बग रिपोर्ट करें और सुविधाओं का अनुरोध करें",
+        "viewGithub": "GitHub देखें",
+        "directSupport": "प्रत्यक्ष समर्थन",
+        "directSupportDesc": "व्यक्तिगत तकनीकी सहायता प्राप्त करें",
+        "contactSupport": "समर्थन से संपर्क करें",
+        "quickContact": "त्वरित सहायता के लिए, आप हमसे संपर्क कर सकते हैं:",
+        "ticketSystem": "टिकट प्रणाली",
+        "issueType": "समस्या प्रकार",
+        "subject": "विषय",
+        "description": "विवरण",
+        "types": {
+          "question": "सामान्य प्रश्न",
+          "blockApp": "एप्लिकेशन ब्लॉक करें",
+          "blockPort": "पोर्ट ब्लॉक करें",
+          "reportMalicious": "दुर्भावनापूर्ण ऐप की रिपोर्ट करें",
+          "reportIssue": "समस्या की रिपोर्ट करें"
+        },
+        "successTitle": "संदेश सफलतापूर्वक भेजा गया!",
+        "successMessage": "हमसे संपर्क करने के लिए धन्यवाद। हम जल्द से जल्द आपसे संपर्क करेंगे।",
+        "errorMessage": "समर्थन टिकट सबमिट करने में विफल। कृपया बाद में पुन: प्रयास करें।",
+        "completeDocs": "पूर्ण दस्तावेज़ीकरण",
+        "fluxosGuide": "FluxOS गाइड",
+        "apiReference": "API संदर्भ",
+        "githubDiscussions": "GitHub चर्चाएँ",
+        "discordCommunity": "Discord समुदाय",
+        "supportTicketingSystem": "समर्थन टिकटिंग प्रणाली",
+        "emailSupport": "ईमेल समर्थन"
       },
       "manageUsers": {
         "title": "उपयोगकर्ताओं को प्रबंधित करें",

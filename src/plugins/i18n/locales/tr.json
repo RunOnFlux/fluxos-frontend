@@ -226,6 +226,10 @@
       "necessaryDescription": "Bu çerezler web sitesinin düzgün çalışması için gereklidir. Engelli olamazlar.",
       "analytics": "Analiz Çerezleri",
       "analyticsDescription": "Bu çerezler, bilgileri anonim olarak toplayıp raporlayarak ziyaretçilerin web sitemizle nasıl etkileşimde bulunduğunu anlamamıza yardımcı olur."
+    },
+    "validation": {
+      "required": "Bu alan gereklidir",
+      "invalidEmail": "Lütfen geçerli bir e-posta adresi girin"
     }
   },
   "menu": {
@@ -2215,6 +2219,46 @@
           "storageFull": "Depolama alanı dolu - yüklemeye izin verilmiyor",
           "insufficientStorage": "\"{name}\" dosyası ({fileSize} MB) kullanılabilir depolama alanını ({available} MB) aşıyor"
         }
+      },
+      "support": {
+        "loadingTitle": "Destek yükleniyor...",
+        "title": "Destek Alın",
+        "subtitle": "İhtiyaçlarınıza göre yardım almanın en iyi yolunu seçin",
+        "supportChannels": "Destek Kanalları",
+        "documentation": "Belgeler",
+        "documentationDesc": "Kapsamlı belgelerimize ve kılavuzlarımıza göz atın",
+        "visitDocs": "Belgeleri Ziyaret Edin",
+        "community": "Topluluk Desteği",
+        "communityDesc": "Topluluğumuzdan yardım alın",
+        "joinDiscord": "Discord'a Katılın",
+        "github": "GitHub Sorunları",
+        "githubDesc": "GitHub'da hata bildirin ve özellik isteyin",
+        "viewGithub": "GitHub'ı Görüntüle",
+        "directSupport": "Doğrudan Destek",
+        "directSupportDesc": "Kişiselleştirilmiş teknik yardım alın",
+        "contactSupport": "Destekle İletişime Geçin",
+        "quickContact": "Hızlı yardım için bize şuradan ulaşabilirsiniz:",
+        "ticketSystem": "Bilet Sistemi",
+        "issueType": "Sorun Türü",
+        "subject": "Konu",
+        "description": "Açıklama",
+        "types": {
+          "question": "Genel soru",
+          "blockApp": "Uygulamayı engelle",
+          "blockPort": "Bağlantı noktasını engelle",
+          "reportMalicious": "Kötü amaçlı uygulamayı bildir",
+          "reportIssue": "Sorun bildir"
+        },
+        "successTitle": "Mesaj Başarıyla Gönderildi!",
+        "successMessage": "Bizimle iletişime geçtiğiniz için teşekkür ederiz. En kısa sürede size geri döneceğiz.",
+        "errorMessage": "Destek biletini gönderme başarısız oldu. Lütfen daha sonra tekrar deneyin.",
+        "completeDocs": "Tam Dokümantasyon",
+        "fluxosGuide": "FluxOS Kılavuzu",
+        "apiReference": "API Referansı",
+        "githubDiscussions": "GitHub Tartışmaları",
+        "discordCommunity": "Discord Topluluğu",
+        "supportTicketingSystem": "Destek Bilet Sistemi",
+        "emailSupport": "E-posta Desteği"
       },
       "manageUsers": {
         "title": "Kullanıcıları Yönet",
