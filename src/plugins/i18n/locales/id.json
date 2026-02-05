@@ -2253,7 +2253,7 @@
         "successMessage": "Terima kasih telah menghubungi kami. Kami akan menghubungi Anda sesegera mungkin.",
         "errorMessage": "Gagal mengirim tiket dukungan. Silakan coba lagi nanti.",
         "completeDocs": "Dokumentasi Lengkap",
-        "fluxosGuide": "Panduan FluxOS",
+        "fluxCloudGuide": "Panduan FluxCloud",
         "apiReference": "Referensi API",
         "githubDiscussions": "Diskusi GitHub",
         "discordCommunity": "Komunitas Discord",

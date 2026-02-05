@@ -2253,7 +2253,7 @@
         "successMessage": "আমাদের সাথে যোগাযোগ করার জন্য ধন্যবাদ। আমরা যত তাড়াতাড়ি সম্ভব আপনার সাথে যোগাযোগ করব।",
         "errorMessage": "সাপোর্ট টিকিট জমা দিতে ব্যর্থ হয়েছে। পরে আবার চেষ্টা করুন।",
         "completeDocs": "সম্পূর্ণ ডকুমেন্টেশন",
-        "fluxosGuide": "FluxOS গাইড",
+        "fluxCloudGuide": "FluxCloud গাইড",
         "apiReference": "API রেফারেন্স",
         "githubDiscussions": "GitHub আলোচনা",
         "discordCommunity": "Discord কমিউনিটি",

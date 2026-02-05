@@ -2253,7 +2253,7 @@
         "successMessage": "شكرًا لك على الاتصال بنا. سنعاود الاتصال بك في أقرب وقت ممكن.",
         "errorMessage": "فشل إرسال تذكرة الدعم. يرجى المحاولة مرة أخرى لاحقًا.",
         "completeDocs": "الوثائق الكاملة",
-        "fluxosGuide": "دليل FluxOS",
+        "fluxCloudGuide": "دليل FluxCloud",
         "apiReference": "مرجع API",
         "githubDiscussions": "مناقشات GitHub",
         "discordCommunity": "مجتمع Discord",

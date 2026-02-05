@@ -49,17 +49,17 @@
                 <VBtn
                   color="surface-variant"
                   variant="flat"
-                  href="https://docs.runonflux.io/fluxos"
+                  href="https://docs.runonflux.com/fluxcloud/"
                   target="_blank"
                   class="support-link-btn justify-start text-none"
                 >
                   <VIcon icon="mdi-book-open-page-variant" size="20" class="mr-2" />
-                  {{ t('pages.administration.support.fluxosGuide') }}
+                  {{ t('pages.administration.support.fluxCloudGuide') }}
                 </VBtn>
                 <VBtn
                   color="surface-variant"
                   variant="flat"
-                  href="https://docs.runonflux.io/api"
+                  href="https://docs.runonflux.io/fluxapi"
                   target="_blank"
                   class="support-link-btn justify-start text-none"
                 >

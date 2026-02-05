@@ -2253,7 +2253,7 @@
         "successMessage": "Bizimle iletişime geçtiğiniz için teşekkür ederiz. En kısa sürede size geri döneceğiz.",
         "errorMessage": "Destek biletini gönderme başarısız oldu. Lütfen daha sonra tekrar deneyin.",
         "completeDocs": "Tam Dokümantasyon",
-        "fluxosGuide": "FluxOS Kılavuzu",
+        "fluxCloudGuide": "FluxCloud Kılavuzu",
         "apiReference": "API Referansı",
         "githubDiscussions": "GitHub Tartışmaları",
         "discordCommunity": "Discord Topluluğu",

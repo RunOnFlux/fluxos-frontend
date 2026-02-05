@@ -2253,7 +2253,7 @@
         "successMessage": "Спасибо, что связались с нами. Мы свяжемся с вами как можно скорее.",
         "errorMessage": "Не удалось отправить заявку в поддержку. Пожалуйста, попробуйте позже.",
         "completeDocs": "Полная документация",
-        "fluxosGuide": "Руководство FluxOS",
+        "fluxCloudGuide": "Руководство FluxCloud",
         "apiReference": "Справочник API",
         "githubDiscussions": "Обсуждения GitHub",
         "discordCommunity": "Сообщество Discord",

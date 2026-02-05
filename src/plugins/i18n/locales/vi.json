@@ -2253,7 +2253,7 @@
         "successMessage": "Cảm ơn bạn đã liên hệ với chúng tôi. Chúng tôi sẽ liên hệ lại với bạn sớm nhất có thể.",
         "errorMessage": "Không thể gửi phiếu hỗ trợ. Vui lòng thử lại sau.",
         "completeDocs": "Tài liệu đầy đủ",
-        "fluxosGuide": "Hướng dẫn FluxOS",
+        "fluxCloudGuide": "Hướng dẫn FluxCloud",
         "apiReference": "Tài liệu tham khảo API",
         "githubDiscussions": "Thảo luận GitHub",
         "discordCommunity": "Cộng đồng Discord",

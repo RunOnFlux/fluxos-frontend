@@ -2253,7 +2253,7 @@
         "successMessage": "感谢您联系我们。我们会尽快与您联系。",
         "errorMessage": "提交支持工单失败。请稍后再试。",
         "completeDocs": "完整文档",
-        "fluxosGuide": "FluxOS 指南",
+        "fluxCloudGuide": "FluxCloud 指南",
         "apiReference": "API 参考",
         "githubDiscussions": "GitHub 讨论",
         "discordCommunity": "Discord 社区",

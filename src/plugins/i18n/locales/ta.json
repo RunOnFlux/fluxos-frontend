@@ -2253,7 +2253,7 @@
         "successMessage": "எங்களைத் தொடர்பு கொண்டதற்கு நன்றி. நாங்கள் விரைவில் உங்களைத் தொடர்பு கொள்வோம்.",
         "errorMessage": "ஆதரவு டிக்கெட்டைச் சமர்ப்பிக்க முடியவில்லை. பின்னர் மீண்டும் முயற்சிக்கவும்.",
         "completeDocs": "முழுமையான ஆவணப்படுத்தல்",
-        "fluxosGuide": "FluxOS வழிகாட்டி",
+        "fluxCloudGuide": "FluxCloud வழிகாட்டி",
         "apiReference": "API குறிப்பு",
         "githubDiscussions": "GitHub விவாதங்கள்",
         "discordCommunity": "Discord சமூகம்",

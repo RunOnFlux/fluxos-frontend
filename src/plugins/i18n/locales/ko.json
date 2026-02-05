@@ -2253,7 +2253,7 @@
         "successMessage": "문의해 주셔서 감사합니다. 가능한 한 빨리 연락드리겠습니다.",
         "errorMessage": "지원 티켓 제출에 실패했습니다. 나중에 다시 시도하십시오.",
         "completeDocs": "전체 문서",
-        "fluxosGuide": "FluxOS 가이드",
+        "fluxCloudGuide": "FluxCloud 가이드",
         "apiReference": "API 참조",
         "githubDiscussions": "GitHub 토론",
         "discordCommunity": "Discord 커뮤니티",

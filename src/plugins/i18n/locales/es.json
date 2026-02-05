@@ -2253,7 +2253,7 @@
         "successMessage": "Gracias por contactarnos. Nos pondremos en contacto contigo lo antes posible.",
         "errorMessage": "Error al enviar el ticket de soporte. Por favor, inténtelo de nuevo más tarde.",
         "completeDocs": "Documentación completa",
-        "fluxosGuide": "Guía de FluxOS",
+        "fluxCloudGuide": "Guía de FluxCloud",
         "apiReference": "Referencia de API",
         "githubDiscussions": "Discusiones de GitHub",
         "discordCommunity": "Comunidad de Discord",

@@ -2253,7 +2253,7 @@
         "successMessage": "ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਨ ਲਈ ਤੁਹਾਡਾ ਧੰਨਵਾਦ। ਅਸੀਂ ਜਿੰਨੀ ਜਲਦੀ ਹੋ ਸਕੇ ਤੁਹਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰਾਂਗੇ।",
         "errorMessage": "ਸਹਾਇਤਾ ਟਿਕਟ ਸਪੁਰਦ ਕਰਨ ਵਿੱਚ ਅਸਫਲ। ਕਿਰਪਾ ਕਰਕੇ ਬਾਅਦ ਵਿੱਚ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
         "completeDocs": "ਸੰਪੂਰਨ ਦਸਤਾਵੇਜ਼ੀਕਰਨ",
-        "fluxosGuide": "FluxOS ਗਾਈਡ",
+        "fluxCloudGuide": "FluxCloud ਗਾਈਡ",
         "apiReference": "API ਸੰਦਰਭ",
         "githubDiscussions": "GitHub ਚਰਚਾਵਾਂ",
         "discordCommunity": "Discord ਭਾਈਚਾਰਾ",

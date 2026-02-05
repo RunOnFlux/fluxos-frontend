@@ -2253,7 +2253,7 @@
         "successMessage": "お問い合わせいただきありがとうございます。できるだけ早くご連絡いたします。",
         "errorMessage": "サポートチケットの送信に失敗しました。後でもう一度お試しください。",
         "completeDocs": "完全なドキュメント",
-        "fluxosGuide": "FluxOSガイド",
+        "fluxCloudGuide": "FluxCloudガイド",
         "apiReference": "APIリファレンス",
         "githubDiscussions": "GitHubディスカッション",
         "discordCommunity": "Discordコミュニティ",

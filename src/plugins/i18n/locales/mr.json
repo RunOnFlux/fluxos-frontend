@@ -2253,7 +2253,7 @@
         "successMessage": "आमच्याशी संपर्क साधल्याबद्दल धन्यवाद. आम्ही शक्य तितक्या लवकर आपल्याशी संपर्क साधू.",
         "errorMessage": "समर्थन तिकीट सबमिट करण्यात अयशस्वी. कृपया नंतर पुन्हा प्रयत्न करा.",
         "completeDocs": "संपूर्ण दस्तऐवजीकरण",
-        "fluxosGuide": "FluxOS मार्गदर्शक",
+        "fluxCloudGuide": "FluxCloud मार्गदर्शक",
         "apiReference": "API संदर्भ",
         "githubDiscussions": "GitHub चर्चा",
         "discordCommunity": "Discord समुदाय",

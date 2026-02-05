@@ -3763,7 +3763,7 @@
         "successMessage": "Dziękujemy za kontakt. Skontaktujemy się z Tobą tak szybko, jak to możliwe.",
         "errorMessage": "Nie udało się przesłać zgłoszenia do pomocy technicznej. Spróbuj ponownie później.",
         "completeDocs": "Pełna dokumentacja",
-        "fluxosGuide": "Przewodnik FluxOS",
+        "fluxCloudGuide": "Przewodnik FluxCloud",
         "apiReference": "Dokumentacja API",
         "githubDiscussions": "Dyskusje GitHub",
         "discordCommunity": "Społeczność Discord",

@@ -2253,7 +2253,7 @@
         "successMessage": "हमसे संपर्क करने के लिए धन्यवाद। हम जल्द से जल्द आपसे संपर्क करेंगे।",
         "errorMessage": "समर्थन टिकट सबमिट करने में विफल। कृपया बाद में पुन: प्रयास करें।",
         "completeDocs": "पूर्ण दस्तावेज़ीकरण",
-        "fluxosGuide": "FluxOS गाइड",
+        "fluxCloudGuide": "FluxCloud गाइड",
         "apiReference": "API संदर्भ",
         "githubDiscussions": "GitHub चर्चाएँ",
         "discordCommunity": "Discord समुदाय",
