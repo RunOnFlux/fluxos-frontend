@@ -3547,6 +3547,12 @@
           }
         }
       },
+      "enterpriseBanner": {
+        "title": "Need Enterprise-Grade Hosting?",
+        "description": "The prices shown above reflect consumer-grade CPU and home-hosted infrastructure on the Flux network. For enterprise solutions — data-center-grade CPUs, guaranteed high uptime, dedicated customer support, a fully managed service dashboard, APIs for instant horizontal scaling, and much more — reach out to learn about FluxCloud Enterprise.",
+        "cta": "Contact Us",
+        "email": "info{'@'}runonflux.com"
+      },
       "relatedResources": {
         "title": "배포할 준비가 되셨나요?",
         "subtitle": "지금 바로 마켓플레이스를 살펴보고 애플리케이션을 배포하세요.",

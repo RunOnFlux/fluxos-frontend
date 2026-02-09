@@ -3355,6 +3355,12 @@
       "description": "Oblicz koszt swojej aplikacji",
       "hardwareResources": "Zasoby sprzętowe",
       "subtitle": "Przystępny hosting zdecentralizowany od 0,99$/miesiąc - Oblicz dokładne koszty",
+      "enterpriseBanner": {
+        "title": "Need Enterprise-Grade Hosting?",
+        "description": "The prices shown above reflect consumer-grade CPU and home-hosted infrastructure on the Flux network. For enterprise solutions — data-center-grade CPUs, guaranteed high uptime, dedicated customer support, a fully managed service dashboard, APIs for instant horizontal scaling, and much more — reach out to learn about FluxCloud Enterprise.",
+        "cta": "Contact Us",
+        "email": "info{'@'}runonflux.com"
+      },
       "relatedResources": {
         "links": [
           {
