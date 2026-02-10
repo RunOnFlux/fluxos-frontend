@@ -4322,7 +4322,7 @@ const startPaymentMonitoring = async () => {
 
       if (paymentMonitoringPhase.value === 'blockchain') {
         // Phase 1: Check if app spec exists on blockchain (payment confirmed)
-        const specResponse = await AppsService.getAppSpecifics(deployedAppName)
+        const specResponse = await AppsService.getAppSpecifics(deployedAppName.value)
 
         if (specResponse.data && specResponse.data.status === 'success') {
           const currentAppSpec = specResponse.data.data
@@ -4336,7 +4336,7 @@ const startPaymentMonitoring = async () => {
         }
       } else if (paymentMonitoringPhase.value === 'deployment') {
         // Phase 2: Check if app is running on nodes
-        const response = await AppsService.getAppLocation(deployedAppName)
+        const response = await AppsService.getAppLocation(deployedAppName.value)
 
         if (response.data && response.data.status === 'success') {
           const appLocation = response.data.data
