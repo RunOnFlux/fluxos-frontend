@@ -44,6 +44,49 @@
       </VCard>
     </a>
 
+    <!-- Enterprise Banner -->
+    <VCard
+      flat
+      class="mb-6 enterprise-banner"
+    >
+      <VCardText class="pa-6 pa-sm-8">
+        <div class="d-flex align-center flex-column flex-sm-row text-center text-sm-start">
+          <VAvatar
+            size="64"
+            color="warning"
+            variant="tonal"
+            class="mb-4 mb-sm-0 me-sm-5"
+          >
+            <VIcon
+              icon="mdi-office-building-cog"
+              size="36"
+            />
+          </VAvatar>
+          <div class="flex-grow-1">
+            <h3 class="text-h5 font-weight-bold mb-2">
+              {{ t('pages.costCalculator.enterpriseBanner.title') }}
+            </h3>
+            <p class="text-body-1 text-medium-emphasis mb-3" style="max-width: 780px;">
+              {{ t('pages.costCalculator.enterpriseBanner.description') }}
+            </p>
+            <VBtn
+              color="warning"
+              variant="elevated"
+              rounded
+              href="mailto:info@runonflux.com"
+            >
+              <VIcon
+                icon="mdi-email-outline"
+                size="18"
+                class="me-2"
+              />
+              {{ t('pages.costCalculator.enterpriseBanner.cta') }} — {{ t('pages.costCalculator.enterpriseBanner.email') }}
+            </VBtn>
+          </div>
+        </div>
+      </VCardText>
+    </VCard>
+
     <VRow>
       <!-- Calculator Form -->
       <VCol 
@@ -1441,6 +1484,13 @@ definePage({
 
 .info-link:hover .learn-more {
   color: rgba(var(--v-theme-on-surface), 0.8);
+}
+
+.enterprise-banner {
+  border-radius: 16px;
+  border: 2px solid rgba(var(--v-theme-warning), 0.35) !important;
+  background: linear-gradient(135deg, rgba(var(--v-theme-warning), 0.06) 0%, rgba(var(--v-theme-warning), 0.02) 100%) !important;
+  box-shadow: none !important;
 }
 
 .calculator-card {

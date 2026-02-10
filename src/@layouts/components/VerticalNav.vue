@@ -224,7 +224,8 @@ const hideTitleAndIcon = configStore.isVerticalNavMini(isHovered)
   }
 
   .nav-items {
-    block-size: 100%;
+    flex: 1;
+    min-block-size: 0;
 
     // ℹ️ We no loner needs this overflow styles as perfect scrollbar applies it
     // overflow-x: hidden;
