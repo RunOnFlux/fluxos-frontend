@@ -19,7 +19,7 @@
     "postinstall": "patch-package && bash scripts/fix-nested-lockfile.sh && npm run build:icons && npm run fix-vuetify"
   },
   "dependencies": {
-    "@casl/ability": "6.7.2",
+    "@casl/ability": "6.7.5",
     "@casl/vue": "2.2.2",
     "@floating-ui/dom": "1.6.8",
     "@fontsource/montserrat": "^5.2.8",
