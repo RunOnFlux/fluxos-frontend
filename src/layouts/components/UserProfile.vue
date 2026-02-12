@@ -125,6 +125,13 @@ async function logout() {
 
 const userProfileList = [
   { type: "divider" },
+  {
+    type: "navItem",
+    icon: "tabler-credit-card",
+    title: "Billing & Payments",
+    to: "/billing/payments",
+  },
+  { type: "divider" },
 
   // {
   //   type: "navItem",
@@ -136,16 +143,6 @@ const userProfileList = [
   //   icon: "tabler-settings",
   //   title: "Settings",
   // },
-  // {
-  //   type: "navItem",
-  //   icon: "tabler-file-dollar",
-  //   title: "Billing Plan",
-  //   badgeProps: {
-  //     color: "error",
-  //     content: "4",
-  //   },
-  // },
-  // { type: "divider" },
 
   // {
   //   type: "navItem",
@@ -239,11 +236,14 @@ const userProfileList = [
               <VListItem
                 v-if="item.type === 'navItem'"
                 :to="item.to"
+                color="default"
+                :active="false"
               >
                 <template #prepend>
                   <VIcon
                     :icon="item.icon"
                     size="22"
+                    color="default"
                   />
                 </template>
 
