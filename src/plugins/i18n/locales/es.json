@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Facturación y Pagos",
+    "logout": "Cerrar sesión"
   }
 }

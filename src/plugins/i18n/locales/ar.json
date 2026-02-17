@@ -5367,5 +5367,9 @@
         "category": "نظام إدارة المحتوى"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "الفواتير والمدفوعات",
+    "logout": "تسجيل الخروج"
   }
 }

@@ -5367,5 +5367,9 @@
         "category": "সিএমএস"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "বিলিং ও পেমেন্ট",
+    "logout": "লগ আউট"
   }
 }

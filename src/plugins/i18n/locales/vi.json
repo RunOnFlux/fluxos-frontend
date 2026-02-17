@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Hóa đơn và Thanh toán",
+    "logout": "Đăng xuất"
   }
 }

@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "청구 및 결제",
+    "logout": "로그아웃"
   }
 }

@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "請求と支払い",
+    "logout": "ログアウト"
   }
 }

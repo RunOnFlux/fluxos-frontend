@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Abrechnung & Zahlungen",
+    "logout": "Abmelden"
   }
 }

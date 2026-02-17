@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Faturamento e Pagamentos",
+    "logout": "Sair"
   }
 }

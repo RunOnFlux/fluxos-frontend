@@ -5367,5 +5367,9 @@
         "category": "система управления контентом"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Биллинг и Платежи",
+    "logout": "Выйти"
   }
 }

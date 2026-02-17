@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "பில்லிங் மற்றும் கொடுப்பனவுகள்",
+    "logout": "வெளியேறு"
   }
 }

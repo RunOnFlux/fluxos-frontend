@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "బిల్లింగ్ మరియు చెల్లింపులు",
+    "logout": "లాగ్ అవుట్"
   }
 }

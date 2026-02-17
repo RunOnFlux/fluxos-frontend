@@ -5367,5 +5367,9 @@
         "category": "内容管理系统"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "账单与付款",
+    "logout": "退出登录"
   }
 }

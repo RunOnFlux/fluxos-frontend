@@ -5367,5 +5367,9 @@
         "category": "मुख्यमंत्रियों"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "बिलिंग और भुगतान",
+    "logout": "लॉग आउट"
   }
 }

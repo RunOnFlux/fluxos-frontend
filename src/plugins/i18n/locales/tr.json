@@ -5367,5 +5367,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Faturalama ve Ödemeler",
+    "logout": "Çıkış yap"
   }
 }
