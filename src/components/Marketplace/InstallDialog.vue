@@ -422,7 +422,7 @@
                   <div class="slider-wrapper">
                     <VSlider
                       v-model="config.instances"
-                      :min="3"
+                      :min="props.app?.instances || 3"
                       :max="100"
                       :step="1"
                       :thumb-label="false"
