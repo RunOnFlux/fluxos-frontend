@@ -1,3 +1,11 @@
+<route lang="yaml">
+meta:
+  privilege:
+    - user
+    - admin
+    - fluxteam
+</route>
+
 <template>
   <div>
     <!-- Loading State -->
@@ -6,8 +14,8 @@
       icon="tabler-credit-card"
       :icon-size="56"
       :rotate-icon="true"
-      title="Loading Billing Data..."
-      message="Fetching your payment history"
+      :title="$t('pages.billing.loading')"
+      :message="$t('pages.billing.fetchingPaymentHistory')"
     />
 
     <!-- Page Header -->
@@ -15,10 +23,10 @@
       <div class="d-flex align-center justify-space-between mb-2">
         <div>
           <h1 class="text-h4 font-weight-bold mb-1">
-            Billing & Payments
+            {{ $t('pages.billing.title') }}
           </h1>
           <p class="text-body-2 text-medium-emphasis">
-            Track your Flux app payment history
+            {{ $t('pages.billing.subtitle') }}
           </p>
         </div>
         <VBtn
@@ -31,7 +39,7 @@
           <template #prepend>
             <VIcon icon="tabler-download" size="20" />
           </template>
-          Export
+          {{ $t('pages.billing.export') }}
         </VBtn>
       </div>
     </div>
@@ -46,10 +54,10 @@
           class="mb-4"
         />
         <h2 class="text-h5 mb-2">
-          No Payment History
+          {{ $t('pages.billing.noPaymentHistory') }}
         </h2>
         <p class="text-body-1 text-medium-emphasis">
-          You don't have any app payments yet. Register an app to start tracking payments.
+          {{ $t('pages.billing.noPaymentsYet') }}
         </p>
       </VCardText>
     </VCard>
@@ -72,7 +80,7 @@
                     </VChip>
                   </div>
                   <div class="text-caption text-uppercase text-medium-emphasis mb-1" style="letter-spacing: 0.5px;">
-                    Total Paid
+                    {{ $t('pages.billing.totalPaid') }}
                   </div>
                   <div class="d-flex align-baseline mb-1">
                     <h2 class="text-h4 font-weight-bold">
@@ -80,12 +88,12 @@
                     </h2>
                   </div>
                   <div class="text-caption text-medium-emphasis mb-3">
-                    {{ registrations }} Applications
+                    {{ registrations }} {{ $t('pages.billing.applications') }}
                   </div>
                   <VDivider class="mb-3" />
                   <div class="mb-2">
                     <div class="text-caption text-medium-emphasis mb-1" style="font-size: 0.7rem;">
-                      First Transaction
+                      {{ $t('pages.billing.firstTransaction') }}
                     </div>
                     <VChip color="success" variant="tonal" size="small" style="font-size: 0.75rem;">
                       <VIcon icon="tabler-clock-play" size="12" start />
@@ -94,7 +102,7 @@
                   </div>
                   <div>
                     <div class="text-caption text-medium-emphasis mb-1" style="font-size: 0.7rem;">
-                      Last Transaction
+                      {{ $t('pages.billing.lastTransaction') }}
                     </div>
                     <VChip color="info" variant="tonal" size="small" style="font-size: 0.75rem;">
                       <VIcon icon="tabler-clock-stop" size="12" start />
@@ -119,22 +127,32 @@
                     </VChip>
                   </div>
                   <div class="text-caption text-uppercase text-medium-emphasis mb-1" style="letter-spacing: 0.5px;">
-                    Transactions
+                    {{ $t('pages.billing.stats.transactions') }}
                   </div>
                   <div class="d-flex align-baseline mb-2">
                     <h2 class="text-h4 font-weight-bold">
                       {{ totalTransactions }}
                     </h2>
                   </div>
-                  <div class="text-caption text-medium-emphasis d-flex justify-space-between mb-2">
-                    <span>{{ registrations }} Registered</span>
-                    <span>{{ updates }} Updated</span>
+                  <div class="text-caption text-medium-emphasis d-flex justify-space-between mb-3">
+                    <span class="d-flex align-center gap-2">
+                      <VAvatar size="20" color="success" variant="tonal">
+                        <VIcon icon="tabler-plus" size="12" />
+                      </VAvatar>
+                      {{ totalTransactions > 0 ? ((registrations / totalTransactions) * 100).toFixed(1) : 0 }}%
+                    </span>
+                    <span class="d-flex align-center gap-2">
+                      <VAvatar size="20" color="warning" variant="tonal">
+                        <VIcon icon="tabler-refresh" size="12" />
+                      </VAvatar>
+                      {{ totalTransactions > 0 ? ((updates / totalTransactions) * 100).toFixed(1) : 0 }}%
+                    </span>
                   </div>
-                  <VDivider class="my-3" />
+                  <VDivider class="mb-3" />
                   <div class="d-flex flex-column gap-2">
                     <div>
                       <div class="text-caption text-medium-emphasis mb-1" style="font-size: 0.7rem;">
-                        Average Cost
+                        {{ $t('pages.billing.stats.averageCost') }}
                       </div>
                       <VChip color="info" variant="tonal" size="small" style="font-size: 0.75rem; width: 100%;">
                         <VIcon icon="tabler-chart-line" size="12" start />
@@ -143,7 +161,7 @@
                     </div>
                     <div>
                       <div class="text-caption text-medium-emphasis mb-1" style="font-size: 0.7rem;">
-                        Highest Payment
+                        {{ $t('pages.billing.stats.highestPayment') }}
                       </div>
                       <VChip color="success" variant="tonal" size="small" style="font-size: 0.75rem; width: 100%;">
                         <VIcon icon="tabler-arrow-up" size="12" start />
@@ -169,7 +187,7 @@
                     </VChip>
                   </div>
                   <div class="text-caption text-uppercase text-medium-emphasis mb-1" style="letter-spacing: 0.5px;">
-                    Registrations
+                    {{ $t('pages.billing.types.appregister') }}
                   </div>
                   <div class="d-flex align-baseline mb-2">
                     <h2 class="text-h4 font-weight-bold">
@@ -183,7 +201,7 @@
                   <div class="d-flex flex-column gap-2">
                     <div>
                       <div class="text-caption text-medium-emphasis mb-1" style="font-size: 0.7rem;">
-                        Average Cost
+                        {{ $t('pages.billing.stats.averageCost') }}
                       </div>
                       <VChip color="success" variant="tonal" size="small" style="font-size: 0.75rem; width: 100%;">
                         <VIcon icon="tabler-chart-line" size="12" start />
@@ -218,7 +236,7 @@
                     </VChip>
                   </div>
                   <div class="text-caption text-uppercase text-medium-emphasis mb-1" style="letter-spacing: 0.5px;">
-                    Updates
+                    {{ $t('pages.billing.types.appupdate') }}
                   </div>
                   <div class="d-flex align-baseline mb-2">
                     <h2 class="text-h4 font-weight-bold">
@@ -232,7 +250,7 @@
                   <div class="d-flex flex-column gap-2">
                     <div>
                       <div class="text-caption text-medium-emphasis mb-1" style="font-size: 0.7rem;">
-                        Average Cost
+                        {{ $t('pages.billing.stats.averageCost') }}
                       </div>
                       <VChip color="warning" variant="tonal" size="small" style="font-size: 0.75rem; width: 100%;">
                         <VIcon icon="tabler-chart-line" size="12" start />
@@ -255,12 +273,12 @@
       </VRow>
 
       <!-- Currently Running Apps Section -->
-      <VRow class="mb-6">
+      <VRow v-if="myApps.length > 0" class="mb-6">
         <VCol cols="12">
           <VCard>
             <VCardTitle class="d-flex align-center pa-5">
               <VIcon icon="tabler-apps" class="me-2" />
-              Currently Running Apps
+              {{ $t('pages.billing.currentlyRunningApps') }}
               <VSpacer />
               <VChip color="info" variant="tonal" size="small">
                 <VIcon icon="tabler-server" size="16" start />
@@ -270,14 +288,7 @@
 
             <VDivider />
 
-            <VCardText v-if="myApps.length === 0" class="text-center py-8">
-              <VIcon icon="tabler-apps-off" size="48" color="disabled" class="mb-3" />
-              <p class="text-body-1 text-medium-emphasis">
-                No apps currently running
-              </p>
-            </VCardText>
-
-            <VCardText v-else class="pa-0">
+            <VCardText class="pa-0">
               <VVirtualScroll
                 :items="myApps"
                 :height="400"
@@ -298,7 +309,7 @@
                       </VChip>
                       <VChip size="x-small" variant="tonal" color="secondary">
                         <VIcon icon="tabler-apps" size="12" start />
-                        {{ item.instances || (item.compose ? item.compose.length : 3) }}
+                        {{ item.instances || (item.compose ? item.compose.length : 3) }} {{ $t('pages.billing.instances') }}
                       </VChip>
                     </VListItemTitle>
                   </VListItem>
@@ -313,109 +324,98 @@
       <!-- Payment Trends Chart -->
       <VCard elevation="2" class="mb-6 billing-chart-container terminal-border">
         <VCardText class="pa-6">
-          <!-- Chart Header with Controls -->
-          <div class="billing-chart-header">
-            <div class="billing-chart-title-section">
-              <h2 class="billing-chart-title">
-                PAYMENT TRENDS
-              </h2>
-              <p class="billing-chart-subtitle">
-                {{ selectedMetric === 'cumulative' ? 'Cumulative total payments' : aggregationLabels[selectedAggregation] + ' spending breakdown' }}
-              </p>
-            </div>
-
-            <div class="billing-chart-controls">
-              <!-- App Filter -->
-              <div class="billing-control-group">
-                <label class="billing-control-label">APP:</label>
-                <VSelect
-                  v-model="chartAppFilter"
-                  :items="uniqueApps"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  clearable
-                  placeholder="Filter by app..."
-                  color="default"
-                  prepend-inner-icon="tabler-apps"
-                  class="billing-chart-select terminal-select app-filter-select"
-                  :menu-props="{ maxHeight: 300 }"
-                  @update:menu="appFilterMenuOpen = $event"
-                >
-                  <template #prepend-item>
-                    <div class="pa-2">
-                      <VTextField
-                        v-model="appSearchQuery"
-                        density="compact"
-                        variant="outlined"
-                        placeholder="Search apps..."
-                        hide-details
-                        clearable
-                        prepend-inner-icon="tabler-search"
-                        class="mb-2"
-                        @click.stop
-                        @keydown.stop
-                        @input.stop
-                        @mousedown.stop
-                      />
-                    </div>
-                  </template>
-                </VSelect>
-              </div>
-
-              <!-- Aggregation Selector -->
-              <div class="billing-control-group">
-                <label class="billing-control-label">VIEW:</label>
-                <VSelect
-                  v-model="selectedAggregation"
-                  :items="[
-                    { value: 'daily', title: 'Daily' },
-                    { value: 'weekly', title: 'Weekly' },
-                    { value: 'monthly', title: 'Monthly' }
-                  ]"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  class="billing-chart-select terminal-select"
-                />
-              </div>
-
-              <!-- Time Range Selector -->
-              <div class="billing-control-group">
-                <label class="billing-control-label">PERIOD:</label>
-                <VSelect
-                  v-model="selectedTimeRange"
-                  :items="[
-                    { value: '7d', title: '7 Days' },
-                    { value: '30d', title: '30 Days' },
-                    { value: '90d', title: '90 Days' },
-                    { value: '1y', title: '1 Year' },
-                    { value: 'all', title: 'All Time' }
-                  ]"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  class="billing-chart-select terminal-select"
-                />
-              </div>
-
-              <!-- Metric Selector -->
-              <div class="billing-control-group">
-                <label class="billing-control-label">METRIC:</label>
-                <VSelect
-                  v-model="selectedMetric"
-                  :items="[
-                    { value: 'monthly', title: 'Period Total' },
-                    { value: 'cumulative', title: 'Cumulative' }
-                  ]"
-                  density="compact"
-                  variant="outlined"
-                  hide-details
-                  class="billing-chart-select terminal-select"
-                />
-              </div>
-            </div>
+          <!-- Chart Header -->
+          <div class="mb-4">
+            <h2 class="text-h5 font-weight-bold mb-1">
+              {{ $t('pages.billing.chart.title') }}
+            </h2>
+            <p class="text-caption text-medium-emphasis mb-0">
+              {{ selectedMetric === 'cumulative' ? $t('pages.billing.chart.cumulativeTotalPayments') : `${aggregationLabels.value[selectedAggregation]} ${$t('pages.billing.chart.spendingBreakdown')}` }}
+            </p>
           </div>
+
+          <!-- Chart Controls -->
+          <VRow dense class="mb-4">
+            <VCol cols="12" sm="6" md="3">
+              <VChip size="x-small" variant="tonal" color="info" class="mb-2">
+                <VIcon icon="tabler-apps" size="14" start />
+                {{ $t('pages.billing.chart.appLabel') }}
+              </VChip>
+              <VSelect
+                v-model="chartAppFilter"
+                :items="uniqueApps"
+                density="compact"
+                variant="outlined"
+                hide-details
+                clearable
+                :placeholder="$t('pages.billing.chart.filterByApp')"
+                prepend-inner-icon="tabler-search"
+                :menu-props="{ maxHeight: 300 }"
+                @update:menu="appFilterMenuOpen = $event"
+              >
+                <template #prepend-item>
+                  <div class="pa-2">
+                    <VTextField
+                      v-model="appSearchQuery"
+                      density="compact"
+                      variant="outlined"
+                      :placeholder="$t('pages.billing.chart.searchApps')"
+                      hide-details
+                      clearable
+                      prepend-inner-icon="tabler-search"
+                      class="mb-2"
+                      @click.stop
+                      @keydown.stop
+                      @input.stop
+                      @mousedown.stop
+                    />
+                  </div>
+                </template>
+              </VSelect>
+            </VCol>
+
+            <VCol cols="12" sm="6" md="3">
+              <VChip size="x-small" variant="tonal" color="info" class="mb-2">
+                <VIcon icon="tabler-eye" size="14" start />
+                {{ $t('pages.billing.chart.viewLabel') }}
+              </VChip>
+              <VSelect
+                v-model="selectedAggregation"
+                :items="aggregationItems"
+                density="compact"
+                variant="outlined"
+                hide-details
+              />
+            </VCol>
+
+            <VCol cols="12" sm="6" md="3">
+              <VChip size="x-small" variant="tonal" color="info" class="mb-2">
+                <VIcon icon="tabler-calendar" size="14" start />
+                {{ $t('pages.billing.chart.periodLabel') }}
+              </VChip>
+              <VSelect
+                v-model="selectedTimeRange"
+                :items="timeRangeItems"
+                density="compact"
+                variant="outlined"
+                hide-details
+              />
+            </VCol>
+
+            <VCol cols="12" sm="6" md="3">
+              <VChip size="x-small" variant="tonal" color="info" class="mb-2">
+                <VIcon icon="tabler-chart-line" size="14" start />
+                {{ $t('pages.billing.chart.metricLabel') }}
+              </VChip>
+              <VSelect
+                v-model="selectedMetric"
+                :items="displayModeItems"
+                density="compact"
+                variant="outlined"
+                hide-details
+              />
+            </VCol>
+          </VRow>
 
           <!-- Category Pills -->
           <div class="billing-category-pills">
@@ -425,10 +425,10 @@
               :style="{ '--category-color': 'rgb(40, 199, 111)' }"
               @click="toggleCategory('registrations')"
             >
-              <span class="billing-category-icon">
+              <span v-if="!smAndDown" class="billing-category-icon">
                 <VIcon icon="tabler-square-rounded-plus" size="16" />
               </span>
-              <span class="billing-category-label">Registrations</span>
+              <span class="billing-category-label">{{ $t('pages.billing.types.appregister') }}</span>
             </button>
             <button
               class="billing-category-pill"
@@ -436,10 +436,10 @@
               :style="{ '--category-color': 'rgb(255, 159, 67)' }"
               @click="toggleCategory('updates')"
             >
-              <span class="billing-category-icon">
+              <span v-if="!smAndDown" class="billing-category-icon">
                 <VIcon icon="tabler-refresh" size="16" />
               </span>
-              <span class="billing-category-label">Updates</span>
+              <span class="billing-category-label">{{ $t('pages.billing.types.appupdate') }}</span>
             </button>
             <button
               class="billing-category-pill"
@@ -447,10 +447,10 @@
               :style="{ '--category-color': 'rgb(0, 200, 255)' }"
               @click="toggleCategory('total')"
             >
-              <span class="billing-category-icon">
+              <span v-if="!smAndDown" class="billing-category-icon">
                 <VIcon icon="tabler-chart-line" size="16" />
               </span>
-              <span class="billing-category-label">Total</span>
+              <span class="billing-category-label">{{ $t('pages.billing.totalPaid') }}</span>
             </button>
           </div>
 
@@ -464,16 +464,16 @@
       <!-- Payment History Table -->
       <VCard elevation="2">
         <VCardText class="pa-8">
-          <div class="d-flex align-center justify-space-between mb-6">
+          <div class="d-flex align-center justify-space-between mb-6 flex-wrap ga-3">
             <div>
-              <h2 class="text-h5 font-weight-bold mb-1">
-                Payment History
+              <h2 class="text-h5 font-weight-bold mb-1 text-no-wrap">
+                {{ $t('pages.billing.paymentHistory') }}
               </h2>
               <p class="text-body-2 text-medium-emphasis mb-0">
-                Complete breakdown of all app payments
+                {{ $t('pages.billing.paymentSummary') }}
               </p>
             </div>
-            <div class="d-flex align-center gap-2">
+            <div class="d-flex align-center gap-2 flex-wrap">
               <VChip
                 color="success"
                 variant="tonal"
@@ -497,7 +497,7 @@
             <VTextField
               v-model="searchQuery"
               prepend-inner-icon="tabler-search"
-              placeholder="Search apps by name..."
+              :placeholder="$t('pages.billing.searchByName')"
               variant="outlined"
               density="comfortable"
               clearable
@@ -529,6 +529,7 @@
             class="bordered-table"
             hide-default-footer
             must-sort
+            :header-props="{ class: 'text-no-wrap' }"
           >
             <template #item.appName="{ item, value, index, internalItem }">
               <VChip
@@ -605,41 +606,45 @@
                 prepend-icon="tabler-eye"
                 @click="viewTransactions(item)"
               >
-                Details
+                {{ $t('pages.billing.table.details') }}
               </VBtn>
             </template>
 
             <!-- Custom pagination footer -->
             <template #bottom>
-              <div class="d-flex align-center justify-space-between pa-4 border-t">
+              <div class="d-flex align-center justify-space-between pa-4 border-t flex-wrap ga-2">
+                <!-- Showing info - left side -->
                 <VChip
                   color="default"
                   variant="tonal"
                   size="small"
                 >
                   <VIcon icon="tabler-list-numbers" size="14" start />
-                  Showing {{ startItem }} to {{ endItem }} of {{ filteredAppPayments.length }}
+                  {{ $t('pages.billing.table.showing', { start: startItem, end: endItem, total: filteredAppPayments.length }) }}
                 </VChip>
-                <div class="d-flex align-center gap-2">
+
+                <!-- Pagination controls - right side -->
+                <div class="d-flex align-center gap-1">
                   <VBtn
                     icon
                     variant="tonal"
                     color="grey"
-                    size="small"
+                    size="x-small"
                     :disabled="currentPage === 1"
                     @click="currentPage = 1"
+                    class="d-none d-sm-inline-flex"
                   >
-                    <VIcon icon="tabler-chevrons-left" />
+                    <VIcon icon="tabler-chevrons-left" size="18" />
                   </VBtn>
                   <VBtn
                     icon
                     variant="tonal"
                     color="grey"
-                    size="small"
+                    size="x-small"
                     :disabled="currentPage === 1"
                     @click="currentPage--"
                   >
-                    <VIcon icon="tabler-chevron-left" />
+                    <VIcon icon="tabler-chevron-left" size="18" />
                   </VBtn>
 
                   <div class="d-flex align-center gap-1">
@@ -648,12 +653,13 @@
                         v-if="page !== '...'"
                         :variant="currentPage === page ? 'flat' : 'tonal'"
                         :color="currentPage === page ? 'primary' : 'grey'"
-                        size="small"
+                        size="x-small"
+                        min-width="32"
                         @click="currentPage = page"
                       >
                         {{ page }}
                       </VBtn>
-                      <span v-else class="px-2">...</span>
+                      <span v-else class="px-1 text-caption">...</span>
                     </template>
                   </div>
 
@@ -661,21 +667,22 @@
                     icon
                     variant="tonal"
                     color="grey"
-                    size="small"
+                    size="x-small"
                     :disabled="currentPage === totalPages"
                     @click="currentPage++"
                   >
-                    <VIcon icon="tabler-chevron-right" />
+                    <VIcon icon="tabler-chevron-right" size="18" />
                   </VBtn>
                   <VBtn
                     icon
                     variant="tonal"
                     color="grey"
-                    size="small"
+                    size="x-small"
                     :disabled="currentPage === totalPages"
                     @click="currentPage = totalPages"
+                    class="d-none d-sm-inline-flex"
                   >
-                    <VIcon icon="tabler-chevrons-right" />
+                    <VIcon icon="tabler-chevrons-right" size="18" />
                   </VBtn>
                 </div>
               </div>
@@ -698,7 +705,7 @@
                   {{ selectedApp.appName }}
                 </div>
                 <div class="text-body-2" style="color: white !important; opacity: 0.9">
-                  Payment details and transaction history
+                  {{ $t('pages.billing.paymentSummary') }}
                 </div>
               </div>
             </div>
@@ -714,63 +721,59 @@
           <VDivider />
 
           <!-- App Summary -->
-          <VCardText class="pa-6">
-            <VRow>
-              <VCol
-                cols="6"
-                md="3"
-              >
-                <div class="d-flex flex-column align-center text-center gap-2">
-                  <div class="d-flex align-center gap-2">
-                    <VIcon icon="tabler-coin" size="24" color="default" />
-                    <span class="text-body-2 text-medium-emphasis">Total Paid</span>
+          <VCardText class="pa-4">
+            <VRow dense>
+              <VCol cols="6" md="3">
+                <VCard variant="flat" class="pa-3 stat-card stat-card--secondary">
+                  <div class="d-flex align-center gap-3">
+                    <VAvatar size="36" color="secondary" variant="tonal">
+                      <VIcon icon="tabler-coin" size="20" />
+                    </VAvatar>
+                    <div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('pages.billing.totalPaid') }}</div>
+                      <div class="text-body-2 font-weight-bold">{{ selectedApp.totalPaid.toFixed(2) }} FLUX</div>
+                    </div>
                   </div>
-                  <div class="text-h6 font-weight-bold">
-                    {{ selectedApp.totalPaid.toFixed(2) }} FLUX
-                  </div>
-                </div>
+                </VCard>
               </VCol>
-              <VCol
-                cols="6"
-                md="3"
-              >
-                <div class="d-flex flex-column align-center text-center gap-2">
-                  <div class="d-flex align-center gap-2">
-                    <VIcon icon="tabler-receipt" size="24" color="default" />
-                    <span class="text-body-2 text-medium-emphasis">Transactions</span>
+              <VCol cols="6" md="3">
+                <VCard variant="flat" class="pa-3 stat-card stat-card--info">
+                  <div class="d-flex align-center gap-3">
+                    <VAvatar size="36" color="info" variant="tonal">
+                      <VIcon icon="tabler-receipt" size="20" />
+                    </VAvatar>
+                    <div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('pages.billing.table.payments') }}</div>
+                      <div class="text-body-2 font-weight-bold">{{ selectedApp.count }}</div>
+                    </div>
                   </div>
-                  <div class="text-h6 font-weight-bold">
-                    {{ selectedApp.count }}
-                  </div>
-                </div>
+                </VCard>
               </VCol>
-              <VCol
-                cols="6"
-                md="3"
-              >
-                <div class="d-flex flex-column align-center text-center gap-2">
-                  <div class="d-flex align-center gap-2">
-                    <VIcon icon="tabler-chart-bar" size="24" color="default" />
-                    <span class="text-body-2 text-medium-emphasis">Average</span>
+              <VCol cols="6" md="3">
+                <VCard variant="flat" class="pa-3 stat-card stat-card--success">
+                  <div class="d-flex align-center gap-3">
+                    <VAvatar size="36" color="success" variant="tonal">
+                      <VIcon icon="tabler-chart-bar" size="20" />
+                    </VAvatar>
+                    <div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('pages.billing.table.avgPayment') }}</div>
+                      <div class="text-body-2 font-weight-bold">{{ selectedApp.avgPayment.toFixed(2) }} FLUX</div>
+                    </div>
                   </div>
-                  <div class="text-h6 font-weight-bold">
-                    {{ selectedApp.avgPayment.toFixed(2) }} FLUX
-                  </div>
-                </div>
+                </VCard>
               </VCol>
-              <VCol
-                cols="6"
-                md="3"
-              >
-                <div class="d-flex flex-column align-center text-center gap-2">
-                  <div class="d-flex align-center gap-2">
-                    <VIcon icon="tabler-calendar" size="24" color="default" />
-                    <span class="text-body-2 text-medium-emphasis">Last Payment</span>
+              <VCol cols="6" md="3">
+                <VCard variant="flat" class="pa-3 stat-card stat-card--warning">
+                  <div class="d-flex align-center gap-3">
+                    <VAvatar size="36" color="warning" variant="tonal">
+                      <VIcon icon="tabler-calendar" size="20" />
+                    </VAvatar>
+                    <div>
+                      <div class="text-caption text-medium-emphasis">{{ $t('pages.billing.lastTransaction') }}</div>
+                      <div class="text-body-2 font-weight-bold">{{ formatDate(selectedApp.lastPayment).split(',')[0] }}</div>
+                    </div>
                   </div>
-                  <div class="text-h6 font-weight-bold">
-                    {{ formatDate(selectedApp.lastPayment).split(',')[0] }}
-                  </div>
-                </div>
+                </VCard>
               </VCol>
             </VRow>
           </VCardText>
@@ -781,17 +784,23 @@
             <VDataTable
               :items="selectedApp.transactions"
               :headers="transactionHeaders"
-              :items-per-page="15"
+              :items-per-page="dialogItemsPerPage"
+              v-model:page="dialogPage"
               density="comfortable"
               class="bordered-table"
             >
               <template #item.type="{ item }">
                 <VChip
-                  :color="item.type === 'register' ? 'success' : 'default'"
+                  :color="item.type === 'register' ? 'success' : item.type === 'renewal' ? 'info' : 'warning'"
                   size="small"
                   variant="tonal"
                 >
-                  {{ item.type }}
+                  <VIcon
+                    :icon="item.type === 'register' ? 'tabler-square-rounded-plus' : item.type === 'renewal' ? 'tabler-refresh' : 'tabler-edit'"
+                    size="14"
+                    start
+                  />
+                  {{ $t(`pages.billing.transactionTable.types.${item.type}`) }}
                 </VChip>
               </template>
 
@@ -807,7 +816,7 @@
                     size="small"
                     variant="tonal"
                   >
-                    FREE
+                    {{ $t('pages.billing.transactionTable.free') }}
                   </VChip>
                 </div>
               </template>
@@ -842,6 +851,66 @@
                   {{ item.txid.substring(0, 12) }}...
                 </VBtn>
               </template>
+
+              <!-- Custom pagination footer -->
+              <template #bottom>
+                <div class="d-flex align-center justify-space-between pa-4 border-t flex-wrap ga-2">
+                  <VChip color="default" variant="tonal" size="small">
+                    <VIcon icon="tabler-list-numbers" size="14" start />
+                    {{ $t('pages.billing.table.showing', { start: dialogStartItem, end: dialogEndItem, total: selectedApp.transactions.length }) }}
+                  </VChip>
+
+                  <div class="d-flex align-center gap-1">
+                    <VBtn
+                      icon variant="tonal" color="grey" size="x-small"
+                      :disabled="dialogPage === 1"
+                      @click="dialogPage = 1"
+                      class="d-none d-sm-inline-flex"
+                    >
+                      <VIcon icon="tabler-chevrons-left" size="18" />
+                    </VBtn>
+                    <VBtn
+                      icon variant="tonal" color="grey" size="x-small"
+                      :disabled="dialogPage === 1"
+                      @click="dialogPage--"
+                    >
+                      <VIcon icon="tabler-chevron-left" size="18" />
+                    </VBtn>
+
+                    <div class="d-flex align-center gap-1">
+                      <template v-for="page in dialogVisiblePages" :key="page">
+                        <VBtn
+                          v-if="page !== '...'"
+                          :variant="dialogPage === page ? 'flat' : 'tonal'"
+                          :color="dialogPage === page ? 'primary' : 'grey'"
+                          size="x-small"
+                          min-width="32"
+                          @click="dialogPage = page"
+                        >
+                          {{ page }}
+                        </VBtn>
+                        <span v-else class="px-1 text-caption">...</span>
+                      </template>
+                    </div>
+
+                    <VBtn
+                      icon variant="tonal" color="grey" size="x-small"
+                      :disabled="dialogPage === dialogTotalPages"
+                      @click="dialogPage++"
+                    >
+                      <VIcon icon="tabler-chevron-right" size="18" />
+                    </VBtn>
+                    <VBtn
+                      icon variant="tonal" color="grey" size="x-small"
+                      :disabled="dialogPage === dialogTotalPages"
+                      @click="dialogPage = dialogTotalPages"
+                      class="d-none d-sm-inline-flex"
+                    >
+                      <VIcon icon="tabler-chevrons-right" size="18" />
+                    </VBtn>
+                  </div>
+                </div>
+              </template>
             </VDataTable>
           </VCardText>
         </VCard>
@@ -856,46 +925,52 @@
       <VCard>
         <VCardTitle class="d-flex align-center gap-2 pa-3 bg-primary text-white">
           <VIcon icon="tabler-download" size="22" color="white" />
-          <span>Export Payment History</span>
+          <span>{{ $t('pages.billing.exportDialog.title') }}</span>
         </VCardTitle>
 
         <VDivider />
 
         <VCardText class="pa-5">
           <p class="text-body-1 text-medium-emphasis mb-4">
-            Select the time period for your export:
+            {{ $t('pages.billing.exportDialog.dateRange') }}
           </p>
 
-          <VRadioGroup
-            v-model="exportPeriod"
-            color="primary"
-            class="export-radio-group"
+          <div
+            class="pa-4 rounded"
+            style="background-color: rgba(var(--v-theme-on-surface), 0.04); border: 1px solid rgba(var(--v-theme-on-surface), 0.12)"
           >
-            <VRadio
-              value="all"
-              label="All Time"
-            />
-            <VRadio
-              value="7d"
-              label="Last 7 Days"
-            />
-            <VRadio
-              value="30d"
-              label="Last 30 Days"
-            />
-            <VRadio
-              value="90d"
-              label="Last 90 Days"
-            />
-            <VRadio
-              value="365d"
-              label="Last Year"
-            />
-            <VRadio
-              value="custom"
-              label="Custom Range"
-            />
-          </VRadioGroup>
+            <VRadioGroup
+              v-model="exportPeriod"
+              color="primary"
+              class="export-radio-group"
+              hide-details
+            >
+              <VRadio
+                value="all"
+                :label="$t('pages.billing.exportDialog.allTime')"
+              />
+              <VRadio
+                value="7d"
+                :label="$t('pages.billing.chart.last7Days')"
+              />
+              <VRadio
+                value="30d"
+                :label="$t('pages.billing.exportDialog.last30Days')"
+              />
+              <VRadio
+                value="90d"
+                :label="$t('pages.billing.exportDialog.last90Days')"
+              />
+              <VRadio
+                value="365d"
+                :label="$t('pages.billing.exportDialog.lastYear')"
+              />
+              <VRadio
+                value="custom"
+                :label="$t('pages.billing.exportDialog.customRange')"
+              />
+            </VRadioGroup>
+          </div>
 
           <!-- Custom Date Range -->
           <div
@@ -905,21 +980,21 @@
           >
             <VRow>
               <VCol cols="12" sm="6">
-                <label class="text-caption text-medium-emphasis mb-2 d-block">Start Date</label>
+                <label class="text-caption text-medium-emphasis mb-2 d-block">{{ $t('pages.billing.exportDialog.startDate') }}</label>
                 <flat-pickr
                   v-model="exportCustomStartDate"
                   :config="flatpickrConfig"
                   class="flatpickr-input"
-                  placeholder="Select start date"
+                  :placeholder="$t('pages.billing.exportDialog.startDate')"
                 />
               </VCol>
               <VCol cols="12" sm="6">
-                <label class="text-caption text-medium-emphasis mb-2 d-block">End Date</label>
+                <label class="text-caption text-medium-emphasis mb-2 d-block">{{ $t('pages.billing.exportDialog.endDate') }}</label>
                 <flat-pickr
                   v-model="exportCustomEndDate"
                   :config="flatpickrConfig"
                   class="flatpickr-input"
-                  placeholder="Select end date"
+                  :placeholder="$t('pages.billing.exportDialog.endDate')"
                 />
               </VCol>
             </VRow>
@@ -947,7 +1022,7 @@
             size="small"
             @click="exportDialogOpen = false"
           >
-            Cancel
+            {{ $t('pages.billing.exportDialog.cancel') }}
           </VBtn>
           <VBtn
             variant="flat"
@@ -956,7 +1031,7 @@
             prepend-icon="tabler-download"
             @click="exportCSV"
           >
-            Export CSV
+            {{ $t('pages.billing.exportDialog.export') }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -970,10 +1045,11 @@ import { useRouter } from 'vue-router'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
 import { useSEO } from '@/composables/useSEO'
+import { useI18n } from 'vue-i18n'
 import BillingService from '@/services/BillingService'
 import { Doughnut, Line } from 'vue-chartjs'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend, LineElement, CategoryScale, LinearScale, PointElement, Filler } from 'chart.js'
-import { useTheme } from 'vuetify'
+import { useTheme, useDisplay } from 'vuetify'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import flatPickr from 'vue-flatpickr-component'
 import 'flatpickr/dist/flatpickr.css'
@@ -984,6 +1060,8 @@ const router = useRouter()
 const fluxStore = useFluxStore()
 const { zelid } = storeToRefs(fluxStore)
 const theme = useTheme()
+const { t } = useI18n()
+const { smAndDown } = useDisplay()
 
 // SEO configuration - exclude from search engines and robots
 useSEO({
@@ -1066,11 +1144,30 @@ const flatpickrConfig = {
   allowInput: true,
 }
 
-const aggregationLabels = {
-  daily: 'Daily',
-  weekly: 'Weekly',
-  monthly: 'Monthly',
-}
+const aggregationLabels = computed(() => ({
+  daily: t('pages.billing.chart.aggregation.daily'),
+  weekly: t('pages.billing.chart.aggregation.weekly'),
+  monthly: t('pages.billing.chart.aggregation.monthly'),
+}))
+
+const aggregationItems = computed(() => [
+  { value: 'daily', title: t('pages.billing.chart.aggregation.daily') },
+  { value: 'weekly', title: t('pages.billing.chart.aggregation.weekly') },
+  { value: 'monthly', title: t('pages.billing.chart.aggregation.monthly') },
+])
+
+const timeRangeItems = computed(() => [
+  { value: '7d', title: t('pages.billing.chart.timeRanges.7d') },
+  { value: '30d', title: t('pages.billing.chart.timeRanges.30d') },
+  { value: '90d', title: t('pages.billing.chart.timeRanges.90d') },
+  { value: '1y', title: t('pages.billing.chart.timeRanges.1y') },
+  { value: 'all', title: t('pages.billing.chart.timeRanges.all') },
+])
+
+const displayModeItems = computed(() => [
+  { value: 'monthly', title: t('pages.billing.chart.displayModes.periodTotal') },
+  { value: 'cumulative', title: t('pages.billing.chart.displayModes.cumulative') },
+])
 
 // Toggle category pills
 function toggleCategory(category) {
@@ -1109,22 +1206,22 @@ const uniqueApps = computed(() => {
 
 
 // Table headers
-const headers = [
-  { title: 'App Name', key: 'appName', sortable: true },
-  { title: 'Total Paid', key: 'totalPaid', sortable: true },
-  { title: 'Payments', key: 'count', sortable: true },
-  { title: 'Avg Payment', key: 'avgPayment', sortable: true },
-  { title: 'Last Payment', key: 'lastPayment', sortable: true },
-  { title: 'Actions', key: 'actions', sortable: false },
-]
+const headers = computed(() => [
+  { title: t('pages.billing.table.appName'), key: 'appName', sortable: true },
+  { title: t('pages.billing.table.totalPaid'), key: 'totalPaid', sortable: true },
+  { title: t('pages.billing.table.payments'), key: 'count', sortable: true },
+  { title: t('pages.billing.table.avgPayment'), key: 'avgPayment', sortable: true },
+  { title: t('pages.billing.lastTransaction'), key: 'lastPayment', sortable: true },
+  { title: t('pages.billing.table.actions'), key: 'actions', sortable: false },
+])
 
-const transactionHeaders = [
-  { title: 'Type', key: 'type', sortable: true },
-  { title: 'Amount', key: 'amount', sortable: true },
-  { title: 'Date', key: 'timestamp', sortable: true },
-  { title: 'Block', key: 'height', sortable: true },
-  { title: 'Transaction ID', key: 'txid', sortable: false },
-]
+const transactionHeaders = computed(() => [
+  { title: t('pages.billing.transactionTable.type'), key: 'type', sortable: true },
+  { title: t('pages.billing.transactionTable.amount'), key: 'amount', sortable: true },
+  { title: t('pages.billing.transactionTable.date'), key: 'timestamp', sortable: true },
+  { title: t('pages.billing.transactionTable.blockHeight'), key: 'height', sortable: true },
+  { title: t('pages.billing.transactionTable.txid'), key: 'txid', sortable: false },
+])
 
 // Helper function to check if transaction is a free update (0.02 FLUX)
 const isFreeUpdate = (tx) => {
@@ -1317,6 +1414,47 @@ const visiblePages = computed(() => {
   return pages
 })
 
+// Dialog transaction table pagination
+const dialogPage = ref(1)
+const dialogItemsPerPage = 10
+
+const dialogTotalPages = computed(() => {
+  return Math.ceil((selectedApp.value?.transactions?.length || 0) / dialogItemsPerPage)
+})
+
+const dialogStartItem = computed(() => {
+  return (dialogPage.value - 1) * dialogItemsPerPage + 1
+})
+
+const dialogEndItem = computed(() => {
+  return Math.min(dialogPage.value * dialogItemsPerPage, selectedApp.value?.transactions?.length || 0)
+})
+
+const dialogVisiblePages = computed(() => {
+  const pages = []
+  const total = dialogTotalPages.value
+  const current = dialogPage.value
+
+  if (total <= 7) {
+    for (let i = 1; i <= total; i++) pages.push(i)
+  } else {
+    pages.push(1)
+    if (current > 3) pages.push('...')
+    const start = Math.max(2, current - 1)
+    const end = Math.min(total - 1, current + 1)
+    for (let i = start; i <= end; i++) pages.push(i)
+    if (current < total - 2) pages.push('...')
+    pages.push(total)
+  }
+
+  return pages
+})
+
+// Reset dialog page when opening a new app
+watch(() => selectedApp.value?.appName, () => {
+  dialogPage.value = 1
+})
+
 const topApps = computed(() => {
   return appPayments.value
     .sort((a, b) => b.totalPaid - a.totalPaid)
@@ -1454,24 +1592,48 @@ watch(appFilterMenuOpen, (isOpen) => {
 
 function viewTransactions(app) {
   // Dynamically build transactions array for this specific app
-  const appTransactions = transactions.value
-    .filter(tx => {
-      const appName = tx.appSpecifications?.name || 'Unknown'
-      return appName === app.appName
-    })
-    .map(tx => {
-      const amountFlux = (tx.valueSat || 0) / 100000000
-      const isRegister = tx.type === 'zelappregister' || tx.type === 'fluxappregister'
-      const type = isRegister ? 'register' : 'update'
+  const rawTxs = transactions.value
+    .filter(tx => (tx.appSpecifications?.name || 'Unknown') === app.appName)
+    .sort((a, b) => a.timestamp - b.timestamp)
 
-      return {
-        txid: tx.txid,
-        amount: amountFlux,
-        height: tx.height,
-        timestamp: tx.timestamp,
-        type: type,
+  const appTransactions = rawTxs.map((tx, i) => {
+    const amountFlux = (tx.valueSat || 0) / 100000000
+    const isRegister = tx.type === 'zelappregister' || tx.type === 'fluxappregister'
+
+    let type = 'update'
+    if (isRegister) {
+      type = 'register'
+    } else {
+      const currSpec = tx.appSpecifications || {}
+      const specVersion = currSpec.version || 0
+
+      // Spec version < 6 had no expire field — every update was a renewal
+      if (specVersion < 6) {
+        type = 'renewal'
+      } else {
+        // Spec version >= 6 has expire field — compare with previous tx
+        const prevTx = rawTxs[i - 1]
+        if (prevTx) {
+          const prevSpec = prevTx.appSpecifications || {}
+          const expireChanged = prevSpec.expire !== currSpec.expire
+          const onlyExpireOrNoChange = Object.keys(currSpec).every(k =>
+            k === 'expire' || JSON.stringify(prevSpec[k]) === JSON.stringify(currSpec[k])
+          )
+          if (expireChanged || onlyExpireOrNoChange) {
+            type = 'renewal'
+          }
+        }
       }
-    })
+    }
+
+    return {
+      txid: tx.txid,
+      amount: amountFlux,
+      height: tx.height,
+      timestamp: tx.timestamp,
+      type: type,
+    }
+  })
 
   selectedApp.value = {
     ...app,
@@ -2075,7 +2237,7 @@ function exportCSV() {
 
   // Check if there are any transactions to export (only headers means no data)
   if (rows.length === 1) {
-    exportValidationError.value = 'No transactions found for the selected period'
+    exportValidationError.value = t('pages.billing.noTransactionsFound')
     return
   }
 
@@ -2362,9 +2524,32 @@ useSEO({
 /* Category Pills - FluxTracker style */
 .billing-category-pills {
   display: flex;
-  gap: 0.5rem;
+  column-gap: 0.5rem;
+  row-gap: 0.25rem;
   margin-bottom: 1rem;
   flex-wrap: wrap;
+}
+
+@media (max-width: 599px) {
+  .billing-category-pills {
+    flex-wrap: nowrap;
+  }
+
+  .billing-category-pill {
+    flex: 1 1 0;
+    min-width: 0;
+    justify-content: center;
+    padding: 0.25rem 0.25rem;
+  }
+
+  .billing-category-label {
+    font-size: 0.6rem !important;
+    letter-spacing: 0 !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
 }
 
 .billing-category-pill {
@@ -2442,6 +2627,12 @@ useSEO({
   line-height: 1.4 !important;
 }
 
+@media (max-width: 599px) {
+  :deep(.bordered-table .v-data-table-footer__items-per-page > span) {
+    display: none;
+  }
+}
+
 @media (max-width: 768px) {
   .billing-chart-header {
     flex-direction: column;
@@ -2471,6 +2662,12 @@ useSEO({
 }
 
 /* Sticky table header */
+:deep(.bordered-table .v-data-table-footer__items-per-page) {
+  order: -1;
+  margin-right: auto;
+  margin-left: 1rem;
+}
+
 :deep(.bordered-table thead) {
   position: sticky;
   top: 0;
@@ -2523,6 +2720,32 @@ useSEO({
   box-shadow: 0 0 0 2px rgba(var(--v-theme-primary), 0.1);
 }
 
+/* Stat cards in transaction dialog */
+.stat-card {
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.stat-card--secondary {
+  background-color: rgba(var(--v-theme-secondary), 0.06);
+  border-color: rgba(var(--v-theme-secondary), 0.2);
+}
+
+.stat-card--info {
+  background-color: rgba(var(--v-theme-info), 0.06);
+  border-color: rgba(var(--v-theme-info), 0.2);
+}
+
+.stat-card--success {
+  background-color: rgba(var(--v-theme-success), 0.06);
+  border-color: rgba(var(--v-theme-success), 0.2);
+}
+
+.stat-card--warning {
+  background-color: rgba(var(--v-theme-warning), 0.06);
+  border-color: rgba(var(--v-theme-warning), 0.2);
+}
+
 /* Export dialog radio button styling */
 .export-radio-group :deep(.v-label) {
   font-size: 0.8125rem !important;
@@ -2530,12 +2753,12 @@ useSEO({
 </style>
 
 <style>
-/* Global styles for app filter dropdown (unscoped to target overlay menu) */
-.v-menu .v-list-item-title {
+/* App filter dropdown - scoped via :has() to avoid affecting other menus */
+.v-overlay:has(.app-filter-select) .v-list-item-title {
   font-size: 0.75rem !important;
 }
 
-.v-menu .v-list-item {
+.v-overlay:has(.app-filter-select) .v-list-item {
   min-height: 32px !important;
   padding-block: 4px !important;
 }

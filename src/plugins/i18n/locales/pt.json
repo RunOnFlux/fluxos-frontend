@@ -3430,6 +3430,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Faturamento e Pagamentos",
+      "subtitle": "Acompanhe o histórico de pagamentos do seu app Flux",
+      "loading": "Carregando dados de faturamento...",
+      "fetchingPaymentHistory": "Buscando seu histórico de pagamentos",
+      "noPaymentHistory": "Sem histórico de pagamentos",
+      "noPaymentsYet": "Você ainda não tem pagamentos de apps. Registre um app para começar a rastrear pagamentos.",
+      "export": "Exportar",
+      "currentlyRunningApps": "Apps em execução",
+      "loadingApps": "Carregando seus apps em execução...",
+      "noAppsRunning": "Nenhum app em execução no momento",
+      "instance": "Instância",
+      "instances": "Instâncias",
+      "paymentSummary": "Resumo de pagamentos",
+      "totalPaid": "Total pago",
+      "applications": "Aplicações",
+      "firstTransaction": "Primeira transação",
+      "lastTransaction": "Última transação",
+      "paymentHistory": "Histórico de pagamentos",
+      "filterByType": "Filtrar por tipo",
+      "allTypes": "Todos os tipos",
+      "searchByName": "Pesquisar...",
+      "noTransactionsFound": "Nenhuma transação encontrada",
+      "noTransactionsMatch": "Nenhuma transação corresponde aos seus critérios de pesquisa",
+      "exportDialog": {
+        "title": "Exportar histórico de pagamentos",
+        "format": "Formato de exportação",
+        "selectFormat": "Selecionar formato de exportação",
+        "dateRange": "Intervalo de datas",
+        "allTime": "Todo o tempo",
+        "last30Days": "Últimos 30 dias",
+        "last90Days": "Últimos 90 dias",
+        "lastYear": "Último ano",
+        "customRange": "Intervalo personalizado",
+        "startDate": "Data de início",
+        "endDate": "Data de fim",
+        "export": "Exportar",
+        "cancel": "Cancelar"
+      },
+      "table": {
+        "appName": "Nome do app",
+        "totalPaid": "Total pago",
+        "payments": "Pagamentos",
+        "avgPayment": "Pagamento médio",
+        "actions": "Ações",
+        "details": "Detalhes",
+        "showing": "{start} a {end} de {total}"
+      },
+      "transactionTable": {
+        "type": "Tipo",
+        "amount": "Valor",
+        "date": "Data",
+        "blockHeight": "Altura do bloco",
+        "txid": "ID da transação",
+        "free": "GRÁTIS",
+        "types": {
+          "register": "Registro",
+          "update": "Atualização",
+          "renewal": "Renovação"
+        }
+      },
+      "types": {
+        "appregister": "Registro",
+        "appupdate": "Atualização"
+      },
+      "stats": {
+        "transactions": "Transações",
+        "registered": "Registradas",
+        "updated": "Atualizadas",
+        "averageCost": "Custo médio",
+        "highestPayment": "Maior pagamento"
+      },
+      "chart": {
+        "title": "TENDÊNCIAS DE PAGAMENTO",
+        "transactions": "Transações",
+        "last7Days": "Últimos 7 dias",
+        "cumulativeTotalPayments": "Total de pagamentos acumulados",
+        "spendingBreakdown": "detalhamento de gastos",
+        "appLabel": "APP",
+        "viewLabel": "VISUALIZAÇÃO",
+        "periodLabel": "PERÍODO",
+        "metricLabel": "MÉTRICA",
+        "filterByApp": "Pesquisar...",
+        "searchApps": "Pesquisar apps...",
+        "timeRanges": {
+          "7d": "7 dias",
+          "30d": "30 dias",
+          "90d": "90 dias",
+          "1y": "1 ano",
+          "all": "Todo o tempo"
+        },
+        "displayModes": {
+          "periodTotal": "Total do período",
+          "cumulative": "Cumulativo"
+        },
+        "aggregation": {
+          "daily": "Diário",
+          "weekly": "Semanal",
+          "monthly": "Mensal"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Calculadora de custos de hospedagem de aplicativos",
       "subtitle": "Hospedagem descentralizada acessível a partir de US$ 0,99/mês - Calcule seus custos exatos",

@@ -3430,6 +3430,108 @@
         }
       }
     },
+    "billing": {
+      "title": "बिलिंग आणि पेमेंट",
+      "subtitle": "तुमच्या Flux अ‍ॅपचा पेमेंट इतिहास ट्रॅक करा",
+      "loading": "बिलिंग डेटा लोड होत आहे...",
+      "fetchingPaymentHistory": "तुमचा पेमेंट इतिहास आणला जात आहे",
+      "noPaymentHistory": "कोणताही पेमेंट इतिहास नाही",
+      "noPaymentsYet": "अद्याप कोणतेही अ‍ॅप पेमेंट नाही. पेमेंट ट्रॅक करणे सुरू करण्यासाठी अ‍ॅप नोंदणी करा.",
+      "export": "निर्यात करा",
+      "currentlyRunningApps": "सध्या चालू असलेले अ‍ॅप्स",
+      "loadingApps": "तुमचे चालू असलेले अ‍ॅप्स लोड होत आहेत...",
+      "noAppsRunning": "सध्या कोणतेही अ‍ॅप चालू नाही",
+      "instance": "इन्स्टन्स",
+      "instances": "इन्स्टन्सेस",
+      "paymentSummary": "पेमेंट सारांश",
+      "totalPaid": "एकूण भरलेले",
+      "applications": "अ‍ॅप्लिकेशन्स",
+      "firstTransaction": "पहिला व्यवहार",
+      "lastTransaction": "शेवटचा व्यवहार",
+      "paymentHistory": "पेमेंट इतिहास",
+      "filterByType": "प्रकारानुसार फिल्टर करा",
+      "allTypes": "सर्व प्रकार",
+      "searchByName": "शोधा...",
+      "noTransactionsFound": "कोणताही व्यवहार आढळला नाही",
+      "noTransactionsMatch": "तुमच्या शोध निकषांशी जुळणारे कोणतेही व्यवहार नाहीत",
+      "exportDialog": {
+        "title": "पेमेंट इतिहास निर्यात करा",
+        "format": "निर्यात स्वरूप",
+        "selectFormat": "निर्यात स्वरूप निवडा",
+        "dateRange": "तारीख श्रेणी",
+        "allTime": "सर्व वेळ",
+        "last30Days": "मागील ३० दिवस",
+        "last90Days": "मागील ९० दिवस",
+        "lastYear": "मागील वर्ष",
+        "customRange": "सानुकूल श्रेणी",
+        "startDate": "प्रारंभ तारीख",
+        "endDate": "समाप्ती तारीख",
+        "export": "निर्यात करा",
+        "cancel": "रद्द करा"
+      },
+      "table": {
+        "appName": "अ‍ॅपचे नाव",
+        "totalPaid": "एकूण भरलेले",
+        "payments": "पेमेंट",
+        "avgPayment": "सरासरी पेमेंट",
+        "actions": "क्रिया",
+        "details": "तपशील",
+        "showing": "{total} पैकी {start} ते {end}"
+      },
+      "transactionTable": {
+        "type": "प्रकार",
+        "amount": "रक्कम",
+        "date": "तारीख",
+        "blockHeight": "ब्लॉक उंची",
+        "txid": "व्यवहार ID",
+        "free": "मोफत",
+        "types": {
+          "register": "नोंदणी",
+          "update": "अपडेट",
+          "renewal": "नूतनीकरण"
+        }
+      },
+      "types": {
+        "appregister": "नोंदणी",
+        "appupdate": "अपडेट"
+      },
+      "stats": {
+        "transactions": "व्यवहार",
+        "registered": "नोंदणीकृत",
+        "updated": "अपडेट केलेले",
+        "averageCost": "सरासरी खर्च",
+        "highestPayment": "सर्वाधिक पेमेंट"
+      },
+      "chart": {
+        "title": "पेमेंट ट्रेंड",
+        "transactions": "व्यवहार",
+        "last7Days": "मागील ७ दिवस",
+        "cumulativeTotalPayments": "संचित एकूण पेमेंट",
+        "spendingBreakdown": "खर्चाचा तपशील",
+        "appLabel": "अ‍ॅप",
+        "viewLabel": "दृश्य",
+        "periodLabel": "कालावधी",
+        "metricLabel": "मेट्रिक",
+        "filterByApp": "शोधा...",
+        "searchApps": "अ‍ॅप्स शोधा...",
+        "timeRanges": {
+          "7d": "७ दिवस",
+          "30d": "३० दिवस",
+          "90d": "९० दिवस",
+          "1y": "१ वर्ष",
+          "all": "सर्व वेळ"
+        },
+        "displayModes": {
+          "periodTotal": "कालावधीचा एकूण",
+          "cumulative": "संचित"
+        },
+        "aggregation": {
+          "daily": "दैनिक",
+          "weekly": "साप्ताहिक",
+          "monthly": "मासिक"
+        }
+      }
+    },
     "costCalculator": {
       "title": "ॲप होस्टिंग कॉस्ट कॅल्क्युलेटर",
       "subtitle": "$0.99/महिना पासून सुरू होणारी परवडणारी विकेंद्रित होस्टिंग - तुमच्या अचूक खर्चाची गणना करा",

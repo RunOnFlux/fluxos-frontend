@@ -3430,6 +3430,108 @@
         }
       }
     },
+    "billing": {
+      "title": "الفواتير والمدفوعات",
+      "subtitle": "تتبع سجل مدفوعات تطبيق Flux الخاص بك",
+      "loading": "جارٍ تحميل بيانات الفواتير...",
+      "fetchingPaymentHistory": "جارٍ جلب سجل مدفوعاتك",
+      "noPaymentHistory": "لا يوجد سجل مدفوعات",
+      "noPaymentsYet": "ليس لديك أي مدفوعات للتطبيق حتى الآن. قم بتسجيل تطبيق لبدء تتبع المدفوعات.",
+      "export": "تصدير",
+      "currentlyRunningApps": "التطبيقات قيد التشغيل حاليًا",
+      "loadingApps": "جارٍ تحميل تطبيقاتك قيد التشغيل...",
+      "noAppsRunning": "لا توجد تطبيقات قيد التشغيل حاليًا",
+      "instance": "نسخة",
+      "instances": "نسخ",
+      "paymentSummary": "ملخص المدفوعات",
+      "totalPaid": "إجمالي المدفوع",
+      "applications": "التطبيقات",
+      "firstTransaction": "أول معاملة",
+      "lastTransaction": "آخر معاملة",
+      "paymentHistory": "سجل المدفوعات",
+      "filterByType": "تصفية حسب النوع",
+      "allTypes": "جميع الأنواع",
+      "searchByName": "بحث...",
+      "noTransactionsFound": "لم يتم العثور على معاملات",
+      "noTransactionsMatch": "لا توجد معاملات تطابق معايير البحث",
+      "exportDialog": {
+        "title": "تصدير سجل المدفوعات",
+        "format": "تنسيق التصدير",
+        "selectFormat": "اختر تنسيق التصدير",
+        "dateRange": "نطاق التاريخ",
+        "allTime": "كل الوقت",
+        "last30Days": "آخر 30 يومًا",
+        "last90Days": "آخر 90 يومًا",
+        "lastYear": "آخر سنة",
+        "customRange": "نطاق مخصص",
+        "startDate": "تاريخ البدء",
+        "endDate": "تاريخ الانتهاء",
+        "export": "تصدير",
+        "cancel": "إلغاء"
+      },
+      "table": {
+        "appName": "اسم التطبيق",
+        "totalPaid": "إجمالي المدفوع",
+        "payments": "المدفوعات",
+        "avgPayment": "متوسط الدفع",
+        "actions": "الإجراءات",
+        "details": "التفاصيل",
+        "showing": "{start} إلى {end} من {total}"
+      },
+      "transactionTable": {
+        "type": "النوع",
+        "amount": "المبلغ",
+        "date": "التاريخ",
+        "blockHeight": "ارتفاع الكتلة",
+        "txid": "معرف المعاملة",
+        "free": "مجاني",
+        "types": {
+          "register": "تسجيل",
+          "update": "تحديث",
+          "renewal": "تجديد"
+        }
+      },
+      "types": {
+        "appregister": "تسجيل",
+        "appupdate": "تحديث"
+      },
+      "stats": {
+        "transactions": "المعاملات",
+        "registered": "مسجل",
+        "updated": "محدّث",
+        "averageCost": "متوسط التكلفة",
+        "highestPayment": "أعلى دفعة"
+      },
+      "chart": {
+        "title": "اتجاهات المدفوعات",
+        "transactions": "المعاملات",
+        "last7Days": "آخر 7 أيام",
+        "cumulativeTotalPayments": "إجمالي المدفوعات التراكمية",
+        "spendingBreakdown": "تفصيل الإنفاق",
+        "appLabel": "التطبيق",
+        "viewLabel": "عرض",
+        "periodLabel": "الفترة",
+        "metricLabel": "المقياس",
+        "filterByApp": "بحث...",
+        "searchApps": "البحث عن التطبيقات...",
+        "timeRanges": {
+          "7d": "7 أيام",
+          "30d": "30 يومًا",
+          "90d": "90 يومًا",
+          "1y": "سنة",
+          "all": "كل الوقت"
+        },
+        "displayModes": {
+          "periodTotal": "إجمالي الفترة",
+          "cumulative": "تراكمي"
+        },
+        "aggregation": {
+          "daily": "يومي",
+          "weekly": "أسبوعي",
+          "monthly": "شهري"
+        }
+      }
+    },
     "costCalculator": {
       "title": "حاسبة تكلفة استضافة التطبيقات",
       "subtitle": "استضافة لامركزية بأسعار معقولة تبدأ من 0.99 دولارًا أمريكيًا شهريًا - احسب تكاليفك الدقيقة",

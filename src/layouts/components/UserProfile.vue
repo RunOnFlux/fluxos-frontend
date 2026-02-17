@@ -128,7 +128,7 @@ const userProfileList = [
   {
     type: "navItem",
     icon: "tabler-credit-card",
-    title: "Billing & Payments",
+    titleKey: "userProfile.billingAndPayments",
     to: "/billing/payments",
   },
   { type: "divider" },
@@ -247,7 +247,7 @@ const userProfileList = [
                   />
                 </template>
 
-                <VListItemTitle>{{ item.title }}</VListItemTitle>
+                <VListItemTitle>{{ item.titleKey ? $t(item.titleKey) : item.title }}</VListItemTitle>
 
                 <template
                   v-if="item.badgeProps"
@@ -275,7 +275,7 @@ const userProfileList = [
                 append-icon="tabler-logout"
                 @click="logout"
               >
-                Logout
+                {{ $t('userProfile.logout') }}
               </VBtn>
             </div>
           </PerfectScrollbar>

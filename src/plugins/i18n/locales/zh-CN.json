@@ -3430,6 +3430,108 @@
         }
       }
     },
+    "billing": {
+      "title": "账单与付款",
+      "subtitle": "追踪您的 Flux 应用付款历史",
+      "loading": "加载账单数据...",
+      "fetchingPaymentHistory": "正在获取您的付款历史",
+      "noPaymentHistory": "无付款历史",
+      "noPaymentsYet": "您尚无任何应用付款记录。注册一个应用以开始追踪付款。",
+      "export": "导出",
+      "currentlyRunningApps": "当前运行的应用",
+      "loadingApps": "正在加载您的运行中应用...",
+      "noAppsRunning": "当前没有正在运行的应用",
+      "instance": "实例",
+      "instances": "实例",
+      "paymentSummary": "付款摘要",
+      "totalPaid": "总付款额",
+      "applications": "应用程序",
+      "firstTransaction": "首次交易",
+      "lastTransaction": "最近交易",
+      "paymentHistory": "付款历史",
+      "filterByType": "按类型筛选",
+      "allTypes": "所有类型",
+      "searchByName": "搜索...",
+      "noTransactionsFound": "未找到交易",
+      "noTransactionsMatch": "没有交易符合您的搜索条件",
+      "exportDialog": {
+        "title": "导出付款历史",
+        "format": "导出格式",
+        "selectFormat": "选择导出格式",
+        "dateRange": "日期范围",
+        "allTime": "所有时间",
+        "last30Days": "近 30 天",
+        "last90Days": "近 90 天",
+        "lastYear": "近 1 年",
+        "customRange": "自定义范围",
+        "startDate": "开始日期",
+        "endDate": "结束日期",
+        "export": "导出",
+        "cancel": "取消"
+      },
+      "table": {
+        "appName": "应用名称",
+        "totalPaid": "总付款额",
+        "payments": "付款次数",
+        "avgPayment": "平均付款",
+        "actions": "操作",
+        "details": "详情",
+        "showing": "第 {start} 至 {end} 条，共 {total} 条"
+      },
+      "transactionTable": {
+        "type": "类型",
+        "amount": "金额",
+        "date": "日期",
+        "blockHeight": "区块高度",
+        "txid": "交易 ID",
+        "free": "免费",
+        "types": {
+          "register": "注册",
+          "update": "更新",
+          "renewal": "续费"
+        }
+      },
+      "types": {
+        "appregister": "注册",
+        "appupdate": "更新"
+      },
+      "stats": {
+        "transactions": "交易次数",
+        "registered": "已注册",
+        "updated": "已更新",
+        "averageCost": "平均费用",
+        "highestPayment": "最高付款"
+      },
+      "chart": {
+        "title": "付款趋势",
+        "transactions": "交易次数",
+        "last7Days": "近 7 天",
+        "cumulativeTotalPayments": "累计总付款",
+        "spendingBreakdown": "支出明细",
+        "appLabel": "应用",
+        "viewLabel": "视图",
+        "periodLabel": "周期",
+        "metricLabel": "指标",
+        "filterByApp": "搜索...",
+        "searchApps": "搜索应用...",
+        "timeRanges": {
+          "7d": "7 天",
+          "30d": "30 天",
+          "90d": "90 天",
+          "1y": "1 年",
+          "all": "所有时间"
+        },
+        "displayModes": {
+          "periodTotal": "周期合计",
+          "cumulative": "累计"
+        },
+        "aggregation": {
+          "daily": "每日",
+          "weekly": "每周",
+          "monthly": "每月"
+        }
+      }
+    },
     "costCalculator": {
       "title": "应用程序托管成本计算器",
       "subtitle": "经济实惠的去中心化托管，起价 0.99 美元/月 - 计算您的确切成本",

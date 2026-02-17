@@ -3430,6 +3430,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Биллинг и Платежи",
+      "subtitle": "Отслеживайте историю платежей вашего приложения Flux",
+      "loading": "Загрузка данных биллинга...",
+      "fetchingPaymentHistory": "Получение истории платежей",
+      "noPaymentHistory": "История платежей отсутствует",
+      "noPaymentsYet": "У вас ещё нет платежей за приложения. Зарегистрируйте приложение, чтобы начать отслеживать платежи.",
+      "export": "Экспорт",
+      "currentlyRunningApps": "Запущенные приложения",
+      "loadingApps": "Загрузка запущенных приложений...",
+      "noAppsRunning": "Нет запущенных приложений",
+      "instance": "Экземпляр",
+      "instances": "Экземпляры",
+      "paymentSummary": "Сводка платежей",
+      "totalPaid": "Всего оплачено",
+      "applications": "Приложения",
+      "firstTransaction": "Первая транзакция",
+      "lastTransaction": "Последняя транзакция",
+      "paymentHistory": "История платежей",
+      "filterByType": "Фильтр по типу",
+      "allTypes": "Все типы",
+      "searchByName": "Поиск...",
+      "noTransactionsFound": "Транзакции не найдены",
+      "noTransactionsMatch": "Ни одна транзакция не соответствует критериям поиска",
+      "exportDialog": {
+        "title": "Экспорт истории платежей",
+        "format": "Формат экспорта",
+        "selectFormat": "Выберите формат экспорта",
+        "dateRange": "Диапазон дат",
+        "allTime": "За всё время",
+        "last30Days": "Последние 30 дней",
+        "last90Days": "Последние 90 дней",
+        "lastYear": "Последний год",
+        "customRange": "Произвольный диапазон",
+        "startDate": "Дата начала",
+        "endDate": "Дата окончания",
+        "export": "Экспорт",
+        "cancel": "Отмена"
+      },
+      "table": {
+        "appName": "Название приложения",
+        "totalPaid": "Всего оплачено",
+        "payments": "Платежи",
+        "avgPayment": "Средний платёж",
+        "actions": "Действия",
+        "details": "Подробности",
+        "showing": "{start}–{end} из {total}"
+      },
+      "transactionTable": {
+        "type": "Тип",
+        "amount": "Сумма",
+        "date": "Дата",
+        "blockHeight": "Высота блока",
+        "txid": "ID транзакции",
+        "free": "БЕСПЛАТНО",
+        "types": {
+          "register": "Регистрация",
+          "update": "Обновление",
+          "renewal": "Продление"
+        }
+      },
+      "types": {
+        "appregister": "Регистрация",
+        "appupdate": "Обновление"
+      },
+      "stats": {
+        "transactions": "Транзакции",
+        "registered": "Зарегистрировано",
+        "updated": "Обновлено",
+        "averageCost": "Средняя стоимость",
+        "highestPayment": "Наибольший платёж"
+      },
+      "chart": {
+        "title": "ТРЕНДЫ ПЛАТЕЖЕЙ",
+        "transactions": "Транзакции",
+        "last7Days": "Последние 7 дней",
+        "cumulativeTotalPayments": "Накопленные общие платежи",
+        "spendingBreakdown": "распределение расходов",
+        "appLabel": "ПРИЛОЖЕНИЕ",
+        "viewLabel": "ВИД",
+        "periodLabel": "ПЕРИОД",
+        "metricLabel": "МЕТРИКА",
+        "filterByApp": "Поиск...",
+        "searchApps": "Поиск приложений...",
+        "timeRanges": {
+          "7d": "7 дней",
+          "30d": "30 дней",
+          "90d": "90 дней",
+          "1y": "1 год",
+          "all": "За всё время"
+        },
+        "displayModes": {
+          "periodTotal": "Сумма за период",
+          "cumulative": "Накопительный итог"
+        },
+        "aggregation": {
+          "daily": "Ежедневно",
+          "weekly": "Еженедельно",
+          "monthly": "Ежемесячно"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Калькулятор стоимости хостинга приложений",
       "subtitle": "Доступный децентрализованный хостинг от 0,99 доллара США в месяц. Рассчитайте точные затраты.",

@@ -3430,6 +3430,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Tagihan & Pembayaran",
+      "subtitle": "Lacak riwayat pembayaran aplikasi Flux sampeyan",
+      "loading": "Ngemot data tagihan...",
+      "fetchingPaymentHistory": "Njupuk riwayat pembayaran sampeyan",
+      "noPaymentHistory": "Ora ana riwayat pembayaran",
+      "noPaymentsYet": "Sampeyan durung duwe pembayaran aplikasi. Daftarake aplikasi kanggo wiwit nglacak pembayaran.",
+      "export": "Ekspor",
+      "currentlyRunningApps": "Aplikasi sing lagi mlaku",
+      "loadingApps": "Ngemot aplikasi sing lagi mlaku...",
+      "noAppsRunning": "Ora ana aplikasi sing lagi mlaku",
+      "instance": "Instansi",
+      "instances": "Instansi",
+      "paymentSummary": "Ringkesan pembayaran",
+      "totalPaid": "Total dibayar",
+      "applications": "Aplikasi",
+      "firstTransaction": "Transaksi pertama",
+      "lastTransaction": "Transaksi pungkasan",
+      "paymentHistory": "Riwayat pembayaran",
+      "filterByType": "Filter miturut jinis",
+      "allTypes": "Kabeh jinis",
+      "searchByName": "Goleki...",
+      "noTransactionsFound": "Ora ana transaksi sing ditemokake",
+      "noTransactionsMatch": "Ora ana transaksi sing cocog karo kriteria panelusuran sampeyan",
+      "exportDialog": {
+        "title": "Ekspor riwayat pembayaran",
+        "format": "Format ekspor",
+        "selectFormat": "Pilih format ekspor",
+        "dateRange": "Rentang tanggal",
+        "allTime": "Kabeh wektu",
+        "last30Days": "30 dina kepungkur",
+        "last90Days": "90 dina kepungkur",
+        "lastYear": "Taun kepungkur",
+        "customRange": "Rentang khusus",
+        "startDate": "Tanggal mulai",
+        "endDate": "Tanggal pungkasan",
+        "export": "Ekspor",
+        "cancel": "Batal"
+      },
+      "table": {
+        "appName": "Jeneng aplikasi",
+        "totalPaid": "Total dibayar",
+        "payments": "Pembayaran",
+        "avgPayment": "Rata-rata pembayaran",
+        "actions": "Tindakan",
+        "details": "Detail",
+        "showing": "{start} nganti {end} saka {total}"
+      },
+      "transactionTable": {
+        "type": "Jinis",
+        "amount": "Jumlah",
+        "date": "Tanggal",
+        "blockHeight": "Dhuwur blok",
+        "txid": "ID transaksi",
+        "free": "GRATIS",
+        "types": {
+          "register": "Pendaftaran",
+          "update": "Pembaruan",
+          "renewal": "Pembaruan"
+        }
+      },
+      "types": {
+        "appregister": "Pendaftaran",
+        "appupdate": "Pembaruan"
+      },
+      "stats": {
+        "transactions": "Transaksi",
+        "registered": "Terdaftar",
+        "updated": "Diperbarui",
+        "averageCost": "Biaya rata-rata",
+        "highestPayment": "Pembayaran tertinggi"
+      },
+      "chart": {
+        "title": "TREN PEMBAYARAN",
+        "transactions": "Transaksi",
+        "last7Days": "7 dina kepungkur",
+        "cumulativeTotalPayments": "Total pembayaran kumulatif",
+        "spendingBreakdown": "rincian pengeluaran",
+        "appLabel": "APP",
+        "viewLabel": "TAMPILAN",
+        "periodLabel": "PERIODE",
+        "metricLabel": "METRIK",
+        "filterByApp": "Goleki...",
+        "searchApps": "Goleki aplikasi...",
+        "timeRanges": {
+          "7d": "7 dina",
+          "30d": "30 dina",
+          "90d": "90 dina",
+          "1y": "1 taun",
+          "all": "Kabeh wektu"
+        },
+        "displayModes": {
+          "periodTotal": "Total periode",
+          "cumulative": "Kumulatif"
+        },
+        "aggregation": {
+          "daily": "Saben dina",
+          "weekly": "Saben minggu",
+          "monthly": "Saben sasi"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Kalkulator Biaya",
       "subtitle": "Affordable Desentralisasi hosting Mulai at $0.99/sasi - Calculate your exact costs",
