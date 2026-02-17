@@ -538,23 +538,9 @@ meta:
                 color="info"
                 prepend-icon="tabler-brand-docker"
                 class="cursor-pointer"
-                @click="console.log('CLICK:', { item, value, index, internalItem, raw: item?.raw, keys: Object.keys(item || {}) }); filterChartByApp(item?.raw?.appName || item?.appName || value)"
+                @click="filterChartByApp(item?.raw?.appName || item?.appName || value)"
               >
-                {{ (() => {
-                  console.log('RENDER appName FULL:', {
-                    index,
-                    value,
-                    'typeof value': typeof value,
-                    'item': JSON.parse(JSON.stringify(item)),
-                    'item.raw': item?.raw,
-                    'item.appName': item?.appName,
-                    'internalItem': internalItem ? JSON.parse(JSON.stringify(internalItem)) : null,
-                    'itemKeys': item ? Object.keys(item) : [],
-                    'itemValues': item ? Object.values(item) : [],
-                    'sortBy': sortBy
-                  });
-                  return item?.raw?.appName || item?.appName || value || 'ERROR';
-                })() }}
+                {{ item?.raw?.appName || item?.appName || value }}
               </VChip>
             </template>
 
@@ -1355,12 +1341,6 @@ const filteredAppPayments = computed(() => {
     })
   }
 
-  console.log('filteredAppPayments computed (sorted):', {
-    count: result.length,
-    first10: result.slice(0, 10).map(app => ({ appName: app.appName, totalPaid: app.totalPaid })),
-    sortBy: sortBy.value
-  })
-
   return result
 })
 
@@ -1504,8 +1484,7 @@ async function fetchPaymentHistory() {
 
     // Check if user is authenticated (zelidauth contains zelid)
     if (!zelidauth) {
-      console.warn('No authentication found - logging out')
-      await router.push('/')
+        await router.push('/')
       return
     }
 
@@ -1515,34 +1494,16 @@ async function fetchPaymentHistory() {
 
     // Validate zelid exists and is not empty
     if (!extractedZelid || !extractedZelid.trim()) {
-      console.warn('Invalid zelid in zelidauth - logging out')
-      await router.push('/')
+        await router.push('/')
       return
     }
-
-    console.log('=== FETCH PAYMENT HISTORY DEBUG ===')
-    console.log('ZelID:', extractedZelid)
-    console.log('ZelidAuth exists:', !!zelidauth)
 
     const response = await BillingService.getMyPaymentHistory(zelidauth, extractedZelid)
     transactions.value = response.data.data || []
 
-    console.log('Total transactions:', transactions.value.length)
-
     // Fetch currently running apps
     const appsResponse = await BillingService.getMyApps(zelidauth, extractedZelid)
     myApps.value = appsResponse.data.data || []
-    console.log('Total running apps:', myApps.value.length)
-    console.log('First 5 transactions app names:', transactions.value.slice(0, 5).map(tx => ({
-      type: tx.type,
-      appName: tx.appSpecifications?.name,
-      fullSpec: tx.appSpecifications
-    })))
-
-    // Extract all unique app names
-    const allAppNames = [...new Set(transactions.value.map(tx => tx.appSpecifications?.name).filter(Boolean))]
-    console.log('All unique app names (first 20):', allAppNames.slice(0, 20))
-    console.log('Numeric-only app names:', allAppNames.filter(name => /^\d+$/.test(name)))
   }
   catch (error) {
     console.error('Failed to fetch payment history:', error)
