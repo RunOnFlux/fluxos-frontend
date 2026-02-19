@@ -1601,6 +1601,7 @@
                           dense
                           hide-details
                           class="flex-grow-1"
+                          @paste="handleCommandPaste"
                         />
                         <VBtn
                           icon
@@ -3688,6 +3689,49 @@ function removeCommandEntry(i) {
 function handleCommandsImport(commands) {
   commandsDialog.entries.push(...commands)
   showToast('success', `Imported ${commands.length} command(s)`)
+}
+
+function handleCommandPaste(event) {
+  const pastedText = event.clipboardData?.getData('text')
+  if (!pastedText) return
+
+  const trimmedPaste = pastedText.trim()
+
+  // Try to parse as JSON array: ["cmd","--flag","value"]
+  // or bare quoted lines:  "cmd",\n  "--flag",\n  "value"
+  const tryParseArray = str => {
+    try {
+      const parsed = JSON.parse(str)
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(item => typeof item === 'string'))
+        return parsed
+    } catch { /* ignore */ }
+    return null
+  }
+
+  const jsonCandidate = trimmedPaste.startsWith('[')
+    ? trimmedPaste
+    : `[${trimmedPaste.replace(/,\s*$/, '')}]`
+
+  const cmdArray = tryParseArray(jsonCandidate)
+  if (cmdArray && cmdArray.length > 1) {
+    // Only intercept if multiple items — single quoted string falls through to normal paste
+    event.preventDefault()
+    const newCmds = cmdArray.filter(cmd => cmd.trim().length > 0)
+    if (!newCmds.length) return
+    commandsDialog.entries.push(...newCmds)
+    showToast('success', `Imported ${newCmds.length} command(s)`)
+    commandsDialog.newCommand = ''
+    return
+  }
+
+  // Fallback: newline-separated plain strings
+  const lines = trimmedPaste.split('\n').map(l => l.trim()).filter(l => l.length > 0)
+  if (lines.length > 1) {
+    event.preventDefault()
+    commandsDialog.entries.push(...lines)
+    showToast('success', `Imported ${lines.length} command(s)`)
+    commandsDialog.newCommand = ''
+  }
 }
 
 function handleSpecImport(spec) {
@@ -6249,6 +6293,52 @@ function handleEnvImport(entries) {
 function handleEnvPaste(event) {
   const pastedText = event.clipboardData?.getData('text')
   if (!pastedText) return
+
+  // Handle JSON array of env strings, with or without outer brackets:
+  //   ["KEY1=val1","KEY2=val2"]
+  //   "KEY1=val1",\n  "KEY2=val2",\n  "KEY3=val3"
+  const trimmedPaste = pastedText.trim()
+
+  const tryParseEnvArray = str => {
+    try {
+      const parsed = JSON.parse(str)
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(item => typeof item === 'string'))
+        return parsed
+    } catch { /* ignore */ }
+    return null
+  }
+
+  // Try as-is (with brackets), then try wrapping bare quoted lines in brackets
+  const jsonCandidate = trimmedPaste.startsWith('[')
+    ? trimmedPaste
+    : `[${trimmedPaste.replace(/,\s*$/, '')}]`
+
+  const envArray = tryParseEnvArray(jsonCandidate)
+  if (envArray) {
+    event.preventDefault()
+    let importedCount = 0
+    let skippedCount = 0
+    let invalidCount = 0
+    for (const item of envArray) {
+      if (!item.includes('=')) { invalidCount++; continue }
+      const [key, ...rest] = item.split('=')
+      const trimmedKey = key.trim()
+      const trimmedValue = rest.join('=').trim()
+      if (!trimmedKey) { invalidCount++; continue }
+      if (envDialog.entries.some(e => e.key === trimmedKey)) { skippedCount++; continue }
+      envDialog.entries.push({ key: trimmedKey, value: trimmedValue })
+      importedCount++
+    }
+    if (importedCount > 0) {
+      let message = `Imported ${importedCount} environment variable(s)`
+      if (skippedCount > 0) message += `, skipped ${skippedCount} duplicate(s)`
+      if (invalidCount > 0) message += `, ignored ${invalidCount} invalid line(s)`
+      showToast('success', message)
+    } else if (skippedCount > 0 || invalidCount > 0) {
+      showToast('warning', `No new variables imported. ${skippedCount} duplicate(s), ${invalidCount} invalid line(s)`)
+    }
+    return
+  }
 
   // Helper function to parse a single line with multiple possible separators
   const parseLine = line => {
