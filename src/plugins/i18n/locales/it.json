@@ -437,7 +437,7 @@
       "total": "Totale",
       "files": "file | file",
       "clearAll": "Cancella tutto",
-      "removeFile": "Rimuovi file",
+      "removeFile": "Rimuovi file"
     },
     "dropZone": {
       "onlyImageFiles": "Sono consentiti solo file di immagine",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "Il file \"{name}\" è già nella coda di caricamento",
           "fileTooLarge": "Il file \"{name}\" supera il limite di 5 GB",
           "uploadFailed": "Caricamento non riuscito",
-      "uploadQueue": "Coda di caricamento",
-      "total": "Totale",
-      "files": "file | file",
-      "clearAll": "Cancella tutto",
-      "removeFile": "Rimuovi file",
-          "storageFull": "Lo spazio di archiviazione è pieno: non sono consentiti caricamenti",
           "insufficientStorage": "Il file \"{name}\" ({fileSize} MB) supera lo spazio di archiviazione disponibile ({available} MB)"
         }
       },

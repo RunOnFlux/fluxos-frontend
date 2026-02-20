@@ -437,7 +437,7 @@
       "total": "合計",
       "files": "ファイル | ファイル",
       "clearAll": "すべてクリア",
-      "removeFile": "ファイルを削除",
+      "removeFile": "ファイルを削除"
     },
     "dropZone": {
       "onlyImageFiles": "画像ファイルのみ許可されます",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "ファイル「{name}」はすでにアップロード キュー内にあります",
           "fileTooLarge": "ファイル「{name}」は 5GB の制限を超えています",
           "uploadFailed": "アップロードに失敗しました",
-      "uploadQueue": "アップロードキュー",
-      "total": "合計",
-      "files": "ファイル | ファイル",
-      "clearAll": "すべてクリア",
-      "removeFile": "ファイルを削除",
-          "storageFull": "ストレージがいっぱいです - アップロードは許可されません",
           "insufficientStorage": "ファイル「{name}」（{fileSize} MB）が利用可能なストレージ（{available} MB）を超えています"
         }
       },

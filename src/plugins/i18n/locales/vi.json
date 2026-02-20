@@ -437,7 +437,7 @@
       "total": "Tổng",
       "files": "tệp | tệp",
       "clearAll": "Xóa tất cả",
-      "removeFile": "Xóa tệp",
+      "removeFile": "Xóa tệp"
     },
     "dropZone": {
       "onlyImageFiles": "Chỉ cho phép tập tin hình ảnh",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "Tệp \"{name}\" đã có trong hàng đợi tải lên",
           "fileTooLarge": "Tệp \"{name}\" vượt quá giới hạn 5GB",
           "uploadFailed": "Tải lên không thành công",
-      "uploadQueue": "Hàng đợi tải lên",
-      "total": "Tổng",
-      "files": "tệp | tệp",
-      "clearAll": "Xóa tất cả",
-      "removeFile": "Xóa tệp",
-          "storageFull": "Bộ nhớ đã đầy - không được phép tải lên",
           "insufficientStorage": "Tệp \"{name}\" ({fileSize} MB) vượt quá dung lượng lưu trữ khả dụng ({available} MB)"
         }
       },

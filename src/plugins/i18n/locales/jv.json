@@ -437,7 +437,7 @@
       "total": "Total",
       "files": "file | file",
       "clearAll": "Busak Kabeh",
-      "removeFile": "Busak File",
+      "removeFile": "Busak File"
     },
     "dropZone": {
       "onlyImageFiles": "Only Gambar files are allowed",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "File \"{name}\" is already in the Unggah queue",
           "fileTooLarge": "File \"{name}\" ngluwihi watesan 5GB",
           "uploadFailed": "Unggah gagal",
-      "uploadQueue": "Antrian Unggah",
-      "total": "Total",
-      "files": "file | file",
-      "clearAll": "Busak Kabeh",
-      "removeFile": "Busak File",
-          "storageFull": "Panyimpenan is full - Ora uploads allowed",
           "insufficientStorage": "Panyimpenan ora cukup. Kasedhiya: {available}. Dibutuhake kanggo {name}."
         }
       },

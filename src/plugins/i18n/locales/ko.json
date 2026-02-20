@@ -437,7 +437,7 @@
       "total": "합계",
       "files": "파일 | 파일",
       "clearAll": "모두 지우기",
-      "removeFile": "파일 제거",
+      "removeFile": "파일 제거"
     },
     "dropZone": {
       "onlyImageFiles": "이미지 파일만 허용됩니다.",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "\"{name}\" 파일이 이미 업로드 대기열에 있습니다.",
           "fileTooLarge": "\"{name}\" 파일이 5GB 제한을 초과했습니다.",
           "uploadFailed": "업로드 실패",
-      "uploadQueue": "업로드 대기열",
-      "total": "합계",
-      "files": "파일 | 파일",
-      "clearAll": "모두 지우기",
-      "removeFile": "파일 제거",
-          "storageFull": "저장용량이 가득 찼습니다. 업로드가 허용되지 않습니다.",
           "insufficientStorage": "파일 \"{name}\"({fileSize}MB)이 사용 가능한 저장 공간({available}MB)을 초과합니다."
         }
       },

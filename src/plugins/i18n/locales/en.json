@@ -437,7 +437,7 @@
       "files": "file | files",
       "clearAll": "Clear All",
       "removeFile": "Remove File",
-      "uploadFailed": "Upload failed for '{fileName}'",
+      "uploadFailed": "Upload failed for '{fileName}'"
     },
     "dropZone": {
       "onlyImageFiles": "Only image files are allowed",

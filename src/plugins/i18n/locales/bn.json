@@ -437,7 +437,7 @@
       "total": "মোট",
       "files": "ফাইল | ফাইল",
       "clearAll": "সব মুছুন",
-      "removeFile": "ফাইল সরান",
+      "removeFile": "ফাইল সরান"
     },
     "dropZone": {
       "onlyImageFiles": "শুধুমাত্র ছবি ফাইল অনুমোদিত",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "ফাইল \"{name}\" ইতিমধ্যেই আপলোড সারিতে রয়েছে৷",
           "fileTooLarge": "ফাইল \"{name}\" 5GB সীমা অতিক্রম করেছে৷",
           "uploadFailed": "আপলোড ব্যর্থ হয়েছে",
-      "uploadQueue": "আপলোড সারি",
-      "total": "মোট",
-      "files": "ফাইল | ফাইল",
-      "clearAll": "সব মুছুন",
-      "removeFile": "ফাইল সরান",
-          "storageFull": "সঞ্চয়স্থান পূর্ণ - কোন আপলোড অনুমোদিত",
           "insufficientStorage": "ফাইল \"{name}\" ({fileSize} MB) উপলব্ধ সঞ্চয়স্থান ছাড়িয়ে গেছে ({available} MB)"
         }
       },

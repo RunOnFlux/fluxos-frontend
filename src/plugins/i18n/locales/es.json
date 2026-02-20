@@ -437,7 +437,7 @@
       "total": "Total",
       "files": "archivo | archivos",
       "clearAll": "Borrar todo",
-      "removeFile": "Eliminar archivo",
+      "removeFile": "Eliminar archivo"
     },
     "dropZone": {
       "onlyImageFiles": "Sólo se permiten archivos de imagen",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "El archivo \"{name}\" ya está en la cola de carga",
           "fileTooLarge": "El archivo \"{name}\" supera el límite de 5 GB",
           "uploadFailed": "Error al subir",
-      "uploadQueue": "Cola de carga",
-      "total": "Total",
-      "files": "archivo | archivos",
-      "clearAll": "Borrar todo",
-      "removeFile": "Eliminar archivo",
-          "storageFull": "El almacenamiento está lleno: no se permiten cargas",
           "insufficientStorage": "El archivo \"{name}\" ({fileSize} MB) excede el almacenamiento disponible ({available} MB)"
         }
       },

@@ -437,7 +437,7 @@
       "total": "Total",
       "files": "file | file",
       "clearAll": "Hapus Semua",
-      "removeFile": "Hapus File",
+      "removeFile": "Hapus File"
     },
     "dropZone": {
       "onlyImageFiles": "Hanya file gambar yang diperbolehkan",
@@ -2220,12 +2220,6 @@
           "duplicateFile": "File \"{name}\" sudah ada dalam antrian unggah",
           "fileTooLarge": "File \"{name}\" melebihi batas 5 GB",
           "uploadFailed": "Gagal mengunggah",
-      "uploadQueue": "Antrean Unggah",
-      "total": "Total",
-      "files": "file | file",
-      "clearAll": "Hapus Semua",
-      "removeFile": "Hapus File",
-          "storageFull": "Penyimpanan penuh - tidak diperbolehkan mengunggah",
           "insufficientStorage": "File \"{name}\" ({fileSize} MB) melebihi penyimpanan yang tersedia ({available} MB)"
         }
       },

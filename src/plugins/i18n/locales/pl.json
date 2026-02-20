@@ -956,7 +956,7 @@
       "total": "Łącznie",
       "files": "plik | pliki | plików",
       "clearAll": "Wyczyść wszystko",
-      "removeFile": "Usuń plik",
+      "removeFile": "Usuń plik"
     },
     "runningInstances": {
       "deployedInstances": "Wdrożone instancje",
