@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' is already in the upload queue",
       "uploadSuccess": "'{fileName}' has been uploaded",
       "uploadError": "Error uploading '{fileName}': status {status}",
-      "uploadFailed": "Upload failed for '{fileName}'"
+      "uploadQueue": "Upload Queue",
+      "total": "Total",
+      "files": "file | files",
+      "clearAll": "Clear All",
+      "removeFile": "Remove File",
+      "uploadFailed": "Upload failed for '{fileName}'",
     },
     "dropZone": {
       "onlyImageFiles": "Only image files are allowed",

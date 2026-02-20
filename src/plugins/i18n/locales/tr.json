@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' zaten yükleme kuyruğunda",
       "uploadSuccess": "'{fileName}' yüklendi",
       "uploadError": "'{fileName}' yüklenirken hata oluştu: durum {status}",
-      "uploadFailed": "'{fileName}' için yükleme başarısız oldu"
+      "uploadFailed": "'{fileName}' için yükleme başarısız oldu",
+      "uploadQueue": "Yükleme Kuyruğu",
+      "total": "Toplam",
+      "files": "dosya | dosyalar",
+      "clearAll": "Tümünü Temizle",
+      "removeFile": "Dosyayı Kaldır",
     },
     "dropZone": {
       "onlyImageFiles": "Yalnızca resim dosyalarına izin verilir",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "\"{name}\" dosyası zaten yükleme kuyruğunda",
           "fileTooLarge": "\"{name}\" dosyası 5 GB sınırını aşıyor",
           "uploadFailed": "Yükleme başarısız oldu",
+      "uploadQueue": "Yükleme Kuyruğu",
+      "total": "Toplam",
+      "files": "dosya | dosyalar",
+      "clearAll": "Tümünü Temizle",
+      "removeFile": "Dosyayı Kaldır",
           "storageFull": "Depolama alanı dolu - yüklemeye izin verilmiyor",
           "insufficientStorage": "\"{name}\" dosyası ({fileSize} MB) kullanılabilir depolama alanını ({available} MB) aşıyor"
         }

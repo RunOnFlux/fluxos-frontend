@@ -951,7 +951,12 @@
       "clickToUpload": "kliknij, aby przesłać",
       "uploadError": "Błąd przesyłania '{fileName}': status {status}",
       "uploadSuccess": "'{fileName}' został przesłany",
-      "uploadFailed": "Nie udało się przesłać '{fileName}'"
+      "uploadFailed": "Nie udało się przesłać '{fileName}'",
+      "uploadQueue": "Kolejka przesyłania",
+      "total": "Łącznie",
+      "files": "plik | pliki | plików",
+      "clearAll": "Wyczyść wszystko",
+      "removeFile": "Usuń plik",
     },
     "runningInstances": {
       "deployedInstances": "Wdrożone instancje",
@@ -1260,7 +1265,7 @@
             "billing1Month": "1 Miesiąc",
             "freeBuilds": "50 buildów/miesiąc",
             "startFreeTrial": "Rozpocznij bezpłatny okres próbny",
-            "total": "Razem",
+            "total": "Łącznie",
             "stepDescription": "Wybierz plan na podstawie swoich potrzeb zasobowych.",
             "customPriceDetail": "Skonfiguruj własne zasoby i cenę"
           },
@@ -2318,7 +2323,7 @@
           "performanceHelp": "Standardowa specyfikacja oferuje najlepszą wydajność i zapewnia dobrą stabilność.",
           "performanceTitle": "Wydajność",
           "emailHelp": "Wyślemy Ci powiadomienia, gdy Twój WordPress Dapp będzie wymagał odnowienia.",
-          "total": "Suma",
+          "total": "Łącznie",
           "subscription": "subskrypcja",
           "deploymentLocationHelp": "Region geograficzny, w którym zostanie wdrożona witryna WordPress. Dla optymalnej wydajności wszystkie węzły muszą znajdować się w tym samym regionie.",
           "pricing": "Ceny",
@@ -3686,6 +3691,11 @@
           "loadFolderFailed": "Nie udało się załadować folderu",
           "createFolderFailed": "Nie udało się utworzyć folderu",
           "uploadFailed": "Przesyłanie nie powiodło się",
+      "uploadQueue": "Kolejka przesyłania",
+      "total": "Łącznie",
+      "files": "plik | pliki | plików",
+      "clearAll": "Wyczyść wszystko",
+      "removeFile": "Usuń plik",
           "storageStatsFailed": "Nie udało się załadować statystyk pamięci",
           "insufficientStorage": "Plik \"{name}\" ({fileSize} MB) przekracza dostępną pamięć ({available} MB)",
           "unshareFailed": "Nie udało się cofnąć udostępniania pliku",
@@ -3930,7 +3940,7 @@
         "billing": "Rozliczenie",
         "storage": "Dysk",
         "currentPlan": "Obecny plan",
-        "total": "Suma",
+        "total": "Łącznie",
         "status": "Status",
         "title": "Podsumowanie zamówienia"
       },
@@ -3980,7 +3990,7 @@
       "secureCheckout": "Bezpieczna płatność",
       "plan": "Plan",
       "monthly": "Miesięcznie",
-      "total": "Suma"
+      "total": "Łącznie"
     },
     "error": {
       "pageNotFoundTitle": "Strona nie znaleziona ⚠️",
@@ -4439,7 +4449,7 @@
       },
       "storageInfo": {
         "usedSpace": "Wykorzystane miejsce",
-        "total": "Całkowity",
+        "total": "Łącznie",
         "title": "Wykorzystanie pamięci",
         "almostFull": "Pamięć prawie pełna",
         "usedOf": "{used} z {total} użyte",
@@ -4663,7 +4673,7 @@
       "cryptoComPaymentCancelled": "Płatność Crypto.com anulowana",
       "calculatingFlux": "Obliczanie FLUX...",
       "sspPaymentInitiated": "Płatność SSP zainicjowana, monitorowanie potwierdzenia...",
-      "total": "Razem",
+      "total": "Łącznie",
       "cryptoCom": "Crypto.com",
       "loadingPlanDetails": "Ładowanie szczegółów planu...",
       "tryAgainOrContactSupport": "Spróbuj ponownie lub skontaktuj się z pomocą techniczną, jeśli problem będzie się utrzymywał.",
@@ -4958,7 +4968,7 @@
       "scrollRight": "Przewiń w prawo",
       "email": "E-mail",
       "plan": "Plan",
-      "total": "Razem",
+      "total": "Łącznie",
       "developer": "Deweloper",
       "screenshots": "Zrzuty ekranu",
       "username": "Nazwa użytkownika",

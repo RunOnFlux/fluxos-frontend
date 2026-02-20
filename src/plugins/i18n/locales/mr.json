@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' आधीच अपलोड रांगेत आहे",
       "uploadSuccess": "'{fileName}' अपलोड केले गेले आहे",
       "uploadError": "'{fileName}' अपलोड करताना त्रुटी: स्थिती {status}",
-      "uploadFailed": "'{fileName}' साठी अपलोड अयशस्वी"
+      "uploadFailed": "'{fileName}' साठी अपलोड अयशस्वी",
+      "uploadQueue": "अपलोड रांग",
+      "total": "एकूण",
+      "files": "फाइल | फायली",
+      "clearAll": "सर्व साफ करा",
+      "removeFile": "फाइल काढा",
     },
     "dropZone": {
       "onlyImageFiles": "फक्त इमेज फाइल्सना परवानगी आहे",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "फाइल \"{name}\" आधीच अपलोड रांगेत आहे",
           "fileTooLarge": "फाइल \"{name}\" 5GB मर्यादा ओलांडते",
           "uploadFailed": "अपलोड अयशस्वी",
+      "uploadQueue": "अपलोड रांग",
+      "total": "एकूण",
+      "files": "फाइल | फायली",
+      "clearAll": "सर्व साफ करा",
+      "removeFile": "फाइल काढा",
           "storageFull": "स्टोरेज भरले आहे - अपलोड करण्याची परवानगी नाही",
           "insufficientStorage": "फाइल \"{name}\" ({fileSize} MB) उपलब्ध स्टोरेजपेक्षा जास्त आहे ({available} MB)"
         }

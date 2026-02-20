@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' ఇప్పటికే అప్‌లోడ్ క్యూలో ఉంది",
       "uploadSuccess": "'{fileName}' అప్‌లోడ్ చేయబడింది",
       "uploadError": "'{fileName}'ని అప్‌లోడ్ చేయడంలో లోపం: స్థితి {status}",
-      "uploadFailed": "'{fileName}' కోసం అప్‌లోడ్ విఫలమైంది"
+      "uploadFailed": "'{fileName}' కోసం అప్‌లోడ్ విఫలమైంది",
+      "uploadQueue": "అప్‌లోడ్ క్యూ",
+      "total": "మొత్తం",
+      "files": "ఫైల్ | ఫైల్స్",
+      "clearAll": "అన్నీ క్లియర్ చేయి",
+      "removeFile": "ఫైల్ తీసివేయి",
     },
     "dropZone": {
       "onlyImageFiles": "ఇమేజ్ ఫైల్‌లు మాత్రమే అనుమతించబడతాయి",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "\"{name}\" ఫైల్ ఇప్పటికే అప్‌లోడ్ క్యూలో ఉంది",
           "fileTooLarge": "ఫైల్ \"{name}\" 5GB పరిమితిని మించిపోయింది",
           "uploadFailed": "అప్‌లోడ్ విఫలమైంది",
+      "uploadQueue": "అప్‌లోడ్ క్యూ",
+      "total": "మొత్తం",
+      "files": "ఫైల్ | ఫైల్స్",
+      "clearAll": "అన్నీ క్లియర్ చేయి",
+      "removeFile": "ఫైల్ తీసివేయి",
           "storageFull": "నిల్వ నిండింది - అప్‌లోడ్‌లు అనుమతించబడవు",
           "insufficientStorage": "ఫైల్ \"{name}\" ({fileSize} MB) అందుబాటులో ఉన్న నిల్వను మించిపోయింది ({available} MB)"
         }

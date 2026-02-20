@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' já está na fila de upload",
       "uploadSuccess": "'{fileName}' foi enviado",
       "uploadError": "Erro ao fazer upload de '{fileName}': status {status}",
-      "uploadFailed": "Falha no upload de '{fileName}'"
+      "uploadFailed": "Falha no upload de '{fileName}'",
+      "uploadQueue": "Fila de upload",
+      "total": "Total",
+      "files": "arquivo | arquivos",
+      "clearAll": "Limpar tudo",
+      "removeFile": "Remover arquivo",
     },
     "dropZone": {
       "onlyImageFiles": "Somente arquivos de imagem são permitidos",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "O arquivo \"{name}\" já está na fila de upload",
           "fileTooLarge": "O arquivo \"{name}\" excede o limite de 5 GB",
           "uploadFailed": "Falha no upload",
+      "uploadQueue": "Fila de upload",
+      "total": "Total",
+      "files": "arquivo | arquivos",
+      "clearAll": "Limpar tudo",
+      "removeFile": "Remover arquivo",
           "storageFull": "O armazenamento está cheio. Nenhum upload é permitido",
           "insufficientStorage": "O arquivo \"{name}\" ({fileSize} MB) excede o armazenamento disponível ({available} MB)"
         }

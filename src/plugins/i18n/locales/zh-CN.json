@@ -432,7 +432,12 @@
       "alreadyInQueue": "“{fileName}”已在上传队列中",
       "uploadSuccess": "“{fileName}”已上传",
       "uploadError": "上传“{fileName}”时出错：状态 {status}",
-      "uploadFailed": "“{fileName}”上传失败"
+      "uploadFailed": "“{fileName}”上传失败",
+      "uploadQueue": "上传队列",
+      "total": "总计",
+      "files": "文件 | 文件",
+      "clearAll": "清除全部",
+      "removeFile": "删除文件",
     },
     "dropZone": {
       "onlyImageFiles": "仅允许图像文件",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "文件“{name}”已在上传队列中",
           "fileTooLarge": "文件“{name}”超出 5GB 限制",
           "uploadFailed": "上传失败",
+      "uploadQueue": "上传队列",
+      "total": "总计",
+      "files": "文件 | 文件",
+      "clearAll": "清除全部",
+      "removeFile": "删除文件",
           "storageFull": "存储已满 - 不允许上传",
           "insufficientStorage": "文件“{name}”({fileSize} MB) 超出可用存储空间 ({available} MB)"
         }

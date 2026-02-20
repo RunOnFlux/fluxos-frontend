@@ -432,7 +432,12 @@
       "alreadyInQueue": "„{fileName}“ befindet sich bereits in der Upload-Warteschlange",
       "uploadSuccess": "„{fileName}“ wurde hochgeladen",
       "uploadError": "Fehler beim Hochladen von „{fileName}“: Status {status}",
-      "uploadFailed": "Der Upload für „{fileName}“ ist fehlgeschlagen."
+      "uploadFailed": "Der Upload für „{fileName}“ ist fehlgeschlagen.",
+      "uploadQueue": "Upload-Warteschlange",
+      "total": "Gesamt",
+      "files": "Datei | Dateien",
+      "clearAll": "Alle löschen",
+      "removeFile": "Datei entfernen",
     },
     "dropZone": {
       "onlyImageFiles": "Es sind nur Bilddateien erlaubt",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "Die Datei „{name}“ befindet sich bereits in der Upload-Warteschlange",
           "fileTooLarge": "Datei „{name}“ überschreitet die 5-GB-Grenze",
           "uploadFailed": "Der Upload ist fehlgeschlagen",
+      "uploadQueue": "Upload-Warteschlange",
+      "total": "Gesamt",
+      "files": "Datei | Dateien",
+      "clearAll": "Alle löschen",
+      "removeFile": "Datei entfernen",
           "storageFull": "Der Speicher ist voll – keine Uploads erlaubt",
           "insufficientStorage": "Datei „{name}“ ({fileSize} MB) überschreitet den verfügbaren Speicher ({available} MB)"
         }

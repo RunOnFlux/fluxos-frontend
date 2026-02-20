@@ -432,14 +432,19 @@
       "alreadyInQueue": "'{fileName}' पहले से ही अपलोड कतार में है",
       "uploadSuccess": "'{fileName}' अपलोड कर दिया गया है",
       "uploadError": "'{fileName}' अपलोड करने में त्रुटि: स्थिति {status}",
-      "uploadFailed": "'{fileName}' के लिए अपलोड विफल रहा"
+      "uploadFailed": "'{fileName}' के लिए अपलोड विफल रहा",
+      "uploadQueue": "अपलोड कतार",
+      "total": "कुल",
+      "files": "फाइल | फाइलें",
+      "clearAll": "सभी साफ़ करें",
+      "removeFile": "फाइल हटाएं",
     },
     "dropZone": {
       "onlyImageFiles": "केवल छवि फ़ाइलों की अनुमति है",
       "dragAndDropImage": "अपनी छवि को यहां खींचें और छोड़ें.",
       "or": "या",
       "browseImages": "छवियाँ ब्राउज़ करें",
-      "removeFile": "फ़ाइल हटाएँ"
+      "removeFile": "फाइल हटाएं"
     },
     "notifications": {
       "notifications": "सूचनाएं",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "फ़ाइल \"{name}\" पहले से ही अपलोड कतार में है",
           "fileTooLarge": "फ़ाइल \"{name}\" 5GB की सीमा से अधिक है",
           "uploadFailed": "अपलोड विफल रहा",
+      "uploadQueue": "अपलोड कतार",
+      "total": "कुल",
+      "files": "फाइल | फाइलें",
+      "clearAll": "सभी साफ़ करें",
+      "removeFile": "फाइल हटाएं",
           "storageFull": "संग्रहण पूर्ण है - अपलोड की अनुमति नहीं है",
           "insufficientStorage": "फ़ाइल \"{name}\" ({fileSize} एमबी) उपलब्ध संग्रहण ({available} एमबी) से अधिक है"
         }

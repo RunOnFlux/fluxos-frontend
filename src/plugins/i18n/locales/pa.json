@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਅੱਪਲੋਡ ਕਤਾਰ ਵਿੱਚ ਹੈ",
       "uploadSuccess": "'{fileName}' ਅੱਪਲੋਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ",
       "uploadError": "'{fileName}' ਅੱਪਲੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ: ਸਥਿਤੀ {status}",
-      "uploadFailed": "'{fileName}' ਲਈ ਅੱਪਲੋਡ ਅਸਫਲ ਰਿਹਾ"
+      "uploadFailed": "'{fileName}' ਲਈ ਅੱਪਲੋਡ ਅਸਫਲ ਰਿਹਾ",
+      "uploadQueue": "ਅੱਪਲੋਡ ਕਤਾਰ",
+      "total": "ਕੁੱਲ",
+      "files": "ਫਾਈਲ | ਫਾਈਲਾਂ",
+      "clearAll": "ਸਭ ਸਾਫ਼ ਕਰੋ",
+      "removeFile": "ਫਾਈਲ ਹਟਾਓ",
     },
     "dropZone": {
       "onlyImageFiles": "ਸਿਰਫ਼ ਚਿੱਤਰ ਫ਼ਾਈਲਾਂ ਦੀ ਇਜਾਜ਼ਤ ਹੈ",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "ਫ਼ਾਈਲ \"{name}\" ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਅੱਪਲੋਡ ਕਤਾਰ ਵਿੱਚ ਹੈ",
           "fileTooLarge": "ਫ਼ਾਈਲ \"{name}\" 5GB ਸੀਮਾ ਤੋਂ ਵੱਧ ਗਈ ਹੈ",
           "uploadFailed": "ਅੱਪਲੋਡ ਅਸਫਲ ਰਿਹਾ",
+      "uploadQueue": "ਅੱਪਲੋਡ ਕਤਾਰ",
+      "total": "ਕੁੱਲ",
+      "files": "ਫਾਈਲ | ਫਾਈਲਾਂ",
+      "clearAll": "ਸਭ ਸਾਫ਼ ਕਰੋ",
+      "removeFile": "ਫਾਈਲ ਹਟਾਓ",
           "storageFull": "ਸਟੋਰੇਜ ਭਰ ਗਈ ਹੈ - ਕੋਈ ਅੱਪਲੋਡ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ",
           "insufficientStorage": "ਫ਼ਾਈਲ \"{name}\" ({fileSize} MB) ਉਪਲਬਧ ਸਟੋਰੇਜ ({available} MB) ਤੋਂ ਵੱਧ ਹੈ"
         }

@@ -432,7 +432,12 @@
       "alreadyInQueue": "\"{fileName}\" موجود بالفعل في قائمة انتظار التحميل",
       "uploadSuccess": "تم تحميل \"{fileName}\".",
       "uploadError": "خطأ في تحميل '{fileName}': الحالة {status}",
-      "uploadFailed": "فشل تحميل '{fileName}'"
+      "uploadFailed": "فشل تحميل '{fileName}'",
+      "uploadQueue": "قائمة الانتظار للتحميل",
+      "total": "المجموع",
+      "files": "ملف | ملفان | ملفات",
+      "clearAll": "مسح الكل",
+      "removeFile": "إزالة الملف",
     },
     "dropZone": {
       "onlyImageFiles": "يُسمح بملفات الصور فقط",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "الملف \"{name}\" موجود بالفعل في قائمة انتظار التحميل",
           "fileTooLarge": "الملف \"{name}\" يتجاوز الحد المسموح به وهو 5 جيجابايت",
           "uploadFailed": "فشل التحميل",
+      "uploadQueue": "قائمة الانتظار للتحميل",
+      "total": "المجموع",
+      "files": "ملف | ملفان | ملفات",
+      "clearAll": "مسح الكل",
+      "removeFile": "إزالة الملف",
           "storageFull": "مساحة التخزين ممتلئة - لا يسمح بالتحميلات",
           "insufficientStorage": "الملف \"{name}\" ({fileSize} ميغابايت) يتجاوز مساحة التخزين المتوفرة ({available} ميغابايت)"
         }

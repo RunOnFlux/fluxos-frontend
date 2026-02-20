@@ -19,10 +19,10 @@
       @change="handleFiles"
     >
 
-    <VCard
-      class="flux-share-upload-drop"
-    >
-      <VCardText class="text-center">
+        <VCard
+          class="flux-share-upload-drop ma-3"
+        >
+          <VCardText class="text-center">
         <VIcon size="64">
           mdi-cloud-upload
         </VIcon>
@@ -41,51 +41,174 @@
           {{ t('core.fileUpload.fileSizeLimit') }}
         </p>
       </VCardText>
+        </VCard>
+
+    <VCard v-if="files.length > 0" class="ma-3 mt-2" variant="outlined">
+      <VCardTitle class="d-flex align-center justify-space-between py-2 px-3">
+        <div class="d-flex align-center flex-grow-1">
+          <VIcon size="20" class="mr-2">
+            mdi-file-upload-outline
+          </VIcon>
+          <span class="text-subtitle-2">
+            {{ t('core.fileUpload.uploadQueue') }} ({{ files.length }})
+            <span class="text-caption" style="opacity: 0.7;">
+              • {{ t('core.fileUpload.total') }}: {{ addAndConvertFileSizes(totalUploadSize) }}
+            </span>
+          </span>
+        </div>
+        <VTooltip location="bottom">
+          <template #activator="{ props }">
+            <VIcon
+              v-if="files.some(f => f.progress === 0)"
+              v-bind="props"
+              class="cursor-pointer mr-2 flex-shrink-0"
+              color="error"
+              size="20"
+              @click="files.splice(0, files.length)"
+            >
+              mdi-delete
+            </VIcon>
+          </template>
+          <span>{{ t('core.fileUpload.clearAll') }}</span>
+        </VTooltip>
+      </VCardTitle>
+      <VDivider />
+      <VCardText class="pa-0">
+        <div class="upload-column">
+          <template v-for="(item, index) in fileTree" :key="index">
+            <!-- Folder Entry -->
+            <div v-if="item.type === 'folder'" class="folder-group">
+              <div class="folder-header" @click="toggleFolder(item.path)">
+                <VIcon size="16" class="mr-2">
+                  {{ folderExpanded.get(item.path) ? 'mdi-chevron-down' : 'mdi-chevron-right' }}
+                </VIcon>
+                <VIcon size="20" class="mr-2">
+                  mdi-folder
+                </VIcon>
+                <span class="folder-name">{{ item.name }}</span>
+                <span class="file-count text-caption ml-2">
+                  ({{ item.files.length }} {{ t('core.fileUpload.files', item.files.length) }}, {{ addAndConvertFileSizes(item.totalSize) }})
+                </span>
+              </div>
+
+              <!-- Files in folder -->
+              <div v-if="folderExpanded.get(item.path)" v-for="file in item.files" :key="file.file.name" class="upload-item file-in-folder">
+                <div class="d-flex align-center justify-space-between">
+                  <div class="d-flex align-center flex-grow-1 mr-2">
+                    <VIcon
+                      icon="mdi-file-outline"
+                      size="18"
+                      class="mr-2 ml-4 flex-shrink-0"
+                      :color="file.uploaded ? 'success' : 'default'"
+                    />
+                    <div class="file-info flex-grow-1">
+                      <div class="file-name text-truncate">
+                        {{ file.file.name }}
+                      </div>
+                      <div class="file-size text-caption">
+                        {{ addAndConvertFileSizes(file.file.size) }}
+                      </div>
+                    </div>
+                  </div>
+                  <VTooltip v-if="file.progress === 0" location="bottom">
+                    <template #activator="{ props }">
+                      <VIcon
+                        v-bind="props"
+                        class="cursor-pointer flex-shrink-0"
+                        color="error"
+                        size="18"
+                        @click.stop="removeFile(file)"
+                      >
+                        mdi-close-circle
+                      </VIcon>
+                    </template>
+                    <span>{{ t('core.fileUpload.removeFile') }}</span>
+                  </VTooltip>
+                  <VIcon
+                    v-else-if="file.uploaded"
+                    color="success"
+                    size="18"
+                    class="flex-shrink-0"
+                  >
+                    mdi-check-circle
+                  </VIcon>
+                </div>
+                <VProgressLinear
+                  v-if="file.uploading || file.uploaded"
+                  :model-value="file.progress"
+                  height="3"
+                  color="success"
+                  class="mt-1"
+                />
+              </div>
+            </div>
+
+            <!-- Single File Entry -->
+            <div v-else class="upload-item">
+              <div class="d-flex align-center justify-space-between">
+                <div class="d-flex align-center flex-grow-1 mr-2">
+                  <VIcon
+                    icon="mdi-file-outline"
+                    size="20"
+                    class="mr-2 flex-shrink-0"
+                    :color="item.uploaded ? 'success' : 'default'"
+                  />
+                  <div class="file-info flex-grow-1">
+                    <div class="file-name text-truncate">
+                      {{ item.file.name }}
+                    </div>
+                    <div class="file-size text-caption">
+                      {{ addAndConvertFileSizes(item.file.size) }}
+                    </div>
+                  </div>
+                </div>
+                <VTooltip v-if="item.progress === 0" location="bottom">
+                  <template #activator="{ props }">
+                    <VIcon
+                      v-bind="props"
+                      class="cursor-pointer mr-2 flex-shrink-0"
+                      color="error"
+                      size="20"
+                      @click.stop="removeFile(item)"
+                    >
+                      mdi-close-circle
+                    </VIcon>
+                  </template>
+                  <span>{{ t('core.fileUpload.removeFile') }}</span>
+                </VTooltip>
+                <VIcon
+                  v-else-if="item.uploaded"
+                  color="success"
+                  size="20"
+                  class="mr-2 flex-shrink-0"
+                >
+                  mdi-check-circle
+                </VIcon>
+              </div>
+              <VProgressLinear
+                v-if="item.uploading || item.uploaded"
+                :model-value="item.progress"
+                height="4"
+                color="success"
+                class="mt-1"
+              />
+            </div>
+          </template>
+        </div>
+      </VCardText>
     </VCard>
 
-    <VRow
-      class="upload-column mt-4"
-      no-gutters
-    >
-      <VCol
-        v-for="file in files"
-        :key="file.file.name"
-        cols="12"
-        class="upload-item"
+    <VCardActions class="justify-center py-2">
+      <VBtn
+        color="primary"
+        variant="flat"
+        :disabled="!filesToUpload"
+        @click="startUpload"
       >
-        <div class="d-flex align-center justify-space-between">
-          <div class="file-name text-truncate">
-            {{ file.file.relativePath || file.file.name }} ({{ addAndConvertFileSizes(file.file.size) }})
-          </div>
-          <VIcon
-            v-if="file.progress === 0"
-            class="cursor-pointer"
-            color="error"
-            @click.stop="removeFile(file)"
-          >
-            mdi-trash-can-outline
-          </VIcon>
-        </div>
-        <VProgressLinear
-          v-if="file.uploading || file.uploaded"
-          :model-value="file.progress"
-          height="6"
-          color="success"
-        />
-      </VCol>
-    </VRow>
-
-    <VRow class="mt-3">
-      <VCol class="text-center">
-        <VBtn
-          color="primary"
-          :disabled="!filesToUpload"
-          @click="startUpload"
-        >
-          {{ t('core.fileUpload.uploadFiles') }}
-        </VBtn>
-      </VCol>
-    </VRow>
+        <VIcon start size="20">mdi-upload</VIcon>
+        {{ t('core.fileUpload.uploadFiles') }}
+      </VBtn>
+    </VCardActions>
 
     <VSnackbar
       v-model="snackbar"
@@ -107,12 +230,15 @@ const props = defineProps({
   headers: { type: Object, required: true },
 })
 
+const emit = defineEmits(['close'])
+
 const { t } = useI18n()
 
 // ✅ Make the array reactive
 const files = reactive([])
 const fileselector = ref(null)
 const lastSelectionType = ref(null) // Track: 'files' or 'folder'
+const folderExpanded = reactive(new Map()) // Track folder expansion state
 
 const snackbar = ref(false)
 const snackbarMessage = ref('')
@@ -127,6 +253,68 @@ const showToast = (message, color = 'success') => {
 const filesToUpload = computed(() => {
   return files.length > 0 && files.some(f => !f.uploading && !f.uploaded && f.progress === 0)
 })
+
+// Organize files into tree structure
+const fileTree = computed(() => {
+  const tree = []
+  const folderMap = new Map()
+
+  files.forEach(fileObj => {
+    const file = fileObj.file
+
+    // If file has relativePath, it's from a folder upload
+    if (file.relativePath) {
+      const parts = file.relativePath.split('/')
+      const fileName = parts[parts.length - 1]
+      const folderPath = parts.slice(0, -1).join('/')
+
+      // Create or get folder entry
+      if (!folderMap.has(folderPath)) {
+        // Initialize expansion state if not set
+        if (!folderExpanded.has(folderPath)) {
+          folderExpanded.set(folderPath, true)
+        }
+
+        const folderEntry = {
+          type: 'folder',
+          path: folderPath,
+          name: folderPath,
+          files: [],
+        }
+        folderMap.set(folderPath, folderEntry)
+        tree.push(folderEntry)
+      }
+
+      // Add file to folder
+      folderMap.get(folderPath).files.push(fileObj)
+    } else {
+      // Single file upload
+      tree.push({
+        type: 'file',
+        ...fileObj,
+      })
+    }
+  })
+
+  // Calculate folder sizes
+  tree.forEach(item => {
+    if (item.type === 'folder') {
+      item.totalSize = item.files.reduce((sum, f) => sum + f.file.size, 0)
+    }
+  })
+
+  return tree
+})
+
+// Calculate total upload size
+const totalUploadSize = computed(() => {
+  return files.reduce((sum, f) => sum + f.file.size, 0)
+})
+
+const toggleFolder = (folderPath) => {
+  const current = folderExpanded.get(folderPath) ?? true
+  folderExpanded.set(folderPath, !current)
+}
 
 const addAndConvertFileSizes = (size, unit = 'auto', decimal = 2) => {
   const map = { B: 1, KB: 1024, MB: 1048576, GB: 1073741824 }
@@ -358,16 +546,98 @@ const upload = file => {
   color: #888;
 }
 .upload-column {
-  max-height: 250px;
+  max-height: 200px;
   overflow-y: auto;
 }
-.upload-item {
-  padding: 8px;
+
+/* Thin, theme-aware scrollbar */
+.upload-column::-webkit-scrollbar {
+  width: 6px;
 }
+
+.upload-column::-webkit-scrollbar-track {
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border-radius: 3px;
+}
+
+.upload-column::-webkit-scrollbar-thumb {
+  background: rgba(var(--v-theme-on-surface), 0.2);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+.upload-column::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--v-theme-on-surface), 0.3);
+}
+
+/* Firefox scrollbar */
+.upload-column {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--v-theme-on-surface), 0.2) rgba(var(--v-theme-on-surface), 0.05);
+}
+
+.folder-group {
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.folder-group:last-child {
+  border-bottom: none;
+}
+
+.folder-header {
+  padding: 6px 12px;
+  background: rgba(var(--v-theme-primary), 0.05);
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.2s;
+}
+
+.folder-header:hover {
+  background: rgba(var(--v-theme-primary), 0.08);
+}
+
+.folder-name {
+  font-weight: 500;
+}
+
+.file-count {
+  opacity: 0.6;
+  font-size: 0.75rem;
+}
+
+.upload-item {
+  padding: 6px 12px;
+  border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.08);
+}
+
+.upload-item:last-child {
+  border-bottom: none;
+}
+
+.file-in-folder {
+  background: rgba(var(--v-theme-on-surface), 0.02);
+  padding: 4px 12px;
+}
+
+.file-info {
+  min-width: 0;
+}
+
 .file-name {
-  max-width: 90%;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+  font-size: 0.8125rem;
+  line-height: 1.3;
+}
+
+.file-size {
+  opacity: 0.7;
+  margin-top: 1px;
+  font-size: 0.7rem;
 }
 </style>

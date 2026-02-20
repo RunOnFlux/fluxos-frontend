@@ -432,7 +432,12 @@
       "alreadyInQueue": "'{fileName}' sudah ada dalam antrean unggah",
       "uploadSuccess": "'{fileName}' telah diunggah",
       "uploadError": "Kesalahan saat mengunggah '{fileName}': status {status}",
-      "uploadFailed": "Gagal mengunggah untuk '{fileName}'"
+      "uploadFailed": "Gagal mengunggah untuk '{fileName}'",
+      "uploadQueue": "Antrean Unggah",
+      "total": "Total",
+      "files": "file | file",
+      "clearAll": "Hapus Semua",
+      "removeFile": "Hapus File",
     },
     "dropZone": {
       "onlyImageFiles": "Hanya file gambar yang diperbolehkan",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "File \"{name}\" sudah ada dalam antrian unggah",
           "fileTooLarge": "File \"{name}\" melebihi batas 5 GB",
           "uploadFailed": "Gagal mengunggah",
+      "uploadQueue": "Antrean Unggah",
+      "total": "Total",
+      "files": "file | file",
+      "clearAll": "Hapus Semua",
+      "removeFile": "Hapus File",
           "storageFull": "Penyimpanan penuh - tidak diperbolehkan mengunggah",
           "insufficientStorage": "File \"{name}\" ({fileSize} MB) melebihi penyimpanan yang tersedia ({available} MB)"
         }

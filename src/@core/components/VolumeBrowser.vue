@@ -351,8 +351,20 @@
       max-width="700px"
     >
       <VCard>
-        <VCardTitle class="bg-primary text-white">
-          {{ t('core.volumeBrowser.uploadFiles') }}
+        <VCardTitle class="bg-primary text-white d-flex align-center justify-space-between">
+          <div class="d-flex align-center">
+            <VIcon class="mr-2">mdi-cloud-upload</VIcon>
+            <span>{{ t('core.volumeBrowser.uploadFiles') }}</span>
+          </div>
+          <VBtn
+            icon
+            variant="text"
+            color="grey"
+            size="small"
+            @click="refreshFolder(); uploadFilesDialog = false"
+          >
+            <VIcon>mdi-close</VIcon>
+          </VBtn>
         </VCardTitle>
         <VCardText>
           <FileUpload
@@ -360,17 +372,6 @@
             :headers="zelidHeader()"
           />
         </VCardText>
-        <VCardActions>
-          <VBtn
-            color="error"
-            size="small"
-            variant="flat"
-            text
-            @click="refreshFolder(); uploadFilesDialog = false"
-          >
-            {{ t('core.volumeBrowser.close') }}
-          </VBtn>
-        </VCardActions>
       </VCard>
     </VDialog>
   

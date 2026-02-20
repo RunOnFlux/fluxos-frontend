@@ -432,7 +432,12 @@
       "alreadyInQueue": "« {fileName} » est déjà dans la file d'attente de téléchargement",
       "uploadSuccess": "'{fileName}' a été téléchargé",
       "uploadError": "Erreur lors du téléchargement de « {fileName} » : état {status}",
-      "uploadFailed": "Échec du téléchargement pour « {fileName} »"
+      "uploadFailed": "Échec du téléchargement pour « {fileName} »",
+      "uploadQueue": "File d'attente de téléchargement",
+      "total": "Total",
+      "files": "fichier | fichiers",
+      "clearAll": "Tout effacer",
+      "removeFile": "Supprimer le fichier",
     },
     "dropZone": {
       "onlyImageFiles": "Seuls les fichiers image sont autorisés",
@@ -2215,6 +2220,11 @@
           "duplicateFile": "Le fichier \"{name}\" est déjà dans la file d'attente de téléchargement",
           "fileTooLarge": "Le fichier \"{name}\" dépasse la limite de 5 Go",
           "uploadFailed": "Échec du téléchargement",
+      "uploadQueue": "File d'attente de téléchargement",
+      "total": "Total",
+      "files": "fichier | fichiers",
+      "clearAll": "Tout effacer",
+      "removeFile": "Supprimer le fichier",
           "storageFull": "Le stockage est plein – aucun téléchargement n'est autorisé",
           "insufficientStorage": "Le fichier \"{name}\" ({fileSize} Mo) dépasse l'espace de stockage disponible ({available} Mo)"
         }
