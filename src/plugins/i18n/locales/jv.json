@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Selehake file ing kene utawa",
       "clickToUpload": "click to Unggah",
+      "dropFilesOrFolders": "Selehake file utawa folder ing kene",
+      "selectFiles": "Pilih File",
+      "selectFolder": "Pilih Folder",
       "fileSizeLimit": "(File Ukuran is limited to 5 GB)",
       "uploadFiles": "Unggah Files",
       "alreadyInQueue": "'{fileName}' is already in the Unggah queue",

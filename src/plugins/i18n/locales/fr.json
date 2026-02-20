@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Déposez les fichiers ici ou",
       "clickToUpload": "cliquez pour télécharger",
+      "dropFilesOrFolders": "Déposez les fichiers ou les dossiers ici",
+      "selectFiles": "Sélectionner les fichiers",
+      "selectFolder": "Sélectionner le dossier",
       "fileSizeLimit": "(La taille du fichier est limitée à 5 Go)",
       "uploadFiles": "Télécharger des fichiers",
       "alreadyInQueue": "« {fileName} » est déjà dans la file d'attente de téléchargement",

@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "ここにファイルをドロップするか、",
       "clickToUpload": "クリックしてアップロード",
+      "dropFilesOrFolders": "ここにファイルまたはフォルダをドロップ",
+      "selectFiles": "ファイルを選択",
+      "selectFolder": "フォルダを選択",
       "fileSizeLimit": "(ファイルサイズは5GBまでに制限されています)",
       "uploadFiles": "ファイルをアップロードする",
       "alreadyInQueue": "「{fileName}」はすでにアップロード キューにあります",

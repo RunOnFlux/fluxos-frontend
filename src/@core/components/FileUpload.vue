@@ -11,17 +11,33 @@
       multiple
       @change="handleFiles"
     >
+    <input
+      v-show="false"
+      ref="folderselector"
+      type="file"
+      webkitdirectory
+      @change="handleFiles"
+    >
 
     <VCard
       class="flux-share-upload-drop"
-      @click="selectFiles"
     >
       <VCardText class="text-center">
         <VIcon size="64">
           mdi-cloud-upload
         </VIcon>
-        <p>{{ t('core.fileUpload.dropFilesHere') }} <em>{{ t('core.fileUpload.clickToUpload') }}</em></p>
-        <p class="upload-footer">
+        <p>{{ t('core.fileUpload.dropFilesOrFolders') }}</p>
+        <div class="d-flex justify-center gap-2 mt-2">
+          <VBtn size="small" @click="selectFiles">
+            <VIcon start>mdi-file-multiple</VIcon>
+            {{ t('core.fileUpload.selectFiles') }}
+          </VBtn>
+          <VBtn size="small" @click="selectFolder">
+            <VIcon start>mdi-folder</VIcon>
+            {{ t('core.fileUpload.selectFolder') }}
+          </VBtn>
+        </div>
+        <p class="upload-footer mt-2">
           {{ t('core.fileUpload.fileSizeLimit') }}
         </p>
       </VCardText>
@@ -39,7 +55,7 @@
       >
         <div class="d-flex align-center justify-space-between">
           <div class="file-name text-truncate">
-            {{ file.file.name }} ({{ addAndConvertFileSizes(file.file.size) }})
+            {{ file.file.relativePath || file.file.name }} ({{ addAndConvertFileSizes(file.file.size) }})
           </div>
           <VIcon
             v-if="file.progress === 0"
@@ -96,6 +112,7 @@ const { t } = useI18n()
 // ✅ Make the array reactive
 const files = reactive([])
 const fileselector = ref(null)
+const lastSelectionType = ref(null) // Track: 'files' or 'folder'
 
 const snackbar = ref(false)
 const snackbarMessage = ref('')
@@ -133,20 +150,88 @@ const addAndConvertFileSizes = (size, unit = 'auto', decimal = 2) => {
 }
 
 const selectFiles = () => {
+  // Clear queue only if switching from folder to files
+  if (lastSelectionType.value === 'folder') {
+    files.splice(0, files.length)
+  }
+  lastSelectionType.value = 'files'
+
+  // Clear folder selector
+  if (folderselector.value) folderselector.value.value = ''
   fileselector.value.click()
 }
 
+const folderselector = ref(null)
+
+const selectFolder = () => {
+  // Clear queue only if switching from files to folder
+  if (lastSelectionType.value === 'files') {
+    files.splice(0, files.length)
+  }
+  lastSelectionType.value = 'folder'
+
+  // Clear file selector
+  if (fileselector.value) fileselector.value.value = ''
+  folderselector.value.click()
+}
+
 const handleFiles = e => {
-  const selected = Array.from(e.target.files)
+  const selected = Array.from(e.target.files).map(file => {
+    // Preserve folder structure from webkitdirectory
+    if (file.webkitRelativePath) {
+      file.relativePath = file.webkitRelativePath
+    }
+    return file
+  })
 
   addFiles(selected)
   e.target.value = ''
 }
 
-const addFile = e => {
-  const dropped = Array.from(e.dataTransfer.files)
+const addFile = async e => {
+  const items = e.dataTransfer.items
+  const fileList = []
 
-  addFiles(dropped)
+  // Handle folder structure via DataTransferItem API - auto-detect folders
+  if (items) {
+    for (const item of items) {
+      if (item.kind === 'file') {
+        const entry = item.webkitGetAsEntry()
+        if (entry) {
+          await traverseFileTree(entry, '', fileList)
+        }
+      }
+    }
+  } else {
+    // Fallback for browsers without DataTransferItem support or folder upload disabled
+    fileList.push(...Array.from(e.dataTransfer.files))
+  }
+
+  addFiles(fileList)
+}
+
+// Recursively traverse folder structure
+async function traverseFileTree(item, path, fileList) {
+  if (item.isFile) {
+    return new Promise(resolve => {
+      item.file(file => {
+        // Preserve folder path in file object
+        file.relativePath = path + file.name
+        fileList.push(file)
+        resolve()
+      })
+    })
+  } else if (item.isDirectory) {
+    const dirReader = item.createReader()
+    return new Promise(resolve => {
+      dirReader.readEntries(async entries => {
+        for (const entry of entries) {
+          await traverseFileTree(entry, path + item.name + '/', fileList)
+        }
+        resolve()
+      })
+    })
+  }
 }
 
 const addFiles = list => {
@@ -178,7 +263,47 @@ const startUpload = () => {
 const upload = file => {
   const xhr = new XMLHttpRequest()
 
-  xhr.open('POST', props.uploadFolder, true)
+  // Build upload URL with path parameter - auto-detect if file has folder structure
+  let uploadUrl = props.uploadFolder
+  if (file.file.relativePath) {
+    // Extract directory path from relativePath (remove filename)
+    const pathParts = file.file.relativePath.split('/')
+    pathParts.pop() // Remove filename
+    const dirPath = pathParts.join('/')
+
+    console.log('🔍 Folder upload debug:', {
+      relativePath: file.file.relativePath,
+      pathParts,
+      dirPath,
+      baseUrl: props.uploadFolder,
+    })
+
+    // Extract current folder from base URL and combine with new folder path
+    // Base URL format: /ioutils/fileupload/volume/app/component/currentFolder
+    // We need to strip the last path segment (currentFolder) and pass full path via query param
+    if (dirPath) {
+      const urlParts = props.uploadFolder.split('/')
+      const lastSegment = urlParts[urlParts.length - 1]
+
+      // Check if URL ends with current folder path (encoded)
+      // If so, combine it with the new subfolder path
+      let fullFolderPath = dirPath
+      if (lastSegment && lastSegment !== 'volume') {
+        // Current folder exists in URL, need to prepend it
+        fullFolderPath = decodeURIComponent(lastSegment) + '/' + dirPath
+        // Remove the last segment from base URL
+        urlParts.pop()
+        uploadUrl = urlParts.join('/')
+      }
+
+      // Add folder as query parameter (backend checks req.query.folder after req.params.folder)
+      uploadUrl = `${uploadUrl}?folder=${encodeURIComponent(fullFolderPath)}`
+    }
+  }
+
+  console.log('📤 Upload URL:', uploadUrl)
+
+  xhr.open('POST', uploadUrl, true)
 
   for (const [key, value] of Object.entries(props.headers)) {
     xhr.setRequestHeader(key, value)
@@ -227,7 +352,6 @@ const upload = file => {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
 }
 .upload-footer {
   font-size: 0.75rem;

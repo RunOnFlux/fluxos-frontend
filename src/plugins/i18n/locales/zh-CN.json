@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "将文件拖放到此处或",
       "clickToUpload": "点击上传",
+      "dropFilesOrFolders": "将文件或文件夹拖放到此处",
+      "selectFiles": "选择文件",
+      "selectFolder": "选择文件夹",
       "fileSizeLimit": "（文件大小限制为 5 GB）",
       "uploadFiles": "上传文件",
       "alreadyInQueue": "“{fileName}”已在上传队列中",

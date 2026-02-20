@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Solte os arquivos aqui ou",
       "clickToUpload": "clique para carregar",
+      "dropFilesOrFolders": "Solte arquivos ou pastas aqui",
+      "selectFiles": "Selecionar arquivos",
+      "selectFolder": "Selecionar pasta",
       "fileSizeLimit": "(O tamanho do arquivo é limitado a 5 GB)",
       "uploadFiles": "Carregar arquivos",
       "alreadyInQueue": "'{fileName}' já está na fila de upload",

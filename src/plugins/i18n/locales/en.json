@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Drop files here or",
       "clickToUpload": "click to upload",
+      "dropFilesOrFolders": "Drop files or folders here",
+      "selectFiles": "Select Files",
+      "selectFolder": "Select Folder",
       "fileSizeLimit": "(File size is limited to 5 GB)",
       "uploadFiles": "Upload Files",
       "alreadyInQueue": "'{fileName}' is already in the upload queue",

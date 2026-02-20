@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Rilascia i file qui o",
       "clickToUpload": "fare clic per caricare",
+      "dropFilesOrFolders": "Rilascia i file o le cartelle qui",
+      "selectFiles": "Seleziona file",
+      "selectFolder": "Seleziona cartella",
       "fileSizeLimit": "(La dimensione del file è limitata a 5 GB)",
       "uploadFiles": "Carica file",
       "alreadyInQueue": "\"{fileName}\" è già nella coda di caricamento",

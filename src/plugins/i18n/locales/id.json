@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Letakkan file di sini atau",
       "clickToUpload": "klik untuk mengunggah",
+      "dropFilesOrFolders": "Letakkan file atau folder di sini",
+      "selectFiles": "Pilih File",
+      "selectFolder": "Pilih Folder",
       "fileSizeLimit": "(Ukuran file dibatasi hingga 5 GB)",
       "uploadFiles": "Unggah File",
       "alreadyInQueue": "'{fileName}' sudah ada dalam antrean unggah",
