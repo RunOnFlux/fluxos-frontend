@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Перетащите файлы сюда или",
       "clickToUpload": "нажмите, чтобы загрузить",
+      "dropFilesOrFolders": "Перетащите файлы или папки сюда",
+      "selectFiles": "Выбрать файлы",
+      "selectFolder": "Выбрать папку",
       "fileSizeLimit": "(Размер файла ограничен 5 ГБ)",
       "uploadFiles": "Загрузить файлы",
       "alreadyInQueue": "«{fileName}» уже находится в очереди на загрузку.",

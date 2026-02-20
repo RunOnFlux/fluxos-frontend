@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "قم بإسقاط الملفات هنا أو",
       "clickToUpload": "انقر للتحميل",
+      "dropFilesOrFolders": "قم بإسقاط الملفات أو المجلدات هنا",
+      "selectFiles": "حدد الملفات",
+      "selectFolder": "حدد المجلد",
       "fileSizeLimit": "(حجم الملف محدود بـ 5 جيجابايت)",
       "uploadFiles": "تحميل الملفات",
       "alreadyInQueue": "\"{fileName}\" موجود بالفعل في قائمة انتظار التحميل",

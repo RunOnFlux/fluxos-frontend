@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "ਫਾਈਲਾਂ ਨੂੰ ਇੱਥੇ ਸੁੱਟੋ ਜਾਂ",
       "clickToUpload": "ਅੱਪਲੋਡ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ",
+      "dropFilesOrFolders": "ਇੱਥੇ ਫਾਈਲਾਂ ਜਾਂ ਫੋਲਡਰ ਸੁੱਟੋ",
+      "selectFiles": "ਫਾਈਲਾਂ ਚੁਣੋ",
+      "selectFolder": "ਫੋਲਡਰ ਚੁਣੋ",
       "fileSizeLimit": "(ਫਾਈਲ ਦਾ ਆਕਾਰ 5 GB ਤੱਕ ਸੀਮਿਤ ਹੈ)",
       "uploadFiles": "ਫਾਈਲਾਂ ਅੱਪਲੋਡ ਕਰੋ",
       "alreadyInQueue": "'{fileName}' ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਅੱਪਲੋਡ ਕਤਾਰ ਵਿੱਚ ਹੈ",

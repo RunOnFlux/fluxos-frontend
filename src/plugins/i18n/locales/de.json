@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Dateien hier ablegen oder",
       "clickToUpload": "Klicken Sie zum Hochladen",
+      "dropFilesOrFolders": "Dateien oder Ordner hier ablegen",
+      "selectFiles": "Dateien auswählen",
+      "selectFolder": "Ordner auswählen",
       "fileSizeLimit": "(Dateigröße ist auf 5 GB begrenzt)",
       "uploadFiles": "Dateien hochladen",
       "alreadyInQueue": "„{fileName}“ befindet sich bereits in der Upload-Warteschlange",

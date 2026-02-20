@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Thả tập tin vào đây hoặc",
       "clickToUpload": "bấm vào để tải lên",
+      "dropFilesOrFolders": "Thả tệp hoặc thư mục vào đây",
+      "selectFiles": "Chọn tệp",
+      "selectFolder": "Chọn thư mục",
       "fileSizeLimit": "(Kích thước tệp được giới hạn ở 5 GB)",
       "uploadFiles": "Tải tập tin lên",
       "alreadyInQueue": "'{fileName}' đã có trong hàng đợi tải lên",

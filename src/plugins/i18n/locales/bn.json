@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "এখানে ফাইল ড্রপ বা",
       "clickToUpload": "আপলোড করতে ক্লিক করুন",
+      "dropFilesOrFolders": "এখানে ফাইল বা ফোল্ডার ড্রপ করুন",
+      "selectFiles": "ফাইল নির্বাচন করুন",
+      "selectFolder": "ফোল্ডার নির্বাচন করুন",
       "fileSizeLimit": "(ফাইলের আকার 5 জিবি পর্যন্ত সীমাবদ্ধ)",
       "uploadFiles": "ফাইল আপলোড করুন",
       "alreadyInQueue": "'{fileName}' ইতিমধ্যেই আপলোড সারিতে রয়েছে৷",

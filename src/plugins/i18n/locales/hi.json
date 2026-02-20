@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "फ़ाइलें यहां छोड़ें या",
       "clickToUpload": "अपलोड करने के लिए क्लिक करें",
+      "dropFilesOrFolders": "फ़ाइलें या फ़ोल्डर यहां छोड़ें",
+      "selectFiles": "फ़ाइलें चुनें",
+      "selectFolder": "फ़ोल्डर चुनें",
       "fileSizeLimit": "(फ़ाइल का आकार 5 जीबी तक सीमित है)",
       "uploadFiles": "फाइलें अपलोड करें",
       "alreadyInQueue": "'{fileName}' पहले से ही अपलोड कतार में है",

@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "ఫైల్‌లను ఇక్కడ వదలండి లేదా",
       "clickToUpload": "అప్‌లోడ్ చేయడానికి క్లిక్ చేయండి",
+      "dropFilesOrFolders": "ఫైల్‌లు లేదా ఫోల్డర్‌లను ఇక్కడ వదలండి",
+      "selectFiles": "ఫైల్‌లను ఎంచుకోండి",
+      "selectFolder": "ఫోల్డర్‌ను ఎంచుకోండి",
       "fileSizeLimit": "(ఫైల్ పరిమాణం 5 GBకి పరిమితం చేయబడింది)",
       "uploadFiles": "ఫైల్‌లను అప్‌లోడ్ చేయండి",
       "alreadyInQueue": "'{fileName}' ఇప్పటికే అప్‌లోడ్ క్యూలో ఉంది",

@@ -943,6 +943,9 @@
     "fileUpload": {
       "fileSizeLimit": "(Rozmiar pliku jest ograniczony do 5 GB)",
       "dropFilesHere": "Upuść pliki tutaj lub",
+      "dropFilesOrFolders": "Upuść pliki lub foldery tutaj",
+      "selectFiles": "Wybierz pliki",
+      "selectFolder": "Wybierz folder",
       "alreadyInQueue": "'{fileName}' jest już w kolejce przesyłania",
       "uploadFiles": "Prześlij pliki",
       "clickToUpload": "kliknij, aby przesłać",

@@ -424,6 +424,9 @@
     "fileUpload": {
       "dropFilesHere": "Dosyaları buraya bırakın veya",
       "clickToUpload": "yüklemek için tıklayın",
+      "dropFilesOrFolders": "Dosyaları veya klasörleri buraya bırakın",
+      "selectFiles": "Dosyaları Seç",
+      "selectFolder": "Klasör Seç",
       "fileSizeLimit": "(Dosya boyutu 5 GB ile sınırlıdır)",
       "uploadFiles": "Dosyaları Yükle",
       "alreadyInQueue": "'{fileName}' zaten yükleme kuyruğunda",
