@@ -424,7 +424,16 @@ async function traverseFileTree(item, path, fileList) {
 
 const addFiles = list => {
   for (const f of list) {
-    if (files.some(file => file.file.name === f.name)) {
+    // Compare by full path (relativePath) for folder uploads, or by name for single files
+    const fileIdentifier = f.relativePath || f.webkitRelativePath || f.name
+    const isDuplicate = files.some(file => {
+      const existingIdentifier = file.file.relativePath || file.file.webkitRelativePath || file.file.name
+      return existingIdentifier === fileIdentifier
+    })
+
+    console.log('🔍 Checking file:', f.name, '| Path:', fileIdentifier, '| Duplicate:', isDuplicate)
+
+    if (isDuplicate) {
       showToast(t('core.fileUpload.alreadyInQueue', { fileName: f.name }), 'warning')
     } else {
       files.push({

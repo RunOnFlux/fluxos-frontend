@@ -8928,9 +8928,15 @@ async function initiateSignWSUpdate() {
     let wsURL = localStorage.getItem("backendURL") || getDetectedBackendURL()
     wsURL = wsURL.replace('https://', 'wss://').replace('http://', 'ws://')
 
-    const sigMsg = `${props.appSpec.owner}${timestamp.value}`
+    // For updates, use ORIGINAL owner (from snapshot) for signing, not the potentially changed owner
+    // This is critical for ownership transfers: old owner signs spec containing new owner
+    const ownerForSigning = props.newApp
+      ? props.appSpec.owner
+      : (originalAppSpecSnapshot.value?.owner || props.appSpec.owner)
+
+    const sigMsg = `${ownerForSigning}${timestamp.value}`
     const uri = `${wsURL}/ws/sign/${sigMsg}`
-    console.log('Creating WebSocket:', uri)
+    console.log('Creating WebSocket:', uri, 'using owner:', ownerForSigning)
 
     websocket.value = new WebSocket(uri)
 

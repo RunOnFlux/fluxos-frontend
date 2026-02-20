@@ -495,10 +495,15 @@ export default defineConfig(({ mode }) => {
       reportCompressedSize: true, // Report gzip sizes
       minify: 'esbuild', // Use esbuild for fast builds
       cssMinify: 'esbuild', // Also minify CSS with esbuild
+      // Limit parallelization to reduce memory usage on servers with limited RAM
+      // This is especially important for 4GB servers
+      maxParallelFileOps: 2, // Reduce from default (depends on CPU cores)
       commonjsOptions: {
         include: [/node_modules/, /@metamask\/.*/,/eventemitter2/],
       },
       rollupOptions: {
+        // Limit worker threads to reduce memory consumption
+        maxParallelFileOps: 2,
         output: {
           manualChunks: (id) => {
             // Polyfills strategy: Bundle buffer, process, eventemitter2 into main entry
