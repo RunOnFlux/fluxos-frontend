@@ -177,7 +177,7 @@
             </VIcon>
             <span
               v-if="item.isDirectory || item.isUpButton"
-              class="cursor-pointer text-primary"
+              class="cursor-pointer"
               @click="changeFolder(item.name)"
             >
               {{ item.name }}
@@ -282,7 +282,7 @@
                     size="small"
                     rounded="0"
                     density="comfortable"
-                    class="mr-1"
+                    class="delete-btn"
                     @click="deleteFile(item.name)"
                   >
                     <VIcon>mdi-trash-can-outline</VIcon>
@@ -1557,5 +1557,54 @@ onMounted(() => {
   background-color: rgb(var(--v-theme-background)) !important;
   color: #b6b4b4 !important;
   font-weight: 600;
+}
+
+/* Equal padding on left and right */
+:deep(.v-data-table tbody td:first-child) {
+  padding-left: 16px !important;
+}
+
+:deep(.v-data-table tbody td:last-child) {
+  padding-right: 12px !important;
+}
+
+:deep(.v-data-table thead th:first-child) {
+  padding-left: 16px !important;
+}
+
+:deep(.v-data-table thead th:last-child) {
+  padding-right: 12px !important;
+}
+
+/* Thin, theme-aware scrollbar - similar to FileUpload */
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar-track {
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border-radius: 3px;
+}
+
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar-thumb {
+  background: rgba(var(--v-theme-on-surface), 0.2);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--v-theme-on-surface), 0.3);
+}
+
+/* Firefox scrollbar */
+:deep(.v-data-table .v-table__wrapper) {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--v-theme-on-surface), 0.2) rgba(var(--v-theme-on-surface), 0.05);
+}
+
+/* Red hover effect for delete icon only */
+:deep(.delete-btn:hover .v-icon) {
+  color: rgb(var(--v-theme-error)) !important;
 }
 </style>
