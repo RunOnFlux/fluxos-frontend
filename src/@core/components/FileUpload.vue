@@ -79,16 +79,18 @@
             <!-- Folder Entry -->
             <div v-if="item.type === 'folder'" class="folder-group">
               <div class="folder-header" @click="toggleFolder(item.path)">
-                <VIcon size="16" class="mr-2">
+                <div class="d-flex align-center flex-grow-1">
+                  <VIcon size="20" class="mr-2">
+                    mdi-folder
+                  </VIcon>
+                  <span class="folder-name">{{ item.name }}</span>
+                  <span class="file-count text-caption ml-2">
+                    ({{ item.files.length }} {{ t('core.fileUpload.files', item.files.length) }}, {{ addAndConvertFileSizes(item.totalSize) }})
+                  </span>
+                </div>
+                <VIcon size="16" class="ml-2 flex-shrink-0">
                   {{ folderExpanded.get(item.path) ? 'mdi-chevron-down' : 'mdi-chevron-right' }}
                 </VIcon>
-                <VIcon size="20" class="mr-2">
-                  mdi-folder
-                </VIcon>
-                <span class="folder-name">{{ item.name }}</span>
-                <span class="file-count text-caption ml-2">
-                  ({{ item.files.length }} {{ t('core.fileUpload.files', item.files.length) }}, {{ addAndConvertFileSizes(item.totalSize) }})
-                </span>
               </div>
 
               <!-- Files in folder -->
