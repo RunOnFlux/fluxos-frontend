@@ -1842,17 +1842,112 @@
                       </div>
                     </div>
 
-                    <!-- Registration Success -->
-                    <div v-else-if="testFinished" class="registration-success">
-                      <div class="text-center">
-                        <VIcon size="48" color="success" class="mb-2">mdi-check-circle</VIcon>
-                        <h3 class="text-h5 font-weight-bold mb-1">{{ t('pages.apps.register.orbit.register.registrationComplete') }}</h3>
-                        <p class="text-body-2 text-medium-emphasis mb-2">
-                          {{ t('pages.apps.register.orbit.register.registrationCompleteMessage') }}
+                    <!-- Test Installation Phase -->
+                    <div v-else-if="testRunning || testFinished" class="test-phase">
+                      <!-- Test Progress -->
+                      <div class="text-center mb-4">
+                        <VIcon v-if="testRunning" size="48" color="primary" class="mb-2">mdi-test-tube</VIcon>
+                        <VIcon v-else-if="testFinished && !testError" size="48" color="success" class="mb-2">mdi-check-circle</VIcon>
+                        <VIcon v-else-if="testFinished && testError" size="48" color="error" class="mb-2">mdi-alert-circle</VIcon>
+                        <h3 class="text-h5 font-weight-bold mb-1">
+                          <template v-if="testRunning">{{ t('core.subscriptionManager.testApplicationInstallation') }}</template>
+                          <template v-else-if="testFinished && !testError">{{ t('pages.apps.register.orbit.register.registrationComplete') }}</template>
+                          <template v-else>{{ t('core.subscriptionManager.testInstallationFailed') }}</template>
+                        </h3>
+                        <p v-if="testRunning" class="text-body-2 text-medium-emphasis">
+                          {{ t('core.subscriptionManager.testInstallationDescription') }}
                         </p>
                       </div>
 
-                      <div class="text-center mt-3">
+                      <!-- Test Output Log -->
+                      <VCard v-if="testOutput.length > 0" variant="outlined" class="mb-4">
+                        <VCardTitle
+                          class="d-flex align-center justify-space-between py-2 px-4"
+                          style="cursor: pointer; font-size: 0.875rem;"
+                          @click="logsExpanded = !logsExpanded"
+                        >
+                          <div class="d-flex align-center">
+                            <VIcon size="18" class="mr-2">mdi-console</VIcon>
+                            <span v-if="testRunning">{{ t('core.subscriptionManager.installationProgress') }}</span>
+                            <span v-else-if="testFinished && !testError">{{ t('core.subscriptionManager.testCompletedSuccessfully') }}</span>
+                            <span v-else>{{ t('core.subscriptionManager.testFailedCheckLogs') }}</span>
+                          </div>
+                          <VIcon size="20">{{ logsExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</VIcon>
+                        </VCardTitle>
+
+                        <VExpandTransition>
+                          <VCardText v-show="logsExpanded" class="pa-0">
+                            <VList density="compact" class="pa-0">
+                              <VListItem
+                                v-for="(output, index) in testOutput"
+                                :key="index"
+                                class="py-1"
+                                :class="{
+                                  'text-success': output.status === 'success',
+                                  'text-error': output.status === 'error',
+                                  'text-warning': output.status === 'warning',
+                                  'text-info': output.status === 'info'
+                                }"
+                              >
+                                <template #prepend>
+                                  <VIcon
+                                    size="16"
+                                    :color="output.status === 'success' ? 'success' : output.status === 'error' ? 'error' : output.status === 'warning' ? 'warning' : 'info'"
+                                    class="mr-2"
+                                  >
+                                    {{ output.status === 'success' ? 'mdi-check-circle' : output.status === 'error' ? 'mdi-close-circle' : output.status === 'warning' ? 'mdi-alert' : 'mdi-information' }}
+                                  </VIcon>
+                                </template>
+                                <VListItemTitle class="text-body-2">
+                                  {{ output.message }}
+                                </VListItemTitle>
+                              </VListItem>
+                            </VList>
+                          </VCardText>
+                        </VExpandTransition>
+                      </VCard>
+
+                      <!-- Test Running Indicator -->
+                      <div v-if="testRunning" class="text-center">
+                        <VProgressLinear indeterminate color="primary" class="mt-2" style="max-width: 200px; margin: 0 auto;" />
+                      </div>
+
+                      <!-- Test Failed Actions -->
+                      <div v-if="testFinished && testError" class="text-center mt-4">
+                        <VAlert type="error" variant="tonal" class="mb-4 text-left">
+                          <div class="d-flex align-center justify-space-between">
+                            <span>{{ t('core.subscriptionManager.testFailedCheckLogsRetry') }}</span>
+                          </div>
+                        </VAlert>
+                        <div class="d-flex justify-center gap-2">
+                          <VBtn
+                            color="primary"
+                            variant="flat"
+                            :loading="testRunning"
+                            @click="testAppInstall"
+                          >
+                            <VIcon start size="18">mdi-refresh</VIcon>
+                            {{ t('core.subscriptionManager.testInstallation') }}
+                          </VBtn>
+                          <VBtn
+                            color="warning"
+                            variant="outlined"
+                            @click="forceEnablePayment"
+                          >
+                            {{ t('core.subscriptionManager.enablePaymentAnyway') }}
+                          </VBtn>
+                          <VBtn
+                            variant="outlined"
+                            @click="goBackToConfigureStep"
+                          >
+                            <VIcon start size="16">mdi-pencil</VIcon>
+                            {{ t('pages.apps.register.orbit.deploy.editConfiguration') }}
+                          </VBtn>
+                        </div>
+                      </div>
+
+                      <!-- Test Success - proceeding to payment -->
+                      <div v-if="testFinished && !testError" class="text-center mt-3">
                         <p class="text-body-2 text-medium-emphasis">{{ t('pages.apps.register.orbit.register.proceedingToPayment') }}</p>
                         <VProgressLinear indeterminate color="primary" class="mt-2" style="max-width: 200px; margin: 0 auto;" />
                       </div>
@@ -4872,8 +4967,12 @@ const finalAppSpec = ref(null) // Spec with uploaded contacts
 const copiedAddress = ref(false)
 const copiedMessage = ref(false)
 
-// Registration success state
+// Test state
 const testFinished = ref(false)
+const testRunning = ref(false)
+const testError = ref(false)
+const testOutput = ref([])
+const logsExpanded = ref(false)
 
 // Payment state
 const paymentProcessing = ref(false)
@@ -5502,8 +5601,8 @@ const proceedToPayment = async () => {
   }
 
   // If we already have a valid signature and registrationHash from a previous attempt,
-  // and the spec hasn't changed, skip the signing process and go directly to the payment step
-  if (signature.value && registrationHash.value && testFinished.value && !hasSpecChanged()) {
+  // the test passed, and the spec hasn't changed, skip re-signing and go directly to payment
+  if (signature.value && registrationHash.value && testFinished.value && !testError.value && !hasSpecChanged()) {
     currentStep.value = 6
     startPaymentMonitoring()
 
@@ -5515,6 +5614,8 @@ const proceedToPayment = async () => {
     signature.value = ''
     registrationHash.value = null
     testFinished.value = false
+    testError.value = false
+    testOutput.value = []
   }
 
   deploying.value = true
@@ -5897,16 +5998,16 @@ const propagateSignedMessage = async () => {
     isSigning.value = false
     isPropagating.value = false
 
-    // Skip testing phase - go directly to success
-    testFinished.value = true
+    // Auto-run test installation
+    await testAppInstall()
 
-    // Auto-advance to Payment step after a brief delay
-    setTimeout(() => {
-      currentStep.value = 6
-
-      // Start monitoring for app registration on the network
-      startPaymentMonitoring()
-    }, 1500)
+    // If test passed, auto-advance to Payment step
+    if (testFinished.value && !testError.value) {
+      setTimeout(() => {
+        currentStep.value = 6
+        startPaymentMonitoring()
+      }, 1500)
+    }
   } catch (error) {
     console.error('Propagation error:', error)
     registrationError.value = error.message || 'Failed to propagate registration'
@@ -5928,11 +6029,151 @@ const getDeploymentInfo = async () => {
   }
 }
 
+// Stream a test phase message with delay
+const streamTestPhase = async (message, status, delay) => {
+  testOutput.value.push({
+    status,
+    message,
+    timestamp: new Date().toISOString(),
+  })
+
+  if (delay > 0) {
+    await new Promise(resolve => setTimeout(resolve, delay))
+  }
+}
+
+// Test app installation
+const testAppInstall = async () => {
+  if (!registrationHash.value) {
+    return
+  }
+
+  // Reset test state
+  testError.value = false
+  testFinished.value = false
+  testRunning.value = true
+  testOutput.value = []
+  logsExpanded.value = true
+
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+
+    await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
+    await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
+    await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
+
+    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
+
+    await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
+
+    if (response.data?.status === 'error') {
+      await streamTestPhase(`Test failed: ${response.data.data?.message || response.data.data || 'Unknown error'}`, 'error', 200)
+      testError.value = true
+      showToast('error', t('core.subscriptionManager.testInstallationFailed'))
+
+      return
+    }
+
+    if (response.data?.status === 'success' && response.data?.data) {
+      await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
+
+      const rawData = response.data.data
+      let parsedResults = []
+
+      if (typeof rawData === 'string' && rawData.trim().length > 0) {
+        try {
+          const outputText = rawData.includes('}{') ? rawData.replace(/}{/g, '},{') : rawData
+          if (outputText.trim().startsWith('{') || outputText.trim().startsWith('[')) {
+            parsedResults = JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
+          } else {
+            parsedResults = [{ status: 'info', message: rawData }]
+          }
+        } catch {
+          parsedResults = [{ status: 'info', message: rawData }]
+        }
+      }
+
+      for (const result of parsedResults) {
+        await streamTestPhase(
+          result.message || t('core.subscriptionManager.testStepCompleted'),
+          result.status || 'info',
+          200,
+        )
+      }
+
+      const containsError = message => {
+        if (!message || typeof message !== 'string') return false
+
+        return /ERROR|FAILED|FATAL|Exception|CRASH|ABORT|terminated|exit code [1-9]/i.test(message)
+      }
+
+      const containsWarning = message => {
+        if (!message || typeof message !== 'string') return false
+
+        return /WARNING|WARN|deprecated/i.test(message)
+      }
+
+      const hasErrors = parsedResults.some(r =>
+        r.status === 'error' || containsError(r.message),
+      )
+      const hasWarnings = parsedResults.some(r =>
+        r.status === 'warning' || containsWarning(r.message),
+      )
+
+      if (hasErrors) {
+        await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
+        testError.value = true
+        showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
+      } else if (hasWarnings) {
+        await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
+        testError.value = false
+        logsExpanded.value = false
+        showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
+      } else {
+        await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
+        testError.value = false
+        logsExpanded.value = false
+        showToast('success', t('core.subscriptionManager.testPassedReady'))
+      }
+    } else {
+      await streamTestPhase(t('core.subscriptionManager.testInstallationCompletedSuccessfully'), 'success', 300)
+      testError.value = false
+      logsExpanded.value = false
+      showToast('success', t('core.subscriptionManager.testCompletedReady'))
+    }
+  } catch (error) {
+    await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 200)
+    testError.value = true
+    showToast('error', t('core.subscriptionManager.testInstallationFailed'))
+    console.error('Test error:', error)
+  } finally {
+    testRunning.value = false
+    testFinished.value = true
+  }
+}
+
+// Force enable payment (fallback when test fails)
+const forceEnablePayment = () => {
+  testError.value = false
+  if (!testFinished.value) {
+    testFinished.value = true
+  }
+  showToast('warning', 'Payment manually enabled. Please proceed with caution and ensure your app specifications are correct.')
+
+  // Advance to payment
+  currentStep.value = 6
+  startPaymentMonitoring()
+}
+
 // Go back to configure step to edit app name or other settings
 const goBackToConfigureStep = () => {
   registrationHash.value = null
   registrationError.value = ''
   deploying.value = false
+  testFinished.value = false
+  testError.value = false
+  testRunning.value = false
+  testOutput.value = []
   currentStep.value = 3 // Configure step
 }
 
@@ -6365,6 +6606,10 @@ const resetForm = () => {
   finalAppSpec.value = null
   signature.value = ''
   testFinished.value = false
+  testError.value = false
+  testRunning.value = false
+  testOutput.value = []
+  logsExpanded.value = false
   paymentConfirmed.value = false
   paymentProcessing.value = false
   paymentMonitoringPhase.value = 'blockchain'
