@@ -19,10 +19,9 @@
       @change="handleFiles"
     >
 
-        <VCard
-          class="flux-share-upload-drop ma-3"
-        >
-          <VCardText class="text-center">
+    <VCard class="flux-share-upload-drop ma-3"
+    >
+      <VCardText class="text-center">
         <VIcon size="64">
           mdi-cloud-upload
         </VIcon>
@@ -41,7 +40,7 @@
           {{ t('core.fileUpload.fileSizeLimit') }}
         </p>
       </VCardText>
-        </VCard>
+    </VCard>
 
     <VCard v-if="files.length > 0" class="ma-3 mt-2" variant="outlined">
       <VCardTitle class="d-flex align-center justify-space-between py-2 px-3">
@@ -313,7 +312,7 @@ const totalUploadSize = computed(() => {
   return files.reduce((sum, f) => sum + f.file.size, 0)
 })
 
-const toggleFolder = (folderPath) => {
+const toggleFolder = folderPath => {
   const current = folderExpanded.get(folderPath) ?? true
   folderExpanded.set(folderPath, !current)
 }
@@ -371,6 +370,7 @@ const handleFiles = e => {
     if (file.webkitRelativePath) {
       file.relativePath = file.webkitRelativePath
     }
+    
     return file
   })
 
@@ -413,6 +413,7 @@ async function traverseFileTree(item, path, fileList) {
     })
   } else if (item.isDirectory) {
     const dirReader = item.createReader()
+    
     return new Promise(resolve => {
       dirReader.readEntries(async entries => {
         for (const entry of entries) {
@@ -430,6 +431,7 @@ const addFiles = list => {
     const fileIdentifier = f.relativePath || f.webkitRelativePath || f.name
     const isDuplicate = files.some(file => {
       const existingIdentifier = file.file.relativePath || file.file.webkitRelativePath || file.file.name
+      
       return existingIdentifier === fileIdentifier
     })
 
@@ -490,6 +492,7 @@ const upload = file => {
       if (lastSegment && lastSegment !== 'volume') {
         // Current folder exists in URL, need to prepend it
         fullFolderPath = decodeURIComponent(lastSegment) + '/' + dirPath
+
         // Remove the last segment from base URL
         urlParts.pop()
         uploadUrl = urlParts.join('/')
