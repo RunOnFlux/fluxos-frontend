@@ -29,21 +29,21 @@
       />
 
       <!-- Revenue Sharing Banner -->
-      <div class="revenue-banner-section">
-        <VCard class="revenue-banner">
-          <VCardText class="d-flex align-center pa-5">
-            <VIcon icon="mdi-handshake" size="36" color="primary" class="me-4 flex-shrink-0" />
-            <div>
-              <h3 class="revenue-banner-title">{{ t('pages.marketplace.revenueBanner.title') }}</h3>
-              <p class="revenue-banner-desc">
-                {{ t('pages.marketplace.revenueBanner.description') }}
-                <a href="mailto:info@runonflux.com" class="revenue-banner-email">info@runonflux.com</a>
-                {{ t('pages.marketplace.revenueBanner.cta') }}
-              </p>
-            </div>
-          </VCardText>
-        </VCard>
-      </div>
+      <VCard class="section-card revenue-banner">
+        <VCardText class="d-flex align-center pa-5">
+          <VAvatar size="64" class="revenue-banner-avatar me-4 flex-shrink-0">
+            <VIcon icon="mdi-handshake" size="36" />
+          </VAvatar>
+          <div>
+            <h3 class="revenue-banner-title">{{ t('pages.marketplace.revenueBanner.title') }}</h3>
+            <p class="revenue-banner-desc">
+              {{ t('pages.marketplace.revenueBanner.description') }}
+              <a href="mailto:info@runonflux.com" class="revenue-banner-email">info@runonflux.com</a>
+              {{ t('pages.marketplace.revenueBanner.cta') }}
+            </p>
+          </div>
+        </VCardText>
+      </VCard>
 
       <!-- Sponsored Apps Section -->
       <div class="sponsored-section">
@@ -424,40 +424,114 @@ onMounted(async () => {
   min-height: 500px;
 }
 
-/* Revenue Sharing Banner */
-.revenue-banner-section {
-  padding: 0 16px;
-}
-
-.revenue-banner {
+/* Section Cards - shared styling */
+.section-card {
+  margin-bottom: 2rem;
   border-radius: 16px !important;
   border: 1px solid rgba(var(--v-theme-on-surface), 0.12) !important;
   box-shadow: none !important;
-  background: rgb(var(--v-theme-surface)) !important;
+}
+
+/* CSS Custom Property for rotation */
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+/* Revenue Sharing Banner */
+.revenue-banner {
+  --angle: 0deg;
+  border: 3px solid transparent !important;
+  position: relative;
+  transition: transform 0.3s ease;
+  background:
+    linear-gradient(
+      rgba(var(--v-theme-surface), 1),
+      rgba(var(--v-theme-surface), 1)
+    ) padding-box,
+    conic-gradient(
+      from var(--angle),
+      rgb(var(--v-theme-primary)),
+      rgba(var(--v-theme-primary), 0.95) 60deg,
+      rgba(var(--v-theme-primary), 0.9) 120deg,
+      rgba(var(--v-theme-primary), 0.85) 180deg,
+      rgba(var(--v-theme-primary), 0.75) 240deg,
+      rgba(var(--v-theme-primary), 0.6) 300deg,
+      rgba(var(--v-theme-primary), 0.3) 340deg,
+      rgb(var(--v-theme-primary)) 360deg
+    ) border-box;
+  filter: drop-shadow(0 0 8px rgba(var(--v-theme-primary), 0.3));
+}
+
+/* Apply the gradient background over the solid background */
+.revenue-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg,
+    rgba(var(--v-theme-primary), 0.08) 0%,
+    rgba(var(--v-theme-primary), 0.04) 50%,
+    transparent 100%);
+  border-radius: 12px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.revenue-banner :deep(.v-card-text) {
+  position: relative;
+  z-index: 1;
+}
+
+@keyframes rotateBorder {
+  to {
+    --angle: 360deg;
+  }
+}
+
+.revenue-banner:hover {
+  border-color: rgba(var(--v-theme-primary), 0.4);
+  box-shadow: 0 4px 20px rgba(var(--v-theme-primary), 0.15) !important;
+  transform: translateY(-2px);
+}
+
+.revenue-banner-avatar {
+  background: linear-gradient(135deg,
+    rgba(var(--v-theme-on-surface), 0.12),
+    rgba(var(--v-theme-on-surface), 0.06)) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border: 2px solid rgba(var(--v-theme-on-surface), 0.15);
+}
+
+.revenue-banner-avatar :deep(.v-icon) {
+  color: rgb(var(--v-theme-on-surface)) !important;
+  opacity: 0.9;
 }
 
 .revenue-banner-title {
-  font-size: 1.125rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 4px;
+  margin-bottom: 8px;
   color: rgb(var(--v-theme-on-surface));
+  line-height: 1.4;
 }
 
 .revenue-banner-desc {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: 1.0625rem;
+  line-height: 1.7;
   margin: 0;
-  color: rgba(var(--v-theme-on-surface), 0.85);
+  color: rgba(var(--v-theme-on-surface), 0.9);
 }
 
 .revenue-banner-email {
   font-weight: 700;
-  color: rgb(var(--v-theme-primary));
-  text-decoration: none;
+  color: rgb(var(--v-theme-on-surface));
+  text-decoration: underline;
+  transition: opacity 0.2s ease;
 }
 
 .revenue-banner-email:hover {
-  text-decoration: underline;
+  opacity: 0.7;
 }
 
 /* Responsive adjustments */
