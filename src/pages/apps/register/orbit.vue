@@ -5998,16 +5998,11 @@ const propagateSignedMessage = async () => {
     isSigning.value = false
     isPropagating.value = false
 
-    // Auto-run test installation
-    await testAppInstall()
-
-    // If test passed, auto-advance to Payment step
-    if (testFinished.value && !testError.value) {
-      setTimeout(() => {
-        currentStep.value = 6
-        startPaymentMonitoring()
-      }, 1500)
-    }
+    // Auto-run test installation (fire-and-forget, same pattern as SubscriptionManager)
+    // Small delay to ensure UI is ready, then test handles its own step progression
+    setTimeout(() => {
+      testAppInstall()
+    }, 500)
   } catch (error) {
     console.error('Propagation error:', error)
     registrationError.value = error.message || 'Failed to propagate registration'
@@ -6088,54 +6083,7 @@ const getResultStatus = result => {
   return 'info'
 }
 
-// Parse concatenated JSON test output (e.g. "{...}{...}{...}") into an array of result objects
-const parseTestOutput = rawData => {
-  if (!rawData) return []
-
-  // If rawData is already an object/array, wrap it
-  if (typeof rawData !== 'string') {
-    return Array.isArray(rawData) ? rawData : [rawData]
-  }
-
-  const trimmed = rawData.trim()
-  if (trimmed.length === 0) return []
-
-  try {
-    const outputText = trimmed.includes('}{') ? trimmed.replace(/}{/g, '},{') : trimmed
-    if (outputText.startsWith('{') || outputText.startsWith('[')) {
-      return JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
-    }
-
-    return [{ status: 'info', message: rawData }]
-  } catch {
-    return [{ status: 'info', message: rawData }]
-  }
-}
-
-// Process parsed test results: stream them to the UI and return whether errors/warnings were found
-const processTestResults = async parsedResults => {
-  let hasErrors = false
-  let hasWarnings = false
-
-  for (const result of parsedResults) {
-    const message = getResultMessage(result)
-    const status = getResultStatus(result)
-    await streamTestPhase(
-      status === 'error' ? getOrbitErrorMessage(message) : message,
-      status,
-      200,
-    )
-    if (status === 'error') hasErrors = true
-    if (status === 'warning') hasWarnings = true
-  }
-
-  return { hasErrors, hasWarnings }
-}
-
-// Test app installation using fetch() with streaming
-// Axios fails on this endpoint because the server streams concatenated JSON objects ({...}{...})
-// which is not valid JSON — axios tries to parse it, fails, and throws "Network Error".
-// fetch() handles this correctly by letting us read the raw response text.
+// Test app installation — same pattern as SubscriptionManager (Docker deployments)
 const testAppInstall = async () => {
   if (!registrationHash.value) {
     return
@@ -6150,94 +6098,105 @@ const testAppInstall = async () => {
 
   try {
     const zelidauth = localStorage.getItem('zelidauth')
-    const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
 
+    // Simulate streaming by breaking the test into phases
     await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
     await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
     await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
 
-    // Use fetch() instead of axios — the server streams concatenated JSON chunks
-    // and axios cannot handle that response format
-    const controller = new AbortController()
-    const timeoutId = setTimeout(() => controller.abort(), 300000) // 5 min timeout
+    console.log('Testing with hash:', registrationHash.value)
 
-    const fetchResponse = await fetch(`${baseURL}/apps/testappinstall/${registrationHash.value}`, {
-      method: 'GET',
-      headers: { zelidauth },
-      signal: controller.signal,
-    })
-
-    clearTimeout(timeoutId)
-
-    const rawText = await fetchResponse.text()
+    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
 
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
-    // The response can be either:
-    // 1. A JSON wrapper: { "status": "success", "data": "{...}{...}" } — the inner data is concatenated JSON
-    // 2. Raw concatenated JSON: {...}{...}{...}
-    let parsedResults = []
+    // Check the response status first
+    console.log('Test response:', response.data)
 
-    try {
-      const wrapper = JSON.parse(rawText)
-
-      if (wrapper.status === 'error') {
-        const errorMsg = getOrbitErrorMessage(wrapper.data?.message || wrapper.data || 'Unknown error')
-        await streamTestPhase(errorMsg, 'error', 200)
-        testError.value = true
-        showToast('error', t('core.subscriptionManager.testInstallationFailed'))
-
-        return
-      }
-
-      // Wrapped response — parse inner data
-      if (wrapper.status === 'success' && wrapper.data) {
-        parsedResults = parseTestOutput(wrapper.data)
-      } else {
-        parsedResults = [wrapper]
-      }
-    } catch {
-      // Not valid JSON as a single object — treat as raw concatenated JSON
-      parsedResults = parseTestOutput(rawText)
-    }
-
-    if (parsedResults.length === 0) {
-      await streamTestPhase('No test output received', 'error', 200)
+    if (response.data?.status === 'error') {
+      const errorMsg = getOrbitErrorMessage(response.data.data?.message || response.data.data || 'Unknown error')
+      await streamTestPhase(errorMsg, 'error', 200)
       testError.value = true
       showToast('error', t('core.subscriptionManager.testInstallationFailed'))
 
       return
     }
 
-    await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
-    const { hasErrors, hasWarnings } = await processTestResults(parsedResults)
+    // Process the actual test results
+    if (response.data?.status === 'success' && response.data?.data) {
+      await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
 
-    if (hasErrors) {
-      await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
-      testError.value = true
-      showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
-    } else if (hasWarnings) {
-      await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
-      testError.value = false
-      logsExpanded.value = false
-      showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
+      const rawData = response.data.data
+      let parsedResults = []
+
+      if (typeof rawData === 'string' && rawData.trim().length > 0) {
+        try {
+          // Handle concatenated JSON objects separated by optional whitespace/newlines
+          const outputText = rawData.replace(/}\s*{/g, '},{')
+          if (outputText.trim().startsWith('{') || outputText.trim().startsWith('[')) {
+            parsedResults = JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
+          } else {
+            parsedResults = [{ status: 'info', message: rawData }]
+          }
+        } catch (jsonError) {
+          console.warn('Failed to parse JSON output:', jsonError)
+          parsedResults = [{ status: 'info', message: rawData }]
+        }
+      }
+
+      // Stream the parsed results with proper message extraction
+      for (const result of parsedResults) {
+        const message = getResultMessage(result)
+        const status = getResultStatus(result)
+        await streamTestPhase(
+          status === 'error' ? getOrbitErrorMessage(message) : message,
+          status,
+          200,
+        )
+      }
+
+      // Determine final status
+      const hasErrors = parsedResults.some(r => r.status === 'error')
+      const hasWarnings = parsedResults.some(r => r.status === 'warning')
+
+      if (hasErrors) {
+        await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
+        testError.value = true
+        showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
+      } else if (hasWarnings) {
+        await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
+        testError.value = false
+        logsExpanded.value = false
+        showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
+      } else {
+        await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
+        testError.value = false
+        logsExpanded.value = false
+        showToast('success', t('core.subscriptionManager.testPassedReady'))
+      }
     } else {
-      await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
+      // Handle other success cases
+      await streamTestPhase(t('core.subscriptionManager.testInstallationCompletedSuccessfully'), 'success', 300)
       testError.value = false
       logsExpanded.value = false
-      showToast('success', t('core.subscriptionManager.testPassedReady'))
+      showToast('success', t('core.subscriptionManager.testCompletedReady'))
     }
   } catch (error) {
     console.error('Test error:', error)
-    const errorMsg = error.name === 'AbortError'
-      ? 'Test timed out. The installation test took too long to complete.'
-      : `Test failed: ${error.message || 'Unknown error'}`
-    await streamTestPhase(errorMsg, 'error', 200)
+    await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 200)
     testError.value = true
     showToast('error', t('core.subscriptionManager.testInstallationFailed'))
   } finally {
     testRunning.value = false
     testFinished.value = true
+
+    // Auto-advance to payment if test passed
+    if (!testError.value) {
+      setTimeout(() => {
+        currentStep.value = 6
+        startPaymentMonitoring()
+      }, 1500)
+    }
   }
 }
 
