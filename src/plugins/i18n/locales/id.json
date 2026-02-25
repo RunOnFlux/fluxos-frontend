@@ -308,7 +308,7 @@
       "manageUsers": "Kelola Pengguna",
       "loggedSessions": "Sesi yang Dicatat",
       "myFluxShare": "FluxShare saya",
-      "fluxShare": "Berbagi Flux"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Fluks XDAO"
@@ -320,11 +320,11 @@
       "title": "Membantu"
     },
     "fluxDrive": {
-      "title": "FluksDrive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "FluksCloud",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "Manajemen Aplikasi Terdesentralisasi",
     "fluxCloudDescription": "Pantau dan kelola semua aplikasi dalam container Docker Anda yang berjalan di jaringan cloud terdesentralisasi Flux. Lihat status real-time, penggunaan sumber daya, dan metrik kinerja aplikasi terdistribusi Anda yang diterapkan di seluruh infrastruktur global kami yang didukung blockchain. Klik pada aplikasi apa pun untuk mengakses kontrol manajemen dan analitik terperinci."
   },
@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "Letakkan file di sini atau",
       "clickToUpload": "klik untuk mengunggah",
+      "dropFilesOrFolders": "Letakkan file atau folder di sini",
+      "selectFiles": "Pilih File",
+      "selectFolder": "Pilih Folder",
       "fileSizeLimit": "(Ukuran file dibatasi hingga 5 GB)",
       "uploadFiles": "Unggah File",
       "alreadyInQueue": "'{fileName}' sudah ada dalam antrean unggah",
       "uploadSuccess": "'{fileName}' telah diunggah",
       "uploadError": "Kesalahan saat mengunggah '{fileName}': status {status}",
-      "uploadFailed": "Gagal mengunggah untuk '{fileName}'"
+      "uploadFailed": "Gagal mengunggah untuk '{fileName}'",
+      "uploadQueue": "Antrean Unggah",
+      "total": "Total",
+      "files": "file | file",
+      "clearAll": "Hapus Semua",
+      "removeFile": "Hapus File"
     },
     "dropZone": {
       "onlyImageFiles": "Hanya file gambar yang diperbolehkan",
@@ -590,7 +598,7 @@
       "fluxDriveDownloadInfo": "Cadangan FluxDrive dapat diunduh di halaman Pemulihan",
       "uploadSelectedComponents": "Unggah Komponen yang Dipilih",
       "selectRestoreMethod": "Pilih Metode Pemulihan",
-      "fluxDrive": "FluksDrive",
+      "fluxDrive": "FluxDrive",
       "uploadFile": "Unggah Berkas",
       "remoteUrl": "URL jarak jauh",
       "backupsInventory": "Inventaris Cadangan",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "30 menit tersisa",
       "deploymentTimeEstimate": "Hingga 45 menit setelah pembayaran",
       "deploymentSuccessMessage": "Aplikasi Anda sekarang aktif dan berjalan di jaringan Flux.",
+      "appAccessDomainAvailable": "Domain akses aplikasi Anda akan tersedia dalam beberapa menit:",
       "updateSuccessMessage": "Spesifikasi aplikasi Anda telah berhasil diperbarui di jaringan Flux.",
       "autoDetectDeployment": "Konfirmasi pembayaran dan penyebaran akan terdeteksi secara otomatis.",
       "autoDetectUpdate": "Pembaruan akan terdeteksi secara otomatis.",
       "autoDetectPaymentUpdate": "Konfirmasi pembayaran dan update akan terdeteksi secara otomatis.",
       "detectionTimeEstimate": "Ini mungkin memakan waktu beberapa menit.",
       "checkingBlockchainConfirmation": "Memeriksa konfirmasi pembayaran...",
-      "waitingForNodeDeployment": "Menunggu penerapan node...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "Memeriksa konfirmasi pembayaran di blockchain.",
       "blockchainConfirmationTime": "Ini mungkin memakan waktu beberapa menit.",
       "paymentConfirmedOnNetwork": "Pembayaran dikonfirmasi di jaringan!",
       "paymentConfirmedWaitingNodes": "Pembayaran dikonfirmasi di jaringan.",
-      "waitingForNodesPickup": "Menunggu node mengambil dan menginstal aplikasi Anda.",
-      "nodeDeploymentTime": "Ini mungkin memakan waktu beberapa menit.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "Sebuah node telah mulai menginstal aplikasi Anda!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "Pembaruan dikonfirmasi! Diperlukan waktu beberapa menit agar node yang menjalankan aplikasi Anda memperbarui ke spesifikasi terbaru.",
       "freeUpdateSponsoredBy": "Pembaruan gratis di jaringan ditawarkan oleh Influx Technologies",
       "noNodesMatch": "Tidak ada node yang cocok dengan pencarian Anda",
@@ -1942,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "FluksDrive",
+        "title": "FluxDrive",
         "subtitle": "Penyimpanan terdesentralisasi yang aman",
         "upgradePlan": "Paket Peningkatan",
         "searchPlaceholder": "Cari file dan folder...",
@@ -2149,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "Memuat FluxShare...",
-        "title": "Berbagi Flux",
+        "title": "FluxShare",
         "subtitle": "Kelola file Anda dan bagikan dengan orang lain",
         "storageUsage": "Penggunaan Penyimpanan",
         "used": "digunakan",
@@ -2212,7 +2225,6 @@
           "duplicateFile": "File \"{name}\" sudah ada dalam antrian unggah",
           "fileTooLarge": "File \"{name}\" melebihi batas 5 GB",
           "uploadFailed": "Gagal mengunggah",
-          "storageFull": "Penyimpanan penuh - tidak diperbolehkan mengunggah",
           "insufficientStorage": "File \"{name}\" ({fileSize} MB) melebihi penyimpanan yang tersedia ({available} MB)"
         }
       },
@@ -3084,16 +3096,21 @@
             "sponsoredBy": "Disponsori oleh Teknologi InFlux",
             "paymentSubmissionInfo": "Pembayaran untuk aplikasi Anda akan dikirimkan ke jaringan dalam beberapa menit berikutnya.",
             "checkingRegistration": "Memeriksa konfirmasi pembayaran...",
-            "waitingForInstance": "Menunggu penerapan node...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "Hosting bulan pertama ditawarkan oleh InFlux Technologies.",
             "freePlanSponsoredBy": "Paket gratis ditawarkan oleh InFlux Technologies.",
             "checkingPaymentOnBlockchain": "Memeriksa konfirmasi pembayaran di blockchain.",
             "blockchainConfirmationTime": "Ini mungkin memakan waktu beberapa menit.",
             "paymentConfirmedWaitingNodes": "Pembayaran dikonfirmasi di jaringan.",
-            "waitingForNodesPickup": "Menunggu node mengambil dan menginstal aplikasi Anda.",
-            "nodeDeploymentTime": "Ini mungkin memakan waktu beberapa menit.",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "Sebuah node telah mulai menginstal aplikasi Anda!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "Pendaftaran/Pembayaran Selesai!",
             "registrationCompleteDescription": "Aplikasi Anda telah berhasil dibayar/didaftarkan di jaringan Flux.",
+            "appAccessDomainAvailable": "Domain akses aplikasi Anda akan tersedia dalam beberapa menit:",
             "nodesSpawning": "Node jaringan sekarang memunculkan aplikasi Anda. Ini akan segera tersedia.",
             "cancelPayment": "Batalkan dan kembali"
           },
@@ -3696,7 +3713,7 @@
     },
     "fluxDrive": {
       "intro": {
-        "title": "FluksDrive",
+        "title": "FluxDrive",
         "subtitle": "Penyimpanan cloud terdesentralisasi didukung oleh IPFS",
         "description": "FluxDrive adalah solusi penyimpanan cloud terdesentralisasi yang dibangun di atas Jaringan FluxCloud, memanfaatkan teknologi IPFS (InterPlanetary File System). Simpan file Anda di jaringan terdistribusi FluxNodes di seluruh dunia, pastikan redundansi, ketahanan sensor, dan ketersediaan permanen. Tidak seperti penyimpanan cloud tradisional, data Anda dienkripsi, terfragmentasi, dan didistribusikan ke beberapa node—memberi Anda kepemilikan dan kendali sebenarnya atas file Anda tanpa bergantung pada penyedia terpusat.",
         "learnMore": "Pelajari Lebih Lanjut Tentang FluxDrive"
@@ -3758,6 +3775,11 @@
       "hero": {
         "title": "Pasar Aplikasi Fluks",
         "subtitle": "Terapkan aplikasi pra-konfigurasi terdesentralisasi di cloud Web3 Flux. Kontainer Docker, aplikasi web, dan API di {nodeCount}+ FluxNodes di seluruh dunia."
+      },
+      "revenueBanner": {
+        "title": "Daftarkan Aplikasi Anda di Marketplace FluxCloud",
+        "description": "Punya aplikasi hebat? Publikasikan di Marketplace FluxCloud dan dapatkan hingga 25% pendapatan bersama dari setiap deployment. Hubungi kami di",
+        "cta": "untuk memulai."
       },
       "detail": {
         "loadingTitle": "Memuat Aplikasi...",
@@ -3886,6 +3908,11 @@
           "loading": "Memuat permainan yang tersedia...",
           "maintenanceTitle": "Pasar Game Untuk Sementara Tidak Tersedia",
           "maintenanceSubtitle": "Kami mengalami masalah sementara",
+          "revenueBanner": {
+            "title": "Daftarkan Game Anda di FluxCloud",
+            "description": "Punya game luar biasa? Publikasikan di FluxCloud dan dapatkan hingga 25% pendapatan bersama dari setiap deployment. Hubungi kami di",
+            "cta": "untuk memulai."
+          },
           "hero": {
             "title": "Hosting Server Game Premium di FluxCloud",
             "subtitle": "Terapkan server game favorit Anda dalam hitungan detik dengan distribusi global, perlindungan DDoS, dan harga bayar sesuai pemakaian yang didukung oleh teknologi blockchain.",
@@ -3979,7 +4006,7 @@
           "comparison": {
             "title": "Mengapa FluxPlay vs Hosting Tradisional",
             "feature": "Fitur",
-            "fluxplay": "Putar Fluks",
+            "fluxplay": "FluxPlay",
             "traditional": "Hosting Tradisional",
             "rows": {
               "setup": "Waktu Pengaturan",
@@ -4858,7 +4885,7 @@
             "comparison": {
               "title": "Mengapa FluxPlay vs Hosting Tradisional",
               "feature": "Fitur",
-              "fluxplay": "Putar Fluks",
+              "fluxplay": "FluxPlay",
               "traditional": "Hosting Tradisional",
               "rows": {
                 "setup": "Waktu Pengaturan",
@@ -4987,7 +5014,7 @@
                 "description": "Host server game favorit Anda"
               },
               "fluxDrive": {
-                "title": "FluksDrive",
+                "title": "FluxDrive",
                 "description": "Penyimpanan file terdesentralisasi"
               },
               "costCalculator": {
@@ -5104,7 +5131,7 @@
       "price": "Harga",
       "perMonth": "per bulan",
       "header": {
-        "title": "FluksDrive",
+        "title": "FluxDrive",
         "subtitle": "Selesaikan langganan Anda untuk membuka kunci penyimpanan terdesentralisasi"
       },
       "fluxPay": {
@@ -5241,17 +5268,17 @@
     "explore": "Mengeksplorasi",
     "services": {
       "fluxCloud": {
-        "name": "FluksCloud",
+        "name": "FluxCloud",
         "description": "Terapkan dan skalakan aplikasi Anda pada infrastruktur cloud terdesentralisasi",
         "category": "Infrastruktur"
       },
       "fluxAI": {
-        "name": "FluksAI",
+        "name": "FluxAI",
         "description": "Manfaatkan kekuatan komputasi AI terdistribusi untuk kebutuhan pembelajaran mesin Anda",
         "category": "AI & ML"
       },
       "fluxDrive": {
-        "name": "FluksDrive",
+        "name": "FluxDrive",
         "description": "Solusi penyimpanan yang aman dan terdesentralisasi untuk data Anda",
         "category": "Penyimpanan"
       },

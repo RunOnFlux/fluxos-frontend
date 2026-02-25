@@ -308,7 +308,7 @@
       "manageUsers": "Gérer les utilisateurs",
       "loggedSessions": "Sessions enregistrées",
       "myFluxShare": "Mon FluxShare",
-      "fluxShare": "FluxPartage"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "FluxXDAO"
@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "Déposez les fichiers ici ou",
       "clickToUpload": "cliquez pour télécharger",
+      "dropFilesOrFolders": "Déposez les fichiers ou les dossiers ici",
+      "selectFiles": "Sélectionner les fichiers",
+      "selectFolder": "Sélectionner le dossier",
       "fileSizeLimit": "(La taille du fichier est limitée à 5 Go)",
       "uploadFiles": "Télécharger des fichiers",
       "alreadyInQueue": "« {fileName} » est déjà dans la file d'attente de téléchargement",
       "uploadSuccess": "'{fileName}' a été téléchargé",
       "uploadError": "Erreur lors du téléchargement de « {fileName} » : état {status}",
-      "uploadFailed": "Échec du téléchargement pour « {fileName} »"
+      "uploadFailed": "Échec du téléchargement pour « {fileName} »",
+      "uploadQueue": "File d'attente de téléchargement",
+      "total": "Total",
+      "files": "fichier | fichiers",
+      "clearAll": "Tout effacer",
+      "removeFile": "Supprimer le fichier"
     },
     "dropZone": {
       "onlyImageFiles": "Seuls les fichiers image sont autorisés",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "30 minutes restantes",
       "deploymentTimeEstimate": "Jusqu'à 45 minutes après le paiement",
       "deploymentSuccessMessage": "Votre application est désormais active et fonctionne sur le réseau Flux.",
+      "appAccessDomainAvailable": "Le domaine d'accès à votre application devrait être disponible dans quelques minutes :",
       "updateSuccessMessage": "Votre spécification d'application a été mise à jour avec succès sur le réseau Flux.",
       "autoDetectDeployment": "La confirmation du paiement et le déploiement seront détectés automatiquement.",
       "autoDetectUpdate": "La mise à jour sera détectée automatiquement.",
       "autoDetectPaymentUpdate": "La confirmation du paiement et la mise à jour seront détectées automatiquement.",
       "detectionTimeEstimate": "Cela peut prendre quelques minutes.",
       "checkingBlockchainConfirmation": "Vérification de la confirmation de paiement...",
-      "waitingForNodeDeployment": "En attente du déploiement du nœud...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "Vérification de la confirmation de paiement sur la blockchain.",
       "blockchainConfirmationTime": "Cela peut prendre quelques minutes.",
       "paymentConfirmedOnNetwork": "Paiement confirmé sur le réseau !",
       "paymentConfirmedWaitingNodes": "Paiement confirmé sur le réseau.",
-      "waitingForNodesPickup": "En attente que les nœuds récupèrent et installent votre application.",
-      "nodeDeploymentTime": "Cela peut prendre quelques minutes.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "Un nœud a commencé à installer votre application !",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "Mise à jour confirmée ! Il faudra quelques minutes pour que les nœuds exécutant votre application soient mis à jour vers les dernières spécifications.",
       "freeUpdateSponsoredBy": "Des mises à jour gratuites sur le réseau sont proposées par Influx Technologies",
       "noNodesMatch": "Aucun nœud ne correspond à votre recherche",
@@ -2149,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "Chargement de FluxShare...",
-        "title": "FluxPartage",
+        "title": "FluxShare",
         "subtitle": "Gérez vos fichiers et partagez-les avec d'autres",
         "storageUsage": "Utilisation du stockage",
         "used": "utilisé",
@@ -2212,7 +2225,6 @@
           "duplicateFile": "Le fichier \"{name}\" est déjà dans la file d'attente de téléchargement",
           "fileTooLarge": "Le fichier \"{name}\" dépasse la limite de 5 Go",
           "uploadFailed": "Échec du téléchargement",
-          "storageFull": "Le stockage est plein – aucun téléchargement n'est autorisé",
           "insufficientStorage": "Le fichier \"{name}\" ({fileSize} Mo) dépasse l'espace de stockage disponible ({available} Mo)"
         }
       },
@@ -3084,16 +3096,21 @@
             "sponsoredBy": "Sponsorisé par InFlux Technologies",
             "paymentSubmissionInfo": "Le paiement de votre candidature sera soumis au réseau dans les prochaines minutes.",
             "checkingRegistration": "Vérification de la confirmation de paiement...",
-            "waitingForInstance": "En attente du déploiement du nœud...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "Le premier mois d'hébergement est offert par InFlux Technologies.",
             "freePlanSponsoredBy": "Un plan gratuit est proposé par InFlux Technologies.",
             "checkingPaymentOnBlockchain": "Vérification de la confirmation de paiement sur la blockchain.",
             "blockchainConfirmationTime": "Cela peut prendre quelques minutes.",
             "paymentConfirmedWaitingNodes": "Paiement confirmé sur le réseau.",
-            "waitingForNodesPickup": "En attente que les nœuds récupèrent et installent votre application.",
-            "nodeDeploymentTime": "Cela peut prendre quelques minutes.",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "Un nœud a commencé à installer votre application !",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "Inscription/paiement terminé !",
             "registrationCompleteDescription": "Votre candidature a été payée/enregistrée avec succès sur le réseau Flux.",
+            "appAccessDomainAvailable": "Le domaine d'accès à votre application devrait être disponible dans quelques minutes :",
             "nodesSpawning": "Les nœuds de réseau génèrent maintenant votre application. Il sera disponible prochainement.",
             "cancelPayment": "Annuler et revenir"
           },
@@ -3759,6 +3776,11 @@
         "title": "Marché des applications Flux",
         "subtitle": "Déployez des applications décentralisées préconfigurées sur le cloud Web3 de Flux. Conteneurs Docker, applications Web et API sur {nodeCount}+ FluxNodes dans le monde entier."
       },
+      "revenueBanner": {
+        "title": "Publiez votre application sur le Marketplace FluxCloud",
+        "description": "Vous avez une excellente application ? Publiez-la sur le Marketplace FluxCloud et gagnez jusqu'à 25% de revenus partagés sur chaque déploiement. Contactez-nous à",
+        "cta": "pour commencer."
+      },
       "detail": {
         "loadingTitle": "Chargement de l'application...",
         "errorMessage": "Échec du chargement des détails de l'application : {error}",
@@ -3886,6 +3908,11 @@
           "loading": "Chargement des jeux disponibles...",
           "maintenanceTitle": "Marché des jeux temporairement indisponible",
           "maintenanceSubtitle": "Nous rencontrons des problèmes temporaires",
+          "revenueBanner": {
+            "title": "Publiez votre jeu sur FluxCloud",
+            "description": "Vous avez un jeu incroyable ? Publiez-le sur FluxCloud et gagnez jusqu'à 25% de revenus partagés sur chaque déploiement. Contactez-nous à",
+            "cta": "pour commencer."
+          },
           "hero": {
             "title": "Hébergement de serveur de jeux premium sur FluxCloud",
             "subtitle": "Déployez vos serveurs de jeux préférés en quelques secondes grâce à une distribution mondiale, une protection DDoS et une tarification à l'utilisation basée sur la technologie blockchain.",

@@ -307,8 +307,8 @@
       "manageBenchmark": "إدارة المعيار",
       "manageUsers": "إدارة المستخدمين",
       "loggedSessions": "الجلسات المسجلة",
-      "myFluxShare": "بلدي فلوكسشير",
-      "fluxShare": "فلوكسشير"
+      "myFluxShare": "FluxShare",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "تدفق XDAO"
@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "قم بإسقاط الملفات هنا أو",
       "clickToUpload": "انقر للتحميل",
+      "dropFilesOrFolders": "قم بإسقاط الملفات أو المجلدات هنا",
+      "selectFiles": "حدد الملفات",
+      "selectFolder": "حدد المجلد",
       "fileSizeLimit": "(حجم الملف محدود بـ 5 جيجابايت)",
       "uploadFiles": "تحميل الملفات",
       "alreadyInQueue": "\"{fileName}\" موجود بالفعل في قائمة انتظار التحميل",
       "uploadSuccess": "تم تحميل \"{fileName}\".",
       "uploadError": "خطأ في تحميل '{fileName}': الحالة {status}",
-      "uploadFailed": "فشل تحميل '{fileName}'"
+      "uploadFailed": "فشل تحميل '{fileName}'",
+      "uploadQueue": "قائمة الانتظار للتحميل",
+      "total": "المجموع",
+      "files": "ملف | ملفان | ملفات",
+      "clearAll": "مسح الكل",
+      "removeFile": "إزالة الملف"
     },
     "dropZone": {
       "onlyImageFiles": "يُسمح بملفات الصور فقط",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "30 دقيقة متبقية",
       "deploymentTimeEstimate": "ما يصل إلى 45 دقيقة بعد الدفع",
       "deploymentSuccessMessage": "أصبح تطبيقك نشطًا الآن ويعمل على شبكة Flux.",
+      "appAccessDomainAvailable": "يجب أن يكون نطاق الوصول إلى تطبيقك متاحًا في غضون دقائق قليلة:",
       "updateSuccessMessage": "تم تحديث مواصفات التطبيق الخاص بك بنجاح على شبكة Flux.",
       "autoDetectDeployment": "سيتم اكتشاف تأكيد الدفع ونشره تلقائيًا.",
       "autoDetectUpdate": "سيتم اكتشاف التحديث تلقائيًا.",
       "autoDetectPaymentUpdate": "سيتم الكشف عن تأكيد الدفع والتحديث تلقائيًا.",
       "detectionTimeEstimate": "قد يستغرق هذا بضع دقائق.",
       "checkingBlockchainConfirmation": "جارٍ التحقق من تأكيد الدفع...",
-      "waitingForNodeDeployment": "في انتظار نشر العقدة...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "التحقق من تأكيد الدفع على blockchain.",
       "blockchainConfirmationTime": "قد يستغرق هذا بضع دقائق.",
       "paymentConfirmedOnNetwork": "تم تأكيد الدفع على الشبكة!",
       "paymentConfirmedWaitingNodes": "تم تأكيد الدفع على الشبكة.",
-      "waitingForNodesPickup": "في انتظار العقد لالتقاط وتثبيت التطبيق الخاص بك.",
-      "nodeDeploymentTime": "قد يستغرق هذا بضع دقائق.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "بدأت عقدة في تثبيت تطبيقك!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "تم تأكيد التحديث! سوف يستغرق الأمر بضع دقائق حتى يتم تحديث العقد التي تقوم بتشغيل تطبيقك إلى أحدث المواصفات.",
       "freeUpdateSponsoredBy": "يتم تقديم تحديثات مجانية على الشبكة بواسطة Influx Technologies",
       "noNodesMatch": "لا توجد عقد تطابق بحثك",
@@ -1933,8 +1946,8 @@
         "starter": "بداية",
         "standard": "معيار",
         "pro": "نخبة",
-        "enterprise": "فلوكس درايف برو",
-        "fluxDrivePro": "فلوكس درايف برو"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "تم الدفع بنجاح! إعادة التوجيه..."
@@ -2096,7 +2109,7 @@
           "starter": "بداية",
           "standard": "معيار",
           "elite": "نخبة",
-          "fluxDrivePro": "فلوكس درايف برو"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "الأكثر شعبية",
@@ -2149,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "جارٍ تحميل FluxShare...",
-        "title": "فلوكسشير",
+        "title": "FluxShare",
         "subtitle": "إدارة ملفاتك ومشاركتها مع الآخرين",
         "storageUsage": "استخدام التخزين",
         "used": "مستخدم",
@@ -2778,7 +2791,7 @@
             "title": "الأسئلة المتداولة",
             "questions": {
               "whatIsFlux": {
-                "question": "ما هو فلوكس كلاود؟",
+                "question": "ما هو FluxCloud؟",
                 "answer": "FluxCloud عبارة عن منصة حوسبة سحابية لامركزية مدعومة بتقنية Web3. على عكس موفري الخدمات السحابية التقليديين الذين يعتمدون على مراكز البيانات المركزية، تقوم FluxCloud بتوزيع تطبيقاتك عبر {nodeCount}+ العقد التي يتم تشغيلها بشكل مستقل في {countryCount}+ البلدان. وهذا يوفر تكرارًا أفضل، ومقاومة للرقابة، وتكاليف أقل بشكل ملحوظ."
               },
               "howToDeploy": {
@@ -3084,16 +3097,21 @@
             "sponsoredBy": "برعاية InFlux Technologies",
             "paymentSubmissionInfo": "سيتم إرسال الدفعة مقابل طلبك إلى الشبكة خلال الدقائق القليلة القادمة.",
             "checkingRegistration": "جارٍ التحقق من تأكيد الدفع...",
-            "waitingForInstance": "في انتظار نشر العقدة...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "يتم تقديم الشهر الأول من الاستضافة بواسطة InFlux Technologies.",
             "freePlanSponsoredBy": "يتم تقديم خطة مجانية بواسطة InFlux Technologies.",
             "checkingPaymentOnBlockchain": "التحقق من تأكيد الدفع على blockchain.",
             "blockchainConfirmationTime": "قد يستغرق هذا بضع دقائق.",
             "paymentConfirmedWaitingNodes": "تم تأكيد الدفع على الشبكة.",
-            "waitingForNodesPickup": "في انتظار العقد لالتقاط وتثبيت التطبيق الخاص بك.",
-            "nodeDeploymentTime": "قد يستغرق هذا بضع دقائق.",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "بدأت عقدة في تثبيت تطبيقك!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "اكتمل التسجيل/الدفع!",
             "registrationCompleteDescription": "لقد تم دفع/تسجيل طلبك بنجاح على شبكة Flux.",
+            "appAccessDomainAvailable": "يجب أن يكون نطاق الوصول إلى تطبيقك متاحًا في غضون دقائق قليلة:",
             "nodesSpawning": "تعمل عقد الشبكة الآن على إنتاج تطبيقك. وسوف تكون متاحة قريبا.",
             "cancelPayment": "إلغاء والعودة"
           },
@@ -3593,7 +3611,7 @@
             "description": "تعمل Flux على blockchain الخاصة بها، وتتعامل مع الحوكمة وعلم الرموز وتوفر إمكانية التشغيل البيني مع blockchains الأخرى من خلال الأصول الموازية. تعمل عملة FLUX الأصلية على تشغيل النظام البيئي بأكمله، مما يتيح البنية التحتية اللامركزية وتكامل DeFi."
           },
           "cloud": {
-            "title": "شبكة فلوكس كلاود",
+            "title": "شبكة FluxCloud",
             "description": "FluxCloud عبارة عن منصة حوسبة سحابية لا مركزية مدعومة بأكثر من {nodes} FluxNodes الموزعة عالميًا. فهو يوفر بنية تحتية جاهزة لـ Web3 لاستضافة التطبيقات، وتشغيل عقد blockchain، وتنفيذ أعباء عمل AI/ML - مما يوفر بديلاً لا مركزيًا لموفري الخدمات السحابية التقليديين مثل AWS أو Google Cloud."
           },
           "learnMore": "يتعلم أكثر"
@@ -3711,7 +3729,7 @@
       "upgradeFailed": "فشلت الترقية:",
       "cancel": "يلغي",
       "features": {
-        "title": "لماذا تختار فلوكس درايف؟",
+        "title": "لماذا تختار FluxDrive؟",
         "encryption": {
           "title": "التشفير من النهاية إلى النهاية",
           "description": "يتم تشفير ملفاتك قبل التحميل وتظل آمنة عبر الشبكة الموزعة. أنت فقط تملك المفاتيح."
@@ -3742,7 +3760,7 @@
         }
       },
       "benefits": {
-        "title": "فوائد فلوكس درايف",
+        "title": "فوائد FluxDrive",
         "noCentralized": "لا يمكن لأي مزود مركزي الوصول إلى بياناتك",
         "fullControl": "الملكية الكاملة والتحكم في ملفاتك",
         "globalRedundancy": "تكرار عالمي عبر أكثر من 2600 عقدة",
@@ -3758,6 +3776,11 @@
       "hero": {
         "title": "سوق تطبيقات التدفق",
         "subtitle": "انشر التطبيقات اللامركزية التي تم تكوينها مسبقًا على سحابة Flux's Web3. حاويات Docker وتطبيقات الويب وواجهات برمجة التطبيقات على {nodeCount}+ FluxNodes في جميع أنحاء العالم."
+      },
+      "revenueBanner": {
+        "title": "أدرج تطبيقك في سوق FluxCloud",
+        "description": "هل لديك تطبيق رائع؟ انشره في سوق FluxCloud واحصل على ما يصل إلى 25% من الإيرادات المشتركة من كل عملية نشر. تواصل معنا عبر",
+        "cta": "للبدء."
       },
       "detail": {
         "loadingTitle": "جارٍ تحميل التطبيق...",
@@ -3836,7 +3859,7 @@
           "subtitle": "كل ما تحتاج لمعرفته حول الاستضافة على FluxCloud",
           "questions": [
             {
-              "q": "ما هو فلوكس كلاود؟",
+              "q": "ما هو FluxCloud؟",
               "a": "FluxCloud عبارة عن منصة حوسبة سحابية لامركزية مدعومة بتقنية Web3. فهو يوفر استضافة آمنة وقابلة للتطوير وفعالة من حيث التكلفة للتطبيقات والألعاب والخدمات عبر شبكة عالمية من العقد."
             },
             {
@@ -3886,6 +3909,11 @@
           "loading": "جارٍ تحميل الألعاب المتوفرة...",
           "maintenanceTitle": "سوق الألعاب غير متاح مؤقتًا",
           "maintenanceSubtitle": "نحن نواجه مشكلات مؤقتة",
+          "revenueBanner": {
+            "title": "أدرج لعبتك على FluxCloud",
+            "description": "هل لديك لعبة مذهلة؟ انشرها على FluxCloud واحصل على ما يصل إلى 25% من الإيرادات المشتركة من كل عملية نشر. تواصل معنا عبر",
+            "cta": "للبدء."
+          },
           "hero": {
             "title": "استضافة خادم الألعاب المميزة على FluxCloud",
             "subtitle": "انشر خوادم الألعاب المفضلة لديك في ثوانٍ من خلال التوزيع العالمي والحماية من هجمات DDoS وتسعير الدفع أولاً بأول المدعوم بتقنية blockchain.",
@@ -5256,7 +5284,7 @@
         "category": "تخزين"
       },
       "fluxEdge": {
-        "name": "فلوكس إيدج",
+        "name": "FluxEdge",
         "description": "حوسبة الحافة على نطاق واسع مع شبكة Flux",
         "category": "شبكة"
       },

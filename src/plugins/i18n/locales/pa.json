@@ -307,7 +307,7 @@
       "manageBenchmark": "ਬੈਂਚਮਾਰਕ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ",
       "manageUsers": "ਉਪਭੋਗਤਾਵਾਂ ਦਾ ਪ੍ਰਬੰਧਨ ਕਰੋ",
       "loggedSessions": "ਲੌਗ ਕੀਤੇ ਸੈਸ਼ਨ",
-      "myFluxShare": "ਮੇਰਾ ਫਲੈਕਸਸ਼ੇਅਰ",
+      "myFluxShare": "ਮੇਰਾ FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "ਫਾਈਲਾਂ ਨੂੰ ਇੱਥੇ ਸੁੱਟੋ ਜਾਂ",
       "clickToUpload": "ਅੱਪਲੋਡ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ",
+      "dropFilesOrFolders": "ਇੱਥੇ ਫਾਈਲਾਂ ਜਾਂ ਫੋਲਡਰ ਸੁੱਟੋ",
+      "selectFiles": "ਫਾਈਲਾਂ ਚੁਣੋ",
+      "selectFolder": "ਫੋਲਡਰ ਚੁਣੋ",
       "fileSizeLimit": "(ਫਾਈਲ ਦਾ ਆਕਾਰ 5 GB ਤੱਕ ਸੀਮਿਤ ਹੈ)",
       "uploadFiles": "ਫਾਈਲਾਂ ਅੱਪਲੋਡ ਕਰੋ",
       "alreadyInQueue": "'{fileName}' ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਅੱਪਲੋਡ ਕਤਾਰ ਵਿੱਚ ਹੈ",
       "uploadSuccess": "'{fileName}' ਅੱਪਲੋਡ ਕਰ ਦਿੱਤਾ ਗਿਆ ਹੈ",
       "uploadError": "'{fileName}' ਅੱਪਲੋਡ ਕਰਨ ਵਿੱਚ ਤਰੁੱਟੀ: ਸਥਿਤੀ {status}",
-      "uploadFailed": "'{fileName}' ਲਈ ਅੱਪਲੋਡ ਅਸਫਲ ਰਿਹਾ"
+      "uploadFailed": "'{fileName}' ਲਈ ਅੱਪਲੋਡ ਅਸਫਲ ਰਿਹਾ",
+      "uploadQueue": "ਅੱਪਲੋਡ ਕਤਾਰ",
+      "total": "ਕੁੱਲ",
+      "files": "ਫਾਈਲ | ਫਾਈਲਾਂ",
+      "clearAll": "ਸਭ ਸਾਫ਼ ਕਰੋ",
+      "removeFile": "ਫਾਈਲ ਹਟਾਓ"
     },
     "dropZone": {
       "onlyImageFiles": "ਸਿਰਫ਼ ਚਿੱਤਰ ਫ਼ਾਈਲਾਂ ਦੀ ਇਜਾਜ਼ਤ ਹੈ",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "30 ਮਿੰਟ ਬਾਕੀ",
       "deploymentTimeEstimate": "ਭੁਗਤਾਨ ਤੋਂ ਬਾਅਦ 45 ਮਿੰਟ ਤੱਕ",
       "deploymentSuccessMessage": "ਤੁਹਾਡੀ ਐਪਲੀਕੇਸ਼ਨ ਹੁਣ ਕਿਰਿਆਸ਼ੀਲ ਹੈ ਅਤੇ Flux ਨੈੱਟਵਰਕ 'ਤੇ ਚੱਲ ਰਹੀ ਹੈ।",
+      "appAccessDomainAvailable": "ਤੁਹਾਡੀ ਐਪ ਦਾ ਐਕਸੈਸ ਡੋਮੇਨ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਉਪਲਬਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ:",
       "updateSuccessMessage": "ਤੁਹਾਡੀ ਐਪਲੀਕੇਸ਼ਨ ਸਪੈਸੀਫਿਕੇਸ਼ਨ ਨੂੰ ਫਲੈਕਸ ਨੈੱਟਵਰਕ 'ਤੇ ਸਫਲਤਾਪੂਰਵਕ ਅੱਪਡੇਟ ਕੀਤਾ ਗਿਆ ਹੈ।",
       "autoDetectDeployment": "ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਅਤੇ ਤੈਨਾਤੀ ਸਵੈਚਲਿਤ ਤੌਰ 'ਤੇ ਖੋਜੀ ਜਾਵੇਗੀ।",
       "autoDetectUpdate": "ਅੱਪਡੇਟ ਆਟੋਮੈਟਿਕ ਹੀ ਖੋਜਿਆ ਜਾਵੇਗਾ।",
       "autoDetectPaymentUpdate": "ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਅਤੇ ਅੱਪਡੇਟ ਸਵੈਚਲਿਤ ਤੌਰ 'ਤੇ ਖੋਜਿਆ ਜਾਵੇਗਾ।",
       "detectionTimeEstimate": "ਇਸ ਵਿੱਚ ਕੁਝ ਮਿੰਟ ਲੱਗ ਸਕਦੇ ਹਨ।",
       "checkingBlockchainConfirmation": "ਭੁਗਤਾਨ ਪੁਸ਼ਟੀਕਰਨ ਦੀ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
-      "waitingForNodeDeployment": "ਨੋਡ ਤੈਨਾਤੀ ਲਈ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "ਬਲਾਕਚੈਨ 'ਤੇ ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ।",
       "blockchainConfirmationTime": "ਇਸ ਵਿੱਚ ਕੁਝ ਮਿੰਟ ਲੱਗ ਸਕਦੇ ਹਨ।",
       "paymentConfirmedOnNetwork": "ਨੈੱਟਵਰਕ 'ਤੇ ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਕੀਤੀ ਗਈ ਹੈ!",
       "paymentConfirmedWaitingNodes": "ਨੈੱਟਵਰਕ 'ਤੇ ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਕੀਤੀ ਗਈ ਹੈ।",
-      "waitingForNodesPickup": "ਤੁਹਾਡੀ ਐਪ ਨੂੰ ਚੁੱਕਣ ਅਤੇ ਸਥਾਪਤ ਕਰਨ ਲਈ ਨੋਡਸ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ।",
-      "nodeDeploymentTime": "ਇਸ ਵਿੱਚ ਕੁਝ ਮਿੰਟ ਲੱਗ ਸਕਦੇ ਹਨ।",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "ਇੱਕ ਨੋਡ ਨੇ ਤੁਹਾਡੀ ਐਪ ਇੰਸਟਾਲ ਕਰਨੀ ਸ਼ੁਰੂ ਕਰ ਦਿੱਤੀ ਹੈ!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "ਅੱਪਡੇਟ ਦੀ ਪੁਸ਼ਟੀ ਹੋਈ! ਤੁਹਾਡੀ ਐਪ ਨੂੰ ਚਲਾਉਣ ਵਾਲੇ ਨੋਡਾਂ ਨੂੰ ਨਵੀਨਤਮ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ 'ਤੇ ਅੱਪਡੇਟ ਹੋਣ ਵਿੱਚ ਕੁਝ ਮਿੰਟ ਲੱਗਣਗੇ।",
       "freeUpdateSponsoredBy": "ਇਨਫਲਕਸ ਟੈਕਨੋਲੋਜੀਜ਼ ਦੁਆਰਾ ਨੈੱਟਵਰਕ 'ਤੇ ਮੁਫ਼ਤ ਅੱਪਡੇਟ ਦੀ ਪੇਸ਼ਕਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ",
       "noNodesMatch": "ਕੋਈ ਨੋਡ ਤੁਹਾਡੀ ਖੋਜ ਨਾਲ ਮੇਲ ਨਹੀਂ ਖਾਂਦਾ",
@@ -1933,8 +1946,8 @@
         "starter": "ਸਟਾਰਟਰ",
         "standard": "ਮਿਆਰੀ",
         "pro": "ਕੁਲੀਨ",
-        "enterprise": "FluxDrive ਪ੍ਰੋ",
-        "fluxDrivePro": "FluxDrive ਪ੍ਰੋ"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "ਭੁਗਤਾਨ ਸਫਲ! ਰੀਡਾਇਰੈਕਟ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
@@ -2096,7 +2109,7 @@
           "starter": "ਸਟਾਰਟਰ",
           "standard": "ਮਿਆਰੀ",
           "elite": "ਕੁਲੀਨ",
-          "fluxDrivePro": "FluxDrive ਪ੍ਰੋ"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "ਸਭ ਤੋਂ ਮਸ਼ਹੂਰ",
@@ -2212,7 +2225,6 @@
           "duplicateFile": "ਫ਼ਾਈਲ \"{name}\" ਪਹਿਲਾਂ ਤੋਂ ਹੀ ਅੱਪਲੋਡ ਕਤਾਰ ਵਿੱਚ ਹੈ",
           "fileTooLarge": "ਫ਼ਾਈਲ \"{name}\" 5GB ਸੀਮਾ ਤੋਂ ਵੱਧ ਗਈ ਹੈ",
           "uploadFailed": "ਅੱਪਲੋਡ ਅਸਫਲ ਰਿਹਾ",
-          "storageFull": "ਸਟੋਰੇਜ ਭਰ ਗਈ ਹੈ - ਕੋਈ ਅੱਪਲੋਡ ਕਰਨ ਦੀ ਇਜਾਜ਼ਤ ਨਹੀਂ ਹੈ",
           "insufficientStorage": "ਫ਼ਾਈਲ \"{name}\" ({fileSize} MB) ਉਪਲਬਧ ਸਟੋਰੇਜ ({available} MB) ਤੋਂ ਵੱਧ ਹੈ"
         }
       },
@@ -3084,16 +3096,21 @@
             "sponsoredBy": "InFlux Technologies ਦੁਆਰਾ ਸਪਾਂਸਰ ਕੀਤਾ ਗਿਆ",
             "paymentSubmissionInfo": "ਤੁਹਾਡੀ ਅਰਜ਼ੀ ਦਾ ਭੁਗਤਾਨ ਅਗਲੇ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਨੈੱਟਵਰਕ ਨੂੰ ਜਮ੍ਹਾਂ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ।",
             "checkingRegistration": "ਭੁਗਤਾਨ ਪੁਸ਼ਟੀਕਰਨ ਦੀ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
-            "waitingForInstance": "ਨੋਡ ਤੈਨਾਤੀ ਲਈ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "ਹੋਸਟਿੰਗ ਦਾ ਪਹਿਲਾ ਮਹੀਨਾ InFlux Technologies ਦੁਆਰਾ ਪੇਸ਼ ਕੀਤਾ ਜਾਂਦਾ ਹੈ।",
             "freePlanSponsoredBy": "InFlux Technologies ਦੁਆਰਾ ਮੁਫਤ ਯੋਜਨਾ ਦੀ ਪੇਸ਼ਕਸ਼ ਕੀਤੀ ਜਾਂਦੀ ਹੈ।",
             "checkingPaymentOnBlockchain": "ਬਲਾਕਚੈਨ 'ਤੇ ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਲਈ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ।",
             "blockchainConfirmationTime": "ਇਸ ਵਿੱਚ ਕੁਝ ਮਿੰਟ ਲੱਗ ਸਕਦੇ ਹਨ।",
             "paymentConfirmedWaitingNodes": "ਨੈੱਟਵਰਕ 'ਤੇ ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ ਕੀਤੀ ਗਈ ਹੈ।",
-            "waitingForNodesPickup": "ਤੁਹਾਡੀ ਐਪ ਨੂੰ ਚੁੱਕਣ ਅਤੇ ਸਥਾਪਤ ਕਰਨ ਲਈ ਨੋਡਸ ਦੀ ਉਡੀਕ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ।",
-            "nodeDeploymentTime": "ਇਸ ਵਿੱਚ ਕੁਝ ਮਿੰਟ ਲੱਗ ਸਕਦੇ ਹਨ।",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "ਇੱਕ ਨੋਡ ਨੇ ਤੁਹਾਡੀ ਐਪ ਇੰਸਟਾਲ ਕਰਨੀ ਸ਼ੁਰੂ ਕਰ ਦਿੱਤੀ ਹੈ!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "ਰਜਿਸਟ੍ਰੇਸ਼ਨ/ਭੁਗਤਾਨ ਪੂਰਾ!",
             "registrationCompleteDescription": "ਤੁਹਾਡੀ ਅਰਜ਼ੀ ਨੂੰ ਫਲੈਕਸ ਨੈੱਟਵਰਕ 'ਤੇ ਸਫਲਤਾਪੂਰਵਕ ਭੁਗਤਾਨ/ਰਜਿਸਟਰ ਕੀਤਾ ਗਿਆ ਹੈ।",
+            "appAccessDomainAvailable": "ਤੁਹਾਡੀ ਐਪ ਦਾ ਐਕਸੈਸ ਡੋਮੇਨ ਕੁਝ ਮਿੰਟਾਂ ਵਿੱਚ ਉਪਲਬਧ ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ:",
             "nodesSpawning": "ਨੈੱਟਵਰਕ ਨੋਡਸ ਹੁਣ ਤੁਹਾਡੀ ਐਪਲੀਕੇਸ਼ਨ ਪੈਦਾ ਕਰ ਰਹੇ ਹਨ। ਇਹ ਜਲਦੀ ਹੀ ਉਪਲਬਧ ਹੋਵੇਗਾ।",
             "cancelPayment": "ਰੱਦ ਕਰੋ ਅਤੇ ਵਾਪਸ ਜਾਓ"
           },
@@ -3759,6 +3776,11 @@
         "title": "ਫਲੈਕਸ ਐਪਲੀਕੇਸ਼ਨ ਮਾਰਕੀਟਪਲੇਸ",
         "subtitle": "Flux ਦੇ Web3 ਕਲਾਉਡ 'ਤੇ ਵਿਕੇਂਦਰੀਕ੍ਰਿਤ ਪੂਰਵ-ਸੰਰੂਪਿਤ ਐਪਲੀਕੇਸ਼ਨਾਂ ਨੂੰ ਤੈਨਾਤ ਕਰੋ। ਦੁਨੀਆ ਭਰ ਵਿੱਚ {nodeCount}+ FluxNodes 'ਤੇ ਡੌਕਰ ਕੰਟੇਨਰ, ਵੈੱਬ ਐਪਾਂ, ਅਤੇ APIs।"
       },
+      "revenueBanner": {
+        "title": "FluxCloud ਮਾਰਕੀਟਪਲੇਸ 'ਤੇ ਆਪਣੀ ਐਪ ਸੂਚੀਬੱਧ ਕਰੋ",
+        "description": "ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਸ਼ਾਨਦਾਰ ਐਪਲੀਕੇਸ਼ਨ ਹੈ? ਇਸਨੂੰ FluxCloud ਮਾਰਕੀਟਪਲੇਸ 'ਤੇ ਪ੍ਰਕਾਸ਼ਿਤ ਕਰੋ ਅਤੇ ਹਰ ਡਿਪਲੌਇਮੈਂਟ ਤੋਂ 25% ਤੱਕ ਸਾਂਝੀ ਆਮਦਨ ਕਮਾਓ। ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+        "cta": "ਸ਼ੁਰੂ ਕਰਨ ਲਈ।"
+      },
       "detail": {
         "loadingTitle": "ਐਪਲੀਕੇਸ਼ਨ ਲੋਡ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ...",
         "errorMessage": "ਐਪਲੀਕੇਸ਼ਨ ਵੇਰਵੇ ਲੋਡ ਕਰਨ ਵਿੱਚ ਅਸਫਲ: {error}",
@@ -3886,6 +3908,11 @@
           "loading": "ਉਪਲਬਧ ਗੇਮਾਂ ਨੂੰ ਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ...",
           "maintenanceTitle": "ਗੇਮਜ਼ ਮਾਰਕੀਟਪਲੇਸ ਅਸਥਾਈ ਤੌਰ 'ਤੇ ਅਣਉਪਲਬਧ",
           "maintenanceSubtitle": "ਅਸੀਂ ਅਸਥਾਈ ਸਮੱਸਿਆਵਾਂ ਦਾ ਅਨੁਭਵ ਕਰ ਰਹੇ ਹਾਂ",
+          "revenueBanner": {
+            "title": "FluxCloud 'ਤੇ ਆਪਣੀ ਗੇਮ ਸੂਚੀਬੱਧ ਕਰੋ",
+            "description": "ਕੀ ਤੁਹਾਡੇ ਕੋਲ ਇੱਕ ਸ਼ਾਨਦਾਰ ਗੇਮ ਹੈ? ਇਸਨੂੰ FluxCloud 'ਤੇ ਪ੍ਰਕਾਸ਼ਿਤ ਕਰੋ ਅਤੇ ਹਰ ਡਿਪਲੌਇਮੈਂਟ ਤੋਂ 25% ਤੱਕ ਸਾਂਝੀ ਆਮਦਨ ਕਮਾਓ। ਸਾਡੇ ਨਾਲ ਸੰਪਰਕ ਕਰੋ",
+            "cta": "ਸ਼ੁਰੂ ਕਰਨ ਲਈ।"
+          },
           "hero": {
             "title": "FluxCloud 'ਤੇ ਪ੍ਰੀਮੀਅਮ ਗੇਮ ਸਰਵਰ ਹੋਸਟਿੰਗ",
             "subtitle": "ਗਲੋਬਲ ਡਿਸਟ੍ਰੀਬਿਊਸ਼ਨ, DDoS ਸੁਰੱਖਿਆ, ਅਤੇ ਬਲਾਕਚੈਨ ਟੈਕਨਾਲੋਜੀ ਦੁਆਰਾ ਸੰਚਾਲਿਤ ਕੀਮਤ ਦੇ ਨਾਲ-ਨਾਲ-ਜਾਓ-ਜਾਓ, ਆਪਣੇ ਮਨਪਸੰਦ ਗੇਮ ਸਰਵਰਾਂ ਨੂੰ ਸਕਿੰਟਾਂ ਵਿੱਚ ਤੈਨਾਤ ਕਰੋ।",
@@ -3916,7 +3943,7 @@
             }
           },
           "features": {
-            "title": "ਗੇਮ ਹੋਸਟਿੰਗ ਲਈ ਫਲਕਸਪਲੇ ਕਿਉਂ ਚੁਣੋ?",
+            "title": "ਗੇਮ ਹੋਸਟਿੰਗ ਲਈ FluxPlay ਕਿਉਂ ਚੁਣੋ?",
             "items": {
               "instant": {
                 "title": "ਤਤਕਾਲ ਤੈਨਾਤੀ",
@@ -3977,7 +4004,7 @@
           "gamesTitle": "ਉਪਲਬਧ ਗੇਮ ਸਰਵਰ",
           "gamesSubtitle": "ਇੱਕ ਗੇਮ ਚੁਣੋ ਅਤੇ ਆਪਣੇ ਸਰਵਰ ਨੂੰ ਸਕਿੰਟਾਂ ਵਿੱਚ ਤੈਨਾਤ ਕਰੋ",
           "comparison": {
-            "title": "ਫਲਕਸਪਲੇ ਬਨਾਮ ਪਰੰਪਰਾਗਤ ਹੋਸਟਿੰਗ ਕਿਉਂ",
+            "title": "FluxPlay ਬਨਾਮ ਪਰੰਪਰਾਗਤ ਹੋਸਟਿੰਗ ਕਿਉਂ",
             "feature": "ਵਿਸ਼ੇਸ਼ਤਾ",
             "fluxplay": "FluxPlay",
             "traditional": "ਰਵਾਇਤੀ ਹੋਸਟਿੰਗ",
@@ -4821,7 +4848,7 @@
               }
             },
             "features": {
-              "title": "ਗੇਮ ਹੋਸਟਿੰਗ ਲਈ ਫਲਕਸਪਲੇ ਕਿਉਂ ਚੁਣੋ?",
+              "title": "ਗੇਮ ਹੋਸਟਿੰਗ ਲਈ FluxPlay ਕਿਉਂ ਚੁਣੋ?",
               "items": {
                 "instant": {
                   "title": "ਤਤਕਾਲ ਤੈਨਾਤੀ",
@@ -4851,12 +4878,12 @@
             },
             "content": {
               "title": "ਪ੍ਰੋਫੈਸ਼ਨਲ ਗੇਮ ਸਰਵਰ ਹੋਸਟਿੰਗ ਨੂੰ ਸਰਲ ਬਣਾਇਆ ਗਿਆ",
-              "body": "<p><strong>FluxPlay</strong> ਵਿਕੇਂਦਰੀਕ੍ਰਿਤ ਬੁਨਿਆਦੀ ਢਾਂਚੇ ਦੀ ਸ਼ਕਤੀ ਨੂੰ ਰਵਾਇਤੀ ਹੋਸਟਿੰਗ ਦੀ ਸਰਲਤਾ ਨਾਲ ਜੋੜ ਕੇ ਗੇਮ ਸਰਵਰ ਹੋਸਟਿੰਗ ਵਿੱਚ ਕ੍ਰਾਂਤੀ ਲਿਆਉਂਦਾ ਹੈ। ਚਾਹੇ ਤੁਸੀਂ <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Anshrouded</strong> ਸਰਵਰਾਂ ਦੀ ਮੇਜ਼ਬਾਨੀ ਕਰ ਰਹੇ ਹੋ, ਸਾਡਾ ਪਲੇਟਫਾਰਮ ਬੇਮਿਸਾਲ ਪ੍ਰਦਰਸ਼ਨ ਅਤੇ ਭਰੋਸੇਯੋਗਤਾ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ। ਆਟੋਮੈਟਿਕ ਸਕੇਲਿੰਗ, ਭੂਗੋਲਿਕ ਵੰਡ, ਅਤੇ ਮਿਲਟਰੀ-ਗ੍ਰੇਡ ਸੁਰੱਖਿਆ ਨਾਲ ਹੋਸਟਿੰਗ। ਸਾਡਾ ਵਿਕੇਂਦਰੀਕ੍ਰਿਤ ਆਰਕੀਟੈਕਚਰ ਇਹ ਯਕੀਨੀ ਬਣਾਉਂਦਾ ਹੈ ਕਿ ਤੁਹਾਡਾ ਗੇਮ ਸਰਵਰ ਔਨਲਾਈਨ ਰਹਿੰਦਾ ਹੈ ਭਾਵੇਂ ਵਿਅਕਤੀਗਤ ਨੋਡਸ ਅਸਫਲ ਹੋ ਜਾਣ, ਪਰੰਪਰਾਗਤ ਕੇਂਦਰੀਕ੍ਰਿਤ ਹੋਸਟਿੰਗ ਪ੍ਰਦਾਤਾਵਾਂ ਦੇ ਮੁਕਾਬਲੇ ਵਧੀਆ ਅਪਟਾਈਮ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹੋਏ।</p><p>ਤਤਕਾਲ ਤੈਨਾਤੀ, ਪਾਰਦਰਸ਼ੀ ਕੀਮਤ, ਅਤੇ DDoS ਸੁਰੱਖਿਆ ਸਮੇਤ, FluxPlay ਗੇਮਰਾਂ, ਭਾਈਚਾਰਿਆਂ ਅਤੇ ਸਰਵਰ ਪ੍ਰਬੰਧਕਾਂ ਲਈ ਆਧੁਨਿਕ ਹੱਲ ਹੈ ਜੋ ਸਰਵਰ ਪ੍ਰਬੰਧਕਾਂ ਦੀ ਮੰਗ ਕਰਦੇ ਹਨ।"
+              "body": "<p><strong>FluxPlay</strong> ਵਿਕੇਂਦਰੀਕ੍ਰਿਤ ਬੁਨਿਆਦੀ ਢਾਂਚੇ ਦੀ ਸ਼ਕਤੀ ਨੂੰ ਰਵਾਇਤੀ ਹੋਸਟਿੰਗ ਦੀ ਸਰਲਤਾ ਨਾਲ ਜੋੜ ਕੇ ਗੇਮ ਸਰਵਰ ਹੋਸਟਿੰਗ ਵਿੱਚ ਕ੍ਰਾਂਤੀ ਲਿਆਉਂਦਾ ਹੈ। ਚਾਹੇ ਤੁਸੀਂ <strong>Minecraft</strong>, <strong>Palworld</strong>, <strong>Factorio</strong>, <strong>Anshrouded</strong> ਸਰਵਰਾਂ ਦੀ ਮੇਜ਼ਬਾਨੀ ਕਰ ਰਹੇ ਹੋ, ਸਾਡਾ ਪਲੇਟਫਾਰਮ ਬੇਮਿਸਾਲ ਪ੍ਰਦਰਸ਼ਨ ਅਤੇ ਭਰੋਸੇਯੋਗਤਾ ਪ੍ਰਦਾਨ ਕਰਦਾ ਹੈ। <strong>FluxCloud</strong> 'ਤੇ ਬਣਾਇਆ ਗਿਆ, FluxPlay ਆਟੋਮੈਟਿਕ ਸਕੇਲਿੰਗ, ਭੂਗੋਲਿਕ ਵੰਡ, ਅਤੇ ਮਿਲਟਰੀ-ਗ੍ਰੇਡ ਸੁਰੱਖਿਆ ਨਾਲ ਹੋਸਟਿੰਗ। ਸਾਡਾ ਵਿਕੇਂਦਰੀਕ੍ਰਿਤ ਆਰਕੀਟੈਕਚਰ ਇਹ ਯਕੀਨੀ ਬਣਾਉਂਦਾ ਹੈ ਕਿ ਤੁਹਾਡਾ ਗੇਮ ਸਰਵਰ ਔਨਲਾਈਨ ਰਹਿੰਦਾ ਹੈ ਭਾਵੇਂ ਵਿਅਕਤੀਗਤ ਨੋਡਸ ਅਸਫਲ ਹੋ ਜਾਣ, ਪਰੰਪਰਾਗਤ ਕੇਂਦਰੀਕ੍ਰਿਤ ਹੋਸਟਿੰਗ ਪ੍ਰਦਾਤਾਵਾਂ ਦੇ ਮੁਕਾਬਲੇ ਵਧੀਆ ਅਪਟਾਈਮ ਪ੍ਰਦਾਨ ਕਰਦੇ ਹੋਏ।</p><p>ਤਤਕਾਲ ਤੈਨਾਤੀ, ਪਾਰਦਰਸ਼ੀ ਕੀਮਤ, ਅਤੇ DDoS ਸੁਰੱਖਿਆ ਸਮੇਤ, FluxPlay ਗੇਮਰਾਂ, ਭਾਈਚਾਰਿਆਂ ਅਤੇ ਸਰਵਰ ਪ੍ਰਬੰਧਕਾਂ ਲਈ ਆਧੁਨਿਕ ਹੱਲ ਹੈ ਜੋ ਸਰਵਰ ਪ੍ਰਬੰਧਕਾਂ ਦੀ ਮੰਗ ਕਰਦੇ ਹਨ।"
             },
             "gamesTitle": "ਉਪਲਬਧ ਗੇਮ ਸਰਵਰ",
             "gamesSubtitle": "ਆਪਣੀ ਗੇਮ ਚੁਣੋ ਅਤੇ ਸਕਿੰਟਾਂ ਵਿੱਚ ਇੱਕ ਸਰਵਰ ਤੈਨਾਤ ਕਰੋ",
             "comparison": {
-              "title": "ਫਲਕਸਪਲੇ ਬਨਾਮ ਪਰੰਪਰਾਗਤ ਹੋਸਟਿੰਗ ਕਿਉਂ",
+              "title": "FluxPlay ਬਨਾਮ ਪਰੰਪਰਾਗਤ ਹੋਸਟਿੰਗ ਕਿਉਂ",
               "feature": "ਵਿਸ਼ੇਸ਼ਤਾ",
               "fluxplay": "FluxPlay",
               "traditional": "ਰਵਾਇਤੀ ਹੋਸਟਿੰਗ",

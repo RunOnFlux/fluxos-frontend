@@ -295,6 +295,7 @@
       "descriptionTooltip": "Krótki opis Twojej aplikacji",
       "redirectingToStripe": "Przekierowanie do Stripe...",
       "deploymentSuccessMessage": "Twoja aplikacja jest teraz aktywna i działa w sieci Flux.",
+      "appAccessDomainAvailable": "Domena dostępowa Twojej aplikacji powinna być dostępna za kilka minut:",
       "publicKeyScore": "Wynik Klucza Publicznego:",
       "paymentConfirmedSpecUpdated": "Płatność potwierdzona! Specyfikacja Twojej aplikacji została zaktualizowana.",
       "contactRequired": "Wymagany jest co najmniej jeden adres e-mail kontaktowy",
@@ -432,8 +433,12 @@
       "dockerAuthPlaceholder": "Uwierzytelnienie Docker nazwa_użytkownika:klucz_api",
       "cancelAction": "Anuluj",
       "nameTooltip": "Nazwa Twojej aplikacji",
-      "nodeDeploymentTime": "Może to potrwać kilka minut.",
-      "waitingForNodeDeployment": "Oczekiwanie na wdrożenie węzła",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "Węzeł rozpoczął instalację Twojej aplikacji!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "paymentDetection": "Wykrywanie płatności",
       "pleaseWaitCheckout": "Proszę czekać, przygotowujemy sesję płatności",
       "renewal3Months": "3 miesiące",
@@ -582,7 +587,7 @@
       "updateSuccessful": "Aktualizacja udana",
       "testInitializing": "Inicjalizacja testowej instalacji...",
       "allCountries": "Wszystkie kraje",
-      "waitingForNodesPickup": "Oczekiwanie na pobranie i instalację aplikacji przez węzły.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
       "updateAction": "Aktualizuj",
       "enterDomainForPort": "Wprowadź domenę dla tego portu",
       "changingNodesWarning": "Ostrzeżenie: Zmiana węzłów może wpłynąć na dostępność aplikacji",
@@ -943,12 +948,20 @@
     "fileUpload": {
       "fileSizeLimit": "(Rozmiar pliku jest ograniczony do 5 GB)",
       "dropFilesHere": "Upuść pliki tutaj lub",
+      "dropFilesOrFolders": "Upuść pliki lub foldery tutaj",
+      "selectFiles": "Wybierz pliki",
+      "selectFolder": "Wybierz folder",
       "alreadyInQueue": "'{fileName}' jest już w kolejce przesyłania",
       "uploadFiles": "Prześlij pliki",
       "clickToUpload": "kliknij, aby przesłać",
       "uploadError": "Błąd przesyłania '{fileName}': status {status}",
       "uploadSuccess": "'{fileName}' został przesłany",
-      "uploadFailed": "Nie udało się przesłać '{fileName}'"
+      "uploadFailed": "Nie udało się przesłać '{fileName}'",
+      "uploadQueue": "Kolejka przesyłania",
+      "total": "Łącznie",
+      "files": "plik | pliki | plików",
+      "clearAll": "Wyczyść wszystko",
+      "removeFile": "Usuń plik"
     },
     "runningInstances": {
       "deployedInstances": "Wdrożone instancje",
@@ -1257,7 +1270,7 @@
             "billing1Month": "1 Miesiąc",
             "freeBuilds": "50 buildów/miesiąc",
             "startFreeTrial": "Rozpocznij bezpłatny okres próbny",
-            "total": "Razem",
+            "total": "Łącznie",
             "stepDescription": "Wybierz plan na podstawie swoich potrzeb zasobowych.",
             "customPriceDetail": "Skonfiguruj własne zasoby i cenę"
           },
@@ -1530,7 +1543,11 @@
             "appName": "Nazwa aplikacji",
             "propagating": "Propagowanie do sieci...",
             "scanQR": "Zeskanuj kod QR lub skopiuj adres",
-            "nodeDeploymentTime": "To może potrwać kilka minut.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "Węzeł rozpoczął instalację Twojej aplikacji!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "paymentSubmissionInfo": "Płatność za Twoją aplikację zostanie przesłana do sieci w ciągu kilku najbliższych minut.",
             "freeMonthDescription": "Twój pierwszy miesiąc hostingu jest całkowicie bezpłatny, sponsorowany przez InFlux Technologies.",
             "registrationFailed": "Rejestracja nieudana",
@@ -1560,12 +1577,13 @@
             "freeMonthTitle": "Pierwszy miesiąc za darmo!",
             "cancel": "Anuluj",
             "registrationCompleteDescription": "Twoja aplikacja została pomyślnie opłacona/zarejestrowana w sieci Flux.",
+            "appAccessDomainAvailable": "Domena dostępowa Twojej aplikacji powinna być dostępna za kilka minut:",
             "cryptoPayment": "Płatność krypto",
             "appUrl": "URL aplikacji",
             "startTest": "Rozpocznij test",
             "checkingPaymentOnBlockchain": "Sprawdzanie potwierdzenia płatności w blockchain.",
-            "waitingForInstance": "Oczekiwanie na wdrożenie na węzłach...",
-            "waitingForNodesPickup": "Oczekiwanie na pobranie i instalację aplikacji przez węzły.",
+            "waitingForInstance": "Waiting for app to finish installing...",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
             "stripeNote": "Bezpieczna płatność przez Stripe",
             "runningTest": "Uruchamianie testu instalacji...",
             "successDescription": "Twoja aplikacja jest teraz wdrażana w sieci Flux.",
@@ -1950,7 +1968,7 @@
             "description": "Flux działa na własnym autorskim blockchainie, obsługującym zarządzanie, tokenomikę i zapewniającym interoperacyjność z innymi blockchainami poprzez równoległe aktywa. Natywna kryptowaluta FLUX napędza cały ekosystem, umożliwiając zdecentralizowaną infrastrukturę i integrację DeFi."
           },
           "cloud": {
-            "description": "FluxCloud to zdecentralizowana platforma chmury obliczeniowej napędzana przez ponad {nodes} globalnie rozproszonych FluxNode. Zapewnia infrastrukturę gotową na Web3 do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń AI/ML — oferując zdecentralizowaną alternatywę dla tradycyjnych dostawców chmury, takich jak AWS czy Google Cloud.",
+            "description": "FluxCloud to zdecentralizowana platforma chmury obliczeniowej napędzana przez ponad {nodes} globalnie rozproszonych FluxNodes. Zapewnia infrastrukturę gotową na Web3 do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń AI/ML — oferując zdecentralizowaną alternatywę dla tradycyjnych dostawców chmury, takich jak AWS czy Google Cloud.",
             "title": "Sieć FluxCloud"
           },
           "title": "Witamy w ekosystemie Flux",
@@ -1996,7 +2014,7 @@
           "title": "Całkowita pojemność sieci"
         },
         "intro": {
-          "description": "Poznaj całkowite zasoby obliczeniowe dostępne obecnie w całej sieci FluxCloud. Nasza zdecentralizowana infrastruktura jest zasilana przez tysiące FluxNode na całym świecie, zapewniając skalowalną pojemność CPU, RAM i pamięci masowej do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń bez polegania na tradycyjnych dostawcach chmury.",
+          "description": "Poznaj całkowite zasoby obliczeniowe dostępne obecnie w całej sieci FluxCloud. Nasza zdecentralizowana infrastruktura jest zasilana przez tysiące FluxNodes na całym świecie, zapewniając skalowalną pojemność CPU, RAM i pamięci masowej do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń bez polegania na tradycyjnych dostawcach chmury.",
           "title": "Zasoby sieci FluxCloud",
           "subtitle": "Pojemność infrastruktury w czasie rzeczywistym"
         },
@@ -2315,7 +2333,7 @@
           "performanceHelp": "Standardowa specyfikacja oferuje najlepszą wydajność i zapewnia dobrą stabilność.",
           "performanceTitle": "Wydajność",
           "emailHelp": "Wyślemy Ci powiadomienia, gdy Twój WordPress Dapp będzie wymagał odnowienia.",
-          "total": "Suma",
+          "total": "Łącznie",
           "subscription": "subskrypcja",
           "deploymentLocationHelp": "Region geograficzny, w którym zostanie wdrożona witryna WordPress. Dla optymalnej wydajności wszystkie węzły muszą znajdować się w tym samym regionie.",
           "pricing": "Ceny",
@@ -2419,7 +2437,7 @@
           "instancesPlural": "instancje",
           "whitelistIp": "Biała lista IP"
         },
-        "pageTitle": "Hosting WordPress na Flux",
+        "pageTitle": "Hosting WordPress na FluxCloud",
         "termsOfService": {
           "agree": "Zgadzam się",
           "title": "Regulamin",
@@ -2679,6 +2697,11 @@
             "title": "Profesjonalny Hosting Serwerów Gier Made Simple"
           },
           "gamesTitle": "Dostępne Serwery Gier",
+          "revenueBanner": {
+            "title": "Opublikuj swoją grę na FluxCloud",
+            "description": "Masz niesamowitą grę? Opublikuj ją na FluxCloud i zarabiaj do 25% współdzielonych przychodów z każdego wdrożenia. Skontaktuj się z nami pod adresem",
+            "cta": "aby zacząć."
+          },
           "hero": {
             "benefits": {
               "instant": "Natychmiastowe Wdrożenie",
@@ -3259,6 +3282,11 @@
         "title": "Marketplace Aplikacji Flux",
         "subtitle": "Wdrażaj zdecentralizowane wstępnie skonfigurowane aplikacje w chmurze Web3 Flux. Kontenery Docker, aplikacje webowe i API na ponad {nodeCount} węzłach FluxNodes na całym świecie."
       },
+      "revenueBanner": {
+        "title": "Opublikuj swoją aplikację w Marketplace FluxCloud",
+        "description": "Masz świetną aplikację? Opublikuj ją w Marketplace FluxCloud i zarabiaj do 25% współdzielonych przychodów z każdego wdrożenia. Skontaktuj się z nami pod adresem",
+        "cta": "aby zacząć."
+      },
       "loading": "Ładowanie sklepu...",
       "maintenanceSubtitle": "Obecnie występują problemy techniczne ze sklepem. Nasz zespół pracuje nad jak najszybszym rozwiązaniem tego problemu."
     },
@@ -3683,6 +3711,11 @@
           "loadFolderFailed": "Nie udało się załadować folderu",
           "createFolderFailed": "Nie udało się utworzyć folderu",
           "uploadFailed": "Przesyłanie nie powiodło się",
+          "uploadQueue": "Kolejka przesyłania",
+          "total": "Łącznie",
+          "files": "plik | pliki | plików",
+          "clearAll": "Wyczyść wszystko",
+          "removeFile": "Usuń plik",
           "storageStatsFailed": "Nie udało się załadować statystyk pamięci",
           "insufficientStorage": "Plik \"{name}\" ({fileSize} MB) przekracza dostępną pamięć ({available} MB)",
           "unshareFailed": "Nie udało się cofnąć udostępniania pliku",
@@ -3809,7 +3842,7 @@
       "tryAgain": "Spróbuj Ponownie",
       "anonymous": "Anonimowy",
       "noProposalsSubmitted": "Nie przesłano jeszcze żadnych propozycji.",
-      "description": "Weź udział w zdecentralizowanym zarządzaniu",
+      "description": "Flux XDAO (Extended Decentralized Autonomous Organization) umożliwia społeczności kształtowanie przyszłości ekosystemu Flux poprzez zarządzanie on-chain. Operatorzy FluxNode mogą składać propozycje, dyskutować nad inicjatywami i głosować nad kluczowymi decyzjami wpływającymi na rozwój sieci, alokację środków i aktualizacje protokołu. Każdy głos jest zapisywany na blockchainie, zapewniając przejrzystość i niezmienność.",
       "errors": {
         "loadProposalsServer": "Nie udało się załadować propozycji z serwera",
         "networkFailed": "Połączenie sieciowe nie powiodło się. Sprawdź swoje połączenie internetowe.",
@@ -3927,7 +3960,7 @@
         "billing": "Rozliczenie",
         "storage": "Dysk",
         "currentPlan": "Obecny plan",
-        "total": "Suma",
+        "total": "Łącznie",
         "status": "Status",
         "title": "Podsumowanie zamówienia"
       },
@@ -3977,7 +4010,7 @@
       "secureCheckout": "Bezpieczna płatność",
       "plan": "Plan",
       "monthly": "Miesięcznie",
-      "total": "Suma"
+      "total": "Łącznie"
     },
     "error": {
       "pageNotFoundTitle": "Strona nie znaleziona ⚠️",
@@ -4432,11 +4465,11 @@
         "signUp": "Zarejestruj się",
         "perDay": "/ dzień",
         "dailyCost": "Koszt dzienny",
-        "title": "Plany cenowe"
+        "title": "FluxDrive Storage Plans"
       },
       "storageInfo": {
         "usedSpace": "Wykorzystane miejsce",
-        "total": "Całkowity",
+        "total": "Łącznie",
         "title": "Wykorzystanie pamięci",
         "almostFull": "Pamięć prawie pełna",
         "usedOf": "{used} z {total} użyte",
@@ -4660,7 +4693,7 @@
       "cryptoComPaymentCancelled": "Płatność Crypto.com anulowana",
       "calculatingFlux": "Obliczanie FLUX...",
       "sspPaymentInitiated": "Płatność SSP zainicjowana, monitorowanie potwierdzenia...",
-      "total": "Razem",
+      "total": "Łącznie",
       "cryptoCom": "Crypto.com",
       "loadingPlanDetails": "Ładowanie szczegółów planu...",
       "tryAgainOrContactSupport": "Spróbuj ponownie lub skontaktuj się z pomocą techniczną, jeśli problem będzie się utrzymywał.",
@@ -4736,22 +4769,22 @@
       "plans": {
         "enterprise": {
           "features": {
-            "4": "Integracja ze Stripe",
+            "0": "Płatności PayPal",
             "1": "Logiczne przeskoki",
             "2": "Przesyłanie plików z pamięcią 5 GB",
             "3": "Wsparcie dla niestandardowej domeny",
-            "0": "Płatności PayPal"
+            "4": "Integracja ze Stripe"
           },
           "name": "Enterprise",
           "tagLine": "Rozwiązanie dla dużych organizacji"
         },
         "standard": {
           "features": {
-            "1": "Nieograniczone formularze i ankiety",
-            "3": "Integracja z Google Docs",
-            "4": "Niestandardowa strona \"Dziękujemy\"",
             "0": "Nieograniczone odpowiedzi",
-            "2": "Profil na Instagramie"
+            "1": "Nieograniczone formularze i ankiety",
+            "2": "Profil na Instagramie",
+            "3": "Integracja z Google Docs",
+            "4": "Niestandardowa strona \"Dziękujemy\""
           },
           "name": "Standardowy",
           "tagLine": "Dla małych i średnich przedsiębiorstw"
@@ -4760,11 +4793,11 @@
           "name": "Podstawowy",
           "tagLine": "Prosty start dla każdego",
           "features": {
-            "2": "Nieograniczona liczba pól",
-            "4": "Do 2 subdomen",
             "0": "100 odpowiedzi miesięcznie",
             "1": "Nieograniczone formularze i ankiety",
-            "3": "Podstawowe narzędzia do tworzenia formularzy"
+            "2": "Nieograniczona liczba pól",
+            "3": "Podstawowe narzędzia do tworzenia formularzy",
+            "4": "Do 2 subdomen"
           }
         }
       },
@@ -4955,7 +4988,7 @@
       "scrollRight": "Przewiń w prawo",
       "email": "E-mail",
       "plan": "Plan",
-      "total": "Razem",
+      "total": "Łącznie",
       "developer": "Deweloper",
       "screenshots": "Zrzuty ekranu",
       "username": "Nazwa użytkownika",

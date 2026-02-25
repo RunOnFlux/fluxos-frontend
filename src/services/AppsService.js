@@ -140,6 +140,15 @@ export default {
   getAppLocation(name) {
     return Api().get(`/apps/location/${name}`)
   },
+  getAppInstallingLocation(name) {
+    const axiosConfig = {
+      headers: {
+        'x-apicache-bypass': true,
+      },
+    }
+
+    return Api().get(`/apps/installinglocation/${name}`, axiosConfig)
+  },
   globalAppSpecifications() {
     return Api().get('/apps/globalappsspecifications')
   },

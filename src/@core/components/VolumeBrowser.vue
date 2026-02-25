@@ -177,7 +177,7 @@
             </VIcon>
             <span
               v-if="item.isDirectory || item.isUpButton"
-              class="cursor-pointer text-primary"
+              class="cursor-pointer"
               @click="changeFolder(item.name)"
             >
               {{ item.name }}
@@ -282,7 +282,7 @@
                     size="small"
                     rounded="0"
                     density="comfortable"
-                    class="mr-1"
+                    class="delete-btn"
                     @click="deleteFile(item.name)"
                   >
                     <VIcon>mdi-trash-can-outline</VIcon>
@@ -351,8 +351,20 @@
       max-width="700px"
     >
       <VCard>
-        <VCardTitle class="bg-primary text-white">
-          {{ t('core.volumeBrowser.uploadFiles') }}
+        <VCardTitle class="bg-primary text-white d-flex align-center justify-space-between">
+          <div class="d-flex align-center">
+            <VIcon class="mr-2">mdi-cloud-upload</VIcon>
+            <span>{{ t('core.volumeBrowser.uploadFiles') }}</span>
+          </div>
+          <VBtn
+            icon
+            variant="text"
+            color="grey"
+            size="small"
+            @click="refreshFolder(); uploadFilesDialog = false"
+          >
+            <VIcon>mdi-close</VIcon>
+          </VBtn>
         </VCardTitle>
         <VCardText>
           <FileUpload
@@ -360,17 +372,6 @@
             :headers="zelidHeader()"
           />
         </VCardText>
-        <VCardActions>
-          <VBtn
-            color="error"
-            size="small"
-            variant="flat"
-            text
-            @click="refreshFolder(); uploadFilesDialog = false"
-          >
-            {{ t('core.volumeBrowser.close') }}
-          </VBtn>
-        </VCardActions>
       </VCard>
     </VDialog>
   
@@ -845,6 +846,7 @@ async function loadFolder(path, soft = false) {
     const response = await props.executeLocalCommand(
       `/apps/getfolderinfo/${props.appSpec.name}/${selectedAppVolume.value}/${encodeURIComponent(path)}`,
     )
+    if (!response) return // Silent return during logout
 
     loadingFolder.value = false
 
@@ -866,6 +868,8 @@ async function storageStats() {
     volumeInfo.value = await props.executeLocalCommand(
       `/backup/getvolumedataofcomponent/${props.appSpec.name}/${selectedAppVolume.value}/B/2/used,size`,
     )
+    if (!volumeInfo.value) return // Silent return during logout
+
     volumePath.value = volumeInfo.value?.data?.data
 
     if (volumeInfo.value?.data?.status === 'success') {
@@ -945,6 +949,7 @@ async function createFolder(path) {
     const response = await props.executeLocalCommand(
       `/apps/createfolder/${props.appSpec.name}/${selectedAppVolume.value}/${encodeURIComponent(folderPath)}`,
     )
+    if (!response) return // Silent return during logout
 
     if (response.data.status === 'error') {
       if (response.data.data.code === 'EEXIST') {
@@ -1056,6 +1061,7 @@ async function confirmRename() {
     const response = await props.executeLocalCommand(
       `/apps/renameobject/${props.appSpec.name}/${selectedAppVolume.value}/${encodeURIComponent(oldpath)}/${newname}`,
     )
+    if (!response) return // Silent return during logout
 
     console.log(response)
     if (response.data.status === 'error') {
@@ -1081,6 +1087,7 @@ async function deleteFile(name) {
     const response = await props.executeLocalCommand(
       `/apps/removeobject/${props.appSpec.name}/${selectedAppVolume.value}/${encodeURIComponent(fileName)}`,
     )
+    if (!response) return // Silent return during logout
 
     if (response.data.status === 'error') {
       showToast('danger', response.data.data.message || response.data.data)
@@ -1145,6 +1152,7 @@ async function download(name, isFolder = false, silent = false) {
       null,
       axiosConfig,
     )
+    if (!response) return // Silent return during logout
 
     console.log(response)
     if (!silent && !isFolder && response.data && response.status === 200) {
@@ -1556,5 +1564,54 @@ onMounted(() => {
   background-color: rgb(var(--v-theme-background)) !important;
   color: #b6b4b4 !important;
   font-weight: 600;
+}
+
+/* Equal padding on left and right */
+:deep(.v-data-table tbody td:first-child) {
+  padding-left: 16px !important;
+}
+
+:deep(.v-data-table tbody td:last-child) {
+  padding-right: 12px !important;
+}
+
+:deep(.v-data-table thead th:first-child) {
+  padding-left: 16px !important;
+}
+
+:deep(.v-data-table thead th:last-child) {
+  padding-right: 12px !important;
+}
+
+/* Thin, theme-aware scrollbar - similar to FileUpload */
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar-track {
+  background: rgba(var(--v-theme-on-surface), 0.05);
+  border-radius: 3px;
+}
+
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar-thumb {
+  background: rgba(var(--v-theme-on-surface), 0.2);
+  border-radius: 3px;
+  transition: background 0.2s;
+}
+
+:deep(.v-data-table .v-table__wrapper)::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--v-theme-on-surface), 0.3);
+}
+
+/* Firefox scrollbar */
+:deep(.v-data-table .v-table__wrapper) {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(var(--v-theme-on-surface), 0.2) rgba(var(--v-theme-on-surface), 0.05);
+}
+
+/* Red hover effect for delete icon only */
+:deep(.delete-btn:hover .v-icon) {
+  color: rgb(var(--v-theme-error)) !important;
 }
 </style>

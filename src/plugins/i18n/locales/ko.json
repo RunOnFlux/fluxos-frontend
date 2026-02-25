@@ -61,7 +61,7 @@
       "ip": "IP 주소",
       "tier": "층",
       "price": "가격",
-      "total": "총",
+      "total": "합계",
       "amount": "양",
       "free": "무료",
       "memory": "메모리",
@@ -308,7 +308,7 @@
       "manageUsers": "사용자 관리",
       "loggedSessions": "기록된 세션",
       "myFluxShare": "내 FluxShare",
-      "fluxShare": "플럭스쉐어"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "플럭스 XDAO"
@@ -320,11 +320,11 @@
       "title": "돕다"
     },
     "fluxDrive": {
-      "title": "플럭스드라이브"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "플럭스클라우드",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "분산형 애플리케이션 관리",
     "fluxCloudDescription": "Flux 분산형 클라우드 네트워크에서 실행되는 모든 Docker 컨테이너형 애플리케이션을 모니터링하고 관리하세요. 글로벌 블록체인 기반 인프라에 배포된 분산 앱의 실시간 상태, 리소스 사용량 및 성능 지표를 확인하세요. 자세한 관리 제어 및 분석에 액세스하려면 애플리케이션을 클릭하세요."
   },
@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "여기에 파일을 놓거나",
       "clickToUpload": "업로드하려면 클릭하세요",
+      "dropFilesOrFolders": "여기에 파일 또는 폴더를 놓으세요",
+      "selectFiles": "파일 선택",
+      "selectFolder": "폴더 선택",
       "fileSizeLimit": "(파일 크기는 5GB로 제한됩니다.)",
       "uploadFiles": "파일 업로드",
       "alreadyInQueue": "'{fileName}'이(가) 이미 업로드 대기열에 있습니다.",
       "uploadSuccess": "'{fileName}'이(가) 업로드되었습니다",
       "uploadError": "'{fileName}' 업로드 오류: 상태 {status}",
-      "uploadFailed": "'{fileName}' 업로드에 실패했습니다."
+      "uploadFailed": "'{fileName}' 업로드에 실패했습니다.",
+      "uploadQueue": "업로드 대기열",
+      "total": "합계",
+      "files": "파일 | 파일",
+      "clearAll": "모두 지우기",
+      "removeFile": "파일 제거"
     },
     "dropZone": {
       "onlyImageFiles": "이미지 파일만 허용됩니다.",
@@ -590,7 +598,7 @@
       "fluxDriveDownloadInfo": "FluxDrive 백업은 복원 페이지에서 다운로드할 수 있습니다.",
       "uploadSelectedComponents": "선택한 구성요소 업로드",
       "selectRestoreMethod": "복원 방법 선택",
-      "fluxDrive": "플럭스드라이브",
+      "fluxDrive": "FluxDrive",
       "uploadFile": "파일 업로드",
       "remoteUrl": "원격 URL",
       "backupsInventory": "백업 인벤토리",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "30분 남음",
       "deploymentTimeEstimate": "결제 후 최대 45분",
       "deploymentSuccessMessage": "이제 귀하의 애플리케이션이 활성화되어 Flux 네트워크에서 실행 중입니다.",
+      "appAccessDomainAvailable": "앱 접근 도메인은 몇 분 내에 사용할 수 있습니다:",
       "updateSuccessMessage": "Flux 네트워크에서 애플리케이션 사양이 성공적으로 업데이트되었습니다.",
       "autoDetectDeployment": "결제 확인 및 배포가 자동으로 감지됩니다.",
       "autoDetectUpdate": "업데이트가 자동으로 감지됩니다.",
       "autoDetectPaymentUpdate": "결제 확인 및 업데이트가 자동으로 감지됩니다.",
       "detectionTimeEstimate": "이 작업은 몇 분 정도 걸릴 수 있습니다.",
       "checkingBlockchainConfirmation": "결제 확인 중...",
-      "waitingForNodeDeployment": "노드 배포를 기다리는 중...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "블록체인에서 결제 확인을 확인하고 있습니다.",
       "blockchainConfirmationTime": "이 작업은 몇 분 정도 걸릴 수 있습니다.",
       "paymentConfirmedOnNetwork": "네트워크에서 결제가 확인되었습니다!",
       "paymentConfirmedWaitingNodes": "네트워크에서 결제가 확인되었습니다.",
-      "waitingForNodesPickup": "노드가 앱을 선택하고 설치하기를 기다리고 있습니다.",
-      "nodeDeploymentTime": "이 작업은 몇 분 정도 걸릴 수 있습니다.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "노드가 앱 설치를 시작했습니다!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "업데이트 확인! 앱을 실행하는 노드가 최신 사양으로 업데이트되는 데 몇 분 정도 걸립니다.",
       "freeUpdateSponsoredBy": "네트워크의 무료 업데이트는 Influx Technologies에서 제공됩니다.",
       "noNodesMatch": "검색어와 일치하는 노드가 없습니다.",
@@ -1861,7 +1874,7 @@
       "plan": "계획",
       "duration": "지속",
       "oneMonth": "1개월",
-      "total": "총",
+      "total": "합계",
       "downgradeTo": "다음으로 다운그레이드",
       "upgradeTo": "업그레이드",
       "renewingYourCurrentPlan": "현재 요금제 갱신 중",
@@ -1933,8 +1946,8 @@
         "starter": "기동기",
         "standard": "기준",
         "pro": "엘리트",
-        "enterprise": "플럭스드라이브 프로",
-        "fluxDrivePro": "플럭스드라이브 프로"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "결제 성공! 리디렉션 중..."
@@ -1942,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "플럭스드라이브",
+        "title": "FluxDrive",
         "subtitle": "안전한 분산형 스토리지",
         "upgradePlan": "업그레이드 계획",
         "searchPlaceholder": "파일 및 폴더 검색...",
@@ -2043,7 +2056,7 @@
         "usedOf": "{total} 중 {used} 사용됨",
         "usedSpace": "사용된 공간",
         "available": "사용 가능",
-        "total": "총",
+        "total": "합계",
         "almostFull": "저장용량이 거의 가득 참",
         "almostFullMessage": "저장용량이 {percentage}% 찼습니다. 계획을 업그레이드하거나 사용하지 않는 파일을 제거하는 것을 고려해보세요.",
         "statusTitle": "보관상태",
@@ -2096,7 +2109,7 @@
           "starter": "기동기",
           "standard": "기준",
           "elite": "엘리트",
-          "fluxDrivePro": "플럭스드라이브 프로"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "가장 인기있는",
@@ -2149,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "FluxShare 로드 중...",
-        "title": "플럭스쉐어",
+        "title": "FluxShare",
         "subtitle": "파일을 관리하고 다른 사람들과 공유하세요",
         "storageUsage": "스토리지 사용량",
         "used": "사용된",
@@ -2212,7 +2225,6 @@
           "duplicateFile": "\"{name}\" 파일이 이미 업로드 대기열에 있습니다.",
           "fileTooLarge": "\"{name}\" 파일이 5GB 제한을 초과했습니다.",
           "uploadFailed": "업로드 실패",
-          "storageFull": "저장용량이 가득 찼습니다. 업로드가 허용되지 않습니다.",
           "insufficientStorage": "파일 \"{name}\"({fileSize}MB)이 사용 가능한 저장 공간({available}MB)을 초과합니다."
         }
       },
@@ -2908,7 +2920,7 @@
             "billing6Months": "6개월",
             "billing12Months": "12개월",
             "savings": "{percent}% 절약",
-            "total": "총",
+            "total": "합계",
             "customDomain": "맞춤 도메인",
             "customDomainPlaceholder": "app.yourdomain.com",
             "customDomainHint": "도메인의 CNAME 레코드를 Flux 앱 URL로 지정",
@@ -3084,16 +3096,21 @@
             "sponsoredBy": "InFlux Technologies 후원",
             "paymentSubmissionInfo": "귀하의 신청서에 대한 지불은 몇 분 안에 네트워크에 제출됩니다.",
             "checkingRegistration": "결제 확인 중...",
-            "waitingForInstance": "노드 배포를 기다리는 중...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "호스팅의 첫 달은 InFlux Technologies에서 제공합니다.",
             "freePlanSponsoredBy": "InFlux Technologies에서 무료 플랜을 제공합니다.",
             "checkingPaymentOnBlockchain": "블록체인에서 결제 확인을 확인하고 있습니다.",
             "blockchainConfirmationTime": "이 작업은 몇 분 정도 걸릴 수 있습니다.",
             "paymentConfirmedWaitingNodes": "네트워크에서 결제가 확인되었습니다.",
-            "waitingForNodesPickup": "노드가 앱을 선택하고 설치하기를 기다리고 있습니다.",
-            "nodeDeploymentTime": "이 작업은 몇 분 정도 걸릴 수 있습니다.",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "노드가 앱 설치를 시작했습니다!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "등록/결제 완료!",
             "registrationCompleteDescription": "귀하의 애플리케이션이 Flux 네트워크에 성공적으로 지불/등록되었습니다.",
+            "appAccessDomainAvailable": "앱 접근 도메인은 몇 분 내에 사용할 수 있습니다:",
             "nodesSpawning": "이제 네트워크 노드가 애플리케이션을 생성하고 있습니다. 곧 출시될 예정입니다.",
             "cancelPayment": "취소하고 돌아가기"
           },
@@ -3617,7 +3634,7 @@
         "intro": {
           "title": "글로벌 FluxCloud 네트워크",
           "subtitle": "진정한 분산형 인프라",
-          "description": "FluxCloud는 모든 대륙과 수백 개의 호스팅 제공업체에 분산된 FluxNode를 통해 세계 최대의 분산형 클라우드 인프라 네트워크를 운영합니다. 이러한 지리적 다양성은 앱 소유자에게 에지 컴퓨팅의 짧은 대기 시간, 높은 중복성 및 내결함성, 검열 저항, 진정한 분산화 등 비교할 수 없는 이점을 제공합니다. 귀하의 애플리케이션은 중앙 집중식 데이터 센터가 아닌 독립적으로 운영되는 실제 하드웨어에서 실행됩니다."
+          "description": "FluxCloud는 모든 대륙과 수백 개의 호스팅 제공업체에 분산된 FluxNodes를 통해 세계 최대의 분산형 클라우드 인프라 네트워크를 운영합니다. 이러한 지리적 다양성은 앱 소유자에게 에지 컴퓨팅의 짧은 대기 시간, 높은 중복성 및 내결함성, 검열 저항, 진정한 분산화 등 비교할 수 없는 이점을 제공합니다. 귀하의 애플리케이션은 중앙 집중식 데이터 센터가 아닌 독립적으로 운영되는 실제 하드웨어에서 실행됩니다."
         },
         "geographicTitle": "지리적 위치",
         "providersTitle": "공급자",
@@ -3645,7 +3662,7 @@
         "intro": {
           "title": "FluxCloud 네트워크 리소스",
           "subtitle": "실시간 인프라 용량",
-          "description": "전체 FluxCloud 네트워크에서 현재 사용 가능한 전체 컴퓨팅 리소스를 살펴보세요. 우리의 분산형 인프라는 전 세계적으로 수천 개의 FluxNode로 구동되며 기존 클라우드 공급자에 의존하지 않고도 애플리케이션 호스팅, 블록체인 노드 실행 및 워크로드 실행을 위한 확장 가능한 CPU, RAM 및 스토리지 용량을 제공합니다."
+          "description": "전체 FluxCloud 네트워크에서 현재 사용 가능한 전체 컴퓨팅 리소스를 살펴보세요. 우리의 분산형 인프라는 전 세계적으로 수천 개의 FluxNodes로 구동되며 기존 클라우드 공급자에 의존하지 않고도 애플리케이션 호스팅, 블록체인 노드 실행 및 워크로드 실행을 위한 확장 가능한 CPU, RAM 및 스토리지 용량을 제공합니다."
         },
         "summary": {
           "title": "총 네트워크 용량"
@@ -3672,7 +3689,7 @@
           "title": "FluxNode 운영자 보상",
           "subtitle": "네트워크에 전력을 공급하고 FLUX를 획득하세요",
           "description": "FluxNode 운영자는 FluxCloud 네트워크의 중추로서 전 세계적으로 분산형 애플리케이션을 지원하는 필수 컴퓨팅 인프라를 제공합니다. 운영자는 기여에 대한 보상으로 블록체인에서 직접 FLUX 암호화폐를 얻습니다. 이러한 보상은 노드 계층과 성능에 따라 자동으로 분배되어 안정적인 고품질 인프라를 유지하기 위한 지속 가능한 인센티브 모델을 만듭니다.",
-          "learnMore": "FluxNode에 대해 자세히 알아보기"
+          "learnMore": "FluxNodes에 대해 자세히 알아보기"
         },
         "cumulusTotalRewards": "누적 총 보상",
         "nimbusTotalRewards": "Nimbus 총 보상",
@@ -3696,7 +3713,7 @@
     },
     "fluxDrive": {
       "intro": {
-        "title": "플럭스드라이브",
+        "title": "FluxDrive",
         "subtitle": "IPFS로 구동되는 분산형 클라우드 스토리지",
         "description": "FluxDrive는 IPFS(InterPlanetary File System) 기술을 활용하여 FluxCloud 네트워크 위에 구축된 분산형 클라우드 스토리지 솔루션입니다. 전 세계 FluxNodes의 분산 네트워크에 파일을 저장하여 중복성, 검열 저항 및 영구 가용성을 보장합니다. 기존 클라우드 스토리지와 달리 데이터는 암호화되고 조각화되어 여러 노드에 분산되므로 중앙 집중식 공급자에 의존하지 않고도 파일에 대한 진정한 소유권과 제어권을 얻을 수 있습니다.",
         "learnMore": "FluxDrive에 대해 자세히 알아보기"
@@ -3718,7 +3735,7 @@
         },
         "distributed": {
           "title": "글로벌 유통",
-          "description": "파일은 전 세계 수천 개의 FluxNode에 분산되어 어디서나 중복성과 빠른 액세스를 보장합니다."
+          "description": "파일은 전 세계 수천 개의 FluxNodes에 분산되어 어디서나 중복성과 빠른 액세스를 보장합니다."
         },
         "censorship": {
           "title": "검열 저항성",
@@ -3758,6 +3775,11 @@
       "hero": {
         "title": "Flux 애플리케이션 마켓플레이스",
         "subtitle": "Flux의 Web3 클라우드에 분산형 사전 구성된 애플리케이션을 배포하세요. 전 세계 {nodeCount}개 이상의 FluxNodes에 있는 Docker 컨테이너, 웹 앱 및 API."
+      },
+      "revenueBanner": {
+        "title": "FluxCloud 마켓플레이스에 앱을 등록하세요",
+        "description": "훌륭한 애플리케이션이 있으신가요? FluxCloud 마켓플레이스에 게시하고 모든 배포에서 최대 25%의 수익을 공유받으세요. 문의:",
+        "cta": "로 연락주세요."
       },
       "detail": {
         "loadingTitle": "애플리케이션 로드 중...",
@@ -3886,6 +3908,11 @@
           "loading": "사용 가능한 게임 로드 중...",
           "maintenanceTitle": "게임 마켓플레이스를 일시적으로 사용할 수 없습니다.",
           "maintenanceSubtitle": "일시적인 문제가 발생했습니다.",
+          "revenueBanner": {
+            "title": "FluxCloud에 게임을 등록하세요",
+            "description": "놀라운 게임이 있으신가요? FluxCloud에 게시하고 모든 배포에서 최대 25%의 수익을 공유받으세요. 문의:",
+            "cta": "로 연락주세요."
+          },
           "hero": {
             "title": "FluxCloud의 프리미엄 게임 서버 호스팅",
             "subtitle": "블록체인 기술을 기반으로 하는 글로벌 배포, DDoS 보호 및 종량제 가격 책정을 통해 좋아하는 게임 서버를 몇 초 만에 배포하세요.",
@@ -3979,7 +4006,7 @@
           "comparison": {
             "title": "FluxPlay와 기존 호스팅이 비교되는 이유",
             "feature": "특징",
-            "fluxplay": "플럭스플레이",
+            "fluxplay": "FluxPlay",
             "traditional": "기존 호스팅",
             "rows": {
               "setup": "설정 시간",
@@ -4727,7 +4754,7 @@
           "pricing": "가격",
           "subtotal": "소계",
           "discount": "할인",
-          "total": "총",
+          "total": "합계",
           "install": "워드프레스 설치",
           "loginRequired": "로그인 필요",
           "loginToInstall": "WordPress를 설치하려면 로그인하세요.",
@@ -4858,7 +4885,7 @@
             "comparison": {
               "title": "FluxPlay와 기존 호스팅이 비교되는 이유",
               "feature": "특징",
-              "fluxplay": "플럭스플레이",
+              "fluxplay": "FluxPlay",
               "traditional": "기존 호스팅",
               "rows": {
                 "setup": "설정 시간",
@@ -4987,7 +5014,7 @@
                 "description": "좋아하는 게임 서버 호스팅"
               },
               "fluxDrive": {
-                "title": "플럭스드라이브",
+                "title": "FluxDrive",
                 "description": "분산형 파일 저장"
               },
               "costCalculator": {
@@ -5038,7 +5065,7 @@
       "anonymous": "익명의",
       "end": "끝",
       "required": "필수의",
-      "total": "총",
+      "total": "합계",
       "yes": "예",
       "no": "아니요",
       "loginRequiredForVoting": "투표하려면 로그인이 필요합니다",
@@ -5089,14 +5116,14 @@
         "storage": "저장",
         "billing": "청구",
         "monthly": "월간 간행물",
-        "total": "총",
+        "total": "합계",
         "currentPlan": "현재 계획",
         "status": "상태"
       },
       "subscriptionDetails": "구독 세부정보",
       "billingCycle": "청구주기",
       "monthly": "월간 간행물",
-      "total": "총",
+      "total": "합계",
       "proceedToPayment": "결제 진행",
       "paymentProcessing": "결제 처리 중",
       "secureCheckout": "안전한 결제",
@@ -5104,7 +5131,7 @@
       "price": "가격",
       "perMonth": "매월",
       "header": {
-        "title": "플럭스드라이브",
+        "title": "FluxDrive",
         "subtitle": "분산형 저장소를 잠금 해제하려면 구독을 완료하세요."
       },
       "fluxPay": {
@@ -5241,22 +5268,22 @@
     "explore": "탐구하다",
     "services": {
       "fluxCloud": {
-        "name": "플럭스클라우드",
+        "name": "FluxCloud",
         "description": "분산형 클라우드 인프라에서 애플리케이션 배포 및 확장",
         "category": "하부 구조"
       },
       "fluxAI": {
-        "name": "플럭스AI",
+        "name": "FluxAI",
         "description": "기계 학습 요구 사항에 맞게 분산 AI 컴퓨팅의 성능을 활용하세요.",
         "category": "AI 및 ML"
       },
       "fluxDrive": {
-        "name": "플럭스드라이브",
+        "name": "FluxDrive",
         "description": "귀하의 데이터를 위한 안전하고 분산된 스토리지 솔루션",
         "category": "저장"
       },
       "fluxEdge": {
-        "name": "플럭스엣지",
+        "name": "FluxEdge",
         "description": "Flux 네트워크를 통한 대규모 엣지 컴퓨팅",
         "category": "회로망"
       },

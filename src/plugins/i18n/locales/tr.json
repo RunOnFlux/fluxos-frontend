@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "Dosyaları buraya bırakın veya",
       "clickToUpload": "yüklemek için tıklayın",
+      "dropFilesOrFolders": "Dosyaları veya klasörleri buraya bırakın",
+      "selectFiles": "Dosyaları Seç",
+      "selectFolder": "Klasör Seç",
       "fileSizeLimit": "(Dosya boyutu 5 GB ile sınırlıdır)",
       "uploadFiles": "Dosyaları Yükle",
       "alreadyInQueue": "'{fileName}' zaten yükleme kuyruğunda",
       "uploadSuccess": "'{fileName}' yüklendi",
       "uploadError": "'{fileName}' yüklenirken hata oluştu: durum {status}",
-      "uploadFailed": "'{fileName}' için yükleme başarısız oldu"
+      "uploadFailed": "'{fileName}' için yükleme başarısız oldu",
+      "uploadQueue": "Yükleme Kuyruğu",
+      "total": "Toplam",
+      "files": "dosya | dosyalar",
+      "clearAll": "Tümünü Temizle",
+      "removeFile": "Dosyayı Kaldır"
     },
     "dropZone": {
       "onlyImageFiles": "Yalnızca resim dosyalarına izin verilir",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "30 dakika kaldı",
       "deploymentTimeEstimate": "Ödeme yapıldıktan sonra 45 dakikaya kadar",
       "deploymentSuccessMessage": "Uygulamanız artık aktif ve Flux ağında çalışıyor.",
+      "appAccessDomainAvailable": "Uygulamanızın erişim alan adı birkaç dakika içinde kullanılabilir olmalıdır:",
       "updateSuccessMessage": "Uygulama spesifikasyonunuz Flux ağında başarıyla güncellendi.",
       "autoDetectDeployment": "Ödeme onayı ve dağıtım otomatik olarak algılanacaktır.",
       "autoDetectUpdate": "Güncelleme otomatik olarak algılanacaktır.",
       "autoDetectPaymentUpdate": "Ödeme onayı ve güncelleme otomatik olarak algılanacaktır.",
       "detectionTimeEstimate": "Bu birkaç dakika sürebilir.",
       "checkingBlockchainConfirmation": "Ödeme onayı kontrol ediliyor...",
-      "waitingForNodeDeployment": "Düğüm dağıtımı bekleniyor...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "Blockchain'de ödeme onayı kontrol ediliyor.",
       "blockchainConfirmationTime": "Bu birkaç dakika sürebilir.",
       "paymentConfirmedOnNetwork": "Ödeme ağda onaylandı!",
       "paymentConfirmedWaitingNodes": "Ödeme ağda onaylandı.",
-      "waitingForNodesPickup": "Düğümlerin uygulamanızı alıp yüklemesi bekleniyor.",
-      "nodeDeploymentTime": "Bu birkaç dakika sürebilir.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "Bir düğüm uygulamanızı kurmaya başladı!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "Güncelleme onaylandı! Uygulamanızı çalıştıran düğümlerin en son spesifikasyonlara güncellenmesi birkaç dakika sürecektir.",
       "freeUpdateSponsoredBy": "Ağdaki ücretsiz güncellemeler Influx Technologies tarafından sunulmaktadır",
       "noNodesMatch": "Aramanızla eşleşen düğüm yok",
@@ -2212,7 +2225,6 @@
           "duplicateFile": "\"{name}\" dosyası zaten yükleme kuyruğunda",
           "fileTooLarge": "\"{name}\" dosyası 5 GB sınırını aşıyor",
           "uploadFailed": "Yükleme başarısız oldu",
-          "storageFull": "Depolama alanı dolu - yüklemeye izin verilmiyor",
           "insufficientStorage": "\"{name}\" dosyası ({fileSize} MB) kullanılabilir depolama alanını ({available} MB) aşıyor"
         }
       },
@@ -3084,16 +3096,21 @@
             "sponsoredBy": "InFlux Technologies sponsorluğunda",
             "paymentSubmissionInfo": "Başvurunuzun ödemesi önümüzdeki birkaç dakika içinde ağa gönderilecektir.",
             "checkingRegistration": "Ödeme onayı kontrol ediliyor...",
-            "waitingForInstance": "Düğüm dağıtımı bekleniyor...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "Hostingin ilk ayı InFlux Technologies tarafından sunulmaktadır.",
             "freePlanSponsoredBy": "InFlux Technologies tarafından ücretsiz plan sunulmaktadır.",
             "checkingPaymentOnBlockchain": "Blockchain'de ödeme onayı kontrol ediliyor.",
             "blockchainConfirmationTime": "Bu birkaç dakika sürebilir.",
             "paymentConfirmedWaitingNodes": "Ödeme ağda onaylandı.",
-            "waitingForNodesPickup": "Düğümlerin uygulamanızı alıp yüklemesi bekleniyor.",
-            "nodeDeploymentTime": "Bu birkaç dakika sürebilir.",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "Bir düğüm uygulamanızı kurmaya başladı!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "Kayıt/Ödeme Tamamlandı!",
             "registrationCompleteDescription": "Başvurunuz Flux ağında başarıyla ödendi/kaydedildi.",
+            "appAccessDomainAvailable": "Uygulamanızın erişim alan adı birkaç dakika içinde kullanılabilir olmalıdır:",
             "nodesSpawning": "Ağ düğümleri artık uygulamanızı oluşturuyor. Kısa süre içinde satışa sunulacak.",
             "cancelPayment": "İptal et ve geri dön"
           },
@@ -3594,7 +3611,7 @@
           },
           "cloud": {
             "title": "FluxCloud Ağı",
-            "description": "FluxCloud, küresel olarak dağıtılan {nodes}'tan fazla FluxNode tarafından desteklenen, merkezi olmayan bir bulut bilişim platformudur. Uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve AI/ML iş yüklerini yürütmek için Web3'e hazır altyapı sağlayarak AWS veya Google Cloud gibi geleneksel bulut sağlayıcılarına merkezi olmayan bir alternatif sunar."
+            "description": "FluxCloud, küresel olarak dağıtılan {nodes}'tan fazla FluxNodes tarafından desteklenen, merkezi olmayan bir bulut bilişim platformudur. Uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve AI/ML iş yüklerini yürütmek için Web3'e hazır altyapı sağlayarak AWS veya Google Cloud gibi geleneksel bulut sağlayıcılarına merkezi olmayan bir alternatif sunar."
           },
           "learnMore": "Daha fazla bilgi edin"
         },
@@ -3645,7 +3662,7 @@
         "intro": {
           "title": "FluxCloud Ağ Kaynakları",
           "subtitle": "Gerçek zamanlı altyapı kapasitesi",
-          "description": "Şu anda FluxCloud Ağının tamamında mevcut olan toplam bilgi işlem kaynaklarını keşfedin. Merkezi olmayan altyapımız, dünya çapında binlerce FluxNode tarafından desteklenmektedir; uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve geleneksel bulut sağlayıcılarına bağlı kalmadan iş yüklerini yürütmek için ölçeklenebilir CPU, RAM ve depolama kapasitesi sağlar."
+          "description": "Şu anda FluxCloud Ağının tamamında mevcut olan toplam bilgi işlem kaynaklarını keşfedin. Merkezi olmayan altyapımız, dünya çapında binlerce FluxNodes tarafından desteklenmektedir; uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve geleneksel bulut sağlayıcılarına bağlı kalmadan iş yüklerini yürütmek için ölçeklenebilir CPU, RAM ve depolama kapasitesi sağlar."
         },
         "summary": {
           "title": "Toplam Ağ Kapasitesi"
@@ -3718,7 +3735,7 @@
         },
         "distributed": {
           "title": "Küresel Dağıtım",
-          "description": "Dosyalar dünya çapında binlerce FluxNode'a dağıtılarak her yerden yedeklilik ve hızlı erişim sağlanır."
+          "description": "Dosyalar dünya çapında binlerce FluxNodes'a dağıtılarak her yerden yedeklilik ve hızlı erişim sağlanır."
         },
         "censorship": {
           "title": "Sansüre Dayanıklı",
@@ -3758,6 +3775,11 @@
       "hero": {
         "title": "Flux Uygulama Pazarı",
         "subtitle": "Flux'un Web3 bulutunda merkezi olmayan, önceden yapılandırılmış uygulamaları dağıtın. Dünya çapında {nodeCount}+ FluxNodes'ta Docker kapsayıcıları, web uygulamaları ve API'ler."
+      },
+      "revenueBanner": {
+        "title": "Uygulamanızı FluxCloud Marketplace'de Yayınlayın",
+        "description": "Harika bir uygulamanız mı var? FluxCloud Marketplace'de yayınlayın ve her dağıtımdan %25'e kadar paylaşılan gelir elde edin. Bize ulaşın:",
+        "cta": "başlamak için."
       },
       "detail": {
         "loadingTitle": "Uygulama Yükleniyor...",
@@ -3886,6 +3908,11 @@
           "loading": "Mevcut oyunlar yükleniyor...",
           "maintenanceTitle": "Oyun Pazarı Geçici Olarak Kullanım Dışı",
           "maintenanceSubtitle": "Geçici sorunlar yaşıyoruz",
+          "revenueBanner": {
+            "title": "Oyununuzu FluxCloud'da Yayınlayın",
+            "description": "Muhteşem bir oyununuz mu var? FluxCloud'da yayınlayın ve her dağıtımdan %25'e kadar paylaşılan gelir elde edin. Bize ulaşın:",
+            "cta": "başlamak için."
+          },
           "hero": {
             "title": "FluxCloud'da Premium Oyun Sunucusu Barındırma",
             "subtitle": "Favori oyun sunucularınızı küresel dağıtım, DDoS koruması ve blockchain teknolojisiyle desteklenen kullandıkça öde fiyatlandırmasıyla saniyeler içinde dağıtın.",

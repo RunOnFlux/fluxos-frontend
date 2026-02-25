@@ -422,7 +422,7 @@
                   <div class="slider-wrapper">
                     <VSlider
                       v-model="config.instances"
-                      :min="3"
+                      :min="props.app?.instances || 3"
                       :max="100"
                       :step="1"
                       :thumb-label="false"
@@ -1232,15 +1232,32 @@
                         <div class="text-h6 mb-2">
                           <template v-if="paymentConfirmed">{{ t('components.marketplace.installDialog.paymentConfirmed') }}</template>
                           <template v-else-if="paymentMonitoringPhase === 'blockchain'">{{ t('core.subscriptionManager.checkingBlockchainConfirmation') }}</template>
+                          <template v-else-if="paymentMonitoringPhase === 'installing'">{{ t('core.subscriptionManager.waitingForNodeInstalling') }}</template>
                           <template v-else>{{ t('core.subscriptionManager.waitingForNodeDeployment') }}</template>
                         </div>
 
                         <!-- Phase-specific messages -->
                         <div class="text-body-2 text-center mb-4 text-medium-emphasis">
-                          <template v-if="paymentConfirmed && redirectCountdown > 0">
-                            <span class="text-success">
-                              {{ t('components.marketplace.installDialog.advancingToDeployment', { seconds: redirectCountdown }) }}
-                            </span>
+                          <template v-if="paymentConfirmed">
+                            <div class="d-flex flex-column align-center gap-2">
+                              <p class="text-subtitle-2 font-weight-medium mb-0">
+                                {{ t('core.subscriptionManager.appAccessDomainAvailable') }}
+                              </p>
+                              <div class="d-flex align-center gap-2">
+                                <VIcon size="18" color="primary">mdi-web</VIcon>
+                                <a
+                                  :href="`https://${deployedAppName}.app.runonflux.io`"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  https://{{ deployedAppName }}.app.runonflux.io
+                                  <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                                </a>
+                              </div>
+                              <span v-if="redirectCountdown > 0" class="text-success mt-1">
+                                {{ t('components.marketplace.installDialog.advancingToDeployment', { seconds: redirectCountdown }) }}
+                              </span>
+                            </div>
                           </template>
                           <template v-else-if="paymentMonitoringPhase === 'blockchain'">
                             <div class="d-flex flex-column align-center gap-1">
@@ -1251,6 +1268,18 @@
                               <div class="d-flex align-center">
                                 <VIcon color="warning" size="18" class="mr-2">mdi-clock-alert</VIcon>
                                 <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
+                              </div>
+                            </div>
+                          </template>
+                          <template v-else-if="paymentMonitoringPhase === 'installing'">
+                            <div class="d-flex flex-column align-center gap-1">
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="18" class="mr-2">mdi-progress-download</VIcon>
+                                <span>{{ t('core.subscriptionManager.waitingForInstallationStart') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="18" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.installationStartTime') }}</span>
                               </div>
                             </div>
                           </template>
@@ -1395,6 +1424,26 @@
                   </div>
                   <div class="text-body-2 text-medium-emphasis">{{ t('components.marketplace.installDialog.applicationActiveAndRunning') }}</div>
                 </div>
+
+                <VCard variant="outlined" class="mb-4 mx-auto" style="max-width: 500px;">
+                  <VCardText class="text-center">
+                    <p class="text-subtitle-2 font-weight-medium mb-2">
+                      {{ t('core.subscriptionManager.appAccessDomainAvailable') }}
+                    </p>
+                    <div class="d-flex align-center justify-center gap-2">
+                      <VIcon size="18" color="primary">mdi-web</VIcon>
+                      <a
+                        :href="`https://${deployedAppName}.app.runonflux.io`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-body-1"
+                      >
+                        https://{{ deployedAppName }}.app.runonflux.io
+                        <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                      </a>
+                    </div>
+                  </VCardText>
+                </VCard>
 
                 <div class="mb-4">
                   <div class="d-flex justify-center mb-3">
@@ -2734,7 +2783,7 @@ const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentConfirmed = ref(false)
 
-// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'deployment' = waiting for nodes to pick up app
+// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'installing' = waiting for node to start installing, 'deployment' = waiting for nodes to pick up app
 const paymentMonitoringPhase = ref('blockchain')
 const paymentBridgeMaintenance = ref(false)
 const popupBlockedDialog = ref(false)
@@ -4288,9 +4337,10 @@ const resetDialog = () => {
   }
 }
 
-// Payment monitoring function - Two-phase detection:
+// Payment monitoring function - Three-phase detection:
 // Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
-// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
+// Phase 2 (installing): Check if a node has started installing via getAppInstallingLocation()
+// Phase 3 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
 
   // Clear any existing monitoring
@@ -4329,13 +4379,39 @@ const startPaymentMonitoring = async () => {
 
           // If app spec exists, payment is confirmed on blockchain
           if (currentAppSpec?.name) {
-            console.log('✅ BLOCKCHAIN CONFIRMED - Moving to deployment phase')
-            paymentMonitoringPhase.value = 'deployment'
+            console.log('✅ BLOCKCHAIN CONFIRMED - Moving to installing phase')
+            paymentMonitoringPhase.value = 'installing'
             showSnackbar(t('core.subscriptionManager.paymentConfirmedOnNetwork'), 'success', 5000)
           }
         }
+      } else if (paymentMonitoringPhase.value === 'installing') {
+        // Phase 2: Check if a node has started installing
+        const installingResponse = await AppsService.getAppInstallingLocation(deployedAppName.value)
+
+        if (installingResponse.data?.status === 'success') {
+          const locations = installingResponse.data.data
+
+          if (locations && locations.length > 0) {
+            console.log('✅ NODE INSTALLING - Moving to deployment phase')
+            paymentMonitoringPhase.value = 'deployment'
+            showSnackbar(t('core.subscriptionManager.nodeStartedInstalling'), 'success', 5000)
+          } else {
+            // No installing locations — app may have already finished installing between polls
+            // Check if it's already running to avoid getting stuck
+            const locationResponse = await AppsService.getAppLocation(deployedAppName.value)
+
+            if (locationResponse.data?.status === 'success') {
+              const appLocation = locationResponse.data.data
+
+              if (appLocation && appLocation.length > 0) {
+                console.log('✅ APP ALREADY RUNNING - Skipping installing phase')
+                paymentMonitoringPhase.value = 'deployment'
+              }
+            }
+          }
+        }
       } else if (paymentMonitoringPhase.value === 'deployment') {
-        // Phase 2: Check if app is running on nodes
+        // Phase 3: Check if app is running on nodes
         const response = await AppsService.getAppLocation(deployedAppName.value)
 
         if (response.data && response.data.status === 'success') {

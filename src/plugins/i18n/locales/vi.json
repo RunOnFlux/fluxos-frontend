@@ -424,12 +424,20 @@
     "fileUpload": {
       "dropFilesHere": "Thả tập tin vào đây hoặc",
       "clickToUpload": "bấm vào để tải lên",
+      "dropFilesOrFolders": "Thả tệp hoặc thư mục vào đây",
+      "selectFiles": "Chọn tệp",
+      "selectFolder": "Chọn thư mục",
       "fileSizeLimit": "(Kích thước tệp được giới hạn ở 5 GB)",
       "uploadFiles": "Tải tập tin lên",
       "alreadyInQueue": "'{fileName}' đã có trong hàng đợi tải lên",
       "uploadSuccess": "'{fileName}' đã được tải lên",
       "uploadError": "Lỗi tải lên '{fileName}': trạng thái {status}",
-      "uploadFailed": "Tải lên không thành công cho '{fileName}'"
+      "uploadFailed": "Tải lên không thành công cho '{fileName}'",
+      "uploadQueue": "Hàng đợi tải lên",
+      "total": "Tổng",
+      "files": "tệp | tệp",
+      "clearAll": "Xóa tất cả",
+      "removeFile": "Xóa tệp"
     },
     "dropZone": {
       "onlyImageFiles": "Chỉ cho phép tập tin hình ảnh",
@@ -1227,19 +1235,24 @@
       "paymentWindowTime": "còn lại 30 phút",
       "deploymentTimeEstimate": "Tối đa 45 phút sau khi thanh toán",
       "deploymentSuccessMessage": "Ứng dụng của bạn hiện đang hoạt động và chạy trên mạng Flux.",
+      "appAccessDomainAvailable": "Tên miền truy cập ứng dụng của bạn sẽ khả dụng trong vài phút:",
       "updateSuccessMessage": "Đặc tả ứng dụng của bạn đã được cập nhật thành công trên mạng Flux.",
       "autoDetectDeployment": "Xác nhận thanh toán và triển khai sẽ được phát hiện tự động.",
       "autoDetectUpdate": "Cập nhật sẽ được phát hiện tự động.",
       "autoDetectPaymentUpdate": "Xác nhận và cập nhật thanh toán sẽ được phát hiện tự động.",
       "detectionTimeEstimate": "Việc này có thể mất vài phút.",
       "checkingBlockchainConfirmation": "Đang kiểm tra xác nhận thanh toán...",
-      "waitingForNodeDeployment": "Đang chờ triển khai nút...",
+      "waitingForNodeDeployment": "Waiting for app to finish installing...",
       "checkingPaymentOnBlockchain": "Kiểm tra xác nhận thanh toán trên blockchain.",
       "blockchainConfirmationTime": "Việc này có thể mất vài phút.",
       "paymentConfirmedOnNetwork": "Thanh toán được xác nhận trên mạng!",
       "paymentConfirmedWaitingNodes": "Thanh toán được xác nhận trên mạng.",
-      "waitingForNodesPickup": "Đang chờ các nút nhận và cài đặt ứng dụng của bạn.",
-      "nodeDeploymentTime": "Việc này có thể mất vài phút.",
+      "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+      "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+      "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+      "nodeStartedInstalling": "Một nút đã bắt đầu cài đặt ứng dụng của bạn!",
+      "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+      "installationStartTime": "This usually takes 1-3 minutes.",
       "updateConfirmedNodesWillUpdate": "Đã xác nhận cập nhật! Sẽ mất vài phút để các nút chạy ứng dụng của bạn cập nhật lên thông số kỹ thuật mới nhất.",
       "freeUpdateSponsoredBy": "Cập nhật miễn phí trên mạng được cung cấp bởi Influx Technologies",
       "noNodesMatch": "Không có nút nào phù hợp với tìm kiếm của bạn",
@@ -2212,7 +2225,6 @@
           "duplicateFile": "Tệp \"{name}\" đã có trong hàng đợi tải lên",
           "fileTooLarge": "Tệp \"{name}\" vượt quá giới hạn 5GB",
           "uploadFailed": "Tải lên không thành công",
-          "storageFull": "Bộ nhớ đã đầy - không được phép tải lên",
           "insufficientStorage": "Tệp \"{name}\" ({fileSize} MB) vượt quá dung lượng lưu trữ khả dụng ({available} MB)"
         }
       },
@@ -3084,16 +3096,21 @@
             "sponsoredBy": "Được tài trợ bởi InFlux Technologies",
             "paymentSubmissionInfo": "Khoản thanh toán cho đơn đăng ký của bạn sẽ được gửi tới mạng trong vài phút tới.",
             "checkingRegistration": "Đang kiểm tra xác nhận thanh toán...",
-            "waitingForInstance": "Đang chờ triển khai nút...",
+            "waitingForInstance": "Waiting for app to finish installing...",
             "firstMonthSponsoredBy": "Dịch vụ lưu trữ tháng đầu tiên được cung cấp bởi InFlux Technologies.",
             "freePlanSponsoredBy": "Gói miễn phí được cung cấp bởi InFlux Technologies.",
             "checkingPaymentOnBlockchain": "Kiểm tra xác nhận thanh toán trên blockchain.",
             "blockchainConfirmationTime": "Việc này có thể mất vài phút.",
             "paymentConfirmedWaitingNodes": "Thanh toán được xác nhận trên mạng.",
-            "waitingForNodesPickup": "Đang chờ các nút nhận và cài đặt ứng dụng của bạn.",
-            "nodeDeploymentTime": "Việc này có thể mất vài phút.",
+            "waitingForNodesPickup": "A node is pulling the Docker image and setting up your app.",
+            "nodeDeploymentTime": "Almost there — this usually takes a couple more minutes.",
+            "waitingForNodeInstalling": "Waiting for a node to pick up your app...",
+            "nodeStartedInstalling": "Một nút đã bắt đầu cài đặt ứng dụng của bạn!",
+            "waitingForInstallationStart": "Waiting for an available node to begin installing your application.",
+            "installationStartTime": "This usually takes 1-3 minutes.",
             "registrationCompleteTitle": "Đăng ký/Thanh toán hoàn tất!",
             "registrationCompleteDescription": "Ứng dụng của bạn đã được thanh toán/đăng ký thành công trên mạng Flux.",
+            "appAccessDomainAvailable": "Tên miền truy cập ứng dụng của bạn sẽ khả dụng trong vài phút:",
             "nodesSpawning": "Các nút mạng hiện đang tạo ra ứng dụng của bạn. Nó sẽ có sẵn trong thời gian ngắn.",
             "cancelPayment": "Hủy và quay lại"
           },
@@ -3594,7 +3611,7 @@
           },
           "cloud": {
             "title": "Mạng FluxCloud",
-            "description": "FluxCloud là một nền tảng điện toán đám mây phi tập trung được hỗ trợ bởi hơn {nodes} FluxNode được phân phối trên toàn cầu. Nó cung cấp cơ sở hạ tầng sẵn sàng cho Web3 để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc AI/ML—cung cấp giải pháp thay thế phi tập trung cho các nhà cung cấp đám mây truyền thống như AWS hoặc Google Cloud."
+            "description": "FluxCloud là một nền tảng điện toán đám mây phi tập trung được hỗ trợ bởi hơn {nodes} FluxNodes được phân phối trên toàn cầu. Nó cung cấp cơ sở hạ tầng sẵn sàng cho Web3 để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc AI/ML—cung cấp giải pháp thay thế phi tập trung cho các nhà cung cấp đám mây truyền thống như AWS hoặc Google Cloud."
           },
           "learnMore": "Tìm hiểu thêm"
         },
@@ -3645,7 +3662,7 @@
         "intro": {
           "title": "Tài nguyên mạng FluxCloud",
           "subtitle": "Năng lực cơ sở hạ tầng thời gian thực",
-          "description": "Khám phá tổng tài nguyên điện toán hiện có trên toàn bộ Mạng FluxCloud. Cơ sở hạ tầng phi tập trung của chúng tôi được cung cấp bởi hàng nghìn FluxNode trên toàn thế giới, cung cấp CPU, RAM và dung lượng lưu trữ có thể mở rộng để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc mà không cần dựa vào các nhà cung cấp đám mây truyền thống."
+          "description": "Khám phá tổng tài nguyên điện toán hiện có trên toàn bộ Mạng FluxCloud. Cơ sở hạ tầng phi tập trung của chúng tôi được cung cấp bởi hàng nghìn FluxNodes trên toàn thế giới, cung cấp CPU, RAM và dung lượng lưu trữ có thể mở rộng để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc mà không cần dựa vào các nhà cung cấp đám mây truyền thống."
         },
         "summary": {
           "title": "Tổng dung lượng mạng"
@@ -3718,7 +3735,7 @@
         },
         "distributed": {
           "title": "Phân phối toàn cầu",
-          "description": "Các tệp được phân phối trên hàng nghìn FluxNode trên toàn thế giới, đảm bảo tính dự phòng và truy cập nhanh từ mọi nơi."
+          "description": "Các tệp được phân phối trên hàng nghìn FluxNodes trên toàn thế giới, đảm bảo tính dự phòng và truy cập nhanh từ mọi nơi."
         },
         "censorship": {
           "title": "Chống kiểm duyệt",
@@ -3758,6 +3775,11 @@
       "hero": {
         "title": "Thị trường ứng dụng Flux",
         "subtitle": "Triển khai các ứng dụng được cấu hình sẵn phi tập trung trên đám mây Web3 của Flux. Bộ chứa Docker, ứng dụng web và API trên {nodeCount}+ FluxNodes trên toàn thế giới."
+      },
+      "revenueBanner": {
+        "title": "Đăng ứng dụng của bạn trên FluxCloud Marketplace",
+        "description": "Bạn có một ứng dụng tuyệt vời? Đăng tải trên FluxCloud Marketplace và kiếm tới 25% doanh thu chia sẻ từ mỗi lần triển khai. Liên hệ với chúng tôi tại",
+        "cta": "để bắt đầu."
       },
       "detail": {
         "loadingTitle": "Đang tải ứng dụng...",
@@ -3886,6 +3908,11 @@
           "loading": "Đang tải các trò chơi có sẵn...",
           "maintenanceTitle": "Thị trường trò chơi tạm thời không có sẵn",
           "maintenanceSubtitle": "Chúng tôi đang gặp sự cố tạm thời",
+          "revenueBanner": {
+            "title": "Đăng trò chơi của bạn trên FluxCloud",
+            "description": "Bạn có một trò chơi tuyệt vời? Đăng tải trên FluxCloud và kiếm tới 25% doanh thu chia sẻ từ mỗi lần triển khai. Liên hệ với chúng tôi tại",
+            "cta": "để bắt đầu."
+          },
           "hero": {
             "title": "Lưu trữ máy chủ trò chơi cao cấp trên FluxCloud",
             "subtitle": "Triển khai các máy chủ trò chơi yêu thích của bạn trong vài giây với khả năng phân phối toàn cầu, bảo vệ DDoS và tính giá thanh toán theo mức sử dụng được hỗ trợ bởi công nghệ chuỗi khối.",
