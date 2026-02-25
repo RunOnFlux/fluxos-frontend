@@ -3611,7 +3611,7 @@
           },
           "cloud": {
             "title": "Mạng FluxCloud",
-            "description": "FluxCloud là một nền tảng điện toán đám mây phi tập trung được hỗ trợ bởi hơn {nodes} FluxNode được phân phối trên toàn cầu. Nó cung cấp cơ sở hạ tầng sẵn sàng cho Web3 để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc AI/ML—cung cấp giải pháp thay thế phi tập trung cho các nhà cung cấp đám mây truyền thống như AWS hoặc Google Cloud."
+            "description": "FluxCloud là một nền tảng điện toán đám mây phi tập trung được hỗ trợ bởi hơn {nodes} FluxNodes được phân phối trên toàn cầu. Nó cung cấp cơ sở hạ tầng sẵn sàng cho Web3 để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc AI/ML—cung cấp giải pháp thay thế phi tập trung cho các nhà cung cấp đám mây truyền thống như AWS hoặc Google Cloud."
           },
           "learnMore": "Tìm hiểu thêm"
         },
@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "Tài nguyên mạng FluxCloud",
           "subtitle": "Năng lực cơ sở hạ tầng thời gian thực",
-          "description": "Khám phá tổng tài nguyên điện toán hiện có trên toàn bộ Mạng FluxCloud. Cơ sở hạ tầng phi tập trung của chúng tôi được cung cấp bởi hàng nghìn FluxNode trên toàn thế giới, cung cấp CPU, RAM và dung lượng lưu trữ có thể mở rộng để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc mà không cần dựa vào các nhà cung cấp đám mây truyền thống."
+          "description": "Khám phá tổng tài nguyên điện toán hiện có trên toàn bộ Mạng FluxCloud. Cơ sở hạ tầng phi tập trung của chúng tôi được cung cấp bởi hàng nghìn FluxNodes trên toàn thế giới, cung cấp CPU, RAM và dung lượng lưu trữ có thể mở rộng để lưu trữ ứng dụng, chạy các nút blockchain và thực thi khối lượng công việc mà không cần dựa vào các nhà cung cấp đám mây truyền thống."
         },
         "summary": {
           "title": "Tổng dung lượng mạng"
@@ -3735,7 +3735,7 @@
         },
         "distributed": {
           "title": "Phân phối toàn cầu",
-          "description": "Các tệp được phân phối trên hàng nghìn FluxNode trên toàn thế giới, đảm bảo tính dự phòng và truy cập nhanh từ mọi nơi."
+          "description": "Các tệp được phân phối trên hàng nghìn FluxNodes trên toàn thế giới, đảm bảo tính dự phòng và truy cập nhanh từ mọi nơi."
         },
         "censorship": {
           "title": "Chống kiểm duyệt",

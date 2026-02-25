@@ -308,7 +308,7 @@
       "manageUsers": "管理用户",
       "loggedSessions": "记录的会话",
       "myFluxShare": "我的 FluxShare",
-      "fluxShare": "通量共享"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "助焊剂 XDAO"
@@ -320,11 +320,11 @@
       "title": "帮助"
     },
     "fluxDrive": {
-      "title": "磁通驱动"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "通量云",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "分散式应用程序管理",
     "fluxCloudDescription": "监控和管理在 Flux 去中心化云网络上运行的所有 Docker 容器化应用程序。查看在我们的全球区块链支持的基础设施中部署的分布式应用程序的实时状态、资源使用情况和性能指标。单击任何应用程序即可访问详细的管理控制和分析。"
   },
@@ -598,7 +598,7 @@
       "fluxDriveDownloadInfo": "FluxDrive 备份可以在恢复页面下载",
       "uploadSelectedComponents": "上传选定的组件",
       "selectRestoreMethod": "选择恢复方法",
-      "fluxDrive": "磁通驱动",
+      "fluxDrive": "FluxDrive",
       "uploadFile": "上传文件",
       "remoteUrl": "远程网址",
       "backupsInventory": "备份库存",
@@ -1946,8 +1946,8 @@
         "starter": "起动机",
         "standard": "标准",
         "pro": "精英",
-        "enterprise": "磁通驱动专业版",
-        "fluxDrivePro": "磁通驱动专业版"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "付款成功！正在重定向..."
@@ -1955,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "磁通驱动",
+        "title": "FluxDrive",
         "subtitle": "安全的去中心化存储",
         "upgradePlan": "升级计划",
         "searchPlaceholder": "搜索文件和文件夹...",
@@ -2109,7 +2109,7 @@
           "starter": "起动机",
           "standard": "标准",
           "elite": "精英",
-          "fluxDrivePro": "磁通驱动专业版"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "最受欢迎",
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "正在加载 FluxShare...",
-        "title": "通量共享",
+        "title": "FluxShare",
         "subtitle": "管理您的文件并与他人共享",
         "storageUsage": "存储使用情况",
         "used": "用过的",
@@ -3610,8 +3610,8 @@
             "description": "Flux 在自己的专有区块链上运行，处理治理、代币经济学，并通过并行资产提供与其他区块链的互操作性。原生 FLUX 加密货币为整个生态系统提供动力，实现去中心化基础设施和 DeFi 集成。"
           },
           "cloud": {
-            "title": "Flux云网络",
-            "description": "FluxCloud 是一个去中心化的云计算平台，由超过 {nodes} 个全球分布的 FluxNode 提供支持。它提供了 Web3 就绪的基础设施，用于托管应用程序、运行区块链节点和执行 AI/ML 工作负载，为 AWS 或 Google Cloud 等传统云提供商提供了去中心化的替代方案。"
+            "title": "FluxCloud网络",
+            "description": "FluxCloud 是一个去中心化的云计算平台，由超过 {nodes} 个全球分布的 FluxNodes 提供支持。它提供了 Web3 就绪的基础设施，用于托管应用程序、运行区块链节点和执行 AI/ML 工作负载，为 AWS 或 Google Cloud 等传统云提供商提供了去中心化的替代方案。"
           },
           "learnMore": "了解更多"
         },
@@ -3634,7 +3634,7 @@
         "intro": {
           "title": "全球FluxCloud网络",
           "subtitle": "真正去中心化的基础设施",
-          "description": "FluxCloud 运营着全球最大的去中心化云基础设施网络，FluxNode 分布在各大洲和数百家托管提供商。这种地理多样性为应用程序所有者提供了无与伦比的好处：边缘计算的低延迟、高冗余和容错能力、抗审查性和真正的去中心化。您的应用程序运行在真实的、独立操作的硬件上，而不是集中式数据中心。"
+          "description": "FluxCloud 运营着全球最大的去中心化云基础设施网络，FluxNodes 分布在各大洲和数百家托管提供商。这种地理多样性为应用程序所有者提供了无与伦比的好处：边缘计算的低延迟、高冗余和容错能力、抗审查性和真正的去中心化。您的应用程序运行在真实的、独立操作的硬件上，而不是集中式数据中心。"
         },
         "geographicTitle": "地理位置",
         "providersTitle": "供应商",
@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "FluxCloud 网络资源",
           "subtitle": "实时基础设施能力",
-          "description": "探索整个 FluxCloud 网络当前可用的总计算资源。我们的去中心化基础设施由全球数千个 FluxNode 提供支持，为托管应用程序、运行区块链节点和执行工作负载提供可扩展的 CPU、RAM 和存储容量，而无需依赖传统云提供商。"
+          "description": "探索整个 FluxCloud 网络当前可用的总计算资源。我们的去中心化基础设施由全球数千个 FluxNodes 提供支持，为托管应用程序、运行区块链节点和执行工作负载提供可扩展的 CPU、RAM 和存储容量，而无需依赖传统云提供商。"
         },
         "summary": {
           "title": "网络总容量"
@@ -3689,7 +3689,7 @@
           "title": "FluxNode 运营者奖励",
           "subtitle": "赚取 FLUX 为网络供电",
           "description": "FluxNode 运营商是 FluxCloud 网络的支柱，提供必要的计算基础设施，为全球去中心化应用程序提供动力。作为对他们贡献的奖励，运营商直接从区块链中赚取 FLUX 加密货币。这些奖励根据节点等级和性能自动分配，创建可持续的激励模型来维护可靠、高质量的基础设施。",
-          "learnMore": "了解有关 FluxNode 的更多信息"
+          "learnMore": "了解有关 FluxNodes 的更多信息"
         },
         "cumulusTotalRewards": "Cumulus 总奖励",
         "nimbusTotalRewards": "Nimbus 总奖励",
@@ -3713,9 +3713,9 @@
     },
     "fluxDrive": {
       "intro": {
-        "title": "磁通驱动",
+        "title": "FluxDrive",
         "subtitle": "由 IPFS 提供支持的去中心化云存储",
-        "description": "FluxDrive 是一个建立在 FluxCloud 网络之上的去中心化云存储解决方案，利用 IPFS（星际文件系统）技术。将您的文件存储在全球 FluxNode 的分布式网络中，确保冗余、抗审查性和永久可用性。与传统的云存储不同，您的数据经过加密、碎片化并分布在多个节点上，让您能够真正拥有和控制文件，而无需依赖集中式提供商。",
+        "description": "FluxDrive 是一个建立在 FluxCloud 网络之上的去中心化云存储解决方案，利用 IPFS（星际文件系统）技术。将您的文件存储在全球 FluxNodes 的分布式网络中，确保冗余、抗审查性和永久可用性。与传统的云存储不同，您的数据经过加密、碎片化并分布在多个节点上，让您能够真正拥有和控制文件，而无需依赖集中式提供商。",
         "learnMore": "了解有关 FluxDrive 的更多信息"
       },
       "loading": "正在加载 FluxDrive...",
@@ -3735,7 +3735,7 @@
         },
         "distributed": {
           "title": "全球分布",
-          "description": "文件分布在全球数千个 FluxNode 上，确保从任何地方进行冗余和快速访问。"
+          "description": "文件分布在全球数千个 FluxNodes 上，确保从任何地方进行冗余和快速访问。"
         },
         "censorship": {
           "title": "抗审查",
@@ -3774,7 +3774,7 @@
       "maintenanceSubtitle": "我们目前在市场上遇到技术困难。我们的团队正在努力尽快解决此问题。",
       "hero": {
         "title": "助焊剂应用市场",
-        "subtitle": "在 Flux 的 Web3 云上部署分散的预配置应用程序。全球 {nodeCount}+ FluxNode 上的 Docker 容器、Web 应用程序和 API。"
+        "subtitle": "在 Flux 的 Web3 云上部署分散的预配置应用程序。全球 {nodeCount}+ FluxNodes 上的 Docker 容器、Web 应用程序和 API。"
       },
       "revenueBanner": {
         "title": "在 FluxCloud 市场上架您的应用",
@@ -4006,7 +4006,7 @@
           "comparison": {
             "title": "为什么 FluxPlay 与传统托管相比",
             "feature": "特征",
-            "fluxplay": "通量播放",
+            "fluxplay": "FluxPlay",
             "traditional": "传统托管",
             "rows": {
               "setup": "设置时间",
@@ -4885,7 +4885,7 @@
             "comparison": {
               "title": "为什么 FluxPlay 与传统托管相比",
               "feature": "特征",
-              "fluxplay": "通量播放",
+              "fluxplay": "FluxPlay",
               "traditional": "传统托管",
               "rows": {
                 "setup": "设置时间",
@@ -5014,7 +5014,7 @@
                 "description": "托管您最喜欢的游戏服务器"
               },
               "fluxDrive": {
-                "title": "磁通驱动",
+                "title": "FluxDrive",
                 "description": "分散式文件存储"
               },
               "costCalculator": {
@@ -5131,7 +5131,7 @@
       "price": "价格",
       "perMonth": "每月",
       "header": {
-        "title": "磁通驱动",
+        "title": "FluxDrive",
         "subtitle": "完成订阅以解锁去中心化存储"
       },
       "fluxPay": {
@@ -5268,22 +5268,22 @@
     "explore": "探索",
     "services": {
       "fluxCloud": {
-        "name": "通量云",
+        "name": "FluxCloud",
         "description": "在分散的云基础设施上部署和扩展您的应用程序",
         "category": "基础设施"
       },
       "fluxAI": {
-        "name": "通量人工智能",
+        "name": "FluxAI",
         "description": "利用分布式 AI 计算的力量来满足您的机器学习需求",
         "category": "人工智能和机器学习"
       },
       "fluxDrive": {
-        "name": "磁通驱动",
+        "name": "FluxDrive",
         "description": "为您的数据提供安全、分散的存储解决方案",
         "category": "贮存"
       },
       "fluxEdge": {
-        "name": "通量边缘",
+        "name": "FluxEdge",
         "description": "使用 Flux 网络进行大规模边缘计算",
         "category": "网络"
       },

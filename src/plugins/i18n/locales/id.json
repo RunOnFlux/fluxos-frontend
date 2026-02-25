@@ -308,7 +308,7 @@
       "manageUsers": "Kelola Pengguna",
       "loggedSessions": "Sesi yang Dicatat",
       "myFluxShare": "FluxShare saya",
-      "fluxShare": "Berbagi Flux"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Fluks XDAO"
@@ -320,11 +320,11 @@
       "title": "Membantu"
     },
     "fluxDrive": {
-      "title": "FluksDrive"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "FluksCloud",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "Manajemen Aplikasi Terdesentralisasi",
     "fluxCloudDescription": "Pantau dan kelola semua aplikasi dalam container Docker Anda yang berjalan di jaringan cloud terdesentralisasi Flux. Lihat status real-time, penggunaan sumber daya, dan metrik kinerja aplikasi terdistribusi Anda yang diterapkan di seluruh infrastruktur global kami yang didukung blockchain. Klik pada aplikasi apa pun untuk mengakses kontrol manajemen dan analitik terperinci."
   },
@@ -598,7 +598,7 @@
       "fluxDriveDownloadInfo": "Cadangan FluxDrive dapat diunduh di halaman Pemulihan",
       "uploadSelectedComponents": "Unggah Komponen yang Dipilih",
       "selectRestoreMethod": "Pilih Metode Pemulihan",
-      "fluxDrive": "FluksDrive",
+      "fluxDrive": "FluxDrive",
       "uploadFile": "Unggah Berkas",
       "remoteUrl": "URL jarak jauh",
       "backupsInventory": "Inventaris Cadangan",
@@ -1955,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "FluksDrive",
+        "title": "FluxDrive",
         "subtitle": "Penyimpanan terdesentralisasi yang aman",
         "upgradePlan": "Paket Peningkatan",
         "searchPlaceholder": "Cari file dan folder...",
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "Memuat FluxShare...",
-        "title": "Berbagi Flux",
+        "title": "FluxShare",
         "subtitle": "Kelola file Anda dan bagikan dengan orang lain",
         "storageUsage": "Penggunaan Penyimpanan",
         "used": "digunakan",
@@ -3713,7 +3713,7 @@
     },
     "fluxDrive": {
       "intro": {
-        "title": "FluksDrive",
+        "title": "FluxDrive",
         "subtitle": "Penyimpanan cloud terdesentralisasi didukung oleh IPFS",
         "description": "FluxDrive adalah solusi penyimpanan cloud terdesentralisasi yang dibangun di atas Jaringan FluxCloud, memanfaatkan teknologi IPFS (InterPlanetary File System). Simpan file Anda di jaringan terdistribusi FluxNodes di seluruh dunia, pastikan redundansi, ketahanan sensor, dan ketersediaan permanen. Tidak seperti penyimpanan cloud tradisional, data Anda dienkripsi, terfragmentasi, dan didistribusikan ke beberapa node—memberi Anda kepemilikan dan kendali sebenarnya atas file Anda tanpa bergantung pada penyedia terpusat.",
         "learnMore": "Pelajari Lebih Lanjut Tentang FluxDrive"
@@ -4006,7 +4006,7 @@
           "comparison": {
             "title": "Mengapa FluxPlay vs Hosting Tradisional",
             "feature": "Fitur",
-            "fluxplay": "Putar Fluks",
+            "fluxplay": "FluxPlay",
             "traditional": "Hosting Tradisional",
             "rows": {
               "setup": "Waktu Pengaturan",
@@ -4885,7 +4885,7 @@
             "comparison": {
               "title": "Mengapa FluxPlay vs Hosting Tradisional",
               "feature": "Fitur",
-              "fluxplay": "Putar Fluks",
+              "fluxplay": "FluxPlay",
               "traditional": "Hosting Tradisional",
               "rows": {
                 "setup": "Waktu Pengaturan",
@@ -5014,7 +5014,7 @@
                 "description": "Host server game favorit Anda"
               },
               "fluxDrive": {
-                "title": "FluksDrive",
+                "title": "FluxDrive",
                 "description": "Penyimpanan file terdesentralisasi"
               },
               "costCalculator": {
@@ -5131,7 +5131,7 @@
       "price": "Harga",
       "perMonth": "per bulan",
       "header": {
-        "title": "FluksDrive",
+        "title": "FluxDrive",
         "subtitle": "Selesaikan langganan Anda untuk membuka kunci penyimpanan terdesentralisasi"
       },
       "fluxPay": {
@@ -5268,17 +5268,17 @@
     "explore": "Mengeksplorasi",
     "services": {
       "fluxCloud": {
-        "name": "FluksCloud",
+        "name": "FluxCloud",
         "description": "Terapkan dan skalakan aplikasi Anda pada infrastruktur cloud terdesentralisasi",
         "category": "Infrastruktur"
       },
       "fluxAI": {
-        "name": "FluksAI",
+        "name": "FluxAI",
         "description": "Manfaatkan kekuatan komputasi AI terdistribusi untuk kebutuhan pembelajaran mesin Anda",
         "category": "AI & ML"
       },
       "fluxDrive": {
-        "name": "FluksDrive",
+        "name": "FluxDrive",
         "description": "Solusi penyimpanan yang aman dan terdesentralisasi untuk data Anda",
         "category": "Penyimpanan"
       },

@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "Risorse di rete FluxCloud",
           "subtitle": "Capacità dell'infrastruttura in tempo reale",
-          "description": "Esplora le risorse informatiche totali attualmente disponibili sull'intera rete FluxCloud. La nostra infrastruttura decentralizzata è alimentata da migliaia di FluxNode in tutto il mondo, fornendo CPU, RAM e capacità di archiviazione scalabili per ospitare applicazioni, eseguire nodi blockchain ed eseguire carichi di lavoro senza fare affidamento sui tradizionali provider cloud."
+          "description": "Esplora le risorse informatiche totali attualmente disponibili sull'intera rete FluxCloud. La nostra infrastruttura decentralizzata è alimentata da migliaia di FluxNodes in tutto il mondo, fornendo CPU, RAM e capacità di archiviazione scalabili per ospitare applicazioni, eseguire nodi blockchain ed eseguire carichi di lavoro senza fare affidamento sui tradizionali provider cloud."
         },
         "summary": {
           "title": "Capacità totale della rete"
@@ -3715,7 +3715,7 @@
       "intro": {
         "title": "FluxDrive",
         "subtitle": "Archiviazione cloud decentralizzata basata su IPFS",
-        "description": "FluxDrive è una soluzione di archiviazione cloud decentralizzata costruita sulla rete FluxCloud, sfruttando la tecnologia IPFS (InterPlanetary File System). Archivia i tuoi file su una rete distribuita di FluxNode in tutto il mondo, garantendo ridondanza, resistenza alla censura e disponibilità permanente. A differenza del tradizionale cloud storage, i tuoi dati sono crittografati, frammentati e distribuiti su più nodi, offrendoti la vera proprietà e il controllo dei tuoi file senza fare affidamento su provider centralizzati.",
+        "description": "FluxDrive è una soluzione di archiviazione cloud decentralizzata costruita sulla rete FluxCloud, sfruttando la tecnologia IPFS (InterPlanetary File System). Archivia i tuoi file su una rete distribuita di FluxNodes in tutto il mondo, garantendo ridondanza, resistenza alla censura e disponibilità permanente. A differenza del tradizionale cloud storage, i tuoi dati sono crittografati, frammentati e distribuiti su più nodi, offrendoti la vera proprietà e il controllo dei tuoi file senza fare affidamento su provider centralizzati.",
         "learnMore": "Ulteriori informazioni su FluxDrive"
       },
       "loading": "Caricamento FluxDrive...",
@@ -3735,7 +3735,7 @@
         },
         "distributed": {
           "title": "Distribuzione globale",
-          "description": "I file sono distribuiti su migliaia di FluxNode in tutto il mondo, garantendo ridondanza e accesso rapido da qualsiasi luogo."
+          "description": "I file sono distribuiti su migliaia di FluxNodes in tutto il mondo, garantendo ridondanza e accesso rapido da qualsiasi luogo."
         },
         "censorship": {
           "title": "Resistente alla censura",
@@ -3774,7 +3774,7 @@
       "maintenanceSubtitle": "Al momento stiamo riscontrando difficoltà tecniche con il marketplace. Il nostro team sta lavorando per risolvere questo problema il più rapidamente possibile.",
       "hero": {
         "title": "Mercato delle applicazioni Flux",
-        "subtitle": "Distribuisci applicazioni preconfigurate decentralizzate sul cloud Web3 di Flux. Contenitori Docker, app web e API su {nodeCount}+ FluxNode in tutto il mondo."
+        "subtitle": "Distribuisci applicazioni preconfigurate decentralizzate sul cloud Web3 di Flux. Contenitori Docker, app web e API su {nodeCount}+ FluxNodes in tutto il mondo."
       },
       "revenueBanner": {
         "title": "Pubblica la tua app sul Marketplace FluxCloud",

@@ -307,8 +307,8 @@
       "manageBenchmark": "Administrar punto de referencia",
       "manageUsers": "Administrar usuarios",
       "loggedSessions": "Sesiones registradas",
-      "myFluxShare": "Mi flujo compartido",
-      "fluxShare": "FluxCompartir"
+      "myFluxShare": "FluxShare",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flujo XDAO"
@@ -324,7 +324,7 @@
     }
   },
   "myApps": {
-    "fluxCloudTitle": "Nube de flujo",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "Gestión de aplicaciones descentralizada",
     "fluxCloudDescription": "Supervise y administre todas sus aplicaciones en contenedores Docker que se ejecutan en la red de nube descentralizada Flux. Vea el estado en tiempo real, el uso de recursos y las métricas de rendimiento de sus aplicaciones distribuidas implementadas en nuestra infraestructura global impulsada por blockchain. Haga clic en cualquier aplicación para acceder a análisis y controles de gestión detallados."
   },
@@ -1946,8 +1946,8 @@
         "starter": "Motor de arranque",
         "standard": "Estándar",
         "pro": "Élite",
-        "enterprise": "FluxDrivePro",
-        "fluxDrivePro": "FluxDrivePro"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "¡Pago exitoso! Redirigiendo..."
@@ -2109,7 +2109,7 @@
           "starter": "Motor de arranque",
           "standard": "Estándar",
           "elite": "Élite",
-          "fluxDrivePro": "FluxDrivePro"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "Más Popular",
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "Cargando FluxShare...",
-        "title": "FluxCompartir",
+        "title": "FluxShare",
         "subtitle": "Manage your files and share them with others",
         "storageUsage": "Uso de almacenamiento",
         "used": "usado",
@@ -4006,7 +4006,7 @@
           "comparison": {
             "title": "Por qué FluxPlay vs hosting tradicional",
             "feature": "Característica",
-            "fluxplay": "FlujoPlay",
+            "fluxplay": "FluxPlay",
             "traditional": "Alojamiento tradicional",
             "rows": {
               "setup": "Tiempo de configuración",
@@ -4885,7 +4885,7 @@
             "comparison": {
               "title": "Por qué FluxPlay vs hosting tradicional",
               "feature": "Característica",
-              "fluxplay": "FlujoPlay",
+              "fluxplay": "FluxPlay",
               "traditional": "Alojamiento tradicional",
               "rows": {
                 "setup": "Tiempo de configuración",
@@ -5268,12 +5268,12 @@
     "explore": "Explorar",
     "services": {
       "fluxCloud": {
-        "name": "Nube de flujo",
+        "name": "FluxCloud",
         "description": "Implemente y escale sus aplicaciones en una infraestructura de nube descentralizada",
         "category": "Infraestructura"
       },
       "fluxAI": {
-        "name": "Flujo AI",
+        "name": "FluxAI",
         "description": "Aproveche el poder de la computación con IA distribuida para sus necesidades de aprendizaje automático",
         "category": "IA y aprendizaje automático"
       },
@@ -5283,7 +5283,7 @@
         "category": "Almacenamiento"
       },
       "fluxEdge": {
-        "name": "Borde de flujo",
+        "name": "FluxEdge",
         "description": "Computación perimetral a escala con la red Flux",
         "category": "Red"
       },

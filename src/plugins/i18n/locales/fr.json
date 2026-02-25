@@ -308,7 +308,7 @@
       "manageUsers": "Gérer les utilisateurs",
       "loggedSessions": "Sessions enregistrées",
       "myFluxShare": "Mon FluxShare",
-      "fluxShare": "FluxPartage"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "FluxXDAO"
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "Chargement de FluxShare...",
-        "title": "FluxPartage",
+        "title": "FluxShare",
         "subtitle": "Gérez vos fichiers et partagez-les avec d'autres",
         "storageUsage": "Utilisation du stockage",
         "used": "utilisé",

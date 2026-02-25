@@ -308,7 +308,7 @@
       "manageUsers": "사용자 관리",
       "loggedSessions": "기록된 세션",
       "myFluxShare": "내 FluxShare",
-      "fluxShare": "플럭스쉐어"
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "플럭스 XDAO"
@@ -320,11 +320,11 @@
       "title": "돕다"
     },
     "fluxDrive": {
-      "title": "플럭스드라이브"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "플럭스클라우드",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "분산형 애플리케이션 관리",
     "fluxCloudDescription": "Flux 분산형 클라우드 네트워크에서 실행되는 모든 Docker 컨테이너형 애플리케이션을 모니터링하고 관리하세요. 글로벌 블록체인 기반 인프라에 배포된 분산 앱의 실시간 상태, 리소스 사용량 및 성능 지표를 확인하세요. 자세한 관리 제어 및 분석에 액세스하려면 애플리케이션을 클릭하세요."
   },
@@ -598,7 +598,7 @@
       "fluxDriveDownloadInfo": "FluxDrive 백업은 복원 페이지에서 다운로드할 수 있습니다.",
       "uploadSelectedComponents": "선택한 구성요소 업로드",
       "selectRestoreMethod": "복원 방법 선택",
-      "fluxDrive": "플럭스드라이브",
+      "fluxDrive": "FluxDrive",
       "uploadFile": "파일 업로드",
       "remoteUrl": "원격 URL",
       "backupsInventory": "백업 인벤토리",
@@ -1946,8 +1946,8 @@
         "starter": "기동기",
         "standard": "기준",
         "pro": "엘리트",
-        "enterprise": "플럭스드라이브 프로",
-        "fluxDrivePro": "플럭스드라이브 프로"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "결제 성공! 리디렉션 중..."
@@ -1955,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "플럭스드라이브",
+        "title": "FluxDrive",
         "subtitle": "안전한 분산형 스토리지",
         "upgradePlan": "업그레이드 계획",
         "searchPlaceholder": "파일 및 폴더 검색...",
@@ -2109,7 +2109,7 @@
           "starter": "기동기",
           "standard": "기준",
           "elite": "엘리트",
-          "fluxDrivePro": "플럭스드라이브 프로"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "가장 인기있는",
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "FluxShare 로드 중...",
-        "title": "플럭스쉐어",
+        "title": "FluxShare",
         "subtitle": "파일을 관리하고 다른 사람들과 공유하세요",
         "storageUsage": "스토리지 사용량",
         "used": "사용된",
@@ -3634,7 +3634,7 @@
         "intro": {
           "title": "글로벌 FluxCloud 네트워크",
           "subtitle": "진정한 분산형 인프라",
-          "description": "FluxCloud는 모든 대륙과 수백 개의 호스팅 제공업체에 분산된 FluxNode를 통해 세계 최대의 분산형 클라우드 인프라 네트워크를 운영합니다. 이러한 지리적 다양성은 앱 소유자에게 에지 컴퓨팅의 짧은 대기 시간, 높은 중복성 및 내결함성, 검열 저항, 진정한 분산화 등 비교할 수 없는 이점을 제공합니다. 귀하의 애플리케이션은 중앙 집중식 데이터 센터가 아닌 독립적으로 운영되는 실제 하드웨어에서 실행됩니다."
+          "description": "FluxCloud는 모든 대륙과 수백 개의 호스팅 제공업체에 분산된 FluxNodes를 통해 세계 최대의 분산형 클라우드 인프라 네트워크를 운영합니다. 이러한 지리적 다양성은 앱 소유자에게 에지 컴퓨팅의 짧은 대기 시간, 높은 중복성 및 내결함성, 검열 저항, 진정한 분산화 등 비교할 수 없는 이점을 제공합니다. 귀하의 애플리케이션은 중앙 집중식 데이터 센터가 아닌 독립적으로 운영되는 실제 하드웨어에서 실행됩니다."
         },
         "geographicTitle": "지리적 위치",
         "providersTitle": "공급자",
@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "FluxCloud 네트워크 리소스",
           "subtitle": "실시간 인프라 용량",
-          "description": "전체 FluxCloud 네트워크에서 현재 사용 가능한 전체 컴퓨팅 리소스를 살펴보세요. 우리의 분산형 인프라는 전 세계적으로 수천 개의 FluxNode로 구동되며 기존 클라우드 공급자에 의존하지 않고도 애플리케이션 호스팅, 블록체인 노드 실행 및 워크로드 실행을 위한 확장 가능한 CPU, RAM 및 스토리지 용량을 제공합니다."
+          "description": "전체 FluxCloud 네트워크에서 현재 사용 가능한 전체 컴퓨팅 리소스를 살펴보세요. 우리의 분산형 인프라는 전 세계적으로 수천 개의 FluxNodes로 구동되며 기존 클라우드 공급자에 의존하지 않고도 애플리케이션 호스팅, 블록체인 노드 실행 및 워크로드 실행을 위한 확장 가능한 CPU, RAM 및 스토리지 용량을 제공합니다."
         },
         "summary": {
           "title": "총 네트워크 용량"
@@ -3689,7 +3689,7 @@
           "title": "FluxNode 운영자 보상",
           "subtitle": "네트워크에 전력을 공급하고 FLUX를 획득하세요",
           "description": "FluxNode 운영자는 FluxCloud 네트워크의 중추로서 전 세계적으로 분산형 애플리케이션을 지원하는 필수 컴퓨팅 인프라를 제공합니다. 운영자는 기여에 대한 보상으로 블록체인에서 직접 FLUX 암호화폐를 얻습니다. 이러한 보상은 노드 계층과 성능에 따라 자동으로 분배되어 안정적인 고품질 인프라를 유지하기 위한 지속 가능한 인센티브 모델을 만듭니다.",
-          "learnMore": "FluxNode에 대해 자세히 알아보기"
+          "learnMore": "FluxNodes에 대해 자세히 알아보기"
         },
         "cumulusTotalRewards": "누적 총 보상",
         "nimbusTotalRewards": "Nimbus 총 보상",
@@ -3713,7 +3713,7 @@
     },
     "fluxDrive": {
       "intro": {
-        "title": "플럭스드라이브",
+        "title": "FluxDrive",
         "subtitle": "IPFS로 구동되는 분산형 클라우드 스토리지",
         "description": "FluxDrive는 IPFS(InterPlanetary File System) 기술을 활용하여 FluxCloud 네트워크 위에 구축된 분산형 클라우드 스토리지 솔루션입니다. 전 세계 FluxNodes의 분산 네트워크에 파일을 저장하여 중복성, 검열 저항 및 영구 가용성을 보장합니다. 기존 클라우드 스토리지와 달리 데이터는 암호화되고 조각화되어 여러 노드에 분산되므로 중앙 집중식 공급자에 의존하지 않고도 파일에 대한 진정한 소유권과 제어권을 얻을 수 있습니다.",
         "learnMore": "FluxDrive에 대해 자세히 알아보기"
@@ -3735,7 +3735,7 @@
         },
         "distributed": {
           "title": "글로벌 유통",
-          "description": "파일은 전 세계 수천 개의 FluxNode에 분산되어 어디서나 중복성과 빠른 액세스를 보장합니다."
+          "description": "파일은 전 세계 수천 개의 FluxNodes에 분산되어 어디서나 중복성과 빠른 액세스를 보장합니다."
         },
         "censorship": {
           "title": "검열 저항성",
@@ -4006,7 +4006,7 @@
           "comparison": {
             "title": "FluxPlay와 기존 호스팅이 비교되는 이유",
             "feature": "특징",
-            "fluxplay": "플럭스플레이",
+            "fluxplay": "FluxPlay",
             "traditional": "기존 호스팅",
             "rows": {
               "setup": "설정 시간",
@@ -4885,7 +4885,7 @@
             "comparison": {
               "title": "FluxPlay와 기존 호스팅이 비교되는 이유",
               "feature": "특징",
-              "fluxplay": "플럭스플레이",
+              "fluxplay": "FluxPlay",
               "traditional": "기존 호스팅",
               "rows": {
                 "setup": "설정 시간",
@@ -5014,7 +5014,7 @@
                 "description": "좋아하는 게임 서버 호스팅"
               },
               "fluxDrive": {
-                "title": "플럭스드라이브",
+                "title": "FluxDrive",
                 "description": "분산형 파일 저장"
               },
               "costCalculator": {
@@ -5131,7 +5131,7 @@
       "price": "가격",
       "perMonth": "매월",
       "header": {
-        "title": "플럭스드라이브",
+        "title": "FluxDrive",
         "subtitle": "분산형 저장소를 잠금 해제하려면 구독을 완료하세요."
       },
       "fluxPay": {
@@ -5268,22 +5268,22 @@
     "explore": "탐구하다",
     "services": {
       "fluxCloud": {
-        "name": "플럭스클라우드",
+        "name": "FluxCloud",
         "description": "분산형 클라우드 인프라에서 애플리케이션 배포 및 확장",
         "category": "하부 구조"
       },
       "fluxAI": {
-        "name": "플럭스AI",
+        "name": "FluxAI",
         "description": "기계 학습 요구 사항에 맞게 분산 AI 컴퓨팅의 성능을 활용하세요.",
         "category": "AI 및 ML"
       },
       "fluxDrive": {
-        "name": "플럭스드라이브",
+        "name": "FluxDrive",
         "description": "귀하의 데이터를 위한 안전하고 분산된 스토리지 솔루션",
         "category": "저장"
       },
       "fluxEdge": {
-        "name": "플럭스엣지",
+        "name": "FluxEdge",
         "description": "Flux 네트워크를 통한 대규모 엣지 컴퓨팅",
         "category": "회로망"
       },

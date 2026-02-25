@@ -630,8 +630,8 @@
       "restoreFailed": "Pulihake gagal",
       "initializingBackupJobs": "Nginitsialisasi Cadangake jobs...",
       "downloadingBackupFiles": "Ngunduh Cadangake files...",
-      "backupUploadedSuccessfully": "Cadangan {component} kasil diunggah",
-      "backupUploadFailed": "Gagal ngunggah cadangan {component}: {message}",
+      "backupUploadedSuccessfully": "Cadangan {component} kasil diunggah menyang FluxDrive",
+      "backupUploadFailed": "Gagal ngunggah menyang FluxDrive cadangan {component}: {message}",
       "errorRegisteringFiles": "Kasalahan registering File(s) for Unggah.",
       "errorReceivingFluxDriveBackupList": "Kasalahan receiving FluxDrive Cadangake Daftar",
       "urlAlreadyInQueue": "URL {url} wis ana ing antrian",
@@ -1955,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "Manajer File",
+        "title": "FluxDrive",
         "subtitle": "Secure Desentralisasi Panyimpenan",
         "upgradePlan": "Tingkatake Paket",
         "searchPlaceholder": "Goleki files and folders...",
@@ -2084,7 +2084,7 @@
         "linkCopyFailed": "gagal to Salin Tautan to clipboard"
       },
       "pricingPlans": {
-        "title": "Paket Rega",
+        "title": "FluxDrive Storage Plans",
         "subtitle": "Choose your perfect Panyimpenan Paket.",
         "storage": "Panyimpenan",
         "contactUs": "Hubungi Us",
@@ -2665,7 +2665,7 @@
       },
       "register": {
         "landing": {
-          "title": "Wiwitan",
+          "title": "Deploy Your App on FluxCloud",
           "subtitle": "Experience the power of truly Desentralisasi Cloud computing. Deploy Docker Kontainer, web Aplikasi, Database, APIs, and microservices on our Global Jaringan of {nodeCount}+ Node across {countryCount}+ Negara.",
           "getStarted": "Miwiti",
           "documentation": "Tampilake Dokumentasi",
@@ -2790,8 +2790,8 @@
             "title": "Pitakonan sing Kerep Ditakoni",
             "questions": {
               "whatIsFlux": {
-                "question": "Apa iku Flux?",
-                "answer": "Flux yaiku ekosistem komputasi awan desentralisasi karo luwih saka {nodeCount} node ing {countryCount} negara."
+                "question": "What is FluxCloud?",
+                "answer": "FluxCloud yaiku ekosistem komputasi awan desentralisasi karo luwih saka {nodeCount} node ing {countryCount} negara."
               },
               "howToDeploy": {
                 "question": "How do I Deploy an Aplikasi?",
@@ -3611,7 +3611,7 @@
           },
           "cloud": {
             "title": "Jaringan FluxCloud",
-            "description": "FluxCloud yaiku platform komputasi awan desentralisasi sing ditenagani dening luwih saka {nodes} FluxNode sing disebarake sacara global. Platform iki nyedhiyakake infrastruktur siap Web3 kanggo hosting aplikasi, njalanake node blockchain, lan ngeksekusi beban kerja AI/ML—nawakake alternatif desentralisasi kanggo panyedia awan tradisional kaya AWS utawa Google Cloud."
+            "description": "FluxCloud yaiku platform komputasi awan desentralisasi sing ditenagani dening luwih saka {nodes} FluxNodes sing disebarake sacara global. Platform iki nyedhiyakake infrastruktur siap Web3 kanggo hosting aplikasi, njalanake node blockchain, lan ngeksekusi beban kerja AI/ML—nawakake alternatif desentralisasi kanggo panyedia awan tradisional kaya AWS utawa Google Cloud."
           },
           "learnMore": "Sinau Luwih Akeh"
         },
@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "Sumber Daya Jaringan FluxCloud",
           "subtitle": "Kapasitas infrastruktur wektu nyata",
-          "description": "Jelajahi total sumber daya komputasi sing saiki kasedhiya ing kabeh Jaringan FluxCloud. Infrastruktur desentralisasi kita ditenagani dening ewonan FluxNode ing saindenging donya, nyedhiyakake kapasitas CPU, RAM, lan panyimpenan sing bisa diskalakan kanggo hosting aplikasi, njalanake node blockchain, lan ngeksekusi beban kerja tanpa ngandelake panyedia awan tradisional."
+          "description": "Jelajahi total sumber daya komputasi sing saiki kasedhiya ing kabeh Jaringan FluxCloud. Infrastruktur desentralisasi kita ditenagani dening ewonan FluxNodes ing saindenging donya, nyedhiyakake kapasitas CPU, RAM, lan panyimpenan sing bisa diskalakan kanggo hosting aplikasi, njalanake node blockchain, lan ngeksekusi beban kerja tanpa ngandelake panyedia awan tradisional."
         },
         "summary": {
           "title": "Kapasitas Jaringan Total"
@@ -3689,7 +3689,7 @@
           "title": "Hadiah Operator FluxNode",
           "subtitle": "Entuk FLUX kanggo nguatake jaringan",
           "description": "Operator FluxNode minangka tulang punggung Jaringan FluxCloud, nyedhiyakake infrastruktur komputasi penting sing nguatake aplikasi desentralisasi ing saindenging donya. Minangka hadiah kanggo kontribusi, operator entuk kriptokurensi FLUX langsung saka blockchain. Hadiah iki disebarake kanthi otomatis adhedhasar tingkat node lan kinerja, nggawe model insentif sing lestari kanggo njaga infrastruktur sing dipercaya lan berkualitas dhuwur.",
-          "learnMore": "Sinau Luwih Akeh Babagan FluxNode"
+          "learnMore": "Sinau Luwih Akeh Babagan FluxNodes"
         },
         "cumulusTotalRewards": "Hadiah Total Cumulus",
         "nimbusTotalRewards": "Hadiah Total Nimbus",
@@ -3728,7 +3728,7 @@
       "upgradeFailed": "Tingkatake gagal: ",
       "cancel": "Batal",
       "features": {
-        "title": "Fitur",
+        "title": "Why Choose FluxDrive",
         "encryption": {
           "title": "Enkripsi End-to-End",
           "description": "Your files are encrypted before Unggah and remain secure across the Terdistribusi Jaringan. Only you hold the Kunci."
@@ -3774,7 +3774,7 @@
       "maintenanceSubtitle": "Saiki lagi ngalami kesulitan teknis karo marketplace. Tim kita lagi ngupaya ngrampungake masalah iki kanthi cepet.",
       "hero": {
         "title": "Temokake Aplikasi sing Sampurna",
-        "subtitle": "Jelajahi aplikasi sing di-host ing {nodeCount} node desentralisasi"
+        "subtitle": "Jelajahi aplikasi sing di-host ing {nodeCount}+ FluxNodes desentralisasi"
       },
       "revenueBanner": {
         "title": "Daftarake Aplikasi Sampeyan ing Marketplace FluxCloud",

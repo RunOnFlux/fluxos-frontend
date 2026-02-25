@@ -307,8 +307,8 @@
       "manageBenchmark": "إدارة المعيار",
       "manageUsers": "إدارة المستخدمين",
       "loggedSessions": "الجلسات المسجلة",
-      "myFluxShare": "بلدي فلوكسشير",
-      "fluxShare": "فلوكسشير"
+      "myFluxShare": "FluxShare",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "تدفق XDAO"
@@ -1946,8 +1946,8 @@
         "starter": "بداية",
         "standard": "معيار",
         "pro": "نخبة",
-        "enterprise": "فلوكس درايف برو",
-        "fluxDrivePro": "فلوكس درايف برو"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "تم الدفع بنجاح! إعادة التوجيه..."
@@ -2109,7 +2109,7 @@
           "starter": "بداية",
           "standard": "معيار",
           "elite": "نخبة",
-          "fluxDrivePro": "فلوكس درايف برو"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "الأكثر شعبية",
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "جارٍ تحميل FluxShare...",
-        "title": "فلوكسشير",
+        "title": "FluxShare",
         "subtitle": "إدارة ملفاتك ومشاركتها مع الآخرين",
         "storageUsage": "استخدام التخزين",
         "used": "مستخدم",
@@ -2791,7 +2791,7 @@
             "title": "الأسئلة المتداولة",
             "questions": {
               "whatIsFlux": {
-                "question": "ما هو فلوكس كلاود؟",
+                "question": "ما هو FluxCloud؟",
                 "answer": "FluxCloud عبارة عن منصة حوسبة سحابية لامركزية مدعومة بتقنية Web3. على عكس موفري الخدمات السحابية التقليديين الذين يعتمدون على مراكز البيانات المركزية، تقوم FluxCloud بتوزيع تطبيقاتك عبر {nodeCount}+ العقد التي يتم تشغيلها بشكل مستقل في {countryCount}+ البلدان. وهذا يوفر تكرارًا أفضل، ومقاومة للرقابة، وتكاليف أقل بشكل ملحوظ."
               },
               "howToDeploy": {
@@ -3611,7 +3611,7 @@
             "description": "تعمل Flux على blockchain الخاصة بها، وتتعامل مع الحوكمة وعلم الرموز وتوفر إمكانية التشغيل البيني مع blockchains الأخرى من خلال الأصول الموازية. تعمل عملة FLUX الأصلية على تشغيل النظام البيئي بأكمله، مما يتيح البنية التحتية اللامركزية وتكامل DeFi."
           },
           "cloud": {
-            "title": "شبكة فلوكس كلاود",
+            "title": "شبكة FluxCloud",
             "description": "FluxCloud عبارة عن منصة حوسبة سحابية لا مركزية مدعومة بأكثر من {nodes} FluxNodes الموزعة عالميًا. فهو يوفر بنية تحتية جاهزة لـ Web3 لاستضافة التطبيقات، وتشغيل عقد blockchain، وتنفيذ أعباء عمل AI/ML - مما يوفر بديلاً لا مركزيًا لموفري الخدمات السحابية التقليديين مثل AWS أو Google Cloud."
           },
           "learnMore": "يتعلم أكثر"
@@ -3729,7 +3729,7 @@
       "upgradeFailed": "فشلت الترقية:",
       "cancel": "يلغي",
       "features": {
-        "title": "لماذا تختار فلوكس درايف؟",
+        "title": "لماذا تختار FluxDrive؟",
         "encryption": {
           "title": "التشفير من النهاية إلى النهاية",
           "description": "يتم تشفير ملفاتك قبل التحميل وتظل آمنة عبر الشبكة الموزعة. أنت فقط تملك المفاتيح."
@@ -3760,7 +3760,7 @@
         }
       },
       "benefits": {
-        "title": "فوائد فلوكس درايف",
+        "title": "فوائد FluxDrive",
         "noCentralized": "لا يمكن لأي مزود مركزي الوصول إلى بياناتك",
         "fullControl": "الملكية الكاملة والتحكم في ملفاتك",
         "globalRedundancy": "تكرار عالمي عبر أكثر من 2600 عقدة",
@@ -3859,7 +3859,7 @@
           "subtitle": "كل ما تحتاج لمعرفته حول الاستضافة على FluxCloud",
           "questions": [
             {
-              "q": "ما هو فلوكس كلاود؟",
+              "q": "ما هو FluxCloud؟",
               "a": "FluxCloud عبارة عن منصة حوسبة سحابية لامركزية مدعومة بتقنية Web3. فهو يوفر استضافة آمنة وقابلة للتطوير وفعالة من حيث التكلفة للتطبيقات والألعاب والخدمات عبر شبكة عالمية من العقد."
             },
             {
@@ -5284,7 +5284,7 @@
         "category": "تخزين"
       },
       "fluxEdge": {
-        "name": "فلوكس إيدج",
+        "name": "FluxEdge",
         "description": "حوسبة الحافة على نطاق واسع مع شبكة Flux",
         "category": "شبكة"
       },

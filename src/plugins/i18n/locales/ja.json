@@ -307,8 +307,8 @@
       "manageBenchmark": "ベンチマークの管理",
       "manageUsers": "ユーザーの管理",
       "loggedSessions": "ログに記録されたセッション",
-      "myFluxShare": "私のフラックスシェア",
-      "fluxShare": "フラックスシェア"
+      "myFluxShare": "私のFluxShare",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "フラックスXDAO"
@@ -320,11 +320,11 @@
       "title": "ヘルプ"
     },
     "fluxDrive": {
-      "title": "フラックスドライブ"
+      "title": "FluxDrive"
     }
   },
   "myApps": {
-    "fluxCloudTitle": "フラックスクラウド",
+    "fluxCloudTitle": "FluxCloud",
     "fluxCloudSubtitle": "分散型アプリケーション管理",
     "fluxCloudDescription": "Flux 分散クラウド ネットワーク上で実行されているすべての Docker コンテナ化アプリケーションを監視および管理します。グローバルなブロックチェーンを活用したインフラストラクチャ全体にデプロイされた分散アプリのリアルタイムのステータス、リソース使用量、パフォーマンス メトリクスを表示します。任意のアプリケーションをクリックして、詳細な管理制御と分析にアクセスします。"
   },
@@ -598,7 +598,7 @@
       "fluxDriveDownloadInfo": "FluxDrive バックアップは復元ページからダウンロードできます",
       "uploadSelectedComponents": "選択したコンポーネントをアップロードする",
       "selectRestoreMethod": "復元方法の選択",
-      "fluxDrive": "フラックスドライブ",
+      "fluxDrive": "FluxDrive",
       "uploadFile": "ファイルをアップロードする",
       "remoteUrl": "リモートURL",
       "backupsInventory": "バックアップインベントリ",
@@ -1946,8 +1946,8 @@
         "starter": "スターター",
         "standard": "標準",
         "pro": "エリート",
-        "enterprise": "フラックスドライブ プロ",
-        "fluxDrivePro": "フラックスドライブ プロ"
+        "enterprise": "FluxDrive Pro",
+        "fluxDrivePro": "FluxDrive Pro"
       },
       "messages": {
         "paymentSuccessfulRedirecting": "支払いが成功しました！リダイレクト中..."
@@ -1955,7 +1955,7 @@
     },
     "fluxDrive": {
       "fileManager": {
-        "title": "フラックスドライブ",
+        "title": "FluxDrive",
         "subtitle": "安全な分散ストレージ",
         "upgradePlan": "アップグレードプラン",
         "searchPlaceholder": "ファイルとフォルダーを検索...",
@@ -2109,7 +2109,7 @@
           "starter": "スターター",
           "standard": "標準",
           "elite": "エリート",
-          "fluxDrivePro": "フラックスドライブ プロ"
+          "fluxDrivePro": "FluxDrive Pro"
         },
         "badges": {
           "mostPopular": "最も人気のある",
@@ -2162,7 +2162,7 @@
       },
       "fluxShare": {
         "loadingTitle": "FluxShare を読み込み中...",
-        "title": "フラックスシェア",
+        "title": "FluxShare",
         "subtitle": "ファイルを管理して他の人と共有する",
         "storageUsage": "ストレージの使用量",
         "used": "使用済み",
@@ -3611,7 +3611,7 @@
           },
           "cloud": {
             "title": "FluxCloudネットワーク",
-            "description": "FluxCloud は、{nodes} を超えるグローバルに分散された FluxNode を利用した分散型クラウド コンピューティング プラットフォームです。アプリケーションのホスティング、ブロックチェーン ノードの実行、AI/ML ワークロードの実行のための Web3 対応インフラストラクチャを提供し、AWS や Google Cloud などの従来のクラウド プロバイダーに代わる分散型の代替手段を提供します。"
+            "description": "FluxCloud は、{nodes} を超えるグローバルに分散された FluxNodes を利用した分散型クラウド コンピューティング プラットフォームです。アプリケーションのホスティング、ブロックチェーン ノードの実行、AI/ML ワークロードの実行のための Web3 対応インフラストラクチャを提供し、AWS や Google Cloud などの従来のクラウド プロバイダーに代わる分散型の代替手段を提供します。"
           },
           "learnMore": "もっと詳しく知る"
         },
@@ -3634,7 +3634,7 @@
         "intro": {
           "title": "グローバル FluxCloud ネットワーク",
           "subtitle": "真の分散型インフラストラクチャ",
-          "description": "FluxCloud は、すべての大陸と数百のホスティング プロバイダーに分散された FluxNode を備えた世界最大の分散型クラウド インフラストラクチャ ネットワークを運営しています。この地理的な多様性は、エッジ コンピューティングによる低遅延、高い冗長性とフォールト トレランス、検閲への耐性、真の分散化など、比類のないメリットをアプリ所有者に提供します。アプリケーションは、集中管理されたデータセンターではなく、独立して運用される実際のハードウェア上で実行されます。"
+          "description": "FluxCloud は、すべての大陸と数百のホスティング プロバイダーに分散された FluxNodes を備えた世界最大の分散型クラウド インフラストラクチャ ネットワークを運営しています。この地理的な多様性は、エッジ コンピューティングによる低遅延、高い冗長性とフォールト トレランス、検閲への耐性、真の分散化など、比類のないメリットをアプリ所有者に提供します。アプリケーションは、集中管理されたデータセンターではなく、独立して運用される実際のハードウェア上で実行されます。"
         },
         "geographicTitle": "地理的位置",
         "providersTitle": "プロバイダー",
@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "FluxCloud ネットワーク リソース",
           "subtitle": "リアルタイムのインフラストラクチャ容量",
-          "description": "FluxCloud ネットワーク全体で現在利用可能な合計コンピューティング リソースを調べます。当社の分散型インフラストラクチャは世界中の何千もの FluxNode によって強化されており、従来のクラウド プロバイダーに依存することなく、アプリケーションをホストし、ブロックチェーン ノードを実行し、ワークロードを実行するためのスケーラブルな CPU、RAM、ストレージ容量を提供します。"
+          "description": "FluxCloud ネットワーク全体で現在利用可能な合計コンピューティング リソースを調べます。当社の分散型インフラストラクチャは世界中の何千もの FluxNodes によって強化されており、従来のクラウド プロバイダーに依存することなく、アプリケーションをホストし、ブロックチェーン ノードを実行し、ワークロードを実行するためのスケーラブルな CPU、RAM、ストレージ容量を提供します。"
         },
         "summary": {
           "title": "総ネットワーク容量"
@@ -3713,7 +3713,7 @@
     },
     "fluxDrive": {
       "intro": {
-        "title": "フラックスドライブ",
+        "title": "FluxDrive",
         "subtitle": "IPFSを活用した分散型クラウドストレージ",
         "description": "FluxDrive は、IPFS (InterPlanetary File System) テクノロジーを活用して、FluxCloud ネットワーク上に構築された分散型クラウド ストレージ ソリューションです。世界中の FluxNodes の分散ネットワーク上にファイルを保存し、冗長性、検閲耐性、永続的な可用性を確保します。従来のクラウド ストレージとは異なり、データは暗号化され、断片化され、複数のノードに分散されるため、集中プロバイダーに依存することなく、ファイルの真の所有権と制御が得られます。",
         "learnMore": "FluxDrive について詳しく見る"
@@ -3735,7 +3735,7 @@
         },
         "distributed": {
           "title": "世界的な分布",
-          "description": "ファイルは世界中の何千もの FluxNode に分散され、どこからでも冗長性と高速アクセスが保証されます。"
+          "description": "ファイルは世界中の何千もの FluxNodes に分散され、どこからでも冗長性と高速アクセスが保証されます。"
         },
         "censorship": {
           "title": "検閲耐性あり",
@@ -3774,7 +3774,7 @@
       "maintenanceSubtitle": "現在、マーケットプレイスで技術的な問題が発生しています。私たちのチームは、この問題をできるだけ早く解決できるよう取り組んでいます。",
       "hero": {
         "title": "Flux アプリケーション マーケットプレイス",
-        "subtitle": "Flux の Web3 クラウド上に、事前に構成された分散型アプリケーションをデプロイします。世界中の {nodeCount}+ FluxNode 上の Docker コンテナ、ウェブ アプリ、API。"
+        "subtitle": "Flux の Web3 クラウド上に、事前に構成された分散型アプリケーションをデプロイします。世界中の {nodeCount}+ FluxNodes 上の Docker コンテナ、ウェブ アプリ、API。"
       },
       "revenueBanner": {
         "title": "FluxCloud マーケットプレイスにアプリを掲載",
@@ -5014,7 +5014,7 @@
                 "description": "お気に入りのゲームサーバーをホストする"
               },
               "fluxDrive": {
-                "title": "フラックスドライブ",
+                "title": "FluxDrive",
                 "description": "分散型ファイルストレージ"
               },
               "costCalculator": {
@@ -5131,7 +5131,7 @@
       "price": "価格",
       "perMonth": "月あたり",
       "header": {
-        "title": "フラックスドライブ",
+        "title": "FluxDrive",
         "subtitle": "サブスクリプションを完了して分散ストレージのロックを解除します"
       },
       "fluxPay": {
@@ -5268,7 +5268,7 @@
     "explore": "探検する",
     "services": {
       "fluxCloud": {
-        "name": "フラックスクラウド",
+        "name": "FluxCloud",
         "description": "分散型クラウド インフラストラクチャ上でアプリケーションをデプロイおよび拡張する",
         "category": "インフラストラクチャー"
       },
@@ -5278,12 +5278,12 @@
         "category": "AI と機械学習"
       },
       "fluxDrive": {
-        "name": "フラックスドライブ",
+        "name": "FluxDrive",
         "description": "データのための安全な分散ストレージ ソリューション",
         "category": "ストレージ"
       },
       "fluxEdge": {
-        "name": "フラックスエッジ",
+        "name": "FluxEdge",
         "description": "Flux ネットワークによる大規模なエッジ コンピューティング",
         "category": "ネットワーク"
       },

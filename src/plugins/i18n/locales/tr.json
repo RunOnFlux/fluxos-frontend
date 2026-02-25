@@ -3611,7 +3611,7 @@
           },
           "cloud": {
             "title": "FluxCloud Ağı",
-            "description": "FluxCloud, küresel olarak dağıtılan {nodes}'tan fazla FluxNode tarafından desteklenen, merkezi olmayan bir bulut bilişim platformudur. Uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve AI/ML iş yüklerini yürütmek için Web3'e hazır altyapı sağlayarak AWS veya Google Cloud gibi geleneksel bulut sağlayıcılarına merkezi olmayan bir alternatif sunar."
+            "description": "FluxCloud, küresel olarak dağıtılan {nodes}'tan fazla FluxNodes tarafından desteklenen, merkezi olmayan bir bulut bilişim platformudur. Uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve AI/ML iş yüklerini yürütmek için Web3'e hazır altyapı sağlayarak AWS veya Google Cloud gibi geleneksel bulut sağlayıcılarına merkezi olmayan bir alternatif sunar."
           },
           "learnMore": "Daha fazla bilgi edin"
         },
@@ -3662,7 +3662,7 @@
         "intro": {
           "title": "FluxCloud Ağ Kaynakları",
           "subtitle": "Gerçek zamanlı altyapı kapasitesi",
-          "description": "Şu anda FluxCloud Ağının tamamında mevcut olan toplam bilgi işlem kaynaklarını keşfedin. Merkezi olmayan altyapımız, dünya çapında binlerce FluxNode tarafından desteklenmektedir; uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve geleneksel bulut sağlayıcılarına bağlı kalmadan iş yüklerini yürütmek için ölçeklenebilir CPU, RAM ve depolama kapasitesi sağlar."
+          "description": "Şu anda FluxCloud Ağının tamamında mevcut olan toplam bilgi işlem kaynaklarını keşfedin. Merkezi olmayan altyapımız, dünya çapında binlerce FluxNodes tarafından desteklenmektedir; uygulamaları barındırmak, blockchain düğümlerini çalıştırmak ve geleneksel bulut sağlayıcılarına bağlı kalmadan iş yüklerini yürütmek için ölçeklenebilir CPU, RAM ve depolama kapasitesi sağlar."
         },
         "summary": {
           "title": "Toplam Ağ Kapasitesi"
@@ -3735,7 +3735,7 @@
         },
         "distributed": {
           "title": "Küresel Dağıtım",
-          "description": "Dosyalar dünya çapında binlerce FluxNode'a dağıtılarak her yerden yedeklilik ve hızlı erişim sağlanır."
+          "description": "Dosyalar dünya çapında binlerce FluxNodes'a dağıtılarak her yerden yedeklilik ve hızlı erişim sağlanır."
         },
         "censorship": {
           "title": "Sansüre Dayanıklı",

@@ -1968,7 +1968,7 @@
             "description": "Flux działa na własnym autorskim blockchainie, obsługującym zarządzanie, tokenomikę i zapewniającym interoperacyjność z innymi blockchainami poprzez równoległe aktywa. Natywna kryptowaluta FLUX napędza cały ekosystem, umożliwiając zdecentralizowaną infrastrukturę i integrację DeFi."
           },
           "cloud": {
-            "description": "FluxCloud to zdecentralizowana platforma chmury obliczeniowej napędzana przez ponad {nodes} globalnie rozproszonych FluxNode. Zapewnia infrastrukturę gotową na Web3 do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń AI/ML — oferując zdecentralizowaną alternatywę dla tradycyjnych dostawców chmury, takich jak AWS czy Google Cloud.",
+            "description": "FluxCloud to zdecentralizowana platforma chmury obliczeniowej napędzana przez ponad {nodes} globalnie rozproszonych FluxNodes. Zapewnia infrastrukturę gotową na Web3 do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń AI/ML — oferując zdecentralizowaną alternatywę dla tradycyjnych dostawców chmury, takich jak AWS czy Google Cloud.",
             "title": "Sieć FluxCloud"
           },
           "title": "Witamy w ekosystemie Flux",
@@ -2014,7 +2014,7 @@
           "title": "Całkowita pojemność sieci"
         },
         "intro": {
-          "description": "Poznaj całkowite zasoby obliczeniowe dostępne obecnie w całej sieci FluxCloud. Nasza zdecentralizowana infrastruktura jest zasilana przez tysiące FluxNode na całym świecie, zapewniając skalowalną pojemność CPU, RAM i pamięci masowej do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń bez polegania na tradycyjnych dostawcach chmury.",
+          "description": "Poznaj całkowite zasoby obliczeniowe dostępne obecnie w całej sieci FluxCloud. Nasza zdecentralizowana infrastruktura jest zasilana przez tysiące FluxNodes na całym świecie, zapewniając skalowalną pojemność CPU, RAM i pamięci masowej do hostowania aplikacji, uruchamiania węzłów blockchain i wykonywania obciążeń bez polegania na tradycyjnych dostawcach chmury.",
           "title": "Zasoby sieci FluxCloud",
           "subtitle": "Pojemność infrastruktury w czasie rzeczywistym"
         },
@@ -2437,7 +2437,7 @@
           "instancesPlural": "instancje",
           "whitelistIp": "Biała lista IP"
         },
-        "pageTitle": "Hosting WordPress na Flux",
+        "pageTitle": "Hosting WordPress na FluxCloud",
         "termsOfService": {
           "agree": "Zgadzam się",
           "title": "Regulamin",
@@ -3711,11 +3711,11 @@
           "loadFolderFailed": "Nie udało się załadować folderu",
           "createFolderFailed": "Nie udało się utworzyć folderu",
           "uploadFailed": "Przesyłanie nie powiodło się",
-      "uploadQueue": "Kolejka przesyłania",
-      "total": "Łącznie",
-      "files": "plik | pliki | plików",
-      "clearAll": "Wyczyść wszystko",
-      "removeFile": "Usuń plik",
+          "uploadQueue": "Kolejka przesyłania",
+          "total": "Łącznie",
+          "files": "plik | pliki | plików",
+          "clearAll": "Wyczyść wszystko",
+          "removeFile": "Usuń plik",
           "storageStatsFailed": "Nie udało się załadować statystyk pamięci",
           "insufficientStorage": "Plik \"{name}\" ({fileSize} MB) przekracza dostępną pamięć ({available} MB)",
           "unshareFailed": "Nie udało się cofnąć udostępniania pliku",
@@ -3842,7 +3842,7 @@
       "tryAgain": "Spróbuj Ponownie",
       "anonymous": "Anonimowy",
       "noProposalsSubmitted": "Nie przesłano jeszcze żadnych propozycji.",
-      "description": "Weź udział w zdecentralizowanym zarządzaniu",
+      "description": "Flux XDAO (Extended Decentralized Autonomous Organization) umożliwia społeczności kształtowanie przyszłości ekosystemu Flux poprzez zarządzanie on-chain. Operatorzy FluxNode mogą składać propozycje, dyskutować nad inicjatywami i głosować nad kluczowymi decyzjami wpływającymi na rozwój sieci, alokację środków i aktualizacje protokołu. Każdy głos jest zapisywany na blockchainie, zapewniając przejrzystość i niezmienność.",
       "errors": {
         "loadProposalsServer": "Nie udało się załadować propozycji z serwera",
         "networkFailed": "Połączenie sieciowe nie powiodło się. Sprawdź swoje połączenie internetowe.",
@@ -4465,7 +4465,7 @@
         "signUp": "Zarejestruj się",
         "perDay": "/ dzień",
         "dailyCost": "Koszt dzienny",
-        "title": "Plany cenowe"
+        "title": "FluxDrive Storage Plans"
       },
       "storageInfo": {
         "usedSpace": "Wykorzystane miejsce",
@@ -4769,22 +4769,22 @@
       "plans": {
         "enterprise": {
           "features": {
-            "4": "Integracja ze Stripe",
+            "0": "Płatności PayPal",
             "1": "Logiczne przeskoki",
             "2": "Przesyłanie plików z pamięcią 5 GB",
             "3": "Wsparcie dla niestandardowej domeny",
-            "0": "Płatności PayPal"
+            "4": "Integracja ze Stripe"
           },
           "name": "Enterprise",
           "tagLine": "Rozwiązanie dla dużych organizacji"
         },
         "standard": {
           "features": {
-            "1": "Nieograniczone formularze i ankiety",
-            "3": "Integracja z Google Docs",
-            "4": "Niestandardowa strona \"Dziękujemy\"",
             "0": "Nieograniczone odpowiedzi",
-            "2": "Profil na Instagramie"
+            "1": "Nieograniczone formularze i ankiety",
+            "2": "Profil na Instagramie",
+            "3": "Integracja z Google Docs",
+            "4": "Niestandardowa strona \"Dziękujemy\""
           },
           "name": "Standardowy",
           "tagLine": "Dla małych i średnich przedsiębiorstw"
@@ -4793,11 +4793,11 @@
           "name": "Podstawowy",
           "tagLine": "Prosty start dla każdego",
           "features": {
-            "2": "Nieograniczona liczba pól",
-            "4": "Do 2 subdomen",
             "0": "100 odpowiedzi miesięcznie",
             "1": "Nieograniczone formularze i ankiety",
-            "3": "Podstawowe narzędzia do tworzenia formularzy"
+            "2": "Nieograniczona liczba pól",
+            "3": "Podstawowe narzędzia do tworzenia formularzy",
+            "4": "Do 2 subdomen"
           }
         }
       },
