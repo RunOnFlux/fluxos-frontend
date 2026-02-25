@@ -3776,6 +3776,11 @@
         "title": "Mercato delle applicazioni Flux",
         "subtitle": "Distribuisci applicazioni preconfigurate decentralizzate sul cloud Web3 di Flux. Contenitori Docker, app web e API su {nodeCount}+ FluxNode in tutto il mondo."
       },
+      "revenueBanner": {
+        "title": "Pubblica la tua app sul Marketplace FluxCloud",
+        "description": "Hai un'ottima applicazione? Pubblicala sul Marketplace FluxCloud e guadagna fino al 25% di ricavi condivisi da ogni deployment. Contattaci a",
+        "cta": "per iniziare."
+      },
       "detail": {
         "loadingTitle": "Caricamento dell'applicazione...",
         "errorMessage": "Impossibile caricare i dettagli dell'applicazione: {error}",
@@ -3903,6 +3908,11 @@
           "loading": "Caricamento giochi disponibili...",
           "maintenanceTitle": "Mercato dei giochi temporaneamente non disponibile",
           "maintenanceSubtitle": "Stiamo riscontrando problemi temporanei",
+          "revenueBanner": {
+            "title": "Pubblica il tuo gioco su FluxCloud",
+            "description": "Hai un gioco fantastico? Pubblicalo su FluxCloud e guadagna fino al 25% di ricavi condivisi da ogni deployment. Contattaci a",
+            "cta": "per iniziare."
+          },
           "hero": {
             "title": "Hosting di server di gioco premium su FluxCloud",
             "subtitle": "Distribuisci i tuoi server di gioco preferiti in pochi secondi con distribuzione globale, protezione DDoS e prezzi a consumo basati sulla tecnologia blockchain.",

@@ -3776,6 +3776,11 @@
         "title": "Pasar Aplikasi Fluks",
         "subtitle": "Terapkan aplikasi pra-konfigurasi terdesentralisasi di cloud Web3 Flux. Kontainer Docker, aplikasi web, dan API di {nodeCount}+ FluxNodes di seluruh dunia."
       },
+      "revenueBanner": {
+        "title": "Daftarkan Aplikasi Anda di Marketplace FluxCloud",
+        "description": "Punya aplikasi hebat? Publikasikan di Marketplace FluxCloud dan dapatkan hingga 25% pendapatan bersama dari setiap deployment. Hubungi kami di",
+        "cta": "untuk memulai."
+      },
       "detail": {
         "loadingTitle": "Memuat Aplikasi...",
         "errorMessage": "Gagal memuat detail aplikasi: {error}",
@@ -3903,6 +3908,11 @@
           "loading": "Memuat permainan yang tersedia...",
           "maintenanceTitle": "Pasar Game Untuk Sementara Tidak Tersedia",
           "maintenanceSubtitle": "Kami mengalami masalah sementara",
+          "revenueBanner": {
+            "title": "Daftarkan Game Anda di FluxCloud",
+            "description": "Punya game luar biasa? Publikasikan di FluxCloud dan dapatkan hingga 25% pendapatan bersama dari setiap deployment. Hubungi kami di",
+            "cta": "untuk memulai."
+          },
           "hero": {
             "title": "Hosting Server Game Premium di FluxCloud",
             "subtitle": "Terapkan server game favorit Anda dalam hitungan detik dengan distribusi global, perlindungan DDoS, dan harga bayar sesuai pemakaian yang didukung oleh teknologi blockchain.",

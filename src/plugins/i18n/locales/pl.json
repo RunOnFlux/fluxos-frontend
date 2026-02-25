@@ -2697,6 +2697,11 @@
             "title": "Profesjonalny Hosting Serwerów Gier Made Simple"
           },
           "gamesTitle": "Dostępne Serwery Gier",
+          "revenueBanner": {
+            "title": "Opublikuj swoją grę na FluxCloud",
+            "description": "Masz niesamowitą grę? Opublikuj ją na FluxCloud i zarabiaj do 25% współdzielonych przychodów z każdego wdrożenia. Skontaktuj się z nami pod adresem",
+            "cta": "aby zacząć."
+          },
           "hero": {
             "benefits": {
               "instant": "Natychmiastowe Wdrożenie",
@@ -3276,6 +3281,11 @@
       "hero": {
         "title": "Marketplace Aplikacji Flux",
         "subtitle": "Wdrażaj zdecentralizowane wstępnie skonfigurowane aplikacje w chmurze Web3 Flux. Kontenery Docker, aplikacje webowe i API na ponad {nodeCount} węzłach FluxNodes na całym świecie."
+      },
+      "revenueBanner": {
+        "title": "Opublikuj swoją aplikację w Marketplace FluxCloud",
+        "description": "Masz świetną aplikację? Opublikuj ją w Marketplace FluxCloud i zarabiaj do 25% współdzielonych przychodów z każdego wdrożenia. Skontaktuj się z nami pod adresem",
+        "cta": "aby zacząć."
       },
       "loading": "Ładowanie sklepu...",
       "maintenanceSubtitle": "Obecnie występują problemy techniczne ze sklepem. Nasz zespół pracuje nad jak najszybszym rozwiązaniem tego problemu."

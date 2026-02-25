@@ -3776,6 +3776,11 @@
         "title": "Flux 애플리케이션 마켓플레이스",
         "subtitle": "Flux의 Web3 클라우드에 분산형 사전 구성된 애플리케이션을 배포하세요. 전 세계 {nodeCount}개 이상의 FluxNodes에 있는 Docker 컨테이너, 웹 앱 및 API."
       },
+      "revenueBanner": {
+        "title": "FluxCloud 마켓플레이스에 앱을 등록하세요",
+        "description": "훌륭한 애플리케이션이 있으신가요? FluxCloud 마켓플레이스에 게시하고 모든 배포에서 최대 25%의 수익을 공유받으세요. 문의:",
+        "cta": "로 연락주세요."
+      },
       "detail": {
         "loadingTitle": "애플리케이션 로드 중...",
         "errorMessage": "애플리케이션 세부정보를 로드하지 못했습니다. {error}",
@@ -3903,6 +3908,11 @@
           "loading": "사용 가능한 게임 로드 중...",
           "maintenanceTitle": "게임 마켓플레이스를 일시적으로 사용할 수 없습니다.",
           "maintenanceSubtitle": "일시적인 문제가 발생했습니다.",
+          "revenueBanner": {
+            "title": "FluxCloud에 게임을 등록하세요",
+            "description": "놀라운 게임이 있으신가요? FluxCloud에 게시하고 모든 배포에서 최대 25%의 수익을 공유받으세요. 문의:",
+            "cta": "로 연락주세요."
+          },
           "hero": {
             "title": "FluxCloud의 프리미엄 게임 서버 호스팅",
             "subtitle": "블록체인 기술을 기반으로 하는 글로벌 배포, DDoS 보호 및 종량제 가격 책정을 통해 좋아하는 게임 서버를 몇 초 만에 배포하세요.",

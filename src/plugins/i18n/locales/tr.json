@@ -3776,6 +3776,11 @@
         "title": "Flux Uygulama Pazarı",
         "subtitle": "Flux'un Web3 bulutunda merkezi olmayan, önceden yapılandırılmış uygulamaları dağıtın. Dünya çapında {nodeCount}+ FluxNodes'ta Docker kapsayıcıları, web uygulamaları ve API'ler."
       },
+      "revenueBanner": {
+        "title": "Uygulamanızı FluxCloud Marketplace'de Yayınlayın",
+        "description": "Harika bir uygulamanız mı var? FluxCloud Marketplace'de yayınlayın ve her dağıtımdan %25'e kadar paylaşılan gelir elde edin. Bize ulaşın:",
+        "cta": "başlamak için."
+      },
       "detail": {
         "loadingTitle": "Uygulama Yükleniyor...",
         "errorMessage": "Uygulama ayrıntıları yüklenemedi: {error}",
@@ -3903,6 +3908,11 @@
           "loading": "Mevcut oyunlar yükleniyor...",
           "maintenanceTitle": "Oyun Pazarı Geçici Olarak Kullanım Dışı",
           "maintenanceSubtitle": "Geçici sorunlar yaşıyoruz",
+          "revenueBanner": {
+            "title": "Oyununuzu FluxCloud'da Yayınlayın",
+            "description": "Muhteşem bir oyununuz mu var? FluxCloud'da yayınlayın ve her dağıtımdan %25'e kadar paylaşılan gelir elde edin. Bize ulaşın:",
+            "cta": "başlamak için."
+          },
           "hero": {
             "title": "FluxCloud'da Premium Oyun Sunucusu Barındırma",
             "subtitle": "Favori oyun sunucularınızı küresel dağıtım, DDoS koruması ve blockchain teknolojisiyle desteklenen kullandıkça öde fiyatlandırmasıyla saniyeler içinde dağıtın.",

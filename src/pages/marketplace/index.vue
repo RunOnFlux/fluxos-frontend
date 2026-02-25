@@ -28,6 +28,23 @@
         icon-aria-label="Marketplace Logo"
       />
 
+      <!-- Revenue Sharing Banner -->
+      <div class="revenue-banner-section">
+        <VCard class="revenue-banner">
+          <VCardText class="d-flex align-center pa-5">
+            <VIcon icon="mdi-handshake" size="36" color="primary" class="me-4 flex-shrink-0" />
+            <div>
+              <h3 class="revenue-banner-title">{{ t('pages.marketplace.revenueBanner.title') }}</h3>
+              <p class="revenue-banner-desc">
+                {{ t('pages.marketplace.revenueBanner.description') }}
+                <a href="mailto:info@runonflux.com" class="revenue-banner-email">info@runonflux.com</a>
+                {{ t('pages.marketplace.revenueBanner.cta') }}
+              </p>
+            </div>
+          </VCardText>
+        </VCard>
+      </div>
+
       <!-- Sponsored Apps Section -->
       <div class="sponsored-section">
         <SponsoredCard :apps="sponsoredApps" :loading="loading" />
@@ -405,6 +422,42 @@ onMounted(async () => {
 .apps-grid-section {
   flex: 1;
   min-height: 500px;
+}
+
+/* Revenue Sharing Banner */
+.revenue-banner-section {
+  padding: 0 16px;
+}
+
+.revenue-banner {
+  border-radius: 16px !important;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.12) !important;
+  box-shadow: none !important;
+  background: rgb(var(--v-theme-surface)) !important;
+}
+
+.revenue-banner-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.revenue-banner-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  color: rgba(var(--v-theme-on-surface), 0.85);
+}
+
+.revenue-banner-email {
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+}
+
+.revenue-banner-email:hover {
+  text-decoration: underline;
 }
 
 /* Responsive adjustments */

@@ -3776,6 +3776,11 @@
         "title": "助焊剂应用市场",
         "subtitle": "在 Flux 的 Web3 云上部署分散的预配置应用程序。全球 {nodeCount}+ FluxNode 上的 Docker 容器、Web 应用程序和 API。"
       },
+      "revenueBanner": {
+        "title": "在 FluxCloud 市场上架您的应用",
+        "description": "有一款出色的应用？将其发布到 FluxCloud 市场，每次部署可获得高达 25% 的共享收益。请联系我们：",
+        "cta": "开始合作。"
+      },
       "detail": {
         "loadingTitle": "正在加载应用程序...",
         "errorMessage": "无法加载应用程序详细信息：{error}",
@@ -3903,6 +3908,11 @@
           "loading": "正在加载可用的游戏...",
           "maintenanceTitle": "游戏市场暂时不可用",
           "maintenanceSubtitle": "我们遇到暂时的问题",
+          "revenueBanner": {
+            "title": "在 FluxCloud 上架您的游戏",
+            "description": "有一款精彩的游戏？将其发布到 FluxCloud，每次部署可获得高达 25% 的共享收益。请联系我们：",
+            "cta": "开始合作。"
+          },
           "hero": {
             "title": "FluxCloud 上的高级游戏服务器托管",
             "subtitle": "通过区块链技术支持的全球分发、DDoS 保护和即用即付定价，在几秒钟内部署您最喜欢的游戏服务器。",

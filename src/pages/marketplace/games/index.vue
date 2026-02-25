@@ -30,6 +30,21 @@
           min-height="300px"
         />
 
+        <!-- Revenue Sharing Banner -->
+        <VCard class="section-card revenue-banner">
+          <VCardText class="d-flex align-center pa-5">
+            <VIcon icon="mdi-handshake" size="36" color="primary" class="me-4 flex-shrink-0" />
+            <div>
+              <h3 class="revenue-banner-title">{{ t('pages.marketplace.games.index.revenueBanner.title') }}</h3>
+              <p class="revenue-banner-desc">
+                {{ t('pages.marketplace.games.index.revenueBanner.description') }}
+                <a href="mailto:info@runonflux.com" class="revenue-banner-email">info@runonflux.com</a>
+                {{ t('pages.marketplace.games.index.revenueBanner.cta') }}
+              </p>
+            </div>
+          </VCardText>
+        </VCard>
+
         <!-- Games Grid Section -->
         <div id="games-grid" class="games-grid-section">
           <h2 class="games-section-title">{{ t('pages.marketplace.games.index.gamesTitle') }}</h2>
@@ -648,6 +663,31 @@ onMounted(async () => {
   line-height: 1.7;
   margin: 0;
   opacity: 0.85;
+}
+
+/* Revenue Sharing Banner */
+.revenue-banner-title {
+  font-size: 1.125rem;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.revenue-banner-desc {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0;
+  color: rgba(var(--v-theme-on-surface), 0.85);
+}
+
+.revenue-banner-email {
+  font-weight: 700;
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+}
+
+.revenue-banner-email:hover {
+  text-decoration: underline;
 }
 
 /* Games Grid Section */

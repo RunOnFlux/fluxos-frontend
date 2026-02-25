@@ -3776,6 +3776,11 @@
         "title": "Temokake Aplikasi sing Sampurna",
         "subtitle": "Jelajahi aplikasi sing di-host ing {nodeCount} node desentralisasi"
       },
+      "revenueBanner": {
+        "title": "Daftarake Aplikasi Sampeyan ing Marketplace FluxCloud",
+        "description": "Duwe aplikasi sing apik? Terbitake ing Marketplace FluxCloud lan entuk nganti 25% bagi hasil saka saben deployment. Hubungi kita ing",
+        "cta": "kanggo miwiti."
+      },
       "detail": {
         "loadingTitle": "Ngundhuh Aplikasi...",
         "errorMessage": "gagal to load Aplikasi Detail: {error}",
@@ -3903,6 +3908,11 @@
           "loading": "Ngundhuh kasedhiya games...",
           "maintenanceTitle": "Games Marketplace Temporarily ora kasedhiya",
           "maintenanceSubtitle": "Lagi ngalami masalah sementara",
+          "revenueBanner": {
+            "title": "Daftarake Game Sampeyan ing FluxCloud",
+            "description": "Duwe game sing luar biasa? Terbitake ing FluxCloud lan entuk nganti 25% bagi hasil saka saben deployment. Hubungi kita ing",
+            "cta": "kanggo miwiti."
+          },
           "hero": {
             "title": "Hosting Server Game Premium ing FluxCloud",
             "subtitle": "Deploy your Favorit game Server in detik with Global distribution, DDoS protection, and Bayar-as-you-go pricing powered by Blockchain technology.",

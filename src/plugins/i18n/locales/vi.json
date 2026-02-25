@@ -3776,6 +3776,11 @@
         "title": "Thị trường ứng dụng Flux",
         "subtitle": "Triển khai các ứng dụng được cấu hình sẵn phi tập trung trên đám mây Web3 của Flux. Bộ chứa Docker, ứng dụng web và API trên {nodeCount}+ FluxNodes trên toàn thế giới."
       },
+      "revenueBanner": {
+        "title": "Đăng ứng dụng của bạn trên FluxCloud Marketplace",
+        "description": "Bạn có một ứng dụng tuyệt vời? Đăng tải trên FluxCloud Marketplace và kiếm tới 25% doanh thu chia sẻ từ mỗi lần triển khai. Liên hệ với chúng tôi tại",
+        "cta": "để bắt đầu."
+      },
       "detail": {
         "loadingTitle": "Đang tải ứng dụng...",
         "errorMessage": "Không tải được chi tiết ứng dụng: {error}",
@@ -3903,6 +3908,11 @@
           "loading": "Đang tải các trò chơi có sẵn...",
           "maintenanceTitle": "Thị trường trò chơi tạm thời không có sẵn",
           "maintenanceSubtitle": "Chúng tôi đang gặp sự cố tạm thời",
+          "revenueBanner": {
+            "title": "Đăng trò chơi của bạn trên FluxCloud",
+            "description": "Bạn có một trò chơi tuyệt vời? Đăng tải trên FluxCloud và kiếm tới 25% doanh thu chia sẻ từ mỗi lần triển khai. Liên hệ với chúng tôi tại",
+            "cta": "để bắt đầu."
+          },
           "hero": {
             "title": "Lưu trữ máy chủ trò chơi cao cấp trên FluxCloud",
             "subtitle": "Triển khai các máy chủ trò chơi yêu thích của bạn trong vài giây với khả năng phân phối toàn cầu, bảo vệ DDoS và tính giá thanh toán theo mức sử dụng được hỗ trợ bởi công nghệ chuỗi khối.",

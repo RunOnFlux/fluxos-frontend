@@ -3776,6 +3776,11 @@
         "title": "Flux アプリケーション マーケットプレイス",
         "subtitle": "Flux の Web3 クラウド上に、事前に構成された分散型アプリケーションをデプロイします。世界中の {nodeCount}+ FluxNode 上の Docker コンテナ、ウェブ アプリ、API。"
       },
+      "revenueBanner": {
+        "title": "FluxCloud マーケットプレイスにアプリを掲載",
+        "description": "優れたアプリケーションをお持ちですか？FluxCloud マーケットプレイスに公開して、デプロイメントごとに最大25%の収益シェアを獲得しましょう。お問い合わせは",
+        "cta": "までご連絡ください。"
+      },
       "detail": {
         "loadingTitle": "アプリケーションをロード中...",
         "errorMessage": "アプリケーションの詳細を読み込めませんでした: {error}",
@@ -3903,6 +3908,11 @@
           "loading": "利用可能なゲームをロードしています...",
           "maintenanceTitle": "ゲーム マーケットプレイスが一時的に利用できなくなります",
           "maintenanceSubtitle": "一時的な問題が発生しています",
+          "revenueBanner": {
+            "title": "FluxCloud にゲームを掲載",
+            "description": "素晴らしいゲームをお持ちですか？FluxCloud に公開して、デプロイメントごとに最大25%の収益シェアを獲得しましょう。お問い合わせは",
+            "cta": "までご連絡ください。"
+          },
           "hero": {
             "title": "FluxCloud でのプレミアム ゲーム サーバー ホスティング",
             "subtitle": "ブロックチェーン技術を活用したグローバル分散、DDoS 保護、従量課金制の価格設定により、お気に入りのゲーム サーバーを数秒で導入できます。",
