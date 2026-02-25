@@ -1425,6 +1425,26 @@
                   <div class="text-body-2 text-medium-emphasis">{{ t('components.marketplace.installDialog.applicationActiveAndRunning') }}</div>
                 </div>
 
+                <VCard variant="outlined" class="mb-4 mx-auto" style="max-width: 500px;">
+                  <VCardText class="text-center">
+                    <p class="text-subtitle-2 font-weight-medium mb-2">
+                      {{ t('core.subscriptionManager.appAccessDomainAvailable') }}
+                    </p>
+                    <div class="d-flex align-center justify-center gap-2">
+                      <VIcon size="18" color="primary">mdi-web</VIcon>
+                      <a
+                        :href="`https://${deployedAppName}.app.runonflux.io`"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-body-1"
+                      >
+                        https://{{ deployedAppName }}.app.runonflux.io
+                        <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                      </a>
+                    </div>
+                  </VCardText>
+                </VCard>
+
                 <div class="mb-4">
                   <div class="d-flex justify-center mb-3">
                     <VChip variant="tonal" size="default" class="summary-chip">
