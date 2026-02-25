@@ -6042,6 +6042,52 @@ const streamTestPhase = async (message, status, delay) => {
   }
 }
 
+// Map orbit git error codes to user-friendly messages
+const getOrbitErrorMessage = errorMessage => {
+  if (!errorMessage || typeof errorMessage !== 'string') return errorMessage
+
+  if (errorMessage.includes('git_clone_failed')) {
+    return 'Git clone failed. Please verify the repository URL, ensure the repository is accessible, and check that credentials (username/token) are correct for private repositories.'
+  }
+  if (errorMessage.includes('project_path_not_found')) {
+    const pathMatch = errorMessage.match(/project_path_not_found:\s*(.+)/)
+    const path = pathMatch ? pathMatch[1].trim() : ''
+
+    return `Project path not found${path ? `: "${path}"` : ''}. The specified subdirectory does not exist in the repository. Please check your project path configuration.`
+  }
+  if (errorMessage.includes('project_type_detection_failed')) {
+    return 'Project type detection failed. No recognizable project files found in the repository (e.g. package.json, requirements.txt, go.mod, Cargo.toml, etc.). Please ensure your repository contains a supported project structure.'
+  }
+
+  return errorMessage
+}
+
+// Extract a display message from an orbit test result object
+// Result format: { status: "Starting component...", data: "..." }
+// or: { status: "error", data: { name: "Error", message: "Orbit deployment failed: ..." } }
+const getResultMessage = result => {
+  if (result.status === 'error' || result.status === 'success') {
+    // status is a state indicator, message is in data
+    if (typeof result.data === 'string') return result.data
+    if (result.data?.message) return result.data.message
+
+    return result.status
+  }
+
+  // status itself is the message (e.g. "Starting component cloudgit...")
+  return result.status || result.data || 'Unknown step'
+}
+
+// Determine display status for an orbit test result
+const getResultStatus = result => {
+  if (result.status === 'error') return 'error'
+  if (result.status === 'success') return 'success'
+  if (result.status === 'warning') return 'warning'
+
+  // Non-standard status values like "Starting component..." are info messages
+  return 'info'
+}
+
 // Test app installation
 const testAppInstall = async () => {
   if (!registrationHash.value) {
@@ -6061,13 +6107,16 @@ const testAppInstall = async () => {
     await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
     await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
     await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
+    await streamTestPhase('Validating Git repository...', 'info', 500)
 
-    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
+    // Orbit tests can take a while (clone, build, detect project type) so use a longer timeout
+    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value, 300000)
 
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
     if (response.data?.status === 'error') {
-      await streamTestPhase(`Test failed: ${response.data.data?.message || response.data.data || 'Unknown error'}`, 'error', 200)
+      const errorMsg = getOrbitErrorMessage(response.data.data?.message || response.data.data || 'Unknown error')
+      await streamTestPhase(errorMsg, 'error', 200)
       testError.value = true
       showToast('error', t('core.subscriptionManager.testInstallationFailed'))
 
@@ -6093,32 +6142,19 @@ const testAppInstall = async () => {
         }
       }
 
+      // Stream parsed results with proper message extraction
       for (const result of parsedResults) {
+        const message = getResultMessage(result)
+        const status = getResultStatus(result)
         await streamTestPhase(
-          result.message || t('core.subscriptionManager.testStepCompleted'),
-          result.status || 'info',
+          status === 'error' ? getOrbitErrorMessage(message) : message,
+          status,
           200,
         )
       }
 
-      const containsError = message => {
-        if (!message || typeof message !== 'string') return false
-
-        return /ERROR|FAILED|FATAL|Exception|CRASH|ABORT|terminated|exit code [1-9]/i.test(message)
-      }
-
-      const containsWarning = message => {
-        if (!message || typeof message !== 'string') return false
-
-        return /WARNING|WARN|deprecated/i.test(message)
-      }
-
-      const hasErrors = parsedResults.some(r =>
-        r.status === 'error' || containsError(r.message),
-      )
-      const hasWarnings = parsedResults.some(r =>
-        r.status === 'warning' || containsWarning(r.message),
-      )
+      const hasErrors = parsedResults.some(r => r.status === 'error')
+      const hasWarnings = parsedResults.some(r => r.status === 'warning')
 
       if (hasErrors) {
         await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)

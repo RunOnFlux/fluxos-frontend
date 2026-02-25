@@ -110,11 +110,15 @@ export default {
 
     return Api().post('/apps/appupdate', JSON.stringify(data), axiosConfig)
   },
-  testAppInstall(zelidauthHeader, hash) {
+  testAppInstall(zelidauthHeader, hash, timeout) {
     const axiosConfig = {
       headers: {
         zelidauth: zelidauthHeader,
       },
+    }
+
+    if (timeout) {
+      axiosConfig.timeout = timeout
     }
 
     return Api().get(`/apps/testappinstall/${hash}`, axiosConfig)
