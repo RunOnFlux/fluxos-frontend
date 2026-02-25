@@ -1878,17 +1878,11 @@
                                 {{ t('pages.apps.register.orbit.deploy.registrationCompleteDescription') }}
                               </p>
 
-                              <!-- Orbit-specific Access Information -->
+                              <!-- Access Information -->
                               <VCard variant="outlined" class="mb-4 text-left">
                                 <VCardText>
-                                  <div class="d-flex align-center justify-center gap-2 mb-2">
-                                    <VIcon color="primary">mdi-application</VIcon>
-                                    <span class="text-h6">{{ appName }}</span>
-                                  </div>
-                                  <VDivider class="my-3" />
-                                  <p class="text-subtitle-2 font-weight-medium mb-2">
-                                    <VIcon size="18" class="mr-1">mdi-information-outline</VIcon>
-                                    {{ t('pages.apps.register.orbit.register.firstInstallInfo') }}
+                                  <p class="text-subtitle-2 font-weight-medium mb-3 text-center">
+                                    {{ t('pages.apps.register.orbit.deploy.appAccessDomainAvailable') }}
                                   </p>
                                   <div class="access-info-list">
                                     <div class="d-flex align-center gap-2 mb-2">
@@ -2206,11 +2200,13 @@
                           <VCard elevation="2" class="payment-monitoring-card">
                             <VCardText class="pa-6">
                               <LoadingSpinner
-                                :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : 'mdi-rocket-launch'"
+                                :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : paymentMonitoringPhase === 'installing' ? 'mdi-progress-download' : 'mdi-rocket-launch'"
                                 :icon-size="48"
                                 :title="paymentMonitoringPhase === 'blockchain'
                                   ? t('pages.apps.register.orbit.deploy.checkingRegistration')
-                                  : t('pages.apps.register.orbit.deploy.waitingForInstance')"
+                                  : paymentMonitoringPhase === 'installing'
+                                    ? t('pages.apps.register.orbit.deploy.waitingForNodeInstalling')
+                                    : t('pages.apps.register.orbit.deploy.waitingForInstance')"
                                 message=""
                               />
                               <!-- Sponsor message - different for FREE plan vs other plans -->
@@ -2247,7 +2243,18 @@
                                         <span>{{ t('pages.apps.register.orbit.deploy.blockchainConfirmationTime') }}</span>
                                       </div>
                                     </template>
-                                    <!-- Phase 2: Node deployment -->
+                                    <!-- Phase 2: Installing -->
+                                    <template v-else-if="paymentMonitoringPhase === 'installing'">
+                                      <div class="d-flex align-center">
+                                        <VIcon color="info" size="20" class="mr-2">mdi-progress-download</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.waitingForInstallationStart') }}</span>
+                                      </div>
+                                      <div class="d-flex align-center">
+                                        <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                        <span>{{ t('pages.apps.register.orbit.deploy.installationStartTime') }}</span>
+                                      </div>
+                                    </template>
+                                    <!-- Phase 3: Node deployment -->
                                     <template v-else>
                                       <div class="d-flex align-center">
                                         <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
@@ -4881,7 +4888,7 @@ const paymentConfirmed = ref(false)
 const paymentMethod = ref('')
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
-const paymentMonitoringPhase = ref('blockchain') // 'blockchain' or 'deployment'
+const paymentMonitoringPhase = ref('blockchain') // 'blockchain', 'installing', or 'deployment'
 const checkoutLoading = ref(false)
 const showFiatOptions = ref(false)
 const showCryptoOptions = ref(false)
@@ -5942,9 +5949,10 @@ const goBackToReviewStep = () => {
   currentStep.value = 4 // Review step
 }
 
-// Payment monitoring - Two-phase detection:
+// Payment monitoring - Three-phase detection:
 // Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
-// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
+// Phase 2 (installing): Check if a node has started installing via getAppInstallingLocation()
+// Phase 3 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
   // Clear any existing intervals
   if (paymentMonitoringInterval.value) {
@@ -5981,12 +5989,35 @@ const startPaymentMonitoring = async () => {
 
           // If app spec exists and hash matches, payment is confirmed on blockchain
           if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
-            // Move to deployment phase
+            // Move to installing phase
+            paymentMonitoringPhase.value = 'installing'
+          }
+        }
+      } else if (paymentMonitoringPhase.value === 'installing') {
+        // Phase 2: Check if a node has started installing
+        const installingResponse = await AppsService.getAppInstallingLocation(appName.value)
+
+        if (installingResponse.data?.status === 'success') {
+          const locations = installingResponse.data.data
+
+          if (locations && locations.length > 0) {
             paymentMonitoringPhase.value = 'deployment'
+          } else {
+            // No installing locations — app may have already finished installing between polls
+            // Check if it's already running to avoid getting stuck
+            const locationResponse = await AppsService.getAppLocation(appName.value)
+
+            if (locationResponse.data?.status === 'success') {
+              const appLocation = locationResponse.data.data
+
+              if (appLocation && appLocation.length > 0) {
+                paymentMonitoringPhase.value = 'deployment'
+              }
+            }
           }
         }
       } else if (paymentMonitoringPhase.value === 'deployment') {
-        // Phase 2: Check if app is running on nodes
+        // Phase 3: Check if app is running on nodes
         const response = await AppsService.getAppLocation(appName.value)
 
         if (response.data && response.data.status === 'success') {

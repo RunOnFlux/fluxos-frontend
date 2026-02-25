@@ -2540,6 +2540,25 @@
                           : t('core.subscriptionManager.updateSuccessMessage')
                         }}
                       </p>
+                      <VCard v-if="props.newApp" variant="outlined" class="mb-4">
+                        <VCardText class="text-center">
+                          <p class="text-subtitle-2 font-weight-medium mb-2">
+                            {{ t('core.subscriptionManager.appAccessDomainAvailable') }}
+                          </p>
+                          <div class="d-flex align-center justify-center gap-2">
+                            <VIcon size="18" color="primary">mdi-web</VIcon>
+                            <a
+                              :href="`https://${appDetails.name}.app.runonflux.io`"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="text-body-1"
+                            >
+                              https://{{ appDetails.name }}.app.runonflux.io
+                              <VIcon size="12" class="ml-1">mdi-open-in-new</VIcon>
+                            </a>
+                          </div>
+                        </VCardText>
+                      </VCard>
                       <VBtn
                         v-if="props.newApp"
                         color="primary"
@@ -2567,9 +2586,9 @@
                   <VCard elevation="2" class="payment-monitoring-card">
                     <VCardText class="pa-6">
                       <LoadingSpinner
-                        :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : 'mdi-rocket-launch'"
+                        :icon="paymentMonitoringPhase === 'blockchain' ? 'mdi-cube-outline' : paymentMonitoringPhase === 'installing' ? 'mdi-progress-download' : 'mdi-rocket-launch'"
                         :icon-size="48"
-                        :title="paymentMonitoringPhase === 'blockchain' ? t('core.subscriptionManager.checkingBlockchainConfirmation') : t('core.subscriptionManager.waitingForNodeDeployment')"
+                        :title="paymentMonitoringPhase === 'blockchain' ? t('core.subscriptionManager.checkingBlockchainConfirmation') : paymentMonitoringPhase === 'installing' ? t('core.subscriptionManager.waitingForNodeInstalling') : t('core.subscriptionManager.waitingForNodeDeployment')"
                         message=""
                       />
                       <!-- Free update sponsor message -->
@@ -2593,7 +2612,18 @@
                                 <span>{{ t('core.subscriptionManager.blockchainConfirmationTime') }}</span>
                               </div>
                             </template>
-                            <!-- Phase 2: Node deployment -->
+                            <!-- Phase 2: Installing -->
+                            <template v-else-if="paymentMonitoringPhase === 'installing'">
+                              <div class="d-flex align-center">
+                                <VIcon color="info" size="20" class="mr-2">mdi-progress-download</VIcon>
+                                <span>{{ t('core.subscriptionManager.waitingForInstallationStart') }}</span>
+                              </div>
+                              <div class="d-flex align-center">
+                                <VIcon color="warning" size="20" class="mr-2">mdi-clock-alert</VIcon>
+                                <span>{{ t('core.subscriptionManager.installationStartTime') }}</span>
+                              </div>
+                            </template>
+                            <!-- Phase 3: Node deployment -->
                             <template v-else-if="paymentMonitoringPhase === 'deployment'">
                               <div class="d-flex align-center">
                                 <VIcon color="success" size="20" class="mr-2">mdi-check-circle</VIcon>
@@ -3407,7 +3437,7 @@ const paymentMonitoringTimeout = ref(null)
 const paymentConfirmed = ref(false)
 const paymentProcessing = ref(false)
 
-// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'deployment' = waiting for nodes to pick up app
+// Payment monitoring phase: 'blockchain' = checking if payment confirmed on chain, 'installing' = waiting for node to start installing, 'deployment' = waiting for nodes to pick up app
 const paymentMonitoringPhase = ref('blockchain')
 const popupBlockedDialog = ref(false)
 const blockedPaymentUrl = ref('')
@@ -3705,6 +3735,7 @@ function handleCommandPaste(event) {
       if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(item => typeof item === 'string'))
         return parsed
     } catch { /* ignore */ }
+    
     return null
   }
 
@@ -3721,6 +3752,7 @@ function handleCommandPaste(event) {
     commandsDialog.entries.push(...newCmds)
     showToast('success', `Imported ${newCmds.length} command(s)`)
     commandsDialog.newCommand = ''
+    
     return
   }
 
@@ -6305,6 +6337,7 @@ function handleEnvPaste(event) {
       if (Array.isArray(parsed) && parsed.length > 0 && parsed.every(item => typeof item === 'string'))
         return parsed
     } catch { /* ignore */ }
+    
     return null
   }
 
@@ -6337,6 +6370,7 @@ function handleEnvPaste(event) {
     } else if (skippedCount > 0 || invalidCount > 0) {
       showToast('warning', `No new variables imported. ${skippedCount} duplicate(s), ${invalidCount} invalid line(s)`)
     }
+    
     return
   }
 
@@ -8532,9 +8566,10 @@ async function initPaypalPay(hash = null, name = null, price = null, description
   }
 }
 
-// Payment monitoring function - Two-phase detection:
+// Payment monitoring function - Three-phase detection:
 // Phase 1 (blockchain): Check if payment/registration is confirmed on the blockchain via getAppSpecifics()
-// Phase 2 (deployment): Check if app is running on nodes via getAppLocation()
+// Phase 2 (installing): Check if a node has started installing via getAppInstallingLocation()
+// Phase 3 (deployment): Check if app is running on nodes via getAppLocation()
 const startPaymentMonitoring = async () => {
   console.log('🚀 START PAYMENT MONITORING', {
     registrationHash: registrationHash.value,
@@ -8605,13 +8640,49 @@ const startPaymentMonitoring = async () => {
 
             // If app spec exists and hash matches, payment is confirmed on blockchain
             if (currentAppSpec?.hash && registrationHash.value && currentAppSpec.hash === registrationHash.value) {
-              console.log('✅ BLOCKCHAIN CONFIRMED - Moving to deployment phase')
-              paymentMonitoringPhase.value = 'deployment'
+              console.log('✅ BLOCKCHAIN CONFIRMED - Moving to installing phase')
+              paymentMonitoringPhase.value = 'installing'
               showToast('success', t('core.subscriptionManager.paymentConfirmedOnNetwork'))
             }
           }
+        } else if (paymentMonitoringPhase.value === 'installing') {
+          // Phase 2: Check if a node has started installing
+          const installingResponse = await AppsService.getAppInstallingLocation(appName)
+
+          if (installingResponse.data?.status === 'success') {
+            const locations = installingResponse.data.data
+
+            console.log('🔍 Phase 2 - Checking installing location:', {
+              locations: locations,
+              hasInstances: locations && locations.length > 0,
+            })
+
+            if (locations && locations.length > 0) {
+              console.log('✅ NODE INSTALLING - Moving to deployment phase')
+              paymentMonitoringPhase.value = 'deployment'
+              showToast('success', t('core.subscriptionManager.nodeStartedInstalling'))
+            } else {
+              // No installing locations — app may have already finished installing between polls
+              // Check if it's already running to avoid getting stuck
+              const locationResponse = await AppsService.getAppLocation(appName)
+
+              if (locationResponse.data?.status === 'success') {
+                const appLocation = locationResponse.data.data
+
+                console.log('🔍 Phase 2 fallback - Checking if already running:', {
+                  appLocation: appLocation,
+                  hasInstances: appLocation && appLocation.length > 0,
+                })
+
+                if (appLocation && appLocation.length > 0) {
+                  console.log('✅ APP ALREADY RUNNING - Skipping installing phase')
+                  paymentMonitoringPhase.value = 'deployment'
+                }
+              }
+            }
+          }
         } else if (paymentMonitoringPhase.value === 'deployment') {
-          // Phase 2: Check if app is running on nodes
+          // Phase 3: Check if app is running on nodes
           const response = await AppsService.getAppLocation(appName)
 
           if (response.data && response.data.status === 'success') {
