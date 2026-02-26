@@ -28,6 +28,28 @@
             {{ appName }}
           </span>
         </VChip>
+        <VChip
+          v-if="subscriptionStatus === 'active'"
+          color="success"
+          variant="tonal"
+          size="x-small"
+          rounded="pill"
+          class="ml-1"
+          prepend-icon="mdi-autorenew"
+        >
+          {{ t('core.subscriptionManager.autoRenewing') }}
+        </VChip>
+        <VChip
+          v-else-if="subscriptionStatus === 'past_due'"
+          color="error"
+          variant="tonal"
+          size="x-small"
+          rounded="pill"
+          class="ml-1"
+          prepend-icon="mdi-alert"
+        >
+          {{ t('core.subscriptionManager.paymentIssue') }}
+        </VChip>
       </div>
       <VRow
         class="d-flex align-center my-1"
@@ -1089,6 +1111,7 @@ import { useConfigStore } from "@core/stores/config"
 import { useI18n } from 'vue-i18n'
 import { useSEONoIndex } from '@/composables/useSEO'
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
+import { paymentBridge } from "@/utils/fiatGateways"
 import LoadingSpinner from "@/components/Marketplace/LoadingSpinner.vue"
 
 // Prevent indexing of app management page (authenticated private data)
@@ -1138,6 +1161,30 @@ const snackbarMessage = ref("")
 const snackbarColor = ref("success")
 const appSpecification = ref(null)
 const appSpecificationGlobal = ref(null)
+const subscriptionStatus = ref(null)
+
+async function fetchSubscriptionStatus() {
+  try {
+    const zelidauth = localStorage.getItem("zelidauth")
+    if (!zelidauth) return
+
+    const auth = qs.parse(zelidauth)
+    if (!auth?.zelid) return
+
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/status`, {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      appName: appName.value,
+    })
+
+    if (response.data.status === "success" && response.data.data) {
+      subscriptionStatus.value = response.data.data.status
+    }
+  } catch (error) {
+    console.warn("Failed to fetch subscription status:", error.message)
+  }
+}
 
 // Spec adapter for SubscriptionManager - creates a mutable reactive copy
 // For V3: converts flat format to compose format for UI compatibility
@@ -3271,6 +3318,7 @@ onMounted(async () => {
       ipAccess.value = true
     }
     await getZelidAuthority()
+    fetchSubscriptionStatus()
     await getDaemonBlockCount()
     await getGlobalApplicationSpecifics()
     await getInstancesForDropDown()

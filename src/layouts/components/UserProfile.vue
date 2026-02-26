@@ -3,10 +3,12 @@ import { PerfectScrollbar } from "vue3-perfect-scrollbar"
 import { useFluxStore } from "@/stores/flux"
 import IDService from "@/services/IDService"
 import qs from "qs"
+import axios from "axios"
 import { useRoute, useRouter } from "vue-router"
 import { eventBus } from "@/utils/eventBus"
 import { disconnectWalletConnect } from "@/utils/walletService"
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
+import { paymentBridge } from "@/utils/fiatGateways"
 import { useI18n } from "vue-i18n"
 
 const { t } = useI18n()
@@ -123,40 +125,59 @@ async function logout() {
   }
 }
 
+const billingLoading = ref(false)
+
+async function openBillingPortal() {
+  if (billingLoading.value) return
+  billingLoading.value = true
+  try {
+    const zelidauth = localStorage.getItem("zelidauth")
+    if (!zelidauth) {
+      showToast('error', 'Authentication required - please login first')
+      
+      return
+    }
+    const authData = qs.parse(zelidauth)
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      
+      return
+    }
+
+    const email = prompt(t('core.subscriptionManager.emailRequiredForSubscription'))
+    if (!email || !email.includes('@')) return
+
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      email,
+      return_url: window.location.href,
+    }
+
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/portal/create`, data)
+    if (response.data.status === 'success' && response.data.data) {
+      window.open(response.data.data, '_blank')
+    } else {
+      showToast('error', t('core.subscriptionManager.billingPortalFailed'))
+    }
+  } catch (error) {
+    console.error('Billing portal error:', error)
+    showToast('error', t('core.subscriptionManager.billingPortalFailed'))
+  } finally {
+    billingLoading.value = false
+  }
+}
+
 const userProfileList = [
   { type: "divider" },
 
-  // {
-  //   type: "navItem",
-  //   icon: "tabler-user",
-  //   title: "Profile",
-  // },
-  // {
-  //   type: "navItem",
-  //   icon: "tabler-settings",
-  //   title: "Settings",
-  // },
-  // {
-  //   type: "navItem",
-  //   icon: "tabler-file-dollar",
-  //   title: "Billing Plan",
-  //   badgeProps: {
-  //     color: "error",
-  //     content: "4",
-  //   },
-  // },
-  // { type: "divider" },
-
-  // {
-  //   type: "navItem",
-  //   icon: "tabler-currency-dollar",
-  //   title: "Pricing",
-  // },
-  // {
-  //   type: "navItem",
-  //   icon: "tabler-question-mark",
-  //   title: "FAQ",
-  // },
+  {
+    type: "navItem",
+    icon: "tabler-file-dollar",
+    title: t('core.subscriptionManager.billingPlan'),
+    action: 'billing',
+  },
 ]
 </script>
 
@@ -239,6 +260,7 @@ const userProfileList = [
               <VListItem
                 v-if="item.type === 'navItem'"
                 :to="item.to"
+                @click="item.action === 'billing' ? openBillingPortal() : null"
               >
                 <template #prepend>
                   <VIcon

@@ -2713,7 +2713,7 @@
                             v-if="stripeEnabled"
                             variant="outlined"
                             class="payment-icon-card"
-                            @click="() => initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)"
+                            @click="() => autoRenewalEnabled ? initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description) : initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)"
                             hover
                           >
                             <VCardText class="d-flex align-center justify-center pa-6">
@@ -2747,6 +2747,39 @@
                           <VChip color="success" variant="flat" size="large">
                             ${{ appSpecPrice?.usd || 0 }} USD + VAT
                           </VChip>
+                        </div>
+
+                        <!-- Auto-Renewal Toggle -->
+                        <div v-if="stripeEnabled && isAutoRenewalEligible" class="mb-4">
+                          <VDivider class="mb-3" />
+                          <div class="d-flex align-center justify-center">
+                            <VSwitch
+                              v-model="autoRenewalEnabled"
+                              color="primary"
+                              hide-details
+                              density="compact"
+                              class="me-2"
+                            />
+                            <div class="text-start">
+                              <div class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.enableAutoRenewal') }}</div>
+                              <div class="text-caption text-medium-emphasis">{{ t('core.subscriptionManager.autoRenewalDescription') }}</div>
+                            </div>
+                          </div>
+                          <VExpandTransition>
+                            <div v-if="autoRenewalEnabled" class="mt-3">
+                              <VTextField
+                                v-model="subscriptionEmail"
+                                density="compact"
+                                variant="outlined"
+                                label="Email"
+                                placeholder="your@email.com"
+                                type="email"
+                                hide-details="auto"
+                                prepend-inner-icon="mdi-email"
+                                class="mx-4"
+                              />
+                            </div>
+                          </VExpandTransition>
                         </div>
 
                         <!-- Payment Advantages -->
@@ -3394,6 +3427,8 @@ const showTermsDialog = ref(false)
 const showTosError = ref(false)
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
+const autoRenewalEnabled = ref(false)
+const subscriptionEmail = ref('')
 const logsExpanded = ref(true)
 
 // ToS panel state - internal ref that's controlled by computed logic (use string '0' to match VExpansionPanel value)
@@ -4719,6 +4754,33 @@ const BASE_RENEWAL_PERIODS = [
   { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months', discount: 6 },                    // 6 months (528,000 blocks)
   { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year', discount: 12 },                       // 1 year (1,056,000 blocks)
 ]
+
+// Map renewal period blocks to subscription period key (for Stripe subscription checkout)
+const SUBSCRIPTION_PERIOD_MAP = {
+  [Math.round(BLOCKS_PER_MONTH * (1 / 4))]: '1w', // 1 week
+  [Math.round(BLOCKS_PER_MONTH * (1 / 2))]: '2w', // 2 weeks
+  [BLOCKS_PER_MONTH]: 1,       // 1 month
+  [BLOCKS_PER_MONTH * 3]: 3,   // 3 months
+  [BLOCKS_PER_MONTH * 6]: 6,   // 6 months
+  [BLOCKS_PER_MONTH * 12]: 12, // 1 year
+}
+
+// Check if current renewal selection is eligible for auto-renewal
+const isAutoRenewalEligible = computed(() => {
+  if (!stripeEnabled.value) return false
+  const currentRenewal = BASE_RENEWAL_PERIODS[appDetails.value.renewalIndex]
+  if (!currentRenewal) return false
+  
+  return currentRenewal.blocks in SUBSCRIPTION_PERIOD_MAP
+})
+
+// Get the subscription period in months for the current selection
+const selectedSubscriptionPeriod = computed(() => {
+  const currentRenewal = BASE_RENEWAL_PERIODS[appDetails.value.renewalIndex]
+  if (!currentRenewal) return null
+  
+  return SUBSCRIPTION_PERIOD_MAP[currentRenewal.blocks] || null
+})
 
 // Helper to format blocks as human-readable duration with months and days
 function formatBlocksAsDuration(blocks) {
@@ -8367,6 +8429,162 @@ async function initStripePay(hash = null, name = null, price = null, description
     console.error('Stripe error response:', error.response?.data)
     const errorMessage = error.response?.data?.message || error.response?.data?.data || error.message || 'Connection failed'
     showToast('error', `Stripe checkout error: ${errorMessage}`)
+    checkoutLoading.value = false
+  }
+}
+
+async function initStripeSubscriptionPay(hash = null, name = null, price = null, description = null) {
+  try {
+    fiatCheckoutURL.value = ''
+    checkoutLoading.value = true
+
+    if (!subscriptionEmail.value || !subscriptionEmail.value.includes('@')) {
+      showToast('error', t('core.subscriptionManager.emailRequiredForSubscription'))
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const period = selectedSubscriptionPeriod.value
+    if (!period) {
+      showToast('error', t('core.subscriptionManager.autoRenewalEligiblePeriods'))
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (!zelidauth) {
+      showToast('error', 'Authentication required - please login first')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const auth = qs.parse(zelidauth)
+    if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const finalHash = hash || registrationHash.value
+    const finalName = name || appDetails.name
+    const finalPrice = price || appSpecPrice.value?.usd || 0
+
+    if (!finalHash) {
+      showToast('error', 'Registration hash required - please register application first')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    if (!finalPrice || finalPrice <= 0) {
+      showToast('error', 'Invalid price - please calculate price first')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const data = {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      details: {
+        name: finalName,
+        email: subscriptionEmail.value,
+        description: description || appDetails.description,
+        hash: finalHash,
+        price: finalPrice,
+        productName: finalName,
+        period,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: isMarketplaceApp.value,
+          registration: props.newApp || props.isRedeploy,
+        },
+      },
+    }
+
+    // Open popup immediately to avoid blocker
+    const popup = window.open('about:blank', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes')
+
+    if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+      checkoutLoading.value = false
+      try {
+        const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+        if (checkoutURL.data.status === 'success') {
+          popupBlockedDialog.value = true
+          blockedPaymentUrl.value = checkoutURL.data.data
+          blockedPaymentType.value = 'Stripe Subscription'
+        }
+      } catch (error) {
+        console.error('Subscription checkout error:', error)
+      }
+      
+      return
+    }
+
+    // Show loading in popup
+    popup.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${t('core.subscriptionManager.loadingSubscriptionCheckout')}</title>
+          <style>
+            body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            .loader-container { text-align: center; color: white; }
+            .spinner { border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            h2 { margin: 0 0 10px 0; font-weight: 600; }
+            p { margin: 0; opacity: 0.9; font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <h2>${t('core.subscriptionManager.redirectingToSubscription')}</h2>
+            <p>${t('core.subscriptionManager.pleaseWaitCheckout')}</p>
+          </div>
+        </body>
+      </html>
+    `)
+
+    try {
+      const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+      if (checkoutURL.data.status === 'error') {
+        showToast('error', `Subscription checkout failed: ${checkoutURL.data.message || checkoutURL.data.data || 'Unknown error'}`)
+        popup.close()
+        checkoutLoading.value = false
+        
+        return
+      }
+
+      fiatCheckoutURL.value = checkoutURL.data.data
+      checkoutLoading.value = false
+
+      paymentMethod.value = 'Stripe Subscription'
+      paymentAmount.value = finalPrice
+
+      popup.location.href = checkoutURL.data.data
+      popup.focus()
+
+      startPaymentMonitoring()
+      showToast('info', 'Stripe subscription checkout opened. Complete payment in the new window.')
+    } catch (error) {
+      console.error('Subscription API error:', error)
+      popup.close()
+      showToast('error', t('core.subscriptionManager.subscriptionCheckoutFailed'))
+      checkoutLoading.value = false
+    }
+  } catch (error) {
+    console.error('Subscription checkout network error:', error)
+    const errorMessage = error.response?.data?.message || error.response?.data?.data || error.message || 'Connection failed'
+    showToast('error', `Subscription checkout error: ${errorMessage}`)
     checkoutLoading.value = false
   }
 }

@@ -1301,7 +1301,21 @@
         "loadError": "Échec du chargement des conditions d'utilisation. Veuillez visiter :",
         "loading": "Chargement des conditions d'utilisation...",
         "acceptFirst": "Acceptez d'abord les conditions d'utilisation pour importer"
-      }
+      },
+      "enableAutoRenewal": "Enable auto-renewal",
+      "autoRenewalDescription": "Automatically renew this app via Stripe subscription. You can cancel anytime from the billing portal.",
+      "autoRenewalOnlyStripe": "Auto-renewal is only available with Stripe payments",
+      "autoRenewalEligiblePeriods": "Auto-renewal is available for 1 week, 2 weeks, 1, 3, 6, or 12 month periods",
+      "loadingSubscriptionCheckout": "Loading subscription checkout...",
+      "redirectingToSubscription": "Redirecting to Stripe subscription...",
+      "subscriptionCheckoutFailed": "Failed to create subscription checkout",
+      "emailRequiredForSubscription": "Enter your email address for billing:",
+      "autoRenewing": "Auto-renewing",
+      "paymentIssue": "Payment issue",
+      "manageBilling": "Manage Billing",
+      "manageBillingDescription": "Manage your subscriptions and billing through the Stripe Customer Portal",
+      "billingPortalFailed": "Failed to open billing portal",
+      "billingPlan": "Billing Plan"
     },
     "tosDialog": {
       "loading": "Chargement des conditions d'utilisation..."
