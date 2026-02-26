@@ -1898,7 +1898,7 @@
                                     {{ output.status === 'success' ? 'mdi-check-circle' : output.status === 'error' ? 'mdi-close-circle' : output.status === 'warning' ? 'mdi-alert' : 'mdi-information' }}
                                   </VIcon>
                                 </template>
-                                <VListItemTitle class="text-body-2">
+                                <VListItemTitle class="text-body-2" style="white-space: normal; overflow: visible; text-overflow: unset;">
                                   {{ output.message }}
                                 </VListItemTitle>
                               </VListItem>
@@ -6083,21 +6083,6 @@ const getResultStatus = result => {
   return 'info'
 }
 
-// Key milestone patterns to show in the UI (everything else is filtered out)
-const MILESTONE_PATTERNS = [
-  /^Running initial checks/i,
-  /^Pulling component/i,
-  /^Creating component/i,
-  /^Starting component/i,
-  /^Checking Orbit deployment/i,
-  /^Checking Flux App network/i,
-]
-
-// Check if a status message is a key milestone worth displaying
-const isMilestone = message => {
-  if (!message) return false
-  return MILESTONE_PATTERNS.some(pattern => pattern.test(message))
-}
 
 // Extract complete JSON objects from a buffer of concatenated JSON text.
 // Returns { objects: [...parsed], remainder: "leftover text" }
@@ -6142,15 +6127,12 @@ const extractJsonObjects = buffer => {
 // Streaming fetch for testappinstall.
 // Uses Fetch API + ReadableStream because axios/XHR fail with ERR_HTTP2_PROTOCOL_ERROR.
 // Calls onResult(parsedObject) for each JSON object as it arrives in real time.
-const fetchTestAppInstall = (zelidauth, hash, onResult) => {
+// Pass an AbortController so the caller can abort the stream (e.g. on error).
+const fetchTestAppInstall = (zelidauth, hash, onResult, controller) => {
   const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
   const url = `${baseURL}/apps/testappinstall/${hash}`
 
-  console.log('[orbit-test] fetch request to:', url)
-
-  const controller = new AbortController()
   const hardTimeout = setTimeout(() => {
-    console.log('[orbit-test] fetch hard timeout (5 min) — aborting')
     controller.abort()
   }, 300000)
 
@@ -6160,8 +6142,6 @@ const fetchTestAppInstall = (zelidauth, hash, onResult) => {
     signal: controller.signal,
   })
     .then(response => {
-      console.log('[orbit-test] fetch response status:', response.status)
-
       if (!response.body) {
         clearTimeout(hardTimeout)
         throw new Error(`HTTP ${response.status}: no response body`)
@@ -6179,7 +6159,6 @@ const fetchTestAppInstall = (zelidauth, hash, onResult) => {
             // Flush any remaining complete objects in buffer
             const { objects } = extractJsonObjects(buffer)
             objects.forEach(obj => { totalObjects++; onResult(obj) })
-            console.log('[orbit-test] fetch stream done, total objects:', totalObjects)
 
             return
           }
@@ -6197,7 +6176,6 @@ const fetchTestAppInstall = (zelidauth, hash, onResult) => {
           // Flush whatever we can parse from buffer before erroring
           const { objects } = extractJsonObjects(buffer)
           objects.forEach(obj => { totalObjects++; onResult(obj) })
-          console.log('[orbit-test] fetch stream error after', totalObjects, 'objects. Error:', streamErr.message)
           if (totalObjects === 0) throw streamErr
           // If we got objects, swallow the error — we have data
         })
@@ -6206,7 +6184,8 @@ const fetchTestAppInstall = (zelidauth, hash, onResult) => {
     })
     .catch(err => {
       clearTimeout(hardTimeout)
-      console.error('[orbit-test] fetch error:', err.message)
+      // Abort errors are expected (we abort on error result) — don't rethrow
+      if (err.name === 'AbortError') return
       throw err
     })
 }
@@ -6216,8 +6195,6 @@ const testAppInstall = async () => {
   if (!registrationHash.value) {
     return
   }
-
-  console.log('[orbit-test] === START testAppInstall ===')
 
   // Reset test state
   testError.value = false
@@ -6233,36 +6210,20 @@ const testAppInstall = async () => {
 
     await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 0)
 
-    console.log('[orbit-test] Starting fetch request...')
+    const fetchController = new AbortController()
 
-    // Stream results in real time — only milestones and errors reach the UI
+    // Stream results — only errors reach the UI
     await fetchTestAppInstall(zelidauth, registrationHash.value, result => {
-      const message = getResultMessage(result)
-      const status = getResultStatus(result)
-
-      if (status === 'error') {
+      if (getResultStatus(result) === 'error') {
         hasErrors = true
         testOutput.value.push({
           status: 'error',
-          message: getOrbitErrorMessage(message),
+          message: getOrbitErrorMessage(getResultMessage(result)),
           timestamp: new Date().toISOString(),
         })
-      } else if (status === 'success') {
-        testOutput.value.push({
-          status: 'success',
-          message,
-          timestamp: new Date().toISOString(),
-        })
-      } else if (isMilestone(message)) {
-        testOutput.value.push({
-          status: 'info',
-          message,
-          timestamp: new Date().toISOString(),
-        })
+        fetchController.abort()
       }
-    })
-
-    console.log('[orbit-test] Stream complete, hasErrors:', hasErrors)
+    }, fetchController)
 
     if (hasErrors) {
       testError.value = true
@@ -6274,12 +6235,10 @@ const testAppInstall = async () => {
       showToast('success', t('core.subscriptionManager.testPassedReady'))
     }
   } catch (error) {
-    console.error('[orbit-test] CATCH:', error.message)
     await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 0)
     testError.value = true
     showToast('error', t('core.subscriptionManager.testInstallationFailed'))
   } finally {
-    console.log('[orbit-test] === DONE === testError:', testError.value)
     testRunning.value = false
     testFinished.value = true
 
