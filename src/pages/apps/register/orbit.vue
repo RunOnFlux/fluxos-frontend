@@ -6083,11 +6083,139 @@ const getResultStatus = result => {
   return 'info'
 }
 
-// Test app installation — same pattern as SubscriptionManager (Docker deployments)
+// Make XHR-based test request — axios hangs on this endpoint because the server
+// streams chunked responses and doesn't cleanly close the connection for long-running
+// orbit tests. XHR lets us read partial data via onreadystatechange as it arrives.
+const xhrTestAppInstall = (zelidauth, hash) => {
+  return new Promise((resolve, reject) => {
+    const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+    const url = `${baseURL}/apps/testappinstall/${hash}`
+    const xhr = new XMLHttpRequest()
+
+    let lastLength = 0
+    let staleTimer = null
+
+    // If no new data arrives for 30 seconds after we've received some data,
+    // consider the response complete (server didn't close connection cleanly)
+    const resetStaleTimer = () => {
+      if (staleTimer) clearTimeout(staleTimer)
+      if (lastLength > 0) {
+        staleTimer = setTimeout(() => {
+          console.log('[orbit-test] XHR stale timeout — resolving with data received so far')
+          xhr.abort()
+          resolve(xhr.responseText)
+        }, 30000)
+      }
+    }
+
+    xhr.open('GET', url, true)
+    xhr.setRequestHeader('zelidauth', zelidauth)
+    xhr.timeout = 300000 // 5 min hard timeout
+
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 3) {
+        // LOADING — data is arriving
+        const newLength = xhr.responseText.length
+        if (newLength > lastLength) {
+          console.log('[orbit-test] XHR chunk received, total bytes:', newLength)
+          lastLength = newLength
+          resetStaleTimer()
+        }
+      }
+      if (xhr.readyState === 4) {
+        if (staleTimer) clearTimeout(staleTimer)
+        if (xhr.status >= 200 && xhr.status < 300) {
+          console.log('[orbit-test] XHR complete, status:', xhr.status, 'bytes:', xhr.responseText.length)
+          resolve(xhr.responseText)
+        } else {
+          console.log('[orbit-test] XHR error, status:', xhr.status)
+          reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`))
+        }
+      }
+    }
+
+    xhr.onerror = () => {
+      if (staleTimer) clearTimeout(staleTimer)
+      // If we have data, resolve with it — the "error" is likely just a connection close
+      if (lastLength > 0) {
+        console.log('[orbit-test] XHR onerror but have data, resolving with', lastLength, 'bytes')
+        resolve(xhr.responseText)
+      } else {
+        reject(new Error('Network Error'))
+      }
+    }
+
+    xhr.ontimeout = () => {
+      if (staleTimer) clearTimeout(staleTimer)
+      if (lastLength > 0) {
+        console.log('[orbit-test] XHR timeout but have data, resolving with', lastLength, 'bytes')
+        resolve(xhr.responseText)
+      } else {
+        reject(new Error('Request timed out'))
+      }
+    }
+
+    xhr.send()
+  })
+}
+
+// Parse the raw response text from testappinstall
+const parseTestResponse = rawText => {
+  console.log('[orbit-test] parseTestResponse input length:', rawText.length)
+  console.log('[orbit-test] parseTestResponse first 500 chars:', rawText.substring(0, 500))
+
+  // Try parsing as a JSON wrapper first: { "status": "success", "data": "..." }
+  try {
+    const wrapper = JSON.parse(rawText)
+    console.log('[orbit-test] Parsed as JSON wrapper, status:', wrapper.status)
+
+    if (wrapper.status === 'error') {
+      return { isError: true, errorMessage: wrapper.data?.message || wrapper.data || 'Unknown error', results: [] }
+    }
+
+    if (wrapper.status === 'success' && wrapper.data) {
+      const results = parseConcatenatedJson(wrapper.data)
+
+      return { isError: false, errorMessage: null, results }
+    }
+
+    return { isError: false, errorMessage: null, results: [wrapper] }
+  } catch {
+    // Not a JSON wrapper — raw concatenated JSON
+    console.log('[orbit-test] Not a JSON wrapper, parsing as concatenated JSON')
+    const results = parseConcatenatedJson(rawText)
+
+    return { isError: false, errorMessage: null, results }
+  }
+}
+
+// Parse concatenated JSON objects: {...}{...}{...} or {...}\n{...}\n{...}
+const parseConcatenatedJson = rawData => {
+  if (!rawData || typeof rawData !== 'string') return []
+
+  const trimmed = rawData.trim()
+  if (trimmed.length === 0) return []
+
+  try {
+    const outputText = trimmed.replace(/}\s*{/g, '},{')
+    if (outputText.startsWith('{') || outputText.startsWith('[')) {
+      const parsed = JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
+      console.log('[orbit-test] parseConcatenatedJson: parsed', parsed.length, 'objects')
+
+      return parsed
+    }
+
+    return [{ status: 'info', message: rawData }]
+  } catch (e) {
+    console.warn('[orbit-test] parseConcatenatedJson failed:', e.message)
+
+    return [{ status: 'info', message: rawData }]
+  }
+}
+
+// Test app installation
 const testAppInstall = async () => {
   if (!registrationHash.value) {
-    console.log('[orbit-test] No registration hash, skipping test')
-
     return
   }
 
@@ -6103,126 +6231,83 @@ const testAppInstall = async () => {
 
   try {
     const zelidauth = localStorage.getItem('zelidauth')
-    console.log('[orbit-test] zelidauth present:', !!zelidauth)
 
-    // Simulate streaming by breaking the test into phases
     await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
     await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
     await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
 
-    console.log('[orbit-test] Calling AppsService.testAppInstall...')
+    console.log('[orbit-test] Starting XHR request...')
 
-    const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
+    // Use XHR instead of axios — axios hangs on this endpoint because the server
+    // streams chunks and doesn't close the connection cleanly for orbit tests.
+    // XHR can read partial data and resolve when data stops arriving.
+    const rawText = await xhrTestAppInstall(zelidauth, registrationHash.value)
 
-    console.log('[orbit-test] API call resolved!')
-    console.log('[orbit-test] response.data:', response.data)
-    console.log('[orbit-test] response.data.status:', response.data?.status)
-    console.log('[orbit-test] response.data.data type:', typeof response.data?.data)
-    console.log('[orbit-test] response.data.data length:', typeof response.data?.data === 'string' ? response.data.data.length : 'N/A')
-    console.log('[orbit-test] response.data.data (first 500 chars):', typeof response.data?.data === 'string' ? response.data.data.substring(0, 500) : response.data?.data)
+    console.log('[orbit-test] Got response, length:', rawText.length)
 
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
-    if (response.data?.status === 'error') {
-      console.log('[orbit-test] Top-level status is error')
-      const errorMsg = getOrbitErrorMessage(response.data.data?.message || response.data.data || 'Unknown error')
-      await streamTestPhase(errorMsg, 'error', 200)
+    const { isError, errorMessage, results } = parseTestResponse(rawText)
+
+    if (isError) {
+      const msg = getOrbitErrorMessage(errorMessage)
+      await streamTestPhase(msg, 'error', 200)
       testError.value = true
       showToast('error', t('core.subscriptionManager.testInstallationFailed'))
 
       return
     }
 
-    // Process the actual test results
-    if (response.data?.status === 'success' && response.data?.data) {
-      console.log('[orbit-test] Top-level status is success, parsing inner data...')
-      await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
+    if (results.length === 0) {
+      await streamTestPhase('No test output received', 'error', 200)
+      testError.value = true
+      showToast('error', t('core.subscriptionManager.testInstallationFailed'))
 
-      const rawData = response.data.data
-      let parsedResults = []
+      return
+    }
 
-      if (typeof rawData === 'string' && rawData.trim().length > 0) {
-        try {
-          // Handle concatenated JSON objects separated by optional whitespace/newlines
-          const outputText = rawData.replace(/}\s*{/g, '},{')
-          console.log('[orbit-test] After regex replace (first 500 chars):', outputText.substring(0, 500))
+    await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
 
-          if (outputText.trim().startsWith('{') || outputText.trim().startsWith('[')) {
-            parsedResults = JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
-          } else {
-            parsedResults = [{ status: 'info', message: rawData }]
-          }
-        } catch (jsonError) {
-          console.warn('[orbit-test] Failed to parse JSON output:', jsonError)
-          parsedResults = [{ status: 'info', message: rawData }]
-        }
-      } else {
-        console.log('[orbit-test] rawData is not a non-empty string. type:', typeof rawData, 'value:', rawData)
-      }
+    // Stream the parsed results
+    let hasErrors = false
+    let hasWarnings = false
 
-      console.log('[orbit-test] parsedResults count:', parsedResults.length)
-      console.log('[orbit-test] parsedResults:', JSON.stringify(parsedResults).substring(0, 1000))
+    for (const result of results) {
+      const message = getResultMessage(result)
+      const status = getResultStatus(result)
+      await streamTestPhase(
+        status === 'error' ? getOrbitErrorMessage(message) : message,
+        status,
+        200,
+      )
+      if (status === 'error') hasErrors = true
+      if (status === 'warning') hasWarnings = true
+    }
 
-      // Stream the parsed results with proper message extraction
-      for (const result of parsedResults) {
-        const message = getResultMessage(result)
-        const status = getResultStatus(result)
-        console.log('[orbit-test] Streaming result:', { status, message: message?.substring?.(0, 100) || message })
-        await streamTestPhase(
-          status === 'error' ? getOrbitErrorMessage(message) : message,
-          status,
-          200,
-        )
-      }
+    console.log('[orbit-test] Final status:', { hasErrors, hasWarnings, resultCount: results.length })
 
-      // Determine final status
-      const hasErrors = parsedResults.some(r => r.status === 'error')
-      const hasWarnings = parsedResults.some(r => r.status === 'warning')
-      console.log('[orbit-test] Final status:', { hasErrors, hasWarnings })
-
-      if (hasErrors) {
-        await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
-        testError.value = true
-        showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
-      } else if (hasWarnings) {
-        await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
-        testError.value = false
-        logsExpanded.value = false
-        showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
-      } else {
-        await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
-        testError.value = false
-        logsExpanded.value = false
-        showToast('success', t('core.subscriptionManager.testPassedReady'))
-      }
-    } else {
-      console.log('[orbit-test] Unexpected response structure:', {
-        status: response.data?.status,
-        hasData: !!response.data?.data,
-        dataType: typeof response.data?.data,
-        fullResponse: JSON.stringify(response.data)?.substring(0, 500),
-      })
-      // Handle other success cases
-      await streamTestPhase(t('core.subscriptionManager.testInstallationCompletedSuccessfully'), 'success', 300)
+    if (hasErrors) {
+      await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
+      testError.value = true
+      showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
+    } else if (hasWarnings) {
+      await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
       testError.value = false
       logsExpanded.value = false
-      showToast('success', t('core.subscriptionManager.testCompletedReady'))
+      showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
+    } else {
+      await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
+      testError.value = false
+      logsExpanded.value = false
+      showToast('success', t('core.subscriptionManager.testPassedReady'))
     }
   } catch (error) {
-    console.error('[orbit-test] CATCH block hit!')
-    console.error('[orbit-test] error.name:', error.name)
-    console.error('[orbit-test] error.message:', error.message)
-    console.error('[orbit-test] error.code:', error.code)
-    console.error('[orbit-test] error.response?.status:', error.response?.status)
-    console.error('[orbit-test] error.response?.data:', error.response?.data)
-    console.error('[orbit-test] Full error:', error)
+    console.error('[orbit-test] CATCH:', error.message)
     await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 200)
     testError.value = true
     showToast('error', t('core.subscriptionManager.testInstallationFailed'))
   } finally {
-    console.log('[orbit-test] === FINALLY block ===')
-    console.log('[orbit-test] testError:', testError.value)
-    console.log('[orbit-test] testOutput count:', testOutput.value.length)
+    console.log('[orbit-test] === DONE === testError:', testError.value)
     testRunning.value = false
     testFinished.value = true
 
