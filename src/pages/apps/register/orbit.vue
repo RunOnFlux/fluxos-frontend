@@ -6086,8 +6086,13 @@ const getResultStatus = result => {
 // Test app installation — same pattern as SubscriptionManager (Docker deployments)
 const testAppInstall = async () => {
   if (!registrationHash.value) {
+    console.log('[orbit-test] No registration hash, skipping test')
+
     return
   }
+
+  console.log('[orbit-test] === START testAppInstall ===')
+  console.log('[orbit-test] registrationHash:', registrationHash.value)
 
   // Reset test state
   testError.value = false
@@ -6098,22 +6103,28 @@ const testAppInstall = async () => {
 
   try {
     const zelidauth = localStorage.getItem('zelidauth')
+    console.log('[orbit-test] zelidauth present:', !!zelidauth)
 
     // Simulate streaming by breaking the test into phases
     await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
     await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
     await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
 
-    console.log('Testing with hash:', registrationHash.value)
+    console.log('[orbit-test] Calling AppsService.testAppInstall...')
 
     const response = await AppsService.testAppInstall(zelidauth, registrationHash.value)
 
+    console.log('[orbit-test] API call resolved!')
+    console.log('[orbit-test] response.data:', response.data)
+    console.log('[orbit-test] response.data.status:', response.data?.status)
+    console.log('[orbit-test] response.data.data type:', typeof response.data?.data)
+    console.log('[orbit-test] response.data.data length:', typeof response.data?.data === 'string' ? response.data.data.length : 'N/A')
+    console.log('[orbit-test] response.data.data (first 500 chars):', typeof response.data?.data === 'string' ? response.data.data.substring(0, 500) : response.data?.data)
+
     await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
 
-    // Check the response status first
-    console.log('Test response:', response.data)
-
     if (response.data?.status === 'error') {
+      console.log('[orbit-test] Top-level status is error')
       const errorMsg = getOrbitErrorMessage(response.data.data?.message || response.data.data || 'Unknown error')
       await streamTestPhase(errorMsg, 'error', 200)
       testError.value = true
@@ -6124,6 +6135,7 @@ const testAppInstall = async () => {
 
     // Process the actual test results
     if (response.data?.status === 'success' && response.data?.data) {
+      console.log('[orbit-test] Top-level status is success, parsing inner data...')
       await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
 
       const rawData = response.data.data
@@ -6133,21 +6145,29 @@ const testAppInstall = async () => {
         try {
           // Handle concatenated JSON objects separated by optional whitespace/newlines
           const outputText = rawData.replace(/}\s*{/g, '},{')
+          console.log('[orbit-test] After regex replace (first 500 chars):', outputText.substring(0, 500))
+
           if (outputText.trim().startsWith('{') || outputText.trim().startsWith('[')) {
             parsedResults = JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
           } else {
             parsedResults = [{ status: 'info', message: rawData }]
           }
         } catch (jsonError) {
-          console.warn('Failed to parse JSON output:', jsonError)
+          console.warn('[orbit-test] Failed to parse JSON output:', jsonError)
           parsedResults = [{ status: 'info', message: rawData }]
         }
+      } else {
+        console.log('[orbit-test] rawData is not a non-empty string. type:', typeof rawData, 'value:', rawData)
       }
+
+      console.log('[orbit-test] parsedResults count:', parsedResults.length)
+      console.log('[orbit-test] parsedResults:', JSON.stringify(parsedResults).substring(0, 1000))
 
       // Stream the parsed results with proper message extraction
       for (const result of parsedResults) {
         const message = getResultMessage(result)
         const status = getResultStatus(result)
+        console.log('[orbit-test] Streaming result:', { status, message: message?.substring?.(0, 100) || message })
         await streamTestPhase(
           status === 'error' ? getOrbitErrorMessage(message) : message,
           status,
@@ -6158,6 +6178,7 @@ const testAppInstall = async () => {
       // Determine final status
       const hasErrors = parsedResults.some(r => r.status === 'error')
       const hasWarnings = parsedResults.some(r => r.status === 'warning')
+      console.log('[orbit-test] Final status:', { hasErrors, hasWarnings })
 
       if (hasErrors) {
         await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
@@ -6175,6 +6196,12 @@ const testAppInstall = async () => {
         showToast('success', t('core.subscriptionManager.testPassedReady'))
       }
     } else {
+      console.log('[orbit-test] Unexpected response structure:', {
+        status: response.data?.status,
+        hasData: !!response.data?.data,
+        dataType: typeof response.data?.data,
+        fullResponse: JSON.stringify(response.data)?.substring(0, 500),
+      })
       // Handle other success cases
       await streamTestPhase(t('core.subscriptionManager.testInstallationCompletedSuccessfully'), 'success', 300)
       testError.value = false
@@ -6182,11 +6209,20 @@ const testAppInstall = async () => {
       showToast('success', t('core.subscriptionManager.testCompletedReady'))
     }
   } catch (error) {
-    console.error('Test error:', error)
+    console.error('[orbit-test] CATCH block hit!')
+    console.error('[orbit-test] error.name:', error.name)
+    console.error('[orbit-test] error.message:', error.message)
+    console.error('[orbit-test] error.code:', error.code)
+    console.error('[orbit-test] error.response?.status:', error.response?.status)
+    console.error('[orbit-test] error.response?.data:', error.response?.data)
+    console.error('[orbit-test] Full error:', error)
     await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 200)
     testError.value = true
     showToast('error', t('core.subscriptionManager.testInstallationFailed'))
   } finally {
+    console.log('[orbit-test] === FINALLY block ===')
+    console.log('[orbit-test] testError:', testError.value)
+    console.log('[orbit-test] testOutput count:', testOutput.value.length)
     testRunning.value = false
     testFinished.value = true
 
