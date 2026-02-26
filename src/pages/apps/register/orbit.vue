@@ -6083,12 +6083,66 @@ const getResultStatus = result => {
   return 'info'
 }
 
-// Fetch API + ReadableStream test request.
-// Axios and XHR both fail on this endpoint with ERR_HTTP2_PROTOCOL_ERROR because
-// the server streams chunked data over HTTP/2 and the connection errors out.
-// ReadableStream reads chunks incrementally — so even when the HTTP/2 stream
-// errors partway through, we've already captured the data that arrived.
-const fetchTestAppInstall = (zelidauth, hash) => {
+// Key milestone patterns to show in the UI (everything else is filtered out)
+const MILESTONE_PATTERNS = [
+  /^Running initial checks/i,
+  /^Pulling component/i,
+  /^Creating component/i,
+  /^Starting component/i,
+  /^Checking Orbit deployment/i,
+  /^Checking Flux App network/i,
+]
+
+// Check if a status message is a key milestone worth displaying
+const isMilestone = message => {
+  if (!message) return false
+  return MILESTONE_PATTERNS.some(pattern => pattern.test(message))
+}
+
+// Extract complete JSON objects from a buffer of concatenated JSON text.
+// Returns { objects: [...parsed], remainder: "leftover text" }
+const extractJsonObjects = buffer => {
+  const objects = []
+  let i = 0
+
+  while (i < buffer.length) {
+    // Skip whitespace between objects
+    while (i < buffer.length && /\s/.test(buffer[i])) i++
+    if (i >= buffer.length || buffer[i] !== '{') break
+
+    // Find matching closing brace (simple depth counting)
+    let depth = 0
+    let inString = false
+    let escape = false
+    let j = i
+
+    for (; j < buffer.length; j++) {
+      const ch = buffer[j]
+      if (escape) { escape = false; continue }
+      if (ch === '\\' && inString) { escape = true; continue }
+      if (ch === '"') { inString = !inString; continue }
+      if (inString) continue
+      if (ch === '{') depth++
+      if (ch === '}') { depth--; if (depth === 0) { j++; break } }
+    }
+
+    if (depth !== 0) break // Incomplete object — keep in remainder
+
+    try {
+      objects.push(JSON.parse(buffer.slice(i, j)))
+    } catch {
+      // Skip malformed object
+    }
+    i = j
+  }
+
+  return { objects, remainder: buffer.slice(i) }
+}
+
+// Streaming fetch for testappinstall.
+// Uses Fetch API + ReadableStream because axios/XHR fail with ERR_HTTP2_PROTOCOL_ERROR.
+// Calls onResult(parsedObject) for each JSON object as it arrives in real time.
+const fetchTestAppInstall = (zelidauth, hash, onResult) => {
   const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
   const url = `${baseURL}/apps/testappinstall/${hash}`
 
@@ -6098,7 +6152,7 @@ const fetchTestAppInstall = (zelidauth, hash) => {
   const hardTimeout = setTimeout(() => {
     console.log('[orbit-test] fetch hard timeout (5 min) — aborting')
     controller.abort()
-  }, 300000) // 5 min hard timeout
+  }, 300000)
 
   return fetch(url, {
     method: 'GET',
@@ -6115,31 +6169,37 @@ const fetchTestAppInstall = (zelidauth, hash) => {
 
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
-      let accumulated = ''
+      let buffer = ''
+      let totalObjects = 0
 
       const read = () =>
         reader.read().then(({ done, value }) => {
           if (done) {
             clearTimeout(hardTimeout)
-            console.log('[orbit-test] fetch stream done, total bytes:', accumulated.length)
+            // Flush any remaining complete objects in buffer
+            const { objects } = extractJsonObjects(buffer)
+            objects.forEach(obj => { totalObjects++; onResult(obj) })
+            console.log('[orbit-test] fetch stream done, total objects:', totalObjects)
 
-            return accumulated
+            return
           }
 
-          const chunk = decoder.decode(value, { stream: true })
-          accumulated += chunk
-          console.log('[orbit-test] fetch chunk, bytes:', chunk.length, 'total:', accumulated.length)
+          buffer += decoder.decode(value, { stream: true })
+
+          // Extract and emit complete JSON objects from the buffer
+          const { objects, remainder } = extractJsonObjects(buffer)
+          buffer = remainder
+          objects.forEach(obj => { totalObjects++; onResult(obj) })
 
           return read()
         }).catch(streamErr => {
           clearTimeout(hardTimeout)
-          // Stream error (e.g. ERR_HTTP2_PROTOCOL_ERROR) — but we may have partial data
-          if (accumulated.length > 0) {
-            console.log('[orbit-test] fetch stream error but have', accumulated.length, 'bytes. Error:', streamErr.message)
-
-            return accumulated
-          }
-          throw streamErr
+          // Flush whatever we can parse from buffer before erroring
+          const { objects } = extractJsonObjects(buffer)
+          objects.forEach(obj => { totalObjects++; onResult(obj) })
+          console.log('[orbit-test] fetch stream error after', totalObjects, 'objects. Error:', streamErr.message)
+          if (totalObjects === 0) throw streamErr
+          // If we got objects, swallow the error — we have data
         })
 
       return read()
@@ -6151,60 +6211,6 @@ const fetchTestAppInstall = (zelidauth, hash) => {
     })
 }
 
-// Parse the raw response text from testappinstall
-const parseTestResponse = rawText => {
-  console.log('[orbit-test] parseTestResponse input length:', rawText.length)
-  console.log('[orbit-test] parseTestResponse first 500 chars:', rawText.substring(0, 500))
-
-  // Try parsing as a JSON wrapper first: { "status": "success", "data": "..." }
-  try {
-    const wrapper = JSON.parse(rawText)
-    console.log('[orbit-test] Parsed as JSON wrapper, status:', wrapper.status)
-
-    if (wrapper.status === 'error') {
-      return { isError: true, errorMessage: wrapper.data?.message || wrapper.data || 'Unknown error', results: [] }
-    }
-
-    if (wrapper.status === 'success' && wrapper.data) {
-      const results = parseConcatenatedJson(wrapper.data)
-
-      return { isError: false, errorMessage: null, results }
-    }
-
-    return { isError: false, errorMessage: null, results: [wrapper] }
-  } catch {
-    // Not a JSON wrapper — raw concatenated JSON
-    console.log('[orbit-test] Not a JSON wrapper, parsing as concatenated JSON')
-    const results = parseConcatenatedJson(rawText)
-
-    return { isError: false, errorMessage: null, results }
-  }
-}
-
-// Parse concatenated JSON objects: {...}{...}{...} or {...}\n{...}\n{...}
-const parseConcatenatedJson = rawData => {
-  if (!rawData || typeof rawData !== 'string') return []
-
-  const trimmed = rawData.trim()
-  if (trimmed.length === 0) return []
-
-  try {
-    const outputText = trimmed.replace(/}\s*{/g, '},{')
-    if (outputText.startsWith('{') || outputText.startsWith('[')) {
-      const parsed = JSON.parse(outputText.startsWith('[') ? outputText : `[${outputText}]`)
-      console.log('[orbit-test] parseConcatenatedJson: parsed', parsed.length, 'objects')
-
-      return parsed
-    }
-
-    return [{ status: 'info', message: rawData }]
-  } catch (e) {
-    console.warn('[orbit-test] parseConcatenatedJson failed:', e.message)
-
-    return [{ status: 'info', message: rawData }]
-  }
-}
-
 // Test app installation
 const testAppInstall = async () => {
   if (!registrationHash.value) {
@@ -6212,7 +6218,6 @@ const testAppInstall = async () => {
   }
 
   console.log('[orbit-test] === START testAppInstall ===')
-  console.log('[orbit-test] registrationHash:', registrationHash.value)
 
   // Reset test state
   testError.value = false
@@ -6221,81 +6226,56 @@ const testAppInstall = async () => {
   testOutput.value = []
   logsExpanded.value = true
 
+  let hasErrors = false
+
   try {
     const zelidauth = localStorage.getItem('zelidauth')
 
-    await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 500)
-    await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
-    await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
+    await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 0)
 
     console.log('[orbit-test] Starting fetch request...')
 
-    // Use Fetch API + ReadableStream — axios and XHR both fail with
-    // ERR_HTTP2_PROTOCOL_ERROR on this streaming endpoint. ReadableStream
-    // reads chunks incrementally and recovers partial data on stream errors.
-    const rawText = await fetchTestAppInstall(zelidauth, registrationHash.value)
-
-    console.log('[orbit-test] Got response, length:', rawText.length)
-
-    await streamTestPhase(t('core.subscriptionManager.testProcessingResults'), 'info', 300)
-
-    const { isError, errorMessage, results } = parseTestResponse(rawText)
-
-    if (isError) {
-      const msg = getOrbitErrorMessage(errorMessage)
-      await streamTestPhase(msg, 'error', 200)
-      testError.value = true
-      showToast('error', t('core.subscriptionManager.testInstallationFailed'))
-
-      return
-    }
-
-    if (results.length === 0) {
-      await streamTestPhase('No test output received', 'error', 200)
-      testError.value = true
-      showToast('error', t('core.subscriptionManager.testInstallationFailed'))
-
-      return
-    }
-
-    await streamTestPhase(t('core.subscriptionManager.testAnalyzingResults'), 'info', 400)
-
-    // Stream the parsed results
-    let hasErrors = false
-    let hasWarnings = false
-
-    for (const result of results) {
+    // Stream results in real time — only milestones and errors reach the UI
+    await fetchTestAppInstall(zelidauth, registrationHash.value, result => {
       const message = getResultMessage(result)
       const status = getResultStatus(result)
-      await streamTestPhase(
-        status === 'error' ? getOrbitErrorMessage(message) : message,
-        status,
-        200,
-      )
-      if (status === 'error') hasErrors = true
-      if (status === 'warning') hasWarnings = true
-    }
 
-    console.log('[orbit-test] Final status:', { hasErrors, hasWarnings, resultCount: results.length })
+      if (status === 'error') {
+        hasErrors = true
+        testOutput.value.push({
+          status: 'error',
+          message: getOrbitErrorMessage(message),
+          timestamp: new Date().toISOString(),
+        })
+      } else if (status === 'success') {
+        testOutput.value.push({
+          status: 'success',
+          message,
+          timestamp: new Date().toISOString(),
+        })
+      } else if (isMilestone(message)) {
+        testOutput.value.push({
+          status: 'info',
+          message,
+          timestamp: new Date().toISOString(),
+        })
+      }
+    })
+
+    console.log('[orbit-test] Stream complete, hasErrors:', hasErrors)
 
     if (hasErrors) {
-      await streamTestPhase(t('core.subscriptionManager.testCompletedWithErrors'), 'error', 300)
       testError.value = true
       showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
-    } else if (hasWarnings) {
-      await streamTestPhase(t('core.subscriptionManager.testCompletedWithWarnings'), 'warning', 300)
-      testError.value = false
-      logsExpanded.value = false
-      showToast('warning', t('core.subscriptionManager.testWarningsReviewLogs'))
     } else {
-      await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 300)
+      await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 0)
       testError.value = false
       logsExpanded.value = false
       showToast('success', t('core.subscriptionManager.testPassedReady'))
     }
   } catch (error) {
     console.error('[orbit-test] CATCH:', error.message)
-    await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 200)
+    await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 0)
     testError.value = true
     showToast('error', t('core.subscriptionManager.testInstallationFailed'))
   } finally {
