@@ -6083,80 +6083,72 @@ const getResultStatus = result => {
   return 'info'
 }
 
-// Make XHR-based test request — axios hangs on this endpoint because the server
-// streams chunked responses and doesn't cleanly close the connection for long-running
-// orbit tests. XHR lets us read partial data via onreadystatechange as it arrives.
-const xhrTestAppInstall = (zelidauth, hash) => {
-  return new Promise((resolve, reject) => {
-    const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
-    const url = `${baseURL}/apps/testappinstall/${hash}`
-    const xhr = new XMLHttpRequest()
+// Fetch API + ReadableStream test request.
+// Axios and XHR both fail on this endpoint with ERR_HTTP2_PROTOCOL_ERROR because
+// the server streams chunked data over HTTP/2 and the connection errors out.
+// ReadableStream reads chunks incrementally — so even when the HTTP/2 stream
+// errors partway through, we've already captured the data that arrived.
+const fetchTestAppInstall = (zelidauth, hash) => {
+  const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+  const url = `${baseURL}/apps/testappinstall/${hash}`
 
-    let lastLength = 0
-    let staleTimer = null
+  console.log('[orbit-test] fetch request to:', url)
 
-    // If no new data arrives for 30 seconds after we've received some data,
-    // consider the response complete (server didn't close connection cleanly)
-    const resetStaleTimer = () => {
-      if (staleTimer) clearTimeout(staleTimer)
-      if (lastLength > 0) {
-        staleTimer = setTimeout(() => {
-          console.log('[orbit-test] XHR stale timeout — resolving with data received so far')
-          xhr.abort()
-          resolve(xhr.responseText)
-        }, 30000)
-      }
-    }
+  const controller = new AbortController()
+  const hardTimeout = setTimeout(() => {
+    console.log('[orbit-test] fetch hard timeout (5 min) — aborting')
+    controller.abort()
+  }, 300000) // 5 min hard timeout
 
-    xhr.open('GET', url, true)
-    xhr.setRequestHeader('zelidauth', zelidauth)
-    xhr.timeout = 300000 // 5 min hard timeout
-
-    xhr.onreadystatechange = () => {
-      if (xhr.readyState === 3) {
-        // LOADING — data is arriving
-        const newLength = xhr.responseText.length
-        if (newLength > lastLength) {
-          console.log('[orbit-test] XHR chunk received, total bytes:', newLength)
-          lastLength = newLength
-          resetStaleTimer()
-        }
-      }
-      if (xhr.readyState === 4) {
-        if (staleTimer) clearTimeout(staleTimer)
-        if (xhr.status >= 200 && xhr.status < 300) {
-          console.log('[orbit-test] XHR complete, status:', xhr.status, 'bytes:', xhr.responseText.length)
-          resolve(xhr.responseText)
-        } else {
-          console.log('[orbit-test] XHR error, status:', xhr.status)
-          reject(new Error(`HTTP ${xhr.status}: ${xhr.statusText}`))
-        }
-      }
-    }
-
-    xhr.onerror = () => {
-      if (staleTimer) clearTimeout(staleTimer)
-      // If we have data, resolve with it — the "error" is likely just a connection close
-      if (lastLength > 0) {
-        console.log('[orbit-test] XHR onerror but have data, resolving with', lastLength, 'bytes')
-        resolve(xhr.responseText)
-      } else {
-        reject(new Error('Network Error'))
-      }
-    }
-
-    xhr.ontimeout = () => {
-      if (staleTimer) clearTimeout(staleTimer)
-      if (lastLength > 0) {
-        console.log('[orbit-test] XHR timeout but have data, resolving with', lastLength, 'bytes')
-        resolve(xhr.responseText)
-      } else {
-        reject(new Error('Request timed out'))
-      }
-    }
-
-    xhr.send()
+  return fetch(url, {
+    method: 'GET',
+    headers: { zelidauth },
+    signal: controller.signal,
   })
+    .then(response => {
+      console.log('[orbit-test] fetch response status:', response.status)
+
+      if (!response.body) {
+        clearTimeout(hardTimeout)
+        throw new Error(`HTTP ${response.status}: no response body`)
+      }
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let accumulated = ''
+
+      const read = () =>
+        reader.read().then(({ done, value }) => {
+          if (done) {
+            clearTimeout(hardTimeout)
+            console.log('[orbit-test] fetch stream done, total bytes:', accumulated.length)
+
+            return accumulated
+          }
+
+          const chunk = decoder.decode(value, { stream: true })
+          accumulated += chunk
+          console.log('[orbit-test] fetch chunk, bytes:', chunk.length, 'total:', accumulated.length)
+
+          return read()
+        }).catch(streamErr => {
+          clearTimeout(hardTimeout)
+          // Stream error (e.g. ERR_HTTP2_PROTOCOL_ERROR) — but we may have partial data
+          if (accumulated.length > 0) {
+            console.log('[orbit-test] fetch stream error but have', accumulated.length, 'bytes. Error:', streamErr.message)
+
+            return accumulated
+          }
+          throw streamErr
+        })
+
+      return read()
+    })
+    .catch(err => {
+      clearTimeout(hardTimeout)
+      console.error('[orbit-test] fetch error:', err.message)
+      throw err
+    })
 }
 
 // Parse the raw response text from testappinstall
@@ -6236,12 +6228,12 @@ const testAppInstall = async () => {
     await streamTestPhase(t('core.subscriptionManager.testConnectingNetwork'), 'info', 800)
     await streamTestPhase(t('core.subscriptionManager.testValidatingImage'), 'info', 1000)
 
-    console.log('[orbit-test] Starting XHR request...')
+    console.log('[orbit-test] Starting fetch request...')
 
-    // Use XHR instead of axios — axios hangs on this endpoint because the server
-    // streams chunks and doesn't close the connection cleanly for orbit tests.
-    // XHR can read partial data and resolve when data stops arriving.
-    const rawText = await xhrTestAppInstall(zelidauth, registrationHash.value)
+    // Use Fetch API + ReadableStream — axios and XHR both fail with
+    // ERR_HTTP2_PROTOCOL_ERROR on this streaming endpoint. ReadableStream
+    // reads chunks incrementally and recovers partial data on stream errors.
+    const rawText = await fetchTestAppInstall(zelidauth, registrationHash.value)
 
     console.log('[orbit-test] Got response, length:', rawText.length)
 
