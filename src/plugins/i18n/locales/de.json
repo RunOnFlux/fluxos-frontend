@@ -978,7 +978,8 @@
       "instancesCount": "{count} Instanz | {count} Instanzen",
       "instancesWarningTwo": "Für ein dezentrales Netzwerk werden mindestens 3 Instanzen empfohlen.",
       "instancesWarningOne": "Für ein dezentrales Netzwerk werden mindestens 3 Instanzen empfohlen. Bei nur einer Instanz kann es bei Ihrer App zu einer Ausfallzeit von einigen Minuten kommen, wenn der Knoten, auf dem die App ausgeführt wird, neu gestartet oder heruntergefahren wird.",
-      "instancesWarningSyncthing": "Die Mindestinstanzen für Apps mit dezentralem persistenten Speicher betragen 3. Um weniger Instanzen zu verwenden, deaktivieren Sie die Datensynchronisierung in den Volume-Pfadeinstellungen.",
+      "instancesWarningSyncthing": "Die Mindestinstanzen für Apps mit dezentralem persistenten Speicher betragen 2. Um weniger Instanzen zu verwenden, deaktivieren Sie die Datensynchronisierung in den Volume-Pfadeinstellungen.",
+      "instancesAutoAdjusted": "Instanzen automatisch von {from} auf {to} angepasst, da die Datensynchronisierung mindestens {to} Instanzen erfordert.",
       "instancesWarningLegacy": "Die Reduzierung von Instanzen unter 3 ist nur für Apps mit Spezifikationsversion 8 oder höher verfügbar. Aktualisieren Sie Ihre App-Spezifikation, um diese Funktion zu aktivieren.",
       "period": "Zeitraum",
       "renewal": "Erneuerung",
@@ -3503,8 +3504,9 @@
       "validation": {
         "instancesRequired": "Instanzen sind erforderlich",
         "instancesMin": "Mindestens 1 Instanz erforderlich",
-        "instancesMinSync": "Bei aktivierter Datensynchronisierung sind mindestens 3 Instanzen erforderlich",
-        "instancesMinSyncInfo": "Die Mindestinstanzen für Apps mit dezentralem persistenten Speicher betragen 3. Um weniger Instanzen zu verwenden, deaktivieren Sie die Datensynchronisierung.",
+        "instancesMinSync": "Mindestens 2 Instanzen erforderlich, wenn die Datensynchronisierung aktiviert ist",
+        "instancesMinSyncInfo": "Die Mindestinstanzen für Apps mit dezentralem persistenten Speicher betragen 2. Um weniger Instanzen zu verwenden, deaktivieren Sie die Datensynchronisierung.",
+        "instancesAutoAdjusted": "Instanzen automatisch von {from} auf {to} angepasst, da die Datensynchronisierung mindestens {to} Instanzen erfordert.",
         "instancesWarningOne": "Für ein dezentrales Netzwerk werden mindestens 3 Instanzen empfohlen. Bei nur einer Instanz kann es bei Ihrer App zu einer Ausfallzeit von einigen Minuten kommen, wenn der Knoten, auf dem die App ausgeführt wird, neu gestartet oder heruntergefahren wird.",
         "instancesWarningTwo": "Für ein dezentrales Netzwerk werden mindestens 3 Instanzen empfohlen.",
         "instancesMax": "Maximal 100 Instanzen zulässig"

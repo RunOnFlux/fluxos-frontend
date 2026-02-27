@@ -978,7 +978,8 @@
       "instancesCount": "{count} 个实例 | {count} 个实例",
       "instancesWarningTwo": "建议去中心化网络的最少实例数为 3 个。",
       "instancesWarningOne": "建议去中心化网络的最少实例数为 3 个。如果只有 1 个实例，如果运行应用程序的节点重新启动或关闭，您的应用程序可能会遇到几分钟的停机时间。",
-      "instancesWarningSyncthing": "具有去中心化持久存储的应用程序的最小实例数为 3。要使用更少的实例，请在卷路径设置中禁用数据同步。",
+      "instancesWarningSyncthing": "具有去中心化持久存储的应用程序的最小实例数为 2。要使用更少的实例，请在卷路径设置中禁用数据同步。",
+      "instancesAutoAdjusted": "由于数据同步需要至少 {to} 个实例，实例已自动从 {from} 调整为 {to}。",
       "instancesWarningLegacy": "将实例减少到 3 以下仅适用于规范版本 8 或更高版本的应用程序。更新您的应用程序规范以启用此功能。",
       "period": "时期",
       "renewal": "更新",
@@ -3502,8 +3503,9 @@
       "validation": {
         "instancesRequired": "需要实例",
         "instancesMin": "至少需要 1 个实例",
-        "instancesMinSync": "启用数据同步时至少需要3个实例",
-        "instancesMinSyncInfo": "具有去中心化持久存储的应用程序的最小实例数为 3。要使用更少的实例，请禁用数据同步。",
+        "instancesMinSync": "启用数据同步时至少需要2个实例",
+        "instancesMinSyncInfo": "具有去中心化持久存储的应用程序的最小实例数为 2。要使用更少的实例，请禁用数据同步。",
+        "instancesAutoAdjusted": "由于数据同步需要至少 {to} 个实例，实例已自动从 {from} 调整为 {to}。",
         "instancesWarningOne": "建议去中心化网络的最少实例数为 3 个。如果只有 1 个实例，如果运行应用程序的节点重新启动或关闭，您的应用程序可能会遇到几分钟的停机时间。",
         "instancesWarningTwo": "建议去中心化网络的最少实例数为 3 个。",
         "instancesMax": "最多允许 100 个实例"

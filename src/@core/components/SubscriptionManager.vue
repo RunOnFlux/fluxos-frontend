@@ -3602,14 +3602,14 @@ const shouldEnforceSyncthingMinimum = computed(() => {
 
 // Minimum instances:
 // - Legacy app updates (version < 8): always 3 (no reduction allowed)
-// - New apps or version >= 8 updates with syncthing: 3
+// - New apps or version >= 8 updates with syncthing: 2
 // - New apps or version >= 8 updates without syncthing: 1
 const minInstances = computed(() => {
   // Legacy apps cannot reduce below 3
   if (isLegacyAppUpdate.value) return 3
 
-  // For new apps or v8+ updates, syncthing enforces 3
-  if (shouldEnforceSyncthingMinimum.value) return 3
+  // For new apps or v8+ updates, syncthing enforces 2
+  if (shouldEnforceSyncthingMinimum.value) return 2
 
   // Otherwise allow down to 1
   return 1
@@ -5062,11 +5062,13 @@ watch(() => renewalOptions.value.length, newLength => {
   }
 })
 
-// Watch syncthing status - auto-adjust instances to minimum 3 when syncthing is enabled
+// Watch syncthing status - auto-adjust instances to minimum 2 when syncthing is enabled
 // Only applies to new apps or updates with version >= 8
 watch(shouldEnforceSyncthingMinimum, newValue => {
-  if (newValue && appDetails.value.instances < 3) {
-    appDetails.value.instances = 3
+  if (newValue && appDetails.value.instances < 2) {
+    const oldInstances = appDetails.value.instances
+    appDetails.value.instances = 2
+    showToast('info', t('core.subscriptionManager.instancesAutoAdjusted', { from: oldInstances, to: 2 }))
   }
 })
 

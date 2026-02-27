@@ -978,7 +978,8 @@
       "instancesCount": "{count} istanza | {count} istanze",
       "instancesWarningTwo": "Il minimo consigliato per una rete decentralizzata è 3 istanze.",
       "instancesWarningOne": "Il minimo consigliato per una rete decentralizzata è 3 istanze. Con solo 1 istanza, la tua app potrebbe riscontrare alcuni minuti di inattività se il nodo che esegue l'app viene riavviato o arrestato.",
-      "instancesWarningSyncthing": "Le istanze minime per le app con archiviazione persistente decentralizzata sono 3. Per utilizzare meno istanze, disabilita la sincronizzazione dei dati nelle impostazioni del percorso del volume.",
+      "instancesWarningSyncthing": "Le istanze minime per le app con archiviazione persistente decentralizzata sono 2. Per utilizzare meno istanze, disabilita la sincronizzazione dei dati nelle impostazioni del percorso del volume.",
+      "instancesAutoAdjusted": "Istanze regolate automaticamente da {from} a {to} perché la sincronizzazione dei dati richiede un minimo di {to} istanze.",
       "instancesWarningLegacy": "La riduzione delle istanze al di sotto di 3 è disponibile solo per le app con la versione specifica 8 o successiva. Aggiorna le specifiche dell'app per abilitare questa funzionalità.",
       "period": "Periodo",
       "renewal": "Rinnovo",
@@ -3502,8 +3503,9 @@
       "validation": {
         "instancesRequired": "Le istanze sono obbligatorie",
         "instancesMin": "È richiesta almeno 1 istanza",
-        "instancesMinSync": "Sono necessarie almeno 3 istanze quando la sincronizzazione dei dati è abilitata",
-        "instancesMinSyncInfo": "Le istanze minime per le app con archiviazione persistente decentralizzata sono 3. Per utilizzare meno istanze, disabilita la sincronizzazione dei dati.",
+        "instancesMinSync": "Minimo 2 istanze richieste quando la sincronizzazione dei dati è abilitata",
+        "instancesMinSyncInfo": "Le istanze minime per le app con archiviazione persistente decentralizzata sono 2. Per utilizzare meno istanze, disabilita la sincronizzazione dei dati.",
+        "instancesAutoAdjusted": "Istanze regolate automaticamente da {from} a {to} perché la sincronizzazione dei dati richiede un minimo di {to} istanze.",
         "instancesWarningOne": "Il minimo consigliato per una rete decentralizzata è 3 istanze. Con solo 1 istanza, la tua app potrebbe riscontrare alcuni minuti di inattività se il nodo che esegue l'app viene riavviato o arrestato.",
         "instancesWarningTwo": "Il minimo consigliato per una rete decentralizzata è 3 istanze.",
         "instancesMax": "Sono consentite un massimo di 100 istanze"

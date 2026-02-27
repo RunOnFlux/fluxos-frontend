@@ -978,7 +978,8 @@
       "instancesCount": "{count} contoh | {count} contoh",
       "instancesWarningTwo": "Minimum yang direkomendasikan untuk jaringan terdesentralisasi adalah 3 contoh.",
       "instancesWarningOne": "Minimum yang direkomendasikan untuk jaringan terdesentralisasi adalah 3 contoh. Dengan hanya 1 instance, aplikasi Anda mungkin mengalami downtime selama beberapa menit jika node yang menjalankan aplikasi di-boot ulang atau dimatikan.",
-      "instancesWarningSyncthing": "Instance minimum untuk aplikasi dengan penyimpanan persisten terdesentralisasi adalah 3. Untuk menggunakan lebih sedikit instance, nonaktifkan sinkronisasi data di pengaturan jalur volume.",
+      "instancesWarningSyncthing": "Instance minimum untuk aplikasi dengan penyimpanan persisten terdesentralisasi adalah 2. Untuk menggunakan lebih sedikit instance, nonaktifkan sinkronisasi data di pengaturan jalur volume.",
+      "instancesAutoAdjusted": "Instance secara otomatis disesuaikan dari {from} menjadi {to} karena sinkronisasi data memerlukan minimum {to} instance.",
       "instancesWarningLegacy": "Mengurangi instance di bawah 3 hanya tersedia untuk aplikasi dengan spesifikasi versi 8 atau lebih tinggi. Perbarui spesifikasi aplikasi Anda untuk mengaktifkan fitur ini.",
       "period": "Periode",
       "renewal": "Pembaruan",
@@ -3502,8 +3503,9 @@
       "validation": {
         "instancesRequired": "Diperlukan instans",
         "instancesMin": "Diperlukan minimal 1 instance",
-        "instancesMinSync": "Diperlukan minimal 3 instance saat sinkronisasi data diaktifkan",
-        "instancesMinSyncInfo": "Instance minimum untuk aplikasi dengan penyimpanan persisten terdesentralisasi adalah 3. Untuk menggunakan lebih sedikit instance, nonaktifkan sinkronisasi data.",
+        "instancesMinSync": "Minimum 2 instance diperlukan saat sinkronisasi data diaktifkan",
+        "instancesMinSyncInfo": "Instance minimum untuk aplikasi dengan penyimpanan persisten terdesentralisasi adalah 2. Untuk menggunakan lebih sedikit instance, nonaktifkan sinkronisasi data.",
+        "instancesAutoAdjusted": "Instance secara otomatis disesuaikan dari {from} menjadi {to} karena sinkronisasi data memerlukan minimum {to} instance.",
         "instancesWarningOne": "Minimum yang direkomendasikan untuk jaringan terdesentralisasi adalah 3 contoh. Dengan hanya 1 instance, aplikasi Anda mungkin mengalami downtime selama beberapa menit jika node yang menjalankan aplikasi di-boot ulang atau dimatikan.",
         "instancesWarningTwo": "Minimum yang direkomendasikan untuk jaringan terdesentralisasi adalah 3 contoh.",
         "instancesMax": "Maksimal 100 instance diperbolehkan"

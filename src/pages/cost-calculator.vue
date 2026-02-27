@@ -901,13 +901,15 @@ const syncEnabled = ref(false)
 const isDirty = ref(false)
 const markDirty = () => { isDirty.value = true }
 
-// Minimum instances: 3 if sync is enabled, 1 otherwise
-const minInstances = computed(() => syncEnabled.value ? 3 : 1)
+// Minimum instances: 2 if sync is enabled, 1 otherwise
+const minInstances = computed(() => syncEnabled.value ? 2 : 1)
 
-// Watch sync status - auto-adjust instances to minimum 3 when sync is enabled
+// Watch sync status - auto-adjust instances to minimum 2 when sync is enabled
 watch(syncEnabled, newValue => {
-  if (newValue && formData.instances < 3) {
-    formData.instances = 3
+  if (newValue && formData.instances < 2) {
+    const oldInstances = formData.instances
+    formData.instances = 2
+    showToast('info', t('pages.costCalculator.validation.instancesAutoAdjusted', { from: oldInstances, to: 2 }))
   }
 })
 
