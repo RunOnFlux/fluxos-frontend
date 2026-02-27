@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Assegna un indirizzo IP statico dedicato alla tua applicazione",
       "syncData": "Sincronizza i dati tra le istanze",
       "syncDataDescription": "Abilita la sincronizzazione dei dati utilizzando le modalità Phased Master-Master (r) o Master-Slave (g) con archiviazione condivisa. Quando disabilitata, ogni istanza utilizza la propria memoria persistente isolata",
+      "calculatePrice": "Calcola Prezzo",
+      "settingsChanged": "Le impostazioni sono cambiate. Clicca su Calcola Prezzo per aggiornare.",
       "estimatedCost": "Costo di implementazione stimato",
       "calculating": "Calcolo...",
       "withDiscount": "con {discount}% di sconto",

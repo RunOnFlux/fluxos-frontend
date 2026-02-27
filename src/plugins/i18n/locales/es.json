@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Asigne una dirección IP estática dedicada a su aplicación",
       "syncData": "Sincronizar datos entre instancias",
       "syncDataDescription": "Habilite la sincronización de datos usando los modos Phased Master-Master (r) o Master-Slave (g) con almacenamiento compartido. Cuando está deshabilitada, cada instancia utiliza su propio almacenamiento persistente aislado.",
+      "calculatePrice": "Calcular Precio",
+      "settingsChanged": "La configuración ha cambiado. Haga clic en Calcular Precio para actualizar.",
       "estimatedCost": "Costo estimado de implementación",
       "calculating": "Calculador...",
       "withDiscount": "con {discount}% de descuento",

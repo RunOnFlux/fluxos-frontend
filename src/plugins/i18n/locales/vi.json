@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Gán địa chỉ IP tĩnh chuyên dụng cho ứng dụng của bạn",
       "syncData": "Đồng bộ hóa dữ liệu giữa các phiên bản",
       "syncDataDescription": "Bật đồng bộ hóa dữ liệu bằng chế độ Phased Master-Master (r) hoặc Master-Slave (g) với bộ nhớ dùng chung. Khi bị tắt, mỗi phiên bản sẽ sử dụng bộ lưu trữ liên tục riêng biệt",
+      "calculatePrice": "Tính Giá",
+      "settingsChanged": "Cài đặt đã thay đổi. Nhấn Tính Giá để cập nhật.",
       "estimatedCost": "Chi phí triển khai ước tính",
       "calculating": "Đang tính...",
       "withDiscount": "với chiết khấu {discount}%",

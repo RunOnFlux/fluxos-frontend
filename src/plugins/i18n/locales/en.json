@@ -3484,6 +3484,8 @@
       "staticIpDescription": "Assign a dedicated static IP address to your application",
       "syncData": "Synchronize data across instances",
       "syncDataDescription": "Enable data sync using Phased Master-Master (r) or Master-Slave (g) modes with shared storage. When disabled, each instance uses its own isolated persistent storage",
+      "calculatePrice": "Calculate Price",
+      "settingsChanged": "Settings have changed. Click Calculate Price to update.",
       "estimatedCost": "Estimated Deployment Cost",
       "calculating": "Calculating...",
       "withDiscount": "with {discount}% discount",

@@ -3484,6 +3484,8 @@
       "staticIpDescription": "Weisen Sie Ihrer Anwendung eine dedizierte statische IP-Adresse zu",
       "syncData": "Daten instanzübergreifend synchronisieren",
       "syncDataDescription": "Aktivieren Sie die Datensynchronisierung mithilfe der Modi „Phased Master-Master“ (r) oder „Master-Slave“ (g) mit gemeinsam genutztem Speicher. Wenn diese Option deaktiviert ist, verwendet jede Instanz ihren eigenen isolierten persistenten Speicher",
+      "calculatePrice": "Preis berechnen",
+      "settingsChanged": "Einstellungen wurden geändert. Klicken Sie auf Preis berechnen, um zu aktualisieren.",
       "estimatedCost": "Geschätzte Bereitstellungskosten",
       "calculating": "Berechnen...",
       "withDiscount": "mit {discount}% Rabatt",

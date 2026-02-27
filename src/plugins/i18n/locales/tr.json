@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Uygulamanıza özel bir statik IP adresi atayın",
       "syncData": "Verileri örnekler arasında senkronize edin",
       "syncDataDescription": "Paylaşılan depolama ile Aşamalı Master-Master (r) veya Master-Slave (g) modlarını kullanarak veri senkronizasyonunu etkinleştirin. Devre dışı bırakıldığında her örnek kendi yalıtılmış kalıcı depolama alanını kullanır",
+      "calculatePrice": "Fiyat Hesapla",
+      "settingsChanged": "Ayarlar değişti. Güncellemek için Fiyat Hesapla butonuna tıklayın.",
       "estimatedCost": "Tahmini Dağıtım Maliyeti",
       "calculating": "Hesaplanıyor...",
       "withDiscount": "%{discount} indirimle",

@@ -3483,6 +3483,8 @@
       "staticIpDescription": "애플리케이션에 전용 고정 IP 주소 할당",
       "syncData": "인스턴스 간 데이터 동기화",
       "syncDataDescription": "공유 스토리지와 함께 단계별 마스터-마스터(r) 또는 마스터-슬레이브(g) 모드를 사용하여 데이터 동기화를 활성화합니다. 비활성화되면 각 인스턴스는 자체 격리된 영구 스토리지를 사용합니다.",
+      "calculatePrice": "가격 계산",
+      "settingsChanged": "설정이 변경되었습니다. 가격 계산을 클릭하여 업데이트하세요.",
       "estimatedCost": "예상 배포 비용",
       "calculating": "계산 중...",
       "withDiscount": "{discount}% 할인으로",

@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Assign a dedicated static IP Alamat to your Aplikasi",
       "syncData": "Synchronize data across Instans",
       "syncDataDescription": "Aktifake data Sinkronake using Phased Master-Master (r) or Master-Slave (g) modes with dibagikan Panyimpenan. When dipateni, each Instans uses its own isolated persistent Panyimpenan",
+      "calculatePrice": "Etung Rega",
+      "settingsChanged": "Setelan wis diganti. Klik Etung Rega kanggo nganyari.",
       "estimatedCost": "Perkiraan Biaya",
       "calculating": "Ngitung...",
       "withDiscount": "karo diskon {discount}%",

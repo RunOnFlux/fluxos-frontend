@@ -3483,6 +3483,8 @@
       "staticIpDescription": "専用の静的 IP アドレスをアプリケーションに割り当てます。",
       "syncData": "インスタンス間でデータを同期する",
       "syncDataDescription": "共有ストレージを備えた段階的なマスター/マスター (r) またはマスター/スレーブ (g) モードを使用してデータ同期を有効にします。無効にすると、各インスタンスは独自の分離された永続ストレージを使用します。",
+      "calculatePrice": "価格を計算",
+      "settingsChanged": "設定が変更されました。価格を計算をクリックして更新してください。",
       "estimatedCost": "推定導入コスト",
       "calculating": "計算中...",
       "withDiscount": "{discount}% 割引あり",

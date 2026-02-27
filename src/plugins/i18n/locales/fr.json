@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Attribuez une adresse IP statique dédiée à votre application",
       "syncData": "Synchronisez les données entre les instances",
       "syncDataDescription": "Activez la synchronisation des données à l'aide des modes Phased Master-Master (r) ou Master-Slave (g) avec stockage partagé. Lorsqu'elle est désactivée, chaque instance utilise son propre stockage persistant isolé",
+      "calculatePrice": "Calculer le prix",
+      "settingsChanged": "Les paramètres ont changé. Cliquez sur Calculer le prix pour mettre à jour.",
       "estimatedCost": "Coût de déploiement estimé",
       "calculating": "Calculateur...",
       "withDiscount": "avec {discount} % de réduction",

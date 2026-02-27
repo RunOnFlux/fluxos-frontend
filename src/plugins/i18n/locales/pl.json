@@ -3421,6 +3421,8 @@
       },
       "presetConfigurations": "Predefiniowane konfiguracje",
       "enterpriseDescription": "Aplikacje Enterprise działają na Arcane OS z ulepszoną ochroną prywatności, zaszyfrowaną obsługą danych i priorytetowym wdrożeniem na specjalistycznych węzłach",
+      "calculatePrice": "Oblicz cenę",
+      "settingsChanged": "Ustawienia zostały zmienione. Kliknij Oblicz cenę, aby zaktualizować.",
       "estimatedCost": "Szacowany koszt wdrożenia",
       "instancesPlaceholder": "3",
       "enterpriseHttpsRequired": "Aplikacje Enterprise wymagają HTTPS lub localhost. Użyj bezpiecznego połączenia, aby uzyskać dostęp do funkcji enterprise.",

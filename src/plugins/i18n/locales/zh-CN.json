@@ -3483,6 +3483,8 @@
       "staticIpDescription": "为您的应用程序分配专用的静态 IP 地址",
       "syncData": "跨实例同步数据",
       "syncDataDescription": "使用具有共享存储的分相主-主 (r) 或主-从 (g) 模式启用数据同步。禁用时，每个实例都使用自己独立的持久存储",
+      "calculatePrice": "计算价格",
+      "settingsChanged": "设置已更改。点击计算价格以更新。",
       "estimatedCost": "预计部署成本",
       "calculating": "正在计算...",
       "withDiscount": "享受 {discount}% 折扣",

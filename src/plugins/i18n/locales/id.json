@@ -3483,6 +3483,8 @@
       "staticIpDescription": "Tetapkan alamat IP statis khusus untuk aplikasi Anda",
       "syncData": "Sinkronisasi data di seluruh instans",
       "syncDataDescription": "Aktifkan sinkronisasi data menggunakan mode Phased Master-Master (r) atau Master-Slave (g) dengan penyimpanan bersama. Jika dinonaktifkan, setiap instance menggunakan penyimpanan persistennya yang terisolasi",
+      "calculatePrice": "Hitung Harga",
+      "settingsChanged": "Pengaturan telah berubah. Klik Hitung Harga untuk memperbarui.",
       "estimatedCost": "Perkiraan Biaya Penerapan",
       "calculating": "Menghitung...",
       "withDiscount": "dengan diskon {discount}%.",

@@ -3484,6 +3484,8 @@
       "staticIpDescription": "قم بتعيين عنوان IP ثابت مخصص لتطبيقك",
       "syncData": "مزامنة البيانات عبر المثيلات",
       "syncDataDescription": "قم بتمكين مزامنة البيانات باستخدام أوضاع Phased Master-Master (r) أو Master-Slave (g) مع التخزين المشترك. عند التعطيل، يستخدم كل مثيل وحدة التخزين الدائمة المعزولة الخاصة به",
+      "calculatePrice": "احسب السعر",
+      "settingsChanged": "تم تغيير الإعدادات. انقر على احسب السعر للتحديث.",
       "estimatedCost": "تكلفة النشر المقدرة",
       "calculating": "جارٍ الحساب...",
       "withDiscount": "مع خصم {discount}%",
