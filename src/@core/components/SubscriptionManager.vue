@@ -7885,6 +7885,24 @@ async function propagateSignedMessage() {
       signedSpecSnapshot.value = JSON.stringify(props.appSpec)
       showToast('success', 'Application registered successfully! Redirecting to Test & Pay...')
 
+      // If this was a cancel action, cancel the Stripe subscription now that the network confirmed it
+      if (managementAction.value === 'cancel') {
+        try {
+          const auth = qs.parse(zelidauth)
+          if (auth.zelid && auth.signature && auth.loginPhrase) {
+            const appName = props.appSpec?.name || appDetails.value.name
+            await axios.post(`${paymentBridge}/api/v1/stripe/subscription/cancel`, {
+              zelid: auth.zelid,
+              signature: auth.signature,
+              loginPhrase: auth.loginPhrase,
+              appName,
+            })
+          }
+        } catch (err) {
+          console.log('Failed to cancel Stripe subscription:', err.message)
+        }
+      }
+
       // Fetch deployment information
       await getDeploymentInfo()
 
