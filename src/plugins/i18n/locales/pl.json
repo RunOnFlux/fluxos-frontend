@@ -606,6 +606,7 @@
       "manageBilling": "Manage Billing",
       "manageBillingDescription": "Manage your subscriptions and billing through the Stripe Customer Portal",
       "billingPortalFailed": "Failed to open billing portal",
+      "noStripeCustomer": "No active subscription found. Please subscribe first to manage billing.",
       "billingPlan": "Billing Plan"
     },
     "volumePathBuilder": {

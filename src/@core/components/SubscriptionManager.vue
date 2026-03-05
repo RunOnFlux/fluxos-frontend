@@ -2765,21 +2765,6 @@
                               <div class="text-caption text-medium-emphasis">{{ t('core.subscriptionManager.autoRenewalDescription') }}</div>
                             </div>
                           </div>
-                          <VExpandTransition>
-                            <div v-if="autoRenewalEnabled" class="mt-3">
-                              <VTextField
-                                v-model="subscriptionEmail"
-                                density="compact"
-                                variant="outlined"
-                                label="Email"
-                                placeholder="your@email.com"
-                                type="email"
-                                hide-details="auto"
-                                prepend-inner-icon="mdi-email"
-                                class="mx-4"
-                              />
-                            </div>
-                          </VExpandTransition>
                         </div>
 
                         <!-- Payment Advantages -->
@@ -3428,7 +3413,6 @@ const showTosError = ref(false)
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
 const autoRenewalEnabled = ref(false)
-const subscriptionEmail = ref('')
 const logsExpanded = ref(true)
 
 // ToS panel state - internal ref that's controlled by computed logic (use string '0' to match VExpansionPanel value)
@@ -8456,13 +8440,6 @@ async function initStripeSubscriptionPay(hash = null, name = null, price = null,
     fiatCheckoutURL.value = ''
     checkoutLoading.value = true
 
-    if (!subscriptionEmail.value || !subscriptionEmail.value.includes('@')) {
-      showToast('error', t('core.subscriptionManager.emailRequiredForSubscription'))
-      checkoutLoading.value = false
-      
-      return
-    }
-
     const period = selectedSubscriptionPeriod.value
     if (!period) {
       showToast('error', t('core.subscriptionManager.autoRenewalEligiblePeriods'))
@@ -8510,8 +8487,6 @@ async function initStripeSubscriptionPay(hash = null, name = null, price = null,
       signature: auth.signature,
       loginPhrase: auth.loginPhrase,
       details: {
-        name: finalName,
-        email: subscriptionEmail.value,
         description: description || appDetails.description,
         hash: finalHash,
         price: finalPrice,

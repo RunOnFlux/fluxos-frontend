@@ -144,14 +144,10 @@ async function openBillingPortal() {
       return
     }
 
-    const email = prompt(t('core.subscriptionManager.emailRequiredForSubscription'))
-    if (!email || !email.includes('@')) return
-
     const data = {
       zelid: authData.zelid,
       signature: authData.signature,
       loginPhrase: authData.loginPhrase,
-      email,
       return_url: window.location.href,
     }
 
@@ -162,8 +158,13 @@ async function openBillingPortal() {
       showToast('error', t('core.subscriptionManager.billingPortalFailed'))
     }
   } catch (error) {
-    console.error('Billing portal error:', error)
-    showToast('error', t('core.subscriptionManager.billingPortalFailed'))
+    const serverMessage = error.response?.data?.data
+    console.error('Billing portal error:', serverMessage || error)
+    if (serverMessage?.includes('no Stripe customer')) {
+      showToast('error', t('core.subscriptionManager.noStripeCustomer'))
+    } else {
+      showToast('error', t('core.subscriptionManager.billingPortalFailed'))
+    }
   } finally {
     billingLoading.value = false
   }
