@@ -1860,28 +1860,32 @@
                       </div>
 
                       <!-- Test Output Log -->
-                      <VCard v-if="testOutput.length > 0" variant="outlined" class="mb-4">
-                        <VCardTitle
-                          class="d-flex align-center justify-space-between py-2 px-4"
-                          style="cursor: pointer; font-size: 0.875rem;"
-                          @click="logsExpanded = !logsExpanded"
-                        >
-                          <div class="d-flex align-center">
-                            <VIcon size="18" class="mr-2">mdi-console</VIcon>
-                            <span v-if="testRunning">{{ t('core.subscriptionManager.installationProgress') }}</span>
-                            <span v-else-if="testFinished && !testError">{{ t('core.subscriptionManager.testCompletedSuccessfully') }}</span>
-                            <span v-else>{{ t('core.subscriptionManager.testFailedCheckLogs') }}</span>
-                          </div>
-                          <VIcon size="20">{{ logsExpanded ? 'mdi-chevron-up' : 'mdi-chevron-down' }}</VIcon>
-                        </VCardTitle>
+                      <VExpansionPanels v-if="testOutput.length > 0" v-model="logsExpanded" class="mb-4">
+                        <VExpansionPanel>
+                          <VExpansionPanelTitle
+                            class="px-4 mb-3"
+                            :class="{
+                              'bg-primary': testRunning,
+                              'bg-success': testFinished && !testError,
+                              'bg-error': testError
+                            }"
+                            style="font-size: 0.875rem; min-height: 36px;"
+                          >
+                            <div class="d-flex align-center">
+                              <VIcon size="18" class="mr-2">mdi-console</VIcon>
+                              <span v-if="testRunning">{{ t('core.subscriptionManager.installationProgress') }}</span>
+                              <span v-else-if="testFinished && !testError">{{ t('core.subscriptionManager.testCompletedSuccessfully') }}</span>
+                              <span v-else>{{ t('core.subscriptionManager.testFailedCheckLogs') }}</span>
+                            </div>
+                          </VExpansionPanelTitle>
 
-                        <VExpandTransition>
-                          <VCardText v-show="logsExpanded" class="pa-0">
+                          <VExpansionPanelText class="pa-0">
                             <VList density="compact" class="pa-0">
                               <VListItem
                                 v-for="(output, index) in testOutput"
                                 :key="index"
-                                class="py-1"
+                                class="py-0 compact-log-item"
+                                style="min-height: 24px;"
                                 :class="{
                                   'text-success': output.status === 'success',
                                   'text-error': output.status === 'error',
@@ -1890,27 +1894,33 @@
                                 }"
                               >
                                 <template #prepend>
-                                  <VIcon
-                                    size="16"
-                                    :color="output.status === 'success' ? 'success' : output.status === 'error' ? 'error' : output.status === 'warning' ? 'warning' : 'info'"
-                                    class="mr-2"
-                                  >
-                                    {{ output.status === 'success' ? 'mdi-check-circle' : output.status === 'error' ? 'mdi-close-circle' : output.status === 'warning' ? 'mdi-alert' : 'mdi-information' }}
-                                  </VIcon>
+                                  <div style="display: flex; align-items: center; margin-right: 6px;">
+                                    <!-- Show spinner for last info item (in progress) -->
+                                    <VProgressCircular
+                                      v-if="output.status === 'info' && index === testOutput.length - 1 && testRunning"
+                                      indeterminate
+                                      size="16"
+                                      width="2"
+                                      color="info"
+                                    />
+                                    <!-- Show icon for completed items -->
+                                    <VIcon
+                                      v-else
+                                      size="16"
+                                      :color="output.status === 'success' ? 'success' : output.status === 'error' ? 'error' : output.status === 'warning' ? 'warning' : 'info'"
+                                    >
+                                      {{ output.status === 'success' ? 'mdi-check-circle' : output.status === 'error' ? 'mdi-close-circle' : output.status === 'warning' ? 'mdi-alert' : 'mdi-information' }}
+                                    </VIcon>
+                                  </div>
                                 </template>
-                                <VListItemTitle class="text-body-2" style="white-space: normal; overflow: visible; text-overflow: unset;">
+                                <VListItemTitle style="white-space: normal; overflow: visible; text-overflow: unset; font-size: 0.9rem !important;">
                                   {{ output.message }}
                                 </VListItemTitle>
                               </VListItem>
                             </VList>
-                          </VCardText>
-                        </VExpandTransition>
-                      </VCard>
-
-                      <!-- Test Running Indicator -->
-                      <div v-if="testRunning" class="text-center">
-                        <VProgressLinear indeterminate color="primary" class="mt-2" style="max-width: 200px; margin: 0 auto;" />
-                      </div>
+                          </VExpansionPanelText>
+                        </VExpansionPanel>
+                      </VExpansionPanels>
 
                       <!-- Test Failed Actions -->
                       <div v-if="testFinished && testError" class="text-center mt-4">
@@ -1937,6 +1947,7 @@
                             {{ t('core.subscriptionManager.enablePaymentAnyway') }}
                           </VBtn>
                           <VBtn
+                            color="grey"
                             variant="outlined"
                             @click="goBackToConfigureStep"
                           >
@@ -1946,10 +1957,12 @@
                         </div>
                       </div>
 
-                      <!-- Test Success - proceeding to payment -->
-                      <div v-if="testFinished && !testError" class="text-center mt-3">
-                        <p class="text-body-2 text-medium-emphasis">{{ t('pages.apps.register.orbit.register.proceedingToPayment') }}</p>
-                        <VProgressLinear indeterminate color="primary" class="mt-2" style="max-width: 200px; margin: 0 auto;" />
+                      <!-- Test Success - Proceeding to Payment -->
+                      <div v-if="testFinished && !testError" class="mt-4">
+                        <div class="d-flex align-center justify-center gap-2 pa-3" style="border: 1px solid rgba(var(--v-theme-success), 0.3); border-radius: 8px;">
+                          <VProgressCircular indeterminate size="18" width="2" color="success" />
+                          <span class="text-body-2">{{ t('pages.apps.register.orbit.register.proceedingToPayment') }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2381,7 +2394,7 @@
 
                 <!-- Actions -->
                 <template #actions>
-                  <div class="step-content stepper-actions-wrapper">
+                  <div v-if="currentStep !== 5" class="step-content stepper-actions-wrapper">
                     <!-- Hint for disabled Continue button -->
                     <div v-if="continueButtonDisabledReason" class="continue-button-hint">
                       <VIcon size="16" color="warning" class="mr-2">mdi-information</VIcon>
@@ -4972,7 +4985,7 @@ const testFinished = ref(false)
 const testRunning = ref(false)
 const testError = ref(false)
 const testOutput = ref([])
-const logsExpanded = ref(false)
+const logsExpanded = ref([])
 
 // Payment state
 const paymentProcessing = ref(false)
@@ -6201,7 +6214,7 @@ const testAppInstall = async () => {
   testFinished.value = false
   testRunning.value = true
   testOutput.value = []
-  logsExpanded.value = true
+  logsExpanded.value = [0]
 
   let hasErrors = false
 
@@ -6231,7 +6244,7 @@ const testAppInstall = async () => {
     } else {
       await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 0)
       testError.value = false
-      logsExpanded.value = false
+      logsExpanded.value = []
       showToast('success', t('core.subscriptionManager.testPassedReady'))
     }
   } catch (error) {
@@ -6247,7 +6260,7 @@ const testAppInstall = async () => {
       setTimeout(() => {
         currentStep.value = 6
         startPaymentMonitoring()
-      }, 1500)
+      }, 2500)
     }
   }
 }
@@ -6709,7 +6722,7 @@ const resetForm = () => {
   testError.value = false
   testRunning.value = false
   testOutput.value = []
-  logsExpanded.value = false
+  logsExpanded.value = []
   paymentConfirmed.value = false
   paymentProcessing.value = false
   paymentMonitoringPhase.value = 'blockchain'
@@ -8364,6 +8377,16 @@ onMounted(() => {
 .test-output-card {
   max-height: 400px;
   overflow: hidden;
+}
+
+.compact-log-item :deep(.v-list-item__prepend) {
+  margin-inline-end: 0 !important;
+  padding: 0 !important;
+  min-width: auto !important;
+}
+
+:deep(.v-expansion-panel-text__wrapper) {
+  padding-inline: 0 !important;
 }
 
 .test-logs {
