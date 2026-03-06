@@ -3151,6 +3151,9 @@
             "multipleCurrency": "Поддержка нескольких валют",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "Ваш первый расчётный период бесплатный. Автоматическое продление начнёт взимать плату после окончания пробного периода.",
+            "setupAutoRenewal": "Настроить автоматическое продление",
+            "autoRenewalSetup": "Автоматическое продление настроено! Плата будет взиматься автоматически после окончания бесплатного периода.",
             "sendTo": "Отправить",
             "message": "Сообщение"
           },

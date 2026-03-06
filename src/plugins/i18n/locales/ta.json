@@ -3151,6 +3151,9 @@
             "multipleCurrency": "பல நாணய ஆதரவு",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "உங்கள் முதல் பில்லிங் காலம் இலவசம். சோதனை காலம் முடிந்த பிறகு தானியங்கி புதுப்பிப்பு கட்டணம் வசூலிக்கத் தொடங்கும்.",
+            "setupAutoRenewal": "தானியங்கி புதுப்பிப்பை அமைக்கவும்",
+            "autoRenewalSetup": "தானியங்கி புதுப்பிப்பு கட்டமைக்கப்பட்டது! உங்கள் இலவச காலம் முடிந்த பிறகு தானாகவே கட்டணம் வசூலிக்கப்படும்.",
             "sendTo": "க்கு அனுப்பு",
             "message": "செய்தி"
           },

@@ -3151,6 +3151,9 @@
             "multipleCurrency": "Supporto per più valute",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "Il tuo primo periodo di fatturazione è gratuito. Il rinnovo automatico inizierà ad addebitare dopo la fine del periodo di prova.",
+            "setupAutoRenewal": "Configura il rinnovo automatico",
+            "autoRenewalSetup": "Rinnovo automatico configurato! Ti verrà addebitato automaticamente dopo la fine del tuo periodo gratuito.",
             "sendTo": "Invia a",
             "message": "Messaggio"
           },

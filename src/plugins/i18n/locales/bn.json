@@ -3151,6 +3151,9 @@
             "multipleCurrency": "একাধিক মুদ্রা সমর্থন",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "আপনার প্রথম বিলিং সময়কাল বিনামূল্যে। ট্রায়াল শেষ হওয়ার পরে স্বয়ংক্রিয় পুনর্নবীকরণ চার্জ শুরু হবে।",
+            "setupAutoRenewal": "স্বয়ংক্রিয় পুনর্নবীকরণ সেট আপ করুন",
+            "autoRenewalSetup": "স্বয়ংক্রিয় পুনর্নবীকরণ কনফিগার করা হয়েছে! আপনার বিনামূল্যে সময়কাল শেষ হওয়ার পরে স্বয়ংক্রিয়ভাবে চার্জ করা হবে।",
             "sendTo": "পাঠান",
             "message": "বার্তা"
           },

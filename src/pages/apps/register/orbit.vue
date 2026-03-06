@@ -2245,6 +2245,46 @@
                                     <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
                                     {{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}
                                   </VChip>
+
+                                  <!-- Auto-Renewal Setup for paid plans with first month free -->
+                                  <div v-if="!autoRenewalSubscriptionCreated" class="mt-4">
+                                    <VCard variant="tonal" color="primary" class="mx-auto" max-width="400">
+                                      <VCardText class="pa-4">
+                                        <div class="d-flex align-center justify-center mb-2">
+                                          <VSwitch
+                                            v-model="autoRenewalEnabled"
+                                            color="primary"
+                                            hide-details
+                                            density="compact"
+                                            class="me-2"
+                                          />
+                                          <div class="text-start">
+                                            <div class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</div>
+                                            <div class="text-caption text-medium-emphasis">{{ t('pages.apps.register.orbit.payment.autoRenewalAfterTrial') }}</div>
+                                          </div>
+                                        </div>
+                                        <VBtn
+                                          v-if="autoRenewalEnabled"
+                                          color="primary"
+                                          variant="flat"
+                                          size="small"
+                                          block
+                                          :loading="autoRenewalLoading"
+                                          @click="setupAutoRenewalWithTrial"
+                                          class="text-none mt-2"
+                                        >
+                                          <VIcon start size="16">mdi-credit-card</VIcon>
+                                          {{ t('pages.apps.register.orbit.payment.setupAutoRenewal') }}
+                                        </VBtn>
+                                      </VCardText>
+                                    </VCard>
+                                  </div>
+                                  <div v-else class="mt-3">
+                                    <VChip color="success" variant="tonal" size="small">
+                                      <VIcon size="16" class="mr-1">mdi-check-circle</VIcon>
+                                      {{ t('pages.apps.register.orbit.payment.autoRenewalSetup') }}
+                                    </VChip>
+                                  </div>
                                 </template>
                               </div>
                               <div class="d-flex justify-center">
@@ -4905,6 +4945,8 @@ const paymentProcessing = ref(false)
 const paymentConfirmed = ref(false)
 const paymentMethod = ref('')
 const autoRenewalEnabled = ref(false)
+const autoRenewalLoading = ref(false)
+const autoRenewalSubscriptionCreated = ref(false)
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentMonitoringPhase = ref('blockchain') // 'blockchain', 'installing', or 'deployment'
@@ -6243,6 +6285,80 @@ const initStripeSubscriptionPay = async () => {
     showToast('error', error.message || 'Failed to initiate Stripe subscription payment')
   } finally {
     checkoutLoading.value = false
+  }
+}
+
+const setupAutoRenewalWithTrial = async () => {
+  autoRenewalLoading.value = true
+
+  try {
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showToast('error', 'Please login to FluxOS to make payments')
+
+      return
+    }
+
+    const authData = qs.parse(zelidauthData)
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+
+      return
+    }
+
+    const period = ORBIT_PERIOD_MAP[billingPeriod.value]
+    if (!period) {
+      showToast('error', 'Auto-renewal is available for 1, 3, 6, or 12 month periods')
+
+      return
+    }
+
+    const trialDays = period * 30
+
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
+        hash: registrationHash.value,
+        price: parseFloat(calculatedAppPrice.value.usd),
+        productName: appName.value.toLowerCase(),
+        period,
+        trialDays,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
+
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create Stripe subscription checkout')
+    }
+
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'Stripe Subscription'
+    } else {
+      win.focus()
+      showToast('info', 'Stripe subscription checkout opened - please complete card setup in the new window', null, 5000)
+    }
+
+    autoRenewalSubscriptionCreated.value = true
+  } catch (error) {
+    console.error('Stripe trial subscription setup error:', error)
+    showToast('error', error.message || 'Failed to set up auto-renewal subscription')
+  } finally {
+    autoRenewalLoading.value = false
   }
 }
 

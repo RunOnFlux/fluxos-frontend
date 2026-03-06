@@ -3151,6 +3151,9 @@
             "multipleCurrency": "Hỗ trợ nhiều loại tiền tệ",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "Kỳ thanh toán đầu tiên của bạn là miễn phí. Tự động gia hạn sẽ bắt đầu tính phí sau khi kết thúc thời gian dùng thử.",
+            "setupAutoRenewal": "Thiết lập tự động gia hạn",
+            "autoRenewalSetup": "Tự động gia hạn đã được cấu hình! Bạn sẽ được tính phí tự động sau khi kết thúc thời gian miễn phí.",
             "sendTo": "Gửi tới",
             "message": "Tin nhắn"
           },

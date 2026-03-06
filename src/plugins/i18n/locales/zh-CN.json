@@ -3151,6 +3151,9 @@
             "multipleCurrency": "多币种支持",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "您的第一个计费周期是免费的。自动续订将在试用期结束后开始收费。",
+            "setupAutoRenewal": "设置自动续订",
+            "autoRenewalSetup": "自动续订已配置！免费期结束后将自动向您收费。",
             "sendTo": "发送至",
             "message": "信息"
           },

@@ -3151,6 +3151,9 @@
             "multipleCurrency": "బహుళ కరెన్సీ మద్దతు",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "మీ మొదటి బిల్లింగ్ కాలం ఉచితం. ట్రయల్ ముగిసిన తర్వాత ఆటో-రెన్యూవల్ ఛార్జ్ చేయడం ప్రారంభిస్తుంది.",
+            "setupAutoRenewal": "ఆటో-రెన్యూవల్ సెటప్ చేయండి",
+            "autoRenewalSetup": "ఆటో-రెన్యూవల్ కాన్ఫిగర్ చేయబడింది! మీ ఉచిత కాలం ముగిసిన తర్వాత మీకు స్వయంచాలకంగా ఛార్జ్ చేయబడుతుంది.",
             "sendTo": "కు పంపండి",
             "message": "సందేశం"
           },

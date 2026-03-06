@@ -3152,6 +3152,9 @@
             "multipleCurrency": "Multiple currency support",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "Your first billing period is free. Auto-renewal will start charging after the trial ends.",
+            "setupAutoRenewal": "Set up auto-renewal",
+            "autoRenewalSetup": "Auto-renewal configured! You will be charged automatically after your free period ends.",
             "sendTo": "Send to",
             "message": "Message"
           },

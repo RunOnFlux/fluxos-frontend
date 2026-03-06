@@ -3151,6 +3151,9 @@
             "multipleCurrency": "複数通貨のサポート",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "最初の請求期間は無料です。自動更新はトライアル終了後に課金を開始します。",
+            "setupAutoRenewal": "自動更新を設定",
+            "autoRenewalSetup": "自動更新が設定されました！無料期間終了後に自動的に課金されます。",
             "sendTo": "送信先",
             "message": "メッセージ"
           },

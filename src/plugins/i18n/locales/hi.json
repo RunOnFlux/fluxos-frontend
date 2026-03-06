@@ -3151,6 +3151,9 @@
             "multipleCurrency": "एकाधिक मुद्रा समर्थन",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "आपकी पहली बिलिंग अवधि मुफ्त है। परीक्षण अवधि समाप्त होने के बाद स्वचालित नवीनीकरण शुल्क लगाना शुरू कर देगा।",
+            "setupAutoRenewal": "स्वचालित नवीनीकरण सेट करें",
+            "autoRenewalSetup": "स्वचालित नवीनीकरण कॉन्फ़िगर किया गया! आपकी मुफ्त अवधि समाप्त होने के बाद स्वचालित रूप से शुल्क लिया जाएगा।",
             "sendTo": "भेजना",
             "message": "संदेश"
           },

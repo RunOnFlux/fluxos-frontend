@@ -3151,6 +3151,9 @@
             "multipleCurrency": "Dukungan berbagai mata uang",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "Periode penagihan pertama Anda gratis. Perpanjangan otomatis akan mulai mengenakan biaya setelah masa uji coba berakhir.",
+            "setupAutoRenewal": "Atur perpanjangan otomatis",
+            "autoRenewalSetup": "Perpanjangan otomatis dikonfigurasi! Anda akan dikenakan biaya secara otomatis setelah periode gratis Anda berakhir.",
             "sendTo": "Kirim ke",
             "message": "Pesan"
           },

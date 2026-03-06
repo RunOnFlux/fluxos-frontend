@@ -3151,6 +3151,9 @@
             "multipleCurrency": "Çoklu para birimi desteği",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "İlk fatura döneminiz ücretsizdir. Otomatik yenileme, deneme süresi sona erdikten sonra ücretlendirmeye başlayacaktır.",
+            "setupAutoRenewal": "Otomatik yenilemeyi ayarla",
+            "autoRenewalSetup": "Otomatik yenileme yapılandırıldı! Ücretsiz döneminiz sona erdikten sonra otomatik olarak ücretlendirileceksiniz.",
             "sendTo": "Gönder",
             "message": "Mesaj"
           },

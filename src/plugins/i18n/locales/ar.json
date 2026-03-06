@@ -3152,6 +3152,9 @@
             "multipleCurrency": "دعم العملات المتعددة",
             "enableAutoRenewal": "Enable auto-renewal",
             "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+            "autoRenewalAfterTrial": "فترة الفوترة الأولى مجانية. سيبدأ التجديد التلقائي بالشحن بعد انتهاء الفترة التجريبية.",
+            "setupAutoRenewal": "إعداد التجديد التلقائي",
+            "autoRenewalSetup": "تم تكوين التجديد التلقائي! سيتم محاسبتك تلقائيًا بعد انتهاء فترتك المجانية.",
             "sendTo": "أرسل إلى",
             "message": "رسالة"
           },
