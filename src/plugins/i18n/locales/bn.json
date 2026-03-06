@@ -3149,6 +3149,8 @@
             "secureProcessing": "নিরাপদ পেমেন্ট প্রক্রিয়াকরণ",
             "instantConfirmation": "তাত্ক্ষণিক পেমেন্ট নিশ্চিতকরণ",
             "multipleCurrency": "একাধিক মুদ্রা সমর্থন",
+            "enableAutoRenewal": "Enable auto-renewal",
+            "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
             "sendTo": "পাঠান",
             "message": "বার্তা"
           },

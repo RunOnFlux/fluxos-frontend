@@ -3149,6 +3149,8 @@
             "secureProcessing": "안전한 결제 처리",
             "instantConfirmation": "즉시결제 확인",
             "multipleCurrency": "다중 통화 지원",
+            "enableAutoRenewal": "Enable auto-renewal",
+            "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
             "sendTo": "다음으로 보내기",
             "message": "메시지"
           },

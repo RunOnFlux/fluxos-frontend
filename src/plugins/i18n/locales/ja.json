@@ -3149,6 +3149,8 @@
             "secureProcessing": "安全な支払い処理",
             "instantConfirmation": "即時支払い確認",
             "multipleCurrency": "複数通貨のサポート",
+            "enableAutoRenewal": "Enable auto-renewal",
+            "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
             "sendTo": "送信先",
             "message": "メッセージ"
           },

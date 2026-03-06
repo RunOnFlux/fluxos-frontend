@@ -3149,6 +3149,8 @@
             "secureProcessing": "Traitement des paiements sécurisé",
             "instantConfirmation": "Confirmation de paiement instantanée",
             "multipleCurrency": "Prise en charge de plusieurs devises",
+            "enableAutoRenewal": "Enable auto-renewal",
+            "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
             "sendTo": "Envoyer à",
             "message": "Message"
           },

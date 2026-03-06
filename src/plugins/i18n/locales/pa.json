@@ -3149,6 +3149,8 @@
             "secureProcessing": "ਸੁਰੱਖਿਅਤ ਭੁਗਤਾਨ ਪ੍ਰਕਿਰਿਆ",
             "instantConfirmation": "ਤੁਰੰਤ ਭੁਗਤਾਨ ਦੀ ਪੁਸ਼ਟੀ",
             "multipleCurrency": "ਮਲਟੀਪਲ ਮੁਦਰਾ ਸਹਾਇਤਾ",
+            "enableAutoRenewal": "Enable auto-renewal",
+            "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
             "sendTo": "ਨੂੰ ਭੇਜੋ",
             "message": "ਸੁਨੇਹਾ"
           },

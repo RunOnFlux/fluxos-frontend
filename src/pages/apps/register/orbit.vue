@@ -1993,7 +1993,7 @@
                                 <VCard
                                   variant="outlined"
                                   class="payment-icon-card-horizontal"
-                                  @click="initStripePay"
+                                  @click="autoRenewalEnabled ? initStripeSubscriptionPay() : initStripePay()"
                                   :loading="checkoutLoading && paymentMethod === 'stripe'"
                                   hover
                                 >
@@ -2038,6 +2038,24 @@
                                 <VChip v-else color="success" variant="flat" size="large">
                                   {{ formattedTotalPrice }} + VAT
                                 </VChip>
+                              </div>
+
+                              <!-- Auto-Renewal Toggle -->
+                              <div class="mb-3">
+                                <VDivider class="mb-3" />
+                                <div class="d-flex align-center justify-center">
+                                  <VSwitch
+                                    v-model="autoRenewalEnabled"
+                                    color="primary"
+                                    hide-details
+                                    density="compact"
+                                    class="me-2"
+                                  />
+                                  <div class="text-start">
+                                    <div class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</div>
+                                    <div class="text-caption text-medium-emphasis">{{ t('pages.apps.register.orbit.payment.autoRenewalDescription') }}</div>
+                                  </div>
+                                </div>
                               </div>
 
                               <!-- Payment Advantages -->
@@ -4886,6 +4904,7 @@ const testFinished = ref(false)
 const paymentProcessing = ref(false)
 const paymentConfirmed = ref(false)
 const paymentMethod = ref('')
+const autoRenewalEnabled = ref(false)
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentMonitoringPhase = ref('blockchain') // 'blockchain', 'installing', or 'deployment'
@@ -6142,6 +6161,86 @@ const initStripePay = async () => {
   } catch (error) {
     console.error('Stripe payment error:', error)
     showToast('error', error.message || 'Failed to initiate Stripe payment')
+  } finally {
+    checkoutLoading.value = false
+  }
+}
+
+// Map billing period to Stripe subscription period key
+const ORBIT_PERIOD_MAP = { '1': 1, '3': 3, '6': 6, '12': 12 }
+
+// Initialize Stripe subscription payment
+const initStripeSubscriptionPay = async () => {
+  checkoutLoading.value = true
+  paymentMethod.value = 'stripe'
+
+  try {
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showToast('error', 'Please login to FluxOS to make payments')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const authData = qs.parse(zelidauthData)
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const period = ORBIT_PERIOD_MAP[billingPeriod.value]
+    if (!period) {
+      showToast('error', 'Auto-renewal is available for 1, 3, 6, or 12 month periods')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
+        hash: registrationHash.value,
+        price: parseFloat(calculatedAppPrice.value.usd),
+        productName: appName.value.toLowerCase(),
+        period,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
+
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create Stripe subscription checkout')
+    }
+
+    fiatPaymentInitiated.value = true
+    startPaymentMonitoring()
+
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'Stripe Subscription'
+    } else {
+      win.focus()
+      showToast('info', 'Stripe subscription checkout opened - please complete payment in the new window', null, 5000)
+    }
+  } catch (error) {
+    console.error('Stripe subscription payment error:', error)
+    showToast('error', error.message || 'Failed to initiate Stripe subscription payment')
   } finally {
     checkoutLoading.value = false
   }
