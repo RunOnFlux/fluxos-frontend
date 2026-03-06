@@ -1842,19 +1842,127 @@
                       </div>
                     </div>
 
-                    <!-- Registration Success -->
-                    <div v-else-if="testFinished" class="registration-success">
-                      <div class="text-center">
-                        <VIcon size="48" color="success" class="mb-2">mdi-check-circle</VIcon>
-                        <h3 class="text-h5 font-weight-bold mb-1">{{ t('pages.apps.register.orbit.register.registrationComplete') }}</h3>
-                        <p class="text-body-2 text-medium-emphasis mb-2">
-                          {{ t('pages.apps.register.orbit.register.registrationCompleteMessage') }}
+                    <!-- Test Installation Phase -->
+                    <div v-else-if="testRunning || testFinished" class="test-phase">
+                      <!-- Test Progress -->
+                      <div class="text-center mb-4">
+                        <VIcon v-if="testRunning" size="48" color="primary" class="mb-2">mdi-test-tube</VIcon>
+                        <VIcon v-else-if="testFinished && !testError" size="48" color="success" class="mb-2">mdi-check-circle</VIcon>
+                        <VIcon v-else-if="testFinished && testError" size="48" color="error" class="mb-2">mdi-alert-circle</VIcon>
+                        <h3 class="text-h5 font-weight-bold mb-1">
+                          <template v-if="testRunning">{{ t('core.subscriptionManager.testApplicationInstallation') }}</template>
+                          <template v-else-if="testFinished && !testError">{{ t('pages.apps.register.orbit.register.registrationComplete') }}</template>
+                          <template v-else>{{ t('core.subscriptionManager.testInstallationFailed') }}</template>
+                        </h3>
+                        <p v-if="testRunning" class="text-body-2 text-medium-emphasis">
+                          {{ t('core.subscriptionManager.testInstallationDescription') }}
                         </p>
                       </div>
 
-                      <div class="text-center mt-3">
-                        <p class="text-body-2 text-medium-emphasis">{{ t('pages.apps.register.orbit.register.proceedingToPayment') }}</p>
-                        <VProgressLinear indeterminate color="primary" class="mt-2" style="max-width: 200px; margin: 0 auto;" />
+                      <!-- Test Output Log -->
+                      <VExpansionPanels v-if="testOutput.length > 0" v-model="logsExpanded" class="mb-4">
+                        <VExpansionPanel>
+                          <VExpansionPanelTitle
+                            class="px-4 mb-3"
+                            :class="{
+                              'bg-primary': testRunning,
+                              'bg-success': testFinished && !testError,
+                              'bg-error': testError
+                            }"
+                            style="font-size: 0.875rem; min-height: 36px;"
+                          >
+                            <div class="d-flex align-center">
+                              <VIcon size="18" class="mr-2">mdi-console</VIcon>
+                              <span v-if="testRunning">{{ t('core.subscriptionManager.installationProgress') }}</span>
+                              <span v-else-if="testFinished && !testError">{{ t('core.subscriptionManager.testCompletedSuccessfully') }}</span>
+                              <span v-else>{{ t('core.subscriptionManager.testFailedCheckLogs') }}</span>
+                            </div>
+                          </VExpansionPanelTitle>
+
+                          <VExpansionPanelText class="pa-0">
+                            <VList density="compact" class="pa-0">
+                              <VListItem
+                                v-for="(output, index) in testOutput"
+                                :key="index"
+                                class="py-0 compact-log-item"
+                                style="min-height: 24px;"
+                                :class="{
+                                  'text-success': output.status === 'success',
+                                  'text-error': output.status === 'error',
+                                  'text-warning': output.status === 'warning',
+                                  'text-info': output.status === 'info'
+                                }"
+                              >
+                                <template #prepend>
+                                  <div style="display: flex; align-items: center; margin-right: 6px;">
+                                    <!-- Show spinner for last info item (in progress) -->
+                                    <VProgressCircular
+                                      v-if="output.status === 'info' && index === testOutput.length - 1 && testRunning"
+                                      indeterminate
+                                      size="16"
+                                      width="2"
+                                      color="info"
+                                    />
+                                    <!-- Show icon for completed items -->
+                                    <VIcon
+                                      v-else
+                                      size="16"
+                                      :color="output.status === 'success' ? 'success' : output.status === 'error' ? 'error' : output.status === 'warning' ? 'warning' : 'info'"
+                                    >
+                                      {{ output.status === 'success' ? 'mdi-check-circle' : output.status === 'error' ? 'mdi-close-circle' : output.status === 'warning' ? 'mdi-alert' : 'mdi-information' }}
+                                    </VIcon>
+                                  </div>
+                                </template>
+                                <VListItemTitle style="white-space: normal; overflow: visible; text-overflow: unset; font-size: 0.9rem !important;">
+                                  {{ output.message }}
+                                </VListItemTitle>
+                              </VListItem>
+                            </VList>
+                          </VExpansionPanelText>
+                        </VExpansionPanel>
+                      </VExpansionPanels>
+
+                      <!-- Test Failed Actions -->
+                      <div v-if="testFinished && testError" class="text-center mt-4">
+                        <VAlert type="error" variant="tonal" class="mb-4 text-left">
+                          <div class="d-flex align-center justify-space-between">
+                            <span>{{ t('core.subscriptionManager.testFailedCheckLogsRetry') }}</span>
+                          </div>
+                        </VAlert>
+                        <div class="d-flex justify-center gap-2">
+                          <VBtn
+                            color="primary"
+                            variant="flat"
+                            :loading="testRunning"
+                            @click="testAppInstall"
+                          >
+                            <VIcon start size="18">mdi-refresh</VIcon>
+                            {{ t('core.subscriptionManager.testInstallation') }}
+                          </VBtn>
+                          <VBtn
+                            color="warning"
+                            variant="outlined"
+                            @click="forceEnablePayment"
+                          >
+                            {{ t('core.subscriptionManager.enablePaymentAnyway') }}
+                          </VBtn>
+                          <VBtn
+                            color="grey"
+                            variant="outlined"
+                            @click="goBackToConfigureStep"
+                          >
+                            <VIcon start size="16">mdi-pencil</VIcon>
+                            {{ t('pages.apps.register.orbit.deploy.editConfiguration') }}
+                          </VBtn>
+                        </div>
+                      </div>
+
+                      <!-- Test Success - Proceeding to Payment -->
+                      <div v-if="testFinished && !testError" class="mt-4">
+                        <div class="d-flex align-center justify-center gap-2 pa-3" style="border: 1px solid rgba(var(--v-theme-success), 0.3); border-radius: 8px;">
+                          <VProgressCircular indeterminate size="18" width="2" color="success" />
+                          <span class="text-body-2">{{ t('pages.apps.register.orbit.register.proceedingToPayment') }}</span>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -2293,7 +2401,7 @@
 
                 <!-- Actions -->
                 <template #actions>
-                  <div class="step-content stepper-actions-wrapper">
+                  <div v-if="currentStep !== 5" class="step-content stepper-actions-wrapper">
                     <!-- Hint for disabled Continue button -->
                     <div v-if="continueButtonDisabledReason" class="continue-button-hint">
                       <VIcon size="16" color="warning" class="mr-2">mdi-information</VIcon>
@@ -4879,8 +4987,12 @@ const finalAppSpec = ref(null) // Spec with uploaded contacts
 const copiedAddress = ref(false)
 const copiedMessage = ref(false)
 
-// Registration success state
+// Test state
 const testFinished = ref(false)
+const testRunning = ref(false)
+const testError = ref(false)
+const testOutput = ref([])
+const logsExpanded = ref([])
 
 // Payment state
 const paymentProcessing = ref(false)
@@ -5509,8 +5621,8 @@ const proceedToPayment = async () => {
   }
 
   // If we already have a valid signature and registrationHash from a previous attempt,
-  // and the spec hasn't changed, skip the signing process and go directly to the payment step
-  if (signature.value && registrationHash.value && testFinished.value && !hasSpecChanged()) {
+  // the test passed, and the spec hasn't changed, skip re-signing and go directly to payment
+  if (signature.value && registrationHash.value && testFinished.value && !testError.value && !hasSpecChanged()) {
     currentStep.value = 6
     startPaymentMonitoring()
 
@@ -5522,6 +5634,8 @@ const proceedToPayment = async () => {
     signature.value = ''
     registrationHash.value = null
     testFinished.value = false
+    testError.value = false
+    testOutput.value = []
   }
 
   deploying.value = true
@@ -5904,16 +6018,11 @@ const propagateSignedMessage = async () => {
     isSigning.value = false
     isPropagating.value = false
 
-    // Skip testing phase - go directly to success
-    testFinished.value = true
-
-    // Auto-advance to Payment step after a brief delay
+    // Auto-run test installation (fire-and-forget, same pattern as SubscriptionManager)
+    // Small delay to ensure UI is ready, then test handles its own step progression
     setTimeout(() => {
-      currentStep.value = 6
-
-      // Start monitoring for app registration on the network
-      startPaymentMonitoring()
-    }, 1500)
+      testAppInstall()
+    }, 500)
   } catch (error) {
     console.error('Propagation error:', error)
     registrationError.value = error.message || 'Failed to propagate registration'
@@ -5935,11 +6044,256 @@ const getDeploymentInfo = async () => {
   }
 }
 
+// Stream a test phase message with delay
+const streamTestPhase = async (message, status, delay) => {
+  testOutput.value.push({
+    status,
+    message,
+    timestamp: new Date().toISOString(),
+  })
+
+  if (delay > 0) {
+    await new Promise(resolve => setTimeout(resolve, delay))
+  }
+}
+
+// Map orbit git error codes to user-friendly messages
+const getOrbitErrorMessage = errorMessage => {
+  if (!errorMessage || typeof errorMessage !== 'string') return errorMessage
+
+  if (errorMessage.includes('git_clone_failed')) {
+    return 'Git clone failed. Please verify the repository URL, ensure the repository is accessible, and check that credentials (username/token) are correct for private repositories.'
+  }
+  if (errorMessage.includes('project_path_not_found')) {
+    const pathMatch = errorMessage.match(/project_path_not_found:\s*(.+)/)
+    const path = pathMatch ? pathMatch[1].trim() : ''
+
+    return `Project path not found${path ? `: "${path}"` : ''}. The specified subdirectory does not exist in the repository. Please check your project path configuration.`
+  }
+  if (errorMessage.includes('project_type_detection_failed')) {
+    return 'Project type detection failed. No recognizable project files found in the repository (e.g. package.json, requirements.txt, go.mod, Cargo.toml, etc.). Please ensure your repository contains a supported project structure.'
+  }
+
+  return errorMessage
+}
+
+// Extract a display message from an orbit test result object
+// Result format: { status: "Starting component...", data: "..." }
+// or: { status: "error", data: { name: "Error", message: "Orbit deployment failed: ..." } }
+const getResultMessage = result => {
+  if (result.status === 'error' || result.status === 'success') {
+    // status is a state indicator, message is in data
+    if (typeof result.data === 'string') return result.data
+    if (result.data?.message) return result.data.message
+
+    return result.status
+  }
+
+  // status itself is the message (e.g. "Starting component cloudgit...")
+  return result.status || result.data || 'Unknown step'
+}
+
+// Determine display status for an orbit test result
+const getResultStatus = result => {
+  if (result.status === 'error') return 'error'
+  if (result.status === 'success') return 'success'
+  if (result.status === 'warning') return 'warning'
+
+  // Non-standard status values like "Starting component..." are info messages
+  return 'info'
+}
+
+
+// Extract complete JSON objects from a buffer of concatenated JSON text.
+// Returns { objects: [...parsed], remainder: "leftover text" }
+const extractJsonObjects = buffer => {
+  const objects = []
+  let i = 0
+
+  while (i < buffer.length) {
+    // Skip whitespace between objects
+    while (i < buffer.length && /\s/.test(buffer[i])) i++
+    if (i >= buffer.length || buffer[i] !== '{') break
+
+    // Find matching closing brace (simple depth counting)
+    let depth = 0
+    let inString = false
+    let escape = false
+    let j = i
+
+    for (; j < buffer.length; j++) {
+      const ch = buffer[j]
+      if (escape) { escape = false; continue }
+      if (ch === '\\' && inString) { escape = true; continue }
+      if (ch === '"') { inString = !inString; continue }
+      if (inString) continue
+      if (ch === '{') depth++
+      if (ch === '}') { depth--; if (depth === 0) { j++; break } }
+    }
+
+    if (depth !== 0) break // Incomplete object — keep in remainder
+
+    try {
+      objects.push(JSON.parse(buffer.slice(i, j)))
+    } catch {
+      // Skip malformed object
+    }
+    i = j
+  }
+
+  return { objects, remainder: buffer.slice(i) }
+}
+
+// Streaming fetch for testappinstall.
+// Uses Fetch API + ReadableStream because axios/XHR fail with ERR_HTTP2_PROTOCOL_ERROR.
+// Calls onResult(parsedObject) for each JSON object as it arrives in real time.
+// Pass an AbortController so the caller can abort the stream (e.g. on error).
+const fetchTestAppInstall = (zelidauth, hash, onResult, controller) => {
+  const baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+  const url = `${baseURL}/apps/testappinstall/${hash}`
+
+  const hardTimeout = setTimeout(() => {
+    controller.abort()
+  }, 300000)
+
+  return fetch(url, {
+    method: 'GET',
+    headers: { zelidauth },
+    signal: controller.signal,
+  })
+    .then(response => {
+      if (!response.body) {
+        clearTimeout(hardTimeout)
+        throw new Error(`HTTP ${response.status}: no response body`)
+      }
+
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      let totalObjects = 0
+
+      const read = () =>
+        reader.read().then(({ done, value }) => {
+          if (done) {
+            clearTimeout(hardTimeout)
+            // Flush any remaining complete objects in buffer
+            const { objects } = extractJsonObjects(buffer)
+            objects.forEach(obj => { totalObjects++; onResult(obj) })
+
+            return
+          }
+
+          buffer += decoder.decode(value, { stream: true })
+
+          // Extract and emit complete JSON objects from the buffer
+          const { objects, remainder } = extractJsonObjects(buffer)
+          buffer = remainder
+          objects.forEach(obj => { totalObjects++; onResult(obj) })
+
+          return read()
+        }).catch(streamErr => {
+          clearTimeout(hardTimeout)
+          // Flush whatever we can parse from buffer before erroring
+          const { objects } = extractJsonObjects(buffer)
+          objects.forEach(obj => { totalObjects++; onResult(obj) })
+          if (totalObjects === 0) throw streamErr
+          // If we got objects, swallow the error — we have data
+        })
+
+      return read()
+    })
+    .catch(err => {
+      clearTimeout(hardTimeout)
+      // Abort errors are expected (we abort on error result) — don't rethrow
+      if (err.name === 'AbortError') return
+      throw err
+    })
+}
+
+// Test app installation
+const testAppInstall = async () => {
+  if (!registrationHash.value) {
+    return
+  }
+
+  // Reset test state
+  testError.value = false
+  testFinished.value = false
+  testRunning.value = true
+  testOutput.value = []
+  logsExpanded.value = [0]
+
+  let hasErrors = false
+
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+
+    await streamTestPhase(t('core.subscriptionManager.testPreparingEnvironment'), 'info', 0)
+
+    const fetchController = new AbortController()
+
+    // Stream results — only errors reach the UI
+    await fetchTestAppInstall(zelidauth, registrationHash.value, result => {
+      if (getResultStatus(result) === 'error') {
+        hasErrors = true
+        testOutput.value.push({
+          status: 'error',
+          message: getOrbitErrorMessage(getResultMessage(result)),
+          timestamp: new Date().toISOString(),
+        })
+        fetchController.abort()
+      }
+    }, fetchController)
+
+    if (hasErrors) {
+      testError.value = true
+      showToast('error', t('core.subscriptionManager.testFailedCheckInstallationLogs'))
+    } else {
+      await streamTestPhase(t('core.subscriptionManager.testInstallationSuccessful'), 'success', 0)
+      testError.value = false
+      logsExpanded.value = []
+      showToast('success', t('core.subscriptionManager.testPassedReady'))
+    }
+  } catch (error) {
+    await streamTestPhase(`Test failed: ${error.message || 'Unknown error'}`, 'error', 0)
+    testError.value = true
+    showToast('error', t('core.subscriptionManager.testInstallationFailed'))
+  } finally {
+    testRunning.value = false
+    testFinished.value = true
+
+    // Auto-advance to payment if test passed
+    if (!testError.value) {
+      setTimeout(() => {
+        currentStep.value = 6
+        startPaymentMonitoring()
+      }, 2500)
+    }
+  }
+}
+
+// Force enable payment (fallback when test fails)
+const forceEnablePayment = () => {
+  testError.value = false
+  if (!testFinished.value) {
+    testFinished.value = true
+  }
+  showToast('warning', 'Payment manually enabled. Please proceed with caution and ensure your app specifications are correct.')
+
+  // Advance to payment
+  currentStep.value = 6
+  startPaymentMonitoring()
+}
+
 // Go back to configure step to edit app name or other settings
 const goBackToConfigureStep = () => {
   registrationHash.value = null
   registrationError.value = ''
   deploying.value = false
+  testFinished.value = false
+  testError.value = false
+  testRunning.value = false
+  testOutput.value = []
   currentStep.value = 3 // Configure step
 }
 
@@ -6396,6 +6750,10 @@ const resetForm = () => {
   finalAppSpec.value = null
   signature.value = ''
   testFinished.value = false
+  testError.value = false
+  testRunning.value = false
+  testOutput.value = []
+  logsExpanded.value = []
   paymentConfirmed.value = false
   paymentProcessing.value = false
   paymentMonitoringPhase.value = 'blockchain'
@@ -8050,6 +8408,16 @@ onMounted(() => {
 .test-output-card {
   max-height: 400px;
   overflow: hidden;
+}
+
+.compact-log-item :deep(.v-list-item__prepend) {
+  margin-inline-end: 0 !important;
+  padding: 0 !important;
+  min-width: auto !important;
+}
+
+:deep(.v-expansion-panel-text__wrapper) {
+  padding-inline: 0 !important;
 }
 
 .test-logs {
