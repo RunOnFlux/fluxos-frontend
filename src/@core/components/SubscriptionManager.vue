@@ -2713,7 +2713,7 @@
                             v-if="stripeEnabled"
                             variant="outlined"
                             class="payment-icon-card"
-                            @click="() => autoRenewalEnabled ? initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description) : initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)"
+                            @click="() => (autoRenewalEnabled && !(managementAction === 'update' && existingSubscription)) ? initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description) : initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)"
                             hover
                           >
                             <VCardText class="d-flex align-center justify-center pa-6">
@@ -2766,6 +2766,18 @@
                             </div>
                           </div>
                         </div>
+
+                        <!-- Existing subscription info for updates -->
+                        <VAlert
+                          v-if="managementAction === 'update' && existingSubscription"
+                          type="info"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-information"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.existingSubscriptionUpdateInfo') }}
+                        </VAlert>
 
                         <!-- Payment Advantages -->
                         <div v-if="stripeEnabled || paypalEnabled" class="mb-4">
@@ -3413,6 +3425,7 @@ const showTosError = ref(false)
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
 const autoRenewalEnabled = ref(false)
+const existingSubscription = ref(null) // Existing active subscription for this app
 const logsExpanded = ref(true)
 
 // ToS panel state - internal ref that's controlled by computed logic (use string '0' to match VExpansionPanel value)
@@ -4749,12 +4762,47 @@ const SUBSCRIPTION_PERIOD_MAP = {
   [BLOCKS_PER_MONTH * 12]: 12, // 1 year
 }
 
+// Fetch existing subscription status for this app
+async function fetchExistingSubscription() {
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (!zelidauth) return
+    const auth = qs.parse(zelidauth)
+    if (!auth?.zelid) return
+    const appName = props.appSpec?.name || appDetails.value?.name
+    if (!appName) return
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/status`, {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      appName,
+    })
+    if (response.data.status === 'success' && response.data.data) {
+      const sub = response.data.data
+      if (sub.status === 'active' || sub.status === 'past_due') {
+        existingSubscription.value = sub
+      } else {
+        existingSubscription.value = null
+      }
+    } else {
+      existingSubscription.value = null
+    }
+  } catch (error) {
+    console.warn('Failed to fetch existing subscription:', error.message)
+    existingSubscription.value = null
+  }
+}
+
 // Check if current renewal selection is eligible for auto-renewal
 const isAutoRenewalEligible = computed(() => {
   if (!stripeEnabled.value) return false
+
+  // If updating an app that already has an active subscription, disable auto-renewal toggle
+  // The existing subscription will auto-adjust its price at next renewal
+  if (managementAction.value === 'update' && existingSubscription.value) return false
   const currentRenewal = BASE_RENEWAL_PERIODS[appDetails.value.renewalIndex]
   if (!currentRenewal) return false
-  
+
   return currentRenewal.blocks in SUBSCRIPTION_PERIOD_MAP
 })
 
@@ -5135,6 +5183,11 @@ watch(hasCalculatedPrice, (newValue, oldValue) => {
 
 // Watch managementAction to restore/apply correct expire when switching modes
 watch(managementAction, (newValue, oldValue) => {
+  // Fetch existing subscription when switching to update mode
+  if (newValue === 'update' && !props.newApp) {
+    fetchExistingSubscription()
+  }
+
   if (!props.newApp && originalExpireSnapshot.value !== null && props.appSpec) {
     console.log(`Management action changed: ${oldValue} → ${newValue}`)
 
@@ -6270,6 +6323,9 @@ watch(() => props.appSpec?.compose?.length, newLength => {
 watch(() => props.initialAction, newAction => {
   if (newAction && !props.newApp) {
     managementAction.value = newAction
+    if (newAction === 'update') {
+      fetchExistingSubscription()
+    }
   }
 })
 

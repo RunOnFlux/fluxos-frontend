@@ -1291,6 +1291,7 @@
       "sspPaymentInitiated": "SSP payment initiated: {txid}",
       "enableAutoRenewal": "Enable auto-renewal",
       "autoRenewalDescription": "Automatically renew your app subscription via Stripe at the selected interval",
+      "existingSubscriptionUpdateInfo": "You have an active subscription for this app. This update will be charged as a one-time payment. Your subscription price will automatically adjust at the next renewal to reflect the updated specs.",
       "autoRenewalOnlyStripe": "Auto-renewal is only available with Stripe payments",
       "autoRenewalEligiblePeriods": "Auto-renewal is available for 1 week, 2 weeks, 1, 3, 6, or 12 month periods",
       "loadingSubscriptionCheckout": "Loading Subscription Checkout...",
