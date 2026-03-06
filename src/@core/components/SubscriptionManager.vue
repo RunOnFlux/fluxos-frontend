@@ -5308,16 +5308,22 @@ function getContinents(isForbidden = false) {
   possibleLocations.value.forEach(loc => {
     const parts = loc.value.split('_')
 
-    // Only count continent-level entries (no underscores)
+    // Only use continent-level entries (no underscores) directly, don't sum
     if (parts.length === 1) {
       const cont = parts[0]
-      continentInstances[cont] = (continentInstances[cont] || 0) + loc.instances
+      // Use the instances directly from the location entry instead of summing
+      if (!continentInstances[cont]) {
+        continentInstances[cont] = loc.instances
+      }
     }
   })
 
   Object.entries(continentInstances).forEach(([cont, instances]) => {
-    const name = geolocations.continents.find(c => c.code === cont)?.name || cont
-    options.push({ value: cont, text: name, instances })
+    // Only include continents with 24+ instances
+    if (instances >= 24) {
+      const name = geolocations.continents.find(c => c.code === cont)?.name || cont
+      options.push({ value: cont, text: name, instances })
+    }
   })
 
   return options
@@ -5331,14 +5337,20 @@ function getCountries(continentCode) {
     const parts = loc.value.split('_')
     if (parts.length === 2 && parts[0] === continentCode) {
       const count = parts[1]
-      countryInstances[count] = (countryInstances[count] || 0) + loc.instances
+      // Use instances directly instead of summing to avoid duplication
+      if (!countryInstances[count]) {
+        countryInstances[count] = loc.instances
+      }
     }
   })
 
   const countries = [{ value: 'ALL', text: 'All Countries', instances: null }]
   Object.entries(countryInstances).forEach(([count, instances]) => {
-    const name = geolocations.countries.find(c => c.code === count)?.name || count
-    countries.push({ value: count, text: name, instances })
+    // Only include countries with 24+ instances
+    if (instances >= 24) {
+      const name = geolocations.countries.find(c => c.code === count)?.name || count
+      countries.push({ value: count, text: name, instances })
+    }
   })
 
   return countries
@@ -5352,13 +5364,19 @@ function getRegions(continentCode, countryCode) {
     const parts = loc.value.split('_')
     if (parts.length === 3 && parts[0] === continentCode && parts[1] === countryCode) {
       const region = parts[2]
-      regionInstances[region] = (regionInstances[region] || 0) + loc.instances
+      // Use instances directly instead of summing to avoid duplication
+      if (!regionInstances[region]) {
+        regionInstances[region] = loc.instances
+      }
     }
   })
 
   const regions = [{ value: 'ALL', text: 'All Regions', instances: null }]
   Object.entries(regionInstances).forEach(([region, instances]) => {
-    regions.push({ value: region, text: region, instances })
+    // Only include regions with 24+ instances
+    if (instances >= 24) {
+      regions.push({ value: region, text: region, instances })
+    }
   })
 
   return regions

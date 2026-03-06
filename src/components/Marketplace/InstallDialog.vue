@@ -2287,7 +2287,7 @@ const allowedCountries = computed(() => {
 
   availableLocations.value.forEach(location => {
     const parts = location.value.split('_')
-    if (parts.length >= 2 && parts[0] === continentCode) {
+    if (parts.length === 2 && parts[0] === continentCode) {
       const countryCode = parts[1]
 
       if (!countryInstanceMap.has(countryCode)) {
@@ -2297,9 +2297,9 @@ const allowedCountries = computed(() => {
     }
   })
 
-  // Only include countries with sufficient instances
+  // Only include countries with sufficient instances (minimum 24)
   countryInstanceMap.forEach((totalInstances, countryCode) => {
-    if (totalInstances >= minInstances) {
+    if (totalInstances >= minInstances && totalInstances >= 24) {
       const countryName = getCountryName(countryCode)
       countriesWithInstances.push({
         name: countryName,
@@ -2325,7 +2325,7 @@ const forbiddenCountries = computed(() => {
 
   availableLocations.value.forEach(location => {
     const parts = location.value.split('_')
-    if (parts.length >= 2 && parts[0] === continentCode) {
+    if (parts.length === 2 && parts[0] === continentCode) {
       const countryCode = parts[1]
 
       if (!countryInstanceMap.has(countryCode)) {
@@ -2335,9 +2335,9 @@ const forbiddenCountries = computed(() => {
     }
   })
 
-  // Only include countries with sufficient instances
+  // Only include countries with sufficient instances (minimum 24)
   countryInstanceMap.forEach((totalInstances, countryCode) => {
-    if (totalInstances >= minInstances) {
+    if (totalInstances >= minInstances && totalInstances >= 24) {
       const countryName = getCountryName(countryCode)
       countriesWithInstances.push({
         name: countryName,
@@ -5034,17 +5034,17 @@ const fetchLiveGeolocationData = async () => {
       availableLocations.value = locations
 
       // Update available continents based on actual data
-      // Only include continents that have sufficient total instances
+      // Only include continents with sufficient instances (minimum 24)
       const minInstances = config.value?.instances || 5
       const filteredContinents = []
 
       continents.forEach((name, code) => {
-        // Calculate total instances for this continent
+        // Calculate total instances for this continent (continent-level only, no underscores)
         const continentInstances = locations
-          .filter(loc => loc.value.startsWith(code))
+          .filter(loc => loc.value === code)
           .reduce((total, loc) => total + loc.instances, 0)
 
-        if (continentInstances >= minInstances) {
+        if (continentInstances >= minInstances && continentInstances >= 24) {
           filteredContinents.push({ name, code, totalInstances: continentInstances })
         }
       })
