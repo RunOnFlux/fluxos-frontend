@@ -4621,6 +4621,7 @@ const processStripeSubscriptionPayment = async () => {
       signature: authData.signature,
       loginPhrase: authData.loginPhrase,
       details: {
+        name: props.app.name.toLowerCase(),
         description: props.app.description,
         hash: paymentHash.value,
         price: parseFloat(estimatedCost.value),

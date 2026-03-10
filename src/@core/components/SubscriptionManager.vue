@@ -8543,6 +8543,7 @@ async function initStripeSubscriptionPay(hash = null, name = null, price = null,
       signature: auth.signature,
       loginPhrase: auth.loginPhrase,
       details: {
+        name: finalName,
         description: description || appDetails.description,
         hash: finalHash,
         price: finalPrice,

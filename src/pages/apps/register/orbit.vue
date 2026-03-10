@@ -6246,6 +6246,7 @@ const initStripeSubscriptionPay = async () => {
       signature: authData.signature,
       loginPhrase: authData.loginPhrase,
       details: {
+        name: appName.value.toLowerCase(),
         description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
         hash: registrationHash.value,
         price: parseFloat(calculatedAppPrice.value.usd),
@@ -6320,6 +6321,7 @@ const setupAutoRenewalWithTrial = async () => {
       signature: authData.signature,
       loginPhrase: authData.loginPhrase,
       details: {
+        name: appName.value.toLowerCase(),
         description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
         hash: registrationHash.value,
         price: parseFloat(calculatedAppPrice.value.usd),
