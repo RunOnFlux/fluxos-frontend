@@ -1,3 +1,8 @@
 # Netlify/Cloudflare Pages SPA fallback
-# Redirect all requests to index.html to support client-side routing
+
+# Serve static files directly
+/sitemap.xml    /sitemap.xml    200
+/robots.txt     /robots.txt     200
+
+# Redirect all other requests to index.html to support client-side routing
 /*    /index.html   200
