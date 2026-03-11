@@ -1753,6 +1753,7 @@
                           variant="outlined"
                           class="text-field-fixed"
                           @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
+                          @keydown="enforceStep100"
                         />
                       </div>
                     </VCol>
@@ -1829,6 +1830,7 @@
                         variant="outlined"
                         class="hardware-input"
                         @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
+                        @keydown="enforceStep100"
                       />
                     </div>
                     <div class="hardware-box-with-input">
@@ -5754,6 +5756,25 @@ const allTabs = computed(() => [
   ...tabItems,
   ...composeTabs.value,
 ])
+
+function enforceStep100(event) {
+  const allowed = ['Backspace', 'Delete', 'Tab', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Home', 'End']
+  if (allowed.includes(event.key) || event.ctrlKey || event.metaKey) return
+  if (!/^\d$/.test(event.key)) {
+    event.preventDefault()
+
+    return
+  }
+  const input = event.target
+  const current = input.value
+  const selStart = input.selectionStart
+  const selEnd = input.selectionEnd
+  const newValue = current.substring(0, selStart) + event.key + current.substring(selEnd)
+  const num = parseInt(newValue, 10)
+  if (num > 65536) {
+    event.preventDefault()
+  }
+}
 
 function addComposeComponent() {
   if (!props.appSpec.compose) props.appSpec.compose = []

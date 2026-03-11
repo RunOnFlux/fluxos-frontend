@@ -182,7 +182,7 @@ const newAppSpec = ref({
       commands: [],
       containerData: '',
       cpu: 0.1,
-      ram: 128,
+      ram: 100,
       hdd: 1,
       repoauth: '',
     },
