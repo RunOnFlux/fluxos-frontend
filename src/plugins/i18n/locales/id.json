@@ -2,44 +2,44 @@
   "common": {
     "off": "mati",
     "buttons": {
-      "cancel": "Membatalkan",
-      "close": "Menutup",
-      "save": "Menyimpan",
-      "delete": "Menghapus",
+      "cancel": "Batalkan",
+      "close": "Tutup",
+      "save": "Simpan",
+      "delete": "Hapus",
       "submit": "Kirim",
-      "update": "Memperbarui",
-      "install": "Memasang",
-      "start": "Awal",
-      "stop": "Berhenti",
-      "remove": "Menghapus",
+      "update": "Perbarui",
+      "install": "Pasang",
+      "start": "Memulai",
+      "stop": "Hentikan",
+      "remove": "Hapus",
       "download": "Unduh",
-      "upload": "Mengunggah",
-      "copy": "Menyalin",
-      "paste": "Pasta",
+      "upload": "Unggah",
+      "copy": "Salin",
+      "paste": "Tempel",
       "export": "Ekspor",
       "import": "Impor",
       "edit": "Sunting",
-      "view": "Melihat",
-      "refresh": "Menyegarkan",
+      "view": "Lihat",
+      "refresh": "Segarkan",
       "reload": "Muat ulang",
       "back": "Kembali",
       "next": "Berikutnya",
       "previous": "Sebelumnya",
-      "confirm": "Mengonfirmasi",
-      "apply": "Menerapkan",
-      "reset": "Mengatur ulang",
-      "clear": "Jernih",
-      "search": "Mencari",
-      "filter": "Menyaring",
+      "confirm": "Konfirmasi",
+      "apply": "Terapkan",
+      "reset": "Atur ulang",
+      "clear": "Kosongkan",
+      "search": "Cari",
+      "filter": "Saring",
       "yes": "Ya",
       "no": "TIDAK",
       "ok": "OKE",
-      "login": "Login"
+      "login": "mASUK"
     },
     "labels": {
       "name": "Nama",
       "title": "Judul",
-      "description": "Keterangan",
+      "description": "Deskripsi",
       "status": "Status",
       "type": "Jenis",
       "version": "Versi",
@@ -57,14 +57,14 @@
       "password": "Kata sandi",
       "username": "Nama belakang",
       "address": "Alamat",
-      "port": "Pelabuhan",
+      "port": "Port",
       "ip": "Alamat IP",
-      "tier": "Tingkat",
+      "tier": "Tingkatan",
       "price": "Harga",
       "total": "Total",
       "amount": "Jumlah",
-      "free": "Bebas",
-      "memory": "Ingatan",
+      "free": "Gratis",
+      "memory": "Memori",
       "storage": "Penyimpanan",
       "screenshots": "Tangkapan layar",
       "about": "Tentang",
@@ -74,40 +74,40 @@
       "links": "Tautan",
       "website": "Situs web",
       "sourceCode": "Kode Sumber",
-      "support": "Mendukung",
+      "support": "Dukungan",
       "plan": "Rencana",
-      "billing": "Penagihan",
+      "billing": "Tagihan",
       "monthly": "Bulanan",
       "scrollLeft": "Gulir ke kiri",
       "scrollRight": "Gulir ke kanan",
       "optional": "Opsional"
     },
     "theme": {
-      "light": "Lampu",
+      "light": "Terang",
       "dark": "Gelap",
       "switchTheme": "Ganti tema"
     },
     "status": {
       "loading": "Memuat...",
-      "success": "Kesuksesan",
-      "error": "Kesalahan",
+      "success": "Sukses",
+      "error": "Galat",
       "warning": "Peringatan",
       "info": "Informasi",
       "active": "Aktif",
       "inactive": "Tidak aktif",
       "enabled": "Diaktifkan",
-      "disabled": "Dengan disabilitas",
-      "online": "On line",
+      "disabled": "Tidak diaktifkan",
+      "online": "Daring",
       "offline": "Luring",
       "available": "Tersedia",
       "unavailable": "Tidak tersedia",
-      "running": "Berlari",
+      "running": "Berjalan",
       "stopped": "Berhenti",
       "pending": "Tertunda",
-      "processing": "Pengolahan",
+      "processing": "Diproses",
       "completed": "Selesai",
       "failed": "Gagal",
-      "unknown": "Tidak dikenal"
+      "unknown": "Tidak diketahui"
     },
     "messages": {
       "pleaseWait": "Harap tunggu...",
@@ -169,7 +169,7 @@
           "rating": "5"
         },
         "review3": {
-          "text": "Menerapkan aplikasi kami dengan lancar di flux cloud. Sangat mudah digunakan, tidak repot. Tidak perlu Kyc",
+          "text": "Terapkan aplikasi kami dengan lancar di flux cloud. Sangat mudah digunakan, tidak repot. Tidak perlu Kyc",
           "author": "Lalat dunia maya",
           "rating": "5"
         }
@@ -178,14 +178,14 @@
     "resources": {
       "cpu": "CPU",
       "ram": "RAM",
-      "memory": "Ingatan",
+      "memory": "Memori",
       "storage": "Penyimpanan",
       "disk": "Disk",
       "hdd": "HDD",
       "ssd": "SSD/NVMe",
       "bandwidth": "Bandwidth",
       "cores": "Inti",
-      "threads": "benang"
+      "threads": "Threads"
     },
     "time": {
       "second": "Kedua",
@@ -212,28 +212,28 @@
     },
     "cookieConsent": {
       "title": "Kami menghargai privasi Anda",
-      "description": "Kami menggunakan cookie untuk meningkatkan pengalaman penelusuran Anda dan menganalisis lalu lintas kami. Dengan mengklik Terima Semua, Anda menyetujui penggunaan cookie kami.",
+      "description": "Kami menggunakan cookie untuk meningkatkan pengalaman penelusuran Anda dan menganalisis lalu lintas kami. Dengan mengklik Terima Semua, Anda menyetujui penggunaan cookie milik kami.",
       "learnMore": "Pelajari lebih lanjut",
       "accept": "Menerima",
       "acceptAll": "Terima Semua",
       "onlyNecessary": "Hanya Diperlukan",
-      "close": "Menutup",
+      "close": "Tutup",
       "customize": "Sesuaikan",
       "manageCookies": "Kelola Cookie",
       "settingsTitle": "Preferensi Kue",
       "settingsDescription": "Kami menggunakan cookie untuk meningkatkan pengalaman Anda di situs kami. Anda dapat memilih jenis cookie mana yang diizinkan.",
       "necessary": "Cookie yang Diperlukan",
-      "necessaryDescription": "Cookies ini penting agar situs web dapat berfungsi dengan baik. Mereka tidak dapat dinonaktifkan.",
+      "necessaryDescription": "Cookies ini sangat penting agar situs web dapat berfungsi dengan baik. Mereka tidak dapat dinonaktifkan.",
       "analytics": "Cookie Analisis",
-      "analyticsDescription": "Cookies ini membantu kami memahami bagaimana pengunjung berinteraksi dengan situs web kami dengan mengumpulkan dan melaporkan informasi secara anonim."
+      "analyticsDescription": "Cookies ini dapat membantu kami memahami bagaimana pengunjung berinteraksi dengan situs web kami dengan mengumpulkan dan melaporkan informasi secara anonim."
     }
   },
   "menu": {
     "home": {
-      "title": "Rumah"
+      "title": "Beranda"
     },
     "dashboard": {
-      "title": "Jaringan Fluks",
+      "title": "Jaringan Flux",
       "overview": "Ringkasan",
       "resources": "Sumber daya",
       "map": "Peta",
@@ -247,20 +247,20 @@
       "globalApps": "Aplikasi Global",
       "localApps": "Aplikasi Lokal",
       "registerNewApp": "Daftarkan Aplikasi Baru",
-      "marketplace": "Pasar Aplikasi",
+      "marketplace": "Bursa Aplikasi",
       "marketplaceApps": "Aplikasi",
-      "marketplaceGames": "Pertandingan",
+      "marketplaceGames": "Permainan",
       "marketplaceWordPress": "WordPress",
       "composition": "Komposisi",
       "locations": "Lokasi",
       "perPage": "Per Halaman",
-      "filter": "Menyaring",
+      "filter": "Saring",
       "typeToSearch": "Ketik untuk Mencari",
-      "openAdvancedFilter": "Buka opsi filter lanjutan",
+      "openAdvancedFilter": "Buka opsi saringan lanjutan",
       "appType": "Jenis Aplikasi",
       "all": "Semua",
-      "marketplaceOnly": "Pasar",
-      "marketplaceExcluded": "Pasar Tidak Termasuk",
+      "marketplaceOnly": "Bursa",
+      "marketplaceExcluded": "Bursa Tidak Termasuk",
       "version": "Versi",
       "allVersions": "Semua Versi",
       "minHdd": "HDD minimal (GB)",
@@ -282,7 +282,7 @@
       "scaleGlobally": "Skalakan secara global",
       "signIn": "Login",
       "learnMore": "Pelajari Lebih Lanjut",
-      "newToFlux": "Baru mengenal Fluks?",
+      "newToFlux": "Baru mengenal Flux?",
       "checkDocumentation": "Periksa dokumentasi kami",
       "toGetStarted": "untuk memulai.",
       "status": "Status",
@@ -296,13 +296,13 @@
       "failedToLoadExpiredApps": "Gagal memuat aplikasi yang kedaluwarsa",
       "installedApps": "Aplikasi Terinstal",
       "availableApps": "Aplikasi yang Tersedia",
-      "marketplaceAppsTab": "Aplikasi Pasar"
+      "marketplaceAppsTab": "Bursa Aplikasi"
     },
     "administration": {
       "title": "Administrasi",
       "systemInfo": "Informasi",
       "dockerEvents": "Acara Docker",
-      "manageFlux": "Kelola Fluks Gravitasi",
+      "manageFlux": "Kelola Flux Gravitasi",
       "manageDaemon": "Kelola Daemon",
       "manageBenchmark": "Kelola Tolok Ukur",
       "manageUsers": "Kelola Pengguna",
@@ -311,13 +311,13 @@
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
-      "title": "Fluks XDAO"
+      "title": "Flux XDAO"
     },
     "costCalculator": {
       "title": "Kalkulator Biaya"
     },
     "apiReference": {
-      "title": "Membantu"
+      "title": "Bantuan"
     },
     "fluxDrive": {
       "title": "FluxDrive"
@@ -330,19 +330,19 @@
   },
   "sections": {
     "dashboard": {
-      "title": "Jaringan Fluks",
+      "title": "Jaringan Flux",
       "description": "Periksa informasi jaringan Flux, sumber daya yang tersedia, atau peta dengan lokasi server."
     },
     "application": {
       "title": "Aplikasi",
-      "description": "Beli di pasar, daftarkan aplikasi Anda sendiri, kelola aplikasi aktif Anda."
+      "description": "Beli di bursa, daftarkan aplikasi Anda sendiri, kelola aplikasi aktif Anda."
     },
     "administration": {
       "title": "Administrasi",
       "description": "Alat untuk administrator infrastruktur dan operator node memungkinkan pengelolaan Flux Gravity."
     },
     "fluxXdao": {
-      "title": "Fluks XDAO",
+      "title": "Flux XDAO",
       "description": "Lihat daftar perubahan yang diusulkan ke jaringan Flux, buat yang baru dan pilih."
     }
   },
@@ -350,9 +350,9 @@
     "appDetailsCard": {
       "general": "Umum",
       "copySpecification": "Salin Spesifikasi",
-      "updateSubscription": "Memperbarui",
-      "renewSubscription": "Memperbarui",
-      "cancelSubscription": "Membatalkan",
+      "updateSubscription": "Perbarui",
+      "renewSubscription": "Perbarui",
+      "cancelSubscription": "Batal",
       "name": "Nama",
       "description": "Keterangan",
       "owner": "Pemilik",
@@ -390,8 +390,8 @@
       "public": "Publik",
       "customDomains": "Domain Khusus",
       "automaticDomains": "Domain Otomatis",
-      "ports": "Pelabuhan",
-      "containerPorts": "Pelabuhan Kontainer",
+      "ports": "Port",
+      "containerPorts": "Port Kontainer",
       "containerData": "Data Kontainer",
       "environmentParameters": "Parameter Lingkungan",
       "commands": "Perintah",
@@ -409,7 +409,7 @@
     "confirmCustomDialog": {
       "confirmation": "Konfirmasi",
       "areYouSure": "Apa kamu yakin?",
-      "cancel": "Membatalkan",
+      "cancel": "Batal",
       "confirm": "Mengonfirmasi"
     },
     "manualSignDialog": {
@@ -418,7 +418,7 @@
       "messageToSign": "Pesan untuk ditandatangani:",
       "pasteSignature": "Tempelkan tanda tangan:",
       "signaturePlaceholder": "Masukkan tanda tangan di sini",
-      "cancel": "Membatalkan",
+      "cancel": "Batal",
       "submit": "Kirim"
     },
     "fileUpload": {
@@ -460,7 +460,7 @@
     },
     "locations": {
       "perPage": "Per halaman",
-      "filter": "Menyaring",
+      "filter": "Saring",
       "typeToSearch": "Ketik untuk Mencari",
       "selectActiveInstance": "Pilih instance aktif",
       "noInstancesFound": "Tidak ada contoh yang ditemukan...",
@@ -486,12 +486,12 @@
       "folderName": "Nama Folder",
       "create": "Membuat",
       "uploadFiles": "Unggah File",
-      "close": "Menutup",
+      "close": "Tutup",
       "rename": "Ganti nama",
       "newName": "Nama Baru",
-      "editing": "Pengeditan: {file}",
-      "saving": "Penghematan...",
-      "save": "Menyimpan",
+      "editing": "Penyunting: {file}",
+      "saving": "Menyimpan...",
+      "save": "Simpan",
       "name": "Nama",
       "size": "Ukuran",
       "modifiedAt": "Dimodifikasi Pada",
@@ -520,8 +520,8 @@
       "title": "Cangkang Aman",
       "selectComponent": "Pilih Komponen",
       "selectCommand": "Pilih Perintah",
-      "connect": "Menghubungkan",
-      "disconnect": "Memutuskan",
+      "connect": "Hubungkan",
+      "disconnect": "Putuskan",
       "newTerminal": "Terminal Baru",
       "popOutAll": "Sematkan semua terminal ke manajer",
       "user": "Pengguna",
@@ -560,7 +560,7 @@
       "selectComponent": "Pilih Komponen",
       "lineCount": "Jumlah Garis",
       "logsSince": "Log Sejak",
-      "filterLogs": "Filter Log",
+      "filterLogs": "Saring Log",
       "enterKeywords": "Masukkan kata kunci...",
       "advanceOptions": "Opsi Lanjutan",
       "autoRefresh": "Segarkan Otomatis",
@@ -579,9 +579,9 @@
       }
     },
     "backupAndRestore": {
-      "backup": "Cadangan",
-      "restore": "Memulihkan",
-      "backupContainerData": "Data Kontainer Cadangan",
+      "backup": "Cadangkan",
+      "restore": "Pulihkan",
+      "backupContainerData": "Cadangkan Data Kontainer",
       "selectComponentsToBackup": "Pilih komponen yang akan dicadangkan",
       "selectAll": "Pilih semua",
       "createBackup": "Buat Cadangan",
@@ -683,7 +683,7 @@
       "insertSignature": "Sisipkan tanda tangan",
       "createSSO": "Buat Akun SSO",
       "confirmPassword": "Konfirmasi Kata Sandi",
-      "cancel": "Membatalkan",
+      "cancel": "Batal",
       "ok": "OKE",
       "emailRequired": "Email diperlukan",
       "emailInvalid": "Format email tidak valid",
@@ -779,7 +779,7 @@
       },
       "operations": {
         "starting": "Mulai",
-        "stopping": "Henti",
+        "stopping": "Terhenti",
         "restarting": "Memulai ulang",
         "pausing": "Berhenti sebentar",
         "unpausing": "Membatalkan jeda",
@@ -797,7 +797,7 @@
       "theming": "Tema",
       "primaryColor": "Warna Primer",
       "theme": "Tema",
-      "light": "Lampu",
+      "light": "Terang",
       "dark": "Gelap",
       "skins": "kulit",
       "default": "Bawaan",
@@ -985,8 +985,8 @@
       "subscriptionNotExtended": "Aktifkan Perpanjangan untuk memperpanjang periode berlangganan.",
       "managementAction": "Tindakan Manajemen",
       "renewalAction": "Pembaruan",
-      "updateAction": "Memperbarui",
-      "cancelAction": "Membatalkan",
+      "updateAction": "Perbarui",
+      "cancelAction": "Batal",
       "cancelSubscription": "Batalkan Berlangganan",
       "cancelWarning": "Ini akan membuat aplikasi Anda kedaluwarsa.",
       "currentlySubscribedUntil": "Saat ini aplikasi Anda berlangganan hingga",
@@ -1016,11 +1016,11 @@
       "containerDataPath": "Jalur Data Kontainer",
       "environmentVariables": "Variabel Lingkungan",
       "commands": "Perintah",
-      "portBindings": "Pengikatan Pelabuhan",
-      "exposedPort": "Pelabuhan Terkena",
-      "containerPort": "Pelabuhan Kontainer",
+      "portBindings": "Pengikatan Port",
+      "exposedPort": "Port Terkena",
+      "containerPort": "Port Kontainer",
       "customDomains": "Domain Khusus",
-      "portDomainConfiguration": "Konfigurasi Pelabuhan & Domain",
+      "portDomainConfiguration": "Konfigurasi Port & Domain",
       "enterDomainForPort": "Masukkan domain untuk port ini",
       "key": "Kunci",
       "value": "Nilai",
@@ -1100,8 +1100,8 @@
       "timeLeft": "Waktu tersisa:",
       "renewalPeriod": "Periode pembaruan",
       "afterRenewalSubscriptionUntil": "Setelah perpanjangan berlangganan sampai:",
-      "cancel": "Membatalkan",
-      "save": "Menyimpan",
+      "cancel": "Batal",
+      "save": "Simpan",
       "autoSelect": "Pilih Otomatis",
       "chooseEnterpriseNodes": "Pilih Node Perusahaan",
       "choosePriorityNodes": "Pilih Node Prioritas",
@@ -1193,7 +1193,7 @@
       "invalidOrDuplicatePort": "Nilai port tidak valid atau duplikat.",
       "duplicateKey": "Kunci duplikat \"{key}\"",
       "keyAndValueRequired": "Kunci dan nilai diperlukan.",
-      "marketplaceAppRestricted": "\"{repotag}\" harus dibeli dari pasar.",
+      "marketplaceAppRestricted": "\"{repotag}\" harus dibeli dari bursa.",
       "noEnvToUpload": "Tidak ada variabel lingkungan untuk diunggah",
       "envAlreadyInStorage": "Parameter lingkungan sudah ada di Flux Storage",
       "noCmdsToUpload": "Tidak ada perintah untuk diunggah",
@@ -1291,7 +1291,7 @@
       "sspPaymentInitiated": "Pembayaran SSP dimulai: {txid}",
       "tos": {
         "title": "Ketentuan Perjanjian Layanan",
-        "dialogTitle": "Ketentuan Layanan Fluks",
+        "dialogTitle": "Ketentuan Layanan Flux",
         "description": "Sebelum mendaftarkan aplikasi Anda, Anda harus membaca dan menerima Ketentuan Layanan kami. Hal ini memastikan Anda memahami pedoman dan tanggung jawab dalam menggunakan platform kami.",
         "agreement": "Saya telah membaca dan menerima",
         "link": "Ketentuan Layanan",
@@ -1318,7 +1318,7 @@
       "disconnected": "Terputus",
       "notSynced": "Tidak Disinkronkan",
       "checkingStatus": "Memeriksa...",
-      "checkingStatusMessage": "Memeriksa status simpul...",
+      "checkingStatusMessage": "Memeriksa status node...",
       "notSyncedMessage": "Blockchain tidak disinkronkan (blok {blocks}/{headers}, {blocksBehind} di belakang)",
       "connectedMessage": "Flux Gravity beroperasi dan disinkronkan dengan jaringan Flux.",
       "connectingMessage": "Menghubungkan ke jaringan Flux. Flux Gravity berjalan dengan kemampuan terbatas.",
@@ -1336,12 +1336,12 @@
     },
     "marketplace": {
       "discoverCard": {
-        "title": "Temukan Fluks Anda",
-        "subtitle": "Pasar Web3"
+        "title": "Temukan Flux Anda",
+        "subtitle": "Bursa Web3"
       },
       "appCard": {
         "install": "Memasang",
-        "view": "Melihat",
+        "view": "Lihat",
         "viewDetails": "Lihat Detail",
         "defaultCategory": "Aplikasi",
         "noDescription": "Tidak ada deskripsi yang tersedia"
@@ -1358,7 +1358,7 @@
       },
       "marketplaceAppCard": {
         "unknown": "Tidak dikenal",
-        "free": "Bebas",
+        "free": "Gratis",
         "install": "Memasang",
         "viewDetails": "Lihat Detail",
         "noDescription": "Tidak ada deskripsi yang tersedia",
@@ -1367,36 +1367,36 @@
       "appList": {
         "featured": "Unggulan",
         "by": "oleh",
-        "free": "Bebas",
+        "free": "Gratis",
         "purchase": "Pembelian",
         "deploy": "Menyebarkan",
         "details": "Detail"
       },
       "sponsoredAppCard": {
         "unknown": "Tidak dikenal",
-        "free": "Bebas",
+        "free": "Gratis",
         "other": "Lainnya"
       },
       "sponsoredCard": {
         "sponsored": "Disponsori",
         "install": "Memasang",
-        "view": "Melihat",
+        "view": "Lihat",
         "viewDetails": "Lihat Detail",
         "noSponsoredApps": "Tidak ada aplikasi bersponsor yang tersedia",
-        "free": "Bebas"
+        "free": "Gratis"
       },
       "newListedCard": {
         "title": "APLIKASI TERDAFTAR BARU",
         "noNewApps": "Tidak ada aplikasi baru yang tersedia",
         "unknownApp": "Aplikasi Tidak Dikenal",
         "noDescription": "Tidak ada deskripsi yang tersedia",
-        "view": "Melihat"
+        "view": "Lihat"
       },
       "maintenanceCard": {
         "defaultTitle": "Sedang dalam Pemeliharaan",
         "defaultSubtitle": "Saat ini kami mengalami kesulitan teknis. Tim kami sedang berupaya menyelesaikan masalah ini secepat mungkin.",
         "defaultDescription": "Silakan periksa kembali nanti atau hubungi dukungan jika Anda memerlukan bantuan segera.",
-        "refresh": "Menyegarkan"
+        "refresh": "Segarkan"
       },
       "appConfigCard": {
         "cpu": "CPU",
@@ -1404,23 +1404,23 @@
         "storage": "Penyimpanan",
         "installNow": "Beli Sekarang",
         "perMonth": "/bln",
-        "core": "Inti",
-        "cores": "Inti",
+        "core": "Core",
+        "cores": "Core",
         "mostPopular": "Paling Populer"
       },
       "appsGrid": {
-        "title": "Aplikasi Fluks",
+        "title": "Aplikasi Flux",
         "searchPlaceholder": "Telusuri aplikasi...",
         "category": "Kategori",
         "sortBy": "Urutkan berdasarkan",
         "allCategories": "Semua Kategori",
-        "loadingApps": "Memuat aplikasi pasar...",
+        "loadingApps": "Memuat bursa aplikasi...",
         "noAppsFound": "Tidak ada aplikasi yang ditemukan",
         "adjustFilters": "Coba sesuaikan pencarian atau filter Anda",
         "resetFilters": "Setel Ulang Filter",
         "noAppsAvailable": "Tidak ada aplikasi yang tersedia",
-        "marketplaceEmpty": "Pasar saat ini kosong",
-        "refresh": "Menyegarkan",
+        "marketplaceEmpty": "Bursa saat ini kosong",
+        "refresh": "Segarkan",
         "previous": "Sebelumnya",
         "next": "Berikutnya",
         "sortDefault": "Bawaan",
@@ -1477,10 +1477,10 @@
         "estimatedPricing": "Perkiraan Harga",
         "loading": "Memuat...",
         "wordPressPlanTitle": "WordPress {planName}",
-        "walletAltZelcore": "ID Fluks (ZelCore)",
+        "walletAltZelcore": "ID Flux (ZelCore)",
         "walletAltSSP": "SSP",
         "walletAltMetaMask": "MetaMask",
-        "walletAltWalletConnect": "DompetConnect",
+        "walletAltWalletConnect": "WalletConnect",
         "agreeToTerms": "Saya menyetujui <a href=\"https://cdn.runonflux.io/Flux_Terms_of_Service.pdf\" target=\"_blank\" rel=\"noopener noreferrer\" style=\"color: mewarisi; text-decoration: none; font-weight: bold;\">Ketentuan Penggunaan</a>",
         "oneMonth": "1 Bulan",
         "threeMonths": "3 Bulan",
@@ -1531,7 +1531,7 @@
         "noCompatibleWallets": "Tidak ada dompet kompatibel yang terdeteksi. Silakan instal ZelCore, SSP, MetaMask, pastikan Anda login melalui SSO, atau login secara manual.",
         "signingApp": "Aplikasi Penandatanganan...",
         "registeringApp": "Mendaftarkan Aplikasi...",
-        "cancel": "Membatalkan",
+        "cancel": "Batal",
         "manualSigningCancelled": "Penandatanganan manual dibatalkan",
         "signingAndRegistrationComplete": "Penandatanganan dan Pendaftaran Selesai",
         "redirectIn": "Anda akan dialihkan dalam {seconds} detik...",
@@ -1762,7 +1762,7 @@
         "pasteHint": "Tempel spesifikasi aplikasi atau Docker Compose (JSON/YAML)",
         "reviewAndEdit": "Tinjau dan edit sebelum mengimpor",
         "import": "Impor",
-        "cancel": "Membatalkan",
+        "cancel": "Batal",
         "loadSpecification": "Spesifikasi Beban",
         "pasteFromClipboard": "Tempel dari Papan Klip",
         "contentPasted": "Konten ditempel dari papan klip!",
@@ -1884,7 +1884,7 @@
       "youWillSave": "Anda akan menghemat:",
       "priceDifference": "Perbedaan harga:",
       "paymentMethod": "Metode Pembayaran",
-      "fluxPay": "Pembayaran Fluks",
+      "fluxPay": "Pembayaran Flux",
       "calculatingFlux": "Menghitung FLUX...",
       "manualPaymentDetails": "Detail Pembayaran Manual",
       "address": "Alamat",
@@ -1901,7 +1901,7 @@
       "canTakeUpTo20Minutes": "Ini bisa memakan waktu hingga 20 menit",
       "cancelMonitoring": "Batalkan Pemantauan",
       "pendingPayment": "Pembayaran Tertunda",
-      "cancel": "Membatalkan",
+      "cancel": "Batal",
       "sspPaymentInitiated": "Pembayaran SSP dimulai, pemantauan untuk konfirmasi...",
       "sspPaymentFailed": "Pembayaran SSP gagal: {error}",
       "zelcorePaymentFailed": "Pembayaran Zelcore gagal: {error}",
@@ -2009,7 +2009,7 @@
         "confirmDeleteMessage": "Apakah Anda yakin ingin menghapus {type} ini?",
         "folder": "map",
         "file": "mengajukan",
-        "cancel": "Membatalkan",
+        "cancel": "Batal",
         "upgradeYourPlan": "Tingkatkan Paket Anda",
         "renameItem": "Ganti nama {type}",
         "newName": "Nama Baru",
@@ -2023,7 +2023,7 @@
         "latest": "Terbaru",
         "versionNumber": "Versi {number}",
         "noPreviousVersions": "Tidak Ada Versi Sebelumnya",
-        "close": "Menutup",
+        "close": "Tutup",
         "createNewFolder": "Buat Folder Baru",
         "folderName": "Nama Folder",
         "createFolder": "Buat Folder",
@@ -2090,7 +2090,7 @@
         "contactUs": "Hubungi kami",
         "signIn": "Login",
         "current": "Saat ini",
-        "renew": "Memperbarui",
+        "renew": "Perbarui",
         "upgrade": "Meningkatkan",
         "downgrade": "Turunkan versi",
         "signUp": "Mendaftar",
@@ -2232,21 +2232,21 @@
         "title": "Kelola Pengguna",
         "subtitle": "Melihat dan mengelola pengguna yang login dan sesi aktif",
         "searchUsers": "Cari pengguna",
-        "refresh": "Menyegarkan",
+        "refresh": "Segarkan",
         "logOut": "Keluar",
         "logOutAll": "Keluar Semua",
         "logOutAllUsers": "Keluar Semua Pengguna",
         "current": "Saat ini",
         "yourCurrentSession": "Sesi Anda saat ini",
         "activeSessions": "Sesi Aktif",
-        "cancel": "Membatalkan",
+        "cancel": "Batal",
         "areYouSureProceed": "Apakah Anda yakin ingin melanjutkan?",
         "confirmLogoutUser": "Konfirmasi Pengguna Keluar",
         "confirmLogoutAllUsers": "Konfirmasi Logout Semua Pengguna",
         "logoutUserWarning": "Ini akan mengeluarkan pengguna yang dipilih.",
         "logoutAllUsersWarning": "Ini akan mengeluarkan SEMUA pengguna termasuk Anda sendiri!",
         "table": {
-          "fluxId": "ID Fluks",
+          "fluxId": "ID Flux",
           "loginPhrase": "Frasa Masuk"
         },
         "errors": {
@@ -2256,7 +2256,7 @@
         }
       },
       "manageFlux": {
-        "title": "Kelola Fluks Gravitasi",
+        "title": "Kelola Flux Gravitasi",
         "subtitle": "Konfigurasikan dan kelola pengaturan node Flux Anda",
         "tabs": {
           "settings": "Pengaturan",
@@ -2268,10 +2268,10 @@
           "systemUpdates": {
             "title": "Pembaruan Sistem",
             "fluxUpdate": {
-              "title": "Pembaruan Gravitasi Fluks",
+              "title": "Pembaruan Gravitasi Flux",
               "process": "Proses pembaruan standar",
               "description": "Perbarui Flux Gravity Anda ke versi terbaru. Setiap Flux Gravity harus menjalankan versi terbaru agar tetap setara dengan jaringan.",
-              "button": "Perbarui Gravitasi Fluks"
+              "button": "Perbarui Gravitasi Flux"
             }
           },
           "nodeConfiguration": {
@@ -2284,17 +2284,17 @@
               "button": "Perbarui IP Perute"
             },
             "apiPort": {
-              "title": "Pelabuhan API",
+              "title": "Port API",
               "subtitle": "Konfigurasi port layanan",
               "tooltip": "Konfigurasikan nomor port untuk layanan Flux Gravity API. Standarnya adalah 16127.",
               "hint": "Bawaan: 16127",
-              "button": "Perbarui Pelabuhan API"
+              "button": "Perbarui Port API"
             },
             "restartFluxOs": {
-              "title": "Mulai ulang Gravitasi Fluks",
+              "title": "Mulai ulang Gravitasi Flux",
               "subtitle": "Mulai ulang aplikasi",
               "warning": "Restart akan menutup dan segera me-restart Flux Gravity. Anda harus menyegarkan dan masuk lagi.",
-              "button": "Mulai ulang Gravitasi Fluks"
+              "button": "Mulai ulang Gravitasi Flux"
             }
           },
           "securityAccess": {
@@ -2316,11 +2316,11 @@
           }
         },
         "logs": {
-          "flux": "Log Fluks",
+          "flux": "Log Flux",
           "daemon": "Log Daemon",
           "benchmark": "Log Tolok Ukur",
           "download": "Unduh",
-          "refresh": "Menyegarkan",
+          "refresh": "Segarkan",
           "loading": "Memuat log..."
         },
         "daemon": {
@@ -2344,7 +2344,7 @@
           },
           "info": {
             "title": "Informasi Daemon",
-            "refresh": "Menyegarkan",
+            "refresh": "Segarkan",
             "loadingMessage": "Memuat info daemon...",
             "versionInfo": "Informasi Versi",
             "networkStatus": "Status Jaringan",
@@ -2383,7 +2383,7 @@
           },
           "info": {
             "title": "Informasi Tolok Ukur",
-            "refresh": "Menyegarkan",
+            "refresh": "Segarkan",
             "loadingMessage": "Memuat info tolok ukur...",
             "thunder": "Guruh",
             "runningWarning": "Tolok ukur sedang berjalan. Silakan coba lagi nanti.",
@@ -2396,7 +2396,7 @@
         },
         "labels": {
           "routerIpAddress": "Alamat IP Perute",
-          "apiPort": "Pelabuhan API",
+          "apiPort": "Port API",
           "blockedPorts": "Port yang Diblokir",
           "blockedRepositories": "Repositori yang Diblokir",
           "type": "Jenis"
@@ -2422,36 +2422,36 @@
           "errorLoadingBenchmarkInfo": "Terjadi kesalahan saat memuat info tolok ukur"
         },
         "dialogs": {
-          "cancel": "Membatalkan",
-          "update": "Memperbarui",
+          "cancel": "Batal",
+          "update": "Perbarui",
           "restart": "Mulai ulang",
           "start": "Awal",
           "stop": "Berhenti",
           "confirmProceed": "Apakah Anda yakin ingin melanjutkan?",
           "updateFlux": {
-            "title": "Konfirmasikan Pembaruan Gravitasi Fluks",
+            "title": "Konfirmasikan Pembaruan Gravitasi Flux",
             "message": "Apakah Anda yakin ingin memperbarui Flux Gravity? Ini akan memulai ulang aplikasi.",
-            "button": "Perbarui Gravitasi Fluks"
+            "button": "Perbarui Gravitasi Flux"
           },
           "updateRouterIp": {
             "title": "Perbarui IP Perute",
             "message": "Apakah Anda yakin ingin memperbarui alamat IP router?",
-            "button": "Memperbarui"
+            "button": "Perbarui"
           },
           "updateBlockedPorts": {
             "title": "Perbarui Port yang Diblokir",
             "message": "Apakah Anda yakin ingin memperbarui port yang diblokir?",
-            "button": "Memperbarui"
+            "button": "Perbarui"
           },
           "updateApiPort": {
-            "title": "Perbarui Pelabuhan API",
+            "title": "Perbarui Port API",
             "message": "Apakah Anda yakin ingin memperbarui port API?",
-            "button": "Memperbarui"
+            "button": "Perbarui"
           },
           "updateBlockedRepos": {
             "title": "Perbarui Repositori yang Diblokir",
             "message": "Apakah Anda yakin ingin memperbarui repositori yang diblokir?",
-            "button": "Memperbarui"
+            "button": "Perbarui"
           },
           "restartFluxOs": {
             "title": "Konfirmasikan Mulai Ulang",
@@ -2532,7 +2532,7 @@
           "fullLogs": "Log Lengkap",
           "showLogs": "Tampilkan Log",
           "hideLogs": "Sembunyikan Log",
-          "close": "Menutup"
+          "close": "Tutup"
         },
         "specification": {
           "local": "Spesifikasi Lokal",
@@ -2566,11 +2566,11 @@
           "inspectDetails": "Periksa Detail",
           "fileChanges": "Perubahan Berkas",
           "loadingFileContent": "Memuat konten file...",
-          "historyStatsOverview": "Ikhtisar Statistik Sejarah",
+          "historyStatsOverview": "Ikhtisar Riwayat Statistik",
           "statsProcessesOverview": "Ikhtisar Statistik & Proses"
         },
         "labels": {
-          "historyStatistics": "Statistik Sejarah",
+          "historyStatistics": "Riwayat Statistik",
           "points": "Poin",
           "refreshRate": "Kecepatan Penyegaran",
           "timeRange": "Rentang Waktu",
@@ -2610,7 +2610,7 @@
       },
       "table": {
         "perPage": "Per Halaman",
-        "filter": "Menyaring",
+        "filter": "Saring",
         "filterPlaceholder": "Ketik untuk Mencari",
         "advancedFilterTooltip": "Buka opsi filter lanjutan",
         "appType": "Jenis Aplikasi",
@@ -2645,8 +2645,8 @@
         "cannotCalculateExpiration": "Tidak mungkin menghitung kedaluwarsa",
         "modeOptions": {
           "all": "Semua",
-          "marketplace": "Pasar",
-          "marketplaceExcluded": "Pasar Tidak Termasuk"
+          "marketplace": "Bursa",
+          "marketplaceExcluded": "Bursa Tidak Termasuk"
         },
         "versionOptions": {
           "all": "Semua Versi",
@@ -2748,7 +2748,7 @@
             "ram": "RAM",
             "storage": "Penyimpanan",
             "pricePerMonth": "Harga/Bulan",
-            "note": "Harga merupakan perkiraan dan berdasarkan harga yang tersedia secara publik untuk konfigurasi serupa. *Akash Network menggunakan pasar penawaran, jadi harga sebenarnya mungkin berbeda. Harga FluxCloud dihitung secara real-time dari API harga kami."
+            "note": "Harga merupakan perkiraan dan berdasarkan harga yang tersedia secara publik untuk konfigurasi serupa. *Akash Network menggunakan bursa penawaran, jadi harga sebenarnya mungkin berbeda. Harga FluxCloud dihitung secara real-time dari API harga kami."
           },
           "serverNetwork": {
             "title": "Jaringan Server Global",
@@ -2822,7 +2822,7 @@
           },
           "relatedLinks": {
             "title": "Jelajahi Lebih Lanjut di FluxCloud",
-            "marketplace": "Pasar",
+            "marketplace": "Bursa",
             "marketplaceDesc": "Jelajahi aplikasi yang telah dikonfigurasi sebelumnya",
             "wordpress": "Hosting WordPress",
             "wordpressDesc": "Terapkan situs WordPress di FluxCloud",
@@ -2899,7 +2899,7 @@
               "dedicatedResources": "Sumber Daya Khusus",
               "dedicatedResourcesDetail": "Tidak ada perangkat keras bersama - sumber daya sewaan Anda khusus untuk aplikasi Anda"
             },
-            "free": "Bebas",
+            "free": "Gratis",
             "developer": "Standar",
             "pro": "Pro",
             "beta": "Beta",
@@ -3021,8 +3021,8 @@
             "configuration": "Konfigurasi",
             "appName": "Nama Aplikasi",
             "description": "Keterangan",
-            "appPort": "Pelabuhan Aplikasi",
-            "exposedPort": "Pelabuhan Terkena",
+            "appPort": "Port Aplikasi",
+            "exposedPort": "Port Terkena",
             "contact": "Kontak",
             "runtime": "Waktu proses",
             "envVariables": "Variabel Env",
@@ -3065,7 +3065,7 @@
             "paymentDescription": "Pilih metode pembayaran pilihan Anda untuk mengaktifkan paket Pro Anda.",
             "processingPayment": "Memproses pembayaran...",
             "waitingConfirmation": "Menunggu konfirmasi pembayaran...",
-            "cancel": "Membatalkan",
+            "cancel": "Batal",
             "paymentSummary": "Ringkasan Pembayaran",
             "discountApplied": "Diskon {percent}% diterapkan",
             "fiatPayment": "Pembayaran Fiat",
@@ -3320,7 +3320,7 @@
             "appNameLabel": "Nama Aplikasi *",
             "appNamePlaceholder": "aplikasi-luar biasa-saya",
             "appNameHint": "Hanya huruf kecil, angka, dan tanda hubung (3-32 karakter)",
-            "appPortLabel": "Pelabuhan Aplikasi *",
+            "appPortLabel": "Port Aplikasi *",
             "appPortPlaceholder": "3000",
             "portListensOn": "Port yang didengarkan aplikasi Anda",
             "autoDetected": "Terdeteksi secara otomatis",
@@ -3392,7 +3392,7 @@
               },
               "installCommand": {
                 "description": "Perintah instalasi ketergantungan khusus",
-                "autoValue": "Terdeteksi otomatis: instalasi npm, instalasi benang, atau instalasi pnpm berdasarkan lockfile"
+                "autoValue": "Terdeteksi otomatis: instalasi npm, instalasi Threads, atau instalasi pnpm berdasarkan lockfile"
               },
               "webhookSecret": {
                 "description": "Rahasia untuk penerapan webhook GitHub (mengaktifkan fitur Perusahaan)",
@@ -3465,7 +3465,7 @@
       "memoryRange": "(min 100 MB / maks 59000 MB)",
       "storageQuestion": "Berapa banyak penyimpanan yang Anda inginkan?",
       "storageRange": "(min 1 GB / maks 820 GB)",
-      "exposedPorts": "Pelabuhan Terkena",
+      "exposedPorts": "Port Terkena",
       "addExposedPort": "Tambahkan Port Terkena",
       "portPlaceholder": "Masukkan nomor port dan tekan Enter",
       "portFee": "+biaya",
@@ -3487,7 +3487,7 @@
       "calculating": "Menghitung...",
       "withDiscount": "dengan diskon {discount}%.",
       "retry": "Mencoba kembali",
-      "helpButton": "Membantu",
+      "helpButton": "Bantuan",
       "presetConfigurations": "Konfigurasi Prasetel",
       "nodes": "Node",
       "cpu": "CPU",
@@ -3495,7 +3495,7 @@
       "ssd": "SSD/NVMe",
       "cost": "Biaya",
       "select": "Memilih",
-      "estimatedRate": "*Perkiraan 1 Fluks = ${rate} USD",
+      "estimatedRate": "*Perkiraan 1 Flux = ${rate} USD",
       "gotIt": "Mengerti",
       "validation": {
         "instancesRequired": "Diperlukan instans",
@@ -3572,18 +3572,18 @@
       },
       "relatedResources": {
         "title": "Siap Diterapkan?",
-        "subtitle": "Jelajahi pasar kami dan terapkan aplikasi Anda sekarang",
+        "subtitle": "Jelajahi bursa kami dan terapkan aplikasi Anda sekarang",
         "links": [
           {
             "title": "Hosting Server Permainan",
             "description": "Terapkan Minecraft, Palworld, Factorio, dan server game populer lainnya secara instan",
-            "url": "/pasar/permainan",
+            "url": "/bursa/permainan",
             "icon": "varian mdi-gamepad"
           },
           {
             "title": "Hosting WordPress",
             "description": "Luncurkan situs WordPress dengan pencadangan otomatis dan perlindungan DDoS",
-            "url": "/pasar/wordpress",
+            "url": "/bursa/wordpress",
             "icon": "mdi-wordpress"
           },
           {
@@ -3593,9 +3593,9 @@
             "icon": "mdi-buruh pelabuhan"
           },
           {
-            "title": "Jelajahi Pasar",
+            "title": "Jelajahi Bursa",
             "description": "Jelajahi aplikasi pra-konfigurasi yang siap diterapkan",
-            "url": "/pasar",
+            "url": "/bursa",
             "icon": "mdi-apps"
           }
         ]
@@ -3606,7 +3606,7 @@
         "intro": {
           "title": "Selamat datang di Ekosistem Flux",
           "blockchain": {
-            "title": "Fluks Blockchain",
+            "title": "Flux Blockchain",
             "description": "Flux beroperasi pada blockchain miliknya sendiri, menangani tata kelola, tokennomics, dan menyediakan interoperabilitas dengan blockchain lain melalui aset paralel. Mata uang kripto FLUX asli memberdayakan seluruh ekosistem, memungkinkan infrastruktur terdesentralisasi dan integrasi DeFi."
           },
           "cloud": {
@@ -3627,7 +3627,7 @@
         "versionBreakdown": "Perincian Versi",
         "tierBreakdown": "Perincian Tingkat",
         "legacy": "Warisan",
-        "nodes": "simpul | node",
+        "nodes": "node | node",
         "errorFetchingHistoryStats": "Tidak dapat mengambil statistik riwayat"
       },
       "locations": {
@@ -3644,11 +3644,11 @@
       },
       "list": {
         "perPage": "Per halaman",
-        "filter": "Menyaring",
+        "filter": "Saring",
         "filterPlaceholder": "Ketik untuk Mencari",
         "notAvailable": "T/A",
         "unknown": "Tidak dikenal",
-        "errorLoading": "Kesalahan saat memuat daftar fluks:",
+        "errorLoading": "Kesalahan saat memuat daftar Flux:",
         "columns": {
           "ip": "Alamat IP",
           "paymentAddress": "Alamat",
@@ -3672,7 +3672,7 @@
         "ssd": "SSD/NVMe",
         "hdd": "HDD",
         "cpuHistory": "Sejarah CPU",
-        "ramHistory": "Sejarah RAM",
+        "ramHistory": "Riwayat RAM",
         "storageHistory": "Riwayat Penyimpanan",
         "totalVCores": "Total vCore",
         "totalRam": "Jumlah RAM",
@@ -3682,7 +3682,7 @@
         "tierNimbus": "Nimbus",
         "tierStratus": "Stratus",
         "errorFetchHistory": "Tidak dapat mengambil statistik riwayat",
-        "close": "Menutup"
+        "close": "Tutup"
       },
       "rewards": {
         "intro": {
@@ -3701,7 +3701,7 @@
         "usd": "Rp",
         "historicalPriceChart": "Grafik Harga Historis",
         "price": "Harga",
-        "close": "Menutup",
+        "close": "Tutup",
         "errors": {
           "failedToFetchData": "Gagal mengambil data",
           "failedToFetchRates": "Gagal mengambil tarif",
@@ -3726,7 +3726,7 @@
       "renewalSuccess": "Langganan berhasil diperbarui!",
       "renewalFailed": "Perpanjangan gagal:",
       "upgradeFailed": "Peningkatan gagal:",
-      "cancel": "Membatalkan",
+      "cancel": "Batal",
       "features": {
         "title": "Mengapa Memilih FluxDrive",
         "encryption": {
@@ -3769,11 +3769,11 @@
       }
     },
     "marketplace": {
-      "loading": "Memuat Pasar...",
-      "maintenanceTitle": "Pasar Aplikasi\nSedang dalam Pemeliharaan",
-      "maintenanceSubtitle": "Saat ini kami mengalami kesulitan teknis dengan pasar. Tim kami sedang berupaya menyelesaikan masalah ini secepat mungkin.",
+      "loading": "Memuat Bursa...",
+      "maintenanceTitle": "Bursa Aplikasi\nSedang dalam Pemeliharaan",
+      "maintenanceSubtitle": "Saat ini kami mengalami kesulitan teknis dengan bursa. Tim kami sedang berupaya menyelesaikan masalah ini secepat mungkin.",
       "hero": {
-        "title": "Pasar Aplikasi Fluks",
+        "title": "Bursa Aplikasi Flux",
         "subtitle": "Terapkan aplikasi pra-konfigurasi terdesentralisasi di cloud Web3 Flux. Kontainer Docker, aplikasi web, dan API di {nodeCount}+ FluxNodes di seluruh dunia."
       },
       "revenueBanner": {
@@ -3785,14 +3785,14 @@
         "loadingTitle": "Memuat Aplikasi...",
         "errorMessage": "Gagal memuat detail aplikasi: {error}",
         "priceLabel": "Harga",
-        "priceFree": "Bebas",
+        "priceFree": "Gratis",
         "install": "Beli Sekarang",
         "minimumRequirements": "Persyaratan Minimal",
         "unitCores": "vCore",
         "unitMB": "MB",
         "unitGB": "GB",
-        "cpuPower": "Kekuatan CPU",
-        "memory": "Ingatan",
+        "cpuPower": "Daya CPU",
+        "memory": "Memori",
         "storage": "Penyimpanan",
         "screenshots": "Tangkapan layar",
         "screenshotAlt": "Tangkapan layar {number}",
@@ -3863,7 +3863,7 @@
             },
             {
               "q": "Bagaimana cara memulainya?",
-              "a": "Cukup telusuri pasar, pilih aplikasi atau game yang Anda inginkan, pilih konfigurasi Anda, dan terapkan. Instans Anda akan aktif dalam hitungan menit. Tidak diperlukan pengaturan yang rumit!"
+              "a": "Cukup telusuri bursa, pilih aplikasi atau game yang Anda inginkan, pilih konfigurasi Anda, dan terapkan. Instans Anda akan aktif dalam hitungan menit. Tidak diperlukan pengaturan yang rumit!"
             },
             {
               "q": "Metode pembayaran apa yang Anda terima?",
@@ -3906,7 +3906,7 @@
           "title": "Hosting Server Permainan",
           "subtitle": "Terapkan dan kelola server game di FluxCloud",
           "loading": "Memuat permainan yang tersedia...",
-          "maintenanceTitle": "Pasar Game Untuk Sementara Tidak Tersedia",
+          "maintenanceTitle": "Bursa Game Untuk Sementara Tidak Tersedia",
           "maintenanceSubtitle": "Kami mengalami masalah sementara",
           "revenueBanner": {
             "title": "Daftarkan Game Anda di FluxCloud",
@@ -4297,7 +4297,7 @@
               },
               {
                 "label": "Platform yang Didukung",
-                "value": "Vanila, Bukkit, Keran, Kertas, Tempa, Kain"
+                "value": "Vanila, Bukit, Keran, Kertas, Tempa, Kain"
               },
               {
                 "label": "Panel Kontrol",
@@ -4434,7 +4434,7 @@
             ]
           },
           "features": {
-            "title": "Mengapa Menghosting di FluxCloud?",
+            "title": "Mengapa Memilih hosting di FluxCloud?",
             "subtitle": "Infrastruktur terdesentralisasi yang dibangun untuk performa gaming",
             "items": [
               {
@@ -4611,8 +4611,8 @@
       },
       "wordpress": {
         "loadingTitle": "Memuat Paket WordPress...",
-        "maintenanceTitle": "Pasar WordPress\nSedang dalam Pemeliharaan",
-        "maintenanceSubtitle": "Saat ini kami mengalami kesulitan teknis dengan pasar WordPress. Tim kami sedang berupaya menyelesaikan masalah ini secepat mungkin.",
+        "maintenanceTitle": "Bursa WordPress\nSedang dalam Pemeliharaan",
+        "maintenanceSubtitle": "Saat ini kami mengalami kesulitan teknis dengan bursa WordPress. Tim kami sedang berupaya menyelesaikan masalah ini secepat mungkin.",
         "maintenanceDescription": "Silakan periksa kembali nanti atau hubungi dukungan jika Anda memerlukan bantuan segera.",
         "pageTitle": "Hosting WordPress di FluxCloud",
         "landing": {
@@ -4816,7 +4816,7 @@
             "title": "Hosting Server Permainan",
             "subtitle": "Terapkan dan kelola server game di FluxCloud",
             "loading": "Memuat permainan yang tersedia...",
-            "maintenanceTitle": "Pasar Game Untuk Sementara Tidak Tersedia",
+            "maintenanceTitle": "Bursa Game Untuk Sementara Tidak Tersedia",
             "maintenanceSubtitle": "Kami mengalami masalah sementara",
             "hero": {
               "title": "Hosting Server Game Premium di FluxCloud",
@@ -4961,7 +4961,7 @@
                 {
                   "title": "Hosting WordPress",
                   "description": "Terapkan situs WordPress pada infrastruktur terdesentralisasi dengan instalasi sekali klik",
-                  "url": "/pasar/wordpress",
+                  "url": "/bursa/wordpress",
                   "icon": "mdi-wordpress"
                 },
                 {
@@ -4971,9 +4971,9 @@
                   "icon": "mdi-aplikasi-roda gigi"
                 },
                 {
-                  "title": "Pasar Penuh",
+                  "title": "Bursa Penuh",
                   "description": "Telusuri semua aplikasi, permainan, dan layanan yang tersedia di FluxCloud",
-                  "url": "/pasar",
+                  "url": "/bursa",
                   "icon": "toko mdi"
                 }
               ]
@@ -5006,7 +5006,7 @@
             "relatedLinks": {
               "sectionTitle": "Jelajahi Lebih Lanjut di FluxCloud",
               "marketplace": {
-                "title": "Pasar",
+                "title": "Bursa",
                 "description": "Jelajahi semua aplikasi yang tersedia"
               },
               "gameServers": {
@@ -5027,18 +5027,18 @@
       }
     },
     "xdao": {
-      "title": "Fluks XDAO",
+      "title": "Flux XDAO",
       "subtitle": "Platform Tata Kelola Terdesentralisasi",
       "description": "Flux XDAO (Organisasi Otonomi Terdesentralisasi yang Diperluas) memberdayakan komunitas untuk membentuk masa depan ekosistem Flux melalui tata kelola on-chain. Operator FluxNode dapat mengajukan proposal, mendiskusikan inisiatif, dan memberikan suara pada keputusan penting yang mempengaruhi pengembangan jaringan, alokasi pendanaan, dan peningkatan protokol. Setiap suara dicatat di blockchain, memastikan transparansi dan kekekalan.",
       "learnMore": "Pelajari Lebih Lanjut Tentang XDAO",
       "loggedIn": "Masuk",
       "login": "Login",
       "loginToVote": "Masuk untuk Memilih",
-      "filters": "Filter",
+      "filters": "Saring",
       "addProposal": "Tambahkan Proposal",
-      "filterProposals": "Filter Proposal",
+      "filterProposals": "Saring Proposal",
       "allProposals": "Semua Proposal",
-      "open": "Membuka",
+      "open": "Buka",
       "passed": "Lulus",
       "unpaid": "Tidak dibayar",
       "rejected": "Ditolak",
@@ -5107,8 +5107,8 @@
       "selectPlan": "Pilih Paket",
       "paymentMethod": {
         "title": "Metode Pembayaran",
-        "fluxPay": "Pembayaran Fluks",
-        "cryptoCom": "Kripto.com"
+        "fluxPay": "Pembayaran Flux",
+        "cryptoCom": "Crypto.com"
       },
       "orderSummary": {
         "title": "Ringkasan Pesanan",
@@ -5135,7 +5135,7 @@
         "subtitle": "Selesaikan langganan Anda untuk membuka kunci penyimpanan terdesentralisasi"
       },
       "fluxPay": {
-        "title": "Bayar dengan Fluks",
+        "title": "Bayar dengan Flux",
         "subtitle": "Pembayaran aman menggunakan dompet Zelcore Anda",
         "amount": "Jumlah:",
         "usdValue": "Nilai USD:",
@@ -5183,8 +5183,8 @@
       "noResultsText": "Tidak ditemukan catatan yang cocok.",
       "noDataText": "Tidak ada data yang tersedia."
     },
-    "close": "Menutup",
-    "open": "membuka",
+    "close": "Tutup",
+    "open": "Buka",
     "loading": "memuat",
     "carousel": {
       "ariaLabel": {
@@ -5212,7 +5212,7 @@
       }
     },
     "input": {
-      "clear": "jernih",
+      "clear": "kosongkan",
       "appendAction": "tambahkanAction",
       "prependAction": "prependAction",
       "counterSize": "ukuran counter",
@@ -5239,7 +5239,7 @@
     "trend": "Kecenderungan",
     "used": "digunakan",
     "limit": "membatasi",
-    "refresh": "Menyegarkan",
+    "refresh": "Segarkan",
     "forceGC": "Paksa GC",
     "clearHistory": "Hapus Riwayat",
     "notAvailable": "API Memori Kinerja tidak tersedia di browser ini.",
@@ -5252,9 +5252,9 @@
       "usedHeap": "Tumpukan JS bekas",
       "usedHeapDesc": "Memori yang aktif digunakan oleh objek JavaScript",
       "freeHeap": "Tumpukan Gratis",
-      "freeHeapDesc": "Ruang tumpukan yang dialokasikan tetapi tidak digunakan",
+      "freeHeapDesc": "Ruang stacks yang dialokasikan tetapi tidak digunakan",
       "available": "Tersedia",
-      "availableDesc": "Ruang tumpukan belum dialokasikan",
+      "availableDesc": "Ruang stacks belum dialokasikan",
       "domNodes": "Node DOM (perkiraan)",
       "domNodesDesc": "Kira-kira {count} elemen DOM",
       "eventListeners": "Pendengar Acara (perkiraan)",
@@ -5265,7 +5265,7 @@
   },
   "landingServices": {
     "title": "Layanan kami",
-    "explore": "Mengeksplorasi",
+    "explore": "Jelajahi",
     "services": {
       "fluxCloud": {
         "name": "FluxCloud",
@@ -5288,12 +5288,12 @@
         "category": "Jaringan"
       },
       "fluxMarketplace": {
-        "name": "Pasar Fluks",
-        "description": "Temukan dan terapkan aplikasi dari pasar kami",
+        "name": "Bursa Flux",
+        "description": "Temukan dan terapkan aplikasi dari bursa kami",
         "category": "Aplikasi"
       },
       "wordPressOnFlux": {
-        "name": "WordPress di Fluks",
+        "name": "WordPress di Flux",
         "description": "Jalankan WordPress dengan kinerja dan keamanan tingkat perusahaan",
         "category": "CMS"
       }
