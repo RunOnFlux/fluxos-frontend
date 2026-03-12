@@ -1,15 +1,6 @@
 <template>
   <div>
-    <!-- Loading State -->
-    <LoadingSpinner
-      v-if="initialLoading"
-      icon="mdi-help-circle"
-      :title="t('pages.administration.support.loadingTitle')"
-    />
-
-    <!-- Content -->
-    <div v-else>
-      <!-- Page Header -->
+    <!-- Page Header -->
       <div class="mb-3">
         <div class="d-flex align-center mb-2">
           <VAvatar color="primary" variant="flat" size="48" class="mr-3">
@@ -164,6 +155,7 @@
                   density="compact"
                   :rules="[rules.required, rules.email]"
                   :disabled="isSubmitting"
+                  maxlength="254"
                 >
                   <template #prepend-inner>
                     <VIcon icon="mdi-email-outline" size="22" />
@@ -195,6 +187,7 @@
                   density="compact"
                   :rules="[rules.required]"
                   :disabled="isSubmitting"
+                  maxlength="200"
                 >
                   <template #prepend-inner>
                     <VIcon icon="mdi-text-short" size="22" />
@@ -210,6 +203,7 @@
                   rows="6"
                   :rules="[rules.required]"
                   :disabled="isSubmitting"
+                  maxlength="5000"
                 >
                   <template #prepend-inner>
                     <VIcon icon="mdi-text" size="22" />
@@ -260,7 +254,7 @@
                   variant="flat"
                   block
                   :loading="isSubmitting"
-                  :disabled="isSubmitting || !formValid"
+                  :disabled="isSubmitting || isSubmitted || !formValid"
                 >
                   <VIcon icon="mdi-send" class="mr-2" style="transform: rotate(-45deg) translateY(-2px);" />
                   {{ t('common.buttons.submit') }}
@@ -270,33 +264,30 @@
           </VForm>
         </VCardText>
       </VCard>
-    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSEONoIndex } from '@/composables/useSEO'
-import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
-
 // Prevent indexing of admin page
 useSEONoIndex()
 
 const { t } = useI18n()
 
 // State
-const initialLoading = ref(true)
 const formRef = ref(null)
 const formValid = ref(false)
 const isSubmitting = ref(false)
 const isSubmitted = ref(false)
 const errorMessage = ref('')
+const dismissTimers = []
 
 // Form data
 const formData = ref({
   email: '',
-  type: 'General Question',
+  type: 'General question',
   subject: '',
   description: '',
 })
@@ -339,50 +330,48 @@ const handleSubmit = async () => {
       body: JSON.stringify(formData.value),
     })
 
-    const data = await response.json()
-
-    // Check if the API returned an error status
-    if (data.status === 'error') {
-      throw new Error(data.data?.message || t('pages.administration.support.errorMessage'))
+    if (!response.ok) {
+      const data = await response.json().catch(() => null)
+      throw new Error(data?.message || t('pages.administration.support.errorMessage'))
     }
 
-    // Also check HTTP status
-    if (!response.ok) {
-      throw new Error(data.message || t('pages.administration.support.errorMessage'))
+    const data = await response.json()
+
+    if (data.status === 'error') {
+      throw new Error(data.data?.message || t('pages.administration.support.errorMessage'))
     }
 
     // Success
     isSubmitted.value = true
     formData.value = {
       email: '',
-      type: 'General Question',
+      type: 'General question',
       subject: '',
       description: '',
     }
     formRef.value.reset()
 
-    // Auto-hide success message after 6 seconds
-    setTimeout(() => {
+    // Auto-hide success message after 8 seconds
+    dismissTimers.push(setTimeout(() => {
       isSubmitted.value = false
-    }, 6000)
+    }, 8000))
   }
   catch (error) {
     console.error('Error submitting support ticket:', error)
     errorMessage.value = error.message || t('pages.administration.support.errorMessage')
 
-    // Auto-hide error message after 6 seconds
-    setTimeout(() => {
+    // Auto-hide error message after 8 seconds
+    dismissTimers.push(setTimeout(() => {
       errorMessage.value = ''
-    }, 6000)
+    }, 8000))
   }
   finally {
     isSubmitting.value = false
   }
 }
 
-onMounted(() => {
-  // Initialize component
-  initialLoading.value = false
+onBeforeUnmount(() => {
+  dismissTimers.forEach(clearTimeout)
 })
 </script>
 
@@ -394,17 +383,6 @@ meta:
 </route>
 
 <style scoped>
-.progress-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 0.75rem;
-  font-weight: 600;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
 .support-link-btn {
   transition: all 0.2s ease-in-out;
   background-color: rgba(var(--v-theme-on-surface), 0.08) !important;
