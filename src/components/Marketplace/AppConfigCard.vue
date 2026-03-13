@@ -66,16 +66,11 @@ const emit = defineEmits(['install'])
 
 const { t } = useI18n()
 
-const { getConfigResources, getPlayerBasedConfigName } = useGameUtils()
+const { getConfigResources } = useGameUtils()
 
 const resources = computed(() => getConfigResources(props.config))
 
-const displayName = computed(() => {
-  // Use player-based naming for gaming apps
-  const gameName = props.app.name || props.app.displayName || ''
-  
-  return getPlayerBasedConfigName(gameName, props.config)
-})
+const displayName = computed(() => props.config.name)
 
 const cardStyle = computed(() => ({
   borderColor: props.config.highlight || 'rgba(255, 255, 255, 0.1)',
