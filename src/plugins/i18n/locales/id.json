@@ -34,7 +34,7 @@
       "yes": "Ya",
       "no": "TIDAK",
       "ok": "OKE",
-      "login": "mASUK"
+      "login": "Masuk"
     },
     "labels": {
       "name": "Nama",
@@ -2695,7 +2695,7 @@
             },
             "docker": {
               "title": "Penulisan Docker",
-              "description": "Aplikasi multi-kontainer dengan dukungan Docker Compose. Tumpukan rumit menjadi sederhana."
+              "description": "Aplikasi multi-kontainer dengan dukungan Docker Compose. struktur data rumit menjadi sederhana."
             }
           },
           "benefits": {
@@ -5235,7 +5235,7 @@
     "title": "Pemantau Memori",
     "currentUsage": "Penggunaan Saat Ini",
     "statistics": "Statistik",
-    "breakdown": "Kerusakan Memori",
+    "breakdown": "Pemecahan Memori",
     "minimum": "Minimum",
     "maximum": "Maksimum",
     "average": "Rata-rata",
@@ -5253,12 +5253,12 @@
     "statusWarning": "Penggunaan memori tinggi",
     "statusNormal": "Penggunaan memori normal",
     "categories": {
-      "usedHeap": "Tumpukan JS bekas",
+      "usedHeap": "struktur data JS bekas",
       "usedHeapDesc": "Memori yang aktif digunakan oleh objek JavaScript",
-      "freeHeap": "Tumpukan Gratis",
-      "freeHeapDesc": "Ruang stacks yang dialokasikan tetapi tidak digunakan",
+      "freeHeap": "struktur data Gratis",
+      "freeHeapDesc": "Ruang struktur data yang dialokasikan tetapi tidak digunakan",
       "available": "Tersedia",
-      "availableDesc": "Ruang stacks belum dialokasikan",
+      "availableDesc": "Ruang struktur datas belum dialokasikan",
       "domNodes": "Node DOM (perkiraan)",
       "domNodesDesc": "Kira-kira {count} elemen DOM",
       "eventListeners": "Pendengar Acara (perkiraan)",
