@@ -2117,6 +2117,37 @@
               <VIcon>mdi-arrow-left-circle</VIcon>
             </VBtn>
           </div>
+          <!-- Hard Redeploy Warning -->
+          <VAlert
+            v-if="hardRedeployWarning"
+            type="warning"
+            variant="tonal"
+            prominent
+            class="mb-4"
+          >
+            <template #title>
+              {{ t('core.subscriptionManager.hardRedeployWarningTitle') }}
+            </template>
+            <p class="mb-2">{{ t('core.subscriptionManager.hardRedeployWarningMessage') }}</p>
+            <ul class="ml-4 mb-2">
+              <li v-for="(reason, idx) in hardRedeployWarning.reasons" :key="idx">{{ reason }}</li>
+            </ul>
+            <p class="font-weight-bold mb-0">{{ t('core.subscriptionManager.hardRedeployBackupAdvice') }}</p>
+          </VAlert>
+
+          <!-- Resource Increase Warning -->
+          <VAlert
+            v-if="resourceIncreaseWarning"
+            type="info"
+            variant="tonal"
+            class="mb-4"
+          >
+            <template #title>
+              {{ t('core.subscriptionManager.resourceIncreaseWarningTitle') }}
+            </template>
+            <p class="mb-0">{{ t('core.subscriptionManager.resourceIncreaseWarningMessage') }}</p>
+          </VAlert>
+
           <!-- Spec Validation -->
           <div class="spec-row">
             <div class="label-cell">{{ t('core.subscriptionManager.validateAppSpec') }}</div>
@@ -3589,6 +3620,95 @@ const hasSyncthingEnabled = computed(() => {
 // New apps can always change components; updates only for v8+ specs
 const canModifyComponents = computed(() => {
   return props.newApp || (managementAction.value === 'update' && specVersion.value >= 8)
+})
+
+// Detect changes that will trigger a hard redeploy (data loss) during app updates
+// Hard redeploy triggers:
+// 1. Component structure change (v8+): adding, removing, or renaming components
+// 2. HDD size change on any component
+// 3. Version upgrade from v3 or below to v4+
+const hardRedeployWarning = computed(() => {
+  if (props.newApp || managementAction.value !== 'update' || !originalAppSpecSnapshot.value) return null
+
+  const original = originalAppSpecSnapshot.value
+  const current = props.appSpec
+  const reasons = []
+
+  // Check version upgrade from v3- to v4+
+  if (original.version <= 3 && current.version >= 4) {
+    reasons.push(t('core.subscriptionManager.hardRedeployReasonVersionUpgrade'))
+
+    return { reasons, scope: 'full' }
+  }
+
+  // Check component structure changes (v8+)
+  if (current.version >= 8 && original.compose && current.compose) {
+    const oldNames = new Set(original.compose.map(c => c.name).filter(Boolean))
+    const countChanged = original.compose.length !== current.compose.length
+    const namesChanged = !current.compose.map(c => c.name).filter(Boolean).every(name => oldNames.has(name))
+
+    if (countChanged || namesChanged) {
+      reasons.push(t('core.subscriptionManager.hardRedeployReasonComponentStructure'))
+
+      return { reasons, scope: 'full' }
+    }
+  }
+
+  // Check HDD changes per component (v4+)
+  if (current.version >= 4 && original.compose && current.compose) {
+    const affectedComponents = []
+
+    for (const newComp of current.compose) {
+      const oldComp = original.compose.find(c => c.name === newComp.name)
+
+      if (oldComp && newComp.hdd !== oldComp.hdd) {
+        affectedComponents.push(newComp.name)
+      }
+    }
+    if (affectedComponents.length > 0) {
+      reasons.push(t('core.subscriptionManager.hardRedeployReasonHddChange', { components: affectedComponents.join(', ') }))
+
+      return { reasons, scope: 'component', components: affectedComponents }
+    }
+  }
+
+  // Check HDD change for v3 single-component apps
+  if (current.version <= 3 && original.hdd !== current.hdd) {
+    reasons.push(t('core.subscriptionManager.hardRedeployReasonHddChange', { components: current.name }))
+
+    return { reasons, scope: 'full' }
+  }
+
+  return null
+})
+
+// Detect CPU/RAM increases that may cause the app to be relocated to different nodes (data loss)
+// When a node can't meet new resource requirements, the redeploy fails and the app is fully removed,
+// then reinstalled on a different node that has enough resources
+const resourceIncreaseWarning = computed(() => {
+  if (props.newApp || managementAction.value !== 'update' || !originalAppSpecSnapshot.value) return false
+  if (hardRedeployWarning.value) return false // already showing a stronger warning
+
+  const original = originalAppSpecSnapshot.value
+  const current = props.appSpec
+
+  // Check v4+ composed apps
+  if (current.version >= 4 && original.compose && current.compose) {
+    for (const newComp of current.compose) {
+      const oldComp = original.compose.find(c => c.name === newComp.name)
+
+      if (oldComp && (newComp.cpu > oldComp.cpu || newComp.ram > oldComp.ram)) {
+        return true
+      }
+    }
+  }
+
+  // Check v3 single-component apps
+  if (current.version <= 3 && (current.cpu > original.cpu || current.ram > original.ram)) {
+    return true
+  }
+
+  return false
 })
 
 // Check if this is a legacy app update (version < 8) - these cannot reduce instances below 3
