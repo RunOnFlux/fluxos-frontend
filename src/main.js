@@ -229,14 +229,20 @@ app.use(head)
 await registerPlugins(app)
 app.directive('sanitize-html', sanitizeHtml)
 
+// Wait for initial route resolution before mounting to prevent splash screen hangs
+const { router } = await import('@/plugins/1.router/index.js')
+await router.isReady()
+
 // Mount vue app
 app.mount('#app')
 
 // Auto-reload when new build is deployed (service worker update)
-// This silently reloads the page when a new SW activates - no user prompt
+// Only listen after the app has fully loaded to prevent reload loops during startup
 if ('serviceWorker' in navigator) {
+  let appReady = false
+  window.addEventListener('app-ready', () => { appReady = true })
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    // New service worker has taken control, reload to get fresh assets
+    if (!appReady) return
     console.log('[PWA] New service worker activated, reloading page for fresh assets...')
     setTimeout(() => window.location.reload(), 2000)
   })

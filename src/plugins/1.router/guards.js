@@ -4,6 +4,15 @@ import { useFluxStore } from "@/stores/flux"
 import { clearStickyBackendDNS } from '@/utils/stickyBackend'
 import qs from 'qs'
 
+const GUARD_TIMEOUT_MS = 8000
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('Guard timeout')), ms)),
+  ])
+}
+
 export const setupGuards = router => {
   router.beforeEach(async (to, from, next) => {
 
@@ -16,7 +25,10 @@ export const setupGuards = router => {
 
     if (auth && auth.zelid && auth.signature && auth.loginPhrase) {
       try {
-        const response = await IDService.checkUserLogged(auth.zelid, auth.signature, auth.loginPhrase)
+        const response = await withTimeout(
+          IDService.checkUserLogged(auth.zelid, auth.signature, auth.loginPhrase),
+          GUARD_TIMEOUT_MS,
+        )
         const privilege = response?.data?.data?.message || 'none'
 
         fluxStore.setPrivilege(privilege)
@@ -51,7 +63,10 @@ export const setupGuards = router => {
 
       if (userPrivilege !== 'fluxteam') {
         try {
-          const appsResponse = await AppsService.myGlobalAppSpecifications(auth.zelid)
+          const appsResponse = await withTimeout(
+            AppsService.myGlobalAppSpecifications(auth.zelid),
+            GUARD_TIMEOUT_MS,
+          )
           const apps = appsResponse?.data?.data || []
           const ownsApp = apps.some(app => app.name === to.params.appName)
 
