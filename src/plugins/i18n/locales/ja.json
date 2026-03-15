@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "請求と支払い",
+      "subtitle": "Fluxアプリの支払い履歴を追跡する",
+      "loading": "請求データを読み込み中...",
+      "fetchingPaymentHistory": "支払い履歴を取得中",
+      "noPaymentHistory": "支払い履歴なし",
+      "noPaymentsYet": "まだアプリの支払いはありません。支払いの追跡を開始するにはアプリを登録してください。",
+      "export": "エクスポート",
+      "currentlyRunningApps": "実行中のアプリ",
+      "loadingApps": "実行中のアプリを読み込み中...",
+      "noAppsRunning": "現在実行中のアプリはありません",
+      "instance": "インスタンス",
+      "instances": "インスタンス",
+      "paymentSummary": "支払いサマリー",
+      "totalPaid": "合計支払額",
+      "applications": "アプリケーション",
+      "firstTransaction": "最初のトランザクション",
+      "lastTransaction": "最後のトランザクション",
+      "paymentHistory": "支払い履歴",
+      "filterByType": "タイプでフィルター",
+      "allTypes": "すべてのタイプ",
+      "searchByName": "検索...",
+      "noTransactionsFound": "トランザクションが見つかりません",
+      "noTransactionsMatch": "検索条件に一致するトランザクションはありません",
+      "exportDialog": {
+        "title": "支払い履歴をエクスポート",
+        "format": "エクスポート形式",
+        "selectFormat": "エクスポート形式を選択",
+        "dateRange": "日付範囲",
+        "allTime": "全期間",
+        "last30Days": "過去30日間",
+        "last90Days": "過去90日間",
+        "lastYear": "過去1年間",
+        "customRange": "カスタム範囲",
+        "startDate": "開始日",
+        "endDate": "終了日",
+        "export": "エクスポート",
+        "cancel": "キャンセル"
+      },
+      "table": {
+        "appName": "アプリ名",
+        "totalPaid": "合計支払額",
+        "payments": "支払い回数",
+        "avgPayment": "平均支払額",
+        "actions": "操作",
+        "details": "詳細",
+        "showing": "{total}件中{start}〜{end}件"
+      },
+      "transactionTable": {
+        "type": "タイプ",
+        "amount": "金額",
+        "date": "日付",
+        "blockHeight": "ブロック高",
+        "txid": "トランザクションID",
+        "free": "無料",
+        "types": {
+          "register": "登録",
+          "update": "更新",
+          "renewal": "更新（継続）"
+        }
+      },
+      "types": {
+        "appregister": "登録",
+        "appupdate": "更新"
+      },
+      "stats": {
+        "transactions": "トランザクション",
+        "registered": "登録済み",
+        "updated": "更新済み",
+        "averageCost": "平均コスト",
+        "highestPayment": "最高支払額"
+      },
+      "chart": {
+        "title": "支払いトレンド",
+        "transactions": "トランザクション",
+        "last7Days": "過去7日間",
+        "cumulativeTotalPayments": "累積合計支払額",
+        "spendingBreakdown": "支出内訳",
+        "appLabel": "アプリ",
+        "viewLabel": "表示",
+        "periodLabel": "期間",
+        "metricLabel": "指標",
+        "filterByApp": "検索...",
+        "searchApps": "アプリを検索...",
+        "timeRanges": {
+          "7d": "7日間",
+          "30d": "30日間",
+          "90d": "90日間",
+          "1y": "1年間",
+          "all": "全期間"
+        },
+        "displayModes": {
+          "periodTotal": "期間合計",
+          "cumulative": "累積"
+        },
+        "aggregation": {
+          "daily": "日次",
+          "weekly": "週次",
+          "monthly": "月次"
+        }
+      }
+    },
     "costCalculator": {
       "title": "アプリのホスティングコスト計算ツール",
       "subtitle": "月額 0.99 ドルから始まる手頃な分散型ホスティング - 正確なコストを計算します",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "請求と支払い",
+    "logout": "ログアウト"
   }
 }

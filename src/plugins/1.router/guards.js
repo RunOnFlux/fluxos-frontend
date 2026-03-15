@@ -45,6 +45,13 @@ export const setupGuards = router => {
       }
     }
 
+    // ✅ Billing page requires zelid authentication
+    if (to.path.startsWith('/billing/')) {
+      if (!auth || !auth.zelid) {
+        return next('/')
+      }
+    }
+
     // ✅ Additional app-level restriction for /apps/manage/:appName
     if (to.path.startsWith('/apps/manage/') && to.params.appName ) {
       const userPrivilege = fluxStore.privilege

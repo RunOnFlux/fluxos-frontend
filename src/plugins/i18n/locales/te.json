@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "బిల్లింగ్ మరియు చెల్లింపులు",
+      "subtitle": "మీ Flux యాప్ చెల్లింపు చరిత్రను ట్రాక్ చేయండి",
+      "loading": "బిల్లింగ్ డేటా లోడ్ అవుతోంది...",
+      "fetchingPaymentHistory": "మీ చెల్లింపు చరిత్ర తీసుకోబడుతోంది",
+      "noPaymentHistory": "చెల్లింపు చరిత్ర లేదు",
+      "noPaymentsYet": "మీకు ఇంకా యాప్ చెల్లింపులు లేవు. చెల్లింపులు ట్రాక్ చేయడం ప్రారంభించడానికి యాప్‌ను నమోదు చేయండి.",
+      "export": "ఎగుమతి చేయండి",
+      "currentlyRunningApps": "ప్రస్తుతం నడుస్తున్న యాప్‌లు",
+      "loadingApps": "మీ నడుస్తున్న యాప్‌లు లోడ్ అవుతున్నాయి...",
+      "noAppsRunning": "ప్రస్తుతం యాప్‌లు ఏవీ నడవడం లేదు",
+      "instance": "ఇన్‌స్టాన్స్",
+      "instances": "ఇన్‌స్టాన్స్‌లు",
+      "paymentSummary": "చెల్లింపు సారాంశం",
+      "totalPaid": "మొత్తం చెల్లించారు",
+      "applications": "అప్లికేషన్‌లు",
+      "firstTransaction": "మొదటి లావాదేవీ",
+      "lastTransaction": "చివరి లావాదేవీ",
+      "paymentHistory": "చెల్లింపు చరిత్ర",
+      "filterByType": "రకం ద్వారా వడపోయండి",
+      "allTypes": "అన్ని రకాలు",
+      "searchByName": "వెతకండి...",
+      "noTransactionsFound": "లావాదేవీలు కనుగొనబడలేదు",
+      "noTransactionsMatch": "మీ శోధన ప్రమాణాలకు సరిపోయే లావాదేవీలు లేవు",
+      "exportDialog": {
+        "title": "చెల్లింపు చరిత్రను ఎగుమతి చేయండి",
+        "format": "ఎగుమతి ఆకృతి",
+        "selectFormat": "ఎగుమతి ఆకృతిని ఎంచుకోండి",
+        "dateRange": "తేదీ పరిధి",
+        "allTime": "అన్ని సమయం",
+        "last30Days": "గత 30 రోజులు",
+        "last90Days": "గత 90 రోజులు",
+        "lastYear": "గత సంవత్సరం",
+        "customRange": "అనుకూల పరిధి",
+        "startDate": "ప్రారంభ తేదీ",
+        "endDate": "ముగింపు తేదీ",
+        "export": "ఎగుమతి చేయండి",
+        "cancel": "రద్దు చేయండి"
+      },
+      "table": {
+        "appName": "యాప్ పేరు",
+        "totalPaid": "మొత్తం చెల్లించారు",
+        "payments": "చెల్లింపులు",
+        "avgPayment": "సగటు చెల్లింపు",
+        "actions": "చర్యలు",
+        "details": "వివరాలు",
+        "showing": "{total} లో {start} నుండి {end} వరకు"
+      },
+      "transactionTable": {
+        "type": "రకం",
+        "amount": "మొత్తం",
+        "date": "తేదీ",
+        "blockHeight": "బ్లాక్ ఎత్తు",
+        "txid": "లావాదేవీ ID",
+        "free": "ఉచితం",
+        "types": {
+          "register": "నమోదు",
+          "update": "నవీకరణ",
+          "renewal": "పునరుద్ధరణ"
+        }
+      },
+      "types": {
+        "appregister": "నమోదు",
+        "appupdate": "నవీకరణ"
+      },
+      "stats": {
+        "transactions": "లావాదేవీలు",
+        "registered": "నమోదు చేయబడింది",
+        "updated": "నవీకరించబడింది",
+        "averageCost": "సగటు ఖర్చు",
+        "highestPayment": "అత్యధిక చెల్లింపు"
+      },
+      "chart": {
+        "title": "చెల్లింపు ధోరణులు",
+        "transactions": "లావాదేవీలు",
+        "last7Days": "గత 7 రోజులు",
+        "cumulativeTotalPayments": "సంచిత మొత్తం చెల్లింపులు",
+        "spendingBreakdown": "వ్యయ విభజన",
+        "appLabel": "యాప్",
+        "viewLabel": "వీక్షణ",
+        "periodLabel": "కాలం",
+        "metricLabel": "మెట్రిక్",
+        "filterByApp": "వెతకండి...",
+        "searchApps": "యాప్‌లు వెతకండి...",
+        "timeRanges": {
+          "7d": "7 రోజులు",
+          "30d": "30 రోజులు",
+          "90d": "90 రోజులు",
+          "1y": "1 సంవత్సరం",
+          "all": "అన్ని సమయం"
+        },
+        "displayModes": {
+          "periodTotal": "కాల మొత్తం",
+          "cumulative": "సంచిత"
+        },
+        "aggregation": {
+          "daily": "రోజువారీ",
+          "weekly": "వారపు",
+          "monthly": "నెలవారీ"
+        }
+      }
+    },
     "costCalculator": {
       "title": "యాప్ హోస్టింగ్ ఖర్చు కాలిక్యులేటర్",
       "subtitle": "సరసమైన వికేంద్రీకృత హోస్టింగ్ $0.99/నెలకు ప్రారంభమవుతుంది - మీ ఖచ్చితమైన ఖర్చులను లెక్కించండి",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "బిల్లింగ్ మరియు చెల్లింపులు",
+    "logout": "లాగ్ అవుట్"
   }
 }

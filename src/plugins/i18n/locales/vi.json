@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Hóa đơn và Thanh toán",
+      "subtitle": "Theo dõi lịch sử thanh toán ứng dụng Flux của bạn",
+      "loading": "Đang tải dữ liệu hóa đơn...",
+      "fetchingPaymentHistory": "Đang lấy lịch sử thanh toán của bạn",
+      "noPaymentHistory": "Không có lịch sử thanh toán",
+      "noPaymentsYet": "Bạn chưa có thanh toán ứng dụng nào. Đăng ký ứng dụng để bắt đầu theo dõi thanh toán.",
+      "export": "Xuất",
+      "currentlyRunningApps": "Ứng dụng đang chạy",
+      "loadingApps": "Đang tải ứng dụng đang chạy của bạn...",
+      "noAppsRunning": "Hiện không có ứng dụng nào đang chạy",
+      "instance": "Phiên bản",
+      "instances": "Phiên bản",
+      "paymentSummary": "Tóm tắt thanh toán",
+      "totalPaid": "Tổng đã trả",
+      "applications": "Ứng dụng",
+      "firstTransaction": "Giao dịch đầu tiên",
+      "lastTransaction": "Giao dịch cuối cùng",
+      "paymentHistory": "Lịch sử thanh toán",
+      "filterByType": "Lọc theo loại",
+      "allTypes": "Tất cả loại",
+      "searchByName": "Tìm kiếm...",
+      "noTransactionsFound": "Không tìm thấy giao dịch",
+      "noTransactionsMatch": "Không có giao dịch nào phù hợp với tiêu chí tìm kiếm",
+      "exportDialog": {
+        "title": "Xuất lịch sử thanh toán",
+        "format": "Định dạng xuất",
+        "selectFormat": "Chọn định dạng xuất",
+        "dateRange": "Phạm vi ngày",
+        "allTime": "Tất cả thời gian",
+        "last30Days": "30 ngày qua",
+        "last90Days": "90 ngày qua",
+        "lastYear": "Năm qua",
+        "customRange": "Phạm vi tùy chỉnh",
+        "startDate": "Ngày bắt đầu",
+        "endDate": "Ngày kết thúc",
+        "export": "Xuất",
+        "cancel": "Hủy"
+      },
+      "table": {
+        "appName": "Tên ứng dụng",
+        "totalPaid": "Tổng đã trả",
+        "payments": "Thanh toán",
+        "avgPayment": "Thanh toán trung bình",
+        "actions": "Thao tác",
+        "details": "Chi tiết",
+        "showing": "{start} đến {end} trong {total}"
+      },
+      "transactionTable": {
+        "type": "Loại",
+        "amount": "Số tiền",
+        "date": "Ngày",
+        "blockHeight": "Chiều cao khối",
+        "txid": "ID giao dịch",
+        "free": "MIỄN PHÍ",
+        "types": {
+          "register": "Đăng ký",
+          "update": "Cập nhật",
+          "renewal": "Gia hạn"
+        }
+      },
+      "types": {
+        "appregister": "Đăng ký",
+        "appupdate": "Cập nhật"
+      },
+      "stats": {
+        "transactions": "Giao dịch",
+        "registered": "Đã đăng ký",
+        "updated": "Đã cập nhật",
+        "averageCost": "Chi phí trung bình",
+        "highestPayment": "Thanh toán cao nhất"
+      },
+      "chart": {
+        "title": "XU HƯỚNG THANH TOÁN",
+        "transactions": "Giao dịch",
+        "last7Days": "7 ngày qua",
+        "cumulativeTotalPayments": "Tổng thanh toán tích lũy",
+        "spendingBreakdown": "phân tích chi tiêu",
+        "appLabel": "ỨNG DỤNG",
+        "viewLabel": "XEM",
+        "periodLabel": "THỜI KỲ",
+        "metricLabel": "CHỈ SỐ",
+        "filterByApp": "Tìm kiếm...",
+        "searchApps": "Tìm kiếm ứng dụng...",
+        "timeRanges": {
+          "7d": "7 ngày",
+          "30d": "30 ngày",
+          "90d": "90 ngày",
+          "1y": "1 năm",
+          "all": "Tất cả thời gian"
+        },
+        "displayModes": {
+          "periodTotal": "Tổng kỳ",
+          "cumulative": "Tích lũy"
+        },
+        "aggregation": {
+          "daily": "Hàng ngày",
+          "weekly": "Hàng tuần",
+          "monthly": "Hàng tháng"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Máy tính chi phí lưu trữ ứng dụng",
       "subtitle": "Dịch vụ lưu trữ phi tập trung giá cả phải chăng bắt đầu từ 0,99 USD/tháng - Tính toán chi phí chính xác của bạn",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Hóa đơn và Thanh toán",
+    "logout": "Đăng xuất"
   }
 }

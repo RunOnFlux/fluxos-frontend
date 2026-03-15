@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "பில்லிங் மற்றும் கொடுப்பனவுகள்",
+      "subtitle": "உங்கள் Flux ஆப் கொடுப்பனவு வரலாற்றை கண்காணிக்கவும்",
+      "loading": "பில்லிங் தரவு ஏற்றுகிறது...",
+      "fetchingPaymentHistory": "உங்கள் கொடுப்பனவு வரலாறு பெறப்படுகிறது",
+      "noPaymentHistory": "கொடுப்பனவு வரலாறு இல்லை",
+      "noPaymentsYet": "இன்னும் ஆப் கொடுப்பனவுகள் இல்லை. கொடுப்பனவுகளை கண்காணிக்க ஒரு ஆப்பை பதிவு செய்யுங்கள்.",
+      "export": "ஏற்றுமதி",
+      "currentlyRunningApps": "தற்போது இயங்கும் ஆப்கள்",
+      "loadingApps": "உங்கள் இயங்கும் ஆப்கள் ஏற்றுகிறது...",
+      "noAppsRunning": "தற்போது எந்த ஆப்பும் இயங்கவில்லை",
+      "instance": "நிகழ்வு",
+      "instances": "நிகழ்வுகள்",
+      "paymentSummary": "கொடுப்பனவு சுருக்கம்",
+      "totalPaid": "மொத்தம் செலுத்தியது",
+      "applications": "பயன்பாடுகள்",
+      "firstTransaction": "முதல் பரிவர்த்தனை",
+      "lastTransaction": "கடைசி பரிவர்த்தனை",
+      "paymentHistory": "கொடுப்பனவு வரலாறு",
+      "filterByType": "வகையால் வடிகட்டு",
+      "allTypes": "அனைத்து வகைகள்",
+      "searchByName": "தேடு...",
+      "noTransactionsFound": "பரிவர்த்தனைகள் கிடைக்கவில்லை",
+      "noTransactionsMatch": "உங்கள் தேடல் அளவுகோல்களுடன் எந்த பரிவர்த்தனையும் பொருந்தவில்லை",
+      "exportDialog": {
+        "title": "கொடுப்பனவு வரலாற்றை ஏற்றுமதி செய்",
+        "format": "ஏற்றுமதி வடிவம்",
+        "selectFormat": "ஏற்றுமதி வடிவத்தை தேர்ந்தெடுக்கவும்",
+        "dateRange": "தேதி வரம்பு",
+        "allTime": "எல்லா நேரமும்",
+        "last30Days": "கடந்த 30 நாட்கள்",
+        "last90Days": "கடந்த 90 நாட்கள்",
+        "lastYear": "கடந்த ஆண்டு",
+        "customRange": "தனிப்பயன் வரம்பு",
+        "startDate": "தொடக்க தேதி",
+        "endDate": "முடிவு தேதி",
+        "export": "ஏற்றுமதி",
+        "cancel": "ரத்து செய்"
+      },
+      "table": {
+        "appName": "ஆப் பெயர்",
+        "totalPaid": "மொத்தம் செலுத்தியது",
+        "payments": "கொடுப்பனவுகள்",
+        "avgPayment": "சராசரி கொடுப்பனவு",
+        "actions": "செயல்கள்",
+        "details": "விவரங்கள்",
+        "showing": "{total} இல் {start} முதல் {end} வரை"
+      },
+      "transactionTable": {
+        "type": "வகை",
+        "amount": "தொகை",
+        "date": "தேதி",
+        "blockHeight": "தொகுதி உயரம்",
+        "txid": "பரிவர்த்தனை ID",
+        "free": "இலவசம்",
+        "types": {
+          "register": "பதிவு",
+          "update": "புதுப்பிப்பு",
+          "renewal": "புதுப்பித்தல்"
+        }
+      },
+      "types": {
+        "appregister": "பதிவு",
+        "appupdate": "புதுப்பிப்பு"
+      },
+      "stats": {
+        "transactions": "பரிவர்த்தனைகள்",
+        "registered": "பதிவு செய்யப்பட்டது",
+        "updated": "புதுப்பிக்கப்பட்டது",
+        "averageCost": "சராசரி செலவு",
+        "highestPayment": "மிக அதிக கொடுப்பனவு"
+      },
+      "chart": {
+        "title": "கொடுப்பனவு போக்குகள்",
+        "transactions": "பரிவர்த்தனைகள்",
+        "last7Days": "கடந்த 7 நாட்கள்",
+        "cumulativeTotalPayments": "திரட்டப்பட்ட மொத்த கொடுப்பனவுகள்",
+        "spendingBreakdown": "செலவு விவரம்",
+        "appLabel": "ஆப்",
+        "viewLabel": "காட்சி",
+        "periodLabel": "காலம்",
+        "metricLabel": "அளவீடு",
+        "filterByApp": "தேடு...",
+        "searchApps": "ஆப்கள் தேடு...",
+        "timeRanges": {
+          "7d": "7 நாட்கள்",
+          "30d": "30 நாட்கள்",
+          "90d": "90 நாட்கள்",
+          "1y": "1 ஆண்டு",
+          "all": "எல்லா நேரமும்"
+        },
+        "displayModes": {
+          "periodTotal": "காலகட்ட மொத்தம்",
+          "cumulative": "திரட்டப்பட்டது"
+        },
+        "aggregation": {
+          "daily": "தினசரி",
+          "weekly": "வாராந்திர",
+          "monthly": "மாதாந்திர"
+        }
+      }
+    },
     "costCalculator": {
       "title": "ஆப் ஹோஸ்டிங் செலவு கால்குலேட்டர்",
       "subtitle": "மலிவு விலையில் பரவலாக்கப்பட்ட ஹோஸ்டிங் $0.99/மாதம் தொடங்குகிறது - உங்கள் சரியான செலவுகளைக் கணக்கிடுங்கள்",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "பில்லிங் மற்றும் கொடுப்பனவுகள்",
+    "logout": "வெளியேறு"
   }
 }

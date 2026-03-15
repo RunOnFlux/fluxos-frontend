@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "ਬਿਲਿੰਗ ਅਤੇ ਭੁਗਤਾਨ",
+      "subtitle": "ਆਪਣੇ Flux ਐਪ ਦੇ ਭੁਗਤਾਨ ਇਤਿਹਾਸ ਨੂੰ ਟ੍ਰੈਕ ਕਰੋ",
+      "loading": "ਬਿਲਿੰਗ ਡੇਟਾ ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...",
+      "fetchingPaymentHistory": "ਤੁਹਾਡਾ ਭੁਗਤਾਨ ਇਤਿਹਾਸ ਪ੍ਰਾਪਤ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ",
+      "noPaymentHistory": "ਕੋਈ ਭੁਗਤਾਨ ਇਤਿਹਾਸ ਨਹੀਂ",
+      "noPaymentsYet": "ਅਜੇ ਤੱਕ ਕੋਈ ਐਪ ਭੁਗਤਾਨ ਨਹੀਂ। ਭੁਗਤਾਨ ਟ੍ਰੈਕ ਕਰਨਾ ਸ਼ੁਰੂ ਕਰਨ ਲਈ ਇੱਕ ਐਪ ਰਜਿਸਟਰ ਕਰੋ।",
+      "export": "ਨਿਰਯਾਤ ਕਰੋ",
+      "currentlyRunningApps": "ਵਰਤਮਾਨ ਵਿੱਚ ਚੱਲ ਰਹੇ ਐਪਸ",
+      "loadingApps": "ਤੁਹਾਡੇ ਚੱਲ ਰਹੇ ਐਪਸ ਲੋਡ ਹੋ ਰਹੇ ਹਨ...",
+      "noAppsRunning": "ਵਰਤਮਾਨ ਵਿੱਚ ਕੋਈ ਐਪ ਨਹੀਂ ਚੱਲ ਰਿਹਾ",
+      "instance": "ਇੰਸਟੈਂਸ",
+      "instances": "ਇੰਸਟੈਂਸ",
+      "paymentSummary": "ਭੁਗਤਾਨ ਸੰਖੇਪ",
+      "totalPaid": "ਕੁੱਲ ਭੁਗਤਾਨ",
+      "applications": "ਐਪਲੀਕੇਸ਼ਨਾਂ",
+      "firstTransaction": "ਪਹਿਲਾ ਲੈਣ-ਦੇਣ",
+      "lastTransaction": "ਆਖਰੀ ਲੈਣ-ਦੇਣ",
+      "paymentHistory": "ਭੁਗਤਾਨ ਇਤਿਹਾਸ",
+      "filterByType": "ਕਿਸਮ ਅਨੁਸਾਰ ਫਿਲਟਰ ਕਰੋ",
+      "allTypes": "ਸਾਰੀਆਂ ਕਿਸਮਾਂ",
+      "searchByName": "ਖੋਜੋ...",
+      "noTransactionsFound": "ਕੋਈ ਲੈਣ-ਦੇਣ ਨਹੀਂ ਮਿਲਿਆ",
+      "noTransactionsMatch": "ਤੁਹਾਡੇ ਖੋਜ ਮਾਪਦੰਡ ਨਾਲ ਕੋਈ ਲੈਣ-ਦੇਣ ਨਹੀਂ ਮਿਲਦਾ",
+      "exportDialog": {
+        "title": "ਭੁਗਤਾਨ ਇਤਿਹਾਸ ਨਿਰਯਾਤ ਕਰੋ",
+        "format": "ਨਿਰਯਾਤ ਫਾਰਮੈਟ",
+        "selectFormat": "ਨਿਰਯਾਤ ਫਾਰਮੈਟ ਚੁਣੋ",
+        "dateRange": "ਮਿਤੀ ਸੀਮਾ",
+        "allTime": "ਸਾਰਾ ਸਮਾਂ",
+        "last30Days": "ਪਿਛਲੇ 30 ਦਿਨ",
+        "last90Days": "ਪਿਛਲੇ 90 ਦਿਨ",
+        "lastYear": "ਪਿਛਲਾ ਸਾਲ",
+        "customRange": "ਕਸਟਮ ਸੀਮਾ",
+        "startDate": "ਸ਼ੁਰੂਆਤੀ ਮਿਤੀ",
+        "endDate": "ਅੰਤਿਮ ਮਿਤੀ",
+        "export": "ਨਿਰਯਾਤ ਕਰੋ",
+        "cancel": "ਰੱਦ ਕਰੋ"
+      },
+      "table": {
+        "appName": "ਐਪ ਦਾ ਨਾਮ",
+        "totalPaid": "ਕੁੱਲ ਭੁਗਤਾਨ",
+        "payments": "ਭੁਗਤਾਨ",
+        "avgPayment": "ਔਸਤ ਭੁਗਤਾਨ",
+        "actions": "ਕਾਰਵਾਈਆਂ",
+        "details": "ਵੇਰਵੇ",
+        "showing": "{total} ਵਿੱਚੋਂ {start} ਤੋਂ {end}"
+      },
+      "transactionTable": {
+        "type": "ਕਿਸਮ",
+        "amount": "ਰਕਮ",
+        "date": "ਮਿਤੀ",
+        "blockHeight": "ਬਲਾਕ ਉਚਾਈ",
+        "txid": "ਲੈਣ-ਦੇਣ ID",
+        "free": "ਮੁਫ਼ਤ",
+        "types": {
+          "register": "ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
+          "update": "ਅਪਡੇਟ",
+          "renewal": "ਨਵੀਨੀਕਰਣ"
+        }
+      },
+      "types": {
+        "appregister": "ਰਜਿਸਟ੍ਰੇਸ਼ਨ",
+        "appupdate": "ਅਪਡੇਟ"
+      },
+      "stats": {
+        "transactions": "ਲੈਣ-ਦੇਣ",
+        "registered": "ਰਜਿਸਟਰਡ",
+        "updated": "ਅਪਡੇਟ ਕੀਤਾ",
+        "averageCost": "ਔਸਤ ਲਾਗਤ",
+        "highestPayment": "ਸਭ ਤੋਂ ਉੱਚਾ ਭੁਗਤਾਨ"
+      },
+      "chart": {
+        "title": "ਭੁਗਤਾਨ ਰੁਝਾਨ",
+        "transactions": "ਲੈਣ-ਦੇਣ",
+        "last7Days": "ਪਿਛਲੇ 7 ਦਿਨ",
+        "cumulativeTotalPayments": "ਸੰਚਿਤ ਕੁੱਲ ਭੁਗਤਾਨ",
+        "spendingBreakdown": "ਖਰਚੇ ਦਾ ਵੇਰਵਾ",
+        "appLabel": "ਐਪ",
+        "viewLabel": "ਦ੍ਰਿਸ਼",
+        "periodLabel": "ਅਵਧੀ",
+        "metricLabel": "ਮੈਟ੍ਰਿਕ",
+        "filterByApp": "ਖੋਜੋ...",
+        "searchApps": "ਐਪਸ ਖੋਜੋ...",
+        "timeRanges": {
+          "7d": "7 ਦਿਨ",
+          "30d": "30 ਦਿਨ",
+          "90d": "90 ਦਿਨ",
+          "1y": "1 ਸਾਲ",
+          "all": "ਸਾਰਾ ਸਮਾਂ"
+        },
+        "displayModes": {
+          "periodTotal": "ਅਵਧੀ ਕੁੱਲ",
+          "cumulative": "ਸੰਚਿਤ"
+        },
+        "aggregation": {
+          "daily": "ਰੋਜ਼ਾਨਾ",
+          "weekly": "ਹਫ਼ਤਾਵਾਰੀ",
+          "monthly": "ਮਾਸਿਕ"
+        }
+      }
+    },
     "costCalculator": {
       "title": "ਐਪ ਹੋਸਟਿੰਗ ਲਾਗਤ ਕੈਲਕੁਲੇਟਰ",
       "subtitle": "$0.99/ਮਹੀਨੇ ਤੋਂ ਸ਼ੁਰੂ ਹੋਣ ਵਾਲੀ ਕਿਫਾਇਤੀ ਵਿਕੇਂਦਰੀਕ੍ਰਿਤ ਹੋਸਟਿੰਗ - ਆਪਣੀਆਂ ਸਹੀ ਲਾਗਤਾਂ ਦੀ ਗਣਨਾ ਕਰੋ",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "ਬਿਲਿੰਗ ਅਤੇ ਭੁਗਤਾਨ",
+    "logout": "ਲੌਗ ਆਉਟ"
   }
 }

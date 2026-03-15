@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Faturalama ve Ödemeler",
+      "subtitle": "Flux uygulamanızın ödeme geçmişini takip edin",
+      "loading": "Faturalama verileri yükleniyor...",
+      "fetchingPaymentHistory": "Ödeme geçmişiniz alınıyor",
+      "noPaymentHistory": "Ödeme geçmişi yok",
+      "noPaymentsYet": "Henüz uygulama ödemesi yok. Ödemeleri takip etmeye başlamak için bir uygulama kaydedin.",
+      "export": "Dışa aktar",
+      "currentlyRunningApps": "Şu anda çalışan uygulamalar",
+      "loadingApps": "Çalışan uygulamalarınız yükleniyor...",
+      "noAppsRunning": "Şu anda çalışan uygulama yok",
+      "instance": "Örnek",
+      "instances": "Örnekler",
+      "paymentSummary": "Ödeme özeti",
+      "totalPaid": "Toplam ödenen",
+      "applications": "Uygulamalar",
+      "firstTransaction": "İlk işlem",
+      "lastTransaction": "Son işlem",
+      "paymentHistory": "Ödeme geçmişi",
+      "filterByType": "Türe göre filtrele",
+      "allTypes": "Tüm türler",
+      "searchByName": "Ara...",
+      "noTransactionsFound": "İşlem bulunamadı",
+      "noTransactionsMatch": "Arama kriterlerinize uyan işlem yok",
+      "exportDialog": {
+        "title": "Ödeme geçmişini dışa aktar",
+        "format": "Dışa aktarma biçimi",
+        "selectFormat": "Dışa aktarma biçimi seçin",
+        "dateRange": "Tarih aralığı",
+        "allTime": "Tüm zamanlar",
+        "last30Days": "Son 30 gün",
+        "last90Days": "Son 90 gün",
+        "lastYear": "Geçen yıl",
+        "customRange": "Özel aralık",
+        "startDate": "Başlangıç tarihi",
+        "endDate": "Bitiş tarihi",
+        "export": "Dışa aktar",
+        "cancel": "İptal"
+      },
+      "table": {
+        "appName": "Uygulama adı",
+        "totalPaid": "Toplam ödenen",
+        "payments": "Ödemeler",
+        "avgPayment": "Ortalama ödeme",
+        "actions": "İşlemler",
+        "details": "Ayrıntılar",
+        "showing": "{total} içinde {start}–{end}"
+      },
+      "transactionTable": {
+        "type": "Tür",
+        "amount": "Tutar",
+        "date": "Tarih",
+        "blockHeight": "Blok yüksekliği",
+        "txid": "İşlem kimliği",
+        "free": "ÜCRETSİZ",
+        "types": {
+          "register": "Kayıt",
+          "update": "Güncelleme",
+          "renewal": "Yenileme"
+        }
+      },
+      "types": {
+        "appregister": "Kayıt",
+        "appupdate": "Güncelleme"
+      },
+      "stats": {
+        "transactions": "İşlemler",
+        "registered": "Kayıtlı",
+        "updated": "Güncellendi",
+        "averageCost": "Ortalama maliyet",
+        "highestPayment": "En yüksek ödeme"
+      },
+      "chart": {
+        "title": "ÖDEME TRENDLERİ",
+        "transactions": "İşlemler",
+        "last7Days": "Son 7 gün",
+        "cumulativeTotalPayments": "Kümülatif toplam ödemeler",
+        "spendingBreakdown": "harcama dağılımı",
+        "appLabel": "UYGULAMA",
+        "viewLabel": "GÖRÜNÜM",
+        "periodLabel": "DÖNEM",
+        "metricLabel": "METRİK",
+        "filterByApp": "Ara...",
+        "searchApps": "Uygulamaları ara...",
+        "timeRanges": {
+          "7d": "7 gün",
+          "30d": "30 gün",
+          "90d": "90 gün",
+          "1y": "1 yıl",
+          "all": "Tüm zamanlar"
+        },
+        "displayModes": {
+          "periodTotal": "Dönem toplamı",
+          "cumulative": "Kümülatif"
+        },
+        "aggregation": {
+          "daily": "Günlük",
+          "weekly": "Haftalık",
+          "monthly": "Aylık"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Uygulama Barındırma Maliyeti Hesaplayıcı",
       "subtitle": "Aylık 0,99$'dan başlayan uygun fiyatlı merkezi olmayan barındırma - Maliyetlerinizi tam olarak hesaplayın",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Faturalama ve Ödemeler",
+    "logout": "Çıkış yap"
   }
 }

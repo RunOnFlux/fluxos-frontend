@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "बिलिंग और भुगतान",
+      "subtitle": "अपने Flux ऐप के भुगतान इतिहास को ट्रैक करें",
+      "loading": "बिलिंग डेटा लोड हो रहा है...",
+      "fetchingPaymentHistory": "आपका भुगतान इतिहास प्राप्त किया जा रहा है",
+      "noPaymentHistory": "कोई भुगतान इतिहास नहीं",
+      "noPaymentsYet": "अभी तक कोई ऐप भुगतान नहीं है। भुगतान ट्रैक करना शुरू करने के लिए एक ऐप पंजीकृत करें।",
+      "export": "निर्यात करें",
+      "currentlyRunningApps": "वर्तमान में चल रहे ऐप्स",
+      "loadingApps": "आपके चल रहे ऐप्स लोड हो रहे हैं...",
+      "noAppsRunning": "वर्तमान में कोई ऐप नहीं चल रहा",
+      "instance": "इंस्टेंस",
+      "instances": "इंस्टेंस",
+      "paymentSummary": "भुगतान सारांश",
+      "totalPaid": "कुल भुगतान",
+      "applications": "एप्लिकेशन",
+      "firstTransaction": "पहला लेनदेन",
+      "lastTransaction": "अंतिम लेनदेन",
+      "paymentHistory": "भुगतान इतिहास",
+      "filterByType": "प्रकार के अनुसार फ़िल्टर करें",
+      "allTypes": "सभी प्रकार",
+      "searchByName": "खोजें...",
+      "noTransactionsFound": "कोई लेनदेन नहीं मिला",
+      "noTransactionsMatch": "कोई भी लेनदेन आपके खोज मानदंड से मेल नहीं खाता",
+      "exportDialog": {
+        "title": "भुगतान इतिहास निर्यात करें",
+        "format": "निर्यात प्रारूप",
+        "selectFormat": "निर्यात प्रारूप चुनें",
+        "dateRange": "दिनांक सीमा",
+        "allTime": "सब समय",
+        "last30Days": "पिछले 30 दिन",
+        "last90Days": "पिछले 90 दिन",
+        "lastYear": "पिछला साल",
+        "customRange": "कस्टम सीमा",
+        "startDate": "प्रारंभ तिथि",
+        "endDate": "समाप्ति तिथि",
+        "export": "निर्यात करें",
+        "cancel": "रद्द करें"
+      },
+      "table": {
+        "appName": "ऐप नाम",
+        "totalPaid": "कुल भुगतान",
+        "payments": "भुगतान",
+        "avgPayment": "औसत भुगतान",
+        "actions": "कार्रवाइयाँ",
+        "details": "विवरण",
+        "showing": "{total} में से {start} से {end}"
+      },
+      "transactionTable": {
+        "type": "प्रकार",
+        "amount": "राशि",
+        "date": "तिथि",
+        "blockHeight": "ब्लॉक ऊँचाई",
+        "txid": "लेनदेन ID",
+        "free": "मुफ़्त",
+        "types": {
+          "register": "पंजीकरण",
+          "update": "अपडेट",
+          "renewal": "नवीनीकरण"
+        }
+      },
+      "types": {
+        "appregister": "पंजीकरण",
+        "appupdate": "अपडेट"
+      },
+      "stats": {
+        "transactions": "लेनदेन",
+        "registered": "पंजीकृत",
+        "updated": "अपडेट",
+        "averageCost": "औसत लागत",
+        "highestPayment": "सबसे अधिक भुगतान"
+      },
+      "chart": {
+        "title": "भुगतान रुझान",
+        "transactions": "लेनदेन",
+        "last7Days": "पिछले 7 दिन",
+        "cumulativeTotalPayments": "संचित कुल भुगतान",
+        "spendingBreakdown": "खर्च का विवरण",
+        "appLabel": "ऐप",
+        "viewLabel": "दृश्य",
+        "periodLabel": "अवधि",
+        "metricLabel": "मेट्रिक",
+        "filterByApp": "खोजें...",
+        "searchApps": "ऐप्स खोजें...",
+        "timeRanges": {
+          "7d": "7 दिन",
+          "30d": "30 दिन",
+          "90d": "90 दिन",
+          "1y": "1 साल",
+          "all": "सब समय"
+        },
+        "displayModes": {
+          "periodTotal": "अवधि कुल",
+          "cumulative": "संचित"
+        },
+        "aggregation": {
+          "daily": "दैनिक",
+          "weekly": "साप्ताहिक",
+          "monthly": "मासिक"
+        }
+      }
+    },
     "costCalculator": {
       "title": "ऐप होस्टिंग लागत कैलकुलेटर",
       "subtitle": "$0.99/माह से शुरू होने वाली किफायती विकेन्द्रीकृत होस्टिंग - अपनी सटीक लागतों की गणना करें",
@@ -5302,5 +5404,9 @@
         "category": "मुख्यमंत्रियों"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "बिलिंग और भुगतान",
+    "logout": "लॉग आउट"
   }
 }

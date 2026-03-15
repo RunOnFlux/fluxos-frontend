@@ -2127,6 +2127,10 @@
       }
     }
   },
+  "userProfile": {
+    "billingAndPayments": "Billing & Payments",
+    "logout": "Logout"
+  },
   "pages": {
     "administration": {
       "systemInfo": {
@@ -3446,6 +3450,108 @@
             "deployWithDocker": "Deploy with Docker",
             "fullControlDeployment": "Full control with custom Docker containers"
           }
+        }
+      }
+    },
+    "billing": {
+      "title": "Billing & Payments",
+      "subtitle": "Track your Flux app payment history",
+      "loading": "Loading Billing Data...",
+      "fetchingPaymentHistory": "Fetching your payment history",
+      "noPaymentHistory": "No Payment History",
+      "noPaymentsYet": "You don't have any app payments yet. Register an app to start tracking payments.",
+      "export": "Export",
+      "currentlyRunningApps": "Currently Running Apps",
+      "loadingApps": "Loading your running apps...",
+      "noAppsRunning": "No apps are currently running",
+      "instance": "Instance",
+      "instances": "Instances",
+      "paymentSummary": "Payment Summary",
+      "totalPaid": "Total Paid",
+      "applications": "Applications",
+      "firstTransaction": "First Transaction",
+      "lastTransaction": "Last Transaction",
+      "paymentHistory": "Payment History",
+      "filterByType": "Filter by Type",
+      "allTypes": "All Types",
+      "searchByName": "Search...",
+      "noTransactionsFound": "No transactions found",
+      "noTransactionsMatch": "No transactions match your search criteria",
+      "exportDialog": {
+        "title": "Export Payment History",
+        "format": "Export Format",
+        "selectFormat": "Select export format",
+        "dateRange": "Date Range",
+        "allTime": "All Time",
+        "last30Days": "Last 30 Days",
+        "last90Days": "Last 90 Days",
+        "lastYear": "Last Year",
+        "customRange": "Custom Range",
+        "startDate": "Start Date",
+        "endDate": "End Date",
+        "export": "Export",
+        "cancel": "Cancel"
+      },
+      "table": {
+        "appName": "App Name",
+        "totalPaid": "Total Paid",
+        "payments": "Payments",
+        "avgPayment": "Avg Payment",
+        "actions": "Actions",
+        "details": "Details",
+        "showing": "{start} to {end} of {total}"
+      },
+      "transactionTable": {
+        "type": "Type",
+        "amount": "Amount",
+        "date": "Date",
+        "blockHeight": "Block Height",
+        "txid": "Transaction ID",
+        "free": "FREE",
+        "types": {
+          "register": "Registration",
+          "update": "Update",
+          "renewal": "Renewal"
+        }
+      },
+      "types": {
+        "appregister": "Registration",
+        "appupdate": "Update"
+      },
+      "stats": {
+        "transactions": "Transactions",
+        "registered": "Registered",
+        "updated": "Updated",
+        "averageCost": "Average Cost",
+        "highestPayment": "Highest Payment"
+      },
+      "chart": {
+        "title": "PAYMENT TRENDS",
+        "transactions": "Transactions",
+        "last7Days": "Last 7 Days",
+        "cumulativeTotalPayments": "Cumulative total payments",
+        "spendingBreakdown": "spending breakdown",
+        "appLabel": "APP",
+        "viewLabel": "VIEW",
+        "periodLabel": "PERIOD",
+        "metricLabel": "METRIC",
+        "filterByApp": "Search...",
+        "searchApps": "Search apps...",
+        "timeRanges": {
+          "7d": "7 Days",
+          "30d": "30 Days",
+          "90d": "90 Days",
+          "1y": "1 Year",
+          "all": "All Time"
+        },
+        "displayModes": {
+          "periodTotal": "Period Total",
+          "cumulative": "Cumulative"
+        },
+        "aggregation": {
+          "daily": "Daily",
+          "weekly": "Weekly",
+          "monthly": "Monthly"
         }
       }
     },

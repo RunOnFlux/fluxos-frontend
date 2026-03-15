@@ -3449,6 +3449,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Abrechnung & Zahlungen",
+      "subtitle": "Verfolgen Sie Ihren Flux-App-Zahlungsverlauf",
+      "loading": "Abrechnungsdaten werden geladen...",
+      "fetchingPaymentHistory": "Ihr Zahlungsverlauf wird abgerufen",
+      "noPaymentHistory": "Kein Zahlungsverlauf",
+      "noPaymentsYet": "Sie haben noch keine App-Zahlungen. Registrieren Sie eine App, um Zahlungen zu verfolgen.",
+      "export": "Exportieren",
+      "currentlyRunningApps": "Derzeit laufende Apps",
+      "loadingApps": "Ihre laufenden Apps werden geladen...",
+      "noAppsRunning": "Derzeit laufen keine Apps",
+      "instance": "Instanz",
+      "instances": "Instanzen",
+      "paymentSummary": "Zahlungsübersicht",
+      "totalPaid": "Gesamt bezahlt",
+      "applications": "Anwendungen",
+      "firstTransaction": "Erste Transaktion",
+      "lastTransaction": "Letzte Transaktion",
+      "paymentHistory": "Zahlungsverlauf",
+      "filterByType": "Nach Typ filtern",
+      "allTypes": "Alle Typen",
+      "searchByName": "Suchen...",
+      "noTransactionsFound": "Keine Transaktionen gefunden",
+      "noTransactionsMatch": "Keine Transaktionen entsprechen Ihren Suchkriterien",
+      "exportDialog": {
+        "title": "Zahlungsverlauf exportieren",
+        "format": "Exportformat",
+        "selectFormat": "Exportformat auswählen",
+        "dateRange": "Datumsbereich",
+        "allTime": "Gesamte Zeit",
+        "last30Days": "Letzte 30 Tage",
+        "last90Days": "Letzte 90 Tage",
+        "lastYear": "Letztes Jahr",
+        "customRange": "Benutzerdefinierter Bereich",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "export": "Exportieren",
+        "cancel": "Abbrechen"
+      },
+      "table": {
+        "appName": "App-Name",
+        "totalPaid": "Gesamt bezahlt",
+        "payments": "Zahlungen",
+        "avgPayment": "Ø Zahlung",
+        "actions": "Aktionen",
+        "details": "Details",
+        "showing": "{start} bis {end} von {total}"
+      },
+      "transactionTable": {
+        "type": "Typ",
+        "amount": "Betrag",
+        "date": "Datum",
+        "blockHeight": "Blockhöhe",
+        "txid": "Transaktions-ID",
+        "free": "KOSTENLOS",
+        "types": {
+          "register": "Registrierung",
+          "update": "Aktualisierung",
+          "renewal": "Verlängerung"
+        }
+      },
+      "types": {
+        "appregister": "Registrierung",
+        "appupdate": "Aktualisierung"
+      },
+      "stats": {
+        "transactions": "Transaktionen",
+        "registered": "Registriert",
+        "updated": "Aktualisiert",
+        "averageCost": "Durchschnittskosten",
+        "highestPayment": "Höchste Zahlung"
+      },
+      "chart": {
+        "title": "ZAHLUNGSTRENDS",
+        "transactions": "Transaktionen",
+        "last7Days": "Letzte 7 Tage",
+        "cumulativeTotalPayments": "Kumulierte Gesamtzahlungen",
+        "spendingBreakdown": "Ausgabenübersicht",
+        "appLabel": "APP",
+        "viewLabel": "ANSICHT",
+        "periodLabel": "ZEITRAUM",
+        "metricLabel": "METRIK",
+        "filterByApp": "Suchen...",
+        "searchApps": "Apps suchen...",
+        "timeRanges": {
+          "7d": "7 Tage",
+          "30d": "30 Tage",
+          "90d": "90 Tage",
+          "1y": "1 Jahr",
+          "all": "Gesamte Zeit"
+        },
+        "displayModes": {
+          "periodTotal": "Periodensumme",
+          "cumulative": "Kumulativ"
+        },
+        "aggregation": {
+          "daily": "Täglich",
+          "weekly": "Wöchentlich",
+          "monthly": "Monatlich"
+        }
+      }
+    },
     "costCalculator": {
       "title": "App-Hosting-Kostenrechner",
       "subtitle": "Erschwingliches dezentrales Hosting ab 0,99 $/Monat – Berechnen Sie Ihre genauen Kosten",
@@ -5303,5 +5405,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Abrechnung & Zahlungen",
+    "logout": "Abmelden"
   }
 }

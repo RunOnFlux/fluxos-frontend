@@ -984,6 +984,10 @@
       "loading": "Ładowanie Regulaminu..."
     }
   },
+  "userProfile": {
+    "billingAndPayments": "Płatności i rozliczenia",
+    "logout": "Wyloguj"
+  },
   "pages": {
     "apps": {
       "manage": {
@@ -3290,6 +3294,109 @@
       },
       "loading": "Ładowanie sklepu...",
       "maintenanceSubtitle": "Obecnie występują problemy techniczne ze sklepem. Nasz zespół pracuje nad jak najszybszym rozwiązaniem tego problemu."
+    },
+    "billing": {
+      "title": "Rozliczenia i Płatności",
+      "subtitle": "Śledź historię płatności za aplikacje Flux",
+      "loading": "Ładowanie Danych Rozliczeniowych...",
+      "fetchingPaymentHistory": "Pobieranie historii płatności",
+      "noPaymentHistory": "Brak Historii Płatności",
+      "noPaymentsYet": "Nie masz jeszcze żadnych płatności za aplikacje. Zarejestruj aplikację, aby rozpocząć śledzenie płatności.",
+      "export": "Eksportuj",
+      "currentlyRunningApps": "Lista Aktywnych Aplikacji",
+      "loadingApps": "Ładowanie działających aplikacji...",
+      "noAppsRunning": "Brak działających aplikacji",
+      "instance": "Instancja",
+      "instances": "Instancje",
+      "instancesGenitive": "Instancji",
+      "paymentSummary": "Podsumowanie Płatności",
+      "totalPaid": "Łącznie Zapłacono",
+      "applications": "Aplikacje",
+      "firstTransaction": "Pierwsza Transakcja",
+      "lastTransaction": "Ostatnia Transakcja",
+      "paymentHistory": "Historia Płatności",
+      "filterByType": "Filtruj po Typie",
+      "allTypes": "Wszystkie Typy",
+      "searchByName": "Szukaj...",
+      "noTransactionsFound": "Nie znaleziono transakcji",
+      "noTransactionsMatch": "Żadne transakcje nie pasują do kryteriów wyszukiwania",
+      "exportDialog": {
+        "title": "Eksportuj Historię Płatności",
+        "format": "Format Eksportu",
+        "selectFormat": "Wybierz format eksportu",
+        "dateRange": "Zakres Dat",
+        "allTime": "Cały Czas",
+        "last30Days": "Ostatnie 30 Dni",
+        "last90Days": "Ostatnie 90 Dni",
+        "lastYear": "Ostatni Rok",
+        "customRange": "Zakres Niestandardowy",
+        "startDate": "Data Rozpoczęcia",
+        "endDate": "Data Zakończenia",
+        "export": "Eksportuj",
+        "cancel": "Anuluj"
+      },
+      "table": {
+        "appName": "Nazwa Aplikacji",
+        "totalPaid": "Suma wpłat",
+        "payments": "Płatności",
+        "avgPayment": "Śr. płatność",
+        "actions": "Akcje",
+        "details": "Szczegóły",
+        "showing": "{start} do {end} z {total}"
+      },
+      "transactionTable": {
+        "type": "Typ",
+        "amount": "Kwota",
+        "date": "Data",
+        "blockHeight": "Wysokość Bloku",
+        "txid": "ID Transakcji",
+        "free": "DARMOWA",
+        "types": {
+          "register": "Rejestracja",
+          "update": "Aktualizacja",
+          "renewal": "Odnowienie"
+        }
+      },
+      "types": {
+        "appregister": "Rejestracje",
+        "appupdate": "Aktualizacje"
+      },
+      "stats": {
+        "transactions": "Transakcje",
+        "registered": "Zarejestrowanych",
+        "updated": "Aktualizacji",
+        "averageCost": "Średni Koszt",
+        "highestPayment": "Najwyższa Płatność"
+      },
+      "chart": {
+        "title": "TRENDY PŁATNOŚCI",
+        "transactions": "Transakcje",
+        "last7Days": "Ostatnie 7 Dni",
+        "cumulativeTotalPayments": "Łączne skumulowane płatności",
+        "spendingBreakdown": "podział wydatków",
+        "appLabel": "APLIKACJA",
+        "viewLabel": "WIDOK",
+        "periodLabel": "OKRES",
+        "metricLabel": "METRYKA",
+        "filterByApp": "Wyszukaj...",
+        "searchApps": "Szukaj aplikacji...",
+        "timeRanges": {
+          "7d": "7 Dni",
+          "30d": "30 Dni",
+          "90d": "90 Dni",
+          "1y": "1 Rok",
+          "all": "Cały Czas"
+        },
+        "displayModes": {
+          "periodTotal": "Suma Okresu",
+          "cumulative": "Suma Skumulowana"
+        },
+        "aggregation": {
+          "daily": "Dziennie",
+          "weekly": "Tygodniowo",
+          "monthly": "Miesięcznie"
+        }
+      }
     },
     "costCalculator": {
       "faq": {

@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Fatturazione e Pagamenti",
+      "subtitle": "Tieni traccia della cronologia dei pagamenti della tua app Flux",
+      "loading": "Caricamento dati di fatturazione...",
+      "fetchingPaymentHistory": "Recupero della cronologia dei pagamenti",
+      "noPaymentHistory": "Nessuna cronologia dei pagamenti",
+      "noPaymentsYet": "Non hai ancora pagamenti per app. Registra un'app per iniziare a tracciare i pagamenti.",
+      "export": "Esporta",
+      "currentlyRunningApps": "App in esecuzione",
+      "loadingApps": "Caricamento app in esecuzione...",
+      "noAppsRunning": "Nessuna app in esecuzione",
+      "instance": "Istanza",
+      "instances": "Istanze",
+      "paymentSummary": "Riepilogo pagamenti",
+      "totalPaid": "Totale pagato",
+      "applications": "Applicazioni",
+      "firstTransaction": "Prima transazione",
+      "lastTransaction": "Ultima transazione",
+      "paymentHistory": "Cronologia pagamenti",
+      "filterByType": "Filtra per tipo",
+      "allTypes": "Tutti i tipi",
+      "searchByName": "Cerca...",
+      "noTransactionsFound": "Nessuna transazione trovata",
+      "noTransactionsMatch": "Nessuna transazione corrisponde ai criteri di ricerca",
+      "exportDialog": {
+        "title": "Esporta cronologia pagamenti",
+        "format": "Formato di esportazione",
+        "selectFormat": "Seleziona il formato di esportazione",
+        "dateRange": "Intervallo di date",
+        "allTime": "Tutto il tempo",
+        "last30Days": "Ultimi 30 giorni",
+        "last90Days": "Ultimi 90 giorni",
+        "lastYear": "Ultimo anno",
+        "customRange": "Intervallo personalizzato",
+        "startDate": "Data di inizio",
+        "endDate": "Data di fine",
+        "export": "Esporta",
+        "cancel": "Annulla"
+      },
+      "table": {
+        "appName": "Nome app",
+        "totalPaid": "Totale pagato",
+        "payments": "Pagamenti",
+        "avgPayment": "Pagamento medio",
+        "actions": "Azioni",
+        "details": "Dettagli",
+        "showing": "{start} a {end} di {total}"
+      },
+      "transactionTable": {
+        "type": "Tipo",
+        "amount": "Importo",
+        "date": "Data",
+        "blockHeight": "Altezza blocco",
+        "txid": "ID transazione",
+        "free": "GRATIS",
+        "types": {
+          "register": "Registrazione",
+          "update": "Aggiornamento",
+          "renewal": "Rinnovo"
+        }
+      },
+      "types": {
+        "appregister": "Registrazione",
+        "appupdate": "Aggiornamento"
+      },
+      "stats": {
+        "transactions": "Transazioni",
+        "registered": "Registrate",
+        "updated": "Aggiornate",
+        "averageCost": "Costo medio",
+        "highestPayment": "Pagamento più alto"
+      },
+      "chart": {
+        "title": "TENDENZE DI PAGAMENTO",
+        "transactions": "Transazioni",
+        "last7Days": "Ultimi 7 giorni",
+        "cumulativeTotalPayments": "Totale pagamenti cumulativi",
+        "spendingBreakdown": "ripartizione delle spese",
+        "appLabel": "APP",
+        "viewLabel": "VISUALIZZAZIONE",
+        "periodLabel": "PERIODO",
+        "metricLabel": "METRICA",
+        "filterByApp": "Cerca...",
+        "searchApps": "Cerca app...",
+        "timeRanges": {
+          "7d": "7 giorni",
+          "30d": "30 giorni",
+          "90d": "90 giorni",
+          "1y": "1 anno",
+          "all": "Tutto il tempo"
+        },
+        "displayModes": {
+          "periodTotal": "Totale del periodo",
+          "cumulative": "Cumulativo"
+        },
+        "aggregation": {
+          "daily": "Giornaliero",
+          "weekly": "Settimanale",
+          "monthly": "Mensile"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Calcolatore dei costi di hosting delle app",
       "subtitle": "Hosting decentralizzato conveniente a partire da $ 0,99 al mese: calcola i costi esatti",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Fatturazione e Pagamenti",
+    "logout": "Esci"
   }
 }

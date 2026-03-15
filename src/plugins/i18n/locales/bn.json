@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "বিলিং ও পেমেন্ট",
+      "subtitle": "আপনার Flux অ্যাপের পেমেন্ট ইতিহাস ট্র্যাক করুন",
+      "loading": "বিলিং ডেটা লোড হচ্ছে...",
+      "fetchingPaymentHistory": "আপনার পেমেন্ট ইতিহাস সংগ্রহ করা হচ্ছে",
+      "noPaymentHistory": "কোনো পেমেন্ট ইতিহাস নেই",
+      "noPaymentsYet": "এখনো কোনো অ্যাপ পেমেন্ট নেই। পেমেন্ট ট্র্যাক শুরু করতে একটি অ্যাপ নিবন্ধন করুন।",
+      "export": "রপ্তানি করুন",
+      "currentlyRunningApps": "বর্তমানে চলমান অ্যাপ",
+      "loadingApps": "আপনার চলমান অ্যাপ লোড হচ্ছে...",
+      "noAppsRunning": "বর্তমানে কোনো অ্যাপ চলছে না",
+      "instance": "ইনস্ট্যান্স",
+      "instances": "ইনস্ট্যান্স",
+      "paymentSummary": "পেমেন্ট সারসংক্ষেপ",
+      "totalPaid": "মোট পরিশোধিত",
+      "applications": "অ্যাপ্লিকেশন",
+      "firstTransaction": "প্রথম লেনদেন",
+      "lastTransaction": "শেষ লেনদেন",
+      "paymentHistory": "পেমেন্ট ইতিহাস",
+      "filterByType": "ধরন অনুযায়ী ফিল্টার করুন",
+      "allTypes": "সব ধরন",
+      "searchByName": "অনুসন্ধান করুন...",
+      "noTransactionsFound": "কোনো লেনদেন পাওয়া যায়নি",
+      "noTransactionsMatch": "আপনার অনুসন্ধানের সাথে কোনো লেনদেন মিলছে না",
+      "exportDialog": {
+        "title": "পেমেন্ট ইতিহাস রপ্তানি করুন",
+        "format": "রপ্তানি বিন্যাস",
+        "selectFormat": "রপ্তানি বিন্যাস নির্বাচন করুন",
+        "dateRange": "তারিখ পরিসর",
+        "allTime": "সব সময়",
+        "last30Days": "শেষ ৩০ দিন",
+        "last90Days": "শেষ ৯০ দিন",
+        "lastYear": "গত বছর",
+        "customRange": "কাস্টম পরিসর",
+        "startDate": "শুরুর তারিখ",
+        "endDate": "শেষ তারিখ",
+        "export": "রপ্তানি করুন",
+        "cancel": "বাতিল করুন"
+      },
+      "table": {
+        "appName": "অ্যাপের নাম",
+        "totalPaid": "মোট পরিশোধিত",
+        "payments": "পেমেন্ট",
+        "avgPayment": "গড় পেমেন্ট",
+        "actions": "কার্যক্রম",
+        "details": "বিবরণ",
+        "showing": "{total} এর মধ্যে {start} থেকে {end}"
+      },
+      "transactionTable": {
+        "type": "ধরন",
+        "amount": "পরিমাণ",
+        "date": "তারিখ",
+        "blockHeight": "ব্লক উচ্চতা",
+        "txid": "লেনদেন ID",
+        "free": "বিনামূল্যে",
+        "types": {
+          "register": "নিবন্ধন",
+          "update": "আপডেট",
+          "renewal": "নবায়ন"
+        }
+      },
+      "types": {
+        "appregister": "নিবন্ধন",
+        "appupdate": "আপডেট"
+      },
+      "stats": {
+        "transactions": "লেনদেন",
+        "registered": "নিবন্ধিত",
+        "updated": "আপডেট হয়েছে",
+        "averageCost": "গড় খরচ",
+        "highestPayment": "সর্বোচ্চ পেমেন্ট"
+      },
+      "chart": {
+        "title": "পেমেন্ট প্রবণতা",
+        "transactions": "লেনদেন",
+        "last7Days": "শেষ ৭ দিন",
+        "cumulativeTotalPayments": "সঞ্চিত মোট পেমেন্ট",
+        "spendingBreakdown": "ব্যয়ের বিবরণ",
+        "appLabel": "অ্যাপ",
+        "viewLabel": "দৃশ্য",
+        "periodLabel": "সময়কাল",
+        "metricLabel": "মেট্রিক",
+        "filterByApp": "অনুসন্ধান করুন...",
+        "searchApps": "অ্যাপ অনুসন্ধান করুন...",
+        "timeRanges": {
+          "7d": "৭ দিন",
+          "30d": "৩০ দিন",
+          "90d": "৯০ দিন",
+          "1y": "১ বছর",
+          "all": "সব সময়"
+        },
+        "displayModes": {
+          "periodTotal": "সময়কালের মোট",
+          "cumulative": "সঞ্চিত"
+        },
+        "aggregation": {
+          "daily": "দৈনিক",
+          "weekly": "সাপ্তাহিক",
+          "monthly": "মাসিক"
+        }
+      }
+    },
     "costCalculator": {
       "title": "অ্যাপ হোস্টিং খরচ ক্যালকুলেটর",
       "subtitle": "সাশ্রয়ী মূল্যের বিকেন্দ্রীভূত হোস্টিং $0.99/মাস থেকে শুরু - আপনার সঠিক খরচ গণনা করুন",
@@ -5302,5 +5404,9 @@
         "category": "সিএমএস"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "বিলিং ও পেমেন্ট",
+    "logout": "লগ আউট"
   }
 }

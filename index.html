@@ -73,10 +73,10 @@
       background-color: var(--initial-loader-bg, #fff) !important;
       color: var(--initial-text-color, #000) !important;
       transition: none !important;
+      overflow: hidden;
     }
     html {
-      overflow-x: hidden;
-      overflow-y: scroll;
+      overflow: hidden;
       background-color: var(--initial-loader-bg, #fff) !important;
     }
     body, #app {
@@ -88,15 +88,14 @@
       min-height: 100vh;
     }
     #loading-bg {
-      position: absolute;
+      position: fixed;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       background: var(--initial-loader-bg, #fff);
-      block-size: 100%;
+      inset: 0;
       gap: 2rem 0;
-      inline-size: 100%;
     }
     .loading-wrapper {
       position: relative;
@@ -420,6 +419,9 @@
       // Remove loader immediately for specific pages
       const loader = document.getElementById('loading-bg')
       if (loader) loader.remove()
+      // Restore overflow
+      document.documentElement.style.overflow = ''
+      document.body.style.overflow = ''
     } else {
       // Normal loader behavior for other pages
       window.addEventListener('app-ready', () => {
@@ -429,7 +431,12 @@
               const loader = document.getElementById('loading-bg')
               if (loader) {
                 loader.classList.add('fade-out')
-                setTimeout(() => loader.remove(), 800)
+                setTimeout(() => {
+                  loader.remove()
+                  // Restore overflow after loader is removed
+                  document.documentElement.style.overflow = ''
+                  document.body.style.overflow = ''
+                }, 800)
               }
             })
           })

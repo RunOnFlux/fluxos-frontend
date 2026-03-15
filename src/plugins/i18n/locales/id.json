@@ -3448,6 +3448,108 @@
         }
       }
     },
+    "billing": {
+      "title": "Tagihan & Pembayaran",
+      "subtitle": "Lacak riwayat pembayaran aplikasi Flux Anda",
+      "loading": "Memuat data tagihan...",
+      "fetchingPaymentHistory": "Mengambil riwayat pembayaran Anda",
+      "noPaymentHistory": "Tidak ada riwayat pembayaran",
+      "noPaymentsYet": "Anda belum memiliki pembayaran aplikasi. Daftarkan aplikasi untuk mulai melacak pembayaran.",
+      "export": "Ekspor",
+      "currentlyRunningApps": "Aplikasi yang sedang berjalan",
+      "loadingApps": "Memuat aplikasi yang sedang berjalan...",
+      "noAppsRunning": "Tidak ada aplikasi yang sedang berjalan",
+      "instance": "Instansi",
+      "instances": "Instansi",
+      "paymentSummary": "Ringkasan pembayaran",
+      "totalPaid": "Total dibayar",
+      "applications": "Aplikasi",
+      "firstTransaction": "Transaksi pertama",
+      "lastTransaction": "Transaksi terakhir",
+      "paymentHistory": "Riwayat pembayaran",
+      "filterByType": "Filter berdasarkan jenis",
+      "allTypes": "Semua jenis",
+      "searchByName": "Cari...",
+      "noTransactionsFound": "Tidak ada transaksi ditemukan",
+      "noTransactionsMatch": "Tidak ada transaksi yang cocok dengan kriteria pencarian Anda",
+      "exportDialog": {
+        "title": "Ekspor riwayat pembayaran",
+        "format": "Format ekspor",
+        "selectFormat": "Pilih format ekspor",
+        "dateRange": "Rentang tanggal",
+        "allTime": "Sepanjang waktu",
+        "last30Days": "30 hari terakhir",
+        "last90Days": "90 hari terakhir",
+        "lastYear": "Tahun lalu",
+        "customRange": "Rentang khusus",
+        "startDate": "Tanggal mulai",
+        "endDate": "Tanggal akhir",
+        "export": "Ekspor",
+        "cancel": "Batal"
+      },
+      "table": {
+        "appName": "Nama aplikasi",
+        "totalPaid": "Total dibayar",
+        "payments": "Pembayaran",
+        "avgPayment": "Rata-rata pembayaran",
+        "actions": "Tindakan",
+        "details": "Detail",
+        "showing": "{start} hingga {end} dari {total}"
+      },
+      "transactionTable": {
+        "type": "Jenis",
+        "amount": "Jumlah",
+        "date": "Tanggal",
+        "blockHeight": "Tinggi blok",
+        "txid": "ID transaksi",
+        "free": "GRATIS",
+        "types": {
+          "register": "Pendaftaran",
+          "update": "Pembaruan",
+          "renewal": "Pembaruan"
+        }
+      },
+      "types": {
+        "appregister": "Pendaftaran",
+        "appupdate": "Pembaruan"
+      },
+      "stats": {
+        "transactions": "Transaksi",
+        "registered": "Terdaftar",
+        "updated": "Diperbarui",
+        "averageCost": "Biaya rata-rata",
+        "highestPayment": "Pembayaran tertinggi"
+      },
+      "chart": {
+        "title": "TREN PEMBAYARAN",
+        "transactions": "Transaksi",
+        "last7Days": "7 hari terakhir",
+        "cumulativeTotalPayments": "Total pembayaran kumulatif",
+        "spendingBreakdown": "rincian pengeluaran",
+        "appLabel": "APP",
+        "viewLabel": "TAMPILAN",
+        "periodLabel": "PERIODE",
+        "metricLabel": "METRIK",
+        "filterByApp": "Cari...",
+        "searchApps": "Cari aplikasi...",
+        "timeRanges": {
+          "7d": "7 hari",
+          "30d": "30 hari",
+          "90d": "90 hari",
+          "1y": "1 tahun",
+          "all": "Sepanjang waktu"
+        },
+        "displayModes": {
+          "periodTotal": "Total periode",
+          "cumulative": "Kumulatif"
+        },
+        "aggregation": {
+          "daily": "Harian",
+          "weekly": "Mingguan",
+          "monthly": "Bulanan"
+        }
+      }
+    },
     "costCalculator": {
       "title": "Kalkulator Biaya Hosting Aplikasi",
       "subtitle": "Hosting terdesentralisasi yang terjangkau mulai dari $0,99/bulan - Hitung biaya pasti Anda",
@@ -5302,5 +5404,9 @@
         "category": "CMS"
       }
     }
+  },
+  "userProfile": {
+    "billingAndPayments": "Tagihan & Pembayaran",
+    "logout": "Keluar"
   }
 }
