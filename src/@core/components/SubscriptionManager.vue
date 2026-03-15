@@ -1012,7 +1012,7 @@
                   </VIcon>
                   <span class="d-none d-sm-inline">{{ component.name || `${t('core.subscriptionManager.component')} ${componentIndex + 1}` }}</span>
                   <VBtn
-                    v-if="props.newApp"
+                    v-if="canModifyComponents"
                     icon
                     variant="flat"
                     color="error"
@@ -1027,7 +1027,7 @@
             </VTabs>
 
             <!-- Add Component Button -->
-            <VBtn v-if="props.newApp" icon color="primary" @click="addComposeComponent">
+            <VBtn v-if="canModifyComponents" icon color="primary" @click="addComposeComponent">
               <VIcon>mdi-plus</VIcon>
             </VBtn>
           </div>
@@ -1053,8 +1053,8 @@
                   density="comfortable"
                   variant="outlined"
                   class="mb-3"
-                  :disabled="!props.newApp"
-                  @input="props.newApp && (component.name = component.name.toLowerCase())"
+                  :disabled="!canModifyComponents"
+                  @input="canModifyComponents && (component.name = component.name.toLowerCase())"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
@@ -3583,6 +3583,12 @@ const hasSyncthingEnabled = computed(() => {
 
     return containerData.startsWith('r:') || containerData.startsWith('g:') || containerData.startsWith('s:')
   })
+})
+
+// Check if component structure changes (add/remove/rename) are allowed
+// New apps can always change components; updates only for v8+ specs
+const canModifyComponents = computed(() => {
+  return props.newApp || (managementAction.value === 'update' && specVersion.value >= 8)
 })
 
 // Check if this is a legacy app update (version < 8) - these cannot reduce instances below 3
