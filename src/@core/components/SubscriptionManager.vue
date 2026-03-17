@@ -2779,6 +2779,28 @@
                           {{ t('core.subscriptionManager.existingSubscriptionUpdateInfo') }}
                         </VAlert>
 
+                        <!-- Existing subscription info for renewals -->
+                        <VAlert
+                          v-if="managementAction === 'renewal' && existingSubscription && !autoRenewalEnabled"
+                          type="warning"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-alert"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.existingSubscriptionRenewalWarning') }}
+                        </VAlert>
+                        <VAlert
+                          v-if="managementAction === 'renewal' && existingSubscription && autoRenewalEnabled"
+                          type="info"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-information"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.existingSubscriptionReplaceInfo') }}
+                        </VAlert>
+
                         <!-- Payment Advantages -->
                         <div v-if="stripeEnabled || paypalEnabled" class="mb-4">
                           <div class="payment-field-container mb-2">
@@ -5183,8 +5205,8 @@ watch(hasCalculatedPrice, (newValue, oldValue) => {
 
 // Watch managementAction to restore/apply correct expire when switching modes
 watch(managementAction, (newValue, oldValue) => {
-  // Fetch existing subscription when switching to update mode
-  if (newValue === 'update' && !props.newApp) {
+  // Fetch existing subscription when switching to update or renewal mode
+  if ((newValue === 'update' || newValue === 'renewal') && !props.newApp) {
     fetchExistingSubscription()
   }
 
@@ -6323,7 +6345,7 @@ watch(() => props.appSpec?.compose?.length, newLength => {
 watch(() => props.initialAction, newAction => {
   if (newAction && !props.newApp) {
     managementAction.value = newAction
-    if (newAction === 'update') {
+    if (newAction === 'update' || newAction === 'renewal') {
       fetchExistingSubscription()
     }
   }
