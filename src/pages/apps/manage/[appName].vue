@@ -989,9 +989,13 @@
               <SubscriptionManager :app-spec="appSpecForSubscription" :new-app="false" :execute-local-command="selectedIp ? executeLocalCommand : undefined" :reset-trigger="subscriptionResetTrigger" :instance-ready="!!appSpecificationGlobal" :initial-action="subscriptionAction" @spec-converted="handleSpecConverted" />
             </div>
 
-          
-          
+            <div v-else-if="tab.value === '11' && auditUrl">
+              <AuditViewer :audit-url="auditUrl" :app-name="appName" @open-stats="currentTab = '12'" />
+            </div>
 
+            <div v-else-if="tab.value === '12' && auditUrl">
+              <AuditStats :audit-url="auditUrl" :app-name="appName" :active="currentTab === '12'" @back="currentTab = '11'" />
+            </div>
 
             <div v-else-if="InstalledLoading">
               <VProgressLinear
@@ -1090,6 +1094,10 @@ import { useI18n } from 'vue-i18n'
 import { useSEONoIndex } from '@/composables/useSEO'
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
 import LoadingSpinner from "@/components/Marketplace/LoadingSpinner.vue"
+import AuditViewer from "@core/components/AuditViewer.vue"
+import AuditStats from "@core/components/AuditStats.vue"
+
+const auditUrl = import.meta.env.VITE_AUDIT_URL || ''
 
 // Prevent indexing of app management page (authenticated private data)
 useSEONoIndex()
@@ -1339,17 +1347,20 @@ const allTabs = computed(() => [
   },
   { label: t('pages.apps.manage.tabs.instances'), value: "9", requiresInstance: true },
   canManageSubscription.value && { label: t('pages.apps.manage.tabs.subscription'), value: "10" },
+  auditUrl && isFluxSupportTeam.value && { label: t('pages.apps.manage.tabs.audit'), value: "11" },
+  auditUrl && isFluxSupportTeam.value && { label: t('pages.apps.manage.tabs.auditStats'), value: "12", hidden: true },
 ].filter(Boolean)) // removes `false` if condition fails
 
 // Filter tabs based on instance availability
 const tabs = computed(() => {
+  const visible = allTabs.value.filter(tab => !tab.hidden)
   if (!selectedIp.value) {
     // No instance selected - only show tabs that don't require instances
-    return allTabs.value.filter(tab => !tab.requiresInstance)
+    return visible.filter(tab => !tab.requiresInstance)
   }
 
   // Instance selected - show all tabs
-  return allTabs.value
+  return visible
 })
 
 const callResponse = ref({ status: null, data: null })
@@ -1903,7 +1914,11 @@ async function logout() {
   if (route.path === "/") {
     window.location.reload()
   } else {
-    await router.push("/")
+    try {
+      await router.push("/")
+    } catch {
+      window.location.href = "/"
+    }
   }
 }
 
@@ -3256,6 +3271,12 @@ function clearCharts() {
   processes.value = []
 }
 
+// Periodic session expiry check (runs on all tabs including audit)
+const authCheckTimer = setInterval(async () => {
+  if (logoutTrigger.value) return
+  await getZelidAuthority()
+}, 300000)
+
 onMounted(async () => {
   try {
     const stored = localStorage.getItem('zelidauth')
@@ -3285,6 +3306,7 @@ onMounted(async () => {
 })
 
 onUnmounted(() => {
+  clearInterval(authCheckTimer)
   stopPollingStats()
   eventBus.off("updateAppStatus", appsGetListAllApps)
   eventBus.off("updateInstanceList", refreshInfo)
