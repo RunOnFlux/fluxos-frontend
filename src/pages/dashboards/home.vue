@@ -6,7 +6,7 @@
 import { onMounted, computed } from 'vue'
 import LandingServices from "@/components/LandingServices.vue"
 import { useI18n } from "vue-i18n"
-import { useHead } from '@vueuse/head'
+import { useHead } from '@unhead/vue'
 import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
 
 const { t } = useI18n()

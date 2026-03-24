@@ -40,7 +40,7 @@ if (typeof window !== 'undefined') {
 import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
-import { createHead } from '@vueuse/head'
+import { createHead } from '@unhead/vue/client'
 import sanitizeHtml from '@/utils/sanitizeHtml'
 
 // Styles
