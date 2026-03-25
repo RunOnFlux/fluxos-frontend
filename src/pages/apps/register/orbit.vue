@@ -2526,7 +2526,7 @@ import { useRouter } from 'vue-router'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
-import { useHead } from '@vueuse/head'
+import { useHead } from '@unhead/vue'
 import { useLoginSheet } from '@/composables/useLoginSheet'
 import axios from 'axios'
 import Api from '@/services/ApiClient'
@@ -6176,6 +6176,7 @@ const fetchTestAppInstall = (zelidauth, hash, onResult, controller) => {
         reader.read().then(({ done, value }) => {
           if (done) {
             clearTimeout(hardTimeout)
+
             // Flush any remaining complete objects in buffer
             const { objects } = extractJsonObjects(buffer)
             objects.forEach(obj => { totalObjects++; onResult(obj) })
@@ -6193,10 +6194,12 @@ const fetchTestAppInstall = (zelidauth, hash, onResult, controller) => {
           return read()
         }).catch(streamErr => {
           clearTimeout(hardTimeout)
+
           // Flush whatever we can parse from buffer before erroring
           const { objects } = extractJsonObjects(buffer)
           objects.forEach(obj => { totalObjects++; onResult(obj) })
           if (totalObjects === 0) throw streamErr
+
           // If we got objects, swallow the error — we have data
         })
 
@@ -6204,6 +6207,7 @@ const fetchTestAppInstall = (zelidauth, hash, onResult, controller) => {
     })
     .catch(err => {
       clearTimeout(hardTimeout)
+
       // Abort errors are expected (we abort on error result) — don't rethrow
       if (err.name === 'AbortError') return
       throw err

@@ -990,6 +990,134 @@
     },
     "tosDialog": {
       "loading": "Ładowanie Regulaminu..."
+    },
+    "auditViewer": {
+      "title": "Dziennik Audytu",
+      "live": "NA ŻYWO",
+      "offline": "OFFLINE",
+      "refresh": "Odśwież",
+      "search": "Szukaj",
+      "retry": "Ponów",
+      "noEvents": "Nie znaleziono zdarzeń dla wybranych filtrów.",
+      "showing": "Wyświetlanie {from}-{to} z {total}",
+      "filters": {
+        "zelid": "FluxID",
+        "category": "Kategoria",
+        "eventType": "Typ Zdarzenia",
+        "eventTypePlaceholder": "np. app.start",
+        "nodeIp": "IP Węzła",
+        "status": "Status",
+        "period": "Okres",
+        "search": "Szukaj",
+        "searchPlaceholder": "Wyszukiwanie pełnotekstowe..."
+      },
+      "columns": {
+        "time": "Czas",
+        "user": "Użytkownik",
+        "event": "Zdarzenie",
+        "app": "Aplikacja",
+        "node": "Węzeł",
+        "status": "Status",
+        "time_ms": "Czas trwania"
+      },
+      "detail": {
+        "request": "Treść Żądania",
+        "response": "Treść Odpowiedzi",
+        "error": "Błąd",
+        "endpoint": "Endpoint",
+        "method": "Metoda",
+        "session": "Sesja",
+        "ip": "IP",
+        "page": "Strona"
+      }
+    },
+    "auditStats": {
+      "title": "Statystyki Audytu",
+      "refresh": "Odśwież",
+      "totalEvents": "Łączne Zdarzenia",
+      "uniqueUsers": "Unikalni Użytkownicy",
+      "errorRate": "Wskaźnik Błędów",
+      "avgResponse": "Śr. Odpowiedź",
+      "topEvents": "Zdarzenia",
+      "topNodes": "Dostępne IP",
+      "topUsers": "Aktywność Użytkowników",
+      "byCategory": "Wg Kategorii",
+      "noData": "Brak danych analitycznych dla tego okresu",
+      "eventsOverTime": "Zdarzenia w Czasie",
+      "errors": "Błędy",
+      "dbSize": "Rozmiar BD",
+      "periods": {
+        "1h": "1 Godzina",
+        "6h": "6 Godzin",
+        "24h": "24 Godziny",
+        "7d": "7 Dni",
+        "30d": "30 Dni",
+        "60d": "60 Dni",
+        "90d": "90 Dni",
+        "180d": "6 Miesięcy",
+        "365d": "1 Rok",
+        "all": "Cały Czas"
+      },
+      "categories": {
+        "all": "Wszystkie",
+        "app_management": "Zarządzanie Aplikacjami",
+        "administration": "Administracja"
+      },
+      "statuses": {
+        "all": "Wszystkie",
+        "success": "Sukces",
+        "error": "Błąd"
+      },
+      "eventSections": {
+        "allEvents": "Wszystkie Zdarzenia",
+        "appLifecycle": "Cykl Życia Aplikacji",
+        "appDiagnostics": "Diagnostyka Aplikacji",
+        "appDeployment": "Wdrożenie Aplikacji",
+        "monitoring": "Monitorowanie",
+        "volumeBrowser": "Przeglądarka Wolumenów",
+        "backupRestore": "Kopia Zapasowa i Przywracanie",
+        "administration": "Administracja"
+      },
+      "eventLabels": {
+        "app.start": "Uruchom Aplikację",
+        "app.stop": "Zatrzymaj Aplikację",
+        "app.pause": "Wstrzymaj Aplikację",
+        "app.unpause": "Wznów Aplikację",
+        "app.restart": "Restartuj Aplikację",
+        "app.remove": "Usuń Aplikację",
+        "app.register": "Zarejestruj Aplikację",
+        "app.update": "Zaktualizuj Aplikację",
+        "app.inspect": "Inspekcja",
+        "app.logs": "Logi",
+        "app.top": "Top",
+        "app.stats": "Statystyki",
+        "app.changes": "Zmiany",
+        "app.exec": "Wykonaj",
+        "app.redeploy": "Ponowne Wdrożenie",
+        "app.testInstall": "Instalacja Testowa",
+        "app.monitor.start": "Rozpocznij Monitoring",
+        "app.monitor.stop": "Zatrzymaj Monitoring",
+        "app.monitor.status": "Status Monitoringu",
+        "app.volume.browse": "Przeglądaj",
+        "app.volume.createFolder": "Utwórz Folder",
+        "app.volume.rename": "Zmień Nazwę",
+        "app.volume.remove": "Usuń",
+        "app.volume.upload": "Prześlij",
+        "app.volume.downloadFile": "Pobierz Plik",
+        "app.volume.downloadFolder": "Pobierz Folder",
+        "backup.create": "Utwórz Kopię",
+        "backup.restore": "Przywróć",
+        "backup.delete": "Usuń Kopię",
+        "backup.volumeInfo": "Info o Wolumenie",
+        "backup.listLocal": "Lista Lokalna",
+        "flux.update": "Aktualizuj Flux",
+        "flux.restart": "Restartuj Flux",
+        "daemon.start": "Uruchom Daemon",
+        "daemon.stop": "Zatrzymaj Daemon",
+        "daemon.restart": "Restartuj Daemon",
+        "benchmark.start": "Uruchom Benchmark",
+        "benchmark.restart": "Restartuj Benchmark"
+      }
     }
   },
   "pages": {
@@ -1084,7 +1212,9 @@
           "monitoring": "Monitorowanie",
           "control": "Sterowanie",
           "instances": "Instancje",
-          "specifications": "Specyfikacje"
+          "specifications": "Specyfikacje",
+          "audit": "Audyt",
+          "auditStats": "Statystyki Audytu"
         },
         "tooltips": {
           "visit": "Odwiedź",

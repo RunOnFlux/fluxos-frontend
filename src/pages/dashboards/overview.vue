@@ -468,7 +468,7 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from "vue"
 import { useI18n } from "vue-i18n"
-import { useHead } from '@vueuse/head'
+import { useHead } from '@unhead/vue'
 import axios from "axios"
 import tierColors from "@/utils/colors"
 import DashboardService from "@/services/DashboardService"

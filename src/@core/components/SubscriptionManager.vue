@@ -5442,6 +5442,7 @@ function getContinents(isForbidden = false) {
     // Only use continent-level entries (no underscores) directly, don't sum
     if (parts.length === 1) {
       const cont = parts[0]
+
       // Use the instances directly from the location entry instead of summing
       if (!continentInstances[cont]) {
         continentInstances[cont] = loc.instances
@@ -5468,6 +5469,7 @@ function getCountries(continentCode) {
     const parts = loc.value.split('_')
     if (parts.length === 2 && parts[0] === continentCode) {
       const count = parts[1]
+
       // Use instances directly instead of summing to avoid duplication
       if (!countryInstances[count]) {
         countryInstances[count] = loc.instances
@@ -5495,6 +5497,7 @@ function getRegions(continentCode, countryCode) {
     const parts = loc.value.split('_')
     if (parts.length === 3 && parts[0] === continentCode && parts[1] === countryCode) {
       const region = parts[2]
+
       // Use instances directly instead of summing to avoid duplication
       if (!regionInstances[region]) {
         regionInstances[region] = loc.instances
