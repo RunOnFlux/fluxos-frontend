@@ -1012,7 +1012,6 @@
         "status": "Status",
         "time_ms": "Czas trwania"
       },
-      "copied": "Skopiowano!",
       "detail": {
         "request": "Treść Żądania",
         "response": "Treść Odpowiedzi",

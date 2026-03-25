@@ -545,7 +545,6 @@
         "status": "状态",
         "time_ms": "耗时"
       },
-      "copied": "已复制！",
       "detail": {
         "request": "请求正文",
         "response": "响应正文",

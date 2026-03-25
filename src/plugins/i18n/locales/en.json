@@ -545,7 +545,6 @@
         "status": "Status",
         "time_ms": "Duration"
       },
-      "copied": "Copied!",
       "detail": {
         "request": "Request Body",
         "response": "Response Body",

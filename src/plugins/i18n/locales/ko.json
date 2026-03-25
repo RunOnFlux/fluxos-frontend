@@ -545,7 +545,6 @@
         "status": "상태",
         "time_ms": "소요시간"
       },
-      "copied": "복사됨!",
       "detail": {
         "request": "요청 본문",
         "response": "응답 본문",

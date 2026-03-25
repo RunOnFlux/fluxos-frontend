@@ -545,7 +545,6 @@
         "status": "ステータス",
         "time_ms": "所要時間"
       },
-      "copied": "コピーしました！",
       "detail": {
         "request": "リクエストボディ",
         "response": "レスポンスボディ",

@@ -24,7 +24,7 @@
               size="small"
               variant="tonal"
               color="info"
-              @click="$emit('open-stats')"
+              @click="$emit('openStats')"
             >
               <VIcon class="mr-1">mdi-chart-line</VIcon>
               {{ t('core.auditStats.title') }}
@@ -476,10 +476,7 @@ import { ref, computed, nextTick, onMounted, onBeforeUnmount, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify'
 import ClipboardJS from 'clipboard'
-import { EVENT_STYLES, getEventStyle } from '@/@core/utils/eventStyles'
-
-const { t } = useI18n()
-const { mobile } = useDisplay()
+import { getEventStyle } from '@/@core/utils/eventStyles'
 
 const props = defineProps({
   auditUrl: {
@@ -491,8 +488,9 @@ const props = defineProps({
     default: null,
   },
 })
-
-defineEmits(['open-stats'])
+defineEmits(['openStats'])
+const { t } = useI18n()
+const { mobile } = useDisplay()
 
 const loading = ref(false)
 const error = ref(null)
@@ -522,8 +520,8 @@ const filters = ref({
   search: '',
 })
 
-const s = (key) => t(`core.auditStats.eventSections.${key}`)
-const e = (key) => t(`core.auditStats.eventLabels.${key}`, key)
+const s = key => t(`core.auditStats.eventSections.${key}`)
+const e = key => t(`core.auditStats.eventLabels.${key}`, key)
 
 const eventTypeOptions = computed(() => [
   { title: s('allEvents'), value: null },
@@ -588,7 +586,7 @@ const statusOptions = computed(() => [
 
 const periodKeys = ['1h', '6h', '24h', '7d', '30d', '60d', '90d', '180d', '365d', 'all']
 const periodOptions = computed(() =>
-  periodKeys.map(k => ({ title: t(`core.auditStats.periods.${k}`), value: k }))
+  periodKeys.map(k => ({ title: t(`core.auditStats.periods.${k}`), value: k })),
 )
 
 function getPeriodFrom(period) {
@@ -665,11 +663,13 @@ async function connectSSE() {
     if (!response.ok || !response.body) {
       console.warn('[AuditViewer] SSE connection failed:', response.status, response.statusText)
       if (response.status !== 401 && response.status !== 403) scheduleReconnect()
+      
       return
     }
 
     sseConnected.value = true
     resetReconnectDelay()
+
     // Refetch to catch events that arrived between initial fetch and SSE connection
     fetchEvents().catch(() => {})
     const reader = response.body.getReader()
@@ -706,7 +706,7 @@ async function connectSSE() {
 
                 nextTick(() => initClipboard())
               }
-            } catch { /* ignore parse errors */ }
+            } catch (err) { console.debug('SSE parse error:', err.message) }
           }
           currentEvent = ''
         } else if (line === '') {
@@ -784,13 +784,13 @@ function initClipboard() {
   }
   const elements = document.querySelectorAll('.copy-zelid-btn')
   clipboardInstance = new ClipboardJS(elements)
-  clipboardInstance.on('success', (e) => {
+  clipboardInstance.on('success', e => {
     const eventId = e.trigger.getAttribute('data-event-id')
     copiedEventId.value = eventId
     setTimeout(() => { copiedEventId.value = null }, 3000)
     e.clearSelection()
   })
-  clipboardInstance.on('error', (e) => {
+  clipboardInstance.on('error', e => {
     console.error('[AuditViewer] Copy error:', e)
   })
 }
@@ -798,12 +798,14 @@ function initClipboard() {
 function getStatusColor(status, code) {
   if (status === 'error' || (code && code >= 500)) return 'error'
   if (code && code >= 400) return 'warning'
+  
   return 'success'
 }
 
 function getStatusIcon(status, code) {
   if (status === 'error' || (code && code >= 500)) return 'mdi-close-circle'
   if (code && code >= 400) return 'mdi-alert-circle'
+  
   return 'mdi-check-circle'
 }
 
@@ -811,6 +813,7 @@ function getDurationColor(ms) {
   if (ms > 5000) return 'error'
   if (ms > 2000) return 'warning'
   if (ms > 500) return 'secondary'
+  
   return 'success'
 }
 
@@ -967,5 +970,4 @@ watch(() => filters.value.period, () => { page.value = 1; fetchEvents() })
 .audit-card--expanded {
   border-color: rgba(var(--v-theme-primary), 0.4) !important;
 }
-
 </style>

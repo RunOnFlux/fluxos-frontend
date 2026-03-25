@@ -108,7 +108,7 @@
                 <div v-for="(item, i) in list.items" :key="i" class="top-list__item">
                   <div class="d-flex align-center ga-2">
                     <div class="top-list__rank">{{ i + 1 }}</div>
-                    <VChip size="small" :color="list.chipColor(item)" :variant="list.chipVariant" label :class="[list.chipTextClass, 'top-list__chip']">
+                    <VChip size="small" :color="list.chipColor(item)" :variant="list.chipVariant" label class="top-list__chip" :class="[list.chipTextClass]">
                       <VIcon v-if="list.chipIcon" size="14" start>{{ list.chipIcon(item) }}</VIcon>
                       <span class="top-list__chip-text">{{ list.chipText(item) }}</span>
                     </VChip>
@@ -160,12 +160,6 @@ import {
 } from 'chart.js'
 import { getEventIcon, getEventColor } from '@/@core/utils/eventStyles'
 
-Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Filler, Tooltip, Legend)
-
-const { t } = useI18n()
-const theme = useTheme()
-const isDark = computed(() => theme.global.current.value.dark)
-
 const props = defineProps({
   auditUrl: {
     type: String,
@@ -183,6 +177,12 @@ const props = defineProps({
 
 defineEmits(['back'])
 
+Chart.register(LineController, LineElement, PointElement, LinearScale, CategoryScale, Filler, Tooltip, Legend)
+
+const { t } = useI18n()
+const theme = useTheme()
+const isDark = computed(() => theme.global.current.value.dark)
+
 const loading = ref(false)
 const error = ref(null)
 const summary = ref(null)
@@ -193,7 +193,7 @@ let abortController = null
 
 const periodKeys = ['1h', '6h', '24h', '7d', '30d', '60d', '90d', '180d', '365d', 'all']
 const periodOptions = computed(() =>
-  periodKeys.map(k => ({ title: t(`core.auditStats.periods.${k}`), value: k }))
+  periodKeys.map(k => ({ title: t(`core.auditStats.periods.${k}`), value: k })),
 )
 
 const BUCKET_FOR_PERIOD = {
@@ -212,6 +212,7 @@ const BUCKET_FOR_PERIOD = {
 const statCards = computed(() => {
   if (!summary.value) return []
   const s = summary.value
+  
   return [
     { key: 'events', icon: 'mdi-chart-bar', color: 'primary', value: formatNumber(s.total_events), label: t('core.auditStats.totalEvents') },
     { key: 'users', icon: 'mdi-account-group', color: 'info', value: formatNumber(s.unique_users), label: t('core.auditStats.uniqueUsers') },
@@ -224,6 +225,7 @@ const statCards = computed(() => {
 const topLists = computed(() => {
   if (!summary.value) return []
   const s = summary.value
+  
   return [
     {
       key: 'events',
@@ -232,10 +234,10 @@ const topLists = computed(() => {
       color: 'grey',
       emptyIcon: 'mdi-format-list-bulleted',
       items: s.topEvents,
-      chipColor: (item) => getEventColor(item.event_type),
+      chipColor: item => getEventColor(item.event_type),
       chipVariant: 'tonal',
-      chipIcon: (item) => getEventIcon(item.event_type),
-      chipText: (item) => item.event_type,
+      chipIcon: item => getEventIcon(item.event_type),
+      chipText: item => item.event_type,
       countColor: 'success',
     },
     {
@@ -248,7 +250,7 @@ const topLists = computed(() => {
       chipColor: () => 'default',
       chipVariant: 'outlined',
       chipIcon: () => 'mdi-server-network',
-      chipText: (item) => item.node_ip,
+      chipText: item => item.node_ip,
       chipTextClass: 'text-grey',
       countColor: 'secondary',
     },
@@ -262,7 +264,7 @@ const topLists = computed(() => {
       chipColor: () => 'default',
       chipVariant: 'outlined',
       chipIcon: () => 'mdi-account',
-      chipText: (item) => item.zelid || '-',
+      chipText: item => item.zelid || '-',
       chipTextClass: 'text-grey',
       countColor: 'info',
     },
@@ -271,6 +273,7 @@ const topLists = computed(() => {
 
 function getHeaders() {
   const zelidauth = localStorage.getItem('zelidauth')
+  
   return zelidauth ? { Authorization: `zelidauth ${zelidauth}` } : {}
 }
 
@@ -286,6 +289,7 @@ async function fetchSummary(signal) {
     const data = await res.json().catch(() => ({}))
     throw new Error(data.error || `HTTP ${res.status}`)
   }
+  
   return res.json()
 }
 
@@ -299,6 +303,7 @@ async function fetchTimeseries(signal) {
     signal,
   })
   if (!res.ok) return { data: [] }
+  
   return res.json()
 }
 
@@ -434,6 +439,7 @@ function formatBucketLabel(bucket) {
 
   const p = period.value
   if (p === '1h' || p === '6h' || p === '24h') return `${hh}:${mi}`
+  
   return `${dd}/${mm} ${hh}:${mi}`
 }
 
@@ -442,6 +448,7 @@ function formatNumber(n) {
   if (!Number.isFinite(num)) return '0'
   if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`
   if (num >= 1000) return `${(num / 1000).toFixed(1)}K`
+  
   return num.toLocaleString()
 }
 
@@ -464,7 +471,7 @@ onMounted(() => {
   fetchAll()
 })
 
-watch(() => props.active, (isActive) => {
+watch(() => props.active, isActive => {
   if (isActive) fetchAll()
 })
 
@@ -478,7 +485,7 @@ onBeforeUnmount(() => {
 
 watch(period, () => fetchAll())
 
-watch(isDark, (dark) => {
+watch(isDark, dark => {
   if (!chart.value) return
   const tt = chart.value.options.plugins.tooltip
   tt.backgroundColor = dark ? 'rgba(30, 30, 30, 0.95)' : 'rgba(255, 255, 255, 0.95)'
