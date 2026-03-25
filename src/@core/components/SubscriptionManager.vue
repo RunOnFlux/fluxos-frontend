@@ -2123,13 +2123,14 @@
             type="warning"
             variant="tonal"
             prominent
-            class="mb-4"
+            density="compact"
+            class="mb-4 text-body-1"
           >
             <template #title>
-              {{ t('core.subscriptionManager.hardRedeployWarningTitle') }}
+              <span class="text-subtitle-1 text-warning font-weight-bold">{{ t('core.subscriptionManager.hardRedeployWarningTitle') }}</span>
             </template>
-            <p class="mb-2">{{ t('core.subscriptionManager.hardRedeployWarningMessage') }}</p>
-            <ul class="ml-4 mb-2">
+            <p class="mb-1">{{ t('core.subscriptionManager.hardRedeployWarningMessage') }}</p>
+            <ul class="ml-4 mb-1">
               <li v-for="(reason, idx) in hardRedeployWarning.reasons" :key="idx">{{ reason }}</li>
             </ul>
             <p class="font-weight-bold mb-0">{{ t('core.subscriptionManager.hardRedeployBackupAdvice') }}</p>
@@ -2140,10 +2141,12 @@
             v-if="resourceIncreaseWarning"
             type="info"
             variant="tonal"
-            class="mb-4"
+            prominent
+            density="compact"
+            class="mb-4 text-body-1"
           >
             <template #title>
-              {{ t('core.subscriptionManager.resourceIncreaseWarningTitle') }}
+              <span class="text-subtitle-1 text-info font-weight-bold">{{ t('core.subscriptionManager.resourceIncreaseWarningTitle') }}</span>
             </template>
             <p class="mb-0">{{ t('core.subscriptionManager.resourceIncreaseWarningMessage') }}</p>
           </VAlert>
