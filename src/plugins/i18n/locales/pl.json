@@ -517,7 +517,7 @@
       "environmentVariables": "Zmienne środowiskowe",
       "sspPaymentInitiated": "Płatność SSP zainicjowana: {txid}",
       "uploadContactsTooltip": "Prześlij informacje kontaktowe",
-      "instancesCount": "{count} instancja | {count} instancje",
+      "instancesCount": "{count} instancja | {count} instancje | {count} instancji",
       "enterpriseNodesInfo": "Informacje o węzłach enterprise",
       "validationError": "Błąd walidacji:",
       "portBindings": "Powiązania portów",

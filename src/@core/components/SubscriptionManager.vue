@@ -588,7 +588,7 @@
                     {{ t('core.subscriptionManager.instances') }}
                   </VChip>
                   <VChip color="success" variant="tonal" size="small">
-                    {{ t('core.subscriptionManager.instancesCount', appDetails.instances, { count: appDetails.instances }) }}
+                    {{ t('core.subscriptionManager.instancesCount', { count: appDetails.instances }) }}
                   </VChip>
                 </div>
                 <VSlider
