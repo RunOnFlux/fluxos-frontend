@@ -152,7 +152,7 @@
                 class="mobile-circle-tab review-glow-btn mx-1"
                 style="width: 44px !important; height: 44px !important;"
                 @click="tab = 99"
-                :disabled="tab !== 2"
+                :disabled="tab !== 3"
               >
                 <VIcon
                   :style="{
@@ -209,31 +209,50 @@
 
         <!-- Renewal Period Section -->
         <div v-else class="pa-3">
-          <!-- For V6+: Show period slider -->
-          <div v-if="versionFlags.supportsExpire" class="px-3">
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="default" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+
+          <!-- Active Subscription Management UI -->
+          <div v-if="existingSubscription" class="px-3">
+            <!-- Active Subscription Info -->
+            <div class="d-flex flex-column gap-2">
+              <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                <VIcon size="20" class="mr-2">mdi-credit-card-check</VIcon>
+                <strong>{{ t('core.subscriptionManager.activeSubscriptionAutoRenewTitle') }}</strong>
               </VChip>
-              <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
-                <strong>{{ timeRemaining }}</strong>
+              <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                <VIcon size="20" class="mr-2">mdi-sync</VIcon>
+                <span class="mr-2">{{ t('core.subscriptionManager.billingPeriod') }}:</span>
+                <strong>{{ subscriptionPeriodInfo(existingSubscription.period).label }}</strong>
+              </VChip>
+              <VChip v-if="existingSubscription.nextChargeTimestamp" color="success" variant="tonal" label style="font-size: 14px;">
+                <VIcon size="20" class="mr-2">mdi-calendar-clock</VIcon>
+                <span class="mr-2">{{ t('core.subscriptionManager.nextBilling') }}:</span>
+                <strong>{{ new Date(existingSubscription.nextChargeTimestamp * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
               </VChip>
             </div>
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="info" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-update</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
-                <strong>{{ renewalLabels[appDetails.renewalIndex] }}</strong>
-              </VChip>
+
+            <!-- Change Period Slider -->
+            <div v-if="versionFlags.supportsExpire" class="d-flex flex-column gap-2 mt-4">
+              <div class="d-flex align-center gap-2">
+                <VChip color="info" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="20" class="mr-2">mdi-swap-horizontal</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.changePeriodTo') }}:</span>
+                  <strong>{{ subscriptionPeriodInfo(selectedSubscriptionPeriod).label }}</strong>
+                </VChip>
+                <VChip
+                  v-if="subscriptionPeriodInfo(selectedSubscriptionPeriod).discount > 0"
+                  color="success"
+                  variant="tonal"
+                  label
+                  style="font-size: 14px;"
+                >
+                  {{ subscriptionPeriodInfo(selectedSubscriptionPeriod).discount }}% {{ t('common.off') }}
+                </VChip>
+              </div>
               <div style="height: 32px; display: flex; align-items: center;">
                 <VSlider
                   v-model="appDetails.renewalIndex"
                   :min="0"
-                  :max="renewalOptions.length - 1"
+                  :max="subscriptionPeriodMax"
                   step="1"
                   hide-details
                   :thumb-label="false"
@@ -241,77 +260,153 @@
                   track-size="4"
                 />
               </div>
-              <VChip color="success" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
-              </VChip>
             </div>
-            <div v-if="appRunningTill.new < appRunningTill.current">
-              <VAlert
-                type="warning"
-                color="error"
-                variant="tonal"
-                density="compact"
-                size="small"
-                class="mt-3"
-              >
-                {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
-              </VAlert>
-            </div>
+
+            <!-- Same period: info alert -->
             <VAlert
+              v-if="!subscriptionPeriodChanged"
               type="info"
               variant="tonal"
               density="compact"
-              class="mt-3"
+              class="mt-4"
             >
-              {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
+              {{ t('core.subscriptionManager.subscriptionActiveInfo') }}
             </VAlert>
-          </div>
 
-          <!-- For < V6: Fixed 1 month renewal -->
-          <div v-else class="px-3">
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="default" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
-              </VChip>
-              <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
-                <strong>{{ timeRemaining }}</strong>
-              </VChip>
-            </div>
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="info" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-update</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
-                <strong>{{ t('core.subscriptionManager.renewal1Month') }}</strong>
-              </VChip>
-              <VChip color="success" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
-                <strong>{{ new Date(Date.now() + 88000 * 0.5 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
-              </VChip>
-            </div>
-          </div>
-
-          <!-- Renewal Action Button -->
-          <div class="mt-4 px-3">
-            <VBtn
-              color="primary"
-              variant="flat"
-              size="large"
+            <!-- Different period: warning alert -->
+            <VAlert
+              v-else
+              type="warning"
+              variant="tonal"
               density="compact"
-              block
-              class="renewal-action-btn"
-              @click="tab = 99"
+              class="mt-4"
             >
-              <VIcon size="22" class="mr-2">mdi-refresh</VIcon>
-              <span>{{ t('core.subscriptionManager.renewalAction') }}</span>
-            </VBtn>
+              {{ t('core.subscriptionManager.subscriptionChangePeriodWarning') }}
+            </VAlert>
+
+            <!-- Change period button (only when different period selected) -->
+            <div v-if="subscriptionPeriodChanged" class="mt-4">
+              <VBtn
+                color="primary"
+                variant="flat"
+                size="large"
+                density="compact"
+                block
+                class="renewal-action-btn"
+                @click="tab = 99"
+              >
+                <VIcon size="22" class="mr-2">mdi-swap-horizontal</VIcon>
+                <span>{{ t('core.subscriptionManager.changePeriod') }}</span>
+              </VBtn>
+            </div>
           </div>
+
+          <!-- No active subscription: Standard Renewal UI -->
+          <template v-else>
+            <!-- For V6+: Show period slider -->
+            <div v-if="versionFlags.supportsExpire" class="px-3">
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="default" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+                <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
+                  <strong>{{ timeRemaining }}</strong>
+                </VChip>
+              </div>
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="info" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-update</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
+                  <strong>{{ renewalLabels[appDetails.renewalIndex] }}</strong>
+                </VChip>
+                <div style="height: 32px; display: flex; align-items: center;">
+                  <VSlider
+                    v-model="appDetails.renewalIndex"
+                    :min="0"
+                    :max="renewalOptions.length - 1"
+                    step="1"
+                    hide-details
+                    :thumb-label="false"
+                    :thumb-size="18"
+                    track-size="4"
+                  />
+                </div>
+                <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+              </div>
+              <div v-if="appRunningTill.new < appRunningTill.current">
+                <VAlert
+                  type="warning"
+                  color="error"
+                  variant="tonal"
+                  density="compact"
+                  size="small"
+                  class="mt-3"
+                >
+                  {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
+                </VAlert>
+              </div>
+              <VAlert
+                type="info"
+                variant="tonal"
+                density="compact"
+                class="mt-3"
+              >
+                {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
+              </VAlert>
+            </div>
+
+            <!-- For < V6: Fixed 1 month renewal -->
+            <div v-else class="px-3">
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="default" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+                <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
+                  <strong>{{ timeRemaining }}</strong>
+                </VChip>
+              </div>
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="info" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-update</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
+                  <strong>{{ t('core.subscriptionManager.renewal1Month') }}</strong>
+                </VChip>
+                <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(Date.now() + 88000 * 0.5 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+              </div>
+            </div>
+
+            <!-- Renewal Action Button -->
+            <div class="mt-4 px-3">
+              <VBtn
+                color="primary"
+                variant="flat"
+                size="large"
+                density="compact"
+                block
+                class="renewal-action-btn"
+                @click="tab = 99"
+              >
+                <VIcon size="22" class="mr-2">mdi-refresh</VIcon>
+                <span>{{ t('core.subscriptionManager.renewalAction') }}</span>
+              </VBtn>
+            </div>
+          </template>
         </div>
       </VCard>
     </div>
@@ -319,24 +414,49 @@
     <!-- Cancel Subscription UI (only for existing apps in cancel mode) -->
     <div v-if="!props.newApp && managementAction === 'cancel' && tab !== 99 && tab !== 100" class="mt-4">
       <VCard elevation="2" class="pa-4" border>
-        <VAlert type="warning" variant="tonal" class="mb-4">
-          {{ t('core.subscriptionManager.cancelWarning') }}
-        </VAlert>
+        <!-- Active subscription cancel info -->
+        <template v-if="existingSubscription">
+          <VAlert type="error" variant="tonal" class="mb-4">
+            {{ t('core.subscriptionManager.cancelActiveSubscriptionWarning') }}
+          </VAlert>
 
-        <ul style="list-style: none; padding: 0; padding-left: 16px;">
-          <li class="d-flex align-start mb-3">
-            <VIcon size="20" class="mr-2 mt-1" color="default">mdi-calendar-check</VIcon>
-            <span>{{ t('core.subscriptionManager.currentlySubscribedUntil') }} <b>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</b></span>
-          </li>
-          <li class="d-flex align-start mb-3">
-            <VIcon size="20" class="mr-2 mt-1" color="warning">mdi-clock-alert</VIcon>
-            <span>{{ t('core.subscriptionManager.afterCancellationExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
-          </li>
-          <li class="d-flex align-start mb-4">
-            <VIcon size="20" class="mr-2 mt-1" color="error">mdi-alert-circle</VIcon>
-            <span>{{ t('core.subscriptionManager.afterExpirationNotAccessible') }}</span>
-          </li>
-        </ul>
+          <ul style="list-style: none; padding: 0; padding-left: 16px;">
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;" color="error">mdi-credit-card-off</VIcon>
+              <span>{{ t('core.subscriptionManager.cancelActiveSubscriptionBilling') }} <b>{{ subscriptionPeriodInfo(existingSubscription.period).label }}</b></span>
+            </li>
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;" color="warning">mdi-server-remove</VIcon>
+              <span>{{ t('core.subscriptionManager.cancelAppWillExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
+            </li>
+            <li class="d-flex align-start mb-4">
+              <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;" color="error">mdi-alert-circle</VIcon>
+              <span>{{ t('core.subscriptionManager.afterExpirationNotAccessible') }}</span>
+            </li>
+          </ul>
+        </template>
+
+        <!-- One-time payment cancel info -->
+        <template v-else>
+          <VAlert type="warning" variant="tonal" class="mb-4">
+            {{ t('core.subscriptionManager.cancelWarning') }}
+          </VAlert>
+
+          <ul style="list-style: none; padding: 0; padding-left: 16px;">
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" color="default">mdi-calendar-check</VIcon>
+              <span>{{ t('core.subscriptionManager.currentlySubscribedUntil') }} <b>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</b></span>
+            </li>
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" color="warning">mdi-clock-alert</VIcon>
+              <span>{{ t('core.subscriptionManager.afterCancellationExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
+            </li>
+            <li class="d-flex align-start mb-4">
+              <VIcon size="20" class="mr-2 mt-1" color="error">mdi-alert-circle</VIcon>
+              <span>{{ t('core.subscriptionManager.afterExpirationNotAccessible') }}</span>
+            </li>
+          </ul>
+        </template>
 
         <VBtn color="error" variant="flat" size="large" density="compact" block class="mt-4" @click="cancelSubscription">
           <VIcon size="22" class="mr-2">mdi-cancel</VIcon>
@@ -644,7 +764,7 @@
               </div>
 
               <!-- Renewal Period Section (Only for V6+ apps) -->
-              <div v-if="versionFlags.supportsExpire" class="mb-2 mt-2">
+              <div v-if="versionFlags.supportsExpire && !existingSubscription" class="mb-2 mt-2">
                 <div class="d-flex align-center justify-space-between mb-1">
                   <div class="d-flex align-center">
                     <VChip color="default" variant="tonal" class="mr-2" style="width: 110px" label>
@@ -2721,6 +2841,8 @@
                                 } else if (updatePaymentChoice === 'onetime') {
                                   initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
                                 }
+                              } else if (managementAction === 'renewal' && existingSubscription && subscriptionPeriodChanged) {
+                                initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
                               } else if (autoRenewalEnabled) {
                                 initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
                               } else {
@@ -2762,62 +2884,66 @@
                           </VChip>
                         </div>
 
-                        <!-- Auto-Renewal Toggle -->
-                        <div v-if="stripeEnabled && isAutoRenewalEligible" class="mb-4">
-                          <VDivider class="mb-3" />
-                          <div class="d-flex align-center justify-center">
+                        <!-- Auto-Renewal Toggle (hidden when active subscription exists) -->
+                        <div
+                          v-if="stripeEnabled && isAutoRenewalEligible && !existingSubscription"
+                          class="mb-4 rounded border"
+                        >
+                          <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                            <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                            <span class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.enableAutoRenewal') }}</span>
+                          </div>
+                          <div class="pa-3 d-flex align-center">
                             <VSwitch
                               v-model="autoRenewalEnabled"
-                              color="primary"
+                              color="success"
                               hide-details
                               density="compact"
-                              class="me-2"
+                              class="me-3 flex-shrink-0"
                             />
-                            <div class="text-start">
-                              <div class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.enableAutoRenewal') }}</div>
-                              <div class="text-caption text-medium-emphasis">{{ t('core.subscriptionManager.autoRenewalDescription') }}</div>
-                            </div>
+                            <div class="text-caption text-medium-emphasis text-start">{{ t('core.subscriptionManager.autoRenewalDescription') }}</div>
                           </div>
                         </div>
 
                         <!-- UPDATE MODE: Paid update without extending, user has active subscription -->
                         <template v-if="managementAction === 'update' && existingSubscription && !renewalEnabled && appSpecPrice?.usd > 0">
-                          <!-- Payment choice: charge via subscription or one-time -->
-                          <VAlert
-                            type="info"
-                            variant="tonal"
-                            class="mb-4 text-start"
-                            icon="mdi-information"
-                            density="compact"
-                          >
-                            {{ t('core.subscriptionManager.updatePaymentChoiceInfo') }}
-                          </VAlert>
+                          <div class="text-caption mt-2 mb-4 text-start font-weight-bold text-warning">{{ t('core.subscriptionManager.updatePaymentChoiceInfo') }}</div>
 
-                          <VRadioGroup
-                            v-model="updatePaymentChoice"
-                            class="mb-4"
-                          >
-                            <VRadio
-                              value="subscription"
-                              :label="t('core.subscriptionManager.chargeViaSubscription')"
-                            />
-                            <VRadio
-                              value="onetime"
-                              :label="t('core.subscriptionManager.chargeOneTimePayment')"
-                            />
-                          </VRadioGroup>
+                          <div class="d-flex gap-3 mb-4" style="align-items: stretch;">
+                            <VCard
+                              variant="outlined"
+                              class="cursor-pointer"
+                              :color="updatePaymentChoice === 'subscription' ? 'success' : undefined"
+                              style="flex: 1 1 0; min-width: 0; border-width: 2px;"
+                              hover
+                              @click="updatePaymentChoice = 'subscription'"
+                            >
+                              <VCardText class="d-flex flex-column align-center justify-center text-center pa-3" style="height: 100%;">
+                                <VIcon size="28" :color="updatePaymentChoice === 'subscription' ? 'success' : 'default'" class="mb-1">mdi-credit-card-sync</VIcon>
+                                <div class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.chargeViaSubscription') }}</div>
+                              </VCardText>
+                            </VCard>
 
-                          <!-- Subscription period price change warning -->
-                          <VAlert
-                            v-if="subscriptionPeriodPriceChanged && subscriptionNewPeriodPrice"
-                            type="warning"
-                            variant="tonal"
-                            class="mb-4 text-start"
-                            icon="mdi-alert"
-                            density="compact"
-                          >
-                            {{ t('core.subscriptionManager.subscriptionPriceWillChange', { newPrice: `$${subscriptionNewPeriodPrice.toFixed(2)}` }) }}
-                          </VAlert>
+                            <VCard
+                              variant="outlined"
+                              class="cursor-pointer"
+                              :color="updatePaymentChoice === 'onetime' ? 'success' : undefined"
+                              style="flex: 1 1 0; min-width: 0; border-width: 2px;"
+                              hover
+                              @click="updatePaymentChoice = 'onetime'"
+                            >
+                              <VCardText class="d-flex flex-column align-center justify-center text-center pa-3" style="height: 100%;">
+                                <VIcon size="28" :color="updatePaymentChoice === 'onetime' ? 'success' : 'default'" class="mb-1">mdi-credit-card</VIcon>
+                                <div class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.chargeOneTimePayment') }}</div>
+                              </VCardText>
+                            </VCard>
+                          </div>
+
+                          <!-- Subscription period price change info -->
+                          <VChip v-if="subscriptionPeriodPriceChanged && subscriptionNewPeriodPrice" color="warning" variant="tonal" label class="mb-4" style="font-size: 14px;">
+                            <VIcon size="20" class="mr-2">mdi-information</VIcon>
+                            {{ t('core.subscriptionManager.subscriptionNewPrice') }} <b class="ml-1">${{ subscriptionNewPeriodPrice.toFixed(2) }} USD + VAT</b> <span class="ml-1">/ {{ t('core.subscriptionManager.billingPeriod').toLowerCase() }}</span>
+                          </VChip>
                         </template>
 
                         <!-- UPDATE MODE: Update with extension (renewal enabled) + active subscription -->
@@ -2834,7 +2960,7 @@
 
                         <!-- RENEWAL MODE: Same period as existing subscription — no action needed -->
                         <VAlert
-                          v-if="managementAction === 'renewal' && existingSubscription && existingSubscription.period === selectedSubscriptionPeriod && autoRenewalEnabled"
+                          v-if="managementAction === 'renewal' && existingSubscription && !subscriptionPeriodChanged && (autoRenewalEnabled || existingSubscription.status === 'active')"
                           type="success"
                           variant="tonal"
                           class="mb-4 text-start"
@@ -2844,9 +2970,9 @@
                           {{ t('core.subscriptionManager.alreadyHasAutoRenewal') }}
                         </VAlert>
 
-                        <!-- RENEWAL MODE: Different period with auto-renewal — cancel old + create new -->
+                        <!-- RENEWAL MODE: Different period — cancel old + create new subscription -->
                         <VAlert
-                          v-if="managementAction === 'renewal' && existingSubscription && existingSubscription.period !== selectedSubscriptionPeriod && autoRenewalEnabled"
+                          v-if="managementAction === 'renewal' && existingSubscription && subscriptionPeriodChanged"
                           type="info"
                           variant="tonal"
                           class="mb-4 text-start"
@@ -2854,18 +2980,6 @@
                           density="compact"
                         >
                           {{ t('core.subscriptionManager.existingSubscriptionReplaceInfo') }}
-                        </VAlert>
-
-                        <!-- RENEWAL MODE: One-time payment with active subscription — double-charge warning -->
-                        <VAlert
-                          v-if="managementAction === 'renewal' && existingSubscription && !autoRenewalEnabled"
-                          type="warning"
-                          variant="tonal"
-                          class="mb-4 text-start"
-                          icon="mdi-alert"
-                          density="compact"
-                        >
-                          {{ t('core.subscriptionManager.existingSubscriptionRenewalWarning') }}
                         </VAlert>
 
                         <!-- Payment Advantages -->
@@ -4477,6 +4591,11 @@ onMounted(async () => {
   Promise.all([getMarketPlace(), getMultiplier()])
   await fetchCurrentBlockHeight()
 
+  // Fetch existing subscription on initial load for existing apps
+  if (!props.newApp) {
+    fetchExistingSubscription()
+  }
+
   // Initialize clipboard.js for copy buttons
   clipboardInstance.value = new ClipboardJS('.copy-btn')
 
@@ -4904,6 +5023,29 @@ const selectedSubscriptionPeriod = computed(() => {
   if (!currentRenewal) return null
   
   return SUBSCRIPTION_PERIOD_MAP[currentRenewal.blocks] || null
+})
+
+// Map subscription period value to i18n label key
+function subscriptionPeriodInfo(period) {
+  const map = {
+    '1w': { labelKey: 'core.subscriptionManager.period1Week', discount: 0 },
+    '2w': { labelKey: 'core.subscriptionManager.period2Weeks', discount: 0 },
+    1: { labelKey: 'core.subscriptionManager.period1Month', discount: 0 },
+    3: { labelKey: 'core.subscriptionManager.period3Months', discount: 3 },
+    6: { labelKey: 'core.subscriptionManager.period6Months', discount: 6 },
+    12: { labelKey: 'core.subscriptionManager.period12Months', discount: 12 },
+  }
+  const entry = map[period] || map[String(period)] || map[1]
+  return { label: t(entry.labelKey), discount: entry.discount }
+}
+
+// Subscription period slider uses all 6 base periods (not capped by current expire)
+const subscriptionPeriodMax = computed(() => BASE_RENEWAL_PERIODS.length - 1)
+
+// Whether the selected renewal period differs from the existing subscription period
+const subscriptionPeriodChanged = computed(() => {
+  if (!existingSubscription.value) return false
+  return existingSubscription.value.period !== selectedSubscriptionPeriod.value
 })
 
 // Helper to format blocks as human-readable duration with months and days
