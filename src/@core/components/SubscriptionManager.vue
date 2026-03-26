@@ -2713,7 +2713,20 @@
                             v-if="stripeEnabled"
                             variant="outlined"
                             class="payment-icon-card"
-                            @click="() => (autoRenewalEnabled && !(managementAction === 'update' && existingSubscription)) ? initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description) : initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)"
+                            :disabled="(managementAction === 'renewal' && existingSubscription && existingSubscription.period === selectedSubscriptionPeriod && autoRenewalEnabled) || (managementAction === 'update' && existingSubscription && !renewalEnabled && appSpecPrice?.usd > 0 && !updatePaymentChoice)"
+                            @click="() => {
+                              if (managementAction === 'update' && existingSubscription && !renewalEnabled) {
+                                if (updatePaymentChoice === 'subscription') {
+                                  initStripeSubscriptionCharge(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                                } else if (updatePaymentChoice === 'onetime') {
+                                  initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                                }
+                              } else if (autoRenewalEnabled) {
+                                initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                              } else {
+                                initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                              }
+                            }"
                             hover
                           >
                             <VCardText class="d-flex align-center justify-center pa-6">
@@ -2767,19 +2780,83 @@
                           </div>
                         </div>
 
-                        <!-- Existing subscription info for updates -->
+                        <!-- UPDATE MODE: Paid update without extending, user has active subscription -->
+                        <template v-if="managementAction === 'update' && existingSubscription && !renewalEnabled && appSpecPrice?.usd > 0">
+                          <!-- Payment choice: charge via subscription or one-time -->
+                          <VAlert
+                            type="info"
+                            variant="tonal"
+                            class="mb-4 text-start"
+                            icon="mdi-information"
+                            density="compact"
+                          >
+                            {{ t('core.subscriptionManager.updatePaymentChoiceInfo') }}
+                          </VAlert>
+
+                          <VRadioGroup
+                            v-model="updatePaymentChoice"
+                            class="mb-4"
+                          >
+                            <VRadio
+                              value="subscription"
+                              :label="t('core.subscriptionManager.chargeViaSubscription')"
+                            />
+                            <VRadio
+                              value="onetime"
+                              :label="t('core.subscriptionManager.chargeOneTimePayment')"
+                            />
+                          </VRadioGroup>
+
+                          <!-- Subscription period price change warning -->
+                          <VAlert
+                            v-if="subscriptionPeriodPriceChanged && subscriptionNewPeriodPrice"
+                            type="warning"
+                            variant="tonal"
+                            class="mb-4 text-start"
+                            icon="mdi-alert"
+                            density="compact"
+                          >
+                            {{ t('core.subscriptionManager.subscriptionPriceWillChange', { newPrice: `$${subscriptionNewPeriodPrice.toFixed(2)}` }) }}
+                          </VAlert>
+                        </template>
+
+                        <!-- UPDATE MODE: Update with extension (renewal enabled) + active subscription -->
                         <VAlert
-                          v-if="managementAction === 'update' && existingSubscription"
+                          v-if="managementAction === 'update' && existingSubscription && renewalEnabled"
+                          type="warning"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-alert"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.updateExtendingCancelWarning') }}
+                        </VAlert>
+
+                        <!-- RENEWAL MODE: Same period as existing subscription — no action needed -->
+                        <VAlert
+                          v-if="managementAction === 'renewal' && existingSubscription && existingSubscription.period === selectedSubscriptionPeriod && autoRenewalEnabled"
+                          type="success"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-check-circle"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.alreadyHasAutoRenewal') }}
+                        </VAlert>
+
+                        <!-- RENEWAL MODE: Different period with auto-renewal — cancel old + create new -->
+                        <VAlert
+                          v-if="managementAction === 'renewal' && existingSubscription && existingSubscription.period !== selectedSubscriptionPeriod && autoRenewalEnabled"
                           type="info"
                           variant="tonal"
                           class="mb-4 text-start"
                           icon="mdi-information"
                           density="compact"
                         >
-                          {{ t('core.subscriptionManager.existingSubscriptionUpdateInfo') }}
+                          {{ t('core.subscriptionManager.existingSubscriptionReplaceInfo') }}
                         </VAlert>
 
-                        <!-- Existing subscription info for renewals -->
+                        <!-- RENEWAL MODE: One-time payment with active subscription — double-charge warning -->
                         <VAlert
                           v-if="managementAction === 'renewal' && existingSubscription && !autoRenewalEnabled"
                           type="warning"
@@ -2789,16 +2866,6 @@
                           density="compact"
                         >
                           {{ t('core.subscriptionManager.existingSubscriptionRenewalWarning') }}
-                        </VAlert>
-                        <VAlert
-                          v-if="managementAction === 'renewal' && existingSubscription && autoRenewalEnabled"
-                          type="info"
-                          variant="tonal"
-                          class="mb-4 text-start"
-                          icon="mdi-information"
-                          density="compact"
-                        >
-                          {{ t('core.subscriptionManager.existingSubscriptionReplaceInfo') }}
                         </VAlert>
 
                         <!-- Payment Advantages -->
@@ -3448,6 +3515,9 @@ const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
 const autoRenewalEnabled = ref(false)
 const existingSubscription = ref(null) // Existing active subscription for this app
+const updatePaymentChoice = ref('') // 'subscription' or 'onetime' — user's choice for paid update with active subscription
+const subscriptionPeriodPriceChanged = ref(false) // Whether the subscription period price differs from current
+const subscriptionNewPeriodPrice = ref(null) // The new period price for the subscription after update
 const logsExpanded = ref(true)
 
 // ToS panel state - internal ref that's controlled by computed logic (use string '0' to match VExpansionPanel value)
@@ -4819,9 +4889,9 @@ async function fetchExistingSubscription() {
 const isAutoRenewalEligible = computed(() => {
   if (!stripeEnabled.value) return false
 
-  // If updating an app that already has an active subscription, disable auto-renewal toggle
-  // The existing subscription will auto-adjust its price at next renewal
-  if (managementAction.value === 'update' && existingSubscription.value) return false
+  // If updating an app that already has an active subscription WITHOUT extending (no renewal toggle),
+  // disable auto-renewal — the user chooses between subscription charge or one-time payment
+  if (managementAction.value === 'update' && existingSubscription.value && !renewalEnabled.value) return false
   const currentRenewal = BASE_RENEWAL_PERIODS[appDetails.value.renewalIndex]
   if (!currentRenewal) return false
 
@@ -7751,6 +7821,11 @@ async function priceForAppSpec() {
     appSpecPrice.value = response.data.data
     console.log('Calculated price:', appSpecPrice.value)
 
+    // Check if subscription price will change after this update
+    if (managementAction.value === 'update' && existingSubscription.value) {
+      checkSubscriptionPriceChange()
+    }
+
     // Update marketplace app flag for payment tracking
     if (marketPlaceApp) {
       isMarketplaceApp.value = true
@@ -8498,6 +8573,22 @@ async function initStripePay(hash = null, name = null, price = null, description
       // Start monitoring
       startPaymentMonitoring()
       showToast('info', 'Stripe checkout opened. Complete payment in the new window.')
+
+      // If this is a one-time update payment with an active subscription, update the subscription price
+      if (managementAction.value === 'update' && existingSubscription.value && subscriptionPeriodPriceChanged.value && subscriptionNewPeriodPrice.value) {
+        try {
+          const authData = qs.parse(localStorage.getItem('zelidauth'))
+          await axios.post(`${paymentBridge}/api/v1/stripe/subscription/update-price`, {
+            zelid: authData.zelid,
+            signature: authData.signature,
+            loginPhrase: authData.loginPhrase,
+            appName: finalName,
+            newPrice: subscriptionNewPeriodPrice.value,
+          })
+        } catch (priceError) {
+          console.warn('Failed to update subscription price:', priceError.message)
+        }
+      }
     } catch (error) {
       console.error('Stripe API error:', error)
       popup.close() // Close the blank popup
@@ -8658,6 +8749,119 @@ async function initStripeSubscriptionPay(hash = null, name = null, price = null,
     const errorMessage = error.response?.data?.message || error.response?.data?.data || error.message || 'Connection failed'
     showToast('error', `Subscription checkout error: ${errorMessage}`)
     checkoutLoading.value = false
+  }
+}
+
+/**
+ * Charges the user for an app update using their existing subscription's payment method.
+ * Creates an invoice item for just the update cost and pays it immediately.
+ */
+async function initStripeSubscriptionCharge(hash = null, name = null, price = null, description = null) {
+  try {
+    checkoutLoading.value = true
+    const zelidauth = localStorage.getItem('zelidauth')
+
+    if (!zelidauth) {
+      showToast('error', 'Authentication required - please login first')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const auth = qs.parse(zelidauth)
+    if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const finalHash = hash || registrationHash.value
+    const finalName = name || appDetails.name
+    const finalPrice = price || appSpecPrice.value?.usd || 0
+
+    if (!finalHash || !finalPrice || finalPrice <= 0) {
+      showToast('error', 'Missing update details')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const data = {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      details: {
+        name: finalName,
+        description: description || appDetails.description,
+        hash: finalHash,
+        price: finalPrice,
+        productName: finalName,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: isMarketplaceApp.value,
+          registration: false,
+        },
+      },
+    }
+
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/charge-update`, data)
+
+    if (response.data.status === 'error') {
+      showToast('error', `Charge failed: ${response.data.data || 'Unknown error'}`)
+      checkoutLoading.value = false
+
+      return
+    }
+
+    paymentMethod.value = 'Stripe Subscription'
+    paymentAmount.value = finalPrice
+    checkoutLoading.value = false
+
+    showToast('success', t('core.subscriptionManager.subscriptionChargeSuccess'))
+    startPaymentMonitoring()
+
+    // Update subscription price if it changed
+    if (subscriptionPeriodPriceChanged.value && subscriptionNewPeriodPrice.value) {
+      try {
+        await axios.post(`${paymentBridge}/api/v1/stripe/subscription/update-price`, {
+          zelid: auth.zelid,
+          signature: auth.signature,
+          loginPhrase: auth.loginPhrase,
+          appName: finalName,
+          newPrice: subscriptionNewPeriodPrice.value,
+        })
+      } catch (priceError) {
+        console.warn('Failed to update subscription price:', priceError.message)
+      }
+    }
+  } catch (error) {
+    console.error('Subscription charge error:', error)
+    const errorMessage = error.response?.data?.data || error.response?.data?.message || error.message || 'Connection failed'
+    showToast('error', `Subscription charge error: ${errorMessage}`)
+    checkoutLoading.value = false
+  }
+}
+
+/**
+ * Calculates the subscription period price for the current app specs
+ * and compares it to the existing subscription's price on Stripe.
+ */
+async function checkSubscriptionPriceChange() {
+  subscriptionPeriodPriceChanged.value = false
+  subscriptionNewPeriodPrice.value = null
+  if (!existingSubscription.value || !appSpecPrice.value?.usd) return
+
+  try {
+    const periodPrice = appSpecPrice.value.usd
+    const currentPrice = existingSubscription.value.currentPrice
+
+    if (currentPrice && Math.round(currentPrice * 100) !== Math.round(periodPrice * 100)) {
+      subscriptionPeriodPriceChanged.value = true
+      subscriptionNewPeriodPrice.value = periodPrice
+    }
+  } catch (error) {
+    console.warn('Failed to check subscription price change:', error.message)
   }
 }
 
