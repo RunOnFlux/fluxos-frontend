@@ -15,7 +15,7 @@
               rounded="md"
               class="ml-2"
             >
-              <VIcon size="8" class="mr-1">{{ sseConnected ? 'mdi-circle' : 'mdi-circle-off-outline' }}</VIcon>
+              <VIcon size="8" class="mr-1">mdi-circle</VIcon>
               {{ sseConnected ? t('core.auditViewer.live') : t('core.auditViewer.offline') }}
             </VChip>
           </div>
@@ -163,7 +163,8 @@
       <div v-else-if="error" class="pa-4 text-center">
         <VIcon color="error" size="48" class="mb-2">mdi-alert-circle</VIcon>
         <div class="text-body-1">{{ error }}</div>
-        <VBtn class="mt-2" variant="tonal" size="small" @click="fetchEvents">
+        <VBtn class="mt-2" variant="flat" color="primary" size="small" min-width="140" @click="fetchEvents">
+          <VIcon class="mr-1">mdi-refresh</VIcon>
           {{ t('core.auditViewer.retry') }}
         </VBtn>
       </div>

@@ -1394,8 +1394,8 @@ const allTabs = computed(() => [
   },
   { label: t('pages.apps.manage.tabs.instances'), value: "9", requiresInstance: true },
   canManageSubscription.value && { label: t('pages.apps.manage.tabs.subscription'), value: "10" },
-  auditUrl && isFluxSupportTeam.value && { label: t('pages.apps.manage.tabs.audit'), value: "11" },
-  auditUrl && isFluxSupportTeam.value && { label: t('pages.apps.manage.tabs.auditStats'), value: "12", hidden: true },
+  auditUrl && (isOwnerZelidauth.value || isFluxSupportTeam.value) && { label: t('pages.apps.manage.tabs.audit'), value: "11" },
+  auditUrl && (isOwnerZelidauth.value || isFluxSupportTeam.value) && { label: t('pages.apps.manage.tabs.auditStats'), value: "12", hidden: true },
 ].filter(Boolean)) // removes `false` if condition fails
 
 // Filter tabs based on instance availability

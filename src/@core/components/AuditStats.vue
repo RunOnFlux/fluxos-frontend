@@ -53,7 +53,8 @@
     <div v-else-if="error" class="pa-4 text-center">
       <VIcon color="error" size="48" class="mb-2">mdi-alert-circle</VIcon>
       <div class="text-body-1">{{ error }}</div>
-      <VBtn class="mt-2" variant="tonal" size="small" @click="fetchAll">
+      <VBtn class="mt-2" variant="flat" color="primary" size="small" min-width="140" @click="fetchAll">
+        <VIcon class="mr-1">mdi-refresh</VIcon>
         {{ t('core.auditStats.refresh') }}
       </VBtn>
     </div>
