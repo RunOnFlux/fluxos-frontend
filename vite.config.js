@@ -307,23 +307,18 @@ export default defineConfig(({ mode }) => {
         workbox: {
           clientsClaim: true,  // Take control of all clients immediately
           skipWaiting: true,   // Activate new service worker immediately
-          // Precache static assets (excluding large files and index.html)
-          // index.html is excluded so browsers always fetch the latest version
-          // (prevents stale chunk references after deployments)
-          globPatterns: ['**/*.{js,css,ico,png,svg,woff,woff2}'],
+          // Only precache small static assets (icons, fonts) — NOT JS/CSS chunks
+          // JS/CSS chunks have content hashes in filenames (immutable) so browser
+          // and CDN caching is sufficient. Precaching them causes stale chunk errors
+          // after deployments when the old SW serves outdated hashed filenames.
+          globPatterns: ['**/*.{ico,png,svg,woff,woff2}'],
           // Don't serve index.html from SW cache for navigation requests
           navigateFallback: null,
-          // Exclude large files and dev tools from precaching
+          // Exclude large files from precaching
           globIgnores: [
             'stats.html', // Bundle analyzer (4MB+)
             '**/monacoeditorwork/**', // Monaco workers (12MB+)
-            '**/crypto-walletconnect*', // WalletConnect (4MB+)
-            '**/crypto-viem*', // Viem (1MB+)
-            '**/syntax-highlight*', // Syntax highlighting (1MB+)
-            '**/leaflet-cluster*.css', // Leaflet MarkerCluster CSS - exclude from PWA cache
           ],
-          // Increase limit to 5MB for remaining large chunks (CSS)
-          maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
           // Runtime caching for API requests and images
           runtimeCaching: [
             {
