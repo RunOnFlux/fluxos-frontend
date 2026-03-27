@@ -120,7 +120,7 @@
                   v => v <= 100 || t('pages.costCalculator.validation.instancesMax')
                 ]"
                 :placeholder="t('pages.costCalculator.instancesPlaceholder')"
-                @input="calculateCost"
+                @input="markDirty"
               />
 
               <!-- Warning for syncthing minimum instances -->
@@ -170,7 +170,7 @@
               <VSelect
                 v-model="formData.expire"
                 :items="renewalOptions"
-                @update:model-value="calculateCost"
+                @update:model-value="markDirty"
               />
             </div>
 
@@ -213,7 +213,7 @@
                     color="primary"
                     :thumb-label="false"
                     class="flex-grow-1"
-                    @update:model-value="calculateCost"
+                    @update:model-value="markDirty"
                   />
                   <VTextField
                     v-model.number="formData.cpu"
@@ -224,7 +224,7 @@
                     density="compact"
                     hide-details
                     style="max-width: 85px;"
-                    @update:model-value="calculateCost"
+                    @update:model-value="markDirty"
                   />
                 </div>
               </div>
@@ -257,7 +257,7 @@
                     color="primary"
                     :thumb-label="false"
                     class="flex-grow-1"
-                    @update:model-value="calculateCost"
+                    @update:model-value="markDirty"
                   />
                   <VTextField
                     v-model.number="formData.memory"
@@ -268,8 +268,8 @@
                     density="compact"
                     hide-details
                     style="max-width: 85px;"
-                    @update:model-value="calculateCost"
-                    @blur="formData.memory = Math.max(100, Math.min(59000, Math.round(formData.memory / 100) * 100)); calculateCost()"
+                    @update:model-value="markDirty"
+                    @blur="formData.memory = Math.max(100, Math.min(59000, Math.round(formData.memory / 100) * 100)); markDirty()"
                   />
                 </div>
               </div>
@@ -302,7 +302,7 @@
                     color="primary"
                     :thumb-label="false"
                     class="flex-grow-1"
-                    @update:model-value="calculateCost"
+                    @update:model-value="markDirty"
                   />
                   <VTextField
                     v-model.number="formData.storage"
@@ -313,7 +313,7 @@
                     density="compact"
                     hide-details
                     style="max-width: 85px;"
-                    @update:model-value="calculateCost"
+                    @update:model-value="markDirty"
                   />
                 </div>
               </div>
@@ -397,7 +397,7 @@
                   :model-value="formData.enterprise === 'enterprise'"
                   :disabled="!isEnterpriseAvailable"
                   :label="t('pages.costCalculator.enterpriseApplication')"
-                  @update:model-value="(val) => { formData.enterprise = val ? 'enterprise' : ''; console.log('Enterprise changed:', val, 'to:', formData.enterprise); calculateCost(); }"
+                  @update:model-value="(val) => { formData.enterprise = val ? 'enterprise' : ''; markDirty(); }"
                 />
                 <p class="text-body-2 ml-8" :class="isEnterpriseAvailable ? 'text-medium-emphasis' : 'text-error'">
                   <template v-if="isEnterpriseAvailable">
@@ -417,7 +417,7 @@
                 <VCheckbox
                   v-model="formData.staticip"
                   :label="t('pages.costCalculator.staticIp')"
-                  @change="() => { console.log('Static IP changed:', formData.staticip); calculateCost(); }"
+                  @change="markDirty"
                 />
                 <p class="text-body-2 text-medium-emphasis ml-8">
                   {{ t('pages.costCalculator.staticIpDescription') }}
@@ -429,13 +429,37 @@
                 <VCheckbox
                   v-model="syncEnabled"
                   :label="t('pages.costCalculator.syncData')"
-                  @change="calculateCost"
+                  @change="markDirty"
                 />
                 <p class="text-body-2 text-medium-emphasis ml-8">
                   {{ t('pages.costCalculator.syncDataDescription') }}
                 </p>
               </div>
             </div>
+
+            <!-- Calculate Price Button -->
+            <VBtn
+              color="primary"
+              size="large"
+              block
+              :loading="calculating"
+              class="mb-6"
+              @click="calculateCost(0)"
+            >
+              <VIcon icon="tabler-calculator" class="me-2" />
+              {{ t('pages.costCalculator.calculatePrice') }}
+            </VBtn>
+
+            <!-- Settings changed hint -->
+            <VAlert
+              v-if="isDirty"
+              type="info"
+              variant="tonal"
+              density="compact"
+              class="mb-4"
+            >
+              {{ t('pages.costCalculator.settingsChanged') }}
+            </VAlert>
 
             <!-- Cost Display -->
             <VCard
@@ -873,13 +897,19 @@ const formData = reactive({
 // Synchronization switch
 const syncEnabled = ref(false)
 
-// Minimum instances: 3 if sync is enabled, 1 otherwise
-const minInstances = computed(() => syncEnabled.value ? 3 : 1)
+// Track whether settings have changed since last calculation
+const isDirty = ref(false)
+const markDirty = () => { isDirty.value = true }
 
-// Watch sync status - auto-adjust instances to minimum 3 when sync is enabled
+// Minimum instances: 2 if sync is enabled, 1 otherwise
+const minInstances = computed(() => syncEnabled.value ? 2 : 1)
+
+// Watch sync status - auto-adjust instances to minimum 2 when sync is enabled
 watch(syncEnabled, newValue => {
-  if (newValue && formData.instances < 3) {
-    formData.instances = 3
+  if (newValue && formData.instances < 2) {
+    const oldInstances = formData.instances
+    formData.instances = 2
+    showToast('info', t('pages.costCalculator.validation.instancesAutoAdjusted', { from: oldInstances, to: 2 }))
   }
 })
 
@@ -987,14 +1017,14 @@ const addPort = () => {
   formData.ports.push(port)
   formData.ports.sort((a, b) => a - b) // Keep ports sorted
   newPortInput.value = ''
-  calculateCost()
+  markDirty()
 }
 
 const removePort = port => {
   const index = formData.ports.indexOf(port)
   if (index > -1) {
     formData.ports.splice(index, 1)
-    calculateCost()
+    markDirty()
   }
 }
 
@@ -1259,6 +1289,7 @@ const calculateCost = async (retryCount = 0) => {
       costResult.flux = response.data.data.flux
       costResult.usd = response.data.data.usd
       costResult.discount = response.data.data.fluxDiscount
+      isDirty.value = false
     } else {
       throw new Error(response.data.message || 'Failed to calculate cost')
     }
