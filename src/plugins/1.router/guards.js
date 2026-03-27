@@ -14,75 +14,108 @@ function withTimeout(promise, ms) {
 }
 
 export const setupGuards = router => {
-  router.beforeEach(async (to, from, next) => {
+  // Catch route component loading failures (e.g., stale chunks after deployment)
+  // These fail as dynamic import errors inside vue-router, which the main.js error handler can't catch
+  const CHUNK_ERROR_MARKER = 'chunk-reload-attempted'
 
-    if (!to.matched.length || to.name === '$error') {
-      return next()
-    }
-    const zelidauth = localStorage.getItem('zelidauth')
-    const auth = qs.parse(zelidauth)
-    const fluxStore = useFluxStore()
+  router.onError(err => {
+    const message = err?.message || ''
+    const isChunkError = message.includes('Failed to fetch dynamically imported module')
+      || message.includes('Importing a module script failed')
+      || message.includes('Loading chunk')
+      || message.includes('Loading CSS chunk')
 
-    if (auth && auth.zelid && auth.signature && auth.loginPhrase) {
-      try {
-        const response = await withTimeout(
-          IDService.checkUserLogged(auth.zelid, auth.signature, auth.loginPhrase),
-          GUARD_TIMEOUT_MS,
-        )
-        const privilege = response?.data?.data?.message || 'none'
+    if (isChunkError) {
+      const hasReloaded = sessionStorage.getItem(CHUNK_ERROR_MARKER)
+      if (!hasReloaded) {
+        console.warn('[Router] Stale chunk detected, reloading:', message)
+        sessionStorage.setItem(CHUNK_ERROR_MARKER, 'true')
+        window.location.reload()
 
-        fluxStore.setPrivilege(privilege)
-
-        if (privilege === 'none') {
-          localStorage.removeItem('zelidauth')
-          clearStickyBackendDNS() // Clear sticky backend on invalid session
-        }
-      } catch (error) {
-        console.log('API error:', error)
-        fluxStore.setPrivilege('none')
-        localStorage.removeItem('zelidauth')
-        clearStickyBackendDNS() // Clear sticky backend on API error
+        return
       }
+      console.error('[Router] Chunk load failed after reload:', message)
+      sessionStorage.removeItem(CHUNK_ERROR_MARKER)
     } else {
-      fluxStore.setPrivilege('none')
-      localStorage.removeItem('zelidauth')
-      clearStickyBackendDNS() // Clear sticky backend on invalid auth format
+      console.warn('[Router] Navigation error:', message)
     }
+  })
 
-    // ✅ Global privilege-based restriction
-    if (to.meta && to.meta.privilege) {
-      const userPrivilege = fluxStore.privilege
-      if (!to.meta.privilege.includes(userPrivilege)) {
-        return next('/')
+  router.beforeEach(async (to, from, next) => {
+    try {
+      if (!to.matched.length || to.name === '$error') {
+        return next()
       }
-    }
 
-    // ✅ Additional app-level restriction for /apps/manage/:appName
-    if (to.path.startsWith('/apps/manage/') && to.params.appName ) {
-      const userPrivilege = fluxStore.privilege
+      const zelidauth = localStorage.getItem('zelidauth')
+      const auth = qs.parse(zelidauth)
+      const fluxStore = useFluxStore()
 
-      if (userPrivilege !== 'fluxteam') {
+      if (auth && auth.zelid && auth.signature && auth.loginPhrase) {
         try {
-          const appsResponse = await withTimeout(
-            AppsService.myGlobalAppSpecifications(auth.zelid),
+          const response = await withTimeout(
+            IDService.checkUserLogged(auth.zelid, auth.signature, auth.loginPhrase),
             GUARD_TIMEOUT_MS,
           )
-          const apps = appsResponse?.data?.data || []
-          const ownsApp = apps.some(app => app.name === to.params.appName)
+          const privilege = response?.data?.data?.message || 'none'
 
-          if (!ownsApp) {
-            console.warn(`Access denied: You do not own app ${to.params.appName}`)
-          
-            return next('/unauthorized')
+          fluxStore.setPrivilege(privilege)
+
+          if (privilege === 'none') {
+            localStorage.removeItem('zelidauth')
+            clearStickyBackendDNS() // Clear sticky backend on invalid session
           }
-        } catch (err) {
-          console.error('App access check failed:', err.message)
-        
-          return next('/unauthorized')
+        } catch (error) {
+          console.log('API error:', error)
+          fluxStore.setPrivilege('none')
+          localStorage.removeItem('zelidauth')
+          clearStickyBackendDNS() // Clear sticky backend on API error
+        }
+      } else {
+        fluxStore.setPrivilege('none')
+        localStorage.removeItem('zelidauth')
+        clearStickyBackendDNS() // Clear sticky backend on invalid auth format
+      }
+
+      // ✅ Global privilege-based restriction
+      if (to.meta && to.meta.privilege) {
+        const userPrivilege = fluxStore.privilege
+        if (!to.meta.privilege.includes(userPrivilege)) {
+          return next('/')
         }
       }
-    }
 
-    next()
+      // ✅ Additional app-level restriction for /apps/manage/:appName
+      if (to.path.startsWith('/apps/manage/') && to.params.appName) {
+        const userPrivilege = fluxStore.privilege
+
+        if (userPrivilege !== 'fluxteam') {
+          try {
+            const appsResponse = await withTimeout(
+              AppsService.myGlobalAppSpecifications(auth.zelid),
+              GUARD_TIMEOUT_MS,
+            )
+            const apps = appsResponse?.data?.data || []
+            const ownsApp = apps.some(app => app.name === to.params.appName)
+
+            if (!ownsApp) {
+              console.warn(`Access denied: You do not own app ${to.params.appName}`)
+
+              return next('/unauthorized')
+            }
+          } catch (err) {
+            console.error('App access check failed:', err.message)
+
+            return next('/unauthorized')
+          }
+        }
+      }
+
+      next()
+    } catch (err) {
+      // Safety net: if anything unexpected throws, always proceed
+      console.warn('[Guard] Unexpected error, proceeding with navigation:', err.message)
+      next()
+    }
   })
 }
