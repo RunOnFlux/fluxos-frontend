@@ -233,13 +233,13 @@ app.directive('sanitize-html', sanitizeHtml)
 app.mount('#app')
 
 // Auto-reload when new build is deployed (service worker update)
-// Only listen after the app has fully loaded to prevent reload loops during startup
+// Only reload on SW *update* (hadController=true), not first install (hadController=false)
+// This prevents reload loops on first visit while ensuring stale chunks trigger a reload
 if ('serviceWorker' in navigator) {
-  let appReady = false
-  window.addEventListener('app-ready', () => { appReady = true })
+  const hadController = !!navigator.serviceWorker.controller
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    if (!appReady) return
+    if (!hadController) return
     console.log('[PWA] New service worker activated, reloading page for fresh assets...')
-    setTimeout(() => window.location.reload(), 2000)
+    window.location.reload()
   })
 }
