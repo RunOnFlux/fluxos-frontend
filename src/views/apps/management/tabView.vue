@@ -396,6 +396,30 @@
                 />
                 {{ item.name }}
               </VChip>
+              <VChip
+                v-if="subscriptionMap.get(item.name) === 'active'"
+                color="success"
+                size="x-small"
+                rounded="pill"
+                variant="tonal"
+                class="mr-1 mb-1"
+                style="margin-top: 5px"
+              >
+                <VIcon start icon="mdi-autorenew" size="12" />
+                {{ t('core.subscriptionManager.autoRenewing') }}
+              </VChip>
+              <VChip
+                v-else-if="subscriptionMap.get(item.name) === 'past_due'"
+                color="error"
+                size="x-small"
+                rounded="pill"
+                variant="tonal"
+                class="mr-1 mb-1"
+                style="margin-top: 5px"
+              >
+                <VIcon start icon="mdi-alert" size="12" />
+                {{ t('core.subscriptionManager.paymentIssue') }}
+              </VChip>
               <UsageChips
                 :items="[
                   { icon: 'mdi-speedometer', value: getServiceUsageValue(1, item.name, item), color: 'success' },
@@ -631,10 +655,26 @@ const props = defineProps({
     type: String,
     default: '',
   },
+  subscriptions: {
+    type: Array,
+    default: () => [],
+  },
 })
 const emit = defineEmits(["openAppManagement"])
 const { t } = useI18n()
 const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
+
+// Build a map of appName -> subscription status for quick lookup
+const subscriptionMap = computed(() => {
+  const map = new Map()
+  if (props.subscriptions && props.subscriptions.length) {
+    props.subscriptions.forEach(sub => {
+      map.set(sub.appName, sub.status)
+    })
+  }
+  
+  return map
+})
 
 const activeTabLocalIndexSpec = ref(0)
 

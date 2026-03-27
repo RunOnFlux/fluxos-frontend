@@ -705,7 +705,7 @@
 <script setup>
 import { ref, onMounted, reactive, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useHead } from '@vueuse/head'
+import { useHead } from '@unhead/vue'
 import Api from '@/services/ApiClient'
 import axios from 'axios'
 import { encryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'

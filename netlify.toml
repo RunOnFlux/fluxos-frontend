@@ -19,21 +19,29 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 
+# Prevent caching of index.html so browsers always fetch the latest version
+# (hashed asset filenames handle cache busting for JS/CSS)
+[[headers]]
+  for = "/index.html"
+  [headers.values]
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
 # Cache static assets
 [[headers]]
   for = "/assets/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
+# Service worker must not be cached — browser needs to fetch it to detect updates
 [[headers]]
-  for = "/*.js"
+  for = "/sw.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
-  for = "/*.css"
+  for = "/registerSW.js"
   [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+    Cache-Control = "no-cache, no-store, must-revalidate"
 
 [[headers]]
   for = "/images/*"

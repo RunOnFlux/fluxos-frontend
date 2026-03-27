@@ -152,7 +152,7 @@
                 class="mobile-circle-tab review-glow-btn mx-1"
                 style="width: 44px !important; height: 44px !important;"
                 @click="tab = 99"
-                :disabled="tab !== 2"
+                :disabled="tab !== 3"
               >
                 <VIcon
                   :style="{
@@ -209,31 +209,50 @@
 
         <!-- Renewal Period Section -->
         <div v-else class="pa-3">
-          <!-- For V6+: Show period slider -->
-          <div v-if="versionFlags.supportsExpire" class="px-3">
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="default" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+
+          <!-- Active Subscription Management UI -->
+          <div v-if="existingSubscription" class="px-3">
+            <!-- Active Subscription Info -->
+            <div class="d-flex flex-column gap-2">
+              <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                <VIcon size="20" class="mr-2">mdi-credit-card-check</VIcon>
+                <strong>{{ t('core.subscriptionManager.activeSubscriptionAutoRenewTitle') }}</strong>
               </VChip>
-              <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
-                <strong>{{ timeRemaining }}</strong>
+              <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                <VIcon size="20" class="mr-2">mdi-sync</VIcon>
+                <span class="mr-2">{{ t('core.subscriptionManager.billingPeriod') }}:</span>
+                <strong>{{ subscriptionPeriodInfo(existingSubscription.period).label }}</strong>
+              </VChip>
+              <VChip v-if="existingSubscription.nextChargeTimestamp" color="success" variant="tonal" label style="font-size: 14px;">
+                <VIcon size="20" class="mr-2">mdi-calendar-clock</VIcon>
+                <span class="mr-2">{{ t('core.subscriptionManager.nextBilling') }}:</span>
+                <strong>{{ new Date(existingSubscription.nextChargeTimestamp * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
               </VChip>
             </div>
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="info" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-update</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
-                <strong>{{ renewalLabels[appDetails.renewalIndex] }}</strong>
-              </VChip>
+
+            <!-- Change Period Slider -->
+            <div v-if="versionFlags.supportsExpire" class="d-flex flex-column gap-2 mt-4">
+              <div class="d-flex align-center gap-2">
+                <VChip color="info" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="20" class="mr-2">mdi-swap-horizontal</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.changePeriodTo') }}:</span>
+                  <strong>{{ subscriptionPeriodInfo(selectedSubscriptionPeriod).label }}</strong>
+                </VChip>
+                <VChip
+                  v-if="subscriptionPeriodInfo(selectedSubscriptionPeriod).discount > 0"
+                  color="success"
+                  variant="tonal"
+                  label
+                  style="font-size: 14px;"
+                >
+                  {{ subscriptionPeriodInfo(selectedSubscriptionPeriod).discount }}% {{ t('common.off') }}
+                </VChip>
+              </div>
               <div style="height: 32px; display: flex; align-items: center;">
                 <VSlider
                   v-model="appDetails.renewalIndex"
                   :min="0"
-                  :max="renewalOptions.length - 1"
+                  :max="subscriptionPeriodMax"
                   step="1"
                   hide-details
                   :thumb-label="false"
@@ -241,77 +260,153 @@
                   track-size="4"
                 />
               </div>
-              <VChip color="success" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
-              </VChip>
             </div>
-            <div v-if="appRunningTill.new < appRunningTill.current">
-              <VAlert
-                type="warning"
-                color="error"
-                variant="tonal"
-                density="compact"
-                size="small"
-                class="mt-3"
-              >
-                {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
-              </VAlert>
-            </div>
+
+            <!-- Same period: info alert -->
             <VAlert
+              v-if="!subscriptionPeriodChanged"
               type="info"
               variant="tonal"
               density="compact"
-              class="mt-3"
+              class="mt-4"
             >
-              {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
+              {{ t('core.subscriptionManager.subscriptionActiveInfo') }}
             </VAlert>
-          </div>
 
-          <!-- For < V6: Fixed 1 month renewal -->
-          <div v-else class="px-3">
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="default" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
-                <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
-              </VChip>
-              <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
-                <strong>{{ timeRemaining }}</strong>
-              </VChip>
-            </div>
-            <div class="d-flex flex-column gap-2 mt-2">
-              <VChip color="info" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-update</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
-                <strong>{{ t('core.subscriptionManager.renewal1Month') }}</strong>
-              </VChip>
-              <VChip color="success" variant="tonal" label style="font-size: 14px;">
-                <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
-                <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
-                <strong>{{ new Date(Date.now() + 88000 * 0.5 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
-              </VChip>
-            </div>
-          </div>
-
-          <!-- Renewal Action Button -->
-          <div class="mt-4 px-3">
-            <VBtn
-              color="primary"
-              variant="flat"
-              size="large"
+            <!-- Different period: warning alert -->
+            <VAlert
+              v-else
+              type="warning"
+              variant="tonal"
               density="compact"
-              block
-              class="renewal-action-btn"
-              @click="tab = 99"
+              class="mt-4"
             >
-              <VIcon size="22" class="mr-2">mdi-refresh</VIcon>
-              <span>{{ t('core.subscriptionManager.renewalAction') }}</span>
-            </VBtn>
+              {{ t('core.subscriptionManager.subscriptionChangePeriodWarning') }}
+            </VAlert>
+
+            <!-- Change period button (only when different period selected) -->
+            <div v-if="subscriptionPeriodChanged" class="mt-4">
+              <VBtn
+                color="primary"
+                variant="flat"
+                size="large"
+                density="compact"
+                block
+                class="renewal-action-btn"
+                @click="tab = 99"
+              >
+                <VIcon size="22" class="mr-2">mdi-swap-horizontal</VIcon>
+                <span>{{ t('core.subscriptionManager.changePeriod') }}</span>
+              </VBtn>
+            </div>
           </div>
+
+          <!-- No active subscription: Standard Renewal UI -->
+          <template v-else>
+            <!-- For V6+: Show period slider -->
+            <div v-if="versionFlags.supportsExpire" class="px-3">
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="default" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+                <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
+                  <strong>{{ timeRemaining }}</strong>
+                </VChip>
+              </div>
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="info" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-update</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
+                  <strong>{{ renewalLabels[appDetails.renewalIndex] }}</strong>
+                </VChip>
+                <div style="height: 32px; display: flex; align-items: center;">
+                  <VSlider
+                    v-model="appDetails.renewalIndex"
+                    :min="0"
+                    :max="renewalOptions.length - 1"
+                    step="1"
+                    hide-details
+                    :thumb-label="false"
+                    :thumb-size="18"
+                    track-size="4"
+                  />
+                </div>
+                <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(appRunningTill.new).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+              </div>
+              <div v-if="appRunningTill.new < appRunningTill.current">
+                <VAlert
+                  type="warning"
+                  color="error"
+                  variant="tonal"
+                  density="compact"
+                  size="small"
+                  class="mt-3"
+                >
+                  {{ t('core.subscriptionManager.subscriptionPeriodDecreaseWarning') }}
+                </VAlert>
+              </div>
+              <VAlert
+                type="info"
+                variant="tonal"
+                density="compact"
+                class="mt-3"
+              >
+                {{ t('core.subscriptionManager.maxSubscriptionInfo') }}
+              </VAlert>
+            </div>
+
+            <!-- For < V6: Fixed 1 month renewal -->
+            <div v-else class="px-3">
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="default" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-check</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.currentSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+                <VChip :color="timeRemainingColor" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-clock-outline</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.timeLeft') }}</span>
+                  <strong>{{ timeRemaining }}</strong>
+                </VChip>
+              </div>
+              <div class="d-flex flex-column gap-2 mt-2">
+                <VChip color="info" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-update</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.renewalPeriod') }}</span>
+                  <strong>{{ t('core.subscriptionManager.renewal1Month') }}</strong>
+                </VChip>
+                <VChip color="success" variant="tonal" label style="font-size: 14px;">
+                  <VIcon size="22" class="mr-2">mdi-calendar-arrow-right</VIcon>
+                  <span class="mr-2">{{ t('core.subscriptionManager.afterRenewalSubscriptionUntil') }}</span>
+                  <strong>{{ new Date(Date.now() + 88000 * 0.5 * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</strong>
+                </VChip>
+              </div>
+            </div>
+
+            <!-- Renewal Action Button -->
+            <div class="mt-4 px-3">
+              <VBtn
+                color="primary"
+                variant="flat"
+                size="large"
+                density="compact"
+                block
+                class="renewal-action-btn"
+                @click="tab = 99"
+              >
+                <VIcon size="22" class="mr-2">mdi-refresh</VIcon>
+                <span>{{ t('core.subscriptionManager.renewalAction') }}</span>
+              </VBtn>
+            </div>
+          </template>
         </div>
       </VCard>
     </div>
@@ -319,24 +414,49 @@
     <!-- Cancel Subscription UI (only for existing apps in cancel mode) -->
     <div v-if="!props.newApp && managementAction === 'cancel' && tab !== 99 && tab !== 100" class="mt-4">
       <VCard elevation="2" class="pa-4" border>
-        <VAlert type="warning" variant="tonal" class="mb-4">
-          {{ t('core.subscriptionManager.cancelWarning') }}
-        </VAlert>
+        <!-- Active subscription cancel info -->
+        <template v-if="existingSubscription">
+          <VAlert type="error" variant="tonal" class="mb-4">
+            {{ t('core.subscriptionManager.cancelActiveSubscriptionWarning') }}
+          </VAlert>
 
-        <ul style="list-style: none; padding: 0; padding-left: 16px;">
-          <li class="d-flex align-start mb-3">
-            <VIcon size="20" class="mr-2 mt-1" color="default">mdi-calendar-check</VIcon>
-            <span>{{ t('core.subscriptionManager.currentlySubscribedUntil') }} <b>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</b></span>
-          </li>
-          <li class="d-flex align-start mb-3">
-            <VIcon size="20" class="mr-2 mt-1" color="warning">mdi-clock-alert</VIcon>
-            <span>{{ t('core.subscriptionManager.afterCancellationExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
-          </li>
-          <li class="d-flex align-start mb-4">
-            <VIcon size="20" class="mr-2 mt-1" color="error">mdi-alert-circle</VIcon>
-            <span>{{ t('core.subscriptionManager.afterExpirationNotAccessible') }}</span>
-          </li>
-        </ul>
+          <ul style="list-style: none; padding: 0; padding-left: 16px;">
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;" color="error">mdi-credit-card-off</VIcon>
+              <span>{{ t('core.subscriptionManager.cancelActiveSubscriptionBilling') }} <b>{{ subscriptionPeriodInfo(existingSubscription.period).label }}</b></span>
+            </li>
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;" color="warning">mdi-server-remove</VIcon>
+              <span>{{ t('core.subscriptionManager.cancelAppWillExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
+            </li>
+            <li class="d-flex align-start mb-4">
+              <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;" color="error">mdi-alert-circle</VIcon>
+              <span>{{ t('core.subscriptionManager.afterExpirationNotAccessible') }}</span>
+            </li>
+          </ul>
+        </template>
+
+        <!-- One-time payment cancel info -->
+        <template v-else>
+          <VAlert type="warning" variant="tonal" class="mb-4">
+            {{ t('core.subscriptionManager.cancelWarning') }}
+          </VAlert>
+
+          <ul style="list-style: none; padding: 0; padding-left: 16px;">
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" color="default">mdi-calendar-check</VIcon>
+              <span>{{ t('core.subscriptionManager.currentlySubscribedUntil') }} <b>{{ new Date(appRunningTill.current).toLocaleString('en-GB', timeOptions.shortDate) }}</b></span>
+            </li>
+            <li class="d-flex align-start mb-3">
+              <VIcon size="20" class="mr-2 mt-1" color="warning">mdi-clock-alert</VIcon>
+              <span>{{ t('core.subscriptionManager.afterCancellationExpire') }} <b>{{ new Date(Date.now() + 100 * (currentBlockHeight >= 2020000 ? 0.5 : 2) * 60 * 1000).toLocaleString('en-GB', timeOptions.shortDate) }}</b> (100 {{ t('core.subscriptionManager.blocksFromNow') }}).</span>
+            </li>
+            <li class="d-flex align-start mb-4">
+              <VIcon size="20" class="mr-2 mt-1" color="error">mdi-alert-circle</VIcon>
+              <span>{{ t('core.subscriptionManager.afterExpirationNotAccessible') }}</span>
+            </li>
+          </ul>
+        </template>
 
         <VBtn color="error" variant="flat" size="large" density="compact" block class="mt-4" @click="cancelSubscription">
           <VIcon size="22" class="mr-2">mdi-cancel</VIcon>
@@ -588,7 +708,7 @@
                     {{ t('core.subscriptionManager.instances') }}
                   </VChip>
                   <VChip color="success" variant="tonal" size="small">
-                    {{ t('core.subscriptionManager.instancesCount', appDetails.instances, { count: appDetails.instances }) }}
+                    {{ t('core.subscriptionManager.instancesCount', { count: appDetails.instances }) }}
                   </VChip>
                 </div>
                 <VSlider
@@ -644,7 +764,7 @@
               </div>
 
               <!-- Renewal Period Section (Only for V6+ apps) -->
-              <div v-if="versionFlags.supportsExpire" class="mb-2 mt-2">
+              <div v-if="versionFlags.supportsExpire && !existingSubscription" class="mb-2 mt-2">
                 <div class="d-flex align-center justify-space-between mb-1">
                   <div class="d-flex align-center">
                     <VChip color="default" variant="tonal" class="mr-2" style="width: 110px" label>
@@ -1012,7 +1132,7 @@
                   </VIcon>
                   <span class="d-none d-sm-inline">{{ component.name || `${t('core.subscriptionManager.component')} ${componentIndex + 1}` }}</span>
                   <VBtn
-                    v-if="props.newApp"
+                    v-if="canModifyComponents"
                     icon
                     variant="flat"
                     color="error"
@@ -1027,7 +1147,7 @@
             </VTabs>
 
             <!-- Add Component Button -->
-            <VBtn v-if="props.newApp" icon color="primary" @click="addComposeComponent">
+            <VBtn v-if="canModifyComponents" icon color="primary" @click="addComposeComponent">
               <VIcon>mdi-plus</VIcon>
             </VBtn>
           </div>
@@ -1053,8 +1173,8 @@
                   density="comfortable"
                   variant="outlined"
                   class="mb-3"
-                  :disabled="!props.newApp"
-                  @input="props.newApp && (component.name = component.name.toLowerCase())"
+                  :disabled="!canModifyComponents"
+                  @input="canModifyComponents && (component.name = component.name.toLowerCase())"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
@@ -2117,6 +2237,40 @@
               <VIcon>mdi-arrow-left-circle</VIcon>
             </VBtn>
           </div>
+          <!-- Hard Redeploy Warning -->
+          <VAlert
+            v-if="hardRedeployWarning"
+            type="warning"
+            variant="tonal"
+            prominent
+            density="compact"
+            class="mb-4 text-body-1"
+          >
+            <template #title>
+              <span class="text-subtitle-1 text-warning font-weight-bold">{{ t('core.subscriptionManager.hardRedeployWarningTitle') }}</span>
+            </template>
+            <p class="mb-1">{{ t('core.subscriptionManager.hardRedeployWarningMessage') }}</p>
+            <ul class="ml-4 mb-1">
+              <li v-for="(reason, idx) in hardRedeployWarning.reasons" :key="idx">{{ reason }}</li>
+            </ul>
+            <p class="font-weight-bold mb-0">{{ t('core.subscriptionManager.hardRedeployBackupAdvice') }}</p>
+          </VAlert>
+
+          <!-- Resource Increase Warning -->
+          <VAlert
+            v-if="resourceIncreaseWarning"
+            type="info"
+            variant="tonal"
+            prominent
+            density="compact"
+            class="mb-4 text-body-1"
+          >
+            <template #title>
+              <span class="text-subtitle-1 text-info font-weight-bold">{{ t('core.subscriptionManager.resourceIncreaseWarningTitle') }}</span>
+            </template>
+            <p class="mb-0">{{ t('core.subscriptionManager.resourceIncreaseWarningMessage') }}</p>
+          </VAlert>
+
           <!-- Spec Validation -->
           <div class="spec-row">
             <div class="label-cell">{{ t('core.subscriptionManager.validateAppSpec') }}</div>
@@ -2715,7 +2869,22 @@
                             v-if="stripeEnabled"
                             variant="outlined"
                             class="payment-icon-card"
-                            @click="() => initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)"
+                            :disabled="(managementAction === 'renewal' && existingSubscription && existingSubscription.period === selectedSubscriptionPeriod && autoRenewalEnabled) || (managementAction === 'update' && existingSubscription && !renewalEnabled && appSpecPrice?.usd > 0 && !updatePaymentChoice)"
+                            @click="() => {
+                              if (managementAction === 'update' && existingSubscription && !renewalEnabled) {
+                                if (updatePaymentChoice === 'subscription') {
+                                  initStripeSubscriptionCharge(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                                } else if (updatePaymentChoice === 'onetime') {
+                                  initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                                }
+                              } else if (managementAction === 'renewal' && existingSubscription && subscriptionPeriodChanged) {
+                                initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                              } else if (autoRenewalEnabled) {
+                                initStripeSubscriptionPay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                              } else {
+                                initStripePay(registrationHash, appDetails.name, appSpecPrice?.usd, appDetails.description)
+                              }
+                            }"
                             hover
                           >
                             <VCardText class="d-flex align-center justify-center pa-6">
@@ -2750,6 +2919,104 @@
                             ${{ appSpecPrice?.usd || 0 }} USD + VAT
                           </VChip>
                         </div>
+
+                        <!-- Auto-Renewal Toggle (hidden when active subscription exists) -->
+                        <div
+                          v-if="stripeEnabled && isAutoRenewalEligible && !existingSubscription"
+                          class="mb-4 rounded border"
+                        >
+                          <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                            <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                            <span class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.enableAutoRenewal') }}</span>
+                          </div>
+                          <div class="pa-3 d-flex align-center">
+                            <VSwitch
+                              v-model="autoRenewalEnabled"
+                              color="success"
+                              hide-details
+                              density="compact"
+                              class="me-3 flex-shrink-0"
+                            />
+                            <div class="text-caption text-medium-emphasis text-start">{{ t('core.subscriptionManager.autoRenewalDescription') }}</div>
+                          </div>
+                        </div>
+
+                        <!-- UPDATE MODE: Paid update without extending, user has active subscription -->
+                        <template v-if="managementAction === 'update' && existingSubscription && !renewalEnabled && appSpecPrice?.usd > 0">
+                          <div class="text-caption mt-2 mb-4 text-start font-weight-bold text-warning">{{ t('core.subscriptionManager.updatePaymentChoiceInfo') }}</div>
+
+                          <div class="d-flex gap-3 mb-4" style="align-items: stretch;">
+                            <VCard
+                              variant="outlined"
+                              class="cursor-pointer"
+                              :color="updatePaymentChoice === 'subscription' ? 'success' : undefined"
+                              style="flex: 1 1 0; min-width: 0; border-width: 2px;"
+                              hover
+                              @click="updatePaymentChoice = 'subscription'"
+                            >
+                              <VCardText class="d-flex flex-column align-center justify-center text-center pa-3" style="height: 100%;">
+                                <VIcon size="28" :color="updatePaymentChoice === 'subscription' ? 'success' : 'default'" class="mb-1">mdi-credit-card-sync</VIcon>
+                                <div class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.chargeViaSubscription') }}</div>
+                              </VCardText>
+                            </VCard>
+
+                            <VCard
+                              variant="outlined"
+                              class="cursor-pointer"
+                              :color="updatePaymentChoice === 'onetime' ? 'success' : undefined"
+                              style="flex: 1 1 0; min-width: 0; border-width: 2px;"
+                              hover
+                              @click="updatePaymentChoice = 'onetime'"
+                            >
+                              <VCardText class="d-flex flex-column align-center justify-center text-center pa-3" style="height: 100%;">
+                                <VIcon size="28" :color="updatePaymentChoice === 'onetime' ? 'success' : 'default'" class="mb-1">mdi-credit-card</VIcon>
+                                <div class="text-body-2 font-weight-medium">{{ t('core.subscriptionManager.chargeOneTimePayment') }}</div>
+                              </VCardText>
+                            </VCard>
+                          </div>
+
+                          <!-- Subscription period price change info -->
+                          <VChip v-if="subscriptionPeriodPriceChanged && subscriptionNewPeriodPrice" color="warning" variant="tonal" label class="mb-4" style="font-size: 14px;">
+                            <VIcon size="20" class="mr-2">mdi-information</VIcon>
+                            {{ t('core.subscriptionManager.subscriptionNewPrice') }} <b class="ml-1">${{ subscriptionNewPeriodPrice.toFixed(2) }} USD + VAT</b> <span class="ml-1">/ {{ t('core.subscriptionManager.billingPeriod').toLowerCase() }}</span>
+                          </VChip>
+                        </template>
+
+                        <!-- UPDATE MODE: Update with extension (renewal enabled) + active subscription -->
+                        <VAlert
+                          v-if="managementAction === 'update' && existingSubscription && renewalEnabled"
+                          type="warning"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-alert"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.updateExtendingCancelWarning') }}
+                        </VAlert>
+
+                        <!-- RENEWAL MODE: Same period as existing subscription — no action needed -->
+                        <VAlert
+                          v-if="managementAction === 'renewal' && existingSubscription && !subscriptionPeriodChanged && (autoRenewalEnabled || existingSubscription.status === 'active')"
+                          type="success"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-check-circle"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.alreadyHasAutoRenewal') }}
+                        </VAlert>
+
+                        <!-- RENEWAL MODE: Different period — cancel old + create new subscription -->
+                        <VAlert
+                          v-if="managementAction === 'renewal' && existingSubscription && subscriptionPeriodChanged"
+                          type="info"
+                          variant="tonal"
+                          class="mb-4 text-start"
+                          icon="mdi-information"
+                          density="compact"
+                        >
+                          {{ t('core.subscriptionManager.existingSubscriptionReplaceInfo') }}
+                        </VAlert>
 
                         <!-- Payment Advantages -->
                         <div v-if="stripeEnabled || paypalEnabled" class="mb-4">
@@ -3396,6 +3663,11 @@ const showTermsDialog = ref(false)
 const showTosError = ref(false)
 const fiatCheckoutURL = ref('')
 const checkoutLoading = ref(false)
+const autoRenewalEnabled = ref(false)
+const existingSubscription = ref(null) // Existing active subscription for this app
+const updatePaymentChoice = ref('') // 'subscription' or 'onetime' — user's choice for paid update with active subscription
+const subscriptionPeriodPriceChanged = ref(false) // Whether the subscription period price differs from current
+const subscriptionNewPeriodPrice = ref(null) // The new period price for the subscription after update
 const logsExpanded = ref(true)
 
 // ToS panel state - internal ref that's controlled by computed logic (use string '0' to match VExpansionPanel value)
@@ -3583,6 +3855,101 @@ const hasSyncthingEnabled = computed(() => {
 
     return containerData.startsWith('r:') || containerData.startsWith('g:') || containerData.startsWith('s:')
   })
+})
+
+// Check if component structure changes (add/remove/rename) are allowed
+// New apps can always change components; updates only for v8+ specs
+const canModifyComponents = computed(() => {
+  return props.newApp || (managementAction.value === 'update' && specVersion.value >= 8)
+})
+
+// Detect changes that will trigger a hard redeploy (data loss) during app updates
+// Hard redeploy triggers:
+// 1. Component structure change (v8+): adding, removing, or renaming components
+// 2. HDD size change on any component
+// 3. Version upgrade from v3 or below to v4+
+const hardRedeployWarning = computed(() => {
+  if (props.newApp || managementAction.value !== 'update' || !originalAppSpecSnapshot.value) return null
+
+  const original = originalAppSpecSnapshot.value
+  const current = props.appSpec
+  const reasons = []
+
+  // Check version upgrade from v3- to v4+
+  if (original.version <= 3 && current.version >= 4) {
+    reasons.push(t('core.subscriptionManager.hardRedeployReasonVersionUpgrade'))
+
+    return { reasons, scope: 'full' }
+  }
+
+  // Check component structure changes (v8+)
+  if (current.version >= 8 && original.compose && current.compose) {
+    const oldNames = new Set(original.compose.map(c => c.name).filter(Boolean))
+    const countChanged = original.compose.length !== current.compose.length
+    const namesChanged = !current.compose.map(c => c.name).filter(Boolean).every(name => oldNames.has(name))
+
+    if (countChanged || namesChanged) {
+      reasons.push(t('core.subscriptionManager.hardRedeployReasonComponentStructure'))
+
+      return { reasons, scope: 'full' }
+    }
+  }
+
+  // Check HDD changes per component (v4+)
+  if (current.version >= 4 && original.compose && current.compose) {
+    const affectedComponents = []
+
+    for (const newComp of current.compose) {
+      const oldComp = original.compose.find(c => c.name === newComp.name)
+
+      if (oldComp && newComp.hdd !== oldComp.hdd) {
+        affectedComponents.push(newComp.name)
+      }
+    }
+    if (affectedComponents.length > 0) {
+      reasons.push(t('core.subscriptionManager.hardRedeployReasonHddChange', { components: affectedComponents.join(', ') }))
+
+      return { reasons, scope: 'component', components: affectedComponents }
+    }
+  }
+
+  // Check HDD change for v3 single-component apps
+  if (current.version <= 3 && original.hdd !== current.hdd) {
+    reasons.push(t('core.subscriptionManager.hardRedeployReasonHddChange', { components: current.name }))
+
+    return { reasons, scope: 'full' }
+  }
+
+  return null
+})
+
+// Detect CPU/RAM increases that may cause the app to be relocated to different nodes (data loss)
+// When a node can't meet new resource requirements, the redeploy fails and the app is fully removed,
+// then reinstalled on a different node that has enough resources
+const resourceIncreaseWarning = computed(() => {
+  if (props.newApp || managementAction.value !== 'update' || !originalAppSpecSnapshot.value) return false
+  if (hardRedeployWarning.value) return false // already showing a stronger warning
+
+  const original = originalAppSpecSnapshot.value
+  const current = props.appSpec
+
+  // Check v4+ composed apps
+  if (current.version >= 4 && original.compose && current.compose) {
+    for (const newComp of current.compose) {
+      const oldComp = original.compose.find(c => c.name === newComp.name)
+
+      if (oldComp && (newComp.cpu > oldComp.cpu || newComp.ram > oldComp.ram)) {
+        return true
+      }
+    }
+  }
+
+  // Check v3 single-component apps
+  if (current.version <= 3 && (current.cpu > original.cpu || current.ram > original.ram)) {
+    return true
+  }
+
+  return false
 })
 
 // Check if this is a legacy app update (version < 8) - these cannot reduce instances below 3
@@ -4355,6 +4722,11 @@ onMounted(async () => {
   Promise.all([getMarketPlace(), getMultiplier()])
   await fetchCurrentBlockHeight()
 
+  // Fetch existing subscription on initial load for existing apps
+  if (!props.newApp) {
+    fetchExistingSubscription()
+  }
+
   // Initialize clipboard.js for copy buttons
   clipboardInstance.value = new ClipboardJS('.copy-btn')
 
@@ -4721,6 +5093,91 @@ const BASE_RENEWAL_PERIODS = [
   { blocks: BLOCKS_PER_MONTH * 6, labelKey: 'renewal6Months', fallback: '6 Months', discount: 6 },                    // 6 months (528,000 blocks)
   { blocks: BLOCKS_PER_MONTH * 12, labelKey: 'renewal1Year', fallback: '1 Year', discount: 12 },                       // 1 year (1,056,000 blocks)
 ]
+
+// Map renewal period blocks to subscription period key (for Stripe subscription checkout)
+const SUBSCRIPTION_PERIOD_MAP = {
+  [Math.round(BLOCKS_PER_MONTH * (1 / 4))]: '1w', // 1 week
+  [Math.round(BLOCKS_PER_MONTH * (1 / 2))]: '2w', // 2 weeks
+  [BLOCKS_PER_MONTH]: 1,       // 1 month
+  [BLOCKS_PER_MONTH * 3]: 3,   // 3 months
+  [BLOCKS_PER_MONTH * 6]: 6,   // 6 months
+  [BLOCKS_PER_MONTH * 12]: 12, // 1 year
+}
+
+// Fetch existing subscription status for this app
+async function fetchExistingSubscription() {
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (!zelidauth) return
+    const auth = qs.parse(zelidauth)
+    if (!auth?.zelid) return
+    const appName = props.appSpec?.name || appDetails.value?.name
+    if (!appName) return
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/status`, {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      appName,
+    })
+    if (response.data.status === 'success' && response.data.data) {
+      const sub = response.data.data
+      if (sub.status === 'active' || sub.status === 'past_due') {
+        existingSubscription.value = sub
+      } else {
+        existingSubscription.value = null
+      }
+    } else {
+      existingSubscription.value = null
+    }
+  } catch (error) {
+    console.warn('Failed to fetch existing subscription:', error.message)
+    existingSubscription.value = null
+  }
+}
+
+// Check if current renewal selection is eligible for auto-renewal
+const isAutoRenewalEligible = computed(() => {
+  if (!stripeEnabled.value) return false
+
+  // If updating an app that already has an active subscription WITHOUT extending (no renewal toggle),
+  // disable auto-renewal — the user chooses between subscription charge or one-time payment
+  if (managementAction.value === 'update' && existingSubscription.value && !renewalEnabled.value) return false
+  const currentRenewal = BASE_RENEWAL_PERIODS[appDetails.value.renewalIndex]
+  if (!currentRenewal) return false
+
+  return currentRenewal.blocks in SUBSCRIPTION_PERIOD_MAP
+})
+
+// Get the subscription period in months for the current selection
+const selectedSubscriptionPeriod = computed(() => {
+  const currentRenewal = BASE_RENEWAL_PERIODS[appDetails.value.renewalIndex]
+  if (!currentRenewal) return null
+  
+  return SUBSCRIPTION_PERIOD_MAP[currentRenewal.blocks] || null
+})
+
+// Map subscription period value to i18n label key
+function subscriptionPeriodInfo(period) {
+  const map = {
+    '1w': { labelKey: 'core.subscriptionManager.period1Week', discount: 0 },
+    '2w': { labelKey: 'core.subscriptionManager.period2Weeks', discount: 0 },
+    1: { labelKey: 'core.subscriptionManager.period1Month', discount: 0 },
+    3: { labelKey: 'core.subscriptionManager.period3Months', discount: 3 },
+    6: { labelKey: 'core.subscriptionManager.period6Months', discount: 6 },
+    12: { labelKey: 'core.subscriptionManager.period12Months', discount: 12 },
+  }
+  const entry = map[period] || map[String(period)] || map[1]
+  return { label: t(entry.labelKey), discount: entry.discount }
+}
+
+// Subscription period slider uses all 6 base periods (not capped by current expire)
+const subscriptionPeriodMax = computed(() => BASE_RENEWAL_PERIODS.length - 1)
+
+// Whether the selected renewal period differs from the existing subscription period
+const subscriptionPeriodChanged = computed(() => {
+  if (!existingSubscription.value) return false
+  return existingSubscription.value.period !== selectedSubscriptionPeriod.value
+})
 
 // Helper to format blocks as human-readable duration with months and days
 function formatBlocksAsDuration(blocks) {
@@ -5093,6 +5550,11 @@ watch(hasCalculatedPrice, (newValue, oldValue) => {
 
 // Watch managementAction to restore/apply correct expire when switching modes
 watch(managementAction, (newValue, oldValue) => {
+  // Fetch existing subscription when switching to update or renewal mode
+  if ((newValue === 'update' || newValue === 'renewal') && !props.newApp) {
+    fetchExistingSubscription()
+  }
+
   if (!props.newApp && originalExpireSnapshot.value !== null && props.appSpec) {
     console.log(`Management action changed: ${oldValue} → ${newValue}`)
 
@@ -5313,6 +5775,7 @@ function getContinents(isForbidden = false) {
     // Only use continent-level entries (no underscores) directly, don't sum
     if (parts.length === 1) {
       const cont = parts[0]
+
       // Use the instances directly from the location entry instead of summing
       if (!continentInstances[cont]) {
         continentInstances[cont] = loc.instances
@@ -5339,6 +5802,7 @@ function getCountries(continentCode) {
     const parts = loc.value.split('_')
     if (parts.length === 2 && parts[0] === continentCode) {
       const count = parts[1]
+
       // Use instances directly instead of summing to avoid duplication
       if (!countryInstances[count]) {
         countryInstances[count] = loc.instances
@@ -5366,6 +5830,7 @@ function getRegions(continentCode, countryCode) {
     const parts = loc.value.split('_')
     if (parts.length === 3 && parts[0] === continentCode && parts[1] === countryCode) {
       const region = parts[2]
+
       // Use instances directly instead of summing to avoid duplication
       if (!regionInstances[region]) {
         regionInstances[region] = loc.instances
@@ -6265,6 +6730,9 @@ watch(() => props.appSpec?.compose?.length, newLength => {
 watch(() => props.initialAction, newAction => {
   if (newAction && !props.newApp) {
     managementAction.value = newAction
+    if (newAction === 'update' || newAction === 'renewal') {
+      fetchExistingSubscription()
+    }
   }
 })
 
@@ -7668,6 +8136,11 @@ async function priceForAppSpec() {
     appSpecPrice.value = response.data.data
     console.log('Calculated price:', appSpecPrice.value)
 
+    // Check if subscription price will change after this update
+    if (managementAction.value === 'update' && existingSubscription.value) {
+      checkSubscriptionPriceChange()
+    }
+
     // Update marketplace app flag for payment tracking
     if (marketPlaceApp) {
       isMarketplaceApp.value = true
@@ -7863,6 +8336,24 @@ async function propagateSignedMessage() {
       // Save snapshot of spec at signing time to detect changes if user goes back
       signedSpecSnapshot.value = JSON.stringify(props.appSpec)
       showToast('success', 'Application registered successfully! Redirecting to Test & Pay...')
+
+      // If this was a cancel action, cancel the Stripe subscription now that the network confirmed it
+      if (managementAction.value === 'cancel') {
+        try {
+          const auth = qs.parse(zelidauth)
+          if (auth.zelid && auth.signature && auth.loginPhrase) {
+            const appName = props.appSpec?.name || appDetails.value.name
+            await axios.post(`${paymentBridge}/api/v1/stripe/subscription/cancel`, {
+              zelid: auth.zelid,
+              signature: auth.signature,
+              loginPhrase: auth.loginPhrase,
+              appName,
+            })
+          }
+        } catch (err) {
+          console.log('Failed to cancel Stripe subscription:', err.message)
+        }
+      }
 
       // Fetch deployment information
       await getDeploymentInfo()
@@ -8397,6 +8888,22 @@ async function initStripePay(hash = null, name = null, price = null, description
       // Start monitoring
       startPaymentMonitoring()
       showToast('info', 'Stripe checkout opened. Complete payment in the new window.')
+
+      // If this is a one-time update payment with an active subscription, update the subscription price
+      if (managementAction.value === 'update' && existingSubscription.value && subscriptionPeriodPriceChanged.value && subscriptionNewPeriodPrice.value) {
+        try {
+          const authData = qs.parse(localStorage.getItem('zelidauth'))
+          await axios.post(`${paymentBridge}/api/v1/stripe/subscription/update-price`, {
+            zelid: authData.zelid,
+            signature: authData.signature,
+            loginPhrase: authData.loginPhrase,
+            appName: finalName,
+            newPrice: subscriptionNewPeriodPrice.value,
+          })
+        } catch (priceError) {
+          console.warn('Failed to update subscription price:', priceError.message)
+        }
+      }
     } catch (error) {
       console.error('Stripe API error:', error)
       popup.close() // Close the blank popup
@@ -8409,6 +8916,267 @@ async function initStripePay(hash = null, name = null, price = null, description
     const errorMessage = error.response?.data?.message || error.response?.data?.data || error.message || 'Connection failed'
     showToast('error', `Stripe checkout error: ${errorMessage}`)
     checkoutLoading.value = false
+  }
+}
+
+async function initStripeSubscriptionPay(hash = null, name = null, price = null, description = null) {
+  try {
+    fiatCheckoutURL.value = ''
+    checkoutLoading.value = true
+
+    const period = selectedSubscriptionPeriod.value
+    if (!period) {
+      showToast('error', t('core.subscriptionManager.autoRenewalEligiblePeriods'))
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (!zelidauth) {
+      showToast('error', 'Authentication required - please login first')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const auth = qs.parse(zelidauth)
+    if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const finalHash = hash || registrationHash.value
+    const finalName = name || appDetails.name
+    const finalPrice = price || appSpecPrice.value?.usd || 0
+
+    if (!finalHash) {
+      showToast('error', 'Registration hash required - please register application first')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    if (!finalPrice || finalPrice <= 0) {
+      showToast('error', 'Invalid price - please calculate price first')
+      checkoutLoading.value = false
+      
+      return
+    }
+
+    const data = {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      details: {
+        name: finalName,
+        description: description || appDetails.description,
+        hash: finalHash,
+        price: finalPrice,
+        productName: finalName,
+        period,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: isMarketplaceApp.value,
+          registration: props.newApp || props.isRedeploy,
+        },
+      },
+    }
+
+    // Open popup immediately to avoid blocker
+    const popup = window.open('about:blank', '_blank', 'width=800,height=600,scrollbars=yes,resizable=yes')
+
+    if (!popup || popup.closed || typeof popup.closed === 'undefined') {
+      checkoutLoading.value = false
+      try {
+        const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+        if (checkoutURL.data.status === 'success') {
+          popupBlockedDialog.value = true
+          blockedPaymentUrl.value = checkoutURL.data.data
+          blockedPaymentType.value = 'Stripe Subscription'
+        }
+      } catch (error) {
+        console.error('Subscription checkout error:', error)
+      }
+      
+      return
+    }
+
+    // Show loading in popup
+    popup.document.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>${t('core.subscriptionManager.loadingSubscriptionCheckout')}</title>
+          <style>
+            body { margin: 0; padding: 0; display: flex; justify-content: center; align-items: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+            .loader-container { text-align: center; color: white; }
+            .spinner { border: 4px solid rgba(255, 255, 255, 0.3); border-top: 4px solid white; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; margin: 0 auto 20px; }
+            @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+            h2 { margin: 0 0 10px 0; font-weight: 600; }
+            p { margin: 0; opacity: 0.9; font-size: 14px; }
+          </style>
+        </head>
+        <body>
+          <div class="loader-container">
+            <div class="spinner"></div>
+            <h2>${t('core.subscriptionManager.redirectingToSubscription')}</h2>
+            <p>${t('core.subscriptionManager.pleaseWaitCheckout')}</p>
+          </div>
+        </body>
+      </html>
+    `)
+
+    try {
+      const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+      if (checkoutURL.data.status === 'error') {
+        showToast('error', `Subscription checkout failed: ${checkoutURL.data.message || checkoutURL.data.data || 'Unknown error'}`)
+        popup.close()
+        checkoutLoading.value = false
+        
+        return
+      }
+
+      fiatCheckoutURL.value = checkoutURL.data.data
+      checkoutLoading.value = false
+
+      paymentMethod.value = 'Stripe Subscription'
+      paymentAmount.value = finalPrice
+
+      popup.location.href = checkoutURL.data.data
+      popup.focus()
+
+      startPaymentMonitoring()
+      showToast('info', 'Stripe subscription checkout opened. Complete payment in the new window.')
+    } catch (error) {
+      console.error('Subscription API error:', error)
+      popup.close()
+      showToast('error', t('core.subscriptionManager.subscriptionCheckoutFailed'))
+      checkoutLoading.value = false
+    }
+  } catch (error) {
+    console.error('Subscription checkout network error:', error)
+    const errorMessage = error.response?.data?.message || error.response?.data?.data || error.message || 'Connection failed'
+    showToast('error', `Subscription checkout error: ${errorMessage}`)
+    checkoutLoading.value = false
+  }
+}
+
+/**
+ * Charges the user for an app update using their existing subscription's payment method.
+ * Creates an invoice item for just the update cost and pays it immediately.
+ */
+async function initStripeSubscriptionCharge(hash = null, name = null, price = null, description = null) {
+  try {
+    checkoutLoading.value = true
+    const zelidauth = localStorage.getItem('zelidauth')
+
+    if (!zelidauth) {
+      showToast('error', 'Authentication required - please login first')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const auth = qs.parse(zelidauth)
+    if (!auth.zelid || !auth.signature || !auth.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const finalHash = hash || registrationHash.value
+    const finalName = name || appDetails.name
+    const finalPrice = price || appSpecPrice.value?.usd || 0
+
+    if (!finalHash || !finalPrice || finalPrice <= 0) {
+      showToast('error', 'Missing update details')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const data = {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+      details: {
+        name: finalName,
+        description: description || appDetails.description,
+        hash: finalHash,
+        price: finalPrice,
+        productName: finalName,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: isMarketplaceApp.value,
+          registration: false,
+        },
+      },
+    }
+
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/charge-update`, data)
+
+    if (response.data.status === 'error') {
+      showToast('error', `Charge failed: ${response.data.data || 'Unknown error'}`)
+      checkoutLoading.value = false
+
+      return
+    }
+
+    paymentMethod.value = 'Stripe Subscription'
+    paymentAmount.value = finalPrice
+    checkoutLoading.value = false
+
+    showToast('success', t('core.subscriptionManager.subscriptionChargeSuccess'))
+    startPaymentMonitoring()
+
+    // Update subscription price if it changed
+    if (subscriptionPeriodPriceChanged.value && subscriptionNewPeriodPrice.value) {
+      try {
+        await axios.post(`${paymentBridge}/api/v1/stripe/subscription/update-price`, {
+          zelid: auth.zelid,
+          signature: auth.signature,
+          loginPhrase: auth.loginPhrase,
+          appName: finalName,
+          newPrice: subscriptionNewPeriodPrice.value,
+        })
+      } catch (priceError) {
+        console.warn('Failed to update subscription price:', priceError.message)
+      }
+    }
+  } catch (error) {
+    console.error('Subscription charge error:', error)
+    const errorMessage = error.response?.data?.data || error.response?.data?.message || error.message || 'Connection failed'
+    showToast('error', `Subscription charge error: ${errorMessage}`)
+    checkoutLoading.value = false
+  }
+}
+
+/**
+ * Calculates the subscription period price for the current app specs
+ * and compares it to the existing subscription's price on Stripe.
+ */
+async function checkSubscriptionPriceChange() {
+  subscriptionPeriodPriceChanged.value = false
+  subscriptionNewPeriodPrice.value = null
+  if (!existingSubscription.value || !appSpecPrice.value?.usd) return
+
+  try {
+    const periodPrice = appSpecPrice.value.usd
+    const currentPrice = existingSubscription.value.currentPrice
+
+    if (currentPrice && Math.round(currentPrice * 100) !== Math.round(periodPrice * 100)) {
+      subscriptionPeriodPriceChanged.value = true
+      subscriptionNewPeriodPrice.value = periodPrice
+    }
+  } catch (error) {
+    console.warn('Failed to check subscription price change:', error.message)
   }
 }
 

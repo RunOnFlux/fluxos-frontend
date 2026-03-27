@@ -92,7 +92,7 @@ export default [
       'vue/first-attribute-linebreak': ['error', { singleline: 'beside', multiline: 'below' }],
       'vue/component-name-in-template-casing': ['error', 'PascalCase', {
         registeredComponentsOnly: false,
-        ignores: ['/^swiper-/'],
+        ignores: [],
       }],
       'vue/custom-event-name-casing': ['error', 'camelCase', {
         ignores: ['/^(click):[a-z]+((\\d)|([A-Z0-9][a-z0-9]+))*([A-Z])?/'],
@@ -177,6 +177,6 @@ export default [
     },
   },
   {
-    ignores: ['node_modules/', 'dist/', '*.d.ts', 'vendor/', 'vite.config.js', 'eslint.config.js','*auto-imports.d.ts', '.backups/'],
+    ignores: ['node_modules/', 'dist/', '*.d.ts', 'vendor/', 'vite.config.js', 'eslint.config.js','*auto-imports.d.ts', '.backups/', '**/icons-optimized.js'],
   },
 ]

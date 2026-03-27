@@ -3,7 +3,7 @@
  * Provides reusable defaults and helper functions for consistent SEO implementation
  */
 
-import { useHead } from '@vueuse/head'
+import { useHead } from '@unhead/vue'
 import { computed } from 'vue'
 
 /**

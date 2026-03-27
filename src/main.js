@@ -40,7 +40,7 @@ if (typeof window !== 'undefined') {
 import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
-import { createHead } from '@vueuse/head'
+import { createHead } from '@unhead/vue/client'
 import sanitizeHtml from '@/utils/sanitizeHtml'
 
 // Styles
@@ -233,10 +233,12 @@ app.directive('sanitize-html', sanitizeHtml)
 app.mount('#app')
 
 // Auto-reload when new build is deployed (service worker update)
-// This silently reloads the page when a new SW activates - no user prompt
+// Only listen after the app has fully loaded to prevent reload loops during startup
 if ('serviceWorker' in navigator) {
+  let appReady = false
+  window.addEventListener('app-ready', () => { appReady = true })
   navigator.serviceWorker.addEventListener('controllerchange', () => {
-    // New service worker has taken control, reload to get fresh assets
+    if (!appReady) return
     console.log('[PWA] New service worker activated, reloading page for fresh assets...')
     setTimeout(() => window.location.reload(), 2000)
   })

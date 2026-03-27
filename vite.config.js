@@ -41,13 +41,7 @@ export default defineConfig(({ mode }) => {
         },
         importMode: 'async',
       }),
-      vue({
-        template: {
-          compilerOptions: {
-            isCustomElement: (tag) => tag === 'swiper-container' || tag === 'swiper-slide',
-          },
-        },
-      }),
+      vue(),
       isDev && VueDevTools(),
       vueJsx(),
       vuetify({
@@ -313,8 +307,12 @@ export default defineConfig(({ mode }) => {
         workbox: {
           clientsClaim: true,  // Take control of all clients immediately
           skipWaiting: true,   // Activate new service worker immediately
-          // Precache static assets (excluding large files)
-          globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+          // Precache static assets (excluding large files and index.html)
+          // index.html is excluded so browsers always fetch the latest version
+          // (prevents stale chunk references after deployments)
+          globPatterns: ['**/*.{js,css,ico,png,svg,woff,woff2}'],
+          // Don't serve index.html from SW cache for navigation requests
+          navigateFallback: null,
           // Exclude large files and dev tools from precaching
           globIgnores: [
             'stats.html', // Bundle analyzer (4MB+)
@@ -629,10 +627,6 @@ export default defineConfig(({ mode }) => {
               return 'lodash'
             }
 
-            // Carousel - Swiper
-            if (id.includes('swiper')) {
-              return 'swiper'
-            }
 
             // JSON viewer
             if (id.includes('vue-json-pretty')) {
