@@ -1361,11 +1361,29 @@
                         </VCardText>
                       </VCard>
 
+                      <!-- Auto-Renewal Toggle (Stripe only) -->
+                      <div v-if="paymentMethod === 'stripe'" class="mb-3 rounded border">
+                        <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                          <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                          <span class="text-body-2 font-weight-medium">{{ t('components.marketplace.installDialog.enableAutoRenewal') }}</span>
+                        </div>
+                        <div class="pa-3 d-flex align-center">
+                          <VSwitch
+                            v-model="autoRenewalEnabled"
+                            color="success"
+                            hide-details
+                            density="compact"
+                            class="me-3 flex-shrink-0"
+                          />
+                          <div class="text-caption text-medium-emphasis text-start">{{ t('components.marketplace.installDialog.autoRenewalDescription') }}</div>
+                        </div>
+                      </div>
+
                       <VBtn
                         color="primary"
                         size="large"
                         block
-                        @click="paymentMethod === 'stripe' ? processStripePayment() : processPayPalPayment()"
+                        @click="paymentMethod === 'stripe' ? (autoRenewalEnabled ? processStripeSubscriptionPayment() : processStripePayment()) : processPayPalPayment()"
                         class="text-none"
                         elevation="2"
                       >
@@ -1995,6 +2013,10 @@ onMounted(async () => {
   }
 })
 const paymentMethod = ref('stripe') // Will be updated when authentication is determined
+const autoRenewalEnabled = ref(false)
+
+// Map subscription months to Stripe subscription period keys
+const SUBSCRIPTION_PERIOD_MAP = { 1: 1, 3: 3, 6: 6, 12: 12 }
 const creditCard = ref({
   number: '',
   expiry: '',
@@ -4561,6 +4583,88 @@ const processStripePayment = async () => {
     } else {
       paymentProcessing.value = false
       const errorMsg = error.response?.data?.message || error.response?.data?.data || error.message || 'Failed to initialize Stripe payment'
+      showSnackbar(errorMsg, 'error')
+    }
+  }
+}
+
+const processStripeSubscriptionPayment = async () => {
+  paymentProcessing.value = true
+
+  try {
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showSnackbar(t('components.marketplace.installDialog.messages.pleaseLoginToMakePayments'), 'error')
+      paymentProcessing.value = false
+
+      return
+    }
+
+    const authData = qs.parse(zelidauthData)
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showSnackbar(t('components.marketplace.installDialog.messages.invalidAuthenticationData'), 'error')
+      paymentProcessing.value = false
+
+      return
+    }
+
+    const period = SUBSCRIPTION_PERIOD_MAP[config.value.subscriptionMonths]
+    if (!period) {
+      showSnackbar(t('components.marketplace.installDialog.autoRenewalEligiblePeriods'), 'error')
+      paymentProcessing.value = false
+
+      return
+    }
+
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        name: props.app.name.toLowerCase(),
+        description: props.app.description,
+        hash: paymentHash.value,
+        price: parseFloat(estimatedCost.value),
+        productName: props.app.name.toLowerCase(),
+        period,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: `${window.location.origin}/marketplace`,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
+
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create Stripe subscription checkout')
+    }
+
+    await startPaymentMonitoring()
+
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'Stripe Subscription'
+    } else {
+      win.focus()
+      showSnackbar(t('components.marketplace.installDialog.messages.stripeCheckoutOpened'), 'info', 5000)
+    }
+  } catch (error) {
+    console.error('Stripe subscription payment failed:', error)
+
+    if (error.response?.status >= 400 || error.code === 'ERR_NETWORK' || error.code === 'ECONNABORTED') {
+      cancelPaymentMonitoring()
+      paymentBridgeMaintenance.value = true
+      paymentProcessing.value = false
+    } else {
+      paymentProcessing.value = false
+      const errorMsg = error.response?.data?.message || error.response?.data?.data || error.message || 'Failed to initialize Stripe subscription'
       showSnackbar(errorMsg, 'error')
     }
   }

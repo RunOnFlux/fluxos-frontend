@@ -78,6 +78,7 @@
               manage
               :api-error="apiError"
               :privilege="privilege"
+              :subscriptions="userSubscriptions"
             />
           </div>
         </VWindowItem>
@@ -94,6 +95,7 @@
               manage
               :api-error="apiError"
               :privilege="privilege"
+              :subscriptions="userSubscriptions"
             />
           </div>
         </VWindowItem>
@@ -122,11 +124,13 @@
 import { ref, computed, onMounted, watch } from "vue"
 import { useI18n } from 'vue-i18n'
 import qs from "qs"
+import axios from "axios"
 import Management from "@/views/apps/management/manage.vue"
 import MyAppsTab from "@/views/apps/management/tabView.vue"
 import AppsService from "@/services/AppsService"
 import DaemonService from "@/services/DaemonService"
 import { decryptEnterpriseWithAes, encryptAesKeyWithRsaKey, importRsaPublicKey, isWebCryptoAvailable } from "@/utils/enterpriseCrypto"
+import { paymentBridge } from "@/utils/fiatGateways"
 
 import { storeToRefs } from "pinia"
 import { useFluxStore } from "@/stores/flux"
@@ -165,9 +169,30 @@ const snackbar = ref({ show: false, message: "", color: "error" })
 const tabIndex = ref(0)
 const activeAppsRef = ref(null)
 const expiredAppsRef = ref(null)
+const userSubscriptions = ref([])
 
 function showSnackbar(message, color = "error") {
   snackbar.value = { show: true, message, color }
+}
+
+async function fetchUserSubscriptions() {
+  try {
+    const zelidauth = localStorage.getItem("zelidauth")
+    if (!zelidauth) return
+    const auth = qs.parse(zelidauth)
+    if (!auth?.zelid) return
+
+    const response = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/list`, {
+      zelid: auth.zelid,
+      signature: auth.signature,
+      loginPhrase: auth.loginPhrase,
+    })
+    if (response.data.status === 'success' && Array.isArray(response.data.data)) {
+      userSubscriptions.value = response.data.data
+    }
+  } catch (error) {
+    console.warn('Failed to fetch subscriptions:', error.message)
+  }
 }
 
 
@@ -416,8 +441,8 @@ watch(loggedIn, newValue => {
 onMounted(async () => {
   await getDaemonBlockCount()
 
-  // Load apps on mount to ensure loading states are properly set
-  await getApps()
+  // Load apps and subscriptions on mount
+  await Promise.all([getApps(), fetchUserSubscriptions()])
 })
 </script>
 

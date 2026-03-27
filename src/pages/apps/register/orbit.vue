@@ -2070,7 +2070,7 @@
 
                       <!-- Payment Method Selection Label -->
                       <div class="payment-method-selection-label mb-4">
-                        <VAvatar size="48" color="primary" variant="flat" class="mr-3">
+                        <VAvatar size="48" color="primary" variant="flat">
                           <VIcon size="28" color="white">mdi-credit-card-outline</VIcon>
                         </VAvatar>
                         <span class="text-h6">{{ t('pages.apps.register.orbit.payment.selectPaymentMethod') }}</span>
@@ -2101,7 +2101,7 @@
                                 <VCard
                                   variant="outlined"
                                   class="payment-icon-card-horizontal"
-                                  @click="initStripePay"
+                                  @click="autoRenewalEnabled ? initStripeSubscriptionPay() : initStripePay()"
                                   :loading="checkoutLoading && paymentMethod === 'stripe'"
                                   hover
                                 >
@@ -2146,6 +2146,24 @@
                                 <VChip v-else color="success" variant="flat" size="large">
                                   {{ formattedTotalPrice }} + VAT
                                 </VChip>
+                              </div>
+
+                              <!-- Auto-Renewal Toggle -->
+                              <div class="mb-3 rounded border">
+                                <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                                  <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                                  <span class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</span>
+                                </div>
+                                <div class="pa-3 d-flex align-center">
+                                  <VSwitch
+                                    v-model="autoRenewalEnabled"
+                                    color="success"
+                                    hide-details
+                                    density="compact"
+                                    class="me-3 flex-shrink-0"
+                                  />
+                                  <div class="text-caption text-medium-emphasis text-start">{{ t('pages.apps.register.orbit.payment.autoRenewalDescription') }}</div>
+                                </div>
                               </div>
 
                               <!-- Payment Advantages -->
@@ -2335,6 +2353,47 @@
                                     <VIcon size="16" class="mr-1">mdi-gift-outline</VIcon>
                                     {{ t('pages.apps.register.orbit.deploy.firstMonthSponsoredBy') }}
                                   </VChip>
+
+                                  <!-- Auto-Renewal Setup for paid plans with first month free -->
+                                  <div v-if="!autoRenewalSubscriptionCreated" class="mt-4">
+                                    <div class="mx-auto rounded border" style="max-width: 400px;">
+                                      <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                                        <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                                        <span class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</span>
+                                      </div>
+                                      <div class="pa-3">
+                                        <div class="d-flex align-center mb-2">
+                                          <VSwitch
+                                            v-model="autoRenewalEnabled"
+                                            color="success"
+                                            hide-details
+                                            density="compact"
+                                            class="me-3 flex-shrink-0"
+                                          />
+                                          <div class="text-caption text-medium-emphasis text-start">{{ t('pages.apps.register.orbit.payment.autoRenewalAfterTrial') }}</div>
+                                        </div>
+                                        <VBtn
+                                          v-if="autoRenewalEnabled"
+                                          color="primary"
+                                          variant="flat"
+                                          size="small"
+                                          block
+                                          :loading="autoRenewalLoading"
+                                          @click="setupAutoRenewalWithTrial"
+                                          class="text-none mt-2"
+                                        >
+                                          <VIcon start size="16">mdi-credit-card</VIcon>
+                                          {{ t('pages.apps.register.orbit.payment.setupAutoRenewal') }}
+                                        </VBtn>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div v-else class="mt-3">
+                                    <VChip color="success" variant="tonal" size="small">
+                                      <VIcon size="16" class="mr-1">mdi-check-circle</VIcon>
+                                      {{ t('pages.apps.register.orbit.payment.autoRenewalSetup') }}
+                                    </VChip>
+                                  </div>
                                 </template>
                               </div>
                               <div class="d-flex justify-center">
@@ -4998,6 +5057,9 @@ const logsExpanded = ref([])
 const paymentProcessing = ref(false)
 const paymentConfirmed = ref(false)
 const paymentMethod = ref('')
+const autoRenewalEnabled = ref(false)
+const autoRenewalLoading = ref(false)
+const autoRenewalSubscriptionCreated = ref(false)
 const paymentMonitoringInterval = ref(null)
 const paymentMonitoringTimeout = ref(null)
 const paymentMonitoringPhase = ref('blockchain') // 'blockchain', 'installing', or 'deployment'
@@ -6502,6 +6564,162 @@ const initStripePay = async () => {
     showToast('error', error.message || 'Failed to initiate Stripe payment')
   } finally {
     checkoutLoading.value = false
+  }
+}
+
+// Map billing period to Stripe subscription period key
+const ORBIT_PERIOD_MAP = { '1': 1, '3': 3, '6': 6, '12': 12 }
+
+// Initialize Stripe subscription payment
+const initStripeSubscriptionPay = async () => {
+  checkoutLoading.value = true
+  paymentMethod.value = 'stripe'
+
+  try {
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showToast('error', 'Please login to FluxOS to make payments')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const authData = qs.parse(zelidauthData)
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const period = ORBIT_PERIOD_MAP[billingPeriod.value]
+    if (!period) {
+      showToast('error', 'Auto-renewal is available for 1, 3, 6, or 12 month periods')
+      checkoutLoading.value = false
+
+      return
+    }
+
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        name: appName.value.toLowerCase(),
+        description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
+        hash: registrationHash.value,
+        price: parseFloat(calculatedAppPrice.value.usd),
+        productName: appName.value.toLowerCase(),
+        period,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
+
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create Stripe subscription checkout')
+    }
+
+    fiatPaymentInitiated.value = true
+    startPaymentMonitoring()
+
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'Stripe Subscription'
+    } else {
+      win.focus()
+      showToast('info', 'Stripe subscription checkout opened - please complete payment in the new window', null, 5000)
+    }
+  } catch (error) {
+    console.error('Stripe subscription payment error:', error)
+    showToast('error', error.message || 'Failed to initiate Stripe subscription payment')
+  } finally {
+    checkoutLoading.value = false
+  }
+}
+
+const setupAutoRenewalWithTrial = async () => {
+  autoRenewalLoading.value = true
+
+  try {
+    const zelidauthData = localStorage.getItem('zelidauth')
+    if (!zelidauthData) {
+      showToast('error', 'Please login to FluxOS to make payments')
+
+      return
+    }
+
+    const authData = qs.parse(zelidauthData)
+    if (!authData.zelid || !authData.signature || !authData.loginPhrase) {
+      showToast('error', 'Invalid authentication data - please login again')
+
+      return
+    }
+
+    const period = ORBIT_PERIOD_MAP[billingPeriod.value]
+    if (!period) {
+      showToast('error', 'Auto-renewal is available for 1, 3, 6, or 12 month periods')
+
+      return
+    }
+
+    const trialDays = period * 30
+
+    const data = {
+      zelid: authData.zelid,
+      signature: authData.signature,
+      loginPhrase: authData.loginPhrase,
+      details: {
+        name: appName.value.toLowerCase(),
+        description: appDescription.value || `Orbit deployment from ${detectedProvider.value || 'Git'}`,
+        hash: registrationHash.value,
+        price: parseFloat(calculatedAppPrice.value.usd),
+        productName: appName.value.toLowerCase(),
+        period,
+        trialDays,
+        success_url: `${window.location.origin}/successcheckout`,
+        cancel_url: window.location.origin,
+        kpi: {
+          origin: 'FluxOS',
+          marketplace: true,
+          registration: true,
+        },
+      },
+    }
+
+    const checkoutURL = await axios.post(`${paymentBridge}/api/v1/stripe/subscription/create`, data)
+
+    if (checkoutURL.data.status === 'error') {
+      throw new Error(checkoutURL.data.message || checkoutURL.data.data || 'Failed to create Stripe subscription checkout')
+    }
+
+    const win = window.open(checkoutURL.data.data, '_blank', 'width=600,height=800,resizable=yes,scrollbars=yes')
+
+    if (!win || win.closed || typeof win.closed === 'undefined') {
+      popupBlockedDialog.value = true
+      blockedPaymentUrl.value = checkoutURL.data.data
+      blockedPaymentType.value = 'Stripe Subscription'
+    } else {
+      win.focus()
+      showToast('info', 'Stripe subscription checkout opened - please complete card setup in the new window', null, 5000)
+    }
+
+    autoRenewalSubscriptionCreated.value = true
+  } catch (error) {
+    console.error('Stripe trial subscription setup error:', error)
+    showToast('error', error.message || 'Failed to set up auto-renewal subscription')
+  } finally {
+    autoRenewalLoading.value = false
   }
 }
 
@@ -8265,6 +8483,11 @@ onMounted(() => {
   background: rgba(var(--v-theme-surface), 0.5);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   width: 100%;
+  gap: 12px;
+}
+
+.payment-method-selection-label :deep(.v-avatar) {
+  flex-shrink: 0;
 }
 
 .v-theme--dark .payment-method-selection-label {
