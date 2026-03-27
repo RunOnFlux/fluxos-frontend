@@ -229,19 +229,7 @@ app.use(head)
 await registerPlugins(app)
 app.directive('sanitize-html', sanitizeHtml)
 
-// Wait for initial route resolution before mounting
-// Wrap in try-catch with timeout so the app always mounts even if routing fails
-const { router } = await import('@/plugins/1.router/index.js')
-try {
-  await Promise.race([
-    router.isReady(),
-    new Promise((_, reject) => setTimeout(() => reject(new Error('Router ready timeout')), 10000)),
-  ])
-} catch (err) {
-  console.warn('[App] Router readiness failed, mounting anyway:', err.message)
-}
-
-// Mount vue app — must always run regardless of router state
+// Mount vue app
 app.mount('#app')
 
 // Auto-reload when new build is deployed (service worker update)
