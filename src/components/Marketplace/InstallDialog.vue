@@ -1362,20 +1362,20 @@
                       </VCard>
 
                       <!-- Auto-Renewal Toggle (Stripe only) -->
-                      <div v-if="paymentMethod === 'stripe'" class="mb-3">
-                        <VDivider class="mb-3" />
-                        <div class="d-flex align-center justify-center">
+                      <div v-if="paymentMethod === 'stripe'" class="mb-3 rounded border">
+                        <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                          <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                          <span class="text-body-2 font-weight-medium">{{ t('components.marketplace.installDialog.enableAutoRenewal') }}</span>
+                        </div>
+                        <div class="pa-3 d-flex align-center">
                           <VSwitch
                             v-model="autoRenewalEnabled"
-                            color="primary"
+                            color="success"
                             hide-details
                             density="compact"
-                            class="me-2"
+                            class="me-3 flex-shrink-0"
                           />
-                          <div class="text-start">
-                            <div class="text-body-2 font-weight-medium">{{ t('components.marketplace.installDialog.enableAutoRenewal') }}</div>
-                            <div class="text-caption text-medium-emphasis">{{ t('components.marketplace.installDialog.autoRenewalDescription') }}</div>
-                          </div>
+                          <div class="text-caption text-medium-emphasis text-start">{{ t('components.marketplace.installDialog.autoRenewalDescription') }}</div>
                         </div>
                       </div>
 

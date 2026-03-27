@@ -1962,7 +1962,7 @@
 
                       <!-- Payment Method Selection Label -->
                       <div class="payment-method-selection-label mb-4">
-                        <VAvatar size="48" color="primary" variant="flat" class="mr-3">
+                        <VAvatar size="48" color="primary" variant="flat">
                           <VIcon size="28" color="white">mdi-credit-card-outline</VIcon>
                         </VAvatar>
                         <span class="text-h6">{{ t('pages.apps.register.orbit.payment.selectPaymentMethod') }}</span>
@@ -2041,20 +2041,20 @@
                               </div>
 
                               <!-- Auto-Renewal Toggle -->
-                              <div class="mb-3">
-                                <VDivider class="mb-3" />
-                                <div class="d-flex align-center justify-center">
+                              <div class="mb-3 rounded border">
+                                <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                                  <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                                  <span class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</span>
+                                </div>
+                                <div class="pa-3 d-flex align-center">
                                   <VSwitch
                                     v-model="autoRenewalEnabled"
-                                    color="primary"
+                                    color="success"
                                     hide-details
                                     density="compact"
-                                    class="me-2"
+                                    class="me-3 flex-shrink-0"
                                   />
-                                  <div class="text-start">
-                                    <div class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</div>
-                                    <div class="text-caption text-medium-emphasis">{{ t('pages.apps.register.orbit.payment.autoRenewalDescription') }}</div>
-                                  </div>
+                                  <div class="text-caption text-medium-emphasis text-start">{{ t('pages.apps.register.orbit.payment.autoRenewalDescription') }}</div>
                                 </div>
                               </div>
 
@@ -2248,20 +2248,21 @@
 
                                   <!-- Auto-Renewal Setup for paid plans with first month free -->
                                   <div v-if="!autoRenewalSubscriptionCreated" class="mt-4">
-                                    <VCard variant="tonal" color="primary" class="mx-auto" max-width="400">
-                                      <VCardText class="pa-4">
-                                        <div class="d-flex align-center justify-center mb-2">
+                                    <div class="mx-auto rounded border" style="max-width: 400px;">
+                                      <div class="px-3 py-2 d-flex align-center rounded-t" style="border-bottom: 1px solid rgba(var(--v-border-color), var(--v-border-opacity)); background: rgba(var(--v-theme-on-surface), 0.04);">
+                                        <VIcon icon="mdi-autorenew" size="18" class="me-2" color="success" />
+                                        <span class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</span>
+                                      </div>
+                                      <div class="pa-3">
+                                        <div class="d-flex align-center mb-2">
                                           <VSwitch
                                             v-model="autoRenewalEnabled"
-                                            color="primary"
+                                            color="success"
                                             hide-details
                                             density="compact"
-                                            class="me-2"
+                                            class="me-3 flex-shrink-0"
                                           />
-                                          <div class="text-start">
-                                            <div class="text-body-2 font-weight-medium">{{ t('pages.apps.register.orbit.payment.enableAutoRenewal') }}</div>
-                                            <div class="text-caption text-medium-emphasis">{{ t('pages.apps.register.orbit.payment.autoRenewalAfterTrial') }}</div>
-                                          </div>
+                                          <div class="text-caption text-medium-emphasis text-start">{{ t('pages.apps.register.orbit.payment.autoRenewalAfterTrial') }}</div>
                                         </div>
                                         <VBtn
                                           v-if="autoRenewalEnabled"
@@ -2276,8 +2277,8 @@
                                           <VIcon start size="16">mdi-credit-card</VIcon>
                                           {{ t('pages.apps.register.orbit.payment.setupAutoRenewal') }}
                                         </VBtn>
-                                      </VCardText>
-                                    </VCard>
+                                      </div>
+                                    </div>
                                   </div>
                                   <div v-else class="mt-3">
                                     <VChip color="success" variant="tonal" size="small">
@@ -8120,6 +8121,11 @@ onMounted(() => {
   background: rgba(var(--v-theme-surface), 0.5);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   width: 100%;
+  gap: 12px;
+}
+
+.payment-method-selection-label :deep(.v-avatar) {
+  flex-shrink: 0;
 }
 
 .v-theme--dark .payment-method-selection-label {
