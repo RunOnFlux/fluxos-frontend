@@ -422,19 +422,34 @@
       if (loader) loader.remove()
     } else {
       // Normal loader behavior for other pages
-      window.addEventListener('app-ready', () => {
+      function dismissLoader() {
+        const loader = document.getElementById('loading-bg')
+        if (loader) {
+          loader.classList.add('fade-out')
+          setTimeout(() => loader.remove(), 800)
+        }
+      }
+
+      let dismissed = false
+      function handleDismiss() {
+        if (dismissed) return
+        dismissed = true
         setTimeout(() => {
           requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-              const loader = document.getElementById('loading-bg')
-              if (loader) {
-                loader.classList.add('fade-out')
-                setTimeout(() => loader.remove(), 800)
-              }
-            })
+            requestAnimationFrame(() => dismissLoader())
           })
         }, 500)
-      })
+      }
+
+      window.addEventListener('app-ready', handleDismiss)
+
+      // Fallback: remove loader after 12s even if app-ready never fires
+      setTimeout(() => {
+        if (!dismissed) {
+          console.warn('[Loader] Fallback timeout reached — removing splash screen')
+          handleDismiss()
+        }
+      }, 12000)
     }
   </script>
 </body>

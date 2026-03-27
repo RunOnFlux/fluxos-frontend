@@ -1,6 +1,6 @@
 {
   "name": "flux-gravity",
-  "version": "3.1.0",
+  "version": "3.2.1",
   "private": true,
   "type": "module",
   "scripts": {
@@ -19,7 +19,7 @@
     "postinstall": "patch-package && bash scripts/fix-nested-lockfile.sh && npm run build:icons && npm run fix-vuetify"
   },
   "dependencies": {
-    "@casl/ability": "6.7.2",
+    "@casl/ability": "^6.8.0",
     "@casl/vue": "2.2.2",
     "@floating-ui/dom": "1.6.8",
     "@fontsource/montserrat": "^5.2.8",
@@ -31,8 +31,8 @@
     "@tiptap/extension-highlight": "^2.10.3",
     "@tiptap/extension-image": "^2.10.3",
     "@tiptap/extension-link": "^2.10.3",
+    "@unhead/vue": "^2.1.12",
     "@vueuse/core": "10.11.1",
-    "@vueuse/head": "^2.0.0",
     "@vueuse/math": "10.11.1",
     "@xterm/addon-fit": "^0.10.0",
     "@xterm/addon-serialize": "^0.13.0",
@@ -69,7 +69,6 @@
     "qs": "^6.14.0",
     "query-string": "^9.3.1",
     "shepherd.js": "13.0.3",
-    "swiper": "11.1.15",
     "typescript": "^5.8.2",
     "ufo": "1.5.4",
     "unplugin-vue-define-options": "1.5.3",
@@ -91,6 +90,7 @@
     "postcss": "^8",
     "@tiptap/core": "^2",
     "@types/video.js": "^7",
+    "serialize-javascript": "^7.0.3",
     "vite-plugin-vue-layouts": {
       "vite": "$vite"
     }
@@ -124,7 +124,7 @@
     "eslint-plugin-promise": "6.6.0",
     "eslint-plugin-regex": "^1.10.0",
     "eslint-plugin-regexp": "^2.9.0",
-    "eslint-plugin-sonarjs": "^3.0.5",
+    "eslint-plugin-sonarjs": "^4.0.2",
     "eslint-plugin-unicorn": "^56.0.0",
     "eslint-plugin-vue": "^10.3.0",
     "patch-package": "^8.0.1",

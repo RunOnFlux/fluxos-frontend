@@ -41,13 +41,7 @@ export default defineConfig(({ mode }) => {
         },
         importMode: 'async',
       }),
-      vue({
-        template: {
-          compilerOptions: {
-            isCustomElement: (tag) => tag === 'swiper-container' || tag === 'swiper-slide',
-          },
-        },
-      }),
+      vue(),
       isDev && VueDevTools(),
       vueJsx(),
       vuetify({
@@ -629,10 +623,6 @@ export default defineConfig(({ mode }) => {
               return 'lodash'
             }
 
-            // Carousel - Swiper
-            if (id.includes('swiper')) {
-              return 'swiper'
-            }
 
             // JSON viewer
             if (id.includes('vue-json-pretty')) {
