@@ -87,8 +87,10 @@
               <!-- Header -->
               <div class="orbit-header">
                 <VBtn
-                  variant="text"
+                  variant="tonal"
+                  color="grey"
                   size="small"
+                  rounded="pill"
                   :to="{ name: 'apps-register' }"
                   class="back-btn"
                 >
@@ -1607,7 +1609,7 @@
                           </h4>
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.appName') }}:</span>
-                            <span class="review-value"><code>{{ appName }}</code></span>
+                            <VChip variant="tonal" color="success" size="small">{{ appName }}</VChip>
                           </div>
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.appPort') }}:</span>
@@ -1640,7 +1642,7 @@
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.plan') }}:</span>
                             <span class="review-value">
-                              <VChip color="primary" size="small">
+                              <VChip variant="tonal" color="success" size="small">
                                 {{ selectedPlanDisplayName }}
                               </VChip>
                             </span>
@@ -1720,7 +1722,7 @@
                           </div>
                           <div class="review-item highlight-price">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
-                            <span class="review-value price">
+                            <span class="review-value price text-success">
                               <!-- Free plan: show "Free Forever" only if eligible -->
                               <VChip v-if="selectedPlan === 'free' && eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
                                 <VIcon start size="14">mdi-infinity</VIcon>
@@ -2469,7 +2471,7 @@
                     <div class="stepper-actions">
                       <VBtn
                         v-if="currentStep > 1 && currentStep <= 4"
-                        variant="text"
+                        variant="flat"
                         @click="currentStep--"
                         :disabled="deploying"
                       >
@@ -2478,7 +2480,7 @@
                       </VBtn>
                       <VBtn
                         v-else-if="currentStep === 6 && !paymentConfirmed && !eligibleForFirstMonthFree && !fiatPaymentInitiated"
-                        variant="text"
+                        variant="flat"
                         @click="goBackToReviewStep"
                       >
                         <VIcon start>mdi-arrow-left</VIcon>
@@ -7100,6 +7102,7 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 0.5rem;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.15);
 }
 
 .orbit-title {
@@ -8214,8 +8217,6 @@ onMounted(() => {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: rgb(var(--v-theme-primary));
 }
 
 .review-item {
@@ -8263,7 +8264,7 @@ onMounted(() => {
 }
 
 .review-value code {
-  background: rgba(var(--v-theme-primary), 0.1);
+  background: rgba(var(--v-theme-on-surface), 0.08);
   padding: 0.125rem 0.5rem;
   border-radius: 4px;
   font-family: monospace;

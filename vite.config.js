@@ -200,6 +200,8 @@ export default defineConfig(({ mode }) => {
             'marker-cluster-medium',
             'marker-cluster-large',
             /^theme--/, // Theme classes
+            // SubscriptionManager spec-row theme styles (scoped CSS + PurgeCSS can strip these)
+            'spec-row', 'label-cell', 'value-cell', 'review-header',
             /^elevation-/, // Elevation utilities
             /^rounded-/, // Border radius utilities
             /^text-/, // Text utilities

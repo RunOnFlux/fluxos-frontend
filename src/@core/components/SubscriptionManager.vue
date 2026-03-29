@@ -4936,6 +4936,7 @@ let signedSpecState = ref(null)
 watch(() => props.appSpec, newSpec => {
   if (!newSpec) return
   if (!signedSpecState.value) return // No signed spec to compare against
+  if (isSigning.value || isPropagating.value) return // Don't clear during active signing/propagation
 
   // If user changes props.appSpec after signing, the old signature is invalid
   try {
