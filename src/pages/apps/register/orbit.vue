@@ -3340,6 +3340,9 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}, evaluationGen
     `${basePath}composer.json`,
     `${basePath}Gemfile`,
     `${basePath}global.json`,
+    `${basePath}Program.cs`,
+    `${basePath}Startup.cs`,
+    `${basePath}appsettings.json`,
     `${basePath}index.html`,
     `${basePath}Dockerfile`,
   ]
@@ -3382,6 +3385,14 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}, evaluationGen
       }
     } catch {
       // Continue checking other files
+    }
+  }
+
+  if (!foundAnyMarker) {
+    const hasDotnetMarker = await detectDotnetProjectMarker(parsed, branchName, basePath, authHeaders)
+    if (hasDotnetMarker) {
+      foundAnyMarker = true
+      foundMarkerFile = `${basePath}*.csproj`
     }
   }
 
@@ -3730,6 +3741,60 @@ const detectPortFromEnvFile = content => {
   }
   
   return { port: null }
+}
+
+// Detect .NET project markers by listing files in the selected project path.
+const detectDotnetProjectMarker = async (parsed, branchName, basePath, authHeaders = {}) => {
+  try {
+    const normalizedPath = basePath ? basePath.replace(/\/$/, '') : ''
+
+    const isDotnetProjectFile = fileName => {
+      return fileName.endsWith('.csproj')
+        || fileName.endsWith('.fsproj')
+        || fileName.endsWith('.vbproj')
+        || fileName.endsWith('.sln')
+    }
+
+    if (parsed.provider === 'github.com') {
+      const pathSegment = normalizedPath ? `/${normalizedPath}` : ''
+      const apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents${pathSegment}?ref=${branchName}`
+      const response = await fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json', ...authHeaders } })
+      if (response.ok) {
+        const items = await response.json()
+        if (Array.isArray(items)) {
+          return items.some(item => item?.type === 'file' && isDotnetProjectFile(item?.name || ''))
+        }
+      }
+    } else if (parsed.provider === 'gitlab.com') {
+      const apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/tree?path=${encodeURIComponent(normalizedPath)}&ref=${branchName}&per_page=100`
+      const response = await fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json', ...authHeaders } })
+      if (response.ok) {
+        const items = await response.json()
+        if (Array.isArray(items)) {
+          return items.some(item => item?.type === 'blob' && isDotnetProjectFile(item?.name || ''))
+        }
+      }
+    } else if (parsed.provider === 'bitbucket.org') {
+      const pathSegment = normalizedPath ? `/${normalizedPath}` : ''
+      const apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}${pathSegment}`
+      const response = await fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json', ...authHeaders } })
+      if (response.ok) {
+        const data = await response.json()
+        const values = Array.isArray(data?.values) ? data.values : []
+
+        return values.some(item => {
+          const filePath = item?.path || ''
+          const fileName = filePath.split('/').pop() || ''
+
+          return item?.type === 'commit_file' && isDotnetProjectFile(fileName)
+        })
+      }
+    }
+  } catch {
+    // Ignore detection errors and let other markers decide compatibility.
+  }
+
+  return false
 }
 
 // Detect monorepo structure
