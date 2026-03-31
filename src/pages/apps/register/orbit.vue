@@ -502,7 +502,7 @@
                         variant="tonal"
                         class="mt-4"
                       >
-                        <div>{{ t('pages.apps.register.orbit.repository.compatibilityWarning') }}</div>
+                        <div>{{ compatibilityMessage || t('pages.apps.register.orbit.repository.compatibilityWarning') }}</div>
                         <a
                           href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
                           target="_blank"
@@ -3405,6 +3405,34 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}, evaluationGen
     return
   }
 
+  const markerBaseName = foundMarkerFile?.replace(basePath, '')
+
+  if (!detectedFramework.value && markerBaseName) {
+    const inferredFrameworkByMarker = {
+      'requirements.txt': 'Python',
+      'pyproject.toml': 'Python',
+      'Pipfile': 'Python',
+      'setup.py': 'Python',
+      'setup.cfg': 'Python',
+      'Cargo.toml': 'Rust',
+      'go.mod': 'Go',
+      'pom.xml': 'Java',
+      'build.gradle': 'Java',
+      'build.gradle.kts': 'Java',
+      'composer.json': 'PHP',
+      'Gemfile': 'Ruby',
+      'global.json': '.NET',
+      'Program.cs': 'ASP.NET Core',
+      'Startup.cs': 'ASP.NET Core',
+      'appsettings.json': 'ASP.NET Core',
+      '*.csproj': 'ASP.NET Core',
+    }
+
+    if (inferredFrameworkByMarker[markerBaseName]) {
+      detectedFramework.value = inferredFrameworkByMarker[markerBaseName]
+    }
+  }
+
   // Markers found — check if we detected a web framework/port
   if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
@@ -3422,8 +3450,6 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}, evaluationGen
 
     return
   }
-
-  const markerBaseName = foundMarkerFile?.replace(basePath, '')
 
   if (markerBaseName === 'Dockerfile') {
     requiresRunCommand.value = false
