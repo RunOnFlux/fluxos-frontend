@@ -4412,19 +4412,23 @@ const detectMonorepoStructureWithAuth = async (parsed, evaluationGeneration = nu
   for (const config of monorepoConfigs) {
     try {
       let apiUrl = ''
+      let requestHeaders = { ...headers }
 
       if (parsed.provider === 'github.com') {
         apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${config.file}?ref=${branchName}`
+        requestHeaders = { ...headers, 'Accept': 'application/vnd.github.v3.raw' }
+      } else if (parsed.provider === 'gitlab.com') {
+        apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(config.file)}/raw?ref=${branchName}`
+      } else if (parsed.provider === 'bitbucket.org') {
+        apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}/${config.file}`
       }
 
-      // Use HEAD request first to check if file exists (avoids 404 errors in console)
-      const headResponse = await fetch(apiUrl, { method: 'HEAD', headers })
-      if (!headResponse.ok) {
-        continue // File doesn't exist, skip to next config
+      if (!apiUrl) {
+        continue
       }
 
       // File exists, fetch the content
-      const response = await fetch(apiUrl, { method: 'GET', headers })
+      const response = await fetch(apiUrl, { method: 'GET', headers: requestHeaders })
       if (response.ok) {
         const content = await response.text()
         const result = config.parser(content)
@@ -4487,6 +4491,52 @@ const expandWorkspacePatternsWithAuth = async (parsed, branchName, patterns, hea
               }
             }
           }
+        } else if (parsed.provider === 'gitlab.com') {
+          const apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/tree?path=${encodeURIComponent(basePath)}&ref=${branchName}&per_page=100`
+          const response = await fetch(apiUrl, { method: 'GET', headers: { ...headers, 'Accept': 'application/json' } })
+
+          if (response.ok) {
+            const items = await response.json()
+            const directories = (items || []).filter(item => item.type === 'tree')
+
+            for (const dir of directories) {
+              const fullPath = `${basePath}/${dir.name}`
+              const projectInfo = await getProjectInfoWithAuth(parsed, branchName, fullPath, headers)
+
+              if (projectInfo.hasPackageJson) {
+                projects.push({
+                  path: `/${fullPath}`,
+                  name: projectInfo.name || dir.name,
+                  description: projectInfo.description || '',
+                  framework: projectInfo.framework || null,
+                })
+              }
+            }
+          }
+        } else if (parsed.provider === 'bitbucket.org') {
+          const apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}/${basePath}`
+          const response = await fetch(apiUrl, { method: 'GET', headers: { ...headers, 'Accept': 'application/json' } })
+
+          if (response.ok) {
+            const data = await response.json()
+            const values = data?.values || []
+            const directories = values.filter(item => item.type === 'commit_directory')
+
+            for (const dir of directories) {
+              const fullPath = dir.path || `${basePath}/${dir.name}`
+              const projectInfo = await getProjectInfoWithAuth(parsed, branchName, fullPath, headers)
+
+              if (projectInfo.hasPackageJson) {
+                const fallbackName = fullPath.split('/').pop()
+                projects.push({
+                  path: `/${fullPath}`,
+                  name: projectInfo.name || fallbackName,
+                  description: projectInfo.description || '',
+                  framework: projectInfo.framework || null,
+                })
+              }
+            }
+          }
         }
       } catch (error) {
         console.debug(`Could not expand pattern ${pattern}:`, error.message)
@@ -4500,29 +4550,42 @@ const expandWorkspacePatternsWithAuth = async (parsed, branchName, patterns, hea
 // Get project info with authentication
 const getProjectInfoWithAuth = async (parsed, branchName, projectPath, headers) => {
   try {
+    let apiUrl = ''
+    let requestHeaders = { ...headers }
+
     if (parsed.provider === 'github.com') {
-      const apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${projectPath}/package.json?ref=${branchName}`
-      const response = await fetch(apiUrl, { method: 'GET', headers: { ...headers, 'Accept': 'application/vnd.github.v3.raw' } })
+      apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${projectPath}/package.json?ref=${branchName}`
+      requestHeaders = { ...headers, 'Accept': 'application/vnd.github.v3.raw' }
+    } else if (parsed.provider === 'gitlab.com') {
+      apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(`${projectPath}/package.json`)}/raw?ref=${branchName}`
+    } else if (parsed.provider === 'bitbucket.org') {
+      apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}/${projectPath}/package.json`
+    }
 
-      if (response.ok) {
-        const content = await response.text()
-        const pkg = JSON.parse(content)
-        const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+    if (!apiUrl) {
+      return { hasPackageJson: false, name: '', description: '', framework: null }
+    }
 
-        let framework = null
-        if (deps['next']) framework = 'Next.js'
-        else if (deps['nuxt'] || deps['nuxt3']) framework = 'Nuxt'
-        else if (deps['@remix-run/react']) framework = 'Remix'
-        else if (deps['astro']) framework = 'Astro'
-        else if (deps['@sveltejs/kit']) framework = 'SvelteKit'
-        else if (deps['vite']) framework = 'Vite'
+    const response = await fetch(apiUrl, { method: 'GET', headers: requestHeaders })
 
-        return {
-          hasPackageJson: true,
-          name: pkg.name || '',
-          description: pkg.description || '',
-          framework,
-        }
+    if (response.ok) {
+      const content = await response.text()
+      const pkg = JSON.parse(content)
+      const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+
+      let framework = null
+      if (deps['next']) framework = 'Next.js'
+      else if (deps['nuxt'] || deps['nuxt3']) framework = 'Nuxt'
+      else if (deps['@remix-run/react']) framework = 'Remix'
+      else if (deps['astro']) framework = 'Astro'
+      else if (deps['@sveltejs/kit']) framework = 'SvelteKit'
+      else if (deps['vite']) framework = 'Vite'
+
+      return {
+        hasPackageJson: true,
+        name: pkg.name || '',
+        description: pkg.description || '',
+        framework,
       }
     }
   } catch (error) {
