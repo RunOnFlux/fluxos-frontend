@@ -3243,7 +3243,7 @@ const calculateAppPrice = async () => {
 }
 
 // Detect port from repository files
-const detectPortFromRepo = async parsed => {
+const detectPortFromRepo = async (parsed, evaluationGeneration = null) => {
   if (!parsed) return
 
   const branchName = branch.value || 'main'
@@ -3290,6 +3290,8 @@ const detectPortFromRepo = async parsed => {
         const content = await response.text()
         const result = check.detect(content)
         if (result.port) {
+          if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
           detectedPort.value = result.port
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
@@ -3307,11 +3309,13 @@ const detectPortFromRepo = async parsed => {
 }
 
 // Check project compatibility with Orbit
-const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
+const checkProjectCompatibility = async (parsed, authHeaders = {}, evaluationGeneration = null) => {
   if (!parsed) return
 
   // For private repos, only analyze after a valid connection is established
   if (repoCheckStatus.value === 'private' && authTestStatus.value !== 'success') return
+
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
   compatibilityStatus.value = 'checking'
   compatibilityMessage.value = ''
@@ -3382,6 +3386,8 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   }
 
   if (!foundAnyMarker) {
+    if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
     compatibilityStatus.value = 'incompatible'
     compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityIncompatible')
 
@@ -3389,6 +3395,8 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   }
 
   // Markers found — check if we detected a web framework/port
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
   if (!detectedPort.value && !detectedFramework.value) {
     compatibilityStatus.value = 'warning'
     compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityWarning')
@@ -3421,6 +3429,8 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
         const content = await response.text()
         const pkg = JSON.parse(content)
         if (pkg.scripts?.start) {
+          if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
           requiresRunCommand.value = false
 
           return
@@ -3430,12 +3440,16 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
       // If we can't read it, assume run command is needed
     }
 
+    if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
     requiresRunCommand.value = true
 
     return
   }
 
   // Non-Node.js markers (Python, Rust, Go, Java, PHP, Ruby, .NET) or index.html without framework
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
   if (markerBaseName !== 'index.html') {
     requiresRunCommand.value = true
   }
@@ -3719,8 +3733,10 @@ const detectPortFromEnvFile = content => {
 }
 
 // Detect monorepo structure
-const detectMonorepoStructure = async parsed => {
+const detectMonorepoStructure = async (parsed, evaluationGeneration = null) => {
   if (!parsed) return
+
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
   detectingMonorepo.value = true
   isMonorepo.value = false
@@ -3768,6 +3784,8 @@ const detectMonorepoStructure = async parsed => {
           // Expand glob patterns to actual directories
           const projects = await expandWorkspacePatterns(parsed, branchName, result.workspaces)
           if (projects.length > 0) {
+            if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
             isMonorepo.value = true
             monorepoType.value = config.type
             monorepoProjects.value = projects
@@ -3785,7 +3803,9 @@ const detectMonorepoStructure = async parsed => {
     }
   }
 
-  detectingMonorepo.value = false
+  if (isCurrentRepoEvaluation(evaluationGeneration)) {
+    detectingMonorepo.value = false
+  }
 }
 
 // Parse pnpm-workspace.yaml
@@ -4098,7 +4118,7 @@ const recheckPrivateRepo = async () => {
 }
 
 // Detect port from private repository
-const detectPortFromPrivateRepo = async parsed => {
+const detectPortFromPrivateRepo = async (parsed, evaluationGeneration = null) => {
   if (!parsed || !repoToken.value) return
 
   const branchName = branch.value || 'main'
@@ -4118,6 +4138,8 @@ const detectPortFromPrivateRepo = async parsed => {
         const content = await response.text()
         const result = detectPortFromPackageJson(content)
         if (result.port) {
+          if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
           detectedPort.value = result.port
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
@@ -4265,8 +4287,10 @@ const fetchBranches = async (parsed, authHeaders = {}) => {
 }
 
 // Detect monorepo structure with authentication
-const detectMonorepoStructureWithAuth = async parsed => {
+const detectMonorepoStructureWithAuth = async (parsed, evaluationGeneration = null) => {
   if (!parsed || !repoToken.value) return
+
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
   detectingMonorepo.value = true
   isMonorepo.value = false
@@ -4318,6 +4342,8 @@ const detectMonorepoStructureWithAuth = async parsed => {
           // For private repos, use API to expand workspaces
           const projects = await expandWorkspacePatternsWithAuth(parsed, branchName, result.workspaces, headers)
           if (projects.length > 0) {
+            if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
             isMonorepo.value = true
             monorepoType.value = config.type
             monorepoProjects.value = projects
@@ -4334,7 +4360,9 @@ const detectMonorepoStructureWithAuth = async parsed => {
     }
   }
 
-  detectingMonorepo.value = false
+  if (isCurrentRepoEvaluation(evaluationGeneration)) {
+    detectingMonorepo.value = false
+  }
 }
 
 // Expand workspace patterns with authentication
@@ -4416,6 +4444,16 @@ const getProjectInfoWithAuth = async (parsed, branchName, projectPath, headers) 
 // Debounce helper
 let repoCheckTimeout = null
 let projectPathCheckTimeout = null
+let repoEvaluationGeneration = 0
+
+const nextRepoEvaluationGeneration = () => {
+  repoEvaluationGeneration += 1
+
+  return repoEvaluationGeneration
+}
+
+const isCurrentRepoEvaluation = generation => generation == null || generation === repoEvaluationGeneration
+
 const debouncedRepoCheck = () => {
   if (repoCheckTimeout) clearTimeout(repoCheckTimeout)
   repoCheckTimeout = setTimeout(() => {
@@ -4443,6 +4481,8 @@ const normalizeRepoUrl = url => {
 // Watch for repo URL changes
 watch(repoUrl, newVal => {
   portAutoDetected.value = false
+  // Invalidate in-flight branch/path evaluations for previous repository URL.
+  nextRepoEvaluationGeneration()
 
   // Auto-trim URLs that point to files/branches/subdirectories
   const normalized = normalizeRepoUrl(newVal)
@@ -4468,12 +4508,14 @@ watch(appName, newName => {
 
 // Watch for branch changes to re-detect port
 watch(branch, async () => {
+  const evaluationGeneration = nextRepoEvaluationGeneration()
+
   if (repoCheckStatus.value === 'public') {
     const parsed = parseRepoUrl(repoUrl.value)
     if (parsed) {
-      await detectPortFromRepo(parsed)
-      await checkProjectCompatibility(parsed)
-      await detectMonorepoStructure(parsed)
+      await detectPortFromRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, {}, evaluationGeneration)
+      await detectMonorepoStructure(parsed, evaluationGeneration)
     }
   } else if (repoCheckStatus.value === 'private' && authTestStatus.value === 'success') {
     const parsed = parseRepoUrl(repoUrl.value)
@@ -4487,9 +4529,9 @@ watch(branch, async () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      await detectPortFromPrivateRepo(parsed)
-      await checkProjectCompatibility(parsed, headers)
-      await detectMonorepoStructureWithAuth(parsed)
+      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, headers, evaluationGeneration)
+      await detectMonorepoStructureWithAuth(parsed, evaluationGeneration)
     }
   }
 })
@@ -4498,13 +4540,15 @@ watch(branch, async () => {
 watch(projectPath, () => {
   if (projectPathCheckTimeout) clearTimeout(projectPathCheckTimeout)
 
+  const evaluationGeneration = nextRepoEvaluationGeneration()
+
   projectPathCheckTimeout = setTimeout(async () => {
     const parsed = parseRepoUrl(repoUrl.value)
     if (!parsed) return
 
     if (repoCheckStatus.value === 'public') {
-      await detectPortFromRepo(parsed)
-      await checkProjectCompatibility(parsed)
+      await detectPortFromRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       return
     }
 
@@ -4518,8 +4562,8 @@ watch(projectPath, () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      await detectPortFromPrivateRepo(parsed)
-      await checkProjectCompatibility(parsed, headers)
+      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, headers, evaluationGeneration)
     }
   }, 500)
 })
