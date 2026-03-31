@@ -3732,11 +3732,12 @@ const detectMonorepoStructure = async parsed => {
   // Monorepo config files to check
   const monorepoConfigs = [
     { file: 'pnpm-workspace.yaml', type: 'pnpm', parser: parsePnpmWorkspace },
+    // Prefer package.json workspaces before tool-specific fallback defaults.
+    { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
     { file: 'turbo.json', type: 'turbo', parser: parseTurboConfig },
     { file: 'lerna.json', type: 'lerna', parser: parseLernaConfig },
     { file: 'nx.json', type: 'nx', parser: parseNxConfig },
     { file: 'rush.json', type: 'rush', parser: parseRushConfig },
-    { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
   ]
 
   for (const config of monorepoConfigs) {
@@ -3764,15 +3765,19 @@ const detectMonorepoStructure = async parsed => {
         const result = config.parser(content)
 
         if (result.isMonorepo && result.workspaces.length > 0) {
-          isMonorepo.value = true
-          monorepoType.value = config.type
-
           // Expand glob patterns to actual directories
           const projects = await expandWorkspacePatterns(parsed, branchName, result.workspaces)
-          monorepoProjects.value = projects
+          if (projects.length > 0) {
+            isMonorepo.value = true
+            monorepoType.value = config.type
+            monorepoProjects.value = projects
 
-          console.log(`Detected ${config.type} monorepo with ${projects.length} projects:`, projects)
-          break
+            console.log(`Detected ${config.type} monorepo with ${projects.length} projects:`, projects)
+            break
+          }
+
+          // If this config didn't resolve real projects, keep trying other configs.
+          console.debug(`Monorepo config ${config.file} found, but no projects resolved. Trying next detector.`)
         }
       }
     } catch (error) {
@@ -4283,6 +4288,10 @@ const detectMonorepoStructureWithAuth = async parsed => {
   const monorepoConfigs = [
     { file: 'pnpm-workspace.yaml', type: 'pnpm', parser: parsePnpmWorkspace },
     { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
+    { file: 'turbo.json', type: 'turbo', parser: parseTurboConfig },
+    { file: 'lerna.json', type: 'lerna', parser: parseLernaConfig },
+    { file: 'nx.json', type: 'nx', parser: parseNxConfig },
+    { file: 'rush.json', type: 'rush', parser: parseRushConfig },
   ]
 
   for (const config of monorepoConfigs) {
@@ -4306,15 +4315,18 @@ const detectMonorepoStructureWithAuth = async parsed => {
         const result = config.parser(content)
 
         if (result.isMonorepo && result.workspaces.length > 0) {
-          isMonorepo.value = true
-          monorepoType.value = config.type
-
           // For private repos, use API to expand workspaces
           const projects = await expandWorkspacePatternsWithAuth(parsed, branchName, result.workspaces, headers)
-          monorepoProjects.value = projects
+          if (projects.length > 0) {
+            isMonorepo.value = true
+            monorepoType.value = config.type
+            monorepoProjects.value = projects
 
-          console.log(`Detected ${config.type} monorepo with ${projects.length} projects`)
-          break
+            console.log(`Detected ${config.type} monorepo with ${projects.length} projects`)
+            break
+          }
+
+          console.debug(`Monorepo config ${config.file} found (auth), but no projects resolved. Trying next detector.`)
         }
       }
     } catch (error) {
@@ -4403,6 +4415,7 @@ const getProjectInfoWithAuth = async (parsed, branchName, projectPath, headers) 
 
 // Debounce helper
 let repoCheckTimeout = null
+let projectPathCheckTimeout = null
 const debouncedRepoCheck = () => {
   if (repoCheckTimeout) clearTimeout(repoCheckTimeout)
   repoCheckTimeout = setTimeout(() => {
@@ -4454,23 +4467,61 @@ watch(appName, newName => {
 })
 
 // Watch for branch changes to re-detect port
-watch(branch, () => {
+watch(branch, async () => {
   if (repoCheckStatus.value === 'public') {
     const parsed = parseRepoUrl(repoUrl.value)
     if (parsed) {
-      detectPortFromRepo(parsed)
+      await detectPortFromRepo(parsed)
+      await checkProjectCompatibility(parsed)
+      await detectMonorepoStructure(parsed)
+    }
+  } else if (repoCheckStatus.value === 'private' && authTestStatus.value === 'success') {
+    const parsed = parseRepoUrl(repoUrl.value)
+    if (parsed) {
+      const headers = { 'Accept': 'application/json' }
+      if (parsed.provider === 'github.com') {
+        headers['Authorization'] = `token ${repoToken.value}`
+      } else if (parsed.provider === 'gitlab.com') {
+        headers['PRIVATE-TOKEN'] = repoToken.value
+      } else if (parsed.provider === 'bitbucket.org') {
+        headers['Authorization'] = `Bearer ${repoToken.value}`
+      }
+
+      await detectPortFromPrivateRepo(parsed)
+      await checkProjectCompatibility(parsed, headers)
+      await detectMonorepoStructureWithAuth(parsed)
     }
   }
 })
 
-// Watch for project path changes to re-detect port
+// Watch for project path changes to re-evaluate compatibility and clear stale errors.
 watch(projectPath, () => {
-  if (repoCheckStatus.value === 'public') {
+  if (projectPathCheckTimeout) clearTimeout(projectPathCheckTimeout)
+
+  projectPathCheckTimeout = setTimeout(async () => {
     const parsed = parseRepoUrl(repoUrl.value)
-    if (parsed) {
-      detectPortFromRepo(parsed)
+    if (!parsed) return
+
+    if (repoCheckStatus.value === 'public') {
+      await detectPortFromRepo(parsed)
+      await checkProjectCompatibility(parsed)
+      return
     }
-  }
+
+    if (repoCheckStatus.value === 'private' && authTestStatus.value === 'success') {
+      const headers = { 'Accept': 'application/json' }
+      if (parsed.provider === 'github.com') {
+        headers['Authorization'] = `token ${repoToken.value}`
+      } else if (parsed.provider === 'gitlab.com') {
+        headers['PRIVATE-TOKEN'] = repoToken.value
+      } else if (parsed.provider === 'bitbucket.org') {
+        headers['Authorization'] = `Bearer ${repoToken.value}`
+      }
+
+      await detectPortFromPrivateRepo(parsed)
+      await checkProjectCompatibility(parsed, headers)
+    }
+  }, 500)
 })
 
 // Watch for token changes to reset auth test status
