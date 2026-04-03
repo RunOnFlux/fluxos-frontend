@@ -180,7 +180,7 @@ import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateF
 import { useFluxStore } from '@/stores/flux'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useGameUtils } from '@/composables/useGameUtils'
-import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
+import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import MaintenanceCard from '@/components/Marketplace/MaintenanceCard.vue'
 import GameCard from '@/components/Marketplace/GameCard.vue'

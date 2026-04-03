@@ -72,7 +72,7 @@ export default defineConfig(({ mode }) => {
           './src/composables/',
           './src/utils/',
           './src/plugins/*/composables/*',
-          './src/plugins/analytics/composables/*',
+          './src/plugins/metrics/composables/*',
         ],
         dts: 'src/auto-imports.d.ts',
         vueTemplate: true,

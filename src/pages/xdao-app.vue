@@ -386,7 +386,7 @@
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema } from '@/composables/useSEO'
-import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
+import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import axios from 'axios'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
