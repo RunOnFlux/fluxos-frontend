@@ -303,6 +303,7 @@ function initMap() {
     attribution: "© OpenStreetMap contributors",
     maxZoom: 18,
     detectRetina: true,
+    referrerPolicy: "origin",
   })
 
   tileLayer.addTo(leafletMap)
