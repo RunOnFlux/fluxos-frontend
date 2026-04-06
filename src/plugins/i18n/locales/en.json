@@ -3503,7 +3503,7 @@
             "testingConnectionHint": "Verifying repository access...",
             "compatibilityChecking": "Analyzing project compatibility...",
             "compatibilityIncompatible": "This repository doesn't appear to contain a supported project.",
-            "compatibilityWarning": "We couldn't detect a web framework in this repository. FluxCloud Git is designed for web applications and APIs. CLI tools and shell-based installers are not supported.",
+            "compatibilityWarning": "We couldn't confidently auto-detect your runtime/framework in this folder. If this is a web app or API, continue and set RUN_COMMAND (and APP_PORT if needed). CLI tools and shell-based installers are not supported.",
             "compatibilityLearnMore": "Learn more about supported projects"
           },
           "config": {
