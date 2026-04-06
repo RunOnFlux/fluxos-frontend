@@ -541,7 +541,7 @@
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useFluxStore } from '@/stores/flux'
 import { useSnackbar } from '@/composables/useSnackbar'
-import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
+import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import ClipboardJS from 'clipboard'
 import qs from 'qs'
 import { payWithSSP, payWithZelcore } from '@/utils/walletService'

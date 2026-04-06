@@ -113,7 +113,7 @@ import { useSEO, generateSoftwareApplicationSchema, generateBreadcrumbSchema } f
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useGameUtils } from '@/composables/useGameUtils'
 import { useFluxStore } from '@/stores/flux'
-import { useAnalytics } from '@/plugins/analytics/composables/useAnalytics'
+import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import PanelRenderer from '@/components/Marketplace/PanelRenderer.vue'
 import AppConfigCard from '@/components/Marketplace/AppConfigCard.vue'
