@@ -2762,6 +2762,18 @@ const route = useRoute()
 const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
 
 const ORBIT_CTA_PREFILL_STORAGE_KEY = 'orbit-register-prefill'
+const ORBIT_PLAN_ALIAS_MAP = {
+  free: 'free',
+  beginner: 'free',
+  starter: 'free',
+  standard: 'developer',
+  developer: 'developer',
+  dev: 'developer',
+  pro: 'pro',
+  professional: 'pro',
+  custom: 'custom',
+  enterprise: 'custom',
+}
 
 const getSingleQueryValue = value => {
   if (Array.isArray(value)) return value[0]
@@ -2777,15 +2789,27 @@ const normalizeProjectPathValue = value => {
   return value.startsWith('/') ? value : `/${value}`
 }
 
+const normalizePlanValue = value => {
+  if (!value) return ''
+
+  return ORBIT_PLAN_ALIAS_MAP[value.toLowerCase()] || ''
+}
+
 const buildOrbitCtaPrefillPayload = source => {
   const repoCandidate = getSingleQueryValue(source.repo) || getSingleQueryValue(source.repolink) || getSingleQueryValue(source.repository)
   const branchCandidate = getSingleQueryValue(source.branch)
   const projectPathCandidate = getSingleQueryValue(source.projectPath) || getSingleQueryValue(source.path)
+  const planCandidate = getSingleQueryValue(source.plan) || getSingleQueryValue(source.tier)
 
   const repoValue = normalizeRepoUrl(repoCandidate?.trim?.() || '')
-  if (!repoValue) return null
+  const planValue = normalizePlanValue(planCandidate?.trim?.() || '')
+  if (!repoValue && !planValue) return null
 
-  const payload = { repoUrl: repoValue }
+  const payload = {}
+
+  if (repoValue) {
+    payload.repoUrl = repoValue
+  }
 
   if (branchCandidate?.trim?.()) {
     payload.branch = branchCandidate.trim()
@@ -2793,6 +2817,10 @@ const buildOrbitCtaPrefillPayload = source => {
 
   if (projectPathCandidate?.trim?.()) {
     payload.projectPath = normalizeProjectPathValue(projectPathCandidate.trim())
+  }
+
+  if (planValue) {
+    payload.plan = planValue
   }
 
   return payload
@@ -2824,6 +2852,7 @@ const loadOrbitCtaPrefillFromStorage = () => {
       repo: parsed.repoUrl,
       branch: parsed.branch,
       projectPath: parsed.projectPath,
+      plan: parsed.plan,
     })
   } catch (error) {
     console.warn('Failed to load Orbit CTA prefill payload from storage:', error)
@@ -2844,7 +2873,18 @@ const resolveOrbitCtaPrefillPayload = () => {
 }
 
 const applyOrbitCtaPrefill = async payload => {
-  if (!payload?.repoUrl) return false
+  if (!payload?.repoUrl && !payload?.plan) return false
+
+  if (payload.plan) {
+    selectedPlan.value = payload.plan
+    if (currentStep.value === 1) {
+      currentStep.value = 2
+    }
+  }
+
+  if (!payload.repoUrl) {
+    return true
+  }
 
   repoUrl.value = payload.repoUrl
   await nextTick()
