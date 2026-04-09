@@ -236,6 +236,12 @@ const formatCount = count => {
 }
 
 const navigateToApp = app => {
+  if (app.redirectUrl) {
+    window.open(app.redirectUrl, '_blank', 'noopener,noreferrer')
+
+    return
+  }
+
   router.push(`/marketplace/${app.uuid || app.name}`)
 }
 

@@ -216,6 +216,12 @@ const parsedAppName = computed(() => {
 })
 
 const navigateToApp = () => {
+  if (props.app.redirectUrl) {
+    window.open(props.app.redirectUrl, '_blank', 'noopener,noreferrer')
+
+    return
+  }
+
   // FluxCloud uses app.name.toLowerCase() for navigation
   const appIdentifier = props.app.name?.toLowerCase() || props.app.uuid
   router.push(`/marketplace/${appIdentifier}`)
