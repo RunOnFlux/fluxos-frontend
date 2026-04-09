@@ -2774,12 +2774,57 @@ const ORBIT_PLAN_ALIAS_MAP = {
   custom: 'custom',
   enterprise: 'custom',
 }
+const ORBIT_RUNTIME_ALIAS_MAP = {
+  node: 'Node.js',
+  nodejs: 'Node.js',
+  'node.js': 'Node.js',
+  python: 'Python',
+  py: 'Python',
+  rust: 'Rust',
+  go: 'Go',
+  golang: 'Go',
+  java: 'Java',
+  dotnet: '.NET',
+  'dot.net': '.NET',
+  '.net': '.NET',
+  net: '.NET',
+  bun: 'Bun',
+  ruby: 'Ruby',
+  php: 'PHP',
+}
+const ORBIT_VALID_POLLING_INTERVALS = new Set(['disabled', '3600', '7200', '21600', '43200', '86400'])
+const ORBIT_POLLING_INTERVAL_ALIAS_MAP = {
+  off: 'disabled',
+  disable: 'disabled',
+  disabled: 'disabled',
+  none: 'disabled',
+  no: 'disabled',
+  '1h': '3600',
+  '2h': '7200',
+  '6h': '21600',
+  '12h': '43200',
+  '24h': '86400',
+  hour: '3600',
+  daily: '86400',
+}
+const ORBIT_GEO_CODE_PATTERN = /^[A-Za-z]{2}(?:_[A-Za-z0-9-]+){0,2}$/
 
 const getSingleQueryValue = value => {
   if (Array.isArray(value)) return value[0]
   if (typeof value === 'string') return value
 
   return ''
+}
+
+const getQueryValues = value => {
+  if (Array.isArray(value)) {
+    return value.filter(v => typeof v === 'string')
+  }
+  if (typeof value === 'string') {
+    return [value]
+  }
+
+  return []
 }
 
 const normalizeProjectPathValue = value => {
@@ -2795,15 +2840,317 @@ const normalizePlanValue = value => {
   return ORBIT_PLAN_ALIAS_MAP[value.toLowerCase()] || ''
 }
 
+const normalizeAppPortValue = value => {
+  const parsedPort = parseInt(value, 10)
+  if (!Number.isInteger(parsedPort)) return ''
+  if (parsedPort < 1 || parsedPort > 65535) return ''
+
+  return String(parsedPort)
+}
+
+const normalizePollingIntervalValue = value => {
+  if (!value) return ''
+  const normalized = value.toLowerCase()
+  const alias = ORBIT_POLLING_INTERVAL_ALIAS_MAP[normalized]
+  if (alias) return alias
+  if (ORBIT_VALID_POLLING_INTERVALS.has(value)) return value
+
+  return ''
+}
+
+const normalizeRuntimeValue = value => {
+  if (!value) return ''
+
+  return ORBIT_RUNTIME_ALIAS_MAP[value.toLowerCase()] || ''
+}
+
+const normalizeRuntimeVersionValue = value => {
+  if (!value) return ''
+
+  return value.trim()
+}
+
+const normalizeBooleanLikeValue = value => {
+  if (!value) return ''
+  const lowered = value.trim().toLowerCase()
+
+  if (['1', 'true', 'yes', 'on', 'enabled'].includes(lowered)) return 'true'
+  if (['0', 'false', 'no', 'off', 'disabled'].includes(lowered)) return 'false'
+
+  return ''
+}
+
+const upsertEnvVar = (envList, key, value) => {
+  const normalizedKey = key?.trim?.()
+  if (!normalizedKey) return
+  if (typeof value !== 'string' || value === '') return
+
+  const existing = envList.find(env => env.key === normalizedKey)
+  if (existing) {
+    existing.value = value
+  } else {
+    envList.push({ key: normalizedKey, value })
+  }
+}
+
+const parseStructuredEnvVars = source => {
+  const sourceEnvVars = Array.isArray(source.envVars) ? source.envVars : []
+  const parsed = []
+
+  for (const env of sourceEnvVars) {
+    if (!env || typeof env !== 'object') continue
+    const key = typeof env.key === 'string' ? env.key.trim() : ''
+    const value = typeof env.value === 'string' ? env.value.trim() : ''
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) continue
+    if (value === '') continue
+    upsertEnvVar(parsed, key, value)
+  }
+
+  return parsed
+}
+
+const parseEnvVarsFromQuery = source => {
+  const parsed = parseStructuredEnvVars(source)
+  const entries = [
+    ...getQueryValues(source.env),
+    ...getQueryValues(source.envs),
+    ...getQueryValues(source.environment),
+    ...getQueryValues(source.environmentVariables),
+    ...getQueryValues(source.envVar),
+    ...getQueryValues(source.envVars),
+  ]
+
+  if (entries.length === 0) return parsed
+
+  for (const entry of entries) {
+    const fragments = entry.split(/[\n;,]/).map(v => v.trim()).filter(Boolean)
+    for (const fragment of fragments) {
+      const equalIndex = fragment.indexOf('=')
+      const separatorIndex = equalIndex >= 0 ? equalIndex : fragment.indexOf(':')
+      if (separatorIndex <= 0) continue
+
+      const key = fragment.substring(0, separatorIndex).trim()
+      const value = fragment.substring(separatorIndex + 1).trim()
+      if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) continue
+      if (value === '') continue
+
+      upsertEnvVar(parsed, key, value)
+    }
+  }
+
+  return parsed
+}
+
+const parseDedicatedOrbitEnvVars = source => {
+  const dedicated = []
+
+  const buildCommandValue = getSingleQueryValue(source.buildCommand)
+    || getSingleQueryValue(source.build_command)
+    || getSingleQueryValue(source.BUILD_COMMAND)
+  const runCommandValue = getSingleQueryValue(source.runCommand)
+    || getSingleQueryValue(source.run_command)
+    || getSingleQueryValue(source.RUN_COMMAND)
+  const installCommandValue = getSingleQueryValue(source.installCommand)
+    || getSingleQueryValue(source.install_command)
+    || getSingleQueryValue(source.INSTALL_COMMAND)
+  const prPreviewEnabledValue = getSingleQueryValue(source.prPreviewEnabled)
+    || getSingleQueryValue(source.pr_preview_enabled)
+    || getSingleQueryValue(source.PR_PREVIEW_ENABLED)
+  const apiKeyValue = getSingleQueryValue(source.apiKey)
+    || getSingleQueryValue(source.api_key)
+    || getSingleQueryValue(source.API_KEY)
+
+  if (buildCommandValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'BUILD_COMMAND', buildCommandValue.trim())
+  }
+
+  if (runCommandValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'RUN_COMMAND', runCommandValue.trim())
+  }
+
+  if (installCommandValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'INSTALL_COMMAND', installCommandValue.trim())
+  }
+
+  const normalizedPrPreviewValue = normalizeBooleanLikeValue(prPreviewEnabledValue)
+  if (normalizedPrPreviewValue) {
+    upsertEnvVar(dedicated, 'PR_PREVIEW_ENABLED', normalizedPrPreviewValue)
+  }
+
+  if (apiKeyValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'API_KEY', apiKeyValue.trim())
+  }
+
+  return dedicated
+}
+
+const mergeEnvVarLists = (baseEnvVars, overrideEnvVars) => {
+  const merged = [...baseEnvVars]
+  for (const env of overrideEnvVars) {
+    upsertEnvVar(merged, env.key, env.value)
+  }
+
+  return merged
+}
+
+const normalizeGeolocationToken = (token, defaultForbidden = false) => {
+  if (!token) return null
+  const trimmed = token.trim()
+  if (!trimmed) return null
+
+  const lowered = trimmed.toLowerCase()
+  if (lowered === 'all' || lowered === 'global' || lowered === 'any') {
+    return { global: true }
+  }
+
+  let forbidden = defaultForbidden
+  let body = trimmed
+  const loweredBody = body.toLowerCase()
+
+  if (loweredBody.startsWith('a!c')) {
+    forbidden = true
+    body = body.slice(3)
+  } else if (loweredBody.startsWith('ac')) {
+    forbidden = false
+    body = body.slice(2)
+  } else if (body.startsWith('!')) {
+    forbidden = true
+    body = body.slice(1)
+  }
+
+  const normalizedBody = body.trim().replace(/^_+|_+$/g, '')
+  if (!ORBIT_GEO_CODE_PATTERN.test(normalizedBody)) return null
+
+  return {
+    code: `${forbidden ? 'a!c' : 'ac'}${normalizedBody}`,
+    forbidden,
+  }
+}
+
+const parseDeploymentLocationFromQuery = source => {
+  const locationTokens = [
+    ...getQueryValues(source.location),
+    ...getQueryValues(source.locations),
+    ...getQueryValues(source.geolocation),
+    ...getQueryValues(source.geo),
+  ]
+  const allowedTokens = [
+    ...getQueryValues(source.allowedLocation),
+    ...getQueryValues(source.allowedLocations),
+  ]
+  const forbiddenTokens = [
+    ...getQueryValues(source.forbiddenLocation),
+    ...getQueryValues(source.forbiddenLocations),
+  ]
+
+  const parsedAllowed = []
+  const parsedForbidden = []
+  let forceGlobal = false
+
+  const persistedAllowed = Array.isArray(source.allowedGeolocations) ? source.allowedGeolocations : []
+  const persistedForbidden = Array.isArray(source.forbiddenGeolocations) ? source.forbiddenGeolocations : []
+
+  const collectTokens = (tokens, defaultForbidden = false) => {
+    for (const raw of tokens) {
+      const fragments = raw.split(/[\n,;|]/).map(v => v.trim()).filter(Boolean)
+      for (const fragment of fragments) {
+        const normalized = normalizeGeolocationToken(fragment, defaultForbidden)
+        if (!normalized) continue
+        if (normalized.global) {
+          forceGlobal = true
+          continue
+        }
+        if (normalized.forbidden) {
+          if (!parsedForbidden.includes(normalized.code)) parsedForbidden.push(normalized.code)
+        } else {
+          if (!parsedAllowed.includes(normalized.code)) parsedAllowed.push(normalized.code)
+        }
+      }
+    }
+  }
+
+  collectTokens(locationTokens)
+  collectTokens(allowedTokens)
+  collectTokens(forbiddenTokens, true)
+
+  collectTokens(persistedAllowed)
+  collectTokens(persistedForbidden, true)
+
+  const continent = getSingleQueryValue(source.continent) || getSingleQueryValue(source.allowedContinent)
+  const country = getSingleQueryValue(source.country) || getSingleQueryValue(source.allowedCountry)
+  const region = getSingleQueryValue(source.region) || getSingleQueryValue(source.allowedRegion)
+
+  const continentTrimmed = continent?.trim?.() || ''
+  const countryTrimmed = country?.trim?.() || ''
+  const regionTrimmed = region?.trim?.() || ''
+
+  if (continentTrimmed) {
+    const locationParts = [continentTrimmed]
+    if (countryTrimmed) {
+      locationParts.push(countryTrimmed)
+      if (regionTrimmed) {
+        locationParts.push(regionTrimmed)
+      }
+    }
+
+    const locationCode = `ac${locationParts.join('_')}`
+    const normalized = normalizeGeolocationToken(locationCode)
+    if (normalized?.code && !parsedAllowed.includes(normalized.code)) {
+      parsedAllowed.push(normalized.code)
+    }
+  }
+
+  if (forceGlobal) {
+    return {
+      allowedGeolocations: [],
+      forbiddenGeolocations: [],
+      selectedGeo: { continent: 'ALL', country: 'ALL', region: 'ALL' },
+    }
+  }
+
+  const firstAllowed = parsedAllowed.find(code => code.startsWith('ac'))
+  let selectedGeo = null
+  if (firstAllowed) {
+    const [continentCode, countryCode, regionCode] = firstAllowed.slice(2).split('_')
+    selectedGeo = {
+      continent: continentCode || 'ALL',
+      country: countryCode || 'ALL',
+      region: regionCode || 'ALL',
+    }
+  }
+
+  if (parsedAllowed.length === 0 && parsedForbidden.length === 0) {
+    return null
+  }
+
+  return {
+    allowedGeolocations: parsedAllowed,
+    forbiddenGeolocations: parsedForbidden,
+    selectedGeo,
+  }
+}
+
 const buildOrbitCtaPrefillPayload = source => {
   const repoCandidate = getSingleQueryValue(source.repo) || getSingleQueryValue(source.repolink) || getSingleQueryValue(source.repository)
   const branchCandidate = getSingleQueryValue(source.branch)
   const projectPathCandidate = getSingleQueryValue(source.projectPath) || getSingleQueryValue(source.path)
   const planCandidate = getSingleQueryValue(source.plan) || getSingleQueryValue(source.tier)
+  const appPortCandidate = getSingleQueryValue(source.appPort) || getSingleQueryValue(source.port) || getSingleQueryValue(source.applicationPort)
+  const pollingIntervalCandidate = getSingleQueryValue(source.pollingInterval) || getSingleQueryValue(source.pollInterval) || getSingleQueryValue(source.polling)
+  const runtimeCandidate = getSingleQueryValue(source.runtime)
+  const runtimeVersionCandidate = getSingleQueryValue(source.runtimeVersion) || getSingleQueryValue(source.runtime_version) || getSingleQueryValue(source.langVersion)
 
   const repoValue = normalizeRepoUrl(repoCandidate?.trim?.() || '')
   const planValue = normalizePlanValue(planCandidate?.trim?.() || '')
-  if (!repoValue && !planValue) return null
+  const appPortValue = normalizeAppPortValue(appPortCandidate?.trim?.() || '')
+  const pollingIntervalValue = normalizePollingIntervalValue(pollingIntervalCandidate?.trim?.() || '')
+  const runtimeValue = normalizeRuntimeValue(runtimeCandidate?.trim?.() || '')
+  const runtimeVersionValue = normalizeRuntimeVersionValue(runtimeVersionCandidate?.trim?.() || '')
+  const envVarsValue = mergeEnvVarLists(parseEnvVarsFromQuery(source), parseDedicatedOrbitEnvVars(source))
+  const deploymentLocationValue = parseDeploymentLocationFromQuery(source)
+  const hasAdvancedPrefill = appPortValue || pollingIntervalValue || runtimeValue || envVarsValue.length > 0 || deploymentLocationValue
+
+  if (!repoValue && !planValue && !hasAdvancedPrefill) return null
 
   const payload = {}
 
@@ -2821,6 +3168,34 @@ const buildOrbitCtaPrefillPayload = source => {
 
   if (planValue) {
     payload.plan = planValue
+  }
+
+  if (appPortValue) {
+    payload.appPort = appPortValue
+  }
+
+  if (pollingIntervalValue) {
+    payload.pollingInterval = pollingIntervalValue
+  }
+
+  if (runtimeValue) {
+    payload.runtime = runtimeValue
+  }
+
+  if (runtimeVersionValue) {
+    payload.runtimeVersion = runtimeVersionValue
+  }
+
+  if (envVarsValue.length > 0) {
+    payload.envVars = envVarsValue
+  }
+
+  if (deploymentLocationValue) {
+    payload.allowedGeolocations = deploymentLocationValue.allowedGeolocations
+    payload.forbiddenGeolocations = deploymentLocationValue.forbiddenGeolocations
+    if (deploymentLocationValue.selectedGeo) {
+      payload.selectedGeo = deploymentLocationValue.selectedGeo
+    }
   }
 
   return payload
@@ -2848,12 +3223,7 @@ const loadOrbitCtaPrefillFromStorage = () => {
     const parsed = JSON.parse(raw)
     if (!parsed || typeof parsed !== 'object') return null
 
-    return buildOrbitCtaPrefillPayload({
-      repo: parsed.repoUrl,
-      branch: parsed.branch,
-      projectPath: parsed.projectPath,
-      plan: parsed.plan,
-    })
+    return buildOrbitCtaPrefillPayload(parsed)
   } catch (error) {
     console.warn('Failed to load Orbit CTA prefill payload from storage:', error)
 
@@ -2873,12 +3243,73 @@ const resolveOrbitCtaPrefillPayload = () => {
 }
 
 const applyOrbitCtaPrefill = async payload => {
-  if (!payload?.repoUrl && !payload?.plan) return false
+  if (!payload) return false
+
+  const hasAnyValue = Boolean(
+    payload.repoUrl
+    || payload.plan
+    || payload.appPort
+    || payload.pollingInterval
+    || payload.runtime
+    || payload.runtimeVersion
+    || (payload.envVars && payload.envVars.length > 0)
+    || payload.allowedGeolocations
+    || payload.forbiddenGeolocations,
+  )
+  if (!hasAnyValue) return false
 
   if (payload.plan) {
     selectedPlan.value = payload.plan
     if (currentStep.value === 1) {
       currentStep.value = 2
+    }
+  }
+
+  const hasConfigPrefill = Boolean(
+    payload.appPort
+    || payload.pollingInterval
+    || payload.runtime
+    || payload.runtimeVersion
+    || (payload.envVars && payload.envVars.length > 0)
+    || payload.allowedGeolocations
+    || payload.forbiddenGeolocations,
+  )
+  if (hasConfigPrefill) {
+    showAdvancedOptions.value = true
+  }
+
+  if (payload.appPort) {
+    appPort.value = payload.appPort
+    portAutoDetected.value = false
+  }
+
+  if (payload.pollingInterval) {
+    pollingInterval.value = payload.pollingInterval
+  }
+
+  if (payload.runtime) {
+    selectedRuntime.value = payload.runtime
+  }
+
+  if (payload.runtimeVersion && payload.runtime) {
+    runtimeVersion.value = payload.runtimeVersion
+  }
+
+  if (Array.isArray(payload.envVars) && payload.envVars.length > 0) {
+    customEnvVars.value = payload.envVars.map(env => ({
+      key: env.key,
+      value: env.value,
+      placeholder: '',
+      isOrbitVar: true,
+    }))
+  }
+
+  if (Array.isArray(payload.allowedGeolocations) || Array.isArray(payload.forbiddenGeolocations)) {
+    allowedGeolocations.value = Array.isArray(payload.allowedGeolocations) ? payload.allowedGeolocations : []
+    forbiddenGeolocations.value = Array.isArray(payload.forbiddenGeolocations) ? payload.forbiddenGeolocations : []
+
+    if (payload.selectedGeo?.continent) {
+      selectedGeo.value = payload.selectedGeo
     }
   }
 
