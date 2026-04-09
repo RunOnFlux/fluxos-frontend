@@ -2810,19 +2810,29 @@ const ORBIT_POLLING_INTERVAL_ALIAS_MAP = {
 }
 const ORBIT_GEO_CODE_PATTERN = /^[A-Za-z]{2}(?:_[A-Za-z0-9-]+){0,2}$/
 
-const getSingleQueryValue = value => {
-  if (Array.isArray(value)) return value[0]
+const normalizeScalarValue = value => {
   if (typeof value === 'string') return value
+  if (typeof value === 'number' && Number.isFinite(value)) return String(value)
+  if (typeof value === 'boolean') return value ? 'true' : 'false'
 
   return ''
 }
 
+const getSingleQueryValue = value => {
+  if (Array.isArray(value)) {
+    return value.length > 0 ? normalizeScalarValue(value[0]) : ''
+  }
+
+  return normalizeScalarValue(value)
+}
+
 const getQueryValues = value => {
   if (Array.isArray(value)) {
-    return value.filter(v => typeof v === 'string')
+    return value.map(v => normalizeScalarValue(v)).filter(Boolean)
   }
-  if (typeof value === 'string') {
-    return [value]
+  const normalized = normalizeScalarValue(value)
+  if (normalized) {
+    return [normalized]
   }
 
   return []
