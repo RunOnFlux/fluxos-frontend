@@ -2583,7 +2583,7 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
@@ -2758,8 +2758,117 @@ useHead({
     },
   ],
 })
-const router = useRouter()
+const route = useRoute()
 const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
+
+const ORBIT_CTA_PREFILL_STORAGE_KEY = 'orbit-register-prefill'
+
+const getSingleQueryValue = value => {
+  if (Array.isArray(value)) return value[0]
+  if (typeof value === 'string') return value
+
+  return ''
+}
+
+const normalizeProjectPathValue = value => {
+  if (!value) return '/'
+  if (value === '/') return '/'
+
+  return value.startsWith('/') ? value : `/${value}`
+}
+
+const buildOrbitCtaPrefillPayload = source => {
+  const repoCandidate = getSingleQueryValue(source.repo) || getSingleQueryValue(source.repolink) || getSingleQueryValue(source.repository)
+  const branchCandidate = getSingleQueryValue(source.branch)
+  const projectPathCandidate = getSingleQueryValue(source.projectPath) || getSingleQueryValue(source.path)
+
+  const repoValue = normalizeRepoUrl(repoCandidate?.trim?.() || '')
+  if (!repoValue) return null
+
+  const payload = { repoUrl: repoValue }
+
+  if (branchCandidate?.trim?.()) {
+    payload.branch = branchCandidate.trim()
+  }
+
+  if (projectPathCandidate?.trim?.()) {
+    payload.projectPath = normalizeProjectPathValue(projectPathCandidate.trim())
+  }
+
+  return payload
+}
+
+const persistOrbitCtaPrefill = payload => {
+  try {
+    if (!payload) {
+      sessionStorage.removeItem(ORBIT_CTA_PREFILL_STORAGE_KEY)
+
+      return
+    }
+
+    sessionStorage.setItem(ORBIT_CTA_PREFILL_STORAGE_KEY, JSON.stringify(payload))
+  } catch (error) {
+    console.warn('Failed to persist Orbit CTA prefill payload:', error)
+  }
+}
+
+const loadOrbitCtaPrefillFromStorage = () => {
+  try {
+    const raw = sessionStorage.getItem(ORBIT_CTA_PREFILL_STORAGE_KEY)
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return null
+
+    return buildOrbitCtaPrefillPayload({
+      repo: parsed.repoUrl,
+      branch: parsed.branch,
+      projectPath: parsed.projectPath,
+    })
+  } catch (error) {
+    console.warn('Failed to load Orbit CTA prefill payload from storage:', error)
+
+    return null
+  }
+}
+
+const resolveOrbitCtaPrefillPayload = () => {
+  const fromQuery = buildOrbitCtaPrefillPayload(route.query)
+  if (fromQuery) {
+    persistOrbitCtaPrefill(fromQuery)
+
+    return fromQuery
+  }
+
+  return loadOrbitCtaPrefillFromStorage()
+}
+
+const applyOrbitCtaPrefill = async payload => {
+  if (!payload?.repoUrl) return false
+
+  repoUrl.value = payload.repoUrl
+  await nextTick()
+
+  if (payload.branch) {
+    branch.value = payload.branch
+  }
+
+  if (payload.projectPath) {
+    projectPath.value = payload.projectPath
+  }
+
+  return true
+}
+
+const restoreOrbitCtaPrefill = async () => {
+  const payload = resolveOrbitCtaPrefillPayload()
+  if (!payload) return
+
+  const applied = await applyOrbitCtaPrefill(payload)
+  if (applied && isLoggedIn.value) {
+    persistOrbitCtaPrefill(null)
+  }
+}
 
 // Flux store
 const fluxStore = useFluxStore()
@@ -2819,6 +2928,7 @@ const showToast = (type, message, icon = null, timeout = 4000) => {
 watch(isLoggedIn, newValue => {
   if (newValue) {
     closeLoginBottomSheet()
+    restoreOrbitCtaPrefill()
   }
 })
 
@@ -7302,6 +7412,8 @@ onMounted(() => {
       contactEmail.value = firebaseUser.email
     }
   }
+
+  restoreOrbitCtaPrefill()
 })
 </script>
 
