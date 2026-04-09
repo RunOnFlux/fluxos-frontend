@@ -2613,6 +2613,7 @@ import {
 import qs from 'qs'
 import { getUser } from '@/utils/firebase'
 import { paymentBridge } from '@/utils/fiatGateways'
+import yaml from 'js-yaml'
 
 const { t } = useI18n()
 
@@ -2865,6 +2866,12 @@ const normalizeRuntimeValue = value => {
 }
 
 const normalizeRuntimeVersionValue = value => {
+  if (!value) return ''
+
+  return value.trim()
+}
+
+const normalizeFrameworkHint = value => {
   if (!value) return ''
 
   return value.trim()
@@ -3139,6 +3146,7 @@ const buildOrbitCtaPrefillPayload = source => {
   const pollingIntervalCandidate = getSingleQueryValue(source.pollingInterval) || getSingleQueryValue(source.pollInterval) || getSingleQueryValue(source.polling)
   const runtimeCandidate = getSingleQueryValue(source.runtime)
   const runtimeVersionCandidate = getSingleQueryValue(source.runtimeVersion) || getSingleQueryValue(source.runtime_version) || getSingleQueryValue(source.langVersion)
+  const frameworkCandidate = getSingleQueryValue(source.framework)
 
   const repoValue = normalizeRepoUrl(repoCandidate?.trim?.() || '')
   const planValue = normalizePlanValue(planCandidate?.trim?.() || '')
@@ -3146,6 +3154,7 @@ const buildOrbitCtaPrefillPayload = source => {
   const pollingIntervalValue = normalizePollingIntervalValue(pollingIntervalCandidate?.trim?.() || '')
   const runtimeValue = normalizeRuntimeValue(runtimeCandidate?.trim?.() || '')
   const runtimeVersionValue = normalizeRuntimeVersionValue(runtimeVersionCandidate?.trim?.() || '')
+  const frameworkValue = normalizeFrameworkHint(frameworkCandidate?.trim?.() || '')
   const envVarsValue = mergeEnvVarLists(parseEnvVarsFromQuery(source), parseDedicatedOrbitEnvVars(source))
   const deploymentLocationValue = parseDeploymentLocationFromQuery(source)
   const hasAdvancedPrefill = appPortValue || pollingIntervalValue || runtimeValue || envVarsValue.length > 0 || deploymentLocationValue
@@ -3184,6 +3193,10 @@ const buildOrbitCtaPrefillPayload = source => {
 
   if (runtimeVersionValue) {
     payload.runtimeVersion = runtimeVersionValue
+  }
+
+  if (frameworkValue) {
+    payload.framework = frameworkValue
   }
 
   if (envVarsValue.length > 0) {
@@ -3252,6 +3265,7 @@ const applyOrbitCtaPrefill = async payload => {
     || payload.pollingInterval
     || payload.runtime
     || payload.runtimeVersion
+    || payload.framework
     || (payload.envVars && payload.envVars.length > 0)
     || payload.allowedGeolocations
     || payload.forbiddenGeolocations,
@@ -3270,6 +3284,7 @@ const applyOrbitCtaPrefill = async payload => {
     || payload.pollingInterval
     || payload.runtime
     || payload.runtimeVersion
+    || payload.framework
     || (payload.envVars && payload.envVars.length > 0)
     || payload.allowedGeolocations
     || payload.forbiddenGeolocations,
@@ -3293,6 +3308,10 @@ const applyOrbitCtaPrefill = async payload => {
 
   if (payload.runtimeVersion && payload.runtime) {
     runtimeVersion.value = payload.runtimeVersion
+  }
+
+  if (payload.framework) {
+    detectedFramework.value = payload.framework
   }
 
   if (Array.isArray(payload.envVars) && payload.envVars.length > 0) {
@@ -3591,6 +3610,103 @@ const parseRepoUrl = url => {
   return null
 }
 
+const buildRepoRawFileUrl = (parsed, branchName, filePath, authHeaders = {}) => {
+  const hasAuth = authHeaders && (authHeaders['Authorization'] || authHeaders['PRIVATE-TOKEN'])
+
+  if (parsed.provider === 'github.com') {
+    if (hasAuth) {
+      return `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${filePath}?ref=${branchName}`
+    }
+
+    return `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
+  }
+
+  if (parsed.provider === 'gitlab.com') {
+    if (hasAuth) {
+      return `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(filePath)}/raw?ref=${branchName}`
+    }
+
+    return `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
+  }
+
+  if (parsed.provider === 'bitbucket.org') {
+    return `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
+  }
+
+  return ''
+}
+
+const fetchRepositoryFileContent = async (parsed, branchName, filePath, authHeaders = {}) => {
+  const url = buildRepoRawFileUrl(parsed, branchName, filePath, authHeaders)
+  if (!url) return null
+
+  const headers = { ...authHeaders }
+  if (parsed.provider === 'github.com' && headers['Authorization']) {
+    headers['Accept'] = 'application/vnd.github.v3.raw'
+  }
+
+  const response = await fetch(url, { method: 'GET', headers })
+  if (!response.ok) return null
+
+  return await response.text()
+}
+
+const parseFluxDeployConfigContent = (content, filePath) => {
+  try {
+    if (filePath.endsWith('.json')) {
+      return JSON.parse(content)
+    }
+
+    return yaml.load(content)
+  } catch (error) {
+    console.warn(`Failed to parse ${filePath}:`, error)
+
+    return null
+  }
+}
+
+const loadFluxDeployConfigFromRepo = async (parsed, authHeaders = {}, evaluationGeneration = null) => {
+  if (!parsed) return null
+
+  const branchName = branch.value || 'main'
+  const basePath = projectPath.value && projectPath.value !== '/' ? projectPath.value.replace(/^\//, '').replace(/\/$/, '') : ''
+
+  const preferredPaths = [
+    basePath ? `${basePath}/flux.json` : 'flux.json',
+    basePath ? `${basePath}/flux.yaml` : 'flux.yaml',
+    basePath ? `${basePath}/flux.yml` : 'flux.yml',
+    'flux.json',
+    'flux.yaml',
+    'flux.yml',
+  ]
+
+  const candidatePaths = [...new Set(preferredPaths)]
+
+  for (const filePath of candidatePaths) {
+    if (!isCurrentRepoEvaluation(evaluationGeneration)) return null
+
+    try {
+      const content = await fetchRepositoryFileContent(parsed, branchName, filePath, authHeaders)
+      if (!content) continue
+
+      const parsedConfig = parseFluxDeployConfigContent(content, filePath)
+      if (!parsedConfig || typeof parsedConfig !== 'object') continue
+
+      const prefillPayload = buildOrbitCtaPrefillPayload(parsedConfig)
+      if (!prefillPayload) continue
+
+      return {
+        filePath,
+        payload: prefillPayload,
+      }
+    } catch (error) {
+      console.debug(`Could not read ${filePath}:`, error.message)
+    }
+  }
+
+  return null
+}
+
 // Check if repository is public or private
 const checkRepoAccess = async () => {
   const parsed = parseRepoUrl(repoUrl.value)
@@ -3628,7 +3744,13 @@ const checkRepoAccess = async () => {
       // Repo is public, fetch branches and detect monorepo structure and port
       await fetchBranches(parsed)
       await detectMonorepoStructure(parsed)
-      await detectPortFromRepo(parsed)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromRepo(parsed)
+      }
       await checkProjectCompatibility(parsed)
     } else if (response.status === 404 || response.status === 403) {
       repoCheckStatus.value = 'private'
@@ -4779,7 +4901,13 @@ const recheckPrivateRepo = async () => {
 
     if (response.ok) {
       // Auth successful, try to detect port from private repo
-      await detectPortFromPrivateRepo(parsed)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromPrivateRepo(parsed)
+      }
     } else {
       repoCheckError.value = 'Authentication failed. Please check your credentials.'
     }
@@ -4858,7 +4986,13 @@ const testAuthConnection = async () => {
 
       // Also detect monorepo and port
       await detectMonorepoStructureWithAuth(parsed)
-      await detectPortFromPrivateRepo(parsed)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromPrivateRepo(parsed)
+      }
       await checkProjectCompatibility(parsed, headers)
     } else {
       authTestStatus.value = 'error'
@@ -5248,7 +5382,13 @@ watch(branch, async () => {
   if (repoCheckStatus.value === 'public') {
     const parsed = parseRepoUrl(repoUrl.value)
     if (parsed) {
-      await detectPortFromRepo(parsed, evaluationGeneration)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromRepo(parsed, evaluationGeneration)
+      }
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       await detectMonorepoStructure(parsed, evaluationGeneration)
     }
@@ -5264,7 +5404,13 @@ watch(branch, async () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      }
       await checkProjectCompatibility(parsed, headers, evaluationGeneration)
       await detectMonorepoStructureWithAuth(parsed, evaluationGeneration)
     }
@@ -5282,7 +5428,13 @@ watch(projectPath, () => {
     if (!parsed) return
 
     if (repoCheckStatus.value === 'public') {
-      await detectPortFromRepo(parsed, evaluationGeneration)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromRepo(parsed, evaluationGeneration)
+      }
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       return
     }
@@ -5297,7 +5449,13 @@ watch(projectPath, () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
+      if (fluxConfig?.payload) {
+        await applyOrbitCtaPrefill(fluxConfig.payload)
+      }
+      if (!fluxConfig?.payload?.appPort) {
+        await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      }
       await checkProjectCompatibility(parsed, headers, evaluationGeneration)
     }
   }, 500)
