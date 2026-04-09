@@ -273,6 +273,12 @@ const filteredApps = computed(() => {
 // Handle app deployment
 const handleDeploy = async app => {
   try {
+    if (app.redirectUrl) {
+      window.open(app.redirectUrl, '_blank', 'noopener,noreferrer')
+
+      return
+    }
+
     router.push(`/marketplace/${app.uuid || app.name}`)
   } catch (err) {
     console.error("Failed to navigate to app:", err)

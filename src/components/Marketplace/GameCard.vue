@@ -69,6 +69,12 @@ const backgroundImageUrl = computed(() => {
 })
 
 const navigateToGame = () => {
+  if (props.game.redirectUrl) {
+    window.open(props.game.redirectUrl, '_blank', 'noopener,noreferrer')
+
+    return
+  }
+
   const gameName = props.game.name.toLowerCase()
   console.log('🎮 Navigating to game:', gameName)
   console.log('🔗 Full path:', `/marketplace/games/${gameName}`)

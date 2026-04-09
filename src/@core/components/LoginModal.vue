@@ -840,7 +840,7 @@ const getZelIdLoginPhrase = async () => {
     const response = await IDService.loginPhrase()
 
     if (response.data.status === "error") {
-      getEmergencyLoginPhrase()
+      await getEmergencyLoginPhrase()
     } else {
       loginPhrase.value = response.data.data
       loginForm.value.loginPhrase = response.data.data
@@ -850,17 +850,18 @@ const getZelIdLoginPhrase = async () => {
   }
 }
 
-const getEmergencyLoginPhrase = () => {
-  IDService.emergencyLoginPhrase()
-    .then(response => {
-      if (response.data.status === "error")
-        showToast("error", response.data.data.message)
-      else {
-        loginPhrase.value = response.data.data
-        loginForm.value.loginPhrase = response.data.data
-      }
-    })
-    .catch(error => showToast("error", error))
+const getEmergencyLoginPhrase = async () => {
+  try {
+    const response = await IDService.emergencyLoginPhrase()
+    if (response.data.status === "error")
+      showToast("error", response.data.data.message)
+    else {
+      loginPhrase.value = response.data.data
+      loginForm.value.loginPhrase = response.data.data
+    }
+  } catch (error) {
+    showToast("error", error)
+  }
 }
 
 const copyLoginPhrase = () => {
@@ -1063,12 +1064,22 @@ const initMetamask = async () => {
 }
 
 const initSSP = async () => {
+  if (isSigning.value) return
   try {
     if (!window.ssp) return showToast("error", t("core.login.sspNotInstalled"))
+
+    isSigning.value = true
     await getZelIdLoginPhrase()
 
+    const phrase = loginPhrase.value
+    if (!phrase) {
+      showToast("error", t("core.login.networkError"))
+
+      return
+    }
+
     const responseData = await window.ssp.request("sspwid_sign_message", {
-      message: loginPhrase.value,
+      message: phrase,
     })
 
     if (responseData.status === "ERROR")
@@ -1077,7 +1088,7 @@ const initSSP = async () => {
     const sspLogin = {
       zelid: responseData.address,
       signature: responseData.signature,
-      loginPhrase: loginPhrase.value,
+      loginPhrase: phrase,
     }
 
     const response = await IDService.verifyLogin(sspLogin)
@@ -1093,6 +1104,8 @@ const initSSP = async () => {
     }
   } catch (error) {
     showToast("error", error.message)
+  } finally {
+    isSigning.value = false
   }
 }
 

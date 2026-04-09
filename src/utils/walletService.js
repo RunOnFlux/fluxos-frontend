@@ -827,10 +827,14 @@ export function isSSPAvailable() {
 }
 
 export async function signWithSSP(message) {
-  console.log('[SSP] 🔐 Starting sign request...')
+  console.log('[SSP] Starting sign request...')
 
   if (!isSSPAvailable()) {
     throw new Error('SSP Wallet not installed')
+  }
+
+  if (!message) {
+    throw new Error('Cannot sign empty message')
   }
 
   try {
@@ -840,11 +844,11 @@ export async function signWithSSP(message) {
       throw new Error(response.data || response.result)
     }
 
-    console.log('[SSP] ✅ Successfully signed message')
-    
+    console.log('[SSP] Successfully signed message')
+
     return { signature: response.signature, address: response.address }
   } catch (error) {
-    console.error('[SSP] ❌ Sign error:', error.message)
+    console.error('[SSP] Sign error:', error.message)
     throw error
   }
 }

@@ -87,8 +87,10 @@
               <!-- Header -->
               <div class="orbit-header">
                 <VBtn
-                  variant="text"
+                  variant="tonal"
+                  color="grey"
                   size="small"
+                  rounded="pill"
                   :to="{ name: 'apps-register' }"
                   class="back-btn"
                 >
@@ -500,7 +502,7 @@
                         variant="tonal"
                         class="mt-4"
                       >
-                        <div>{{ t('pages.apps.register.orbit.repository.compatibilityWarning') }}</div>
+                        <div>{{ compatibilityMessage || t('pages.apps.register.orbit.repository.compatibilityWarning') }}</div>
                         <a
                           href="https://docs.runonflux.com/fluxcloud/register-new-app/deploy-with-git/"
                           target="_blank"
@@ -1607,7 +1609,7 @@
                           </h4>
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.appName') }}:</span>
-                            <span class="review-value"><code>{{ appName }}</code></span>
+                            <VChip variant="tonal" color="success" size="small">{{ appName }}</VChip>
                           </div>
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.appPort') }}:</span>
@@ -1640,7 +1642,7 @@
                           <div class="review-item">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.plan') }}:</span>
                             <span class="review-value">
-                              <VChip color="primary" size="small">
+                              <VChip variant="tonal" color="success" size="small">
                                 {{ selectedPlanDisplayName }}
                               </VChip>
                             </span>
@@ -1720,7 +1722,7 @@
                           </div>
                           <div class="review-item highlight-price">
                             <span class="review-label">{{ t('pages.apps.register.orbit.review.totalPrice') }}:</span>
-                            <span class="review-value price">
+                            <span class="review-value price text-success">
                               <!-- Free plan: show "Free Forever" only if eligible -->
                               <VChip v-if="selectedPlan === 'free' && eligibleForFirstMonthFree" color="success" size="small" variant="flat" class="mr-2">
                                 <VIcon start size="14">mdi-infinity</VIcon>
@@ -2469,7 +2471,7 @@
                     <div class="stepper-actions">
                       <VBtn
                         v-if="currentStep > 1 && currentStep <= 4"
-                        variant="text"
+                        variant="flat"
                         @click="currentStep--"
                         :disabled="deploying"
                       >
@@ -2478,7 +2480,7 @@
                       </VBtn>
                       <VBtn
                         v-else-if="currentStep === 6 && !paymentConfirmed && !eligibleForFirstMonthFree && !fiatPaymentInitiated"
-                        variant="text"
+                        variant="flat"
                         @click="goBackToReviewStep"
                       >
                         <VIcon start>mdi-arrow-left</VIcon>
@@ -3241,7 +3243,7 @@ const calculateAppPrice = async () => {
 }
 
 // Detect port from repository files
-const detectPortFromRepo = async parsed => {
+const detectPortFromRepo = async (parsed, evaluationGeneration = null) => {
   if (!parsed) return
 
   const branchName = branch.value || 'main'
@@ -3288,6 +3290,8 @@ const detectPortFromRepo = async parsed => {
         const content = await response.text()
         const result = check.detect(content)
         if (result.port) {
+          if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
           detectedPort.value = result.port
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
@@ -3305,11 +3309,13 @@ const detectPortFromRepo = async parsed => {
 }
 
 // Check project compatibility with Orbit
-const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
+const checkProjectCompatibility = async (parsed, authHeaders = {}, evaluationGeneration = null) => {
   if (!parsed) return
 
   // For private repos, only analyze after a valid connection is established
   if (repoCheckStatus.value === 'private' && authTestStatus.value !== 'success') return
+
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
   compatibilityStatus.value = 'checking'
   compatibilityMessage.value = ''
@@ -3334,6 +3340,9 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
     `${basePath}composer.json`,
     `${basePath}Gemfile`,
     `${basePath}global.json`,
+    `${basePath}Program.cs`,
+    `${basePath}Startup.cs`,
+    `${basePath}appsettings.json`,
     `${basePath}index.html`,
     `${basePath}Dockerfile`,
   ]
@@ -3380,13 +3389,53 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
   }
 
   if (!foundAnyMarker) {
+    const hasDotnetMarker = await detectDotnetProjectMarker(parsed, branchName, basePath, authHeaders)
+    if (hasDotnetMarker) {
+      foundAnyMarker = true
+      foundMarkerFile = `${basePath}*.csproj`
+    }
+  }
+
+  if (!foundAnyMarker) {
+    if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
     compatibilityStatus.value = 'incompatible'
     compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityIncompatible')
 
     return
   }
 
+  const markerBaseName = foundMarkerFile?.replace(basePath, '')
+
+  if (!detectedFramework.value && markerBaseName) {
+    const inferredFrameworkByMarker = {
+      'requirements.txt': 'Python',
+      'pyproject.toml': 'Python',
+      'Pipfile': 'Python',
+      'setup.py': 'Python',
+      'setup.cfg': 'Python',
+      'Cargo.toml': 'Rust',
+      'go.mod': 'Go',
+      'pom.xml': 'Java',
+      'build.gradle': 'Java',
+      'build.gradle.kts': 'Java',
+      'composer.json': 'PHP',
+      'Gemfile': 'Ruby',
+      'global.json': '.NET',
+      'Program.cs': 'ASP.NET Core',
+      'Startup.cs': 'ASP.NET Core',
+      'appsettings.json': 'ASP.NET Core',
+      '*.csproj': 'ASP.NET Core',
+    }
+
+    if (inferredFrameworkByMarker[markerBaseName]) {
+      detectedFramework.value = inferredFrameworkByMarker[markerBaseName]
+    }
+  }
+
   // Markers found — check if we detected a web framework/port
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
   if (!detectedPort.value && !detectedFramework.value) {
     compatibilityStatus.value = 'warning'
     compatibilityMessage.value = t('pages.apps.register.orbit.repository.compatibilityWarning')
@@ -3401,8 +3450,6 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
 
     return
   }
-
-  const markerBaseName = foundMarkerFile?.replace(basePath, '')
 
   if (markerBaseName === 'Dockerfile') {
     requiresRunCommand.value = false
@@ -3419,6 +3466,8 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
         const content = await response.text()
         const pkg = JSON.parse(content)
         if (pkg.scripts?.start) {
+          if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
           requiresRunCommand.value = false
 
           return
@@ -3428,12 +3477,16 @@ const checkProjectCompatibility = async (parsed, authHeaders = {}) => {
       // If we can't read it, assume run command is needed
     }
 
+    if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
     requiresRunCommand.value = true
 
     return
   }
 
   // Non-Node.js markers (Python, Rust, Go, Java, PHP, Ruby, .NET) or index.html without framework
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
   if (markerBaseName !== 'index.html') {
     requiresRunCommand.value = true
   }
@@ -3716,9 +3769,65 @@ const detectPortFromEnvFile = content => {
   return { port: null }
 }
 
+// Detect .NET project markers by listing files in the selected project path.
+const detectDotnetProjectMarker = async (parsed, branchName, basePath, authHeaders = {}) => {
+  try {
+    const normalizedPath = basePath ? basePath.replace(/\/$/, '') : ''
+
+    const isDotnetProjectFile = fileName => {
+      return fileName.endsWith('.csproj')
+        || fileName.endsWith('.fsproj')
+        || fileName.endsWith('.vbproj')
+        || fileName.endsWith('.sln')
+    }
+
+    if (parsed.provider === 'github.com') {
+      const pathSegment = normalizedPath ? `/${normalizedPath}` : ''
+      const apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents${pathSegment}?ref=${branchName}`
+      const response = await fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json', ...authHeaders } })
+      if (response.ok) {
+        const items = await response.json()
+        if (Array.isArray(items)) {
+          return items.some(item => item?.type === 'file' && isDotnetProjectFile(item?.name || ''))
+        }
+      }
+    } else if (parsed.provider === 'gitlab.com') {
+      const apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/tree?path=${encodeURIComponent(normalizedPath)}&ref=${branchName}&per_page=100`
+      const response = await fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json', ...authHeaders } })
+      if (response.ok) {
+        const items = await response.json()
+        if (Array.isArray(items)) {
+          return items.some(item => item?.type === 'blob' && isDotnetProjectFile(item?.name || ''))
+        }
+      }
+    } else if (parsed.provider === 'bitbucket.org') {
+      const pathSegment = normalizedPath ? `/${normalizedPath}` : ''
+      const apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}${pathSegment}`
+      const response = await fetch(apiUrl, { method: 'GET', headers: { 'Accept': 'application/json', ...authHeaders } })
+      if (response.ok) {
+        const data = await response.json()
+        const values = Array.isArray(data?.values) ? data.values : []
+
+        return values.some(item => {
+          const filePath = item?.path || ''
+          const fileName = filePath.split('/').pop() || ''
+
+          return item?.type === 'commit_file' && isDotnetProjectFile(fileName)
+        })
+      }
+    }
+  } catch {
+    // Ignore detection errors and let other markers decide compatibility.
+  }
+
+  return false
+}
+
 // Detect monorepo structure
-const detectMonorepoStructure = async parsed => {
+const detectMonorepoStructure = async (parsed, evaluationGeneration = null) => {
   if (!parsed) return
+
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
   detectingMonorepo.value = true
   isMonorepo.value = false
@@ -3730,11 +3839,12 @@ const detectMonorepoStructure = async parsed => {
   // Monorepo config files to check
   const monorepoConfigs = [
     { file: 'pnpm-workspace.yaml', type: 'pnpm', parser: parsePnpmWorkspace },
+    // Prefer package.json workspaces before tool-specific fallback defaults.
+    { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
     { file: 'turbo.json', type: 'turbo', parser: parseTurboConfig },
     { file: 'lerna.json', type: 'lerna', parser: parseLernaConfig },
     { file: 'nx.json', type: 'nx', parser: parseNxConfig },
     { file: 'rush.json', type: 'rush', parser: parseRushConfig },
-    { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
   ]
 
   for (const config of monorepoConfigs) {
@@ -3762,15 +3872,21 @@ const detectMonorepoStructure = async parsed => {
         const result = config.parser(content)
 
         if (result.isMonorepo && result.workspaces.length > 0) {
-          isMonorepo.value = true
-          monorepoType.value = config.type
-
           // Expand glob patterns to actual directories
           const projects = await expandWorkspacePatterns(parsed, branchName, result.workspaces)
-          monorepoProjects.value = projects
+          if (projects.length > 0) {
+            if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
-          console.log(`Detected ${config.type} monorepo with ${projects.length} projects:`, projects)
-          break
+            isMonorepo.value = true
+            monorepoType.value = config.type
+            monorepoProjects.value = projects
+
+            console.log(`Detected ${config.type} monorepo with ${projects.length} projects:`, projects)
+            break
+          }
+
+          // If this config didn't resolve real projects, keep trying other configs.
+          console.debug(`Monorepo config ${config.file} found, but no projects resolved. Trying next detector.`)
         }
       }
     } catch (error) {
@@ -3778,7 +3894,9 @@ const detectMonorepoStructure = async parsed => {
     }
   }
 
-  detectingMonorepo.value = false
+  if (isCurrentRepoEvaluation(evaluationGeneration)) {
+    detectingMonorepo.value = false
+  }
 }
 
 // Parse pnpm-workspace.yaml
@@ -4091,7 +4209,7 @@ const recheckPrivateRepo = async () => {
 }
 
 // Detect port from private repository
-const detectPortFromPrivateRepo = async parsed => {
+const detectPortFromPrivateRepo = async (parsed, evaluationGeneration = null) => {
   if (!parsed || !repoToken.value) return
 
   const branchName = branch.value || 'main'
@@ -4111,6 +4229,8 @@ const detectPortFromPrivateRepo = async parsed => {
         const content = await response.text()
         const result = detectPortFromPackageJson(content)
         if (result.port) {
+          if (!isCurrentRepoEvaluation(evaluationGeneration)) return
+
           detectedPort.value = result.port
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
@@ -4258,8 +4378,10 @@ const fetchBranches = async (parsed, authHeaders = {}) => {
 }
 
 // Detect monorepo structure with authentication
-const detectMonorepoStructureWithAuth = async parsed => {
+const detectMonorepoStructureWithAuth = async (parsed, evaluationGeneration = null) => {
   if (!parsed || !repoToken.value) return
+
+  if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
   detectingMonorepo.value = true
   isMonorepo.value = false
@@ -4281,38 +4403,51 @@ const detectMonorepoStructureWithAuth = async parsed => {
   const monorepoConfigs = [
     { file: 'pnpm-workspace.yaml', type: 'pnpm', parser: parsePnpmWorkspace },
     { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
+    { file: 'turbo.json', type: 'turbo', parser: parseTurboConfig },
+    { file: 'lerna.json', type: 'lerna', parser: parseLernaConfig },
+    { file: 'nx.json', type: 'nx', parser: parseNxConfig },
+    { file: 'rush.json', type: 'rush', parser: parseRushConfig },
   ]
 
   for (const config of monorepoConfigs) {
     try {
       let apiUrl = ''
+      let requestHeaders = { ...headers }
 
       if (parsed.provider === 'github.com') {
         apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${config.file}?ref=${branchName}`
+        requestHeaders = { ...headers, 'Accept': 'application/vnd.github.v3.raw' }
+      } else if (parsed.provider === 'gitlab.com') {
+        apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(config.file)}/raw?ref=${branchName}`
+      } else if (parsed.provider === 'bitbucket.org') {
+        apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}/${config.file}`
       }
 
-      // Use HEAD request first to check if file exists (avoids 404 errors in console)
-      const headResponse = await fetch(apiUrl, { method: 'HEAD', headers })
-      if (!headResponse.ok) {
-        continue // File doesn't exist, skip to next config
+      if (!apiUrl) {
+        continue
       }
 
       // File exists, fetch the content
-      const response = await fetch(apiUrl, { method: 'GET', headers })
+      const response = await fetch(apiUrl, { method: 'GET', headers: requestHeaders })
       if (response.ok) {
         const content = await response.text()
         const result = config.parser(content)
 
         if (result.isMonorepo && result.workspaces.length > 0) {
-          isMonorepo.value = true
-          monorepoType.value = config.type
-
           // For private repos, use API to expand workspaces
           const projects = await expandWorkspacePatternsWithAuth(parsed, branchName, result.workspaces, headers)
-          monorepoProjects.value = projects
+          if (projects.length > 0) {
+            if (!isCurrentRepoEvaluation(evaluationGeneration)) return
 
-          console.log(`Detected ${config.type} monorepo with ${projects.length} projects`)
-          break
+            isMonorepo.value = true
+            monorepoType.value = config.type
+            monorepoProjects.value = projects
+
+            console.log(`Detected ${config.type} monorepo with ${projects.length} projects`)
+            break
+          }
+
+          console.debug(`Monorepo config ${config.file} found (auth), but no projects resolved. Trying next detector.`)
         }
       }
     } catch (error) {
@@ -4320,7 +4455,9 @@ const detectMonorepoStructureWithAuth = async parsed => {
     }
   }
 
-  detectingMonorepo.value = false
+  if (isCurrentRepoEvaluation(evaluationGeneration)) {
+    detectingMonorepo.value = false
+  }
 }
 
 // Expand workspace patterns with authentication
@@ -4354,6 +4491,52 @@ const expandWorkspacePatternsWithAuth = async (parsed, branchName, patterns, hea
               }
             }
           }
+        } else if (parsed.provider === 'gitlab.com') {
+          const apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/tree?path=${encodeURIComponent(basePath)}&ref=${branchName}&per_page=100`
+          const response = await fetch(apiUrl, { method: 'GET', headers: { ...headers, 'Accept': 'application/json' } })
+
+          if (response.ok) {
+            const items = await response.json()
+            const directories = (items || []).filter(item => item.type === 'tree')
+
+            for (const dir of directories) {
+              const fullPath = `${basePath}/${dir.name}`
+              const projectInfo = await getProjectInfoWithAuth(parsed, branchName, fullPath, headers)
+
+              if (projectInfo.hasPackageJson) {
+                projects.push({
+                  path: `/${fullPath}`,
+                  name: projectInfo.name || dir.name,
+                  description: projectInfo.description || '',
+                  framework: projectInfo.framework || null,
+                })
+              }
+            }
+          }
+        } else if (parsed.provider === 'bitbucket.org') {
+          const apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}/${basePath}`
+          const response = await fetch(apiUrl, { method: 'GET', headers: { ...headers, 'Accept': 'application/json' } })
+
+          if (response.ok) {
+            const data = await response.json()
+            const values = data?.values || []
+            const directories = values.filter(item => item.type === 'commit_directory')
+
+            for (const dir of directories) {
+              const fullPath = dir.path || `${basePath}/${dir.name}`
+              const projectInfo = await getProjectInfoWithAuth(parsed, branchName, fullPath, headers)
+
+              if (projectInfo.hasPackageJson) {
+                const fallbackName = fullPath.split('/').pop()
+                projects.push({
+                  path: `/${fullPath}`,
+                  name: projectInfo.name || fallbackName,
+                  description: projectInfo.description || '',
+                  framework: projectInfo.framework || null,
+                })
+              }
+            }
+          }
         }
       } catch (error) {
         console.debug(`Could not expand pattern ${pattern}:`, error.message)
@@ -4367,29 +4550,42 @@ const expandWorkspacePatternsWithAuth = async (parsed, branchName, patterns, hea
 // Get project info with authentication
 const getProjectInfoWithAuth = async (parsed, branchName, projectPath, headers) => {
   try {
+    let apiUrl = ''
+    let requestHeaders = { ...headers }
+
     if (parsed.provider === 'github.com') {
-      const apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${projectPath}/package.json?ref=${branchName}`
-      const response = await fetch(apiUrl, { method: 'GET', headers: { ...headers, 'Accept': 'application/vnd.github.v3.raw' } })
+      apiUrl = `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${projectPath}/package.json?ref=${branchName}`
+      requestHeaders = { ...headers, 'Accept': 'application/vnd.github.v3.raw' }
+    } else if (parsed.provider === 'gitlab.com') {
+      apiUrl = `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(`${projectPath}/package.json`)}/raw?ref=${branchName}`
+    } else if (parsed.provider === 'bitbucket.org') {
+      apiUrl = `https://api.bitbucket.org/2.0/repositories/${parsed.owner}/${parsed.repo}/src/${branchName}/${projectPath}/package.json`
+    }
 
-      if (response.ok) {
-        const content = await response.text()
-        const pkg = JSON.parse(content)
-        const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+    if (!apiUrl) {
+      return { hasPackageJson: false, name: '', description: '', framework: null }
+    }
 
-        let framework = null
-        if (deps['next']) framework = 'Next.js'
-        else if (deps['nuxt'] || deps['nuxt3']) framework = 'Nuxt'
-        else if (deps['@remix-run/react']) framework = 'Remix'
-        else if (deps['astro']) framework = 'Astro'
-        else if (deps['@sveltejs/kit']) framework = 'SvelteKit'
-        else if (deps['vite']) framework = 'Vite'
+    const response = await fetch(apiUrl, { method: 'GET', headers: requestHeaders })
 
-        return {
-          hasPackageJson: true,
-          name: pkg.name || '',
-          description: pkg.description || '',
-          framework,
-        }
+    if (response.ok) {
+      const content = await response.text()
+      const pkg = JSON.parse(content)
+      const deps = { ...pkg.dependencies, ...pkg.devDependencies }
+
+      let framework = null
+      if (deps['next']) framework = 'Next.js'
+      else if (deps['nuxt'] || deps['nuxt3']) framework = 'Nuxt'
+      else if (deps['@remix-run/react']) framework = 'Remix'
+      else if (deps['astro']) framework = 'Astro'
+      else if (deps['@sveltejs/kit']) framework = 'SvelteKit'
+      else if (deps['vite']) framework = 'Vite'
+
+      return {
+        hasPackageJson: true,
+        name: pkg.name || '',
+        description: pkg.description || '',
+        framework,
       }
     }
   } catch (error) {
@@ -4401,6 +4597,17 @@ const getProjectInfoWithAuth = async (parsed, branchName, projectPath, headers) 
 
 // Debounce helper
 let repoCheckTimeout = null
+let projectPathCheckTimeout = null
+let repoEvaluationGeneration = 0
+
+const nextRepoEvaluationGeneration = () => {
+  repoEvaluationGeneration += 1
+
+  return repoEvaluationGeneration
+}
+
+const isCurrentRepoEvaluation = generation => generation == null || generation === repoEvaluationGeneration
+
 const debouncedRepoCheck = () => {
   if (repoCheckTimeout) clearTimeout(repoCheckTimeout)
   repoCheckTimeout = setTimeout(() => {
@@ -4428,6 +4635,8 @@ const normalizeRepoUrl = url => {
 // Watch for repo URL changes
 watch(repoUrl, newVal => {
   portAutoDetected.value = false
+  // Invalidate in-flight branch/path evaluations for previous repository URL.
+  nextRepoEvaluationGeneration()
 
   // Auto-trim URLs that point to files/branches/subdirectories
   const normalized = normalizeRepoUrl(newVal)
@@ -4452,23 +4661,65 @@ watch(appName, newName => {
 })
 
 // Watch for branch changes to re-detect port
-watch(branch, () => {
+watch(branch, async () => {
+  const evaluationGeneration = nextRepoEvaluationGeneration()
+
   if (repoCheckStatus.value === 'public') {
     const parsed = parseRepoUrl(repoUrl.value)
     if (parsed) {
-      detectPortFromRepo(parsed)
+      await detectPortFromRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, {}, evaluationGeneration)
+      await detectMonorepoStructure(parsed, evaluationGeneration)
+    }
+  } else if (repoCheckStatus.value === 'private' && authTestStatus.value === 'success') {
+    const parsed = parseRepoUrl(repoUrl.value)
+    if (parsed) {
+      const headers = { 'Accept': 'application/json' }
+      if (parsed.provider === 'github.com') {
+        headers['Authorization'] = `token ${repoToken.value}`
+      } else if (parsed.provider === 'gitlab.com') {
+        headers['PRIVATE-TOKEN'] = repoToken.value
+      } else if (parsed.provider === 'bitbucket.org') {
+        headers['Authorization'] = `Bearer ${repoToken.value}`
+      }
+
+      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, headers, evaluationGeneration)
+      await detectMonorepoStructureWithAuth(parsed, evaluationGeneration)
     }
   }
 })
 
-// Watch for project path changes to re-detect port
+// Watch for project path changes to re-evaluate compatibility and clear stale errors.
 watch(projectPath, () => {
-  if (repoCheckStatus.value === 'public') {
+  if (projectPathCheckTimeout) clearTimeout(projectPathCheckTimeout)
+
+  const evaluationGeneration = nextRepoEvaluationGeneration()
+
+  projectPathCheckTimeout = setTimeout(async () => {
     const parsed = parseRepoUrl(repoUrl.value)
-    if (parsed) {
-      detectPortFromRepo(parsed)
+    if (!parsed) return
+
+    if (repoCheckStatus.value === 'public') {
+      await detectPortFromRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, {}, evaluationGeneration)
+      return
     }
-  }
+
+    if (repoCheckStatus.value === 'private' && authTestStatus.value === 'success') {
+      const headers = { 'Accept': 'application/json' }
+      if (parsed.provider === 'github.com') {
+        headers['Authorization'] = `token ${repoToken.value}`
+      } else if (parsed.provider === 'gitlab.com') {
+        headers['PRIVATE-TOKEN'] = repoToken.value
+      } else if (parsed.provider === 'bitbucket.org') {
+        headers['Authorization'] = `Bearer ${repoToken.value}`
+      }
+
+      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      await checkProjectCompatibility(parsed, headers, evaluationGeneration)
+    }
+  }, 500)
 })
 
 // Watch for token changes to reset auth test status
@@ -7100,6 +7351,7 @@ onMounted(() => {
   position: absolute;
   left: 0;
   top: 0.5rem;
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.15);
 }
 
 .orbit-title {
@@ -8214,8 +8466,6 @@ onMounted(() => {
   margin-bottom: 1rem;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-  color: rgb(var(--v-theme-primary));
 }
 
 .review-item {
@@ -8263,7 +8513,7 @@ onMounted(() => {
 }
 
 .review-value code {
-  background: rgba(var(--v-theme-primary), 0.1);
+  background: rgba(var(--v-theme-on-surface), 0.08);
   padding: 0.125rem 0.5rem;
   border-radius: 4px;
   font-family: monospace;

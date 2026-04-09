@@ -2762,16 +2762,20 @@ const monthlyPrice = computed(() => {
   return totalPrice
 })
 
-// USD pricing - NO DISCOUNTS for fiat payments
+// USD pricing - total cost for the entire subscription period (monthly × months × discount)
 const estimatedCost = computed(() => {
   const baseMonthlyPrice = monthlyPrice.value || 0
   if (isNaN(baseMonthlyPrice)) {
     console.warn('Monthly price is NaN:', monthlyPrice.value)
-    
+
     return '0'
   }
-  
-  return baseMonthlyPrice.toFixed(2)
+
+  const months = config.value.subscriptionMonths || 1
+  const discount = currentDiscount.value || 0
+  const total = baseMonthlyPrice * months * (1 - discount / 100)
+
+  return total.toFixed(2)
 })
 
 // Total USD cost for the entire subscription period
