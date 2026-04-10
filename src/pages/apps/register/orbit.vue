@@ -583,6 +583,10 @@
                                   <VIcon start size="12">mdi-auto-fix</VIcon>
                                   {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
                                 </VChip>
+                                <VChip v-if="appPortImportedFromConfig && configImportSourceLabel" color="info" size="x-small" variant="tonal" class="ml-2">
+                                  <VIcon start size="12">mdi-file-document-outline</VIcon>
+                                  Imported from {{ configImportSourceLabel }}
+                                </VChip>
                               </div>
                             </template>
                           </VTextField>
@@ -843,7 +847,7 @@
                         </VExpansionPanels>
 
                         <!-- Custom Environment Variables -->
-                        <VExpansionPanels class="mb-4">
+                        <VExpansionPanels v-model="envExpansionPanel" class="mb-4">
                           <VExpansionPanel>
                             <VExpansionPanelTitle>
                               <VIcon start size="20">mdi-variable</VIcon>
@@ -852,8 +856,15 @@
                               <VChip v-if="customEnvVars.length > 0" size="x-small" color="primary" class="ml-2">
                                 {{ customEnvVars.length }}
                               </VChip>
+                              <VChip v-if="envVarsImportedFromConfig && configImportSourceLabel" size="x-small" color="info" variant="tonal" class="ml-2">
+                                <VIcon start size="12">mdi-file-document-outline</VIcon>
+                                Imported from {{ configImportSourceLabel }}
+                              </VChip>
                             </VExpansionPanelTitle>
                             <VExpansionPanelText>
+                              <VAlert v-if="envVarsImportedFromConfig && configImportSourceLabel" type="info" variant="tonal" density="compact" class="mb-3">
+                                Environment variables imported from {{ configImportSourceLabel }}.
+                              </VAlert>
                               <VAlert type="info" variant="tonal" density="compact" class="mb-4">
                                 {{ t('pages.apps.register.orbit.config.envVariablesInfo') }}
                               </VAlert>
@@ -3265,8 +3276,13 @@ const resolveOrbitCtaPrefillPayload = () => {
   return loadOrbitCtaPrefillFromStorage()
 }
 
-const applyOrbitCtaPrefill = async payload => {
+const applyOrbitCtaPrefill = async (payload, options = {}) => {
   if (!payload) return false
+
+  const isConfigImport = Boolean(options.configFilePath)
+  if (isConfigImport) {
+    configImportSourceFile.value = options.configFilePath
+  }
 
   const hasAnyValue = Boolean(
     payload.repoUrl
@@ -3306,6 +3322,9 @@ const applyOrbitCtaPrefill = async payload => {
   if (payload.appPort) {
     appPort.value = payload.appPort
     portAutoDetected.value = false
+    appPortImportedFromConfig.value = isConfigImport
+  } else if (isConfigImport) {
+    appPortImportedFromConfig.value = false
   }
 
   if (payload.pollingInterval) {
@@ -3331,6 +3350,12 @@ const applyOrbitCtaPrefill = async payload => {
       placeholder: '',
       isOrbitVar: true,
     }))
+    envVarsImportedFromConfig.value = isConfigImport
+    if (isConfigImport) {
+      envExpansionPanel.value = 0
+    }
+  } else if (isConfigImport) {
+    envVarsImportedFromConfig.value = false
   }
 
   if (Array.isArray(payload.allowedGeolocations) || Array.isArray(payload.forbiddenGeolocations)) {
@@ -3585,6 +3610,16 @@ const portAutoDetected = ref(false)
 const contactEmail = ref('')
 const pollingInterval = ref('86400') // Default: 24 hours in seconds
 const showAdvancedOptions = ref(false)
+const envExpansionPanel = ref(null)
+const configImportSourceFile = ref('')
+const appPortImportedFromConfig = ref(false)
+const envVarsImportedFromConfig = ref(false)
+const configImportSourceLabel = computed(() => {
+  if (!configImportSourceFile.value) return ''
+  const parts = configImportSourceFile.value.split('/')
+
+  return parts[parts.length - 1] || configImportSourceFile.value
+})
 
 // Polling interval options (value in seconds, 'disabled' to not add env var)
 const pollingIntervalOptions = [
@@ -3864,7 +3899,7 @@ const checkRepoAccess = async () => {
       await detectMonorepoStructure(parsed)
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -4118,6 +4153,7 @@ const detectPortFromRepo = async (parsed, evaluationGeneration = null) => {
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
           portAutoDetected.value = true
+          appPortImportedFromConfig.value = false
           console.log(`Auto-detected port ${result.port} from ${check.path}`, result.framework ? `(${result.framework})` : '')
           
           return
@@ -5022,7 +5058,7 @@ const recheckPrivateRepo = async () => {
       // Auth successful, try to detect port from private repo
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -5064,6 +5100,7 @@ const detectPortFromPrivateRepo = async (parsed, evaluationGeneration = null) =>
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
           portAutoDetected.value = true
+          appPortImportedFromConfig.value = false
           console.log(`Auto-detected port ${result.port} from private repo`, result.framework ? `(${result.framework})` : '')
         }
       }
@@ -5108,7 +5145,7 @@ const testAuthConnection = async () => {
       await detectMonorepoStructureWithAuth(parsed)
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -5471,6 +5508,10 @@ const normalizeRepoUrl = url => {
 // Watch for repo URL changes
 watch(repoUrl, newVal => {
   portAutoDetected.value = false
+  appPortImportedFromConfig.value = false
+  envVarsImportedFromConfig.value = false
+  configImportSourceFile.value = ''
+  envExpansionPanel.value = null
   // Invalidate in-flight branch/path evaluations for previous repository URL.
   nextRepoEvaluationGeneration()
 
@@ -5505,7 +5546,7 @@ watch(branch, async () => {
     if (parsed) {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -5528,7 +5569,7 @@ watch(branch, async () => {
 
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -5553,7 +5594,7 @@ watch(projectPath, () => {
     if (repoCheckStatus.value === 'public') {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -5575,7 +5616,7 @@ watch(projectPath, () => {
 
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
       if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload)
+        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
         console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
@@ -8055,10 +8096,14 @@ const resetForm = () => {
   appName.value = ''
   appDescription.value = ''
   appPort.value = '3000'
+  appPortImportedFromConfig.value = false
   contactEmail.value = ''
   selectedRuntime.value = null
   runtimeVersion.value = ''
   customEnvVars.value = []
+  envVarsImportedFromConfig.value = false
+  configImportSourceFile.value = ''
+  envExpansionPanel.value = null
   requiresRunCommand.value = false
   userEnabledEnterprise.value = false
 
