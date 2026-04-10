@@ -3675,6 +3675,80 @@ const parseFluxDeployConfigContent = (content, filePath) => {
   }
 }
 
+const extractPortFromCommand = command => {
+  if (!command || typeof command !== 'string') return ''
+
+  const match = command.match(/(?:--port(?:=|\s+)|-p\s+)(\d{1,5})\b/i)
+  if (!match) return ''
+
+  return normalizeAppPortValue(match[1])
+}
+
+const parseVercelEnvObject = envObject => {
+  if (!envObject || typeof envObject !== 'object' || Array.isArray(envObject)) return []
+
+  const envVars = []
+  for (const [key, rawValue] of Object.entries(envObject)) {
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) continue
+
+    const normalized = normalizeScalarValue(rawValue)
+    if (!normalized) continue
+
+    upsertEnvVar(envVars, key, normalized)
+  }
+
+  return envVars
+}
+
+const buildPrefillPayloadFromVercelConfig = vercelConfig => {
+  if (!vercelConfig || typeof vercelConfig !== 'object' || Array.isArray(vercelConfig)) return null
+
+  const source = {}
+
+  const buildCommand = normalizeScalarValue(vercelConfig.buildCommand)
+  if (buildCommand) {
+    source.buildCommand = buildCommand
+  }
+
+  const installCommand = normalizeScalarValue(vercelConfig.installCommand)
+  if (installCommand) {
+    source.installCommand = installCommand
+  }
+
+  let portCandidate = normalizeScalarValue(vercelConfig.port)
+
+  if (!portCandidate && Array.isArray(vercelConfig.builds)) {
+    for (const build of vercelConfig.builds) {
+      const buildPort = normalizeScalarValue(build?.config?.port)
+      if (buildPort) {
+        portCandidate = buildPort
+        break
+      }
+    }
+  }
+
+  if (!portCandidate) {
+    portCandidate = extractPortFromCommand(normalizeScalarValue(vercelConfig.devCommand))
+  }
+
+  const normalizedPort = normalizeAppPortValue(portCandidate)
+  if (normalizedPort) {
+    source.appPort = normalizedPort
+  }
+
+  const envVars = []
+  parseVercelEnvObject(vercelConfig.env).forEach(env => upsertEnvVar(envVars, env.key, env.value))
+  parseVercelEnvObject(vercelConfig.build?.env).forEach(env => upsertEnvVar(envVars, env.key, env.value))
+
+  if (envVars.length > 0) {
+    source.envVars = envVars
+  }
+
+  if (Object.keys(source).length === 0) return null
+
+  return buildOrbitCtaPrefillPayload(source)
+}
+
 const loadFluxDeployConfigFromRepo = async (parsed, authHeaders = {}, evaluationGeneration = null) => {
   if (!parsed) return null
 
@@ -3691,8 +3765,42 @@ const loadFluxDeployConfigFromRepo = async (parsed, authHeaders = {}, evaluation
   ]
 
   const candidatePaths = [...new Set(preferredPaths)]
+  let hasAnyFluxConfigFile = false
 
   for (const filePath of candidatePaths) {
+    if (!isCurrentRepoEvaluation(evaluationGeneration)) return null
+
+    try {
+      const content = await fetchRepositoryFileContent(parsed, branchName, filePath, authHeaders)
+      if (!content) continue
+      hasAnyFluxConfigFile = true
+
+      const parsedConfig = parseFluxDeployConfigContent(content, filePath)
+      if (!parsedConfig || typeof parsedConfig !== 'object') continue
+
+      const prefillPayload = buildOrbitCtaPrefillPayload(parsedConfig)
+      if (!prefillPayload) continue
+
+      return {
+        filePath,
+        payload: prefillPayload,
+      }
+    } catch (error) {
+      console.debug(`Could not read ${filePath}:`, error.message)
+    }
+  }
+
+  // Fallback to vercel.json only when no flux config file exists.
+  if (hasAnyFluxConfigFile) {
+    return null
+  }
+
+  const vercelCandidatePaths = [...new Set([
+    basePath ? `${basePath}/vercel.json` : 'vercel.json',
+    'vercel.json',
+  ])]
+
+  for (const filePath of vercelCandidatePaths) {
     if (!isCurrentRepoEvaluation(evaluationGeneration)) return null
 
     try {
@@ -3702,7 +3810,7 @@ const loadFluxDeployConfigFromRepo = async (parsed, authHeaders = {}, evaluation
       const parsedConfig = parseFluxDeployConfigContent(content, filePath)
       if (!parsedConfig || typeof parsedConfig !== 'object') continue
 
-      const prefillPayload = buildOrbitCtaPrefillPayload(parsedConfig)
+      const prefillPayload = buildPrefillPayloadFromVercelConfig(parsedConfig)
       if (!prefillPayload) continue
 
       return {
@@ -3757,6 +3865,7 @@ const checkRepoAccess = async () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromRepo(parsed)
@@ -4914,6 +5023,7 @@ const recheckPrivateRepo = async () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromPrivateRepo(parsed)
@@ -4999,6 +5109,7 @@ const testAuthConnection = async () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromPrivateRepo(parsed)
@@ -5395,6 +5506,7 @@ watch(branch, async () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromRepo(parsed, evaluationGeneration)
@@ -5417,6 +5529,7 @@ watch(branch, async () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromPrivateRepo(parsed, evaluationGeneration)
@@ -5441,6 +5554,7 @@ watch(projectPath, () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromRepo(parsed, evaluationGeneration)
@@ -5462,6 +5576,7 @@ watch(projectPath, () => {
       const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
       if (fluxConfig?.payload) {
         await applyOrbitCtaPrefill(fluxConfig.payload)
+        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
       }
       if (!fluxConfig?.payload?.appPort) {
         await detectPortFromPrivateRepo(parsed, evaluationGeneration)
