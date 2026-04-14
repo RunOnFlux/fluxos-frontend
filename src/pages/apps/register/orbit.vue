@@ -2600,6 +2600,7 @@ import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
 import { useLoginSheet } from '@/composables/useLoginSheet'
+import { useOrbitRepoConfigImport } from '@/composables/useOrbitRepoConfigImport'
 import axios from 'axios'
 import Api from '@/services/ApiClient'
 import geolocations from '@/utils/geolocation'
@@ -2624,7 +2625,6 @@ import {
 import qs from 'qs'
 import { getUser } from '@/utils/firebase'
 import { paymentBridge } from '@/utils/fiatGateways'
-import yaml from 'js-yaml'
 
 const { t } = useI18n()
 
@@ -3655,209 +3655,23 @@ const parseRepoUrl = url => {
   return null
 }
 
-const buildRepoRawFileUrl = (parsed, branchName, filePath, authHeaders = {}) => {
-  const hasAuth = authHeaders && (authHeaders['Authorization'] || authHeaders['PRIVATE-TOKEN'])
-
-  if (parsed.provider === 'github.com') {
-    if (hasAuth) {
-      return `https://api.github.com/repos/${parsed.owner}/${parsed.repo}/contents/${filePath}?ref=${branchName}`
-    }
-
-    return `https://raw.githubusercontent.com/${parsed.owner}/${parsed.repo}/${branchName}/${filePath}`
+const applyRepoConfigWithPortFallback = async ({
+  parsed,
+  authHeaders = {},
+  evaluationGeneration = null,
+  detectPort,
+}) => {
+  const fluxConfig = await loadRepoDeploymentConfig(parsed, authHeaders, evaluationGeneration)
+  if (fluxConfig?.payload) {
+    await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
+    console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
   }
 
-  if (parsed.provider === 'gitlab.com') {
-    if (hasAuth) {
-      return `https://gitlab.com/api/v4/projects/${encodeURIComponent(`${parsed.owner}/${parsed.repo}`)}/repository/files/${encodeURIComponent(filePath)}/raw?ref=${branchName}`
-    }
-
-    return `https://gitlab.com/${parsed.owner}/${parsed.repo}/-/raw/${branchName}/${filePath}`
+  if (!fluxConfig?.payload?.appPort && typeof detectPort === 'function') {
+    await detectPort()
   }
 
-  if (parsed.provider === 'bitbucket.org') {
-    return `https://bitbucket.org/${parsed.owner}/${parsed.repo}/raw/${branchName}/${filePath}`
-  }
-
-  return ''
-}
-
-const fetchRepositoryFileContent = async (parsed, branchName, filePath, authHeaders = {}) => {
-  const url = buildRepoRawFileUrl(parsed, branchName, filePath, authHeaders)
-  if (!url) return null
-
-  const headers = { ...authHeaders }
-  if (parsed.provider === 'github.com' && headers['Authorization']) {
-    headers['Accept'] = 'application/vnd.github.v3.raw'
-  }
-
-  const response = await fetch(url, { method: 'GET', headers })
-  if (!response.ok) return null
-
-  return await response.text()
-}
-
-const parseFluxDeployConfigContent = (content, filePath) => {
-  try {
-    if (filePath.endsWith('.json')) {
-      return JSON.parse(content)
-    }
-
-    return yaml.load(content)
-  } catch (error) {
-    console.warn(`Failed to parse ${filePath}:`, error)
-
-    return null
-  }
-}
-
-const extractPortFromCommand = command => {
-  if (!command || typeof command !== 'string') return ''
-
-  const match = command.match(/(?:--port(?:=|\s+)|-p\s+)(\d{1,5})\b/i)
-  if (!match) return ''
-
-  return normalizeAppPortValue(match[1])
-}
-
-const parseVercelEnvObject = envObject => {
-  if (!envObject || typeof envObject !== 'object' || Array.isArray(envObject)) return []
-
-  const envVars = []
-  for (const [key, rawValue] of Object.entries(envObject)) {
-    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) continue
-
-    const normalized = normalizeScalarValue(rawValue)
-    if (!normalized) continue
-
-    upsertEnvVar(envVars, key, normalized)
-  }
-
-  return envVars
-}
-
-const buildPrefillPayloadFromVercelConfig = vercelConfig => {
-  if (!vercelConfig || typeof vercelConfig !== 'object' || Array.isArray(vercelConfig)) return null
-
-  const source = {}
-
-  const buildCommand = normalizeScalarValue(vercelConfig.buildCommand)
-  if (buildCommand) {
-    source.buildCommand = buildCommand
-  }
-
-  const installCommand = normalizeScalarValue(vercelConfig.installCommand)
-  if (installCommand) {
-    source.installCommand = installCommand
-  }
-
-  let portCandidate = normalizeScalarValue(vercelConfig.port)
-
-  if (!portCandidate && Array.isArray(vercelConfig.builds)) {
-    for (const build of vercelConfig.builds) {
-      const buildPort = normalizeScalarValue(build?.config?.port)
-      if (buildPort) {
-        portCandidate = buildPort
-        break
-      }
-    }
-  }
-
-  if (!portCandidate) {
-    portCandidate = extractPortFromCommand(normalizeScalarValue(vercelConfig.devCommand))
-  }
-
-  const normalizedPort = normalizeAppPortValue(portCandidate)
-  if (normalizedPort) {
-    source.appPort = normalizedPort
-  }
-
-  const envVars = []
-  parseVercelEnvObject(vercelConfig.env).forEach(env => upsertEnvVar(envVars, env.key, env.value))
-  parseVercelEnvObject(vercelConfig.build?.env).forEach(env => upsertEnvVar(envVars, env.key, env.value))
-
-  if (envVars.length > 0) {
-    source.envVars = envVars
-  }
-
-  if (Object.keys(source).length === 0) return null
-
-  return buildOrbitCtaPrefillPayload(source)
-}
-
-const loadFluxDeployConfigFromRepo = async (parsed, authHeaders = {}, evaluationGeneration = null) => {
-  if (!parsed) return null
-
-  const branchName = branch.value || 'main'
-  const basePath = projectPath.value && projectPath.value !== '/' ? projectPath.value.replace(/^\//, '').replace(/\/$/, '') : ''
-
-  const preferredPaths = [
-    basePath ? `${basePath}/flux.json` : 'flux.json',
-    basePath ? `${basePath}/flux.yaml` : 'flux.yaml',
-    basePath ? `${basePath}/flux.yml` : 'flux.yml',
-    'flux.json',
-    'flux.yaml',
-    'flux.yml',
-  ]
-
-  const candidatePaths = [...new Set(preferredPaths)]
-  let hasAnyFluxConfigFile = false
-
-  for (const filePath of candidatePaths) {
-    if (!isCurrentRepoEvaluation(evaluationGeneration)) return null
-
-    try {
-      const content = await fetchRepositoryFileContent(parsed, branchName, filePath, authHeaders)
-      if (!content) continue
-      hasAnyFluxConfigFile = true
-
-      const parsedConfig = parseFluxDeployConfigContent(content, filePath)
-      if (!parsedConfig || typeof parsedConfig !== 'object') continue
-
-      const prefillPayload = buildOrbitCtaPrefillPayload(parsedConfig)
-      if (!prefillPayload) continue
-
-      return {
-        filePath,
-        payload: prefillPayload,
-      }
-    } catch (error) {
-      console.debug(`Could not read ${filePath}:`, error.message)
-    }
-  }
-
-  // Fallback to vercel.json only when no flux config file exists.
-  if (hasAnyFluxConfigFile) {
-    return null
-  }
-
-  const vercelCandidatePaths = [...new Set([
-    basePath ? `${basePath}/vercel.json` : 'vercel.json',
-    'vercel.json',
-  ])]
-
-  for (const filePath of vercelCandidatePaths) {
-    if (!isCurrentRepoEvaluation(evaluationGeneration)) return null
-
-    try {
-      const content = await fetchRepositoryFileContent(parsed, branchName, filePath, authHeaders)
-      if (!content) continue
-
-      const parsedConfig = parseFluxDeployConfigContent(content, filePath)
-      if (!parsedConfig || typeof parsedConfig !== 'object') continue
-
-      const prefillPayload = buildPrefillPayloadFromVercelConfig(parsedConfig)
-      if (!prefillPayload) continue
-
-      return {
-        filePath,
-        payload: prefillPayload,
-      }
-    } catch (error) {
-      console.debug(`Could not read ${filePath}:`, error.message)
-    }
-  }
-
-  return null
+  return fluxConfig
 }
 
 // Check if repository is public or private
@@ -3897,14 +3711,10 @@ const checkRepoAccess = async () => {
       // Repo is public, fetch branches and detect monorepo structure and port
       await fetchBranches(parsed)
       await detectMonorepoStructure(parsed)
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromRepo(parsed)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        detectPort: () => detectPortFromRepo(parsed),
+      })
       await checkProjectCompatibility(parsed)
     } else if (response.status === 404 || response.status === 403) {
       repoCheckStatus.value = 'private'
@@ -5056,14 +4866,11 @@ const recheckPrivateRepo = async () => {
 
     if (response.ok) {
       // Auth successful, try to detect port from private repo
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromPrivateRepo(parsed)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        detectPort: () => detectPortFromPrivateRepo(parsed),
+      })
     } else {
       repoCheckError.value = 'Authentication failed. Please check your credentials.'
     }
@@ -5143,14 +4950,11 @@ const testAuthConnection = async () => {
 
       // Also detect monorepo and port
       await detectMonorepoStructureWithAuth(parsed)
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromPrivateRepo(parsed)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        detectPort: () => detectPortFromPrivateRepo(parsed),
+      })
       await checkProjectCompatibility(parsed, headers)
     } else {
       authTestStatus.value = 'error'
@@ -5481,6 +5285,16 @@ const nextRepoEvaluationGeneration = () => {
 
 const isCurrentRepoEvaluation = generation => generation == null || generation === repoEvaluationGeneration
 
+const { loadRepoDeploymentConfig } = useOrbitRepoConfigImport({
+  getBranchName: () => branch.value || 'main',
+  getProjectPath: () => (projectPath.value && projectPath.value !== '/' ? projectPath.value : ''),
+  buildOrbitCtaPrefillPayload,
+  normalizeAppPortValue,
+  normalizeScalarValue,
+  upsertEnvVar,
+  isCurrentRepoEvaluation,
+})
+
 const debouncedRepoCheck = () => {
   if (repoCheckTimeout) clearTimeout(repoCheckTimeout)
   repoCheckTimeout = setTimeout(() => {
@@ -5544,14 +5358,11 @@ watch(branch, async () => {
   if (repoCheckStatus.value === 'public') {
     const parsed = parseRepoUrl(repoUrl.value)
     if (parsed) {
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromRepo(parsed, evaluationGeneration)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        evaluationGeneration,
+        detectPort: () => detectPortFromRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       await detectMonorepoStructure(parsed, evaluationGeneration)
     }
@@ -5567,14 +5378,12 @@ watch(branch, async () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromPrivateRepo(parsed, evaluationGeneration)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        evaluationGeneration,
+        detectPort: () => detectPortFromPrivateRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, headers, evaluationGeneration)
       await detectMonorepoStructureWithAuth(parsed, evaluationGeneration)
     }
@@ -5592,14 +5401,11 @@ watch(projectPath, () => {
     if (!parsed) return
 
     if (repoCheckStatus.value === 'public') {
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, {}, evaluationGeneration)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromRepo(parsed, evaluationGeneration)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        evaluationGeneration,
+        detectPort: () => detectPortFromRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       return
     }
@@ -5614,14 +5420,12 @@ watch(projectPath, () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      const fluxConfig = await loadFluxDeployConfigFromRepo(parsed, headers, evaluationGeneration)
-      if (fluxConfig?.payload) {
-        await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-        console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
-      }
-      if (!fluxConfig?.payload?.appPort) {
-        await detectPortFromPrivateRepo(parsed, evaluationGeneration)
-      }
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        evaluationGeneration,
+        detectPort: () => detectPortFromPrivateRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, headers, evaluationGeneration)
     }
   }, 500)
