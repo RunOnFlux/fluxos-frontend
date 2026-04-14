@@ -3244,9 +3244,7 @@ const persistOrbitCtaPrefill = payload => {
     }
 
     sessionStorage.setItem(ORBIT_CTA_PREFILL_STORAGE_KEY, JSON.stringify(payload))
-  } catch (error) {
-    console.warn('Failed to persist Orbit CTA prefill payload:', error)
-  }
+  } catch {}
 }
 
 const loadOrbitCtaPrefillFromStorage = () => {
@@ -3258,9 +3256,7 @@ const loadOrbitCtaPrefillFromStorage = () => {
     if (!parsed || typeof parsed !== 'object') return null
 
     return buildOrbitCtaPrefillPayload(parsed)
-  } catch (error) {
-    console.warn('Failed to load Orbit CTA prefill payload from storage:', error)
-
+  } catch {
     return null
   }
 }
@@ -3664,7 +3660,6 @@ const applyRepoConfigWithPortFallback = async ({
   const fluxConfig = await loadRepoDeploymentConfig(parsed, authHeaders, evaluationGeneration)
   if (fluxConfig?.payload) {
     await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
-    console.debug(`[orbit] Loaded deployment config from ${fluxConfig.filePath}`)
   }
 
   if (!fluxConfig?.payload?.appPort && typeof detectPort === 'function') {

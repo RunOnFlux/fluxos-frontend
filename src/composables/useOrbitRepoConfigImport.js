@@ -30,9 +30,7 @@ const parseRepoConfigContent = (content, filePath) => {
     }
 
     return yaml.load(content)
-  } catch (error) {
-    console.warn(`[orbit] Failed to parse ${filePath}:`, error)
-
+  } catch {
     return null
   }
 }
@@ -202,9 +200,7 @@ export function useOrbitRepoConfigImport({
           filePath,
           payload: prefillPayload,
         }
-      } catch (error) {
-        console.debug(`[orbit] Could not read ${filePath}:`, error.message)
-      }
+      } catch {}
     }
 
     if (hasAnyFluxConfigFile) {
@@ -233,9 +229,7 @@ export function useOrbitRepoConfigImport({
           filePath,
           payload: prefillPayload,
         }
-      } catch (error) {
-        console.debug(`[orbit] Could not read ${filePath}:`, error.message)
-      }
+      } catch {}
     }
 
     return null
