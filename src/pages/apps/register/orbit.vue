@@ -583,6 +583,10 @@
                                   <VIcon start size="12">mdi-auto-fix</VIcon>
                                   {{ detectedFramework ? t('pages.apps.register.orbit.config.autoDetectedFrom', { framework: detectedFramework }) : t('pages.apps.register.orbit.config.autoDetected') }}
                                 </VChip>
+                                <VChip v-if="appPortImportedFromConfig && configImportSourceLabel" color="info" size="x-small" variant="tonal" class="ml-2">
+                                  <VIcon start size="12">mdi-file-document-outline</VIcon>
+                                  Imported from {{ configImportSourceLabel }}
+                                </VChip>
                               </div>
                             </template>
                           </VTextField>
@@ -843,7 +847,7 @@
                         </VExpansionPanels>
 
                         <!-- Custom Environment Variables -->
-                        <VExpansionPanels class="mb-4">
+                        <VExpansionPanels v-model="envExpansionPanel" class="mb-4">
                           <VExpansionPanel>
                             <VExpansionPanelTitle>
                               <VIcon start size="20">mdi-variable</VIcon>
@@ -852,8 +856,15 @@
                               <VChip v-if="customEnvVars.length > 0" size="x-small" color="primary" class="ml-2">
                                 {{ customEnvVars.length }}
                               </VChip>
+                              <VChip v-if="envVarsImportedFromConfig && configImportSourceLabel" size="x-small" color="info" variant="tonal" class="ml-2">
+                                <VIcon start size="12">mdi-file-document-outline</VIcon>
+                                Imported from {{ configImportSourceLabel }}
+                              </VChip>
                             </VExpansionPanelTitle>
                             <VExpansionPanelText>
+                              <VAlert v-if="envVarsImportedFromConfig && configImportSourceLabel" type="info" variant="tonal" density="compact" class="mb-3">
+                                Environment variables imported from {{ configImportSourceLabel }}.
+                              </VAlert>
                               <VAlert type="info" variant="tonal" density="compact" class="mb-4">
                                 {{ t('pages.apps.register.orbit.config.envVariablesInfo') }}
                               </VAlert>
@@ -2583,12 +2594,13 @@
 
 <script setup>
 import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
 import { useLoginSheet } from '@/composables/useLoginSheet'
+import { useOrbitRepoConfigImport } from '@/composables/useOrbitRepoConfigImport'
 import axios from 'axios'
 import Api from '@/services/ApiClient'
 import geolocations from '@/utils/geolocation'
@@ -2758,8 +2770,626 @@ useHead({
     },
   ],
 })
-const router = useRouter()
+const route = useRoute()
 const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
+
+const ORBIT_CTA_PREFILL_STORAGE_KEY = 'orbit-register-prefill'
+const ORBIT_PLAN_ALIAS_MAP = {
+  free: 'free',
+  beginner: 'free',
+  starter: 'free',
+  standard: 'developer',
+  developer: 'developer',
+  dev: 'developer',
+  pro: 'pro',
+  professional: 'pro',
+  custom: 'custom',
+  enterprise: 'custom',
+}
+const ORBIT_RUNTIME_ALIAS_MAP = {
+  node: 'Node.js',
+  nodejs: 'Node.js',
+  'node.js': 'Node.js',
+  python: 'Python',
+  py: 'Python',
+  rust: 'Rust',
+  go: 'Go',
+  golang: 'Go',
+  java: 'Java',
+  dotnet: '.NET',
+  'dot.net': '.NET',
+  '.net': '.NET',
+  net: '.NET',
+  bun: 'Bun',
+  ruby: 'Ruby',
+  php: 'PHP',
+}
+const ORBIT_VALID_POLLING_INTERVALS = new Set(['disabled', '3600', '7200', '21600', '43200', '86400'])
+const ORBIT_POLLING_INTERVAL_ALIAS_MAP = {
+  off: 'disabled',
+  disable: 'disabled',
+  disabled: 'disabled',
+  none: 'disabled',
+  no: 'disabled',
+  '1h': '3600',
+  '2h': '7200',
+  '6h': '21600',
+  '12h': '43200',
+  '24h': '86400',
+  hour: '3600',
+  daily: '86400',
+}
+const ORBIT_GEO_CODE_PATTERN = /^[A-Za-z]{2}(?:_[A-Za-z0-9-]+){0,2}$/
+
+const normalizeScalarValue = value => {
+  if (typeof value === 'string') return value
+  if (typeof value === 'number' && Number.isFinite(value)) return String(value)
+  if (typeof value === 'boolean') return value ? 'true' : 'false'
+
+  return ''
+}
+
+const getSingleQueryValue = value => {
+  if (Array.isArray(value)) {
+    return value.length > 0 ? normalizeScalarValue(value[0]) : ''
+  }
+
+  return normalizeScalarValue(value)
+}
+
+const getQueryValues = value => {
+  if (Array.isArray(value)) {
+    return value.map(v => normalizeScalarValue(v)).filter(Boolean)
+  }
+  const normalized = normalizeScalarValue(value)
+  if (normalized) {
+    return [normalized]
+  }
+
+  return []
+}
+
+const normalizeProjectPathValue = value => {
+  if (!value) return '/'
+  if (value === '/') return '/'
+
+  return value.startsWith('/') ? value : `/${value}`
+}
+
+const normalizePlanValue = value => {
+  if (!value) return ''
+
+  return ORBIT_PLAN_ALIAS_MAP[value.toLowerCase()] || ''
+}
+
+const normalizeAppPortValue = value => {
+  const parsedPort = parseInt(value, 10)
+  if (!Number.isInteger(parsedPort)) return ''
+  if (parsedPort < 1 || parsedPort > 65535) return ''
+
+  return String(parsedPort)
+}
+
+const normalizePollingIntervalValue = value => {
+  if (!value) return ''
+  const normalized = value.toLowerCase()
+  const alias = ORBIT_POLLING_INTERVAL_ALIAS_MAP[normalized]
+  if (alias) return alias
+  if (ORBIT_VALID_POLLING_INTERVALS.has(value)) return value
+
+  return ''
+}
+
+const normalizeRuntimeValue = value => {
+  if (!value) return ''
+
+  return ORBIT_RUNTIME_ALIAS_MAP[value.toLowerCase()] || ''
+}
+
+const normalizeRuntimeVersionValue = value => {
+  if (!value) return ''
+
+  return value.trim()
+}
+
+const normalizeFrameworkHint = value => {
+  if (!value) return ''
+
+  return value.trim()
+}
+
+const normalizeBooleanLikeValue = value => {
+  if (!value) return ''
+  const lowered = value.trim().toLowerCase()
+
+  if (['1', 'true', 'yes', 'on', 'enabled'].includes(lowered)) return 'true'
+  if (['0', 'false', 'no', 'off', 'disabled'].includes(lowered)) return 'false'
+
+  return ''
+}
+
+const upsertEnvVar = (envList, key, value) => {
+  const normalizedKey = key?.trim?.()
+  if (!normalizedKey) return
+  if (typeof value !== 'string' || value === '') return
+
+  const existing = envList.find(env => env.key === normalizedKey)
+  if (existing) {
+    existing.value = value
+  } else {
+    envList.push({ key: normalizedKey, value })
+  }
+}
+
+const parseStructuredEnvVars = source => {
+  const sourceEnvVars = Array.isArray(source.envVars) ? source.envVars : []
+  const parsed = []
+
+  for (const env of sourceEnvVars) {
+    if (!env || typeof env !== 'object') continue
+    const key = typeof env.key === 'string' ? env.key.trim() : ''
+    const value = typeof env.value === 'string' ? env.value.trim() : ''
+    if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) continue
+    if (value === '') continue
+    upsertEnvVar(parsed, key, value)
+  }
+
+  return parsed
+}
+
+const parseEnvVarsFromQuery = source => {
+  const parsed = parseStructuredEnvVars(source)
+  const entries = [
+    ...getQueryValues(source.env),
+    ...getQueryValues(source.envs),
+    ...getQueryValues(source.environment),
+    ...getQueryValues(source.environmentVariables),
+    ...getQueryValues(source.envVar),
+    ...getQueryValues(source.envVars),
+  ]
+
+  if (entries.length === 0) return parsed
+
+  for (const entry of entries) {
+    const fragments = entry.split(/[\n;,]/).map(v => v.trim()).filter(Boolean)
+    for (const fragment of fragments) {
+      const equalIndex = fragment.indexOf('=')
+      const separatorIndex = equalIndex >= 0 ? equalIndex : fragment.indexOf(':')
+      if (separatorIndex <= 0) continue
+
+      const key = fragment.substring(0, separatorIndex).trim()
+      const value = fragment.substring(separatorIndex + 1).trim()
+      if (!/^[A-Za-z_][A-Za-z0-9_]*$/.test(key)) continue
+      if (value === '') continue
+
+      upsertEnvVar(parsed, key, value)
+    }
+  }
+
+  return parsed
+}
+
+const parseDedicatedOrbitEnvVars = source => {
+  const dedicated = []
+
+  const buildCommandValue = getSingleQueryValue(source.buildCommand)
+    || getSingleQueryValue(source.build_command)
+    || getSingleQueryValue(source.BUILD_COMMAND)
+  const runCommandValue = getSingleQueryValue(source.runCommand)
+    || getSingleQueryValue(source.run_command)
+    || getSingleQueryValue(source.RUN_COMMAND)
+  const installCommandValue = getSingleQueryValue(source.installCommand)
+    || getSingleQueryValue(source.install_command)
+    || getSingleQueryValue(source.INSTALL_COMMAND)
+  const prPreviewEnabledValue = getSingleQueryValue(source.prPreviewEnabled)
+    || getSingleQueryValue(source.pr_preview_enabled)
+    || getSingleQueryValue(source.PR_PREVIEW_ENABLED)
+  const apiKeyValue = getSingleQueryValue(source.apiKey)
+    || getSingleQueryValue(source.api_key)
+    || getSingleQueryValue(source.API_KEY)
+
+  if (buildCommandValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'BUILD_COMMAND', buildCommandValue.trim())
+  }
+
+  if (runCommandValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'RUN_COMMAND', runCommandValue.trim())
+  }
+
+  if (installCommandValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'INSTALL_COMMAND', installCommandValue.trim())
+  }
+
+  const normalizedPrPreviewValue = normalizeBooleanLikeValue(prPreviewEnabledValue)
+  if (normalizedPrPreviewValue) {
+    upsertEnvVar(dedicated, 'PR_PREVIEW_ENABLED', normalizedPrPreviewValue)
+  }
+
+  if (apiKeyValue?.trim?.()) {
+    upsertEnvVar(dedicated, 'API_KEY', apiKeyValue.trim())
+  }
+
+  return dedicated
+}
+
+const mergeEnvVarLists = (baseEnvVars, overrideEnvVars) => {
+  const merged = [...baseEnvVars]
+  for (const env of overrideEnvVars) {
+    upsertEnvVar(merged, env.key, env.value)
+  }
+
+  return merged
+}
+
+const normalizeGeolocationToken = (token, defaultForbidden = false) => {
+  if (!token) return null
+  const trimmed = token.trim()
+  if (!trimmed) return null
+
+  const lowered = trimmed.toLowerCase()
+  if (lowered === 'all' || lowered === 'global' || lowered === 'any') {
+    return { global: true }
+  }
+
+  let forbidden = defaultForbidden
+  let body = trimmed
+  const loweredBody = body.toLowerCase()
+
+  if (loweredBody.startsWith('a!c')) {
+    forbidden = true
+    body = body.slice(3)
+  } else if (loweredBody.startsWith('ac')) {
+    forbidden = false
+    body = body.slice(2)
+  } else if (body.startsWith('!')) {
+    forbidden = true
+    body = body.slice(1)
+  }
+
+  const normalizedBody = body.trim().replace(/^_+|_+$/g, '')
+  if (!ORBIT_GEO_CODE_PATTERN.test(normalizedBody)) return null
+
+  return {
+    code: `${forbidden ? 'a!c' : 'ac'}${normalizedBody}`,
+    forbidden,
+  }
+}
+
+const parseDeploymentLocationFromQuery = source => {
+  const locationTokens = [
+    ...getQueryValues(source.location),
+    ...getQueryValues(source.locations),
+    ...getQueryValues(source.geolocation),
+    ...getQueryValues(source.geo),
+  ]
+  const allowedTokens = [
+    ...getQueryValues(source.allowedLocation),
+    ...getQueryValues(source.allowedLocations),
+  ]
+  const forbiddenTokens = [
+    ...getQueryValues(source.forbiddenLocation),
+    ...getQueryValues(source.forbiddenLocations),
+  ]
+
+  const parsedAllowed = []
+  const parsedForbidden = []
+  let forceGlobal = false
+
+  const persistedAllowed = Array.isArray(source.allowedGeolocations) ? source.allowedGeolocations : []
+  const persistedForbidden = Array.isArray(source.forbiddenGeolocations) ? source.forbiddenGeolocations : []
+
+  const collectTokens = (tokens, defaultForbidden = false) => {
+    for (const raw of tokens) {
+      const fragments = raw.split(/[\n,;|]/).map(v => v.trim()).filter(Boolean)
+      for (const fragment of fragments) {
+        const normalized = normalizeGeolocationToken(fragment, defaultForbidden)
+        if (!normalized) continue
+        if (normalized.global) {
+          forceGlobal = true
+          continue
+        }
+        if (normalized.forbidden) {
+          if (!parsedForbidden.includes(normalized.code)) parsedForbidden.push(normalized.code)
+        } else {
+          if (!parsedAllowed.includes(normalized.code)) parsedAllowed.push(normalized.code)
+        }
+      }
+    }
+  }
+
+  collectTokens(locationTokens)
+  collectTokens(allowedTokens)
+  collectTokens(forbiddenTokens, true)
+
+  collectTokens(persistedAllowed)
+  collectTokens(persistedForbidden, true)
+
+  const continent = getSingleQueryValue(source.continent) || getSingleQueryValue(source.allowedContinent)
+  const country = getSingleQueryValue(source.country) || getSingleQueryValue(source.allowedCountry)
+  const region = getSingleQueryValue(source.region) || getSingleQueryValue(source.allowedRegion)
+
+  const continentTrimmed = continent?.trim?.() || ''
+  const countryTrimmed = country?.trim?.() || ''
+  const regionTrimmed = region?.trim?.() || ''
+
+  if (continentTrimmed) {
+    const locationParts = [continentTrimmed]
+    if (countryTrimmed) {
+      locationParts.push(countryTrimmed)
+      if (regionTrimmed) {
+        locationParts.push(regionTrimmed)
+      }
+    }
+
+    const locationCode = `ac${locationParts.join('_')}`
+    const normalized = normalizeGeolocationToken(locationCode)
+    if (normalized?.code && !parsedAllowed.includes(normalized.code)) {
+      parsedAllowed.push(normalized.code)
+    }
+  }
+
+  if (forceGlobal) {
+    return {
+      allowedGeolocations: [],
+      forbiddenGeolocations: [],
+      selectedGeo: { continent: 'ALL', country: 'ALL', region: 'ALL' },
+    }
+  }
+
+  const firstAllowed = parsedAllowed.find(code => code.startsWith('ac'))
+  let selectedGeo = null
+  if (firstAllowed) {
+    const [continentCode, countryCode, regionCode] = firstAllowed.slice(2).split('_')
+    selectedGeo = {
+      continent: continentCode || 'ALL',
+      country: countryCode || 'ALL',
+      region: regionCode || 'ALL',
+    }
+  }
+
+  if (parsedAllowed.length === 0 && parsedForbidden.length === 0) {
+    return null
+  }
+
+  return {
+    allowedGeolocations: parsedAllowed,
+    forbiddenGeolocations: parsedForbidden,
+    selectedGeo,
+  }
+}
+
+const buildOrbitCtaPrefillPayload = source => {
+  const repoCandidate = getSingleQueryValue(source.repo) || getSingleQueryValue(source.repolink) || getSingleQueryValue(source.repository)
+  const branchCandidate = getSingleQueryValue(source.branch)
+  const projectPathCandidate = getSingleQueryValue(source.projectPath) || getSingleQueryValue(source.path)
+  const planCandidate = getSingleQueryValue(source.plan) || getSingleQueryValue(source.tier)
+  const appPortCandidate = getSingleQueryValue(source.appPort) || getSingleQueryValue(source.port) || getSingleQueryValue(source.applicationPort)
+  const pollingIntervalCandidate = getSingleQueryValue(source.pollingInterval) || getSingleQueryValue(source.pollInterval) || getSingleQueryValue(source.polling)
+  const runtimeCandidate = getSingleQueryValue(source.runtime)
+  const runtimeVersionCandidate = getSingleQueryValue(source.runtimeVersion) || getSingleQueryValue(source.runtime_version) || getSingleQueryValue(source.langVersion)
+  const frameworkCandidate = getSingleQueryValue(source.framework)
+
+  const repoValue = normalizeRepoUrl(repoCandidate?.trim?.() || '')
+  const planValue = normalizePlanValue(planCandidate?.trim?.() || '')
+  const appPortValue = normalizeAppPortValue(appPortCandidate?.trim?.() || '')
+  const pollingIntervalValue = normalizePollingIntervalValue(pollingIntervalCandidate?.trim?.() || '')
+  const runtimeValue = normalizeRuntimeValue(runtimeCandidate?.trim?.() || '')
+  const runtimeVersionValue = normalizeRuntimeVersionValue(runtimeVersionCandidate?.trim?.() || '')
+  const frameworkValue = normalizeFrameworkHint(frameworkCandidate?.trim?.() || '')
+  const envVarsValue = mergeEnvVarLists(parseEnvVarsFromQuery(source), parseDedicatedOrbitEnvVars(source))
+  const deploymentLocationValue = parseDeploymentLocationFromQuery(source)
+  const hasAdvancedPrefill = appPortValue || pollingIntervalValue || runtimeValue || envVarsValue.length > 0 || deploymentLocationValue
+
+  if (!repoValue && !planValue && !hasAdvancedPrefill) return null
+
+  const payload = {}
+
+  if (repoValue) {
+    payload.repoUrl = repoValue
+  }
+
+  if (branchCandidate?.trim?.()) {
+    payload.branch = branchCandidate.trim()
+  }
+
+  if (projectPathCandidate?.trim?.()) {
+    payload.projectPath = normalizeProjectPathValue(projectPathCandidate.trim())
+  }
+
+  if (planValue) {
+    payload.plan = planValue
+  }
+
+  if (appPortValue) {
+    payload.appPort = appPortValue
+  }
+
+  if (pollingIntervalValue) {
+    payload.pollingInterval = pollingIntervalValue
+  }
+
+  if (runtimeValue) {
+    payload.runtime = runtimeValue
+  }
+
+  if (runtimeVersionValue) {
+    payload.runtimeVersion = runtimeVersionValue
+  }
+
+  if (frameworkValue) {
+    payload.framework = frameworkValue
+  }
+
+  if (envVarsValue.length > 0) {
+    payload.envVars = envVarsValue
+  }
+
+  if (deploymentLocationValue) {
+    payload.allowedGeolocations = deploymentLocationValue.allowedGeolocations
+    payload.forbiddenGeolocations = deploymentLocationValue.forbiddenGeolocations
+    if (deploymentLocationValue.selectedGeo) {
+      payload.selectedGeo = deploymentLocationValue.selectedGeo
+    }
+  }
+
+  return payload
+}
+
+const persistOrbitCtaPrefill = payload => {
+  try {
+    if (!payload) {
+      sessionStorage.removeItem(ORBIT_CTA_PREFILL_STORAGE_KEY)
+
+      return
+    }
+
+    sessionStorage.setItem(ORBIT_CTA_PREFILL_STORAGE_KEY, JSON.stringify(payload))
+  } catch {}
+}
+
+const loadOrbitCtaPrefillFromStorage = () => {
+  try {
+    const raw = sessionStorage.getItem(ORBIT_CTA_PREFILL_STORAGE_KEY)
+    if (!raw) return null
+
+    const parsed = JSON.parse(raw)
+    if (!parsed || typeof parsed !== 'object') return null
+
+    return buildOrbitCtaPrefillPayload(parsed)
+  } catch {
+    return null
+  }
+}
+
+const resolveOrbitCtaPrefillPayload = () => {
+  const fromQuery = buildOrbitCtaPrefillPayload(route.query)
+  if (fromQuery) {
+    persistOrbitCtaPrefill(fromQuery)
+
+    return fromQuery
+  }
+
+  return loadOrbitCtaPrefillFromStorage()
+}
+
+const applyOrbitCtaPrefill = async (payload, options = {}) => {
+  if (!payload) return false
+
+  const isConfigImport = Boolean(options.configFilePath)
+  if (isConfigImport) {
+    configImportSourceFile.value = options.configFilePath
+  }
+
+  const hasAnyValue = Boolean(
+    payload.repoUrl
+    || payload.plan
+    || payload.appPort
+    || payload.pollingInterval
+    || payload.runtime
+    || payload.runtimeVersion
+    || payload.framework
+    || (payload.envVars && payload.envVars.length > 0)
+    || payload.allowedGeolocations
+    || payload.forbiddenGeolocations,
+  )
+  if (!hasAnyValue) return false
+
+  if (payload.plan) {
+    selectedPlan.value = payload.plan
+    if (currentStep.value === 1) {
+      currentStep.value = 2
+    }
+  }
+
+  const hasConfigPrefill = Boolean(
+    payload.appPort
+    || payload.pollingInterval
+    || payload.runtime
+    || payload.runtimeVersion
+    || payload.framework
+    || (payload.envVars && payload.envVars.length > 0)
+    || payload.allowedGeolocations
+    || payload.forbiddenGeolocations,
+  )
+  if (hasConfigPrefill) {
+    showAdvancedOptions.value = true
+  }
+
+  if (payload.appPort) {
+    appPort.value = payload.appPort
+    portAutoDetected.value = false
+    appPortImportedFromConfig.value = isConfigImport
+  } else if (isConfigImport) {
+    appPortImportedFromConfig.value = false
+  }
+
+  if (payload.pollingInterval) {
+    pollingInterval.value = payload.pollingInterval
+  }
+
+  if (payload.runtime) {
+    selectedRuntime.value = payload.runtime
+  }
+
+  if (payload.runtimeVersion && payload.runtime) {
+    runtimeVersion.value = payload.runtimeVersion
+  }
+
+  if (payload.framework) {
+    detectedFramework.value = payload.framework
+  }
+
+  if (Array.isArray(payload.envVars) && payload.envVars.length > 0) {
+    customEnvVars.value = payload.envVars.map(env => ({
+      key: env.key,
+      value: env.value,
+      placeholder: '',
+      isOrbitVar: true,
+    }))
+    envVarsImportedFromConfig.value = isConfigImport
+    if (isConfigImport) {
+      envExpansionPanel.value = 0
+    }
+  } else if (isConfigImport) {
+    envVarsImportedFromConfig.value = false
+  }
+
+  if (Array.isArray(payload.allowedGeolocations) || Array.isArray(payload.forbiddenGeolocations)) {
+    allowedGeolocations.value = Array.isArray(payload.allowedGeolocations) ? payload.allowedGeolocations : []
+    forbiddenGeolocations.value = Array.isArray(payload.forbiddenGeolocations) ? payload.forbiddenGeolocations : []
+
+    if (payload.selectedGeo?.continent) {
+      selectedGeo.value = payload.selectedGeo
+    }
+  }
+
+  if (!payload.repoUrl) {
+    return true
+  }
+
+  repoUrl.value = payload.repoUrl
+  await nextTick()
+
+  if (payload.branch) {
+    branch.value = payload.branch
+  }
+
+  if (payload.projectPath) {
+    projectPath.value = payload.projectPath
+  }
+
+  return true
+}
+
+const restoreOrbitCtaPrefill = async () => {
+  const payload = resolveOrbitCtaPrefillPayload()
+  if (!payload) return
+
+  const applied = await applyOrbitCtaPrefill(payload)
+  if (applied && isLoggedIn.value) {
+    persistOrbitCtaPrefill(null)
+  }
+}
 
 // Flux store
 const fluxStore = useFluxStore()
@@ -2819,6 +3449,7 @@ const showToast = (type, message, icon = null, timeout = 4000) => {
 watch(isLoggedIn, newValue => {
   if (newValue) {
     closeLoginBottomSheet()
+    restoreOrbitCtaPrefill()
   }
 })
 
@@ -2975,6 +3606,16 @@ const portAutoDetected = ref(false)
 const contactEmail = ref('')
 const pollingInterval = ref('86400') // Default: 24 hours in seconds
 const showAdvancedOptions = ref(false)
+const envExpansionPanel = ref(null)
+const configImportSourceFile = ref('')
+const appPortImportedFromConfig = ref(false)
+const envVarsImportedFromConfig = ref(false)
+const configImportSourceLabel = computed(() => {
+  if (!configImportSourceFile.value) return ''
+  const parts = configImportSourceFile.value.split('/')
+
+  return parts[parts.length - 1] || configImportSourceFile.value
+})
 
 // Polling interval options (value in seconds, 'disabled' to not add env var)
 const pollingIntervalOptions = [
@@ -3008,6 +3649,24 @@ const parseRepoUrl = url => {
   }
   
   return null
+}
+
+const applyRepoConfigWithPortFallback = async ({
+  parsed,
+  authHeaders = {},
+  evaluationGeneration = null,
+  detectPort,
+}) => {
+  const fluxConfig = await loadRepoDeploymentConfig(parsed, authHeaders, evaluationGeneration)
+  if (fluxConfig?.payload) {
+    await applyOrbitCtaPrefill(fluxConfig.payload, { configFilePath: fluxConfig.filePath })
+  }
+
+  if (!fluxConfig?.payload?.appPort && typeof detectPort === 'function') {
+    await detectPort()
+  }
+
+  return fluxConfig
 }
 
 // Check if repository is public or private
@@ -3047,7 +3706,10 @@ const checkRepoAccess = async () => {
       // Repo is public, fetch branches and detect monorepo structure and port
       await fetchBranches(parsed)
       await detectMonorepoStructure(parsed)
-      await detectPortFromRepo(parsed)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        detectPort: () => detectPortFromRepo(parsed),
+      })
       await checkProjectCompatibility(parsed)
     } else if (response.status === 404 || response.status === 403) {
       repoCheckStatus.value = 'private'
@@ -3296,6 +3958,7 @@ const detectPortFromRepo = async (parsed, evaluationGeneration = null) => {
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
           portAutoDetected.value = true
+          appPortImportedFromConfig.value = false
           console.log(`Auto-detected port ${result.port} from ${check.path}`, result.framework ? `(${result.framework})` : '')
           
           return
@@ -4198,7 +4861,11 @@ const recheckPrivateRepo = async () => {
 
     if (response.ok) {
       // Auth successful, try to detect port from private repo
-      await detectPortFromPrivateRepo(parsed)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        detectPort: () => detectPortFromPrivateRepo(parsed),
+      })
     } else {
       repoCheckError.value = 'Authentication failed. Please check your credentials.'
     }
@@ -4235,6 +4902,7 @@ const detectPortFromPrivateRepo = async (parsed, evaluationGeneration = null) =>
           detectedFramework.value = result.framework || null
           appPort.value = result.port.toString()
           portAutoDetected.value = true
+          appPortImportedFromConfig.value = false
           console.log(`Auto-detected port ${result.port} from private repo`, result.framework ? `(${result.framework})` : '')
         }
       }
@@ -4277,7 +4945,11 @@ const testAuthConnection = async () => {
 
       // Also detect monorepo and port
       await detectMonorepoStructureWithAuth(parsed)
-      await detectPortFromPrivateRepo(parsed)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        detectPort: () => detectPortFromPrivateRepo(parsed),
+      })
       await checkProjectCompatibility(parsed, headers)
     } else {
       authTestStatus.value = 'error'
@@ -4608,6 +5280,16 @@ const nextRepoEvaluationGeneration = () => {
 
 const isCurrentRepoEvaluation = generation => generation == null || generation === repoEvaluationGeneration
 
+const { loadRepoDeploymentConfig } = useOrbitRepoConfigImport({
+  getBranchName: () => branch.value || 'main',
+  getProjectPath: () => (projectPath.value && projectPath.value !== '/' ? projectPath.value : ''),
+  buildOrbitCtaPrefillPayload,
+  normalizeAppPortValue,
+  normalizeScalarValue,
+  upsertEnvVar,
+  isCurrentRepoEvaluation,
+})
+
 const debouncedRepoCheck = () => {
   if (repoCheckTimeout) clearTimeout(repoCheckTimeout)
   repoCheckTimeout = setTimeout(() => {
@@ -4635,6 +5317,10 @@ const normalizeRepoUrl = url => {
 // Watch for repo URL changes
 watch(repoUrl, newVal => {
   portAutoDetected.value = false
+  appPortImportedFromConfig.value = false
+  envVarsImportedFromConfig.value = false
+  configImportSourceFile.value = ''
+  envExpansionPanel.value = null
   // Invalidate in-flight branch/path evaluations for previous repository URL.
   nextRepoEvaluationGeneration()
 
@@ -4667,7 +5353,11 @@ watch(branch, async () => {
   if (repoCheckStatus.value === 'public') {
     const parsed = parseRepoUrl(repoUrl.value)
     if (parsed) {
-      await detectPortFromRepo(parsed, evaluationGeneration)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        evaluationGeneration,
+        detectPort: () => detectPortFromRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       await detectMonorepoStructure(parsed, evaluationGeneration)
     }
@@ -4683,7 +5373,12 @@ watch(branch, async () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        evaluationGeneration,
+        detectPort: () => detectPortFromPrivateRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, headers, evaluationGeneration)
       await detectMonorepoStructureWithAuth(parsed, evaluationGeneration)
     }
@@ -4701,7 +5396,11 @@ watch(projectPath, () => {
     if (!parsed) return
 
     if (repoCheckStatus.value === 'public') {
-      await detectPortFromRepo(parsed, evaluationGeneration)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        evaluationGeneration,
+        detectPort: () => detectPortFromRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
       return
     }
@@ -4716,7 +5415,12 @@ watch(projectPath, () => {
         headers['Authorization'] = `Bearer ${repoToken.value}`
       }
 
-      await detectPortFromPrivateRepo(parsed, evaluationGeneration)
+      await applyRepoConfigWithPortFallback({
+        parsed,
+        authHeaders: headers,
+        evaluationGeneration,
+        detectPort: () => detectPortFromPrivateRepo(parsed, evaluationGeneration),
+      })
       await checkProjectCompatibility(parsed, headers, evaluationGeneration)
     }
   }, 500)
@@ -7191,10 +7895,14 @@ const resetForm = () => {
   appName.value = ''
   appDescription.value = ''
   appPort.value = '3000'
+  appPortImportedFromConfig.value = false
   contactEmail.value = ''
   selectedRuntime.value = null
   runtimeVersion.value = ''
   customEnvVars.value = []
+  envVarsImportedFromConfig.value = false
+  configImportSourceFile.value = ''
+  envExpansionPanel.value = null
   requiresRunCommand.value = false
   userEnabledEnterprise.value = false
 
@@ -7302,6 +8010,8 @@ onMounted(() => {
       contactEmail.value = firebaseUser.email
     }
   }
+
+  restoreOrbitCtaPrefill()
 })
 </script>
 
