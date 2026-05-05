@@ -247,10 +247,10 @@ export const useFluxStore = defineStore("flux", {
       // This should be called with i18n context, but we'll provide basic defaults
       // The component will still use i18n for display
       return {
-        rating: 4.5,
-        reviewCount: 16,
-        ratingText: '4.5 out of 5',
-        reviewsText: 'Based on 16 reviews',
+        rating: 4.6,
+        reviewCount: 21,
+        ratingText: '4.6 out of 5',
+        reviewsText: 'Based on 21 reviews',
         profileUrl: 'https://www.trustpilot.com/review/runonflux.com',
         ratingLabel: 'Excellent',
         title: 'Trusted by Thousands',
@@ -352,8 +352,8 @@ export const useFluxStore = defineStore("flux", {
         const liveData = {
           rating: businessData.score?.trustScore || fallbackData.rating,
           reviewCount: businessData.numberOfReviews?.total || fallbackData.reviewCount,
-          ratingText: `${businessData.score?.trustScore?.toFixed(1) || '4.5'} out of 5`,
-          reviewsText: `Based on ${businessData.numberOfReviews?.total || 16} reviews`,
+          ratingText: `${businessData.score?.trustScore?.toFixed(1) || '4.6'} out of 5`,
+          reviewsText: `Based on ${businessData.numberOfReviews?.total || 21} reviews`,
           profileUrl: 'https://www.trustpilot.com/review/runonflux.com',
           ratingLabel: businessData.score?.stars >= 4 ? 'Excellent' : 'Great',
           title: fallbackData.title,
