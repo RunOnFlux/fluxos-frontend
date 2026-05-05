@@ -130,10 +130,10 @@ const navigateToGame = () => {
 }
 
 .game-logo {
-  max-height: var(--logo-max-height);
-  max-width: 90%;
+  width: 100%;
   height: var(--logo-max-height);
-  width: auto;
+  max-width: 90%;
+  max-height: var(--logo-max-height);
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.8));
 }
 
@@ -141,11 +141,7 @@ const navigateToGame = () => {
   max-height: var(--logo-max-height) !important;
   height: var(--logo-max-height) !important;
   max-width: 100% !important;
-  width: auto !important;
-}
-
-.game-logo :deep(.v-responsive__sizer) {
-  padding-bottom: 0 !important;
+  width: 100% !important;
 }
 
 .game-logo :deep(.v-responsive__content) {
