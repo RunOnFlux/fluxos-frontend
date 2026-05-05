@@ -31,6 +31,8 @@ declare module 'vue' {
     AppStepper: typeof import('./@core/components/AppStepper.vue')['default']
     AppTextarea: typeof import('./@core/components/app-form-elements/AppTextarea.vue')['default']
     AppTextField: typeof import('./@core/components/app-form-elements/AppTextField.vue')['default']
+    AuditStats: typeof import('./@core/components/AuditStats.vue')['default']
+    AuditViewer: typeof import('./@core/components/AuditViewer.vue')['default']
     BackendSelector: typeof import('./@core/components/BackendSelector.vue')['default']
     BackupAndRestore: typeof import('./@core/components/BackupAndRestore.vue')['default']
     BenefitsGrid: typeof import('./components/BenefitsGrid.vue')['default']

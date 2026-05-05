@@ -22,8 +22,8 @@ export function useTrustpilot() {
    * Get predefined fallback data from i18n
    */
   const getFallbackData = () => ({
-    rating: parseFloat(t('common.trustpilot.score')) || 4.5,
-    reviewCount: parseInt(t('common.trustpilot.reviewsCount')) || 16,
+    rating: parseFloat(t('common.trustpilot.score')) || 4.6,
+    reviewCount: parseInt(t('common.trustpilot.reviewsCount')) || 21,
     ratingText: t('common.trustpilot.rating'),
     reviewsText: t('common.trustpilot.reviews'),
     profileUrl: t('common.trustpilot.profileUrl'),
@@ -52,8 +52,8 @@ export function useTrustpilot() {
 
   // Computed properties for easy access - read from store
   const trustpilotData = computed(() => trustpilot.value.data || getFallbackData())
-  const rating = computed(() => trustpilotData.value?.rating || parseFloat(t('common.trustpilot.score')) || 4.5)
-  const reviewCount = computed(() => trustpilotData.value?.reviewCount || parseInt(t('common.trustpilot.reviewsCount')) || 16)
+  const rating = computed(() => trustpilotData.value?.rating || parseFloat(t('common.trustpilot.score')) || 4.6)
+  const reviewCount = computed(() => trustpilotData.value?.reviewCount || parseInt(t('common.trustpilot.reviewsCount')) || 21)
   const ratingText = computed(() => trustpilotData.value?.ratingText || t('common.trustpilot.rating'))
   const reviewsText = computed(() => trustpilotData.value?.reviewsText || t('common.trustpilot.reviews'))
   const sampleReviews = computed(() => trustpilotData.value?.sampleReviews || getFallbackData().sampleReviews)

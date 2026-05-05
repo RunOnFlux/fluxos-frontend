@@ -1211,6 +1211,7 @@
                   density="comfortable"
                   variant="outlined"
                   class="mb-3"
+                  :readonly="originalAppSpecSnapshot?.compose?.[componentIndex]?.repotag === 'runonflux/orbit:latest'"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
@@ -1354,6 +1355,7 @@
                       prepend-icon="mdi-console"
                       color="grey"
                       block
+                      :disabled="originalAppSpecSnapshot?.compose?.[componentIndex]?.repotag === 'runonflux/orbit:latest'"
                       @click="openCommandsDialog(componentIndex)"
                     >
                       <span class="env-btn-text">{{ t('core.subscriptionManager.commands') }}</span>
@@ -1384,7 +1386,7 @@
 
                   <div class="border rounded d-flex flex-column justify-center" style="min-height: 60px;">
                     <!-- Add new ports -->
-                    <div class="d-flex align-center gap-2 px-2" v-if="newPorts[componentIndex]" :class="component.ports && component.ports.length > 0 ? 'py-2' : ''">
+                    <div class="d-flex align-center gap-2 px-2" v-if="newPorts[componentIndex] && originalAppSpecSnapshot?.compose?.[componentIndex]?.repotag !== 'runonflux/orbit:latest'" :class="component.ports && component.ports.length > 0 ? 'py-2' : ''">
                       <VTextField
                         v-model.number="newPorts[componentIndex].exposed"
                         type="number"
@@ -1674,7 +1676,6 @@
                         color="success"
                         variant="tonal"
                         size="small"
-                        :disabled="envDialog.entries.length === 0"
                         @click="saveEnvChanges"
                       >
                         Save
@@ -1793,7 +1794,6 @@
                         color="success"
                         variant="tonal"
                         size="small"
-                        :disabled="commandsDialog.entries.length === 0"
                         @click="saveCommandChanges"
                       >
                         Save
