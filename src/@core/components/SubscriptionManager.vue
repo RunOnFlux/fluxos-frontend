@@ -1675,7 +1675,6 @@
                         color="success"
                         variant="tonal"
                         size="small"
-                        :disabled="envDialog.entries.length === 0"
                         @click="saveEnvChanges"
                       >
                         Save
@@ -1794,7 +1793,6 @@
                         color="success"
                         variant="tonal"
                         size="small"
-                        :disabled="commandsDialog.entries.length === 0"
                         @click="saveCommandChanges"
                       >
                         Save
