@@ -8,6 +8,7 @@ export {}
 declare global {
   const $api: typeof import('./utils/api.js')['$api']
   const COOKIE_MAX_AGE_1_YEAR: typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']
+  const EVENT_STYLES: typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']
   const EffectScope: typeof import('vue')['EffectScope']
   const LATEST_SPEC_VERSION: typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']
   const MemoryMonitor: typeof import('./utils/memoryMonitor.js')['MemoryMonitor']
@@ -94,6 +95,9 @@ declare global {
   const getCurrentScope: typeof import('vue')['getCurrentScope']
   const getDetectedBackendURL: typeof import('./utils/backend.js')['getDetectedBackendURL']
   const getEnterprisePGPKeys: typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']
+  const getEventColor: typeof import('./@core/utils/eventStyles.js')['getEventColor']
+  const getEventIcon: typeof import('./@core/utils/eventStyles.js')['getEventIcon']
+  const getEventStyle: typeof import('./@core/utils/eventStyles.js')['getEventStyle']
   const getMetaMaskSDK: typeof import('./utils/walletService.js')['getMetaMaskSDK']
   const getOptimizedImagePath: typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']
   const getPictureSources: typeof import('./composables/useOptimizedImage.js')['getPictureSources']
@@ -237,7 +241,7 @@ declare global {
   const useAbility: typeof import('./plugins/casl/composables/useAbility.js')['useAbility']
   const useAbs: typeof import('@vueuse/math')['useAbs']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
-  const useAnalytics: typeof import('./plugins/analytics/composables/useAnalytics.js')['useAnalytics']
+  const useAnalytics: typeof import('./plugins/metrics/composables/useAnalytics.js')['useAnalytics']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
   const useApi: typeof import('./composables/useApi.js')['useApi']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
@@ -351,6 +355,7 @@ declare global {
   const useOffsetPagination: typeof import('@vueuse/core')['useOffsetPagination']
   const useOnline: typeof import('@vueuse/core')['useOnline']
   const useOptimizedImage: typeof import('./composables/useOptimizedImage.js')['useOptimizedImage']
+  const useOrbitRepoConfigImport: typeof import('./composables/useOrbitRepoConfigImport.js')['useOrbitRepoConfigImport']
   const usePageLeave: typeof import('@vueuse/core')['usePageLeave']
   const useParallax: typeof import('@vueuse/core')['useParallax']
   const useParentElement: typeof import('@vueuse/core')['useParentElement']
@@ -464,6 +469,7 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly $api: UnwrapRef<typeof import('./utils/api.js')['$api']>
     readonly COOKIE_MAX_AGE_1_YEAR: UnwrapRef<typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']>
+    readonly EVENT_STYLES: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly LATEST_SPEC_VERSION: UnwrapRef<typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']>
     readonly MemoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['MemoryMonitor']>
@@ -550,6 +556,9 @@ declare module 'vue' {
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
     readonly getDetectedBackendURL: UnwrapRef<typeof import('./utils/backend.js')['getDetectedBackendURL']>
     readonly getEnterprisePGPKeys: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['getEnterprisePGPKeys']>
+    readonly getEventColor: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['getEventColor']>
+    readonly getEventIcon: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['getEventIcon']>
+    readonly getEventStyle: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['getEventStyle']>
     readonly getMetaMaskSDK: UnwrapRef<typeof import('./utils/walletService.js')['getMetaMaskSDK']>
     readonly getOptimizedImagePath: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']>
     readonly getPictureSources: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getPictureSources']>
@@ -691,7 +700,7 @@ declare module 'vue' {
     readonly useAbility: UnwrapRef<typeof import('./plugins/casl/composables/useAbility.js')['useAbility']>
     readonly useAbs: UnwrapRef<typeof import('@vueuse/math')['useAbs']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
-    readonly useAnalytics: UnwrapRef<typeof import('./plugins/analytics/composables/useAnalytics.js')['useAnalytics']>
+    readonly useAnalytics: UnwrapRef<typeof import('./plugins/metrics/composables/useAnalytics.js')['useAnalytics']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
     readonly useApi: UnwrapRef<typeof import('./composables/useApi.js')['useApi']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
@@ -805,6 +814,7 @@ declare module 'vue' {
     readonly useOffsetPagination: UnwrapRef<typeof import('@vueuse/core')['useOffsetPagination']>
     readonly useOnline: UnwrapRef<typeof import('@vueuse/core')['useOnline']>
     readonly useOptimizedImage: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['useOptimizedImage']>
+    readonly useOrbitRepoConfigImport: UnwrapRef<typeof import('./composables/useOrbitRepoConfigImport.js')['useOrbitRepoConfigImport']>
     readonly usePageLeave: UnwrapRef<typeof import('@vueuse/core')['usePageLeave']>
     readonly useParallax: UnwrapRef<typeof import('@vueuse/core')['useParallax']>
     readonly useParentElement: UnwrapRef<typeof import('@vueuse/core')['useParentElement']>

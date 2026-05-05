@@ -361,6 +361,7 @@ module.exports = {
     "useOffsetPagination": true,
     "useOnline": true,
     "useOptimizedImage": true,
+    "useOrbitRepoConfigImport": true,
     "usePageLeave": true,
     "useParallax": true,
     "useParentElement": true,
