@@ -1211,6 +1211,7 @@
                   density="comfortable"
                   variant="outlined"
                   class="mb-3"
+                  :readonly="originalAppSpecSnapshot?.compose?.[componentIndex]?.repotag === 'runonflux/orbit:latest'"
                 >
                   <template #append-inner>
                     <VTooltip location="top">
