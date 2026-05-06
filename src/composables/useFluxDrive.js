@@ -72,9 +72,9 @@ export function useFluxDrive() {
   const fluxStore = useFluxStore()
   const router = useRouter()
 
-  // Config - FluxDrive uses jetpack bridge, not FluxOS backend
-  const ipfsHost = 'https://jetpack2_38080.app.runonflux.io'
-  const bridgeURL = 'https://jetpackbridge.runonflux.io'
+  // Config - FluxDrive uses FluxDrive bridge, not FluxOS backend
+  const ipfsHost = 'https://fluxdrive.runonflux.io'
+  const bridgeURL = 'https://api.fluxdrive.runonflux.io'
 
   // Recovery mode state
   const isRecoveryMode = ref(false)
@@ -349,7 +349,7 @@ export function useFluxDrive() {
 
             // Try to get payment gateway from subscription API
             try {
-              const subResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
+              const subResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/subscriptions', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -962,7 +962,7 @@ export function useFluxDrive() {
 
       console.log('🔄 Renewing subscription:', sanitizeAuthData(requestBody))
 
-      const response = await fetch(`${bridgeURL}/api/v1/subscriptions.php`, {
+      const response = await fetch(`${bridgeURL}/api/v1/subscriptions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(requestBody),
@@ -1015,7 +1015,7 @@ export function useFluxDrive() {
 
       console.log('🔄 Upgrading subscription:', sanitizeAuthData(requestBody))
 
-      const response = await fetch(`${bridgeURL}/api/v1/subscriptions.php`, {
+      const response = await fetch(`${bridgeURL}/api/v1/subscriptions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(requestBody),
@@ -1066,7 +1066,7 @@ export function useFluxDrive() {
 
       console.log('🚫 Canceling subscription:', sanitizeAuthData(requestBody))
 
-      const response = await fetch(`${bridgeURL}/api/v1/subscriptions.php`, {
+      const response = await fetch(`${bridgeURL}/api/v1/subscriptions`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: new URLSearchParams(requestBody),

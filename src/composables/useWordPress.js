@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const WORDPRESS_BRIDGE_URL = 'https://jetpackbridge.runonflux.io'
+const WORDPRESS_BRIDGE_URL = 'https://api.marketplace.runonflux.io'
 const API_VERSION = 1
 
 export function useWordPress() {

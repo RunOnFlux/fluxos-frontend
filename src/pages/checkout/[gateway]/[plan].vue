@@ -297,7 +297,7 @@ const fluxStore = useFluxStore()
 const { showSnackbar } = useSnackbar()
 
 // Config
-const bridgeURL = 'jetpackbridge.runonflux.io'
+const bridgeURL = 'api.fluxdrive.runonflux.io'
 
 // Route params
 const gateway = computed(() => route.params.gateway)
@@ -328,7 +328,7 @@ const isLoggedIn = computed(() => {
   return !!(zelidauth && hasZelid)
 })
 
-// Load subscription data from API (like jetpack2 does)
+// Load subscription data from API
 const loadSubscriptionData = async () => {
   if (!isLoggedIn.value) {
     loading.value = false
@@ -368,7 +368,7 @@ const loadSubscriptionData = async () => {
       hasLoginPhrase: !!loginPhrase,
     })
 
-    const response = await fetch(`https://${bridgeURL}/api/v1/subscriptions.php`, {
+    const response = await fetch(`https://${bridgeURL}/api/v1/subscriptions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -467,7 +467,7 @@ const initializeFluxPayment = async () => {
       return
     }
 
-    const response = await fetch(`https://${bridgeURL}/api/v1/fluxpay.php`, {
+    const response = await fetch(`https://${bridgeURL}/api/v1/fluxpay`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -533,7 +533,7 @@ const initializeCryptoComPayment = async () => {
       return
     }
 
-    const response = await fetch(`https://${bridgeURL}/api/v1/cryptocom.php`, {
+    const response = await fetch(`https://${bridgeURL}/api/v1/cryptocom`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -566,7 +566,7 @@ const initializeCryptoComPayment = async () => {
 const monitorPayment = async paymentId => {
   const checkPayment = async () => {
     try {
-      const response = await fetch(`https://${bridgeURL}/api/v1/fluxpay.php`, {
+      const response = await fetch(`https://${bridgeURL}/api/v1/fluxpay`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
