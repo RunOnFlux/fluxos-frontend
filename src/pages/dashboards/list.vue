@@ -172,7 +172,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify(structuredData),
+      innerHTML: JSON.stringify(structuredData),
     },
   ],
 })

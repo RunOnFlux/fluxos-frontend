@@ -2702,7 +2702,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'WebPage',
         'name': 'Deploy with Git - Git-based Deployment on FluxCloud',
@@ -2718,7 +2718,7 @@ useHead({
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'BreadcrumbList',
         'itemListElement': [
@@ -2745,7 +2745,7 @@ useHead({
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify({
+      innerHTML: JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'SoftwareApplication',
         'name': 'Flux Git',

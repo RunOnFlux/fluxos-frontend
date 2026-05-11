@@ -747,19 +747,19 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify(breadcrumbSchema.value),
+      innerHTML: JSON.stringify(breadcrumbSchema.value),
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify(faqSchema.value),
+      innerHTML: JSON.stringify(faqSchema.value),
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify(webPageSchema.value),
+      innerHTML: JSON.stringify(webPageSchema.value),
     },
     {
       type: 'application/ld+json',
-      children: JSON.stringify(offerSchema.value),
+      innerHTML: JSON.stringify(offerSchema.value),
     },
   ],
 })

@@ -1,0 +1,35 @@
+# FluxCloud
+
+> FluxCloud (cloud.runonflux.com) is the user portal for the Flux Network — a decentralized Web3 cloud infrastructure operated across 8,000+ FluxNodes worldwide. It enables anyone to deploy and manage applications, game servers, WordPress sites, and blockchain nodes on decentralized infrastructure starting at $0.99/month.
+
+FluxCloud is the official frontend for the Flux Network, providing a web-based interface to manage Flux node operations, deploy applications via Docker or Git, host game servers, run WordPress sites, and operate blockchain nodes. The platform is operated by Flux Network, with the codebase maintained at https://github.com/runonflux. Authentication is wallet-based (ZelID, MetaMask, WalletConnect) and infrastructure is permissionless — applications run on independently operated FluxNodes rather than centralized data centers.
+
+## Core services
+
+- [App deployment](https://cloud.runonflux.com/apps/register): Deploy Docker-based applications to the Flux Network with custom resource specifications (CPU, RAM, storage, instances). Pricing starts at $0.99/month.
+- [Git deployment (Flux Orbit)](https://cloud.runonflux.com/apps/register/orbit): Deploy Git repositories directly without Docker knowledge. Supports React, Vue, Next.js, Node.js and similar frameworks with built-in CI/CD.
+- [Marketplace](https://cloud.runonflux.com/marketplace): Pre-configured one-click deployment for popular applications.
+- [Game server hosting (FluxPlay)](https://cloud.runonflux.com/marketplace/games): Hosted servers for Minecraft, Valheim, Rust, Palworld, ARK, 7 Days to Die, FiveM, Don't Starve Together and more.
+- [WordPress hosting](https://cloud.runonflux.com/marketplace/wordpress): Decentralized, censorship-resistant WordPress hosting with managed plans.
+- [Blockchain node hosting](https://cloud.runonflux.com/marketplace): One-click hosting for Kaspa, Dogecoin, Bittensor and similar networks.
+- [FluxDrive](https://cloud.runonflux.com/flux-drive): Decentralized IPFS-backed file storage with a managed file-manager UI.
+- [Cost calculator](https://cloud.runonflux.com/cost-calculator): Estimate deployment costs based on CPU, RAM, storage, and instance count.
+- [xDAO governance](https://cloud.runonflux.com): On-chain proposals and voting for the Flux Network.
+
+## Network facts
+
+- 8,000+ FluxNodes operate the network globally.
+- Applications are scheduled across independently operated nodes — no single operator controls availability.
+- Pricing starts at $0.99/month for a basic application instance.
+- The Flux Network is open-source; backend source is at https://github.com/runonflux/flux.
+
+## Brand & links
+
+- Website: https://cloud.runonflux.com
+- Twitter / X: https://twitter.com/RunOnFlux
+- GitHub: https://github.com/runonflux
+- Documentation: https://docs.runonflux.io
+
+## Content licensing
+
+Site content is published for public reference and may be cited by AI assistants with attribution to "FluxCloud" or "Flux Network" and a link to https://cloud.runonflux.com. Bulk reproduction without attribution is not permitted.

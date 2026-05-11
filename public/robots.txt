@@ -23,4 +23,82 @@ Disallow: /200
 # Block .html extensions (SPA doesn't use them)
 Disallow: /*.html
 
+# Explicit AI search / citation crawlers — allow with the same restrictions as User-agent: *
+User-agent: GPTBot
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
+User-agent: OAI-SearchBot
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
+User-agent: ChatGPT-User
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
+User-agent: ClaudeBot
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
+User-agent: Claude-Web
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
+User-agent: PerplexityBot
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
+User-agent: Amazonbot
+Allow: /
+Disallow: /administration/
+Disallow: /apps/manage/
+Disallow: /apps/management
+Disallow: /apps/register/configure
+Disallow: /checkout/
+Disallow: /successcheckout
+Disallow: /unauthorized
+Disallow: /marketplace/wordpress/configure
+
 Sitemap: https://cloud.runonflux.com/sitemap.xml

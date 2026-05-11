@@ -123,7 +123,7 @@ export function useSEO(options) {
       ? [
         {
           type: 'application/ld+json',
-          children: JSON.stringify(data),
+          innerHTML: JSON.stringify(data),
         },
       ]
       : []
