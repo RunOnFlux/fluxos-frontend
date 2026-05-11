@@ -783,7 +783,7 @@ const loadCurrentSubscription = async () => {
 
     console.log('📋 Fetching current subscription:', sanitizeAuthData(payload))
 
-    const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
+    const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/subscriptions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -908,7 +908,7 @@ const loadPlanDetails = async () => {
     console.log('Reading subscription details from API')
     console.log('API payload being sent (READ):', sanitizeAuthData(apiPayload))
 
-    let response = await fetch('https://jetpackbridge.runonflux.io/api/v1/subscriptions.php', {
+    let response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/subscriptions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -1077,7 +1077,7 @@ const preInitializeManualPaymentData = async () => {
 
     console.log('🔄 Pre-initializing payment data for manual section:', sanitizeAuthData(paymentPayload))
 
-    const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/fluxpay.php', {
+    const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/fluxpay', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -1253,7 +1253,7 @@ const initializeFluxPayment = async (walletType = 'zelcore') => {
     const bodyParams = new URLSearchParams(paymentPayload)
     console.log('URL-encoded body:', bodyParams.toString())
 
-    const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/fluxpay.php', {
+    const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/fluxpay', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -1372,7 +1372,7 @@ const initializeCryptoComPayment = async () => {
     console.log('Selected plan data:', selectedPlan.value)
     console.log('Payment payload:', sanitizeAuthData(paymentPayload))
 
-    const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/cryptocom.php', {
+    const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/cryptocom', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -1485,7 +1485,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
 
       console.log('📸 Capturing initial /read state for renewal monitoring...')
 
-      const initialReadResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+      const initialReadResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/read', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -1533,7 +1533,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
 
       console.log('📸 Capturing initial storage state for signup monitoring...')
 
-      const initialResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+      const initialResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/storage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -1569,7 +1569,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
 
       console.log('📸 Capturing initial storage state for', props.actionType, 'monitoring...')
 
-      const initialResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+      const initialResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/storage', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -1620,7 +1620,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
 
         console.log('Checking Crypto.com payment status with payload:', sanitizeAuthData(checkPayload))
 
-        const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/cryptocom.php', {
+        const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/cryptocom', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -1640,7 +1640,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             // For renewals, verify error disappeared
             console.log('✅ Crypto.com payment completed - verifying renewal...')
             try {
-              const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+              const readResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/read', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -1676,7 +1676,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             // For upgrades/downgrades, verify capacity changed
             console.log(`✅ Crypto.com payment completed - verifying ${props.actionType}...`)
             try {
-              const storageResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+              const storageResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/storage', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -1713,7 +1713,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             // For new signups, verify subscription is active and no errors
             console.log('✅ Crypto.com payment completed - verifying signup...')
             try {
-              const storageResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+              const storageResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/storage', {
                 method: 'POST',
                 headers: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -1730,7 +1730,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
               if (storageResult.active === true) {
                 // Also verify with /read if was already active before
                 if (initialSubscriptionState && initialSubscriptionState.wasActive === true) {
-                  const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+                  const readResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/read', {
                     method: 'POST',
                     headers: {
                       'Content-Type': 'application/x-www-form-urlencoded',
@@ -1801,7 +1801,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
         if (props.actionType === 'renew') {
           // For renewals, check /read endpoint for error+period_end disappearing
           try {
-            const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+            const readResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/read', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -1876,7 +1876,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
           }
         } else if (props.actionType === 'upgrade' || props.actionType === 'downgrade') {
           // For upgrades and downgrades, check /storage endpoint for capacity change
-          const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+          const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/storage', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -1931,7 +1931,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
           }
         } else {
           // For new subscriptions, check /storage if active AND verify with /read
-          const response = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/storage', {
+          const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/storage', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -1950,7 +1950,7 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
             if (initialSubscriptionState && initialSubscriptionState.wasActive === true) {
               // Was already active before payment - verify /read shows no errors (actual new subscription)
               try {
-                const readResponse = await fetch('https://jetpackbridge.runonflux.io/api/v1/ipfs/read', {
+                const readResponse = await fetch('https://api.fluxdrive.runonflux.io/api/v1/ipfs/read', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

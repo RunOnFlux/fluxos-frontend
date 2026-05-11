@@ -2182,7 +2182,7 @@ const uploadFileWithProgress = async file => {
 
       xhr.onerror = () => reject(new Error('Upload failed'))
 
-      const bridgeURL = localStorage.getItem('bridgeURL') || 'https://jetpackbridge.runonflux.io'
+      const bridgeURL = localStorage.getItem('bridgeURL') || 'https://api.fluxdrive.runonflux.io'
       xhr.open('POST', `${bridgeURL}/api/v1/ipfs/write`)
       xhr.send(formData)
     })

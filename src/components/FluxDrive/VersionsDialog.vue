@@ -344,8 +344,8 @@ const showMessage = (message, type = 'success') => {
 }
 
 // Get bridgeURL and ipfsHost from localStorage or defaults
-const bridgeURL = localStorage.getItem('bridgeURL') || 'https://jetpackbridge.runonflux.io'
-const ipfsHost = localStorage.getItem('ipfsHost') || 'https://jetpack2_38080.app.runonflux.io'
+const bridgeURL = localStorage.getItem('bridgeURL') || 'https://api.fluxdrive.runonflux.io'
+const ipfsHost = localStorage.getItem('ipfsHost') || 'https://fluxdrive.runonflux.io'
 
 // State
 const loading = ref(false)
