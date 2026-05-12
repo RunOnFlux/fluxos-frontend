@@ -16,7 +16,7 @@ const __dirname = path.dirname(__filename)
 const BASE_URL = 'https://cloud.runonflux.com'
 
 // API Configuration
-const MARKETPLACE_API_URL = 'https://jetpackbridge.runonflux.io'
+const MARKETPLACE_API_URL = 'https://api.marketplace.runonflux.io'
 const API_VERSION = 1
 
 // Games category UUIDs (used to separate games from regular marketplace apps)

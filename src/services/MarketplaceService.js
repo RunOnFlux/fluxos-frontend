@@ -5,8 +5,8 @@ class MarketplaceService {
     // Use different marketplace bridge API endpoint based on analytics setting
     const enableAnalytics = import.meta.env.VITE_ENABLE_ANALYTICS === 'true'
     this.marketplaceURL = enableAnalytics
-      ? 'https://jetpackbridge.runonflux.io'
-      : 'https://bridge.flux-view.com:8443'
+      ? 'https://api.marketplace.runonflux.io'
+      : 'https://api-dev.marketplace.runonflux.io'
     this.apiVersion = 1
   }
 

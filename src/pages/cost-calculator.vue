@@ -877,7 +877,7 @@ useHead({
   script: [
     {
       type: 'application/ld+json',
-      children: JSON.stringify([webApplicationStructuredData, serviceStructuredData, organizationStructuredData, breadcrumbStructuredData, faqStructuredData]),
+      innerHTML: JSON.stringify([webApplicationStructuredData, serviceStructuredData, organizationStructuredData, breadcrumbStructuredData, faqStructuredData]),
     },
   ],
 })

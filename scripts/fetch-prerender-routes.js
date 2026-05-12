@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
 // API Configuration
-const MARKETPLACE_API_URL = 'https://jetpackbridge.runonflux.io'
+const MARKETPLACE_API_URL = 'https://api.marketplace.runonflux.io'
 const API_VERSION = 1
 const API_TIMEOUT_MS = 10000 // 10 second timeout for API requests
 

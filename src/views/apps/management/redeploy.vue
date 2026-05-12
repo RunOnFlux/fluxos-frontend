@@ -49,11 +49,6 @@ function redeployApp(appSpecs, isFromActive = false) {
 
   const specs = { ...appSpecs }
 
-  // Auto-generate new name: oldName + timestamp (last 5 digits)
-  const originalName = specs.name
-  specs.name = `${originalName}${Date.now().toString().slice(-5)}`
-  console.log('🚀 [REDEPLOY] Generated new name:', specs.name, 'from original:', originalName)
-
   const zelidauth = localStorage.getItem("zelidauth")
   const auth = qs.parse(zelidauth)
 
