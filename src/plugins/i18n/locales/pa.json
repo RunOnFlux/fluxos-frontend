@@ -1150,6 +1150,7 @@
       "environmentVariables": "ਵਾਤਾਵਰਣ ਵੇਰੀਏਬਲ",
       "commands": "ਹੁਕਮ",
       "portBindings": "ਪੋਰਟ ਬਾਈਡਿੰਗ",
+      "addPortMapping": "ਪੋਰਟ ਮੈਪਿੰਗ ਜੋੜੋ",
       "exposedPort": "ਐਕਸਪੋਜ਼ਡ ਪੋਰਟ",
       "containerPort": "ਕੰਟੇਨਰ ਪੋਰਟ",
       "customDomains": "ਕਸਟਮ ਡੋਮੇਨ",

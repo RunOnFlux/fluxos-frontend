@@ -1150,6 +1150,7 @@
       "environmentVariables": "Переменные среды",
       "commands": "Команды",
       "portBindings": "Привязки портов",
+      "addPortMapping": "Добавить сопоставление порта",
       "exposedPort": "Открытый порт",
       "containerPort": "Контейнерный порт",
       "customDomains": "Пользовательские домены",

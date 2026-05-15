@@ -525,6 +525,7 @@
       "enterpriseNodesInfo": "Informacje o węzłach enterprise",
       "validationError": "Błąd walidacji:",
       "portBindings": "Powiązania portów",
+      "addPortMapping": "Dodaj mapowanie portu",
       "payWithCard": "Zapłać kartą",
       "noNodesAvailable": "Brak dostępnych węzłów",
       "upToFortyFiveMinutes": "Do 45 minut",

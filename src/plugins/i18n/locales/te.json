@@ -1150,6 +1150,7 @@
       "environmentVariables": "ఎన్విరాన్మెంట్ వేరియబుల్స్",
       "commands": "ఆదేశాలు",
       "portBindings": "పోర్ట్ బైండింగ్స్",
+      "addPortMapping": "పోర్ట్ మ్యాపింగ్ జోడించండి",
       "exposedPort": "బహిర్గతమైన పోర్ట్",
       "containerPort": "కంటైనర్ పోర్ట్",
       "customDomains": "అనుకూల డొమైన్‌లు",

@@ -1150,6 +1150,7 @@
       "environmentVariables": "متغيرات البيئة",
       "commands": "الأوامر",
       "portBindings": "روابط الموانئ",
+      "addPortMapping": "إضافة تعيين منفذ",
       "exposedPort": "ميناء مكشوف",
       "containerPort": "ميناء الحاويات",
       "customDomains": "المجالات المخصصة",

@@ -1150,6 +1150,7 @@
       "environmentVariables": "Variables d'environnement",
       "commands": "Commandes",
       "portBindings": "Liaisons de ports",
+      "addPortMapping": "Ajouter un mappage de port",
       "exposedPort": "Port exposé",
       "containerPort": "Port à conteneurs",
       "customDomains": "Domaines personnalisés",

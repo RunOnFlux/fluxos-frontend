@@ -1150,6 +1150,7 @@
       "environmentVariables": "환경 변수",
       "commands": "명령",
       "portBindings": "포트 바인딩",
+      "addPortMapping": "포트 매핑 추가",
       "exposedPort": "노출된 포트",
       "containerPort": "컨테이너 포트",
       "customDomains": "맞춤 도메인",

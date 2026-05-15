@@ -1150,6 +1150,7 @@
       "environmentVariables": "Variabel Lingkungan",
       "commands": "Perintah",
       "portBindings": "Pengikatan Port",
+      "addPortMapping": "Tambah Pemetaan Port",
       "exposedPort": "Port Terkena",
       "containerPort": "Port Kontainer",
       "customDomains": "Domain Khusus",

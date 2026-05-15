@@ -1150,6 +1150,7 @@
       "environmentVariables": "环境变量",
       "commands": "命令",
       "portBindings": "端口绑定",
+      "addPortMapping": "添加端口映射",
       "exposedPort": "暴露端口",
       "containerPort": "集装箱港口",
       "customDomains": "自定义域",

@@ -888,219 +888,215 @@
           <VRow>
             <!-- Allowed Geolocation -->
             <VCol cols="12" md="6">
-              <!-- <h3 class="text-center">Allowed Geolocation</h3> -->
-
-              <div class="text-center">
+              <div class="text-center mb-4">
                 <h4 class="d-flex align-center justify-center flex-wrap gap-1">
                   <VIcon color="success">mdi-earth</VIcon>
                   {{ t('core.subscriptionManager.allowedGeolocation') }}
                 </h4>
               </div>
-              <!-- Continent Selector -->
-              <VSelect
-                v-model="selectedAllowed.continent"
-                :items="getContinents(false)"
-                :label="t('core.subscriptionManager.continent')"
-                item-title="text"
-                item-value="value"
-                outlined
-                dense
-                class="mb-4 mt-4"
-              >
-                <template #item="{ props, item }">
-                  <VListItem v-bind="props">
-                    <template v-if="item.raw.instances" #append>
-                      <VChip size="x-small" color="success" variant="tonal">
-                        {{ item.raw.instances }}
-                      </VChip>
-                    </template>
-                  </VListItem>
-                </template>
-              </VSelect>
-              <!-- Country Selector -->
-              <VSelect
-                v-model="selectedAllowed.country"
-                :items="getCountries(selectedAllowed.continent, false)"
-                :label="t('core.subscriptionManager.country')"
-                item-title="text"
-                item-value="value"
-                outlined
-                dense
-                class="mb-4"
-                :disabled="!selectedAllowed.continent || selectedAllowed.continent === 'ALL'"
-              >
-                <template #item="{ props, item }">
-                  <VListItem v-bind="props">
-                    <template v-if="item.raw.instances" #append>
-                      <VChip size="x-small" color="success" variant="tonal">
-                        {{ item.raw.instances }}
-                      </VChip>
-                    </template>
-                  </VListItem>
-                </template>
-              </VSelect>
-              <!-- Region Selector -->
-              <VSelect
-                v-model="selectedAllowed.region"
-                :items="getRegions(selectedAllowed.continent, selectedAllowed.country, false)"
-                :label="t('core.subscriptionManager.region')"
-                item-title="text"
-                item-value="value"
-                outlined
-                dense
-                class="mb-4"
-                :disabled="!selectedAllowed.country || selectedAllowed.country === 'ALL'"
-              >
-                <template #item="{ props, item }">
-                  <VListItem v-bind="props">
-                    <template v-if="item.raw.instances" #append>
-                      <VChip size="x-small" color="success" variant="tonal">
-                        {{ item.raw.instances }}
-                      </VChip>
-                    </template>
-                  </VListItem>
-                </template>
-              </VSelect>
 
-              <!-- Add Button -->
-              <div class="d-flex justify-center mt-2 mb-2">
-                <VTooltip :text="t('core.subscriptionManager.addAllowed')" location="top">
-                  <template #activator="{ props }">
-                    <VBtn
-                      v-bind="props"
-                      @click="addAllowed"
-                      icon
-                      color="success"
-                      density="compact"
-                    >
-                      <VIcon>mdi-plus</VIcon>
-                    </VBtn>
+              <div
+                v-for="(row, i) in allowedGeolocations"
+                :key="`allowed-${i}`"
+                class="d-flex align-start gap-2 mb-3"
+              >
+                <VSelect
+                  :model-value="row.continent"
+                  @update:model-value="v => updateAllowedRow(i, 'continent', v)"
+                  :items="getContinents(false)"
+                  :label="t('core.subscriptionManager.continent')"
+                  item-title="text"
+                  item-value="value"
+                  density="comfortable"
+                  variant="outlined"
+                  hide-details
+                  style="flex: 1;"
+                >
+                  <template #item="{ props, item }">
+                    <VListItem v-bind="props">
+                      <template v-if="item.raw.instances" #append>
+                        <VChip size="x-small" color="success" variant="tonal">
+                          {{ item.raw.instances }}
+                        </VChip>
+                      </template>
+                    </VListItem>
                   </template>
-                </VTooltip>
+                </VSelect>
+                <VSelect
+                  :model-value="row.country"
+                  @update:model-value="v => updateAllowedRow(i, 'country', v)"
+                  :items="getCountries(row.continent, false)"
+                  :label="t('core.subscriptionManager.country')"
+                  item-title="text"
+                  item-value="value"
+                  density="comfortable"
+                  variant="outlined"
+                  hide-details
+                  style="flex: 1;"
+                  :disabled="!row.continent || row.continent === 'ALL'"
+                >
+                  <template #item="{ props, item }">
+                    <VListItem v-bind="props">
+                      <template v-if="item.raw.instances" #append>
+                        <VChip size="x-small" color="success" variant="tonal">
+                          {{ item.raw.instances }}
+                        </VChip>
+                      </template>
+                    </VListItem>
+                  </template>
+                </VSelect>
+                <VSelect
+                  :model-value="row.region"
+                  @update:model-value="v => updateAllowedRow(i, 'region', v)"
+                  :items="getRegions(row.continent, row.country, false)"
+                  :label="t('core.subscriptionManager.region')"
+                  item-title="text"
+                  item-value="value"
+                  density="comfortable"
+                  variant="outlined"
+                  hide-details
+                  style="flex: 1;"
+                  :disabled="!row.country || row.country === 'ALL'"
+                >
+                  <template #item="{ props, item }">
+                    <VListItem v-bind="props">
+                      <template v-if="item.raw.instances" #append>
+                        <VChip size="x-small" color="success" variant="tonal">
+                          {{ item.raw.instances }}
+                        </VChip>
+                      </template>
+                    </VListItem>
+                  </template>
+                </VSelect>
+                <VBtn
+                  icon
+                  color="error"
+                  variant="text"
+                  density="comfortable"
+                  @click="removeAllowed(i)"
+                  :aria-label="`Remove allowed location ${i + 1}`"
+                >
+                  <VIcon>mdi-close</VIcon>
+                </VBtn>
               </div>
 
-              <!-- Resulting Chips -->
-              <div class="mt-2">
-                <VChip
-                  v-for="(loc, i) in allowedGeolocations"
-                  :key="loc"
+              <div class="d-flex justify-center mt-2">
+                <VBtn
                   color="success"
-                  class="ma-1"
-                  closable
-                  @click:close="removeAllowed(i)"
-                  label
+                  variant="tonal"
+                  size="small"
+                  prepend-icon="mdi-plus"
+                  @click="addAllowedRow"
                 >
-                  {{ getGeolocationLabel(loc) }}
-                </VChip>
+                  {{ t('core.subscriptionManager.addAllowed') }}
+                </VBtn>
               </div>
             </VCol>
 
             <!-- Forbidden Geolocation -->
             <VCol cols="12" md="6">
-              <div class="text-center">
+              <div class="text-center mb-4">
                 <h4 class="d-flex align-center justify-center flex-wrap gap-1">
                   <VIcon color="error">mdi-earth-off</VIcon>
                   {{ t('core.subscriptionManager.forbiddenGeolocation') }}
                 </h4>
               </div>
 
-              <!-- Continent Selector -->
-              <VSelect
-                v-model="selectedForbidden.continent"
-                :items="getContinents(true)"
-                :label="t('core.subscriptionManager.continent')"
-                item-title="text"
-                item-value="value"
-                outlined
-                dense
-                class="mb-4 mt-4"
+              <div
+                v-for="(row, i) in forbiddenGeolocations"
+                :key="`forbidden-${i}`"
+                class="d-flex align-start gap-2 mb-3"
               >
-                <template #item="{ props, item }">
-                  <VListItem v-bind="props">
-                    <template v-if="item.raw.instances" #append>
-                      <VChip size="x-small" color="error" variant="tonal">
-                        {{ item.raw.instances }}
-                      </VChip>
-                    </template>
-                  </VListItem>
-                </template>
-              </VSelect>
-
-              <!-- Country Selector -->
-              <VSelect
-                v-model="selectedForbidden.country"
-                :items="getCountries(selectedForbidden.continent, true)"
-                :label="t('core.subscriptionManager.country')"
-                item-title="text"
-                item-value="value"
-                outlined
-                dense
-                class="mb-4"
-                :disabled="!selectedForbidden.continent || selectedForbidden.continent === 'NONE'"
-              >
-                <template #item="{ props, item }">
-                  <VListItem v-bind="props">
-                    <template v-if="item.raw.instances" #append>
-                      <VChip size="x-small" color="error" variant="tonal">
-                        {{ item.raw.instances }}
-                      </VChip>
-                    </template>
-                  </VListItem>
-                </template>
-              </VSelect>
-
-              <!-- Region Selector -->
-              <VSelect
-                v-model="selectedForbidden.region"
-                :items="getRegions(selectedForbidden.continent, selectedForbidden.country, true)"
-                :label="t('core.subscriptionManager.region')"
-                item-title="text"
-                item-value="value"
-                outlined
-                dense
-                class="mb-4"
-                :disabled="!selectedForbidden.country || selectedForbidden.country === 'ALL'"
-              >
-                <template #item="{ props, item }">
-                  <VListItem v-bind="props">
-                    <template v-if="item.raw.instances" #append>
-                      <VChip size="x-small" color="error" variant="tonal">
-                        {{ item.raw.instances }}
-                      </VChip>
-                    </template>
-                  </VListItem>
-                </template>
-              </VSelect>
-
-              <!-- Add Button -->
-              <div class="d-flex justify-center mt-2 mb-2">
-                <VTooltip :text="t('core.subscriptionManager.addForbidden')" location="top">
-                  <template #activator="{ props }">
-                    <VBtn
-                      v-bind="props"
-                      @click="addForbidden"
-                      icon
-                      color="error"
-                      density="compact"
-                    >
-                      <VIcon>mdi-plus</VIcon>
-                    </VBtn>
-                  </template>
-                </VTooltip>
-              </div>
-              <!-- Resulting Chips -->
-              <div class="mt-2">
-                <VChip
-                  v-for="(loc, i) in forbiddenGeolocations"
-                  :key="loc"
-                  color="error"
-                  class="ma-1"
-                  closable
-                  label
-                  @click:close="removeForbidden(i)"
+                <VSelect
+                  :model-value="row.continent"
+                  @update:model-value="v => updateForbiddenRow(i, 'continent', v)"
+                  :items="getContinents(true)"
+                  :label="t('core.subscriptionManager.continent')"
+                  item-title="text"
+                  item-value="value"
+                  density="comfortable"
+                  variant="outlined"
+                  hide-details
+                  style="flex: 1;"
                 >
-                  {{ getGeolocationLabel(loc) }}
-                </VChip>
+                  <template #item="{ props, item }">
+                    <VListItem v-bind="props">
+                      <template v-if="item.raw.instances" #append>
+                        <VChip size="x-small" color="error" variant="tonal">
+                          {{ item.raw.instances }}
+                        </VChip>
+                      </template>
+                    </VListItem>
+                  </template>
+                </VSelect>
+                <VSelect
+                  :model-value="row.country"
+                  @update:model-value="v => updateForbiddenRow(i, 'country', v)"
+                  :items="getCountries(row.continent, true)"
+                  :label="t('core.subscriptionManager.country')"
+                  item-title="text"
+                  item-value="value"
+                  density="comfortable"
+                  variant="outlined"
+                  hide-details
+                  style="flex: 1;"
+                  :disabled="!row.continent || row.continent === 'NONE'"
+                >
+                  <template #item="{ props, item }">
+                    <VListItem v-bind="props">
+                      <template v-if="item.raw.instances" #append>
+                        <VChip size="x-small" color="error" variant="tonal">
+                          {{ item.raw.instances }}
+                        </VChip>
+                      </template>
+                    </VListItem>
+                  </template>
+                </VSelect>
+                <VSelect
+                  :model-value="row.region"
+                  @update:model-value="v => updateForbiddenRow(i, 'region', v)"
+                  :items="getRegions(row.continent, row.country, true)"
+                  :label="t('core.subscriptionManager.region')"
+                  item-title="text"
+                  item-value="value"
+                  density="comfortable"
+                  variant="outlined"
+                  hide-details
+                  style="flex: 1;"
+                  :disabled="!row.country || row.country === 'ALL'"
+                >
+                  <template #item="{ props, item }">
+                    <VListItem v-bind="props">
+                      <template v-if="item.raw.instances" #append>
+                        <VChip size="x-small" color="error" variant="tonal">
+                          {{ item.raw.instances }}
+                        </VChip>
+                      </template>
+                    </VListItem>
+                  </template>
+                </VSelect>
+                <VBtn
+                  icon
+                  color="error"
+                  variant="text"
+                  density="comfortable"
+                  @click="removeForbidden(i)"
+                  :aria-label="`Remove forbidden location ${i + 1}`"
+                >
+                  <VIcon>mdi-close</VIcon>
+                </VBtn>
+              </div>
+
+              <div class="d-flex justify-center mt-2">
+                <VBtn
+                  color="error"
+                  variant="tonal"
+                  size="small"
+                  prepend-icon="mdi-plus"
+                  @click="addForbiddenRow"
+                >
+                  {{ t('core.subscriptionManager.addForbidden') }}
+                </VBtn>
               </div>
             </VCol>
           </VRow>
@@ -1385,51 +1381,8 @@
                   </div>
 
                   <div class="border rounded d-flex flex-column justify-center" style="min-height: 60px;">
-                    <!-- Add new ports -->
-                    <div class="d-flex align-center gap-2 px-2" v-if="newPorts[componentIndex] && originalAppSpecSnapshot?.compose?.[componentIndex]?.repotag !== 'runonflux/orbit:latest'" :class="component.ports && component.ports.length > 0 ? 'py-2' : ''">
-                      <VTextField
-                        v-model.number="newPorts[componentIndex].exposed"
-                        type="number"
-                        :label="t('core.subscriptionManager.exposedPort')"
-                        density="comfortable"
-                        variant="outlined"
-                        hide-details
-                        style="max-width: 180px;"
-                        @input="handleExposedPortInput(componentIndex)"
-                      >
-                        <template #append-inner>
-                          <VTooltip location="top">
-                            <template #activator="{ props }">
-                              <VIcon v-bind="props" size="18" color="grey">mdi-information-outline</VIcon>
-                            </template>
-                            <span>{{ t('core.subscriptionManager.exposedPortTooltip') }}</span>
-                          </VTooltip>
-                        </template>
-                      </VTextField>
-                      <VTextField
-                        v-model.number="newPorts[componentIndex].container"
-                        type="number"
-                        :label="t('core.subscriptionManager.containerPort')"
-                        density="comfortable"
-                        variant="outlined"
-                        hide-details
-                        style="max-width: 180px;"
-                      >
-                        <template #append-inner>
-                          <VTooltip location="top">
-                            <template #activator="{ props }">
-                              <VIcon v-bind="props" size="18" color="grey">mdi-information-outline</VIcon>
-                            </template>
-                            <span>{{ t('core.subscriptionManager.containerPortTooltip') }}</span>
-                          </VTooltip>
-                        </template>
-                      </VTextField>
-                      <VBtn icon color="primary" density="compact" @click="addPortPair(componentIndex)">
-                        <VIcon size="18">mdi-plus</VIcon>
-                      </VBtn>
-                    </div>
                     <!-- Editable Chip List -->
-                    <div class="d-flex flex-wrap align-center gap-1 px-2 pb-2" v-if="component.ports && component.ports.length > 0">
+                    <div class="d-flex flex-wrap align-center gap-1 px-2 pt-2" v-if="component.ports && component.ports.length > 0">
                       <div
                         v-for="(port, idx) in component.ports"
                         :key="'port-pair-' + idx"
@@ -1449,14 +1402,14 @@
                             style="font-size: 12px; cursor: pointer;"
                             :aria-label="`Edit port pair ${port} : ${component.containerPorts[idx] || '-'}`"
                           >
-                            {{ port }} : {{ component.containerPorts[idx] || '-' }}
+                            {{ port || '-' }} : {{ component.containerPorts[idx] || '-' }}
                           </VChip>
                         </div>
                         <!-- Edit Mode -->
                         <div
                           v-else
                           class="d-flex align-center"
-                          style="gap: 4px;"
+                          style="gap: 8px;"
                           :ref="el => setEditWrapper(idx, el)"
                         >
                           <VTextField
@@ -1465,25 +1418,45 @@
                             hide-details
                             density="compact"
                             type="number"
-                            style="max-width: 120px; font-size: 12px;"
+                            :label="t('core.subscriptionManager.exposedPort')"
+                            style="max-width: 180px;"
                             variant="outlined"
                             @focus="handleFocus(idx, 'exposed')"
                             @blur="handleBlur(idx, 'exposed')"
                             @keydown.enter="saveAndExitEdit(component, componentIndex, idx)"
                             @input="validatePort(component, componentIndex, idx, 'exposed')"
-                          />
+                          >
+                            <template #append-inner>
+                              <VTooltip location="top" max-width="280">
+                                <template #activator="{ props }">
+                                  <VIcon v-bind="props" size="18" color="grey">mdi-information-outline</VIcon>
+                                </template>
+                                <span>{{ t('core.subscriptionManager.exposedPortTooltip') }}</span>
+                              </VTooltip>
+                            </template>
+                          </VTextField>
                           <VTextField
                             v-model.number="component.containerPorts[idx]"
                             hide-details
                             density="compact"
                             type="number"
-                            style="max-width: 120px; font-size: 12px;"
+                            :label="t('core.subscriptionManager.containerPort')"
+                            style="max-width: 180px;"
                             variant="outlined"
                             @focus="handleFocus(idx, 'container')"
                             @blur="handleBlur(idx, 'container')"
                             @keydown.enter="saveAndExitEdit(component, componentIndex, idx)"
                             @input="validatePort(component, componentIndex, idx, 'container')"
-                          />
+                          >
+                            <template #append-inner>
+                              <VTooltip location="top" max-width="280">
+                                <template #activator="{ props }">
+                                  <VIcon v-bind="props" size="18" color="grey">mdi-information-outline</VIcon>
+                                </template>
+                                <span>{{ t('core.subscriptionManager.containerPortTooltip') }}</span>
+                              </VTooltip>
+                            </template>
+                          </VTextField>
                         </div>
                         <!-- Remove Button -->
                         <VBtn
@@ -1496,6 +1469,21 @@
                           <VIcon size="14">mdi-close</VIcon>
                         </VBtn>
                       </div>
+                    </div>
+                    <!-- Add port mapping button -->
+                    <div
+                      class="d-flex justify-center pa-2"
+                      v-if="originalAppSpecSnapshot?.compose?.[componentIndex]?.repotag !== 'runonflux/orbit:latest'"
+                    >
+                      <VBtn
+                        color="primary"
+                        variant="tonal"
+                        size="small"
+                        prepend-icon="mdi-plus"
+                        @click="addPortMapping(componentIndex)"
+                      >
+                        {{ t('core.subscriptionManager.addPortMapping') }}
+                      </VBtn>
                     </div>
                   </div>
                 </div>
@@ -3798,9 +3786,6 @@ const SSPLogoThemeImg = computed(() => {
 const allowedGeolocations = ref([])
 const forbiddenGeolocations = ref([])
 
-const selectedAllowed = ref({ continent: 'ALL', country: 'ALL', region: 'ALL' })
-const selectedForbidden = ref({ continent: 'NONE', country: 'ALL', region: 'ALL' })
-
 const possibleLocations = ref([])
 
 // Computed tab items based on app version
@@ -5168,6 +5153,7 @@ function subscriptionPeriodInfo(period) {
     12: { labelKey: 'core.subscriptionManager.period12Months', discount: 12 },
   }
   const entry = map[period] || map[String(period)] || map[1]
+  
   return { label: t(entry.labelKey), discount: entry.discount }
 }
 
@@ -5177,6 +5163,7 @@ const subscriptionPeriodMax = computed(() => BASE_RENEWAL_PERIODS.length - 1)
 // Whether the selected renewal period differs from the existing subscription period
 const subscriptionPeriodChanged = computed(() => {
   if (!existingSubscription.value) return false
+  
   return existingSubscription.value.period !== selectedSubscriptionPeriod.value
 })
 
@@ -5591,7 +5578,21 @@ watch(managementAction, (newValue, oldValue) => {
   }
 })
 
-// Geolocation helpers (keep existing)
+// Geolocation helpers
+// Internal model: rows are { continent, country, region } objects.
+// Spec format: 'ac<CONT>_<COUNT>_<REG>' for allowed, 'a!c<CONT>_<COUNT>_<REG>' for forbidden.
+// 'ALL' for country/region means "no refinement" and is omitted from the serialized string.
+function parseGeoString(s) {
+  const stripped = s.replace(/^a!c|^ac/, '')
+  const [continent = '', country = '', region = ''] = stripped.split('_')
+
+  return {
+    continent: continent || 'ALL',
+    country: country || 'ALL',
+    region: region || 'ALL',
+  }
+}
+
 function decodeGeolocation(existingGeolocation) {
   let updatedNewSpecGeo = existingGeolocation
   let isOldSpecs = false
@@ -5611,116 +5612,80 @@ function decodeGeolocation(existingGeolocation) {
     updatedNewSpecGeo = [newSpecLocation]
   }
 
-  allowedGeolocations.value = updatedNewSpecGeo.filter(l => l.startsWith('ac'))
-  forbiddenGeolocations.value = updatedNewSpecGeo.filter(l => l.startsWith('a!c'))
+  allowedGeolocations.value = updatedNewSpecGeo
+    .filter(l => l.startsWith('ac') && l !== 'acALL')
+    .map(parseGeoString)
+
+  forbiddenGeolocations.value = updatedNewSpecGeo
+    .filter(l => l.startsWith('a!c'))
+    .map(parseGeoString)
+}
+
+function serializeRow(row, isForbidden) {
+  if (!row.continent) return null
+  if (row.continent === 'ALL' || row.continent === 'NONE') return null
+  const prefix = isForbidden ? 'a!c' : 'ac'
+  let s = `${prefix}${row.continent}`
+  if (row.country && row.country !== 'ALL') {
+    s += `_${row.country}`
+    if (row.region && row.region !== 'ALL') {
+      s += `_${row.region}`
+    }
+  }
+
+  return s
 }
 
 function generateGeolocations() {
-  const allowed = allowedGeolocations.value.includes('acALL') ? [] : allowedGeolocations.value
-  
-  return [...allowed, ...forbiddenGeolocations.value]
+  const allowed = allowedGeolocations.value
+    .map(r => serializeRow(r, false))
+    .filter(Boolean)
+
+  const forbidden = forbiddenGeolocations.value
+    .map(r => serializeRow(r, true))
+    .filter(Boolean)
+
+  return [...allowed, ...forbidden]
 }
 
-function hasConflict(geo, isAllowed) {
-  const targetParts = geo.replace(/^a!?c/, '').split('_')
-  const oppositeList = isAllowed
-    ? forbiddenGeolocations.value
-    : (allowedGeolocations.value.includes('acALL') ? [] : allowedGeolocations.value)
-
-  return oppositeList.some(existing => {
-    const existingParts = existing.replace(/^a!?c/, '').split('_')
-    
-    return isAllowed
-      ? existingParts.every((val, i) => val === targetParts[i])
-      : targetParts.every((val, i) => val === existingParts[i])
-  })
+function addAllowedRow() {
+  allowedGeolocations.value.push({ continent: 'ALL', country: 'ALL', region: 'ALL' })
 }
 
-function isRedundant(geo, list) {
-  const parts = geo.replace(/^a!?c/, '').split('_')
-  
-  return list.some(existing => {
-    const existingParts = existing.replace(/^a!?c/, '').split('_')
-    
-    return existingParts.every((val, i) => val === parts[i]) && existingParts.length < parts.length
-  })
+function addForbiddenRow() {
+  forbiddenGeolocations.value.push({ continent: 'NONE', country: 'ALL', region: 'ALL' })
 }
 
-function cleanChildren(parentGeo, listRef) {
-  const parentParts = parentGeo.replace(/^a!?c/, '').split('_')
-  listRef.value = listRef.value.filter(entry => {
-    const entryParts = entry.replace(/^a!?c/, '').split('_')
-    
-    return !(entryParts.length > parentParts.length && parentParts.every((val, i) => val === entryParts[i]))
-  })
-}
-
-function buildGeoCode(prefix, selection) {
-  let geo = `${prefix}${selection.continent}`
-  if (selection.country && selection.country !== 'ALL') {
-    geo += `_${selection.country}`
-    if (selection.region && selection.region !== 'ALL') {
-      geo += `_${selection.region}`
-    }
-  }
-  
-  return geo
-}
-
-function addAllowed() {
-  if (!selectedAllowed.value.continent || selectedAllowed.value.continent === 'NONE') return
-  const geo = buildGeoCode('ac', selectedAllowed.value)
-  if (!geo || geo === 'acALL') return
-
-  if (
-    !allowedGeolocations.value.includes(geo) &&
-    !hasConflict(geo, true) &&
-    !forbiddenGeolocations.value.includes('a!cNONE') &&
-    !isRedundant(geo, allowedGeolocations.value)
-  ) {
-    cleanChildren(geo, allowedGeolocations)
-    allowedGeolocations.value.push(geo)
+function updateAllowedRow(index, field, value) {
+  const row = allowedGeolocations.value[index]
+  if (!row) return
+  row[field] = value
+  if (field === 'continent') {
+    row.country = 'ALL'
+    row.region = 'ALL'
+  } else if (field === 'country') {
+    row.region = 'ALL'
   }
 }
 
-function addForbidden() {
-  if (!selectedForbidden.value.continent || selectedForbidden.value.continent === 'ALL') return
-  const geo = buildGeoCode('a!c', selectedForbidden.value)
-  if (!geo || geo === 'a!cNONE') return
-
-  if (
-    !forbiddenGeolocations.value.includes(geo) &&
-    !isRedundant(geo, forbiddenGeolocations.value)
-  ) {
-    // 1. Remove equivalent and child entries from allowedGeolocations
-    const base = geo.replace(/^a!c/, '')
-    allowedGeolocations.value = allowedGeolocations.value.filter(allowed => {
-      const allowedBase = allowed.replace(/^ac/, '')
-      
-      return !(allowedBase === base || allowedBase.startsWith(base + '_'))
-    })
-
-    // 2. Clean children from forbidden list (already implemented)
-    cleanChildren(geo, forbiddenGeolocations)
-
-    // 3. Add new forbidden entry
-    forbiddenGeolocations.value.push(geo)
-
-    // 4. Update spec
-    props.appSpec.geolocation = generateGeolocations()
+function updateForbiddenRow(index, field, value) {
+  const row = forbiddenGeolocations.value[index]
+  if (!row) return
+  row[field] = value
+  if (field === 'continent') {
+    row.country = 'ALL'
+    row.region = 'ALL'
+  } else if (field === 'country') {
+    row.region = 'ALL'
   }
 }
 
 function removeAllowed(index) {
   allowedGeolocations.value.splice(index, 1)
-  allowedGeolocations.value = [...allowedGeolocations.value]
-  props.appSpec.geolocation = generateGeolocations()
 }
 
 function removeForbidden(index) {
   forbiddenGeolocations.value.splice(index, 1)
-  forbiddenGeolocations.value = [...forbiddenGeolocations.value]
-  props.appSpec.geolocation = generateGeolocations()
 }
 
 async function getGeolocationData() {
@@ -5848,18 +5813,6 @@ function getRegions(continentCode, countryCode) {
   })
 
   return regions
-}
-
-function getGeolocationLabel(code) {
-  const raw = code.replace(/^a!?c/, '')
-  const [cont, count, region] = raw.split('_')
-  const contName = geolocations.continents.find(c => c.code === cont)?.name || cont
-  const countName = count ? geolocations.countries.find(c => c.code === count)?.name || count : ''
-  const regionName = region || ''
-  if (regionName) return `${contName} / ${countName} / ${regionName}`
-  if (countName) return `${contName} / ${countName}`
-  
-  return `${contName}`
 }
 
 function removeDuplicates() {
@@ -6137,24 +6090,6 @@ watch(selectedNodesFilter, () => {
   selectedNodesCurrentPage.value = 1
 })
 
-watch(() => selectedAllowed.value.continent, () => {
-  selectedAllowed.value.country = 'ALL'
-  selectedAllowed.value.region = 'ALL'
-})
-
-watch(() => selectedAllowed.value.country, () => {
-  selectedAllowed.value.region = 'ALL'
-})
-
-watch(() => selectedForbidden.value.continent, () => {
-  selectedForbidden.value.country = 'ALL'
-  selectedForbidden.value.region = 'ALL'
-})
-
-watch(() => selectedForbidden.value.country, () => {
-  selectedForbidden.value.region = 'ALL'
-})
-
 watch([allowedGeolocations, forbiddenGeolocations], () => {
   if (props.appSpec) {
     props.appSpec.geolocation = generateGeolocations()
@@ -6262,8 +6197,9 @@ function addComposeComponent() {
     secrets: '',
   }) - 1
 
-  // The watch function will automatically generate the random port
   componentTab.value = `component-${index}`
+
+  addPortMapping(index)
 }
 
 /////
@@ -6271,7 +6207,6 @@ function addComposeComponent() {
 const editIndex = ref(null)
 const exposedInput = ref([])
 const editWrapper = ref([])
-const newPorts = ref([])
 const focusState = ref({})
 const previousPorts = ref([])
 const currentEditComponentIndex = ref(null)
@@ -6428,52 +6363,34 @@ async function copyToClipboard(text) {
   }
 }
 
-// Add a new port pair
-function addPortPair(index) {
+// Add a new port mapping directly to the component and open it in edit mode
+function addPortMapping(index) {
   const component = props.appSpec.compose[index]
-  const ports = newPorts.value[index]
+  if (!component) return
 
-  if (!ports) return
+  if (!Array.isArray(component.ports)) component.ports = []
+  if (!Array.isArray(component.containerPorts)) component.containerPorts = []
+  if (!Array.isArray(component.domains)) component.domains = []
 
-  const isDuplicateLocal = component.ports.includes(ports.exposed)
-  const allExposedPorts = props.appSpec.compose.flatMap((c, i) =>
-    i === index ? [] : c.ports || [],
+  const usedExposed = new Set(
+    props.appSpec.compose.flatMap(c => c.ports || []).filter(p => Number.isInteger(p)),
   )
-  const isDuplicateGlobal = allExposedPorts.includes(ports.exposed)
 
-  if (
-    isValidPort(ports.exposed) &&
-    isValidPort(ports.container) &&
-    !isDuplicateLocal &&
-    !isDuplicateGlobal
-  ) {
-    component.ports.push(ports.exposed)
-    component.containerPorts.push(ports.container)
-
-    // Auto-increment exposed port by +1, clear container port
-    const nextExposed = ports.exposed + 1
-    newPorts.value[index] = {
-      exposed: nextExposed,
-      container: null,
-    }
-  } else {
-    showToast("error",
-      isDuplicateGlobal
-        ? `Port ${ports.exposed} is already used in another component.`
-        : 'Invalid or duplicate port values.',
-    )
+  let exposed = generateRandomPort()
+  let attempts = 0
+  while (usedExposed.has(exposed) && attempts < 100) {
+    exposed = generateRandomPort()
+    attempts++
   }
-}
 
-// Handle exposed port input - auto-suggest container port (enabled for all modes)
-function handleExposedPortInput(componentIndex) {
-  const ports = newPorts.value[componentIndex]
-  if (!ports) return
+  component.ports.push(exposed)
+  component.containerPorts.push(exposed)
+  component.domains.push('')
 
-  // Only auto-fill container port if it's empty
-  if (ports.exposed && !ports.container) {
-    newPorts.value[componentIndex].container = ports.exposed
-  }
+  const newIdx = component.ports.length - 1
+  nextTick(() => {
+    startEdit(component, index, newIdx)
+  })
 }
 
 // Remove a port pair
@@ -6703,30 +6620,6 @@ function generateRandomPort(min = 30000, max = 39999) {
   return Math.floor(Math.random() * (max - min + 1)) + min
 }
 
-// Watch for compose length changes
-watch(() => props.appSpec?.compose?.length, newLength => {
-  // Generate random port for each component (enabled for all modes)
-  if (newLength > 0) {
-    // Only initialize ports for new components that don't have ports yet
-    if (!newPorts.value) {
-      newPorts.value = []
-    }
-
-    // Ensure the array has the right length and preserve existing values
-    while (newPorts.value.length < newLength) {
-      // Generate random port for each new component
-      newPorts.value.push({ exposed: generateRandomPort(), container: null })
-    }
-
-    // Trim if needed (in case components were removed)
-    if (newPorts.value.length > newLength) {
-      newPorts.value = newPorts.value.slice(0, newLength)
-    }
-  } else {
-    newPorts.value = []
-  }
-}, { immediate: true })
-
 // Watch for initialAction changes to update managementAction
 watch(() => props.initialAction, newAction => {
   if (newAction && !props.newApp) {
@@ -6742,7 +6635,6 @@ function removeComposeComponent(index) {
   if (!props.appSpec.compose || index < 0 || index >= props.appSpec.compose.length) return
   props.appSpec.compose.splice(index, 1)
   editIndex.value = null
-  newPorts.value.splice(index, 1)
   delete focusState.value[index]
   document.removeEventListener('click', handleOutsideClick)
 
