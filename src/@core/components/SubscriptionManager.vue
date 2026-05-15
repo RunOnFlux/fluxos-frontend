@@ -1559,33 +1559,7 @@
                     </VCardTitle>
 
                     <!-- Body -->
-                    <VCardText>
-                      <!-- Add entry row -->
-                      <div class="d-flex mb-4 align-center" style="gap: 8px;">
-                        <VTextField
-                          v-model="envDialog.newKey"
-                          :label="t('core.subscriptionManager.key')"
-                          density="compact"
-                          hide-details
-                          @paste="handleEnvPaste"
-                        />
-                        <VTextField
-                          v-model="envDialog.newValue"
-                          :label="t('core.subscriptionManager.value')"
-                          density="compact"
-                          hide-details
-                        />
-                        <VBtn
-                          icon
-                          color="primary"
-                          density="compact"
-                          @click="addEnvEntry"
-                          :disabled="!envDialog.newKey || !envDialog.newValue"
-                        >
-                          <VIcon>mdi-plus</VIcon>
-                        </VBtn>
-                      </div>
-
+                    <VCardText @paste="handleEnvPaste">
                       <!-- Table -->
                       <VSheet
                         v-if="envDialog.entries.length > 0"
@@ -1652,6 +1626,18 @@
                           </tbody>
                         </VTable>
                       </VSheet>
+
+                      <div class="d-flex justify-center mt-4">
+                        <VBtn
+                          color="primary"
+                          variant="tonal"
+                          size="small"
+                          prepend-icon="mdi-plus"
+                          @click="addEnvRow"
+                        >
+                          {{ t('core.subscriptionManager.addVariable') }}
+                        </VBtn>
+                      </div>
                     </VCardText>
 
                     <!-- Actions -->
@@ -1700,29 +1686,7 @@
                       </div>
                     </VCardTitle>
 
-                    <VCardText>
-                      <!-- Add Command -->
-                      <div class="d-flex mb-4 align-center gap-2">
-                        <VTextField
-                          v-model="commandsDialog.newCommand"
-                          :label="t('core.subscriptionManager.newCommand')"
-                          density="compact"
-                          dense
-                          hide-details
-                          class="flex-grow-1"
-                          @paste="handleCommandPaste"
-                        />
-                        <VBtn
-                          icon
-                          color="primary"
-                          density="compact"
-                          @click="addCommandEntry"
-                          :disabled="!commandsDialog.newCommand"
-                        >
-                          <VIcon>mdi-plus</VIcon>
-                        </VBtn>
-                      </div>
-
+                    <VCardText @paste="handleCommandPaste">
                       <!-- Editable Table -->
                       <VSheet v-if="commandsDialog.entries.length > 0" border rounded class="mt-2">
                         <VTable dense class="rounded" style="--v-table-header-height: 40px">
@@ -1771,6 +1735,18 @@
                           </tbody>
                         </VTable>
                       </VSheet>
+
+                      <div class="d-flex justify-center mt-4">
+                        <VBtn
+                          color="primary"
+                          variant="tonal"
+                          size="small"
+                          prepend-icon="mdi-plus"
+                          @click="addCommandRow"
+                        >
+                          {{ t('core.subscriptionManager.addCommand') }}
+                        </VBtn>
+                      </div>
                     </VCardText>
 
                     <VCardActions>
@@ -4044,7 +4020,6 @@ const commandsDialog = reactive({
   show: false,
   componentIndex: null,
   entries: [],
-  newCommand: '',
 })
 
 function openCommandsDialog(index) {
@@ -4054,16 +4029,12 @@ function openCommandsDialog(index) {
   requestAnimationFrame(() => {
     commandsDialog.componentIndex = index
     commandsDialog.entries = [...(component.commands || [])]
-    commandsDialog.newCommand = ''
     commandsDialog.show = true
   })
 }
 
-function addCommandEntry() {
-  const cmd = commandsDialog.newCommand.trim()
-  if (!cmd) return showToast('error', 'Command cannot be empty.')
-  commandsDialog.entries.push(cmd)
-  commandsDialog.newCommand = ''
+function addCommandRow() {
+  commandsDialog.entries.push('')
 }
 
 function removeCommandEntry(i) {
@@ -4105,8 +4076,7 @@ function handleCommandPaste(event) {
     if (!newCmds.length) return
     commandsDialog.entries.push(...newCmds)
     showToast('success', `Imported ${newCmds.length} command(s)`)
-    commandsDialog.newCommand = ''
-    
+
     return
   }
 
@@ -4116,7 +4086,6 @@ function handleCommandPaste(event) {
     event.preventDefault()
     commandsDialog.entries.push(...lines)
     showToast('success', `Imported ${lines.length} command(s)`)
-    commandsDialog.newCommand = ''
   }
 }
 
@@ -4213,7 +4182,9 @@ function handleSpecImport(spec) {
 function saveCommandChanges() {
   const index = commandsDialog.componentIndex
   if (index === null) return
-  props.appSpec.compose[index].commands = [...commandsDialog.entries]
+  props.appSpec.compose[index].commands = commandsDialog.entries
+    .map(c => (typeof c === 'string' ? c.trim() : ''))
+    .filter(c => c.length > 0)
   commandsDialog.show = false
 }
 
@@ -6650,8 +6621,6 @@ const envDialog = reactive({
   show: false,
   componentIndex: null,
   entries: [],
-  newKey: '',
-  newValue: '',
 })
 
 const showEnvImportDialog = ref(false)
@@ -6662,8 +6631,6 @@ watch(() => envDialog.show, val => {
   if (!val) {
     envDialog.componentIndex = null
     envDialog.entries = []
-    envDialog.newKey = ''
-    envDialog.newValue = ''
   }
 })
 
@@ -6676,28 +6643,15 @@ function openEnvDialog(index) {
     envDialog.componentIndex = index
     envDialog.entries = (component.environmentParameters || []).map(str => {
       const [key, ...rest] = str.split('=')
-      
+
       return { key, value: rest.join('=') }
     })
-    envDialog.newKey = ''
-    envDialog.newValue = ''
     envDialog.show = true
   })
 }
 
-function addEnvEntry() {
-  const key = envDialog.newKey.trim()
-  const value = envDialog.newValue.trim()
-
-  if (!key || !value) return showToast('error', 'Key and value are required.')
-
-  if (envDialog.entries.some(e => e.key === key)) {
-    return showToast('error', `Duplicate key "${key}"`)
-  }
-
-  envDialog.entries.push({ key, value })
-  envDialog.newKey = ''
-  envDialog.newValue = ''
+function addEnvRow() {
+  envDialog.entries.push({ key: '', value: '' })
 }
 
 function removeEnvEntry(index) {
@@ -6895,7 +6849,10 @@ function saveEnvChanges() {
   if (index === null) return
 
   const component = props.appSpec.compose[index]
-  component.environmentParameters = envDialog.entries.map(e => `${e.key}=${e.value}`)
+  component.environmentParameters = envDialog.entries
+    .map(e => ({ key: (e.key || '').trim(), value: (e.value || '').trim() }))
+    .filter(e => e.key)
+    .map(e => `${e.key}=${e.value}`)
 
   envDialog.show = false
 }

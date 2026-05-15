@@ -1151,6 +1151,8 @@
       "commands": "コマンド",
       "portBindings": "ポートバインディング",
       "addPortMapping": "ポートマッピングを追加",
+      "addVariable": "変数を追加",
+      "addCommand": "コマンドを追加",
       "exposedPort": "露出ポート",
       "containerPort": "コンテナ港",
       "customDomains": "カスタムドメイン",

@@ -1151,6 +1151,8 @@
       "commands": "ఆదేశాలు",
       "portBindings": "పోర్ట్ బైండింగ్స్",
       "addPortMapping": "పోర్ట్ మ్యాపింగ్ జోడించండి",
+      "addVariable": "వేరియబుల్‌ను జోడించండి",
+      "addCommand": "ఆదేశాన్ని జోడించండి",
       "exposedPort": "బహిర్గతమైన పోర్ట్",
       "containerPort": "కంటైనర్ పోర్ట్",
       "customDomains": "అనుకూల డొమైన్‌లు",

@@ -1151,6 +1151,8 @@
       "commands": "命令",
       "portBindings": "端口绑定",
       "addPortMapping": "添加端口映射",
+      "addVariable": "添加变量",
+      "addCommand": "添加命令",
       "exposedPort": "暴露端口",
       "containerPort": "集装箱港口",
       "customDomains": "自定义域",

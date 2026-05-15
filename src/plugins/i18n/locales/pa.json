@@ -1151,6 +1151,8 @@
       "commands": "ਹੁਕਮ",
       "portBindings": "ਪੋਰਟ ਬਾਈਡਿੰਗ",
       "addPortMapping": "ਪੋਰਟ ਮੈਪਿੰਗ ਜੋੜੋ",
+      "addVariable": "ਵੇਰੀਏਬਲ ਜੋੜੋ",
+      "addCommand": "ਹੁਕਮ ਜੋੜੋ",
       "exposedPort": "ਐਕਸਪੋਜ਼ਡ ਪੋਰਟ",
       "containerPort": "ਕੰਟੇਨਰ ਪੋਰਟ",
       "customDomains": "ਕਸਟਮ ਡੋਮੇਨ",

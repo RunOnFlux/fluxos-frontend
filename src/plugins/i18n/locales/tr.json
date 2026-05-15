@@ -1151,6 +1151,8 @@
       "commands": "Komutlar",
       "portBindings": "Bağlantı Noktası Bağlamaları",
       "addPortMapping": "Bağlantı Noktası Eşlemesi Ekle",
+      "addVariable": "Değişken Ekle",
+      "addCommand": "Komut Ekle",
       "exposedPort": "Açık Bağlantı Noktası",
       "containerPort": "Konteyner Limanı",
       "customDomains": "Özel Etki Alanları",

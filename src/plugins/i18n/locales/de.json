@@ -1151,6 +1151,8 @@
       "commands": "Befehle",
       "portBindings": "Portbindungen",
       "addPortMapping": "Port-Zuordnung hinzufügen",
+      "addVariable": "Variable hinzufügen",
+      "addCommand": "Befehl hinzufügen",
       "exposedPort": "Freigelegter Hafen",
       "containerPort": "Containerhafen",
       "customDomains": "Benutzerdefinierte Domänen",

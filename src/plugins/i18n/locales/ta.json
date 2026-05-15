@@ -1151,6 +1151,8 @@
       "commands": "கட்டளைகள்",
       "portBindings": "போர்ட் பைண்டிங்ஸ்",
       "addPortMapping": "போர்ட் மேப்பிங் சேர்க்கவும்",
+      "addVariable": "மாறியைச் சேர்க்கவும்",
+      "addCommand": "கட்டளையைச் சேர்க்கவும்",
       "exposedPort": "வெளிப்பட்ட துறைமுகம்",
       "containerPort": "கொள்கலன் துறைமுகம்",
       "customDomains": "தனிப்பயன் டொமைன்கள்",

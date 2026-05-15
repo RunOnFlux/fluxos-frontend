@@ -526,6 +526,8 @@
       "validationError": "Błąd walidacji:",
       "portBindings": "Powiązania portów",
       "addPortMapping": "Dodaj mapowanie portu",
+      "addVariable": "Dodaj zmienną",
+      "addCommand": "Dodaj polecenie",
       "payWithCard": "Zapłać kartą",
       "noNodesAvailable": "Brak dostępnych węzłów",
       "upToFortyFiveMinutes": "Do 45 minut",

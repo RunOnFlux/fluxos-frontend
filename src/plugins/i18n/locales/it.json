@@ -1151,6 +1151,8 @@
       "commands": "Comandi",
       "portBindings": "Legami di porta",
       "addPortMapping": "Aggiungi mappatura porta",
+      "addVariable": "Aggiungi variabile",
+      "addCommand": "Aggiungi comando",
       "exposedPort": "Porto esposto",
       "containerPort": "Porto dei contenitori",
       "customDomains": "Domini personalizzati",
