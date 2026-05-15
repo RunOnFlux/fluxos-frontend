@@ -599,87 +599,84 @@
                           {{ t('components.marketplace.installDialog.allowedLocations') }}
                         </h6>
 
-                        <div class="geolocation-controls">
-                          <div class="control-group mb-3">
-                            <label class="control-label">{{ t('components.marketplace.installDialog.continent') }}:</label>
-                            <VSelect
-                              v-model="geolocation.allowedContinent"
-                              :items="[{name: t('components.marketplace.installDialog.global'), code: '', totalInstances: null}, ...availableContinents]"
-                              item-title="name"
-                              item-value="code"
-                              :placeholder="t('components.marketplace.installDialog.globalAllContinents')"
-                              variant="outlined"
-                              density="compact"
-                              class="geolocation-select"
-                              @update:model-value="onContinentChange('allowed', $event)"
-                            >
-                              <template #prepend-inner>
-                                <VIcon icon="mdi-earth" size="20" />
-                              </template>
-                              <template #item="{ props, item }">
-                                <VListItem v-bind="props" class="geolocation-dropdown-item">
-                                  <template #append v-if="item.raw.totalInstances">
-                                    <VChip
-                                      size="x-small"
-                                      color="success"
-                                      variant="tonal"
-                                      class="node-count-chip"
-                                    >
-                                      {{ item.raw.totalInstances }}
-                                    </VChip>
-                                  </template>
-                                </VListItem>
-                              </template>
-                            </VSelect>
-                          </div>
+                        <div
+                          v-for="(row, i) in allowedGeolocations"
+                          :key="`allowed-${i}`"
+                          class="d-flex align-start gap-2 mb-3"
+                        >
+                          <VSelect
+                            :model-value="row.continent"
+                            @update:model-value="v => updateAllowedRow(i, 'continent', v)"
+                            :items="availableContinents"
+                            item-title="name"
+                            item-value="code"
+                            :label="t('components.marketplace.installDialog.continent')"
+                            variant="outlined"
+                            density="compact"
+                            hide-details
+                            style="flex: 1;"
+                          >
+                            <template #prepend-inner>
+                              <VIcon icon="mdi-earth" size="20" />
+                            </template>
+                            <template #item="{ props, item }">
+                              <VListItem v-bind="props" class="geolocation-dropdown-item">
+                                <template #append v-if="item.raw.totalInstances">
+                                  <VChip size="x-small" color="success" variant="tonal" class="node-count-chip">
+                                    {{ item.raw.totalInstances }}
+                                  </VChip>
+                                </template>
+                              </VListItem>
+                            </template>
+                          </VSelect>
+                          <VSelect
+                            :model-value="row.country"
+                            @update:model-value="v => updateAllowedRow(i, 'country', v)"
+                            :items="[{name: t('components.marketplace.installDialog.allCountries'), code: '', instances: null}, ...getCountriesForContinent(row.continent)]"
+                            item-title="name"
+                            item-value="code"
+                            :label="t('components.marketplace.installDialog.country')"
+                            variant="outlined"
+                            density="compact"
+                            hide-details
+                            :disabled="!row.continent"
+                            style="flex: 1;"
+                          >
+                            <template #prepend-inner>
+                              <VIcon icon="mdi-flag" size="20" />
+                            </template>
+                            <template #item="{ props, item }">
+                              <VListItem v-bind="props" class="geolocation-dropdown-item">
+                                <template #append v-if="item.raw.instances">
+                                  <VChip size="x-small" color="success" variant="tonal" class="node-count-chip">
+                                    {{ item.raw.instances }}
+                                  </VChip>
+                                </template>
+                              </VListItem>
+                            </template>
+                          </VSelect>
+                          <VBtn
+                            icon
+                            color="error"
+                            variant="text"
+                            density="comfortable"
+                            @click="removeAllowedGeolocation(i)"
+                            :aria-label="`Remove allowed location ${i + 1}`"
+                          >
+                            <VIcon>mdi-close</VIcon>
+                          </VBtn>
+                        </div>
 
-                          <div class="control-group">
-                            <label class="control-label">{{ t('components.marketplace.installDialog.country') }}:</label>
-                            <VSelect
-                              v-model="geolocation.allowedCountry"
-                              :items="geolocation.allowedContinent ? [{name: t('components.marketplace.installDialog.allCountries'), code: '', instances: null}, ...allowedCountries] : []"
-                              item-title="name"
-                              item-value="code"
-                              :placeholder="t('components.marketplace.installDialog.allCountries')"
-                              variant="outlined"
-                              density="compact"
-                              :disabled="!geolocation.allowedContinent"
-                              class="geolocation-select"
-                              @update:model-value="onCountryChange('allowed', $event)"
-                            >
-                              <template #prepend-inner>
-                                <VIcon icon="mdi-flag" size="20" />
-                              </template>
-                              <template #item="{ props, item }">
-                                <VListItem v-bind="props" class="geolocation-dropdown-item">
-                                  <template #append v-if="item.raw.instances">
-                                    <VChip
-                                      size="x-small"
-                                      color="success"
-                                      variant="tonal"
-                                      class="node-count-chip"
-                                    >
-                                      {{ item.raw.instances }}
-                                    </VChip>
-                                  </template>
-                                </VListItem>
-                              </template>
-                            </VSelect>
-                          </div>
-
-                          <!-- Add Button inside card -->
-                          <div class="mt-3 d-flex justify-center">
-                            <VBtn
-                              color="success"
-                              variant="outlined"
-                              size="small"
-                              @click="addAllowedGeolocation"
-                              :disabled="!geolocation.allowedContinent"
-                            >
-                              <VIcon icon="mdi-plus" size="16" class="mr-1" />
-                              {{ t('components.marketplace.installDialog.addAllowed') }}
-                            </VBtn>
-                          </div>
+                        <div class="mt-3 d-flex justify-center">
+                          <VBtn
+                            color="success"
+                            variant="outlined"
+                            size="small"
+                            prepend-icon="mdi-plus"
+                            @click="addAllowedRow"
+                          >
+                            {{ t('components.marketplace.installDialog.addAllowed') }}
+                          </VBtn>
                         </div>
                       </div>
                     </VCol>
@@ -692,141 +689,88 @@
                           {{ t('components.marketplace.installDialog.forbiddenLocations') }}
                         </h6>
 
-                        <div class="geolocation-controls">
-                          <div class="control-group mb-3">
-                            <label class="control-label">{{ t('components.marketplace.installDialog.continent') }}:</label>
-                            <VSelect
-                              v-model="geolocation.forbiddenContinent"
-                              :items="[{name: t('components.marketplace.installDialog.noContinentsForbidden'), code: '', totalInstances: null}, ...availableContinents]"
-                              item-title="name"
-                              item-value="code"
-                              :placeholder="t('components.marketplace.installDialog.noneNoRestrictions')"
-                              variant="outlined"
-                              density="compact"
-                              class="geolocation-select"
-                              @update:model-value="onContinentChange('forbidden', $event)"
-                            >
-                              <template #prepend-inner>
-                                <VIcon icon="mdi-earth" size="20" />
-                              </template>
-                              <template #item="{ props, item }">
-                                <VListItem v-bind="props" class="geolocation-dropdown-item">
-                                  <template #append v-if="item.raw.totalInstances">
-                                    <VChip
-                                      size="x-small"
-                                      color="error"
-                                      variant="tonal"
-                                      class="node-count-chip"
-                                    >
-                                      {{ item.raw.totalInstances }}
-                                    </VChip>
-                                  </template>
-                                </VListItem>
-                              </template>
-                            </VSelect>
-                          </div>
+                        <div
+                          v-for="(row, i) in forbiddenGeolocations"
+                          :key="`forbidden-${i}`"
+                          class="d-flex align-start gap-2 mb-3"
+                        >
+                          <VSelect
+                            :model-value="row.continent"
+                            @update:model-value="v => updateForbiddenRow(i, 'continent', v)"
+                            :items="availableContinents"
+                            item-title="name"
+                            item-value="code"
+                            :label="t('components.marketplace.installDialog.continent')"
+                            variant="outlined"
+                            density="compact"
+                            hide-details
+                            style="flex: 1;"
+                          >
+                            <template #prepend-inner>
+                              <VIcon icon="mdi-earth" size="20" />
+                            </template>
+                            <template #item="{ props, item }">
+                              <VListItem v-bind="props" class="geolocation-dropdown-item">
+                                <template #append v-if="item.raw.totalInstances">
+                                  <VChip size="x-small" color="error" variant="tonal" class="node-count-chip">
+                                    {{ item.raw.totalInstances }}
+                                  </VChip>
+                                </template>
+                              </VListItem>
+                            </template>
+                          </VSelect>
+                          <VSelect
+                            :model-value="row.country"
+                            @update:model-value="v => updateForbiddenRow(i, 'country', v)"
+                            :items="[{name: t('components.marketplace.installDialog.allCountries'), code: '', instances: null}, ...getCountriesForContinent(row.continent)]"
+                            item-title="name"
+                            item-value="code"
+                            :label="t('components.marketplace.installDialog.country')"
+                            variant="outlined"
+                            density="compact"
+                            hide-details
+                            :disabled="!row.continent"
+                            style="flex: 1;"
+                          >
+                            <template #prepend-inner>
+                              <VIcon icon="mdi-flag" size="20" />
+                            </template>
+                            <template #item="{ props, item }">
+                              <VListItem v-bind="props" class="geolocation-dropdown-item">
+                                <template #append v-if="item.raw.instances">
+                                  <VChip size="x-small" color="error" variant="tonal" class="node-count-chip">
+                                    {{ item.raw.instances }}
+                                  </VChip>
+                                </template>
+                              </VListItem>
+                            </template>
+                          </VSelect>
+                          <VBtn
+                            icon
+                            color="error"
+                            variant="text"
+                            density="comfortable"
+                            @click="removeForbiddenGeolocation(i)"
+                            :aria-label="`Remove forbidden location ${i + 1}`"
+                          >
+                            <VIcon>mdi-close</VIcon>
+                          </VBtn>
+                        </div>
 
-                          <div class="control-group">
-                            <label class="control-label">{{ t('components.marketplace.installDialog.country') }}:</label>
-                            <VSelect
-                              v-model="geolocation.forbiddenCountry"
-                              :items="geolocation.forbiddenContinent ? [{name: t('components.marketplace.installDialog.noCountriesForbidden'), code: '', instances: null}, ...forbiddenCountries] : []"
-                              item-title="name"
-                              item-value="code"
-                              :placeholder="t('components.marketplace.installDialog.allCountries')"
-                              variant="outlined"
-                              density="compact"
-                              :disabled="!geolocation.forbiddenContinent"
-                              class="geolocation-select"
-                              @update:model-value="onCountryChange('forbidden', $event)"
-                            >
-                              <template #prepend-inner>
-                                <VIcon icon="mdi-flag" size="20" />
-                              </template>
-                              <template #item="{ props, item }">
-                                <VListItem v-bind="props" class="geolocation-dropdown-item">
-                                  <template #append v-if="item.raw.instances">
-                                    <VChip
-                                      size="x-small"
-                                      color="error"
-                                      variant="tonal"
-                                      class="node-count-chip"
-                                    >
-                                      {{ item.raw.instances }}
-                                    </VChip>
-                                  </template>
-                                </VListItem>
-                              </template>
-                            </VSelect>
-                          </div>
-
-                          <!-- Add Button inside card -->
-                          <div class="mt-3 d-flex justify-center">
-                            <VBtn
-                              color="error"
-                              variant="outlined"
-                              size="small"
-                              @click="addForbiddenGeolocation"
-                              :disabled="!geolocation.forbiddenContinent"
-                            >
-                              <VIcon icon="mdi-plus" size="16" class="mr-1" />
-                              {{ t('components.marketplace.installDialog.addForbidden') }}
-                            </VBtn>
-                          </div>
+                        <div class="mt-3 d-flex justify-center">
+                          <VBtn
+                            color="error"
+                            variant="outlined"
+                            size="small"
+                            prepend-icon="mdi-plus"
+                            @click="addForbiddenRow"
+                          >
+                            {{ t('components.marketplace.installDialog.addForbidden') }}
+                          </VBtn>
                         </div>
                       </div>
                     </VCol>
                   </VRow>
-
-                  <!-- Current Geolocation Rules -->
-                  <div v-if="allowedGeolocations.length > 0 || forbiddenGeolocations.length > 0" class="mt-4">
-                    <h4 class="mb-3 current-rules-title">
-                      <VIcon icon="mdi-format-list-bulleted" size="20" class="mr-2" />
-                      {{ t('components.marketplace.installDialog.currentRules') }}
-                    </h4>
-
-                    <!-- Allowed Rules -->
-                    <div v-if="allowedGeolocations.length > 0" class="mb-4">
-                      <h5 class="text-success mb-2 d-flex align-center">
-                        <VIcon icon="mdi-check-circle" size="20" class="mr-1" />
-                        {{ t('components.marketplace.installDialog.allowedLocationsColon') }}
-                      </h5>
-                      <div class="d-flex flex-wrap gap-2">
-                        <VChip
-                          v-for="(geo, index) in allowedGeolocations"
-                          :key="index"
-                          color="success"
-                          variant="tonal"
-                          closable
-                          @click:close="removeAllowedGeolocation(index)"
-                        >
-                          <VIcon icon="mdi-check-circle" size="14" class="mr-1" />
-                          {{ formatGeolocationLabel(geo) }}
-                        </VChip>
-                      </div>
-                    </div>
-
-                    <!-- Forbidden Rules - Hidden for Games -->
-                    <div v-if="!isFluxCloudGame && forbiddenGeolocations.length > 0">
-                      <h5 class="text-error mb-2 d-flex align-center">
-                        <VIcon icon="mdi-close-circle" size="20" class="mr-1" />
-                        {{ t('components.marketplace.installDialog.forbiddenLocationsColon') }}
-                      </h5>
-                      <div class="d-flex flex-wrap gap-2">
-                        <VChip
-                          v-for="(geo, index) in forbiddenGeolocations"
-                          :key="index"
-                          color="error"
-                          variant="tonal"
-                          closable
-                          @click:close="removeForbiddenGeolocation(index)"
-                        >
-                          <VIcon icon="mdi-close-circle" size="14" class="mr-1" />
-                          {{ formatGeolocationLabel(geo) }}
-                        </VChip>
-                      </div>
-                    </div>
-                  </div>
 
                   <VAlert
                     type="info"
@@ -2003,12 +1947,6 @@ onMounted(async () => {
     // Clear all geolocation rules to ensure global deployment
     allowedGeolocations.value = []
     forbiddenGeolocations.value = []
-
-    // Reset geolocation selectors to default state
-    geolocation.value.allowedContinent = null
-    geolocation.value.allowedCountry = null
-    geolocation.value.forbiddenContinent = null
-    geolocation.value.forbiddenCountry = null
     showSnackbar(t('components.marketplace.installDialog.messages.usingGlobalDeployment'), 'warning')
   }
 })
@@ -2146,15 +2084,8 @@ watch(() => props.selectedConfig, selectedConfig => {
   }
 }, { immediate: true })
 
-// Geolocation configuration
-const geolocation = ref({
-  allowedContinent: null,
-  allowedCountry: null,
-  forbiddenContinent: null,
-  forbiddenCountry: null,
-})
-
-// Arrays to store multiple geolocation rules
+// Geolocation rules: each row is { continent, country }.
+// Rows with no continent set are ignored at submit time.
 const allowedGeolocations = ref([])
 const forbiddenGeolocations = ref([])
 
@@ -2296,73 +2227,29 @@ const availableCountries = ref([
   { name: 'Antarctica', code: 'AQ', continent: 'AN' },
 ])
 
-// Computed properties for country filtering based on live data
-const allowedCountries = computed(() => {
-  if (!geolocation.value.allowedContinent) return []
+// Country options filtered by live node availability for a given continent.
+function getCountriesForContinent(continentCode) {
+  if (!continentCode) return []
 
   const minInstances = config.value?.instances || 5
-  const countriesWithInstances = []
-  const continentCode = geolocation.value.allowedContinent
-
-  // Group locations by country and calculate total instances per country
   const countryInstanceMap = new Map()
 
   availableLocations.value.forEach(location => {
     const parts = location.value.split('_')
     if (parts.length === 2 && parts[0] === continentCode) {
       const countryCode = parts[1]
-
-      if (!countryInstanceMap.has(countryCode)) {
-        countryInstanceMap.set(countryCode, 0)
-      }
-      countryInstanceMap.set(countryCode, countryInstanceMap.get(countryCode) + location.instances)
+      countryInstanceMap.set(
+        countryCode,
+        (countryInstanceMap.get(countryCode) || 0) + location.instances,
+      )
     }
   })
 
-  // Only include countries with sufficient instances (minimum 24)
-  countryInstanceMap.forEach((totalInstances, countryCode) => {
-    if (totalInstances >= minInstances && totalInstances >= 24) {
-      const countryName = getCountryName(countryCode)
-      countriesWithInstances.push({
-        name: countryName,
-        code: countryCode,
-        instances: totalInstances,
-      })
-    }
-  })
-
-  // Sort by instance count (highest first)
-  return countriesWithInstances.sort((a, b) => b.instances - a.instances)
-})
-
-const forbiddenCountries = computed(() => {
-  if (!geolocation.value.forbiddenContinent) return []
-
-  const minInstances = config.value?.instances || 5
   const countriesWithInstances = []
-  const continentCode = geolocation.value.forbiddenContinent
-
-  // Group locations by country and calculate total instances per country
-  const countryInstanceMap = new Map()
-
-  availableLocations.value.forEach(location => {
-    const parts = location.value.split('_')
-    if (parts.length === 2 && parts[0] === continentCode) {
-      const countryCode = parts[1]
-
-      if (!countryInstanceMap.has(countryCode)) {
-        countryInstanceMap.set(countryCode, 0)
-      }
-      countryInstanceMap.set(countryCode, countryInstanceMap.get(countryCode) + location.instances)
-    }
-  })
-
-  // Only include countries with sufficient instances (minimum 24)
   countryInstanceMap.forEach((totalInstances, countryCode) => {
     if (totalInstances >= minInstances && totalInstances >= 24) {
-      const countryName = getCountryName(countryCode)
       countriesWithInstances.push({
-        name: countryName,
+        name: getCountryName(countryCode),
         code: countryCode,
         instances: totalInstances,
       })
@@ -2370,7 +2257,7 @@ const forbiddenCountries = computed(() => {
   })
 
   return countriesWithInstances.sort((a, b) => b.instances - a.instances)
-})
+}
 
 // Email validation rules (optional with format validation)
 const emailRules = computed(() => [
@@ -4865,234 +4752,59 @@ const deployApp = async () => {
   }
 }
 
-// Geolocation methods
-const onContinentChange = (type, continentCode) => {
-  if (type === 'allowed') {
-    geolocation.value.allowedContinent = continentCode
-    geolocation.value.allowedCountry = null // Reset country when continent changes
-  } else {
-    geolocation.value.forbiddenContinent = continentCode
-    geolocation.value.forbiddenCountry = null // Reset country when continent changes
-  }
-  updateGeolocationConfiguration()
-}
+// Serialize a row to the spec string format ('ac<CONT>_<COUNT>' or 'a!c<CONT>_<COUNT>').
+// Rows without a continent are omitted (they're considered empty/in-progress).
+function serializeGeoRow(row, isForbidden) {
+  if (!row.continent) return null
+  const prefix = isForbidden ? 'a!c' : 'ac'
+  let code = `${prefix}${row.continent}`
+  if (row.country) code += `_${row.country}`
 
-const onCountryChange = (type, countryCode) => {
-  if (type === 'allowed') {
-    geolocation.value.allowedCountry = countryCode
-  } else {
-    geolocation.value.forbiddenCountry = countryCode
-  }
-  updateGeolocationConfiguration()
-}
-
-const updateGeolocationConfiguration = () => {
-  // Generate geolocation codes from multiple arrays
-  const geolocationCodes = []
-
-  // Add all allowed geolocations
-  geolocationCodes.push(...allowedGeolocations.value)
-
-  // Add all forbidden geolocations (these override allowed ones in FluxOS)
-  geolocationCodes.push(...forbiddenGeolocations.value)
-
-  return geolocationCodes
+  return code
 }
 
 const getGeolocationCodes = () => {
-  return updateGeolocationConfiguration()
+  const codes = []
+  allowedGeolocations.value.forEach(r => {
+    const c = serializeGeoRow(r, false)
+    if (c) codes.push(c)
+  })
+  forbiddenGeolocations.value.forEach(r => {
+    const c = serializeGeoRow(r, true)
+    if (c) codes.push(c)
+  })
+
+  return codes
 }
 
-// Functions for managing multiple geolocation entries
-const addAllowedGeolocation = () => {
-  if (!geolocation.value.allowedContinent) return
-
-  let geoCode = `ac${geolocation.value.allowedContinent}`
-  if (geolocation.value.allowedCountry) {
-    geoCode += `_${geolocation.value.allowedCountry}`
-  }
-
-  // Check for conflicts with forbidden geolocations
-  const conflictCheck = checkGeolocationConflicts(geoCode, 'allowed')
-  if (conflictCheck.hasConflict) {
-    showSnackbar(conflictCheck.message, 'error', 3000, 'mdi-alert-circle')
-    
-    return
-  }
-
-  // Check if this geolocation already exists
-  if (!allowedGeolocations.value.includes(geoCode)) {
-    allowedGeolocations.value.push(geoCode)
-    showSnackbar(`Added allowed location: ${formatGeolocationLabel(geoCode)}`, 'success', 3000, 'mdi-check-circle')
-  } else {
-    showSnackbar(t('components.marketplace.installDialog.messages.locationAlreadyInAllowedList'), 'warning', 3000, 'mdi-alert')
-    
-    return
-  }
-
-  // Reset the form
-  geolocation.value.allowedContinent = null
-  geolocation.value.allowedCountry = null
+const addAllowedRow = () => {
+  allowedGeolocations.value.push({ continent: '', country: '' })
 }
 
-const addForbiddenGeolocation = () => {
-  if (!geolocation.value.forbiddenContinent) return
+const addForbiddenRow = () => {
+  forbiddenGeolocations.value.push({ continent: '', country: '' })
+}
 
-  let geoCode = `a!c${geolocation.value.forbiddenContinent}`
-  if (geolocation.value.forbiddenCountry) {
-    geoCode += `_${geolocation.value.forbiddenCountry}`
-  }
+const updateAllowedRow = (index, field, value) => {
+  const row = allowedGeolocations.value[index]
+  if (!row) return
+  row[field] = value || ''
+  if (field === 'continent') row.country = ''
+}
 
-  // Check for conflicts with allowed geolocations
-  const conflictCheck = checkGeolocationConflicts(geoCode, 'forbidden')
-  if (conflictCheck.hasConflict) {
-    showSnackbar(conflictCheck.message, 'error', 3000, 'mdi-alert-circle')
-    
-    return
-  }
-
-  // Check if this geolocation already exists
-  if (!forbiddenGeolocations.value.includes(geoCode)) {
-    forbiddenGeolocations.value.push(geoCode)
-    showSnackbar(`Added forbidden location: ${formatGeolocationLabel(geoCode)}`, 'success', 3000, 'mdi-check-circle')
-  } else {
-    showSnackbar(t('components.marketplace.installDialog.messages.locationAlreadyInForbiddenList'), 'warning', 3000, 'mdi-alert')
-    
-    return
-  }
-
-  // Reset the form
-  geolocation.value.forbiddenContinent = null
-  geolocation.value.forbiddenCountry = null
+const updateForbiddenRow = (index, field, value) => {
+  const row = forbiddenGeolocations.value[index]
+  if (!row) return
+  row[field] = value || ''
+  if (field === 'continent') row.country = ''
 }
 
 const removeAllowedGeolocation = index => {
-  const removed = allowedGeolocations.value.splice(index, 1)
-  showSnackbar(`Removed allowed location: ${formatGeolocationLabel(removed[0])}`, 'info', 3000, 'mdi-delete')
+  allowedGeolocations.value.splice(index, 1)
 }
 
 const removeForbiddenGeolocation = index => {
-  const removed = forbiddenGeolocations.value.splice(index, 1)
-  showSnackbar(`Removed forbidden location: ${formatGeolocationLabel(removed[0])}`, 'info', 3000, 'mdi-delete')
-}
-
-const clearAllGeolocations = () => {
-  const totalRemoved = allowedGeolocations.value.length + forbiddenGeolocations.value.length
-  allowedGeolocations.value = []
-  forbiddenGeolocations.value = []
-  showSnackbar(`Cleared ${totalRemoved} geolocation rules`, 'success', 3000, 'mdi-delete-sweep')
-}
-
-const formatGeolocationLabel = geoCode => {
-  const isAllowed = geoCode.startsWith('ac')
-  const isForbidden = geoCode.startsWith('a!c')
-
-  let locationCode
-  if (isAllowed) {
-    locationCode = geoCode.slice(2) // Remove 'ac'
-  } else if (isForbidden) {
-    locationCode = geoCode.slice(3) // Remove 'a!c'
-  } else {
-    return geoCode
-  }
-
-  const parts = locationCode.split('_')
-  const continentCode = parts[0]
-  const countryCode = parts[1]
-
-  const continentName = getContinentName(continentCode) || continentCode
-  const countryName = countryCode ? getCountryName(countryCode) : 'All Countries'
-
-  if (countryCode) {
-    return `${continentName}, ${countryName}`
-  }
-  
-  return continentName
-}
-
-// Check for geolocation conflicts that would exclude each other
-const checkGeolocationConflicts = (newGeoCode, type) => {
-  const newLocationCode = newGeoCode.startsWith('a!c') ? newGeoCode.slice(3) : newGeoCode.slice(2)
-  const newParts = newLocationCode.split('_')
-  const newContinent = newParts[0]
-  const newCountry = newParts[1]
-
-  if (type === 'allowed') {
-    // Check conflicts with forbidden geolocations
-    for (const forbiddenGeo of forbiddenGeolocations.value) {
-      const forbiddenLocation = forbiddenGeo.slice(3) // Remove 'a!c'
-      const forbiddenParts = forbiddenLocation.split('_')
-      const forbiddenContinent = forbiddenParts[0]
-      const forbiddenCountry = forbiddenParts[1]
-
-      // Exact match conflict
-      if (forbiddenLocation === newLocationCode) {
-        return {
-          hasConflict: true,
-          message: `Cannot allow "${formatGeolocationLabel(newGeoCode)}" because it's already forbidden`,
-        }
-      }
-
-      // Parent-child conflicts
-      if (newCountry && forbiddenContinent === newContinent && !forbiddenCountry) {
-        return {
-          hasConflict: true,
-          message: `Cannot allow "${formatGeolocationLabel(newGeoCode)}" because entire continent is forbidden`,
-        }
-      }
-
-      if (!newCountry && forbiddenContinent === newContinent && forbiddenCountry) {
-        return {
-          hasConflict: true,
-          message: `Cannot allow entire continent because "${getContinentName(forbiddenContinent)} → ${getCountryName(forbiddenCountry)}" is already forbidden`,
-        }
-      }
-    }
-  } else {
-    // For forbidden geolocations: auto-remove conflicting allowed rules (forbidden wins)
-    const conflictsToRemove = []
-
-    for (let i = 0; i < allowedGeolocations.value.length; i++) {
-      const allowedGeo = allowedGeolocations.value[i]
-      const allowedLocation = allowedGeo.slice(2) // Remove 'ac'
-      const allowedParts = allowedLocation.split('_')
-      const allowedContinent = allowedParts[0]
-      const allowedCountry = allowedParts[1]
-
-      // Exact match conflict - remove the allowed rule
-      if (allowedLocation === newLocationCode) {
-        conflictsToRemove.push({
-          index: i,
-          geo: allowedGeo,
-          reason: 'exact match',
-        })
-      }
-
-      // Parent-child conflicts - remove conflicting allowed rules
-      if (newCountry && allowedContinent === newContinent && !allowedCountry) {
-        conflictsToRemove.push({
-          index: i,
-          geo: allowedGeo,
-          reason: 'continent already allowed',
-        })
-      }
-
-      if (!newCountry && allowedContinent === newContinent && allowedCountry) {
-        conflictsToRemove.push({
-          index: i,
-          geo: allowedGeo,
-          reason: 'country conflicts with continent',
-        })
-      }
-    }
-
-    // Remove conflicts (in reverse order to maintain indices)
-    conflictsToRemove.reverse().forEach(conflict => {
-      allowedGeolocations.value.splice(conflict.index, 1)
-    })
-  }
-
-  return { hasConflict: false }
+  forbiddenGeolocations.value.splice(index, 1)
 }
 
 // FluxOS-style live geolocation data fetching

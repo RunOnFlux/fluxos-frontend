@@ -1009,88 +1009,105 @@
                                         {{ t('pages.apps.register.orbit.config.allowedLocations') }}
                                       </h6>
 
-                                      <VSelect
-                                        v-model="geolocation.allowedContinent"
-                                        :items="getContinents().filter(c => c.value !== 'ALL')"
-                                        item-title="text"
-                                        item-value="value"
-                                        :label="t('pages.apps.register.orbit.config.continentLabel')"
-                                        prepend-inner-icon="mdi-earth"
-                                        variant="outlined"
-                                        density="compact"
-                                        clearable
-                                        class="mb-3"
-                                        @update:model-value="geolocation.allowedCountry = null; geolocation.allowedRegion = null"
+                                      <div
+                                        v-for="(row, i) in allowedGeolocations"
+                                        :key="`allowed-${i}`"
+                                        class="mb-4"
                                       >
-                                        <template #item="{ props, item }">
-                                          <VListItem v-bind="props">
-                                            <template v-if="item.raw.instances" #append>
-                                              <VChip size="x-small" color="success" variant="tonal">
-                                                {{ item.raw.instances }}
-                                              </VChip>
-                                            </template>
-                                          </VListItem>
-                                        </template>
-                                      </VSelect>
-
-                                      <VSelect
-                                        v-model="geolocation.allowedCountry"
-                                        :items="getAllowedCountries(geolocation.allowedContinent)"
-                                        item-title="text"
-                                        item-value="value"
-                                        :label="t('pages.apps.register.orbit.config.countryLabel')"
-                                        prepend-inner-icon="mdi-flag"
-                                        variant="outlined"
-                                        density="compact"
-                                        clearable
-                                        :disabled="!geolocation.allowedContinent"
-                                        class="mb-3"
-                                        @update:model-value="geolocation.allowedRegion = null"
-                                      >
-                                        <template #item="{ props, item }">
-                                          <VListItem v-bind="props">
-                                            <template v-if="item.raw.instances" #append>
-                                              <VChip size="x-small" color="success" variant="tonal">
-                                                {{ item.raw.instances }}
-                                              </VChip>
-                                            </template>
-                                          </VListItem>
-                                        </template>
-                                      </VSelect>
-
-                                      <VSelect
-                                        v-model="geolocation.allowedRegion"
-                                        :items="getAllowedRegions(geolocation.allowedContinent, geolocation.allowedCountry)"
-                                        item-title="text"
-                                        item-value="value"
-                                        :label="t('pages.apps.register.orbit.config.regionLabel')"
-                                        prepend-inner-icon="mdi-map-marker-radius"
-                                        variant="outlined"
-                                        density="compact"
-                                        clearable
-                                        :disabled="!geolocation.allowedCountry"
-                                        class="mb-3"
-                                      >
-                                        <template #item="{ props, item }">
-                                          <VListItem v-bind="props">
-                                            <template v-if="item.raw.instances" #append>
-                                              <VChip size="x-small" color="success" variant="tonal">
-                                                {{ item.raw.instances }}
-                                              </VChip>
-                                            </template>
-                                          </VListItem>
-                                        </template>
-                                      </VSelect>
+                                        <div class="d-flex align-start gap-2">
+                                          <div class="flex-grow-1">
+                                            <VSelect
+                                              :model-value="row.continent"
+                                              @update:model-value="v => updateAllowedRow(i, 'continent', v)"
+                                              :items="getContinents().filter(c => c.value !== 'ALL')"
+                                              item-title="text"
+                                              item-value="value"
+                                              :label="t('pages.apps.register.orbit.config.continentLabel')"
+                                              prepend-inner-icon="mdi-earth"
+                                              variant="outlined"
+                                              density="compact"
+                                              hide-details
+                                              class="mb-2"
+                                            >
+                                              <template #item="{ props, item }">
+                                                <VListItem v-bind="props">
+                                                  <template v-if="item.raw.instances" #append>
+                                                    <VChip size="x-small" color="success" variant="tonal">
+                                                      {{ item.raw.instances }}
+                                                    </VChip>
+                                                  </template>
+                                                </VListItem>
+                                              </template>
+                                            </VSelect>
+                                            <VSelect
+                                              :model-value="row.country"
+                                              @update:model-value="v => updateAllowedRow(i, 'country', v)"
+                                              :items="getAllowedCountries(row.continent)"
+                                              item-title="text"
+                                              item-value="value"
+                                              :label="t('pages.apps.register.orbit.config.countryLabel')"
+                                              prepend-inner-icon="mdi-flag"
+                                              variant="outlined"
+                                              density="compact"
+                                              hide-details
+                                              :disabled="!row.continent"
+                                              class="mb-2"
+                                            >
+                                              <template #item="{ props, item }">
+                                                <VListItem v-bind="props">
+                                                  <template v-if="item.raw.instances" #append>
+                                                    <VChip size="x-small" color="success" variant="tonal">
+                                                      {{ item.raw.instances }}
+                                                    </VChip>
+                                                  </template>
+                                                </VListItem>
+                                              </template>
+                                            </VSelect>
+                                            <VSelect
+                                              :model-value="row.region"
+                                              @update:model-value="v => updateAllowedRow(i, 'region', v)"
+                                              :items="getAllowedRegions(row.continent, row.country)"
+                                              item-title="text"
+                                              item-value="value"
+                                              :label="t('pages.apps.register.orbit.config.regionLabel')"
+                                              prepend-inner-icon="mdi-map-marker-radius"
+                                              variant="outlined"
+                                              density="compact"
+                                              hide-details
+                                              :disabled="!row.country"
+                                            >
+                                              <template #item="{ props, item }">
+                                                <VListItem v-bind="props">
+                                                  <template v-if="item.raw.instances" #append>
+                                                    <VChip size="x-small" color="success" variant="tonal">
+                                                      {{ item.raw.instances }}
+                                                    </VChip>
+                                                  </template>
+                                                </VListItem>
+                                              </template>
+                                            </VSelect>
+                                          </div>
+                                          <VBtn
+                                            icon
+                                            color="error"
+                                            variant="text"
+                                            density="comfortable"
+                                            @click="removeAllowedGeolocation(i)"
+                                            :aria-label="`Remove allowed location ${i + 1}`"
+                                          >
+                                            <VIcon>mdi-close</VIcon>
+                                          </VBtn>
+                                        </div>
+                                      </div>
 
                                       <div class="d-flex justify-center">
                                         <VBtn
                                           color="success"
                                           variant="outlined"
                                           size="small"
-                                          :disabled="!geolocation.allowedContinent"
-                                          @click="addAllowedGeolocation"
+                                          prepend-icon="mdi-plus"
+                                          @click="addAllowedRow"
                                         >
-                                          <VIcon icon="mdi-plus" size="16" class="mr-1" />
                                           {{ t('pages.apps.register.orbit.config.addAllowed') }}
                                         </VBtn>
                                       </div>
@@ -1105,146 +1122,111 @@
                                         {{ t('pages.apps.register.orbit.config.forbiddenLocations') }}
                                       </h6>
 
-                                      <VSelect
-                                        v-model="geolocation.forbiddenContinent"
-                                        :items="getContinents().filter(c => c.value !== 'ALL')"
-                                        item-title="text"
-                                        item-value="value"
-                                        :label="t('pages.apps.register.orbit.config.continentLabel')"
-                                        prepend-inner-icon="mdi-earth"
-                                        variant="outlined"
-                                        density="compact"
-                                        clearable
-                                        class="mb-3"
-                                        @update:model-value="geolocation.forbiddenCountry = null; geolocation.forbiddenRegion = null"
+                                      <div
+                                        v-for="(row, i) in forbiddenGeolocations"
+                                        :key="`forbidden-${i}`"
+                                        class="mb-4"
                                       >
-                                        <template #item="{ props, item }">
-                                          <VListItem v-bind="props">
-                                            <template v-if="item.raw.instances" #append>
-                                              <VChip size="x-small" color="error" variant="tonal">
-                                                {{ item.raw.instances }}
-                                              </VChip>
-                                            </template>
-                                          </VListItem>
-                                        </template>
-                                      </VSelect>
-
-                                      <VSelect
-                                        v-model="geolocation.forbiddenCountry"
-                                        :items="getForbiddenCountries(geolocation.forbiddenContinent)"
-                                        item-title="text"
-                                        item-value="value"
-                                        :label="t('pages.apps.register.orbit.config.countryLabel')"
-                                        prepend-inner-icon="mdi-flag"
-                                        variant="outlined"
-                                        density="compact"
-                                        clearable
-                                        :disabled="!geolocation.forbiddenContinent"
-                                        class="mb-3"
-                                        @update:model-value="geolocation.forbiddenRegion = null"
-                                      >
-                                        <template #item="{ props, item }">
-                                          <VListItem v-bind="props">
-                                            <template v-if="item.raw.instances" #append>
-                                              <VChip size="x-small" color="error" variant="tonal">
-                                                {{ item.raw.instances }}
-                                              </VChip>
-                                            </template>
-                                          </VListItem>
-                                        </template>
-                                      </VSelect>
-
-                                      <VSelect
-                                        v-model="geolocation.forbiddenRegion"
-                                        :items="getForbiddenRegions(geolocation.forbiddenContinent, geolocation.forbiddenCountry)"
-                                        item-title="text"
-                                        item-value="value"
-                                        :label="t('pages.apps.register.orbit.config.regionLabel')"
-                                        prepend-inner-icon="mdi-map-marker-radius"
-                                        variant="outlined"
-                                        density="compact"
-                                        clearable
-                                        :disabled="!geolocation.forbiddenCountry"
-                                        class="mb-3"
-                                      >
-                                        <template #item="{ props, item }">
-                                          <VListItem v-bind="props">
-                                            <template v-if="item.raw.instances" #append>
-                                              <VChip size="x-small" color="error" variant="tonal">
-                                                {{ item.raw.instances }}
-                                              </VChip>
-                                            </template>
-                                          </VListItem>
-                                        </template>
-                                      </VSelect>
+                                        <div class="d-flex align-start gap-2">
+                                          <div class="flex-grow-1">
+                                            <VSelect
+                                              :model-value="row.continent"
+                                              @update:model-value="v => updateForbiddenRow(i, 'continent', v)"
+                                              :items="getContinents().filter(c => c.value !== 'ALL')"
+                                              item-title="text"
+                                              item-value="value"
+                                              :label="t('pages.apps.register.orbit.config.continentLabel')"
+                                              prepend-inner-icon="mdi-earth"
+                                              variant="outlined"
+                                              density="compact"
+                                              hide-details
+                                              class="mb-2"
+                                            >
+                                              <template #item="{ props, item }">
+                                                <VListItem v-bind="props">
+                                                  <template v-if="item.raw.instances" #append>
+                                                    <VChip size="x-small" color="error" variant="tonal">
+                                                      {{ item.raw.instances }}
+                                                    </VChip>
+                                                  </template>
+                                                </VListItem>
+                                              </template>
+                                            </VSelect>
+                                            <VSelect
+                                              :model-value="row.country"
+                                              @update:model-value="v => updateForbiddenRow(i, 'country', v)"
+                                              :items="getForbiddenCountries(row.continent)"
+                                              item-title="text"
+                                              item-value="value"
+                                              :label="t('pages.apps.register.orbit.config.countryLabel')"
+                                              prepend-inner-icon="mdi-flag"
+                                              variant="outlined"
+                                              density="compact"
+                                              hide-details
+                                              :disabled="!row.continent"
+                                              class="mb-2"
+                                            >
+                                              <template #item="{ props, item }">
+                                                <VListItem v-bind="props">
+                                                  <template v-if="item.raw.instances" #append>
+                                                    <VChip size="x-small" color="error" variant="tonal">
+                                                      {{ item.raw.instances }}
+                                                    </VChip>
+                                                  </template>
+                                                </VListItem>
+                                              </template>
+                                            </VSelect>
+                                            <VSelect
+                                              :model-value="row.region"
+                                              @update:model-value="v => updateForbiddenRow(i, 'region', v)"
+                                              :items="getForbiddenRegions(row.continent, row.country)"
+                                              item-title="text"
+                                              item-value="value"
+                                              :label="t('pages.apps.register.orbit.config.regionLabel')"
+                                              prepend-inner-icon="mdi-map-marker-radius"
+                                              variant="outlined"
+                                              density="compact"
+                                              hide-details
+                                              :disabled="!row.country"
+                                            >
+                                              <template #item="{ props, item }">
+                                                <VListItem v-bind="props">
+                                                  <template v-if="item.raw.instances" #append>
+                                                    <VChip size="x-small" color="error" variant="tonal">
+                                                      {{ item.raw.instances }}
+                                                    </VChip>
+                                                  </template>
+                                                </VListItem>
+                                              </template>
+                                            </VSelect>
+                                          </div>
+                                          <VBtn
+                                            icon
+                                            color="error"
+                                            variant="text"
+                                            density="comfortable"
+                                            @click="removeForbiddenGeolocation(i)"
+                                            :aria-label="`Remove forbidden location ${i + 1}`"
+                                          >
+                                            <VIcon>mdi-close</VIcon>
+                                          </VBtn>
+                                        </div>
+                                      </div>
 
                                       <div class="d-flex justify-center">
                                         <VBtn
                                           color="error"
                                           variant="outlined"
                                           size="small"
-                                          :disabled="!geolocation.forbiddenContinent"
-                                          @click="addForbiddenGeolocation"
+                                          prepend-icon="mdi-plus"
+                                          @click="addForbiddenRow"
                                         >
-                                          <VIcon icon="mdi-plus" size="16" class="mr-1" />
                                           {{ t('pages.apps.register.orbit.config.addForbidden') }}
                                         </VBtn>
                                       </div>
                                     </VCard>
                                   </VCol>
                                 </VRow>
-
-                                <!-- Current Geolocation Rules -->
-                                <div v-if="allowedGeolocations.length > 0 || forbiddenGeolocations.length > 0" class="mt-4">
-                                  <h6 class="text-subtitle-2 mb-3 d-flex align-center">
-                                    <VIcon icon="mdi-format-list-bulleted" size="18" class="mr-2" />
-                                    {{ t('pages.apps.register.orbit.config.currentRules') }}
-                                  </h6>
-
-                                  <!-- Allowed Rules -->
-                                  <div v-if="allowedGeolocations.length > 0" class="mb-3">
-                                    <p class="text-caption text-success mb-2 d-flex align-center">
-                                      <VIcon icon="mdi-check-circle" size="16" class="mr-1" />
-                                      {{ t('pages.apps.register.orbit.config.allowedLocationsColon') }}
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2">
-                                      <VChip
-                                        v-for="(geo, index) in allowedGeolocations"
-                                        :key="'allowed-' + index"
-                                        color="success"
-                                        variant="tonal"
-                                        closable
-                                        size="small"
-                                        @click:close="removeAllowedGeolocation(index)"
-                                      >
-                                        <VIcon icon="mdi-check-circle" size="14" class="mr-1" />
-                                        {{ formatGeolocationLabel(geo) }}
-                                      </VChip>
-                                    </div>
-                                  </div>
-
-                                  <!-- Forbidden Rules -->
-                                  <div v-if="forbiddenGeolocations.length > 0">
-                                    <p class="text-caption text-error mb-2 d-flex align-center">
-                                      <VIcon icon="mdi-close-circle" size="16" class="mr-1" />
-                                      {{ t('pages.apps.register.orbit.config.forbiddenLocationsColon') }}
-                                    </p>
-                                    <div class="d-flex flex-wrap gap-2">
-                                      <VChip
-                                        v-for="(geo, index) in forbiddenGeolocations"
-                                        :key="'forbidden-' + index"
-                                        color="error"
-                                        variant="tonal"
-                                        closable
-                                        size="small"
-                                        @click:close="removeForbiddenGeolocation(index)"
-                                      >
-                                        <VIcon icon="mdi-close-circle" size="14" class="mr-1" />
-                                        {{ formatGeolocationLabel(geo) }}
-                                      </VChip>
-                                    </div>
-                                  </div>
-                                </div>
 
                                 <p class="text-caption text-medium-emphasis mt-3">
                                   <VIcon size="14" class="mr-1">mdi-information-outline</VIcon>
@@ -3355,8 +3337,8 @@ const applyOrbitCtaPrefill = async (payload, options = {}) => {
   }
 
   if (Array.isArray(payload.allowedGeolocations) || Array.isArray(payload.forbiddenGeolocations)) {
-    allowedGeolocations.value = Array.isArray(payload.allowedGeolocations) ? payload.allowedGeolocations : []
-    forbiddenGeolocations.value = Array.isArray(payload.forbiddenGeolocations) ? payload.forbiddenGeolocations : []
+    setAllowedFromPayload(payload.allowedGeolocations)
+    setForbiddenFromPayload(payload.forbiddenGeolocations)
 
     if (payload.selectedGeo?.continent) {
       selectedGeo.value = payload.selectedGeo
@@ -4502,6 +4484,7 @@ const detectMonorepoStructure = async (parsed, evaluationGeneration = null) => {
   // Monorepo config files to check
   const monorepoConfigs = [
     { file: 'pnpm-workspace.yaml', type: 'pnpm', parser: parsePnpmWorkspace },
+
     // Prefer package.json workspaces before tool-specific fallback defaults.
     { file: 'package.json', type: 'npm/yarn', parser: parsePackageJsonWorkspaces },
     { file: 'turbo.json', type: 'turbo', parser: parseTurboConfig },
@@ -5321,6 +5304,7 @@ watch(repoUrl, newVal => {
   envVarsImportedFromConfig.value = false
   configImportSourceFile.value = ''
   envExpansionPanel.value = null
+
   // Invalidate in-flight branch/path evaluations for previous repository URL.
   nextRepoEvaluationGeneration()
 
@@ -5402,6 +5386,7 @@ watch(projectPath, () => {
         detectPort: () => detectPortFromRepo(parsed, evaluationGeneration),
       })
       await checkProjectCompatibility(parsed, {}, evaluationGeneration)
+      
       return
     }
 
@@ -5518,15 +5503,9 @@ const customDomain = ref('')
 const possibleLocations = ref([])
 const selectedGeo = ref({ continent: 'ALL', country: 'ALL', region: 'ALL' })
 
-// Multiple geolocation arrays (like Docker app registration)
-const geolocation = ref({
-  allowedContinent: null,
-  allowedCountry: null,
-  allowedRegion: null,
-  forbiddenContinent: null,
-  forbiddenCountry: null,
-  forbiddenRegion: null,
-})
+// Geolocation rules: each row is { continent, country, region }. Rows with no
+// continent are ignored at submit time. Strings are serialized only via
+// getGeolocationCodes() when building the spec.
 const allowedGeolocations = ref([])
 const forbiddenGeolocations = ref([])
 
@@ -5654,17 +5633,27 @@ const buildGeoCode = selection => {
   return code
 }
 
-// Get human-readable label for geolocation code
-const getGeolocationLabel = code => {
-  const raw = code.replace(/^a!?c/, '')
-  if (raw === 'ALL') return 'Global (Any Location)'
+// Get human-readable label for a geolocation entry. Accepts either a row object
+// ({ continent, country, region }) or a legacy string code.
+const getGeolocationLabel = entry => {
+  let cont = ''
+  let count = ''
+  let region = ''
+  if (typeof entry === 'string') {
+    const raw = entry.replace(/^a!?c/, '')
+    if (raw === 'ALL') return 'Global (Any Location)'
+    ;[cont, count, region] = raw.split('_')
+  } else if (entry && typeof entry === 'object') {
+    cont = entry.continent || ''
+    count = entry.country || ''
+    region = entry.region || ''
+  }
+  if (!cont) return 'Global (Any Location)'
 
-  const [cont, count, region] = raw.split('_')
   const contName = geolocations.continents.find(c => c.code === cont)?.name || cont
   const countName = count ? geolocations.countries.find(c => c.code === count)?.name || count : ''
-  const regionName = region || ''
 
-  if (regionName) return `${contName} / ${countName} / ${regionName}`
+  if (region) return `${contName} / ${countName} / ${region}`
   if (countName) return `${contName} / ${countName}`
 
   return contName
@@ -5714,185 +5703,96 @@ const getForbiddenCountries = continentCode => getAllowedCountries(continentCode
 // Get forbidden regions for country
 const getForbiddenRegions = (continentCode, countryCode) => getAllowedRegions(continentCode, countryCode)
 
-// Build geolocation code from selection (for multi-select)
-const buildGeoCodeFromSelection = (continent, country, region, isForbidden = false) => {
+// Parse a spec string into a row object. Used when loading persisted/prefilled data.
+const parseGeoString = code => {
+  const stripped = code.replace(/^a!c|^ac/, '')
+  const [continent = '', country = '', region = ''] = stripped.split('_')
+
+  return { continent, country, region }
+}
+
+// Hydrate the lists from a payload that may contain either strings (legacy) or objects.
+const setAllowedFromPayload = list => {
+  allowedGeolocations.value = (Array.isArray(list) ? list : []).map(item =>
+    typeof item === 'string' ? parseGeoString(item) : { ...item },
+  )
+}
+
+const setForbiddenFromPayload = list => {
+  forbiddenGeolocations.value = (Array.isArray(list) ? list : []).map(item =>
+    typeof item === 'string' ? parseGeoString(item) : { ...item },
+  )
+}
+
+// Serialize a row object to spec string format. Returns null for incomplete rows
+// (no continent set), which are filtered out before submission.
+const serializeGeoRow = (row, isForbidden) => {
+  if (!row.continent) return null
   const prefix = isForbidden ? 'a!c' : 'ac'
-  let code = `${prefix}${continent}`
-  if (country) {
-    code += `_${country}`
-    if (region) {
-      code += `_${region}`
+  let code = `${prefix}${row.continent}`
+  if (row.country) {
+    code += `_${row.country}`
+    if (row.region) {
+      code += `_${row.region}`
     }
   }
-  
+
   return code
 }
 
-// Format geolocation label for chips display
-const formatGeolocationLabel = geoCode => {
-  const isAllowed = geoCode.startsWith('ac') && !geoCode.startsWith('a!c')
-  const isForbidden = geoCode.startsWith('a!c')
-
-  let locationCode
-  if (isAllowed) {
-    locationCode = geoCode.slice(2) // Remove 'ac'
-  } else if (isForbidden) {
-    locationCode = geoCode.slice(3) // Remove 'a!c'
-  } else {
-    return geoCode
-  }
-
-  const [cont, count, region] = locationCode.split('_')
-  const contName = geolocations.continents.find(c => c.code === cont)?.name || cont
-  const countName = count ? geolocations.countries.find(c => c.code === count)?.name || count : null
-  const regionName = region || null
-
-  if (regionName) return `${contName} / ${countName} / ${regionName}`
-  if (countName) return `${contName} / ${countName}`
-  
-  return contName
+// Row-based mutations
+const addAllowedRow = () => {
+  allowedGeolocations.value.push({ continent: '', country: '', region: '' })
 }
 
-// Check for geolocation conflicts
-const checkGeolocationConflicts = (newGeoCode, type) => {
-  const newLocationCode = newGeoCode.startsWith('a!c') ? newGeoCode.slice(3) : newGeoCode.slice(2)
-  const newParts = newLocationCode.split('_')
-  const newContinent = newParts[0]
-  const newCountry = newParts[1]
-  const newRegion = newParts[2]
-
-  if (type === 'allowed') {
-    for (const forbiddenGeo of forbiddenGeolocations.value) {
-      const forbiddenLocationCode = forbiddenGeo.slice(3)
-      const forbiddenParts = forbiddenLocationCode.split('_')
-      const forbiddenContinent = forbiddenParts[0]
-      const forbiddenCountry = forbiddenParts[1]
-      const forbiddenRegion = forbiddenParts[2]
-
-      // Check for exact match or hierarchical conflict
-      if (newContinent === forbiddenContinent) {
-        if (!newCountry && !forbiddenCountry) {
-          return { hasConflict: true, message: `This location conflicts with forbidden: ${formatGeolocationLabel(forbiddenGeo)}` }
-        }
-        if (newCountry === forbiddenCountry) {
-          if (!newRegion && !forbiddenRegion) {
-            return { hasConflict: true, message: `This location conflicts with forbidden: ${formatGeolocationLabel(forbiddenGeo)}` }
-          }
-          if (newRegion === forbiddenRegion) {
-            return { hasConflict: true, message: `This location conflicts with forbidden: ${formatGeolocationLabel(forbiddenGeo)}` }
-          }
-        }
-      }
-    }
-  } else {
-    for (const allowedGeo of allowedGeolocations.value) {
-      const allowedLocationCode = allowedGeo.slice(2)
-      const allowedParts = allowedLocationCode.split('_')
-      const allowedContinent = allowedParts[0]
-      const allowedCountry = allowedParts[1]
-      const allowedRegion = allowedParts[2]
-
-      if (newContinent === allowedContinent) {
-        if (!newCountry && !allowedCountry) {
-          return { hasConflict: true, message: `This location conflicts with allowed: ${formatGeolocationLabel(allowedGeo)}` }
-        }
-        if (newCountry === allowedCountry) {
-          if (!newRegion && !allowedRegion) {
-            return { hasConflict: true, message: `This location conflicts with allowed: ${formatGeolocationLabel(allowedGeo)}` }
-          }
-          if (newRegion === allowedRegion) {
-            return { hasConflict: true, message: `This location conflicts with allowed: ${formatGeolocationLabel(allowedGeo)}` }
-          }
-        }
-      }
-    }
-  }
-
-  return { hasConflict: false }
+const addForbiddenRow = () => {
+  forbiddenGeolocations.value.push({ continent: '', country: '', region: '' })
 }
 
-// Add allowed geolocation
-const addAllowedGeolocation = () => {
-  if (!geolocation.value.allowedContinent) return
-
-  const geoCode = buildGeoCodeFromSelection(
-    geolocation.value.allowedContinent,
-    geolocation.value.allowedCountry,
-    geolocation.value.allowedRegion,
-    false,
-  )
-
-  // Check for conflicts with forbidden geolocations
-  const conflictCheck = checkGeolocationConflicts(geoCode, 'allowed')
-  if (conflictCheck.hasConflict) {
-    console.warn(conflictCheck.message)
-    
-    return
+const updateAllowedRow = (index, field, value) => {
+  const row = allowedGeolocations.value[index]
+  if (!row) return
+  row[field] = value || ''
+  if (field === 'continent') {
+    row.country = ''
+    row.region = ''
+  } else if (field === 'country') {
+    row.region = ''
   }
-
-  // Check if this geolocation already exists
-  if (!allowedGeolocations.value.includes(geoCode)) {
-    allowedGeolocations.value.push(geoCode)
-  }
-
-  // Reset the form
-  geolocation.value.allowedContinent = null
-  geolocation.value.allowedCountry = null
-  geolocation.value.allowedRegion = null
 }
 
-// Add forbidden geolocation
-const addForbiddenGeolocation = () => {
-  if (!geolocation.value.forbiddenContinent) return
-
-  const geoCode = buildGeoCodeFromSelection(
-    geolocation.value.forbiddenContinent,
-    geolocation.value.forbiddenCountry,
-    geolocation.value.forbiddenRegion,
-    true,
-  )
-
-  // Check for conflicts with allowed geolocations
-  const conflictCheck = checkGeolocationConflicts(geoCode, 'forbidden')
-  if (conflictCheck.hasConflict) {
-    console.warn(conflictCheck.message)
-    
-    return
+const updateForbiddenRow = (index, field, value) => {
+  const row = forbiddenGeolocations.value[index]
+  if (!row) return
+  row[field] = value || ''
+  if (field === 'continent') {
+    row.country = ''
+    row.region = ''
+  } else if (field === 'country') {
+    row.region = ''
   }
-
-  // Check if this geolocation already exists
-  if (!forbiddenGeolocations.value.includes(geoCode)) {
-    forbiddenGeolocations.value.push(geoCode)
-  }
-
-  // Reset the form
-  geolocation.value.forbiddenContinent = null
-  geolocation.value.forbiddenCountry = null
-  geolocation.value.forbiddenRegion = null
 }
 
-// Remove allowed geolocation
 const removeAllowedGeolocation = index => {
   allowedGeolocations.value.splice(index, 1)
 }
 
-// Remove forbidden geolocation
 const removeForbiddenGeolocation = index => {
   forbiddenGeolocations.value.splice(index, 1)
-}
-
-// Clear all geolocations
-const clearAllGeolocations = () => {
-  allowedGeolocations.value = []
-  forbiddenGeolocations.value = []
 }
 
 // Get all geolocation codes for app spec
 const getGeolocationCodes = () => {
   const codes = []
-  codes.push(...allowedGeolocations.value)
-  codes.push(...forbiddenGeolocations.value)
-  
+  allowedGeolocations.value.forEach(r => {
+    const c = serializeGeoRow(r, false)
+    if (c) codes.push(c)
+  })
+  forbiddenGeolocations.value.forEach(r => {
+    const c = serializeGeoRow(r, true)
+    if (c) codes.push(c)
+  })
+
   return codes
 }
 
