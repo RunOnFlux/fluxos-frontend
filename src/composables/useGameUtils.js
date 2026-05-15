@@ -78,16 +78,23 @@ export function useGameUtils() {
    * @returns {Object} Resource summary
    */
   const getConfigResources = config => {
-    if (!config.components || !config.components.length) {
+    if (!config.components?.length) {
       return { cpu: 0, ram: 0, hdd: 0 }
     }
 
-    const component = config.components[0]
-    
+    const totals = config.components.reduce(
+      (acc, c) => ({
+        cpu: acc.cpu + (Number(c.cpu) || 0),
+        ram: acc.ram + (Number(c.ram) || 0),
+        hdd: acc.hdd + (Number(c.hdd) || 0),
+      }),
+      { cpu: 0, ram: 0, hdd: 0 },
+    )
+
     return {
-      cpu: Math.round((Number(component.cpu) || 0) * 100) / 100, // Round to 2 decimals
-      ram: Math.round(Number(component.ram) || 0), // Round to whole number
-      hdd: Math.round(Number(component.hdd) || 0), // Round to whole number
+      cpu: Math.round(totals.cpu * 100) / 100,
+      ram: Math.round(totals.ram),
+      hdd: Math.round(totals.hdd),
     }
   }
 
