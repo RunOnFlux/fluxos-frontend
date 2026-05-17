@@ -898,86 +898,94 @@
               <div
                 v-for="(row, i) in allowedGeolocations"
                 :key="`allowed-${i}`"
-                class="d-flex align-start gap-2 mb-3"
+                class="mb-3"
               >
-                <VSelect
-                  :model-value="row.continent"
-                  @update:model-value="v => updateAllowedRow(i, 'continent', v)"
-                  :items="getContinents(false)"
-                  :label="t('core.subscriptionManager.continent')"
-                  item-title="text"
-                  item-value="value"
-                  density="comfortable"
-                  variant="outlined"
-                  hide-details
-                  style="flex: 1;"
-                >
-                  <template #item="{ props, item }">
-                    <VListItem v-bind="props">
-                      <template v-if="item.raw.instances" #append>
-                        <VChip size="x-small" color="success" variant="tonal">
-                          {{ item.raw.instances }}
-                        </VChip>
-                      </template>
-                    </VListItem>
-                  </template>
-                </VSelect>
-                <VSelect
-                  :model-value="row.country"
-                  @update:model-value="v => updateAllowedRow(i, 'country', v)"
-                  :items="getCountries(row.continent, false)"
-                  :label="t('core.subscriptionManager.country')"
-                  item-title="text"
-                  item-value="value"
-                  density="comfortable"
-                  variant="outlined"
-                  hide-details
-                  style="flex: 1;"
-                  :disabled="!row.continent || row.continent === 'ALL'"
-                >
-                  <template #item="{ props, item }">
-                    <VListItem v-bind="props">
-                      <template v-if="item.raw.instances" #append>
-                        <VChip size="x-small" color="success" variant="tonal">
-                          {{ item.raw.instances }}
-                        </VChip>
-                      </template>
-                    </VListItem>
-                  </template>
-                </VSelect>
-                <VSelect
-                  :model-value="row.region"
-                  @update:model-value="v => updateAllowedRow(i, 'region', v)"
-                  :items="getRegions(row.continent, row.country, false)"
-                  :label="t('core.subscriptionManager.region')"
-                  item-title="text"
-                  item-value="value"
-                  density="comfortable"
-                  variant="outlined"
-                  hide-details
-                  style="flex: 1;"
-                  :disabled="!row.country || row.country === 'ALL'"
-                >
-                  <template #item="{ props, item }">
-                    <VListItem v-bind="props">
-                      <template v-if="item.raw.instances" #append>
-                        <VChip size="x-small" color="success" variant="tonal">
-                          {{ item.raw.instances }}
-                        </VChip>
-                      </template>
-                    </VListItem>
-                  </template>
-                </VSelect>
-                <VBtn
-                  icon
-                  color="error"
-                  variant="text"
-                  density="comfortable"
-                  @click="removeAllowed(i)"
-                  :aria-label="`Remove allowed location ${i + 1}`"
-                >
-                  <VIcon>mdi-close</VIcon>
-                </VBtn>
+                <div class="d-flex align-start gap-2">
+                  <VSelect
+                    :model-value="row.continent"
+                    @update:model-value="v => updateAllowedRow(i, 'continent', v)"
+                    :items="getContinents(false)"
+                    :label="t('core.subscriptionManager.continent')"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    variant="outlined"
+                    hide-details
+                    :error="!!allowedGeolocationErrors[i]"
+                    style="flex: 1;"
+                  >
+                    <template #item="{ props, item }">
+                      <VListItem v-bind="props">
+                        <template v-if="item.raw.instances" #append>
+                          <VChip size="x-small" color="success" variant="tonal">
+                            {{ item.raw.instances }}
+                          </VChip>
+                        </template>
+                      </VListItem>
+                    </template>
+                  </VSelect>
+                  <VSelect
+                    :model-value="row.country"
+                    @update:model-value="v => updateAllowedRow(i, 'country', v)"
+                    :items="getCountries(row.continent, false)"
+                    :label="t('core.subscriptionManager.country')"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    variant="outlined"
+                    hide-details
+                    :error="!!allowedGeolocationErrors[i]"
+                    style="flex: 1;"
+                    :disabled="!row.continent || row.continent === 'ALL'"
+                  >
+                    <template #item="{ props, item }">
+                      <VListItem v-bind="props">
+                        <template v-if="item.raw.instances" #append>
+                          <VChip size="x-small" color="success" variant="tonal">
+                            {{ item.raw.instances }}
+                          </VChip>
+                        </template>
+                      </VListItem>
+                    </template>
+                  </VSelect>
+                  <VSelect
+                    :model-value="row.region"
+                    @update:model-value="v => updateAllowedRow(i, 'region', v)"
+                    :items="getRegions(row.continent, row.country, false)"
+                    :label="t('core.subscriptionManager.region')"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    variant="outlined"
+                    hide-details
+                    :error="!!allowedGeolocationErrors[i]"
+                    style="flex: 1;"
+                    :disabled="!row.country || row.country === 'ALL'"
+                  >
+                    <template #item="{ props, item }">
+                      <VListItem v-bind="props">
+                        <template v-if="item.raw.instances" #append>
+                          <VChip size="x-small" color="success" variant="tonal">
+                            {{ item.raw.instances }}
+                          </VChip>
+                        </template>
+                      </VListItem>
+                    </template>
+                  </VSelect>
+                  <VBtn
+                    icon
+                    color="error"
+                    variant="text"
+                    density="comfortable"
+                    @click="removeAllowed(i)"
+                    :aria-label="`Remove allowed location ${i + 1}`"
+                  >
+                    <VIcon>mdi-close</VIcon>
+                  </VBtn>
+                </div>
+                <div v-if="allowedGeolocationErrors[i]" class="text-error text-caption mt-1 ml-2">
+                  {{ allowedGeolocationErrors[i] }}
+                </div>
               </div>
 
               <div class="d-flex justify-center mt-2">
@@ -1005,86 +1013,94 @@
               <div
                 v-for="(row, i) in forbiddenGeolocations"
                 :key="`forbidden-${i}`"
-                class="d-flex align-start gap-2 mb-3"
+                class="mb-3"
               >
-                <VSelect
-                  :model-value="row.continent"
-                  @update:model-value="v => updateForbiddenRow(i, 'continent', v)"
-                  :items="getContinents(true)"
-                  :label="t('core.subscriptionManager.continent')"
-                  item-title="text"
-                  item-value="value"
-                  density="comfortable"
-                  variant="outlined"
-                  hide-details
-                  style="flex: 1;"
-                >
-                  <template #item="{ props, item }">
-                    <VListItem v-bind="props">
-                      <template v-if="item.raw.instances" #append>
-                        <VChip size="x-small" color="error" variant="tonal">
-                          {{ item.raw.instances }}
-                        </VChip>
-                      </template>
-                    </VListItem>
-                  </template>
-                </VSelect>
-                <VSelect
-                  :model-value="row.country"
-                  @update:model-value="v => updateForbiddenRow(i, 'country', v)"
-                  :items="getCountries(row.continent, true)"
-                  :label="t('core.subscriptionManager.country')"
-                  item-title="text"
-                  item-value="value"
-                  density="comfortable"
-                  variant="outlined"
-                  hide-details
-                  style="flex: 1;"
-                  :disabled="!row.continent || row.continent === 'NONE'"
-                >
-                  <template #item="{ props, item }">
-                    <VListItem v-bind="props">
-                      <template v-if="item.raw.instances" #append>
-                        <VChip size="x-small" color="error" variant="tonal">
-                          {{ item.raw.instances }}
-                        </VChip>
-                      </template>
-                    </VListItem>
-                  </template>
-                </VSelect>
-                <VSelect
-                  :model-value="row.region"
-                  @update:model-value="v => updateForbiddenRow(i, 'region', v)"
-                  :items="getRegions(row.continent, row.country, true)"
-                  :label="t('core.subscriptionManager.region')"
-                  item-title="text"
-                  item-value="value"
-                  density="comfortable"
-                  variant="outlined"
-                  hide-details
-                  style="flex: 1;"
-                  :disabled="!row.country || row.country === 'ALL'"
-                >
-                  <template #item="{ props, item }">
-                    <VListItem v-bind="props">
-                      <template v-if="item.raw.instances" #append>
-                        <VChip size="x-small" color="error" variant="tonal">
-                          {{ item.raw.instances }}
-                        </VChip>
-                      </template>
-                    </VListItem>
-                  </template>
-                </VSelect>
-                <VBtn
-                  icon
-                  color="error"
-                  variant="text"
-                  density="comfortable"
-                  @click="removeForbidden(i)"
-                  :aria-label="`Remove forbidden location ${i + 1}`"
-                >
-                  <VIcon>mdi-close</VIcon>
-                </VBtn>
+                <div class="d-flex align-start gap-2">
+                  <VSelect
+                    :model-value="row.continent"
+                    @update:model-value="v => updateForbiddenRow(i, 'continent', v)"
+                    :items="getContinents(true)"
+                    :label="t('core.subscriptionManager.continent')"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    variant="outlined"
+                    hide-details
+                    :error="!!forbiddenGeolocationErrors[i]"
+                    style="flex: 1;"
+                  >
+                    <template #item="{ props, item }">
+                      <VListItem v-bind="props">
+                        <template v-if="item.raw.instances" #append>
+                          <VChip size="x-small" color="error" variant="tonal">
+                            {{ item.raw.instances }}
+                          </VChip>
+                        </template>
+                      </VListItem>
+                    </template>
+                  </VSelect>
+                  <VSelect
+                    :model-value="row.country"
+                    @update:model-value="v => updateForbiddenRow(i, 'country', v)"
+                    :items="getCountries(row.continent, true)"
+                    :label="t('core.subscriptionManager.country')"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    variant="outlined"
+                    hide-details
+                    :error="!!forbiddenGeolocationErrors[i]"
+                    style="flex: 1;"
+                    :disabled="!row.continent || row.continent === 'NONE'"
+                  >
+                    <template #item="{ props, item }">
+                      <VListItem v-bind="props">
+                        <template v-if="item.raw.instances" #append>
+                          <VChip size="x-small" color="error" variant="tonal">
+                            {{ item.raw.instances }}
+                          </VChip>
+                        </template>
+                      </VListItem>
+                    </template>
+                  </VSelect>
+                  <VSelect
+                    :model-value="row.region"
+                    @update:model-value="v => updateForbiddenRow(i, 'region', v)"
+                    :items="getRegions(row.continent, row.country, true)"
+                    :label="t('core.subscriptionManager.region')"
+                    item-title="text"
+                    item-value="value"
+                    density="comfortable"
+                    variant="outlined"
+                    hide-details
+                    :error="!!forbiddenGeolocationErrors[i]"
+                    style="flex: 1;"
+                    :disabled="!row.country || row.country === 'ALL'"
+                  >
+                    <template #item="{ props, item }">
+                      <VListItem v-bind="props">
+                        <template v-if="item.raw.instances" #append>
+                          <VChip size="x-small" color="error" variant="tonal">
+                            {{ item.raw.instances }}
+                          </VChip>
+                        </template>
+                      </VListItem>
+                    </template>
+                  </VSelect>
+                  <VBtn
+                    icon
+                    color="error"
+                    variant="text"
+                    density="comfortable"
+                    @click="removeForbidden(i)"
+                    :aria-label="`Remove forbidden location ${i + 1}`"
+                  >
+                    <VIcon>mdi-close</VIcon>
+                  </VBtn>
+                </div>
+                <div v-if="forbiddenGeolocationErrors[i]" class="text-error text-caption mt-1 ml-2">
+                  {{ forbiddenGeolocationErrors[i] }}
+                </div>
               </div>
 
               <div class="d-flex justify-center mt-2">
@@ -5691,12 +5707,81 @@ function generateGeolocations() {
   return [...allowed, ...forbidden]
 }
 
+const allowedGeolocationErrors = reactive({})
+const forbiddenGeolocationErrors = reactive({})
+
+function clearGeolocationErrors() {
+  Object.keys(allowedGeolocationErrors).forEach(k => delete allowedGeolocationErrors[k])
+  Object.keys(forbiddenGeolocationErrors).forEach(k => delete forbiddenGeolocationErrors[k])
+}
+
+function rowTriplet(row) {
+  return `${row.continent}|${row.country}|${row.region}`
+}
+
+function isDefaultAllowedRow(row) {
+  return row.continent === 'ALL' && row.country === 'ALL' && row.region === 'ALL'
+}
+
+function isDefaultForbiddenRow(row) {
+  return row.continent === 'NONE' && row.country === 'ALL' && row.region === 'ALL'
+}
+
+function validateGeolocations() {
+  clearGeolocationErrors()
+
+  const allowedSeen = new Map()
+  allowedGeolocations.value.forEach((row, i) => {
+    if (isDefaultAllowedRow(row)) {
+      allowedGeolocationErrors[i] = t('core.subscriptionManager.geolocationDefaultRow')
+
+      return
+    }
+    const key = rowTriplet(row)
+    if (allowedSeen.has(key)) {
+      allowedGeolocationErrors[i] = t('core.subscriptionManager.geolocationDuplicate')
+    } else {
+      allowedSeen.set(key, i)
+    }
+  })
+
+  const forbiddenSeen = new Map()
+  forbiddenGeolocations.value.forEach((row, i) => {
+    if (isDefaultForbiddenRow(row)) {
+      forbiddenGeolocationErrors[i] = t('core.subscriptionManager.geolocationDefaultRow')
+
+      return
+    }
+    const key = rowTriplet(row)
+    if (forbiddenSeen.has(key)) {
+      forbiddenGeolocationErrors[i] = t('core.subscriptionManager.geolocationDuplicate')
+    } else {
+      forbiddenSeen.set(key, i)
+    }
+  })
+
+  allowedGeolocations.value.forEach((row, i) => {
+    if (allowedGeolocationErrors[i]) return
+    const key = rowTriplet(row)
+    if (forbiddenSeen.has(key)) {
+      const fi = forbiddenSeen.get(key)
+      allowedGeolocationErrors[i] = t('core.subscriptionManager.geolocationConflict')
+      forbiddenGeolocationErrors[fi] = t('core.subscriptionManager.geolocationConflict')
+    }
+  })
+
+  return Object.keys(allowedGeolocationErrors).length === 0
+    && Object.keys(forbiddenGeolocationErrors).length === 0
+}
+
 function addAllowedRow() {
   allowedGeolocations.value.push({ continent: 'ALL', country: 'ALL', region: 'ALL' })
+  clearGeolocationErrors()
 }
 
 function addForbiddenRow() {
   forbiddenGeolocations.value.push({ continent: 'NONE', country: 'ALL', region: 'ALL' })
+  clearGeolocationErrors()
 }
 
 function updateAllowedRow(index, field, value) {
@@ -5709,6 +5794,7 @@ function updateAllowedRow(index, field, value) {
   } else if (field === 'country') {
     row.region = 'ALL'
   }
+  clearGeolocationErrors()
 }
 
 function updateForbiddenRow(index, field, value) {
@@ -5721,14 +5807,17 @@ function updateForbiddenRow(index, field, value) {
   } else if (field === 'country') {
     row.region = 'ALL'
   }
+  clearGeolocationErrors()
 }
 
 function removeAllowed(index) {
   allowedGeolocations.value.splice(index, 1)
+  clearGeolocationErrors()
 }
 
 function removeForbidden(index) {
   forbiddenGeolocations.value.splice(index, 1)
+  clearGeolocationErrors()
 }
 
 async function getGeolocationData() {
@@ -7352,6 +7441,18 @@ watch(tab, async newVal => {
 
     await fetchBlockHeight()
     checkedExpiry = true
+
+    // --- STEP 0: Validate geolocations (client-side) ---
+    if (versionFlags.value.supportsGeolocation && !validateGeolocations()) {
+      verifyAppSpecError.value = t('core.subscriptionManager.geolocationErrorsFound')
+      verifyAppSpecResponse.value = false
+      isVeryfitying.value = false
+      hasValidatedSpec.value = true
+      hasCheckedExpiry.value = checkedExpiry
+      showToast('error', t('core.subscriptionManager.geolocationErrorsFound'))
+
+      return
+    }
 
     // --- STEP 1: Validate Spec ---
     const specOK = await verifyAppSpec()
