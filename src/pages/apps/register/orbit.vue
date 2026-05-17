@@ -1027,6 +1027,7 @@
                                               variant="outlined"
                                               density="compact"
                                               hide-details
+                                              :error="!!allowedGeolocationErrors[i]"
                                               class="mb-2"
                                             >
                                               <template #item="{ props, item }">
@@ -1050,6 +1051,7 @@
                                               variant="outlined"
                                               density="compact"
                                               hide-details
+                                              :error="!!allowedGeolocationErrors[i]"
                                               :disabled="!row.continent"
                                               class="mb-2"
                                             >
@@ -1074,6 +1076,7 @@
                                               variant="outlined"
                                               density="compact"
                                               hide-details
+                                              :error="!!allowedGeolocationErrors[i]"
                                               :disabled="!row.country"
                                             >
                                               <template #item="{ props, item }">
@@ -1097,6 +1100,9 @@
                                           >
                                             <VIcon>mdi-close</VIcon>
                                           </VBtn>
+                                        </div>
+                                        <div v-if="allowedGeolocationErrors[i]" class="text-error text-caption mt-1 ml-2">
+                                          {{ allowedGeolocationErrors[i] }}
                                         </div>
                                       </div>
 
@@ -1140,6 +1146,7 @@
                                               variant="outlined"
                                               density="compact"
                                               hide-details
+                                              :error="!!forbiddenGeolocationErrors[i]"
                                               class="mb-2"
                                             >
                                               <template #item="{ props, item }">
@@ -1163,6 +1170,7 @@
                                               variant="outlined"
                                               density="compact"
                                               hide-details
+                                              :error="!!forbiddenGeolocationErrors[i]"
                                               :disabled="!row.continent"
                                               class="mb-2"
                                             >
@@ -1187,6 +1195,7 @@
                                               variant="outlined"
                                               density="compact"
                                               hide-details
+                                              :error="!!forbiddenGeolocationErrors[i]"
                                               :disabled="!row.country"
                                             >
                                               <template #item="{ props, item }">
@@ -1210,6 +1219,9 @@
                                           >
                                             <VIcon>mdi-close</VIcon>
                                           </VBtn>
+                                        </div>
+                                        <div v-if="forbiddenGeolocationErrors[i]" class="text-error text-caption mt-1 ml-2">
+                                          {{ forbiddenGeolocationErrors[i] }}
                                         </div>
                                       </div>
 
@@ -2575,7 +2587,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, reactive, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
 import { useRoute } from 'vue-router'
 import { useFluxStore } from '@/stores/flux'
 import { storeToRefs } from 'pinia'
@@ -5740,13 +5752,74 @@ const serializeGeoRow = (row, isForbidden) => {
   return code
 }
 
+const allowedGeolocationErrors = reactive({})
+const forbiddenGeolocationErrors = reactive({})
+
+const clearGeolocationErrors = () => {
+  Object.keys(allowedGeolocationErrors).forEach(k => delete allowedGeolocationErrors[k])
+  Object.keys(forbiddenGeolocationErrors).forEach(k => delete forbiddenGeolocationErrors[k])
+}
+
+const geoRowKey = row => `${row.continent}|${row.country}|${row.region}`
+
+const isDefaultGeoRow = row => !row.continent
+
+const validateGeolocations = () => {
+  clearGeolocationErrors()
+
+  const allowedSeen = new Map()
+  allowedGeolocations.value.forEach((row, i) => {
+    if (isDefaultGeoRow(row)) {
+      allowedGeolocationErrors[i] = t('core.subscriptionManager.geolocationDefaultRow')
+
+      return
+    }
+    const key = geoRowKey(row)
+    if (allowedSeen.has(key)) {
+      allowedGeolocationErrors[i] = t('core.subscriptionManager.geolocationDuplicate')
+    } else {
+      allowedSeen.set(key, i)
+    }
+  })
+
+  const forbiddenSeen = new Map()
+  forbiddenGeolocations.value.forEach((row, i) => {
+    if (isDefaultGeoRow(row)) {
+      forbiddenGeolocationErrors[i] = t('core.subscriptionManager.geolocationDefaultRow')
+
+      return
+    }
+    const key = geoRowKey(row)
+    if (forbiddenSeen.has(key)) {
+      forbiddenGeolocationErrors[i] = t('core.subscriptionManager.geolocationDuplicate')
+    } else {
+      forbiddenSeen.set(key, i)
+    }
+  })
+
+  allowedGeolocations.value.forEach((row, i) => {
+    if (allowedGeolocationErrors[i]) return
+    const key = geoRowKey(row)
+    if (forbiddenSeen.has(key)) {
+      const fi = forbiddenSeen.get(key)
+      allowedGeolocationErrors[i] = t('core.subscriptionManager.geolocationConflict')
+      forbiddenGeolocationErrors[fi] = t('core.subscriptionManager.geolocationConflict')
+    }
+  })
+
+  return Object.keys(allowedGeolocationErrors).length === 0
+    && Object.keys(forbiddenGeolocationErrors).length === 0
+}
+
 // Row-based mutations
 const addAllowedRow = () => {
   allowedGeolocations.value.push({ continent: '', country: '', region: '' })
+  clearGeolocationErrors()
 }
 
 const addForbiddenRow = () => {
   forbiddenGeolocations.value.push({ continent: '', country: '', region: '' })
+  clearGeolocationErrors()
 }
 
 const updateAllowedRow = (index, field, value) => {
@@ -5759,6 +5832,7 @@ const updateAllowedRow = (index, field, value) => {
   } else if (field === 'country') {
     row.region = ''
   }
+  clearGeolocationErrors()
 }
 
 const updateForbiddenRow = (index, field, value) => {
@@ -5771,14 +5845,17 @@ const updateForbiddenRow = (index, field, value) => {
   } else if (field === 'country') {
     row.region = ''
   }
+  clearGeolocationErrors()
 }
 
 const removeAllowedGeolocation = index => {
   allowedGeolocations.value.splice(index, 1)
+  clearGeolocationErrors()
 }
 
 const removeForbiddenGeolocation = index => {
   forbiddenGeolocations.value.splice(index, 1)
+  clearGeolocationErrors()
 }
 
 // Get all geolocation codes for app spec
@@ -6497,6 +6574,12 @@ const nextStep = async () => {
       if (!runCmd || !runCmd.value.trim()) {
         return
       }
+    }
+
+    if (!validateGeolocations()) {
+      showToast('error', t('core.subscriptionManager.geolocationErrorsFound'))
+
+      return
     }
   }
   currentStep.value++
