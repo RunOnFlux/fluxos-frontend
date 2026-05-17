@@ -1605,8 +1605,11 @@
                                 <VTextField
                                   v-model="entry.key"
                                   density="compact"
-                                  hide-details
+                                  :hide-details="!envRowErrors[i]"
+                                  :error="!!envRowErrors[i]"
+                                  :error-messages="envRowErrors[i]"
                                   :placeholder="t('core.subscriptionManager.keyPlaceholder')"
+                                  @update:model-value="delete envRowErrors[i]"
                                 />
                               </td>
                               <td>
@@ -1642,6 +1645,15 @@
 
                     <!-- Actions -->
                     <VCardActions>
+                      <VBtn
+                        v-if="hasBlankEnvRows"
+                        variant="text"
+                        size="small"
+                        prepend-icon="mdi-broom"
+                        @click="removeBlankEnvRows"
+                      >
+                        {{ t('core.subscriptionManager.removeEmptyRows') }}
+                      </VBtn>
                       <VSpacer />
                       <VBtn color="error" variant="tonal" size="small" @click="envDialog.show = false">
                         Cancel
@@ -1722,8 +1734,11 @@
                                   :placeholder="t('core.subscriptionManager.enterCommand')"
                                   density="compact"
                                   dense
-                                  hide-details
+                                  :hide-details="!commandRowErrors[i]"
+                                  :error="!!commandRowErrors[i]"
+                                  :error-messages="commandRowErrors[i]"
                                   class="ma-0"
+                                  @update:model-value="delete commandRowErrors[i]"
                                 />
                               </td>
                               <td>
@@ -1750,6 +1765,15 @@
                     </VCardText>
 
                     <VCardActions>
+                      <VBtn
+                        v-if="hasBlankCommandRows"
+                        variant="text"
+                        size="small"
+                        prepend-icon="mdi-broom"
+                        @click="removeBlankCommandRows"
+                      >
+                        {{ t('core.subscriptionManager.removeEmptyRows') }}
+                      </VBtn>
                       <VSpacer />
                       <VBtn color="error" variant="tonal" size="small" @click="commandsDialog.show = false">
                         Cancel
@@ -4022,6 +4046,45 @@ const commandsDialog = reactive({
   entries: [],
 })
 
+const commandRowErrors = reactive({})
+const commandValidationFailed = ref(false)
+
+function clearCommandErrors() {
+  Object.keys(commandRowErrors).forEach(k => delete commandRowErrors[k])
+}
+
+const hasBlankCommandRows = computed(() => {
+  if (!commandValidationFailed.value) return false
+
+  return commandsDialog.entries.some(c => typeof c !== 'string' || c.trim().length === 0)
+})
+
+function removeBlankCommandRows() {
+  commandsDialog.entries = commandsDialog.entries.filter(
+    c => typeof c === 'string' && c.trim().length > 0,
+  )
+  validateCommandEntries()
+}
+
+function validateCommandEntries() {
+  clearCommandErrors()
+  commandsDialog.entries.forEach((c, i) => {
+    if (typeof c !== 'string' || c.trim().length === 0) {
+      commandRowErrors[i] = t('core.subscriptionManager.commandRequired')
+    }
+  })
+  commandValidationFailed.value = Object.keys(commandRowErrors).length > 0
+
+  return !commandValidationFailed.value
+}
+
+watch(() => commandsDialog.show, val => {
+  if (!val) {
+    clearCommandErrors()
+    commandValidationFailed.value = false
+  }
+})
+
 function openCommandsDialog(index) {
   const component = props.appSpec.compose[index]
   commandsDialog.show = false
@@ -4035,10 +4098,14 @@ function openCommandsDialog(index) {
 
 function addCommandRow() {
   commandsDialog.entries.push('')
+  clearCommandErrors()
+  commandValidationFailed.value = false
 }
 
 function removeCommandEntry(i) {
   commandsDialog.entries.splice(i, 1)
+  clearCommandErrors()
+  commandValidationFailed.value = false
 }
 
 function handleCommandsImport(commands) {
@@ -4180,11 +4247,16 @@ function handleSpecImport(spec) {
 }
 
 function saveCommandChanges() {
+  if (!validateCommandEntries()) {
+    showToast('error', t('core.subscriptionManager.fixEmptyRows'))
+
+    return
+  }
+
   const index = commandsDialog.componentIndex
   if (index === null) return
   props.appSpec.compose[index].commands = commandsDialog.entries
-    .map(c => (typeof c === 'string' ? c.trim() : ''))
-    .filter(c => c.length > 0)
+    .map(c => c.trim())
   commandsDialog.show = false
 }
 
@@ -6627,10 +6699,44 @@ const showEnvImportDialog = ref(false)
 const showCommandsImportDialog = ref(false)
 const showSpecImportDialog = ref(false)
 
+const envRowErrors = reactive({})
+const envValidationFailed = ref(false)
+
+function clearEnvErrors() {
+  Object.keys(envRowErrors).forEach(k => delete envRowErrors[k])
+}
+
+const hasBlankEnvRows = computed(() => {
+  if (!envValidationFailed.value) return false
+
+  return envDialog.entries.some(e => !(e.key || '').trim() && !(e.value || '').trim())
+})
+
+function removeBlankEnvRows() {
+  envDialog.entries = envDialog.entries.filter(
+    e => (e.key || '').trim() || (e.value || '').trim(),
+  )
+  validateEnvEntries()
+}
+
+function validateEnvEntries() {
+  clearEnvErrors()
+  envDialog.entries.forEach((e, i) => {
+    if (!(e.key || '').trim()) {
+      envRowErrors[i] = t('core.subscriptionManager.envKeyRequired')
+    }
+  })
+  envValidationFailed.value = Object.keys(envRowErrors).length > 0
+
+  return !envValidationFailed.value
+}
+
 watch(() => envDialog.show, val => {
   if (!val) {
     envDialog.componentIndex = null
     envDialog.entries = []
+    clearEnvErrors()
+    envValidationFailed.value = false
   }
 })
 
@@ -6652,10 +6758,14 @@ function openEnvDialog(index) {
 
 function addEnvRow() {
   envDialog.entries.push({ key: '', value: '' })
+  clearEnvErrors()
+  envValidationFailed.value = false
 }
 
 function removeEnvEntry(index) {
   envDialog.entries.splice(index, 1)
+  clearEnvErrors()
+  envValidationFailed.value = false
 }
 
 function handleEnvImport(entries) {
@@ -6845,13 +6955,18 @@ function handleEnvPaste(event) {
 }
 
 function saveEnvChanges() {
+  if (!validateEnvEntries()) {
+    showToast('error', t('core.subscriptionManager.fixEmptyRows'))
+
+    return
+  }
+
   const index = envDialog.componentIndex
   if (index === null) return
 
   const component = props.appSpec.compose[index]
   component.environmentParameters = envDialog.entries
     .map(e => ({ key: (e.key || '').trim(), value: (e.value || '').trim() }))
-    .filter(e => e.key)
     .map(e => `${e.key}=${e.value}`)
 
   envDialog.show = false
