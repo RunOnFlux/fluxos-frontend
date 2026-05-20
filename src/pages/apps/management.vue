@@ -205,109 +205,105 @@ const activeAppsLabel = computed(() => {
 })
 
 // --- 🟦 Enterprise Decryption Helper ---
+async function attemptEnterpriseDecrypt(spec, tag, owner) {
+  const zelidauth = localStorage.getItem('zelidauth')
+
+  const pubRes = await AppsService.getAppPublicKey(zelidauth, {
+    name: spec.name,
+    owner,
+  })
+  if (pubRes.data.status !== 'success') {
+    console.warn(`${tag} ⚠️ pubkey fail`, pubRes.data)
+    return { ok: false }
+  }
+
+  const pubKeyB64 = pubRes.data.data.trim().replace(/\s+/g, '')
+  const rsaPubKey = await importRsaPublicKey(pubKeyB64)
+
+  const aesKey = crypto.getRandomValues(new Uint8Array(32))
+  const encryptedEnterpriseKey = await encryptAesKeyWithRsaKey(aesKey, rsaPubKey)
+
+  const encryptedRes = await AppsService.getAppEncryptedSpecifics(
+    spec.name,
+    zelidauth,
+    encryptedEnterpriseKey,
+  )
+
+  if (encryptedRes.data.status !== 'success') {
+    const msg = encryptedRes.data.data?.message
+    if (msg === 'Application not found') {
+      return { ok: false, notFound: true }
+    }
+    return { ok: false, data: encryptedRes.data }
+  }
+
+  const encryptedPayload = encryptedRes.data.data?.enterprise
+  if (!encryptedPayload) return { ok: false, noPayload: true }
+
+  const plain = await decryptEnterpriseWithAes(encryptedPayload, aesKey)
+  const extraFields = JSON.parse(plain)
+  return { ok: true, extraFields }
+}
+
 async function decryptIfEnterprise(spec, idx = 0) {
   const tag = `[${idx}:${spec.name}]`
   if (!(spec.version >= 8 && spec.enterprise)) return spec
 
   try {
-    // --- Get owner ---
+    if (!isWebCryptoAvailable()) {
+      console.warn(`${tag} ⚠️ WebCrypto not available, skipping enterprise decryption`)
+      return spec
+    }
+
     const ownerRes = await AppsService.getAppOriginalOwner(spec.name)
     if (ownerRes.data.status !== 'success') {
       console.warn(`${tag} ⚠️ owner fail`, ownerRes.data)
-      
       return spec
     }
     const owner = ownerRes.data.data
 
-    // --- Get pubkey ---
-    const zelidauth = localStorage.getItem('zelidauth')
-    const pubRes = await AppsService.getAppPublicKey(zelidauth, {
-      name: spec.name,
-      owner,
-    })
-    if (pubRes.data.status !== 'success') {
-      console.warn(`${tag} ⚠️ pubkey fail`, pubRes.data)
-      
-      return spec
-    }
-
-    // Check if WebCrypto is available before proceeding
-    if (!isWebCryptoAvailable()) {
-      console.warn(`${tag} ⚠️ WebCrypto not available, skipping enterprise decryption`)
-      
-      return spec
-    }
-
-    const pubKeyB64 = pubRes.data.data.trim().replace(/\s+/g, '')
-    const rsaPubKey = await importRsaPublicKey(pubKeyB64)
-
-    // --- Generate AES key ---
-    const aesKey = crypto.getRandomValues(new Uint8Array(32))
-    const encryptedEnterpriseKey = await encryptAesKeyWithRsaKey(aesKey, rsaPubKey)
-
-    // --- Fetch encrypted payload ---
-    let encryptedRes
-    try {
-      encryptedRes = await AppsService.getAppEncryptedSpecifics(
-        spec.name,
-        zelidauth,
-        encryptedEnterpriseKey,
-      )
-    } catch (fetchErr) {
-      console.warn(`${tag} ⚠️ encrypted fetch fail`, fetchErr)
-      
-      return spec
-    }
-    if (encryptedRes.data.status !== 'success') {
-      console.warn(`${tag} ⚠️ encrypted fetch bad status`, encryptedRes.data)
-
-      // If app not found, return null so it can be filtered out
-      if (encryptedRes.data.data?.message === 'Application not found') {
-        console.warn(`${tag} Application not found - will be filtered from list`)
-        
-        return null
+    // Retry up to 3 times — block height can change between pubkey and decrypt calls
+    const maxRetries = 3
+    let result = null
+    for (let attempt = 1; attempt <= maxRetries; attempt++) {
+      result = await attemptEnterpriseDecrypt(spec, tag, owner).catch(() => ({ ok: false }))
+      if (result.ok) { result.attempt = attempt; break }
+      if (result.notFound) break
+      if (attempt < maxRetries) {
+        console.warn(`${tag} ⚠️ attempt ${attempt}/${maxRetries} failed, retrying`)
+        await new Promise((r) => setTimeout(r, 1000))
       }
+    }
 
+    if (result.notFound) {
+      console.warn(`${tag} Application not found - will be filtered from list`)
+      return null
+    }
+
+    if (!result.ok) {
+      console.warn(`${tag} ⚠️ decrypt failed after ${maxRetries} attempts`, result.data)
       return spec
     }
 
-    const encryptedPayload = encryptedRes.data.data?.enterprise
-    if (!encryptedPayload) {
-      console.warn(`${tag} ⚠️ missing encrypted payload`)
-      
-      return spec
-    }
-
-    let plain = null
-    try {
-      plain = await decryptEnterpriseWithAes(encryptedPayload, aesKey)
-    } catch (decryptErr) {
-      console.warn(`${tag} ⚠️ decrypt failed`, decryptErr)
-      
-      return spec
-    }
-
-    let extraFields = {}
-    try {
-      extraFields = JSON.parse(plain)
-    } catch (parseErr) {
-      console.warn(`${tag} ⚠️ parse fail`, parseErr)
-      
-      return spec
-    }
-    console.log(`${tag} ✅ decrypted`)
-    
-    return { ...spec, ...extraFields, enterprise: null }
+    console.log(`${tag} ✅ decrypted (attempt ${result.attempt || 1}/${maxRetries})`)
+    return { ...spec, ...result.extraFields, enterprise: null }
   } catch (e) {
     console.error(`${tag} 💥 decrypt failed`, e)
-    
     return spec
   }
 }
 
 // --- 🟦 Decrypt Array Helper (for active/expired) ---
 async function decryptEnterpriseApps(appArray) {
-  const results = await Promise.all(appArray.map(decryptIfEnterprise))
+  const concurrency = 120
+  const results = []
+  for (let i = 0; i < appArray.length; i += concurrency) {
+    const batch = appArray.slice(i, i + concurrency)
+    const batchResults = await Promise.all(
+      batch.map((spec, j) => decryptIfEnterprise(spec, i + j)),
+    )
+    results.push(...batchResults)
+  }
 
   // Filter out null results (apps that were not found)
   return results.filter(spec => spec !== null)
