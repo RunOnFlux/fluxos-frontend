@@ -25,58 +25,9 @@ const description = 'Deploy apps on FluxCloud\'s decentralized Web3 infrastructu
 const pageUrl = 'https://cloud.runonflux.com/'
 const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 
-// Structured data schemas
-const structuredData = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    name: 'Flux Network',
-    url: 'https://cloud.runonflux.com',
-    logo: 'https://cloud.runonflux.com/images/logo.png',
-    description: 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
-    sameAs: [
-      'https://twitter.com/RunOnFlux',
-      'https://github.com/RunOnFlux',
-    ],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'FluxCloud',
-    url: 'https://cloud.runonflux.com',
-    description: description,
-    publisher: {
-      '@type': 'Organization',
-      name: 'Flux Network',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://cloud.runonflux.com/images/logo.png',
-      },
-    },
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Service',
-    serviceType: 'Cloud Hosting',
-    provider: {
-      '@type': 'Organization',
-      name: 'Flux Network',
-    },
-    areaServed: 'Worldwide',
-    description: 'Decentralized cloud hosting for games, WordPress, and custom applications',
-    offers: {
-      '@type': 'Offer',
-      price: '0.99',
-      priceCurrency: 'USD',
-      priceSpecification: {
-        '@type': 'UnitPriceSpecification',
-        price: '0.99',
-        priceCurrency: 'USD',
-        unitText: 'monthly',
-      },
-    },
-  },
-]
+// Organization / WebSite / Service structured data for the homepage is declared
+// statically in index.html. The homepage is not prerendered, so the schema must
+// live in the served HTML rather than being injected here at runtime.
 
 useHead({
   title,
@@ -103,12 +54,6 @@ useHead({
   ],
   link: [
     { rel: 'canonical', href: pageUrl },
-  ],
-  script: [
-    {
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify(structuredData),
-    },
   ],
 })
 

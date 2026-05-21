@@ -394,7 +394,7 @@
 import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useSEO, generateBreadcrumbSchema } from '@/composables/useSEO'
+import { useSEO, generateBreadcrumbSchema, usePrerenderReady } from '@/composables/useSEO'
 import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import DOMPurify from 'dompurify'
 import { useMarketplace } from '@/composables/useMarketplace'
@@ -956,6 +956,14 @@ useSEO({
   keywords: seoKeywords,
   structuredData, // Computed ref - useSEO will handle reactivity
 })
+
+// Hold the SEO prerenderer until app data has loaded, so the prerendered HTML
+// carries the real per-app title, meta description, and schema instead of the
+// loading-state placeholders.
+const { markReady } = usePrerenderReady()
+watch(isLoading, loading => {
+  if (!loading) markReady()
+}, { flush: 'post' })
 
 onMounted(async () => {
   // Load network data for dynamic node/country counts

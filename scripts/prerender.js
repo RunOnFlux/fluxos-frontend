@@ -295,23 +295,41 @@ async function renderPageWithRetry(context, route, port) {
         await page.waitForTimeout(1000)
       }
 
-      // Wait for @vueuse/head to update the title (non-default title means SEO loaded)
+      // Wait for SEO-critical data to be ready before snapshotting.
+      // Pages whose title/meta/JSON-LD depend on async data call
+      // usePrerenderReady() (see src/composables/useSEO.js), which sets
+      // data-prerender-pending="true" during setup and "false" once that data
+      // resolves. Static pages never set it. Without this wait the snapshot
+      // captures loading-state metadata — generic titles and empty schema,
+      // the root cause of the duplicate-title indexing problem.
       try {
         await page.waitForFunction(() => {
-          const title = document.title
+          const pending = document.documentElement.getAttribute('data-prerender-pending')
 
-          // Wait until title changes from the default
-          return title && !title.includes('FluxCloud - Decentralized Web3 Cloud Infrastructure')
-        }, { timeout: 2000 })
+          // A data-dependent page has finished loading its SEO data.
+          if (pending === 'false') return true
+
+          // A data-dependent page is still loading.
+          if (pending === 'true') return false
+
+          // Attribute absent: either a static page, or the route component has
+          // not mounted yet. Allow a grace period before assuming "static".
+          if (!window.__seoGraceStart) window.__seoGraceStart = Date.now()
+
+          return Date.now() - window.__seoGraceStart > 2000
+        }, { timeout: 15000, polling: 100 })
       } catch {
-        // Some pages might keep default title, that's ok
+        // Slow or failed data load — snapshot whatever has rendered.
       }
 
-      // Extra wait for head meta tags to fully update (reduced)
-      await page.waitForTimeout(500)
+      // Extra wait for head meta tags / JSON-LD to fully flush to the DOM
+      await page.waitForTimeout(800)
 
       // Get the rendered HTML
       let html = await page.content()
+
+      // Strip the internal prerender-coordination attribute from the output
+      html = html.replace(/\s+data-prerender-pending="[^"]*"/gi, '')
 
       // Clean up duplicate meta tags (keep dynamically added ones)
       html = cleanDuplicateMetaTags(html)

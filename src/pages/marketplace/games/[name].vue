@@ -109,7 +109,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useSEO, generateSoftwareApplicationSchema, generateBreadcrumbSchema } from '@/composables/useSEO'
+import { useSEO, generateSoftwareApplicationSchema, generateBreadcrumbSchema, usePrerenderReady } from '@/composables/useSEO'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useGameUtils } from '@/composables/useGameUtils'
 import { useFluxStore } from '@/stores/flux'
@@ -289,11 +289,6 @@ const structuredData = computed(() => {
       '99.9% uptime guarantee',
       'Pay-as-you-go pricing',
     ],
-    aggregateRating: {
-      ratingValue: '4.8',
-      reviewCount: '127',
-      bestRating: '5',
-    },
   })
 
   // Breadcrumb structured data
@@ -321,6 +316,14 @@ useSEO({
   keywords: seoKeywords,
   structuredData, // Computed ref - useSEO will handle reactivity
 })
+
+// Hold the SEO prerenderer until game data has loaded, so the prerendered HTML
+// carries the real per-game title, meta description, and schema instead of the
+// loading-state placeholders.
+const { markReady } = usePrerenderReady()
+watch(loading, isLoading => {
+  if (!isLoading) markReady()
+}, { flush: 'post' })
 
 const loadGameDetails = async () => {
   loading.value = true

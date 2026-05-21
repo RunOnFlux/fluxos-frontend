@@ -150,10 +150,10 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema } from '@/composables/useSEO'
+import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema, usePrerenderReady } from '@/composables/useSEO'
 import { useWordPress } from '@/composables/useWordPress'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
@@ -399,12 +399,24 @@ const relatedLinks = computed(() => {
 // SEO constants
 const pageUrl = 'https://cloud.runonflux.com/marketplace/wordpress'
 const title = 'WordPress Hosting on FluxCloud - Decentralized & Scalable'
-const description = 'Deploy WordPress on decentralized FluxCloud. Multiple performance plans with MySQL, SSL, automatic backups. Affordable pricing starting at $25/month.'
 const imageUrl = 'https://cloud.runonflux.com/banner/FluxWPMarketplace.webp'
 
-// Article timestamps for SEO (static dates for this landing page)
-const datePublished = '2024-01-15T00:00:00Z' // Initial launch date
-const dateModified = '2025-01-20T00:00:00Z'  // Last significant update
+// Lowest plan price — derived from the same live plan data as the Product
+// schema offers, so the meta description and structured data can never
+// contradict each other on price.
+const lowestPlanPrice = computed(() => {
+  if (!plans.value.length) return null
+
+  return Math.min(...plans.value.map(plan => plan.usd))
+})
+
+const description = computed(() => {
+  const base = 'Deploy WordPress on decentralized FluxCloud. Multiple performance plans with MySQL, SSL, and automatic backups.'
+
+  return lowestPlanPrice.value != null
+    ? `${base} Affordable pricing from $${lowestPlanPrice.value.toFixed(2)}/month.`
+    : base
+})
 
 // Generate JSON-LD structured data (reactive for plans)
 const structuredData = computed(() => {
@@ -412,16 +424,6 @@ const structuredData = computed(() => {
 
   // Organization Schema
   schemas.push(generateOrganizationSchema())
-
-  // Article Schema with timestamps
-  schemas.push(generateArticleSchema({
-    headline: title,
-    description,
-    url: pageUrl,
-    image: imageUrl,
-    datePublished,
-    dateModified,
-  }))
 
   // BreadcrumbList Schema
   schemas.push(generateBreadcrumbSchema([
@@ -457,11 +459,6 @@ const structuredData = computed(() => {
         name: 'FluxCloud',
       },
       offers: offers,
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.8',
-        reviewCount: '127',
-      },
     })
   }
 
@@ -514,6 +511,13 @@ useSEO({
     { name: 'author', content: 'FluxCloud' },
   ],
 })
+
+// Hold the SEO prerenderer until plan data has loaded, so the prerendered HTML
+// carries the Product schema offers and the price-bearing meta description.
+const { markReady } = usePrerenderReady()
+watch(loadingPlans, loading => {
+  if (!loading) markReady()
+}, { flush: 'post' })
 
 onMounted(() => {
   // Track WordPress page view

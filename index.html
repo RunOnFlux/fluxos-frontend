@@ -47,6 +47,67 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://cloud.runonflux.com/" />
 
+  <!-- Structured data (Organization / WebSite / Service). Declared statically
+       so it is present for crawlers without executing JavaScript. The homepage
+       is intentionally not prerendered, so this must live in index.html rather
+       than being injected at runtime. -->
+  <script type="application/ld+json">
+  [
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Flux Network",
+      "url": "https://cloud.runonflux.com",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://cloud.runonflux.com/images/logo.png"
+      },
+      "description": "Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide",
+      "sameAs": [
+        "https://twitter.com/RunOnFlux",
+        "https://github.com/RunOnFlux"
+      ]
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "FluxCloud",
+      "url": "https://cloud.runonflux.com",
+      "description": "Deploy applications on FluxCloud's decentralized Web3 infrastructure. Host games, WordPress sites, and custom apps on a network of 8,000+ FluxNodes worldwide. Starting at $0.99/month.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Flux Network",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://cloud.runonflux.com/images/logo.png"
+        }
+      }
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "Service",
+      "serviceType": "Cloud Hosting",
+      "provider": {
+        "@type": "Organization",
+        "name": "Flux Network"
+      },
+      "areaServed": "Worldwide",
+      "description": "Decentralized cloud hosting for games, WordPress, and custom applications",
+      "offers": {
+        "@type": "Offer",
+        "price": "0.99",
+        "priceCurrency": "USD",
+        "priceSpecification": {
+          "@type": "UnitPriceSpecification",
+          "price": "0.99",
+          "priceCurrency": "USD",
+          "unitText": "monthly"
+        }
+      }
+    }
+  ]
+  </script>
+
   <!-- Preconnect to critical third-party domains for better performance -->
   <link rel="preconnect" href="https://api.runonflux.io" crossorigin />
   <link rel="preconnect" href="https://stats.runonflux.io" crossorigin />
