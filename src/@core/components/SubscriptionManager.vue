@@ -1493,7 +1493,7 @@
                     >
                       <VBtn
                         color="primary"
-                        variant="tonal"
+                        variant="flat"
                         size="small"
                         prepend-icon="mdi-plus"
                         @click="addPortMapping(componentIndex)"
@@ -1649,7 +1649,7 @@
                       <div class="d-flex justify-center mt-4">
                         <VBtn
                           color="primary"
-                          variant="tonal"
+                          variant="flat"
                           size="small"
                           prepend-icon="mdi-plus"
                           @click="addEnvRow"
@@ -1770,7 +1770,7 @@
                       <div class="d-flex justify-center mt-4">
                         <VBtn
                           color="primary"
-                          variant="tonal"
+                          variant="flat"
                           size="small"
                           prepend-icon="mdi-plus"
                           @click="addCommandRow"
@@ -4155,6 +4155,8 @@ function handleCommandPaste(event) {
   if (cmdArray && cmdArray.length > 1) {
     // Only intercept if multiple items — single quoted string falls through to normal paste
     event.preventDefault()
+    // Remove empty rows before importing
+    commandsDialog.entries = commandsDialog.entries.filter(e => e.trim() !== '')
     const newCmds = cmdArray.filter(cmd => cmd.trim().length > 0)
     if (!newCmds.length) return
     commandsDialog.entries.push(...newCmds)
@@ -4167,6 +4169,8 @@ function handleCommandPaste(event) {
   const lines = trimmedPaste.split('\n').map(l => l.trim()).filter(l => l.length > 0)
   if (lines.length > 1) {
     event.preventDefault()
+    // Remove empty rows before importing
+    commandsDialog.entries = commandsDialog.entries.filter(e => e.trim() !== '')
     commandsDialog.entries.push(...lines)
     showToast('success', `Imported ${lines.length} command(s)`)
   }
@@ -4199,11 +4203,22 @@ function handleSpecImport(spec) {
 
     // Geolocation - required field, provide default if missing
     props.appSpec.geolocation = spec.geolocation || []
+    // Decode geolocation into UI state (allowed/forbidden rows)
+    decodeGeolocation(props.appSpec.geolocation)
 
     if (spec.expire) props.appSpec.expire = spec.expire
     if (spec.nodes) {
       props.appSpec.nodes = spec.nodes || []
       appDetails.value.nodes = Array.isArray(spec.nodes) ? spec.nodes.join(', ') : spec.nodes
+      // Populate selectedNodes UI state for Priority Nodes tab
+      if (Array.isArray(spec.nodes) && spec.nodes.length > 0) {
+        selectedNodes.value = spec.nodes.map(nodeIp => ({
+          ip: nodeIp,
+          payment_address: 'Loading...',
+          tier: 'Loading...',
+          score: 0,
+        }))
+      }
     }
     if (spec.instances !== undefined) {
       props.appSpec.instances = spec.instances
@@ -4263,11 +4278,8 @@ function handleSpecImport(spec) {
 }
 
 function saveCommandChanges() {
-  if (!validateCommandEntries()) {
-    showToast('error', t('core.subscriptionManager.fixEmptyRows'))
-
-    return
-  }
+  // Silently drop empty rows before saving
+  commandsDialog.entries = commandsDialog.entries.filter(c => typeof c === 'string' && c.trim() !== '')
 
   const index = commandsDialog.componentIndex
   if (index === null) return
@@ -5525,7 +5537,7 @@ watch(appDetails, val => {
 
   props.appSpec.description = val.description
   props.appSpec.owner = val.owner
-  props.appSpec.contacts = val.contacts
+  props.appSpec.contacts = Array.isArray(val.contacts) ? val.contacts : (val.contacts ? [val.contacts] : [])
   props.appSpec.instances = val.instances
   props.appSpec.staticip = val.staticip
   props.appSpec.enterprise = val.enterprise
@@ -6904,6 +6916,8 @@ function handleEnvPaste(event) {
   const envArray = tryParseEnvArray(jsonCandidate)
   if (envArray) {
     event.preventDefault()
+    // Remove empty rows left by "Add Env" button before importing
+    envDialog.entries = envDialog.entries.filter(e => e.key.trim() !== '' || e.value.trim() !== '')
     let importedCount = 0
     let skippedCount = 0
     let invalidCount = 0
@@ -6988,6 +7002,9 @@ function handleEnvPaste(event) {
   // Prevent default paste behavior
   event.preventDefault()
 
+  // Remove empty rows left by "Add Env" button before importing
+  envDialog.entries = envDialog.entries.filter(e => e.key.trim() !== '' || e.value.trim() !== '')
+
   let importedCount = 0
   let skippedCount = 0
   let invalidCount = 0
@@ -7044,11 +7061,8 @@ function handleEnvPaste(event) {
 }
 
 function saveEnvChanges() {
-  if (!validateEnvEntries()) {
-    showToast('error', t('core.subscriptionManager.fixEmptyRows'))
-
-    return
-  }
+  // Silently drop empty rows before saving
+  envDialog.entries = envDialog.entries.filter(e => (e.key || '').trim() !== '')
 
   const index = envDialog.componentIndex
   if (index === null) return
@@ -7893,7 +7907,7 @@ async function verifyAppSpec() {
 
     // Validate contacts field - required for V5+ specs (registration and updates), but not for cancel or old specs
     if (appSpecTemp.version >= 5 && managementAction.value !== 'cancel') {
-      const contacts = appSpecTemp.contacts || []
+      const contacts = Array.isArray(appSpecTemp.contacts) ? appSpecTemp.contacts : (appSpecTemp.contacts ? [appSpecTemp.contacts] : [])
       const validContacts = contacts.filter(c => c && c.trim())
       if (validContacts.length === 0) {
         throw new Error(t('core.subscriptionManager.contactRequired'))
