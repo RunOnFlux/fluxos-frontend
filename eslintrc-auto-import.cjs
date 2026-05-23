@@ -376,6 +376,7 @@ module.exports = {
     "usePreferredDark": true,
     "usePreferredLanguages": true,
     "usePreferredReducedMotion": true,
+    "usePrerenderReady": true,
     "usePrevious": true,
     "useProjection": true,
     "useRafFn": true,

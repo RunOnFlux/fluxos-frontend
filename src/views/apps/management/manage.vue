@@ -65,6 +65,46 @@
       </template>
     </VTooltip>
 
+    <!-- Clone Button -->
+    <VTooltip :text="t('pages.apps.manage.tooltips.clone', 'Clone')">
+      <template #activator="{ props: cloneBtnProps }">
+        <VBtn
+          v-bind="cloneBtnProps"
+          size="small"
+          icon
+          variant="tonal"
+          color="default"
+          rounded="true"
+          class="mr-2"
+          @click="cloneApp(row.item)"
+        >
+          <VIcon size="22">
+            mdi-content-duplicate
+          </VIcon>
+        </VBtn>
+      </template>
+    </VTooltip>
+
+    <!-- Export Spec Button -->
+    <VTooltip :text="t('core.subscriptionManager.exportSpec')">
+      <template #activator="{ props: exportBtnProps }">
+        <VBtn
+          v-bind="exportBtnProps"
+          size="small"
+          icon
+          variant="tonal"
+          color="default"
+          rounded="true"
+          class="mr-2"
+          @click="exportSpec(row.item)"
+        >
+          <VIcon size="22">
+            mdi-file-export
+          </VIcon>
+        </VBtn>
+      </template>
+    </VTooltip>
+
     <!-- Visit Button -->
     <VTooltip :text="t('pages.apps.manage.tooltips.visit')">
       <template #activator="{ props: visitBtnProps }">
@@ -216,6 +256,7 @@
 <script setup>
 import { ref, watch, nextTick, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import qs from 'qs'
 import AppsService from '@/services/AppsService'
 import { eventBus } from '@/utils/eventBus'
 
@@ -258,6 +299,46 @@ function showSnackbar(message, color = 'error') {
 
 function openAppManagement(appName) {
   router.push(`/apps/manage/${encodeURIComponent(appName)}`)
+}
+
+function exportSpec(appSpecs) {
+  try {
+    const specJSON = JSON.stringify(appSpecs, null, 2)
+    const blob = new Blob([specJSON], { type: 'application/json' })
+    const url = URL.createObjectURL(blob)
+    const link = document.createElement('a')
+    link.href = url
+    link.download = `${appSpecs.name || 'app'}-spec-v${appSpecs.version || 'unknown'}.json`
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  } catch (error) {
+    console.error('Error exporting specification:', error)
+    showSnackbar(`Failed to export specification: ${error.message}`)
+  }
+}
+
+function cloneApp(appSpecs) {
+  const specs = { ...appSpecs }
+
+  // Generate new name: originalName + timestamp (13 digits)
+  // Strip existing timestamp suffix if present (from previous clone)
+  const baseName = appSpecs.name.replace(/\d{13}$/, '')
+  specs.name = `${baseName}${Date.now()}`
+
+  const zelidauth = localStorage.getItem('zelidauth')
+  const auth = qs.parse(zelidauth)
+  if (auth) {
+    specs.owner = auth.zelid
+  }
+
+  sessionStorage.setItem('redeploySpecs', JSON.stringify({
+    appspecs: specs,
+    isRedeploy: true,
+  }))
+
+  router.push({ name: 'apps-register-configure' })
 }
 
 async function openGlobalApp(appName) {

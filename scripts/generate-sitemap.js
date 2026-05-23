@@ -7,6 +7,7 @@
 
 import fs from 'fs'
 import path from 'path'
+import { execSync } from 'child_process'
 import { fileURLToPath } from 'url'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -36,35 +37,41 @@ const SEO_PRIORITY = Object.freeze({
 // Get current date in ISO format (YYYY-MM-DD)
 const currentDate = new Date().toISOString().split('T')[0]
 
-// Define static URLs with their priorities and change frequencies
+// Define static URLs with their priorities and change frequencies.
+// `source` points to the page's Vue file so lastmod can be derived from git.
 const staticUrls = [
   // High Priority Pages
   {
     loc: '/',
+    source: 'src/pages/dashboards/home.vue',
     priority: SEO_PRIORITY.HIGHEST,
     changefreq: 'daily',
     description: 'Homepage',
   },
   {
     loc: '/cost-calculator',
+    source: 'src/pages/cost-calculator.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
     description: 'Cost Calculator',
   },
   {
     loc: '/flux-drive',
+    source: 'src/pages/flux-drive.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
     description: 'FluxDrive',
   },
   {
     loc: '/marketplace/games',
+    source: 'src/pages/marketplace/games/index.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
     description: 'Games Landing Page',
   },
   {
     loc: '/marketplace/wordpress',
+    source: 'src/pages/marketplace/wordpress/index.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
     description: 'WordPress Hosting',
@@ -73,30 +80,35 @@ const staticUrls = [
   // Dashboard Pages
   {
     loc: '/dashboards/overview',
+    source: 'src/pages/dashboards/overview.vue',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'daily',
     description: 'Flux Network Overview',
   },
   {
     loc: '/marketplace',
+    source: 'src/pages/marketplace/index.vue',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'weekly',
     description: 'Marketplace',
   },
   {
     loc: '/dashboards/resources',
+    source: 'src/pages/dashboards/resources.vue',
     priority: SEO_PRIORITY.STANDARD,
     changefreq: 'daily',
     description: 'Flux Network Resources',
   },
   {
     loc: '/dashboards/locations',
+    source: 'src/pages/dashboards/locations.vue',
     priority: SEO_PRIORITY.STANDARD,
     changefreq: 'weekly',
     description: 'Flux Node Locations',
   },
   {
     loc: '/apps/register',
+    source: 'src/pages/apps/register/index.vue',
     priority: SEO_PRIORITY.STANDARD,
     changefreq: 'monthly',
     description: 'App Registration',
@@ -181,6 +193,47 @@ function generateSlug(name) {
 }
 
 /**
+ * Resolve a page's last-modified date (YYYY-MM-DD) from git history.
+ * Returns null when git or the file is unavailable so the caller can fall back.
+ */
+function getGitLastModified(relativePath) {
+  if (!relativePath) return null
+
+  try {
+    const repoRoot = path.join(__dirname, '..')
+    if (!fs.existsSync(path.join(repoRoot, relativePath))) return null
+
+    const out = execSync(`git log -1 --format=%cs -- "${relativePath}"`, {
+      cwd: repoRoot,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim()
+
+    return /^\d{4}-\d{2}-\d{2}$/.test(out) ? out : null
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Resolve a marketplace app's last-modified date (YYYY-MM-DD) from whatever
+ * timestamp field the API provides. Falls back to the current date.
+ */
+function getAppLastModified(app) {
+  const ts = app.updatedAt || app.updated_at || app.lastModified
+    || app.modified || app.dateModified
+
+  if (ts) {
+    const date = new Date(ts)
+    if (!Number.isNaN(date.getTime())) {
+      return date.toISOString().split('T')[0]
+    }
+  }
+
+  return currentDate
+}
+
+/**
  * Escape special XML characters
  */
 function escapeXml(str) {
@@ -195,14 +248,14 @@ function escapeXml(str) {
 /**
  * Generate XML for a single URL entry
  */
-function generateUrlEntry({ loc, priority, changefreq, description }) {
+function generateUrlEntry({ loc, priority, changefreq, description, lastmod }) {
   const fullUrl = loc.startsWith('http') ? loc : `${BASE_URL}${loc}`
 
   return `
   <!-- ${description} -->
   <url>
     <loc>${escapeXml(fullUrl)}</loc>
-    <lastmod>${currentDate}</lastmod>
+    <lastmod>${lastmod || currentDate}</lastmod>
     <priority>${priority}</priority>
     <changefreq>${changefreq}</changefreq>
   </url>`
@@ -235,8 +288,11 @@ function generateSitemap(urls) {
 async function main() {
   console.log('\n📡 Generating sitemap with dynamic marketplace routes...\n')
 
-  // Start with static URLs
-  const allUrls = [...staticUrls]
+  // Start with static URLs, resolving an accurate per-page lastmod from git
+  const allUrls = staticUrls.map(url => ({
+    ...url,
+    lastmod: getGitLastModified(url.source) || currentDate,
+  }))
 
   // Fetch marketplace data
   const [allApps, trendingGameUUIDs] = await Promise.all([
@@ -256,10 +312,19 @@ async function main() {
   console.log(`   🏪 Marketplace apps (excluding games): ${marketplaceApps.length}`)
   console.log(`   ⭐ Trending games: ${trendingGames.length}`)
 
-  // Add marketplace app URLs
+  // Add marketplace app URLs.
+  // Apps with a redirectUrl are skipped: their detail pages set rel=canonical
+  // to the dedicated site, so including them here would contradict the
+  // canonical signal we want Google to follow.
   const existingLocs = new Set(staticUrls.map(u => u.loc))
+  let redirectSkippedApps = 0
+  let redirectSkippedGames = 0
 
   for (const app of marketplaceApps) {
+    if (app.redirectUrl) {
+      redirectSkippedApps++
+      continue
+    }
     const slug = app.name || generateSlug(app.displayName)
     if (slug) {
       const loc = `/marketplace/${slug}`
@@ -267,6 +332,7 @@ async function main() {
         existingLocs.add(loc)
         allUrls.push({
           loc,
+          lastmod: getAppLastModified(app),
           priority: SEO_PRIORITY.STANDARD,
           changefreq: 'weekly',
           description: `Marketplace App: ${app.displayName || app.name}`,
@@ -277,6 +343,10 @@ async function main() {
 
   // Add trending game URLs
   for (const game of trendingGames) {
+    if (game.redirectUrl) {
+      redirectSkippedGames++
+      continue
+    }
     const slug = game.name || generateSlug(game.displayName)
     if (slug) {
       const loc = `/marketplace/games/${slug}`
@@ -284,6 +354,7 @@ async function main() {
         existingLocs.add(loc)
         allUrls.push({
           loc,
+          lastmod: getAppLastModified(game),
           priority: SEO_PRIORITY.MEDIUM,
           changefreq: 'weekly',
           description: `Game Server: ${game.displayName || game.name}`,
@@ -292,9 +363,13 @@ async function main() {
     }
   }
 
+  if (redirectSkippedApps || redirectSkippedGames) {
+    console.log(`   ↩️  Skipped (canonical → dedicated site): ${redirectSkippedApps} apps, ${redirectSkippedGames} games`)
+  }
+
   console.log(`\n   📄 Static URLs: ${staticUrls.length}`)
-  console.log(`   📄 Marketplace app URLs: ${marketplaceApps.length}`)
-  console.log(`   📄 Game URLs: ${trendingGames.length}`)
+  console.log(`   📄 Marketplace app URLs: ${marketplaceApps.length - redirectSkippedApps}`)
+  console.log(`   📄 Game URLs: ${trendingGames.length - redirectSkippedGames}`)
   console.log(`   📄 Total URLs: ${allUrls.length}`)
 
   // Generate and write sitemap

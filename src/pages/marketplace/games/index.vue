@@ -176,7 +176,7 @@
 <script setup>
 import { ref, computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema, generateArticleSchema } from '@/composables/useSEO'
+import { useSEO, generateOrganizationSchema, generateBreadcrumbSchema, generateFAQSchema, usePrerenderReady } from '@/composables/useSEO'
 import { useFluxStore } from '@/stores/flux'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useGameUtils } from '@/composables/useGameUtils'
@@ -433,20 +433,6 @@ const title = 'Game Server Hosting - FluxPlay on FluxCloud'
 const description = 'Host Minecraft, Palworld, Factorio, Satisfactory & Enshrouded servers on FluxCloud. Global servers, instant deployment, DDoS protection. Flexible plans.'
 const imageUrl = 'https://cloud.runonflux.com/images/games/FluxPlay_white.svg'
 
-// Article timestamps for SEO (static dates for this landing page)
-const datePublished = '2024-02-01T00:00:00Z' // Initial launch date
-const dateModified = '2025-01-20T00:00:00Z'  // Last significant update
-
-// FluxPlay Organization schema (custom for this page)
-const fluxPlayOrganizationSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
-  'name': 'FluxPlay',
-  'url': 'https://cloud.runonflux.com',
-  'logo': imageUrl,
-  'description': 'Decentralized game server hosting on FluxCloud',
-}
-
 // Reactive structured data that updates when games load
 const structuredDataSchemas = computed(() => {
   // FAQ schema with HTML tags stripped
@@ -461,19 +447,12 @@ const structuredDataSchemas = computed(() => {
     { name: 'Games', url: pageUrl },
   ])
 
-  // Article schema with timestamps
-  const articleSchema = generateArticleSchema({
-    headline: title,
-    description,
-    url: pageUrl,
-    image: imageUrl,
-    datePublished,
-    dateModified,
-  })
+  // Single canonical Organization entity, shared across the whole site
+  const organizationSchema = generateOrganizationSchema()
 
   if (!games.value || games.value.length === 0) {
-    // Return only Organization, Breadcrumb, Article, and FAQ when games haven't loaded yet
-    return [fluxPlayOrganizationSchema, breadcrumbSchema, articleSchema, faqSchema]
+    // Games not loaded yet — return everything except the ItemList
+    return [organizationSchema, breadcrumbSchema, faqSchema]
   }
 
   // When games are loaded, include ItemList
@@ -493,7 +472,7 @@ const structuredDataSchemas = computed(() => {
     })),
   }
 
-  return [itemListSchema, fluxPlayOrganizationSchema, breadcrumbSchema, articleSchema, faqSchema]
+  return [itemListSchema, organizationSchema, breadcrumbSchema, faqSchema]
 })
 
 // useSEO with reactive structured data
@@ -506,9 +485,16 @@ useSEO({
   keywords: 'game server hosting, minecraft hosting, palworld hosting, factorio hosting, satisfactory hosting, enshrouded hosting, decentralized hosting, flux network, dedicated game servers, affordable hosting, ddos protection, blockchain hosting, pay-as-you-go gaming',
   structuredData: structuredDataSchemas,
   meta: [
-    { property: 'og:site_name', content: 'FluxPlay' },
+    { property: 'og:site_name', content: 'FluxPlay by FluxCloud' },
   ],
 })
+
+// Hold the SEO prerenderer until the games list has loaded, so the prerendered
+// HTML carries the ItemList structured data.
+const { markReady } = usePrerenderReady()
+watch(loading, isLoading => {
+  if (!isLoading) markReady()
+}, { flush: 'post' })
 
 // Load games and flux locations on mount
 onMounted(async () => {

@@ -58,6 +58,7 @@ const STICKY_BACKEND_EXCLUSIONS = [
   '/apps/temporarymessages',  // Not currently used in frontend, matches backend ACL
   '/apps/location',
   '/apps/testappinstall',
+  '/apps/getpublickey',
 ]
 
 /**

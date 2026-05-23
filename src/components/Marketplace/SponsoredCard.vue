@@ -29,6 +29,10 @@
               <VCard
                 v-for="(app, index) in slideApps"
                 :key="app.uuid || app.name"
+                :href="app.redirectUrl || undefined"
+                :to="!app.redirectUrl ? `/marketplace/${app.name?.toLowerCase() || app.uuid}` : undefined"
+                :target="app.redirectUrl ? '_blank' : undefined"
+                :rel="app.redirectUrl ? 'noopener' : undefined"
                 class="sponsored-app"
                 variant="outlined"
               >

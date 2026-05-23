@@ -109,7 +109,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useSEO, generateSoftwareApplicationSchema, generateBreadcrumbSchema } from '@/composables/useSEO'
+import { useSEO, generateSoftwareApplicationSchema, generateBreadcrumbSchema, usePrerenderReady } from '@/composables/useSEO'
 import { useMarketplace } from '@/composables/useMarketplace'
 import { useGameUtils } from '@/composables/useGameUtils'
 import { useFluxStore } from '@/stores/flux'
@@ -204,6 +204,12 @@ const seoImage = computed(() => {
 
 const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/games/${route.params.name}`)
 
+// When a game has a dedicated website (game.redirectUrl), funnel SEO signal to
+// it: canonical, og:url, and structured data url all point there so search
+// engines treat the dedicated site as the authoritative source instead of
+// competing with this page.
+const canonicalUrl = computed(() => game.value?.redirectUrl || seoUrl.value)
+
 const seoKeywords = computed(() => {
   if (!game.value) return 'game server hosting, decentralized hosting, flux network, affordable game hosting'
   const gameName = game.value.displayName || game.value.name
@@ -218,6 +224,7 @@ const structuredData = computed(() => {
   const gameName = game.value.displayName || game.value.name
   const description = seoDescription.value
   const pageUrl = seoUrl.value
+  const entityUrl = canonicalUrl.value
   const imageUrl = seoImage.value
   const price = minPrice.value
 
@@ -270,7 +277,7 @@ const structuredData = computed(() => {
   const productStructuredData = generateSoftwareApplicationSchema({
     name: `${gameName} Server Hosting`,
     description,
-    url: pageUrl,
+    url: entityUrl,
     image: imageUrl,
     applicationCategory: 'GameServer',
     operatingSystem: 'Linux',
@@ -289,12 +296,13 @@ const structuredData = computed(() => {
       '99.9% uptime guarantee',
       'Pay-as-you-go pricing',
     ],
-    aggregateRating: {
-      ratingValue: '4.8',
-      reviewCount: '127',
-      bestRating: '5',
-    },
   })
+
+  // When a dedicated site exists, declare this marketplace page as an alternate
+  // URL so search engines connect them to the same entity.
+  if (game.value.redirectUrl) {
+    productStructuredData.sameAs = [pageUrl]
+  }
 
   // Breadcrumb structured data
   const breadcrumbStructuredData = generateBreadcrumbSchema([
@@ -316,11 +324,19 @@ const structuredData = computed(() => {
 useSEO({
   title: seoTitle,
   description: seoDescription,
-  url: seoUrl,
+  url: canonicalUrl,
   image: seoImage,
   keywords: seoKeywords,
   structuredData, // Computed ref - useSEO will handle reactivity
 })
+
+// Hold the SEO prerenderer until game data has loaded, so the prerendered HTML
+// carries the real per-game title, meta description, and schema instead of the
+// loading-state placeholders.
+const { markReady } = usePrerenderReady()
+watch(loading, isLoading => {
+  if (!isLoading) markReady()
+}, { flush: 'post' })
 
 const loadGameDetails = async () => {
   loading.value = true

@@ -1,12 +1,13 @@
 <template>
-  <div
+  <component
+    :is="wrapperTag"
+    v-bind="wrapperAttrs"
     ref="cardRef"
     class="app-card-wrapper"
     :class="{ 'hovered': hovered, 'is-visible': isVisible }"
     :style="{ '--animation-order': animationOrder }"
     @mouseenter="hovered = true"
     @mouseleave="hovered = false"
-    @click="viewDetails"
   >
     <VCard
       class="app-card"
@@ -108,12 +109,12 @@
         </div>
       </div>
     </VCard>
-  </div>
+  </component>
 </template>
 
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import AppIcon from '@/components/Marketplace/AppIcon.vue'
 import { useMarketplaceUtils } from '@/composables/useMarketplaceUtils'
@@ -215,6 +216,28 @@ const parsedAppName = computed(() => {
   }
 })
 
+const internalRoute = computed(() => {
+  const appIdentifier = props.app.name?.toLowerCase() || props.app.uuid
+
+  return `/marketplace/${appIdentifier}`
+})
+
+// Render as a real anchor for external redirects (so crawlers see a backlink to
+// the dedicated site and PageRank flows) or a RouterLink for internal routes.
+const wrapperTag = computed(() => props.app.redirectUrl ? 'a' : RouterLink)
+
+const wrapperAttrs = computed(() => {
+  if (props.app.redirectUrl) {
+    return {
+      href: props.app.redirectUrl,
+      target: '_blank',
+      rel: 'noopener',
+    }
+  }
+
+  return { to: internalRoute.value }
+})
+
 const navigateToApp = () => {
   if (props.app.redirectUrl) {
     window.open(props.app.redirectUrl, '_blank', 'noopener,noreferrer')
@@ -222,9 +245,7 @@ const navigateToApp = () => {
     return
   }
 
-  // FluxCloud uses app.name.toLowerCase() for navigation
-  const appIdentifier = props.app.name?.toLowerCase() || props.app.uuid
-  router.push(`/marketplace/${appIdentifier}`)
+  router.push(internalRoute.value)
 }
 
 const viewDetails = () => {
@@ -263,6 +284,9 @@ onUnmounted(() => {
 
 <style scoped>
 .app-card-wrapper {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   height: 250px;
   width: 100%;

@@ -4,7 +4,7 @@
  */
 
 import { useHead } from '@unhead/vue'
-import { computed } from 'vue'
+import { computed, toValue } from 'vue'
 
 /**
  * Escape HTML special characters to prevent XSS in user-provided content
@@ -56,13 +56,16 @@ export function useSEO(options) {
     robots = 'index, follow',
   } = options
 
-  // Sanitize user-provided content to prevent XSS
-  const safeTitle = escapeHtml(title)
-  const safeDescription = escapeHtml(description)
-  const safeKeywords = escapeHtml(keywords)
+  // Sanitize user-provided content to prevent XSS.
+  // title/description/keywords may be plain strings or reactive refs —
+  // dynamic pages (e.g. marketplace/[id]) pass computed values — so resolve
+  // and escape inside a computed to stay reactive and keep escaping correct.
+  const safeTitle = computed(() => escapeHtml(toValue(title)))
+  const safeDescription = computed(() => escapeHtml(toValue(description)))
+  const safeKeywords = computed(() => escapeHtml(toValue(keywords)))
 
   // Use title as default alt text if not provided
-  const imgAlt = escapeHtml(imageAlt || title)
+  const imgAlt = computed(() => escapeHtml(toValue(imageAlt) || toValue(title)))
 
   // Default meta tags
   const defaultMeta = [
@@ -102,7 +105,7 @@ export function useSEO(options) {
   ]
 
   // Add keywords if provided
-  if (safeKeywords) {
+  if (toValue(keywords)) {
     defaultMeta.push({
       name: 'keywords',
       content: safeKeywords,
@@ -147,7 +150,10 @@ export function generateOrganizationSchema() {
     '@type': 'Organization',
     'name': 'Flux Network',
     'url': 'https://cloud.runonflux.com',
-    'logo': 'https://cloud.runonflux.com/images/logo.png',
+    'logo': {
+      '@type': 'ImageObject',
+      'url': 'https://cloud.runonflux.com/images/logo.png',
+    },
     'description': 'Decentralized Web3 cloud infrastructure powered by FluxNodes worldwide',
     'sameAs': [
       'https://twitter.com/RunOnFlux',
@@ -468,4 +474,37 @@ export function useSEONoIndex() {
       },
     ],
   })
+}
+
+/**
+ * Coordinate SEO prerendering for pages whose title, meta description, or
+ * JSON-LD structured data depend on data fetched asynchronously after mount.
+ *
+ * Such a page calls usePrerenderReady() during setup and invokes the returned
+ * markReady() once that data has resolved (or failed). scripts/prerender.js
+ * waits for this signal before snapshotting the static HTML, so loading-state
+ * metadata (generic titles, empty schema) is never baked into the prerendered
+ * output.
+ *
+ * Pages with no async SEO data do not need this — the prerender script treats
+ * the absence of the data-prerender-pending attribute as "ready".
+ *
+ * @returns {{ markReady: () => void }}
+ */
+export function usePrerenderReady() {
+  const PENDING_ATTR = 'data-prerender-pending'
+
+  if (typeof document !== 'undefined') {
+    document.documentElement.setAttribute(PENDING_ATTR, 'true')
+  }
+
+  let settled = false
+
+  const markReady = () => {
+    if (settled || typeof document === 'undefined') return
+    settled = true
+    document.documentElement.setAttribute(PENDING_ATTR, 'false')
+  }
+
+  return { markReady }
 }

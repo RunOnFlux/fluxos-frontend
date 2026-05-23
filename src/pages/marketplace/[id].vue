@@ -185,7 +185,7 @@
 
 
       <!-- Compact Info Grid -->
-      <div class="info-grid" :class="{ 'single-column': !app.website && !app.sourceCode && !app.supportLink }">
+      <div class="info-grid" :class="{ 'single-column': !app.redirectUrl && !app.website && !app.sourceCode && !app.supportLink }">
         <div class="info-section">
           <div class="section-title-modern">
             <VAvatar size="32" class="section-title-avatar about-avatar">
@@ -240,7 +240,7 @@
           </div>
         </div>
 
-        <div v-if="app.website || app.sourceCode || app.supportLink" class="info-section">
+        <div v-if="app.redirectUrl || app.website || app.sourceCode || app.supportLink" class="info-section">
           <div class="section-title-modern">
             <VAvatar size="32" class="section-title-avatar links-avatar">
               <VIcon icon="mdi-link" size="18" color="white" />
@@ -248,6 +248,20 @@
             <span class="section-title-text">{{ t('pages.marketplace.detail.links') }}</span>
           </div>
           <div class="links-list">
+            <VBtn
+              v-if="app.redirectUrl"
+              variant="flat"
+              color="primary"
+              size="small"
+              :href="app.redirectUrl"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="modern-link redirect-link"
+              :ripple="false"
+            >
+              <VIcon start icon="mdi-rocket-launch" size="16" />
+              {{ app.displayName || app.name }} hosting site
+            </VBtn>
             <VBtn
               v-if="app.website"
               variant="text"
@@ -260,7 +274,7 @@
               :ripple="false"
             >
               <VIcon start icon="mdi-web" size="16" />
-              {{ t('pages.marketplace.detail.website') }}
+              {{ app.displayName || app.name }} {{ t('pages.marketplace.detail.website').toLowerCase() }}
             </VBtn>
             <VBtn
               v-if="app.sourceCode"
@@ -274,7 +288,7 @@
               :ripple="false"
             >
               <VIcon start icon="mdi-github" size="16" />
-              {{ t('pages.marketplace.detail.sourceCode') }}
+              {{ app.displayName || app.name }} {{ t('pages.marketplace.detail.sourceCode').toLowerCase() }}
             </VBtn>
             <VBtn
               v-if="app.supportLink"
@@ -394,7 +408,7 @@
 import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { useSEO, generateBreadcrumbSchema } from '@/composables/useSEO'
+import { useSEO, generateBreadcrumbSchema, usePrerenderReady } from '@/composables/useSEO'
 import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import DOMPurify from 'dompurify'
 import { useMarketplace } from '@/composables/useMarketplace'
@@ -867,6 +881,12 @@ const seoImage = computed(() => {
 
 const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/${route.params.id}`)
 
+// When an app has a dedicated website (app.redirectUrl), funnel SEO signal to
+// it: canonical, og:url, structured data url, and offer url all point there
+// so search engines treat the dedicated site as the authoritative source for
+// the app instead of competing with this page.
+const canonicalUrl = computed(() => app.value?.redirectUrl || seoUrl.value)
+
 const seoKeywords = computed(() => {
   if (!app.value) return 'Flux, cloud hosting, decentralized hosting, Web3, blockchain hosting'
   
@@ -887,18 +907,28 @@ const structuredData = computed(() => {
     'description': seoDescription.value,
     'applicationCategory': 'WebApplication',
     'operatingSystem': 'Web',
+    'url': canonicalUrl.value,
     'offers': {
       '@type': 'Offer',
       'price': newApp.price || 0,
       'priceCurrency': 'USD',
       'availability': 'https://schema.org/InStock',
-      'url': seoUrl.value,
+      'url': canonicalUrl.value,
     },
     'provider': {
       '@type': 'Organization',
       'name': 'Flux',
       'url': 'https://runonflux.io',
     },
+  }
+
+  // When a dedicated site exists, declare alternate URLs (this marketplace
+  // page + sourceCode) so search engines connect them to the same entity.
+  const alternateUrls = []
+  if (newApp.redirectUrl) alternateUrls.push(seoUrl.value)
+  if (newApp.sourceCode) alternateUrls.push(newApp.sourceCode)
+  if (alternateUrls.length > 0) {
+    productStructuredData.sameAs = alternateUrls
   }
 
   // Add developer/company info if available
@@ -951,11 +981,19 @@ const structuredData = computed(() => {
 useSEO({
   title: seoTitle,
   description: seoDescription,
-  url: seoUrl,
+  url: canonicalUrl,
   image: seoImage,
   keywords: seoKeywords,
   structuredData, // Computed ref - useSEO will handle reactivity
 })
+
+// Hold the SEO prerenderer until app data has loaded, so the prerendered HTML
+// carries the real per-app title, meta description, and schema instead of the
+// loading-state placeholders.
+const { markReady } = usePrerenderReady()
+watch(isLoading, loading => {
+  if (!loading) markReady()
+}, { flush: 'post' })
 
 onMounted(async () => {
   // Load network data for dynamic node/country counts
@@ -1835,6 +1873,16 @@ onMounted(async () => {
   font-size: 0.875rem !important;
   padding: 6px 12px !important;
   transition: all 0.2s ease;
+}
+
+.modern-link.redirect-link {
+  opacity: 1;
+  color: white !important;
+  font-weight: 600 !important;
+}
+
+.modern-link.redirect-link :deep(.v-btn__overlay) {
+  opacity: 0 !important;
 }
 
 .modern-link:hover {
