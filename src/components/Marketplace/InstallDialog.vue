@@ -2632,12 +2632,20 @@ const monthlyPrice = computed(() => {
     const apiPrice = Number(apiPricing.value.usd.toFixed(2))
     const configPrice = props.app.price || 0
 
-    // Ensure price never goes below the original config price
-    const finalPrice = Math.max(apiPrice, configPrice)
+    // Scale the floor by instance count so apps listed for <3 instances
+    // (where the backend pricing API clamps to a 3-instance minimum)
+    // still see the price increase when the user adds instances.
+    const baseInstances = props.app.instances || 3
+    const currentInstances = config.value.instances || baseInstances
+    const scaledFloor = configPrice * (Math.max(currentInstances, baseInstances) / baseInstances)
+    const finalPrice = Math.max(apiPrice, scaledFloor)
 
     console.log('💰 Using API-calculated price:', {
       apiPrice,
       configPrice,
+      baseInstances,
+      currentInstances,
+      scaledFloor,
       finalPrice,
       usedMinimum: finalPrice > apiPrice,
     })
@@ -2645,11 +2653,11 @@ const monthlyPrice = computed(() => {
     return finalPrice
   }
 
-  // Fallback: Marketplace apps only - config price is for default instances (3)
+  // Fallback: Marketplace apps only - config price is for the app's listed instances
   // Calculate price per instance, then multiply by current instances
   const configPrice = props.app.price || 0
-  const defaultInstances = 3
-  const currentInstances = config.value.instances || 3
+  const defaultInstances = props.app.instances || 3
+  const currentInstances = config.value.instances || defaultInstances
   const pricePerInstance = configPrice / defaultInstances
   const totalPrice = Number((pricePerInstance * currentInstances).toFixed(2))
 
