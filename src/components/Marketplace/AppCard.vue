@@ -252,11 +252,19 @@ const viewDetails = () => {
   navigateToApp()
 }
 
-// Intersection Observer for scroll-based animation
+// Intersection Observer for scroll-based animation.
+// The wrapper renders as a native <a> for redirect cards but as a RouterLink
+// component for internal cards — for the latter, the template ref resolves to
+// the component instance, so unwrap to the underlying DOM via $el before
+// handing it to IntersectionObserver. Without this, internal-link cards
+// never receive `is-visible` and stay at opacity: 0.
 let observer = null
 
+const getCardEl = () => cardRef.value?.$el ?? cardRef.value
+
 onMounted(() => {
-  if (!cardRef.value) return
+  const el = getCardEl()
+  if (!el) return
 
   observer = new IntersectionObserver(
     entries => {
@@ -272,12 +280,13 @@ onMounted(() => {
     },
   )
 
-  observer.observe(cardRef.value)
+  observer.observe(el)
 })
 
 onUnmounted(() => {
-  if (observer && cardRef.value) {
-    observer.unobserve(cardRef.value)
+  const el = getCardEl()
+  if (observer && el) {
+    observer.unobserve(el)
   }
 })
 </script>
