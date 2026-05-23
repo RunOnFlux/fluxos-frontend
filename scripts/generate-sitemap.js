@@ -312,10 +312,19 @@ async function main() {
   console.log(`   🏪 Marketplace apps (excluding games): ${marketplaceApps.length}`)
   console.log(`   ⭐ Trending games: ${trendingGames.length}`)
 
-  // Add marketplace app URLs
+  // Add marketplace app URLs.
+  // Apps with a redirectUrl are skipped: their detail pages set rel=canonical
+  // to the dedicated site, so including them here would contradict the
+  // canonical signal we want Google to follow.
   const existingLocs = new Set(staticUrls.map(u => u.loc))
+  let redirectSkippedApps = 0
+  let redirectSkippedGames = 0
 
   for (const app of marketplaceApps) {
+    if (app.redirectUrl) {
+      redirectSkippedApps++
+      continue
+    }
     const slug = app.name || generateSlug(app.displayName)
     if (slug) {
       const loc = `/marketplace/${slug}`
@@ -334,6 +343,10 @@ async function main() {
 
   // Add trending game URLs
   for (const game of trendingGames) {
+    if (game.redirectUrl) {
+      redirectSkippedGames++
+      continue
+    }
     const slug = game.name || generateSlug(game.displayName)
     if (slug) {
       const loc = `/marketplace/games/${slug}`
@@ -350,9 +363,13 @@ async function main() {
     }
   }
 
+  if (redirectSkippedApps || redirectSkippedGames) {
+    console.log(`   ↩️  Skipped (canonical → dedicated site): ${redirectSkippedApps} apps, ${redirectSkippedGames} games`)
+  }
+
   console.log(`\n   📄 Static URLs: ${staticUrls.length}`)
-  console.log(`   📄 Marketplace app URLs: ${marketplaceApps.length}`)
-  console.log(`   📄 Game URLs: ${trendingGames.length}`)
+  console.log(`   📄 Marketplace app URLs: ${marketplaceApps.length - redirectSkippedApps}`)
+  console.log(`   📄 Game URLs: ${trendingGames.length - redirectSkippedGames}`)
   console.log(`   📄 Total URLs: ${allUrls.length}`)
 
   // Generate and write sitemap

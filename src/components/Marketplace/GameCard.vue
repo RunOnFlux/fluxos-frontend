@@ -1,7 +1,8 @@
 <template>
-  <div
+  <component
+    :is="wrapperTag"
+    v-bind="wrapperAttrs"
     class="game-card"
-    @click="navigateToGame"
     :style="{ backgroundImage: backgroundImageUrl ? `url(${backgroundImageUrl})` : 'none' }"
   >
     <!-- Price Chip -->
@@ -39,12 +40,12 @@
         {{ t('components.marketplace.gameCard.viewDetails') }}
       </VBtn>
     </div>
-  </div>
+  </component>
 </template>
 
 <script setup>
 import { computed } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, RouterLink } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useGameUtils } from '@/composables/useGameUtils'
 
@@ -68,6 +69,24 @@ const backgroundImageUrl = computed(() => {
   return parsed
 })
 
+const internalRoute = computed(() => `/marketplace/games/${props.game.name.toLowerCase()}`)
+
+// Render as a real anchor for external redirects (so crawlers see a backlink to
+// the dedicated site and PageRank flows) or a RouterLink for internal routes.
+const wrapperTag = computed(() => props.game.redirectUrl ? 'a' : RouterLink)
+
+const wrapperAttrs = computed(() => {
+  if (props.game.redirectUrl) {
+    return {
+      href: props.game.redirectUrl,
+      target: '_blank',
+      rel: 'noopener',
+    }
+  }
+
+  return { to: internalRoute.value }
+})
+
 const navigateToGame = () => {
   if (props.game.redirectUrl) {
     window.open(props.game.redirectUrl, '_blank', 'noopener,noreferrer')
@@ -75,16 +94,16 @@ const navigateToGame = () => {
     return
   }
 
-  const gameName = props.game.name.toLowerCase()
-  console.log('🎮 Navigating to game:', gameName)
-  console.log('🔗 Full path:', `/marketplace/games/${gameName}`)
-  router.push(`/marketplace/games/${gameName}`)
+  router.push(internalRoute.value)
 }
 </script>
 
 <style scoped>
 .game-card {
   --logo-max-height: 200px;
+  display: block;
+  text-decoration: none;
+  color: inherit;
   height: 500px;
   border-radius: 24px;
   overflow: hidden;

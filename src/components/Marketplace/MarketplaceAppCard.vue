@@ -1,8 +1,11 @@
 <template>
   <VCard
+    :href="app.redirectUrl || undefined"
+    :to="!app.redirectUrl ? `/marketplace/${app.name?.toLowerCase() || app.uuid}` : undefined"
+    :target="app.redirectUrl ? '_blank' : undefined"
+    :rel="app.redirectUrl ? 'noopener' : undefined"
     class="marketplace-card"
     elevation="2"
-    @click="$router.push(`/marketplace/${app.uuid || app.name}`)"
   >
     <!-- Uniform Square Image -->
     <div class="image-section">
