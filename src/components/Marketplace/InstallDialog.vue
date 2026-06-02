@@ -3501,6 +3501,22 @@ const generateDeploymentMessage = async () => {
         ...(component.environmentParameters || component.enviromentParameters || []),
       ]
 
+      // Merge per-tier environment parameters from the selected config (game configurations).
+      // Without this, configs[].components[].environmentParameters (e.g. MEMORY/PUBLIC for
+      // game servers) never reach the deployed spec - only compose values do.
+      // Config values override compose values with the same key; new keys are appended.
+      const configComponent = props.selectedConfig?.components?.find(c => c.name === component.name)
+        || props.selectedConfig?.components?.[index]
+      for (const param of configComponent?.environmentParameters || []) {
+        const paramKey = String(param).split('=')[0]
+        const existingIndex = environmentParameters.findIndex(p => String(p).split('=')[0] === paramKey)
+        if (existingIndex >= 0) {
+          environmentParameters[existingIndex] = param
+        } else {
+          environmentParameters.push(param)
+        }
+      }
+
       // Add user-configured parameters - ONLY for this specific component
       try {
         const envParams = getEnvironmentParameters()
