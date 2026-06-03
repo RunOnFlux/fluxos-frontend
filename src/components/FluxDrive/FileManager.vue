@@ -2064,8 +2064,8 @@ const uploadVersion = async () => {
   const fileSize = formatFileSize(selectedVersionFile.value.size)
   const fileSizeInMB = selectedVersionFile.value.size / (1024 * 1024)
 
-  if (fileSizeInMB > 100) {
-    showToastMessage(`File too large! Upload limit is 100.00 MB (${fileSize} provided)`, 'error', 'mdi-file-alert')
+  if (fileSizeInMB > uploadLimitBytes.value / (1024 * 1024)) {
+    showToastMessage(`File too large! Upload limit is ${(uploadLimitBytes.value / 1073741824).toFixed(2)} GB (${fileSize} provided)`, 'error', 'mdi-file-alert')
     
     return
   }
@@ -2229,9 +2229,9 @@ const handleLocalFileSelect = async e => {
       const fileSize = formatFileSize(file.size)
       const fileSizeInMB = file.size / (1024 * 1024)
 
-      if (fileSizeInMB > 100) {
+      if (fileSizeInMB > uploadLimitBytes.value / (1024 * 1024)) {
         showToastMessage(
-          `File "${file.name}" is too large! Upload limit is 100.00 MB (${fileSize} provided)`,
+          `File "${file.name}" is too large! Upload limit is ${(uploadLimitBytes.value / 1073741824).toFixed(2)} GB (${fileSize} provided)`,
           'error',
           'mdi-file-alert',
         )
@@ -2328,9 +2328,9 @@ const handleLocalDrop = async e => {
       const fileSize = formatFileSize(file.size)
       const fileSizeInMB = file.size / (1024 * 1024)
 
-      if (fileSizeInMB > 100) {
+      if (fileSizeInMB > uploadLimitBytes.value / (1024 * 1024)) {
         showToastMessage(
-          `File "${file.name}" is too large! Upload limit is 100.00 MB (${fileSize} provided)`,
+          `File "${file.name}" is too large! Upload limit is ${(uploadLimitBytes.value / 1073741824).toFixed(2)} GB (${fileSize} provided)`,
           'error',
           'mdi-file-alert',
         )
@@ -2552,6 +2552,7 @@ const {
   uploadMessage,
   ipfsHost,
   bridgeURL,
+  uploadLimitBytes,
   getAlertType,
   loadFiles,
   isRecoveryMode,

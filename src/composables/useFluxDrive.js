@@ -39,6 +39,9 @@ const sharedState = {
   subscriptionChecked: ref(false), // Track if we've checked subscription status
   subscriptionPeriodEnd: ref(null), // Subscription expiration timestamp
   paymentGateway: ref(''), // Payment gateway used for subscription ('fluxpay' or 'cryptocom')
+  uploadLimitBytes: ref(5 * 1024 * 1024 * 1024), // 5 GB default; refreshed from API GET /api/v1/config
+  uploadLimitFetched: ref(false), // Track if the config has been fetched from the API
+  config: ref(null), // Full public config from GET /api/v1/config (limits, plans, gateways, features, maintenance)
   storageInfoFetched: ref(false), // Track if storage info has been fetched
   filesLoaded: ref(false), // Track if files have been loaded
   usedStorage: ref(0),
@@ -184,8 +187,29 @@ export function useFluxDrive() {
     }
   }
 
+  // Fetch the public runtime config once (limits, plans, gateways, features, maintenance) so the UI
+  // never hardcodes these — fluxdrive-api is the single source of truth. Falls back to the local
+  // defaults if the endpoint is unreachable.
+  const fetchConfig = async () => {
+    if (sharedState.uploadLimitFetched.value) return
+    try {
+      const response = await fetch(`${bridgeURL}/api/v1/config`)
+      if (response.ok) {
+        const data = await response.json()
+        sharedState.config.value = data
+        const bytes = Number(data?.limits?.uploadBytes)
+        if (Number.isFinite(bytes) && bytes > 0) sharedState.uploadLimitBytes.value = bytes
+      }
+      sharedState.uploadLimitFetched.value = true
+    } catch (e) {
+      console.warn('Could not fetch config from API; using defaults', e)
+    }
+  }
+
   // Check subscription status - based on IPFS READ response
   const fetchStorageInfo = async () => {
+    fetchConfig() // fire-and-forget; loads public config (limits/plans/gateways/...) from the API on load
+
     // Prevent duplicate calls if storage info is already being fetched or already fetched
     if (sharedState.loadingStorage.value || sharedState.storageInfoFetched.value) {
       console.log('⏭️ Storage info already loading or fetched, skipping duplicate call')
@@ -531,72 +555,66 @@ export function useFluxDrive() {
   // Storage is already handled by shared state, don't redefine
 
   // FluxDrive plans (matching FluxCloud source code exactly)
-  const fluxDrivePlans = computed(() => [
-    {
-      id: 'starter',
-      name: t('components.fluxDrive.pricingPlans.plans.starter'),
-      storage: '10 GB',
-      price: '$0.50',
-      pricePerMonth: '$0.50 / Month',
-      originalPrice: null,
-      popular: false,
-      badge: null,
-      features: [
-        t('components.fluxDrive.pricingPlans.features.web3Infrastructure'),
-        t('components.fluxDrive.pricingPlans.features.decentralizedStorage'),
-        t('components.fluxDrive.pricingPlans.features.globalDistribution'),
-        t('components.fluxDrive.pricingPlans.features.unlimitedBandwidth'),
-      ],
-    },
-    {
-      id: 'standard',
-      name: t('components.fluxDrive.pricingPlans.plans.standard'),
-      storage: '50 GB',
-      price: '$2.50',
-      pricePerMonth: '$2.50 / Month',
-      originalPrice: null,
-      popular: true,
-      badge: t('components.fluxDrive.pricingPlans.badges.mostPopular'),
-      features: [
-        t('components.fluxDrive.pricingPlans.features.web3Infrastructure'),
-        t('components.fluxDrive.pricingPlans.features.decentralizedStorage'),
-        t('components.fluxDrive.pricingPlans.features.globalDistribution'),
-        t('components.fluxDrive.pricingPlans.features.unlimitedBandwidth'),
-      ],
-    },
-    {
-      id: 'pro',
-      name: t('components.fluxDrive.pricingPlans.plans.elite'),
-      storage: '100 GB',
-      price: '$5.00',
-      pricePerMonth: '$5.00 / Month',
-      originalPrice: null,
-      popular: false,
-      badge: t('components.fluxDrive.pricingPlans.badges.bestValue'),
-      features: [
-        t('components.fluxDrive.pricingPlans.features.web3Infrastructure'),
-        t('components.fluxDrive.pricingPlans.features.decentralizedStorage'),
-        t('components.fluxDrive.pricingPlans.features.globalDistribution'),
-        t('components.fluxDrive.pricingPlans.features.unlimitedBandwidth'),
-      ],
-    },
-    {
-      id: 'enterprise',
-      name: t('components.fluxDrive.pricingPlans.plans.fluxDrivePro'),
-      storage: t('components.fluxDrive.pricingPlans.customizable'),
-      price: '',
-      pricePerMonth: '',
-      originalPrice: null,
-      popular: false,
-      badge: t('components.fluxDrive.pricingPlans.badges.enterprise'),
-      features: [
-        t('components.fluxDrive.pricingPlans.features.web3Infrastructure'),
-        t('components.fluxDrive.pricingPlans.features.decentralizedStorage'),
-        t('components.fluxDrive.pricingPlans.features.globalDistribution'),
-        t('components.fluxDrive.pricingPlans.features.unlimitedBandwidth'),
-      ],
-    },
-  ])
+  const fluxDrivePlans = computed(() => {
+    // Storage/price come from the API config once loaded (single source of truth); the literals are
+    // fallbacks shown only before /api/v1/config resolves. i18n names/features/badges stay local.
+    const byName = Object.fromEntries((sharedState.config.value?.plans ?? []).map(p => [p.name, p]))
+    const fromConfig = (id, fallbackStorage, fallbackPrice) => {
+      const c = byName[id]
+      const storage = c ? `${c.storage_gb} GB` : fallbackStorage
+      const price = c ? `$${c.price_usd.toFixed(2)}` : fallbackPrice
+
+      return { storage, price, pricePerMonth: `${price} / Month` }
+    }
+
+    const features = [
+      t('components.fluxDrive.pricingPlans.features.web3Infrastructure'),
+      t('components.fluxDrive.pricingPlans.features.decentralizedStorage'),
+      t('components.fluxDrive.pricingPlans.features.globalDistribution'),
+      t('components.fluxDrive.pricingPlans.features.unlimitedBandwidth'),
+    ]
+
+    return [
+      {
+        id: 'starter',
+        name: t('components.fluxDrive.pricingPlans.plans.starter'),
+        ...fromConfig('starter', '10 GB', '$0.50'),
+        originalPrice: null,
+        popular: false,
+        badge: null,
+        features,
+      },
+      {
+        id: 'standard',
+        name: t('components.fluxDrive.pricingPlans.plans.standard'),
+        ...fromConfig('standard', '50 GB', '$2.50'),
+        originalPrice: null,
+        popular: true,
+        badge: t('components.fluxDrive.pricingPlans.badges.mostPopular'),
+        features,
+      },
+      {
+        id: 'pro',
+        name: t('components.fluxDrive.pricingPlans.plans.elite'),
+        ...fromConfig('pro', '100 GB', '$5.00'),
+        originalPrice: null,
+        popular: false,
+        badge: t('components.fluxDrive.pricingPlans.badges.bestValue'),
+        features,
+      },
+      {
+        id: 'enterprise',
+        name: t('components.fluxDrive.pricingPlans.plans.fluxDrivePro'),
+        storage: t('components.fluxDrive.pricingPlans.customizable'),
+        price: '',
+        pricePerMonth: '',
+        originalPrice: null,
+        popular: false,
+        badge: t('components.fluxDrive.pricingPlans.badges.enterprise'),
+        features,
+      },
+    ]
+  })
 
   // File table headers
   const fileHeaders = ref([
@@ -1605,8 +1623,8 @@ export function useFluxDrive() {
     console.log(`📤 Dropped ${files.length} file(s) for upload`)
 
     for (const file of files) {
-      if (file.size > 100000000) {
-        showSnackbar(`File "${file.name}" too large! Upload limit is 100MB`, 'error')
+      if (file.size > sharedState.uploadLimitBytes.value) {
+        showSnackbar(`File "${file.name}" too large! Upload limit is ${Math.round(sharedState.uploadLimitBytes.value / 1073741824)}GB`, 'error')
         continue
       }
       await uploadData(file)
@@ -1618,8 +1636,8 @@ export function useFluxDrive() {
     console.log(`📤 Selected ${files.length} file(s) for upload`)
 
     for (const file of files) {
-      if (file.size > 100000000) {
-        showSnackbar(`File "${file.name}" too large! Upload limit is 100MB`, 'error')
+      if (file.size > sharedState.uploadLimitBytes.value) {
+        showSnackbar(`File "${file.name}" too large! Upload limit is ${Math.round(sharedState.uploadLimitBytes.value / 1073741824)}GB`, 'error')
         continue
       }
       await uploadData(file)
@@ -1740,8 +1758,8 @@ export function useFluxDrive() {
 
           for (let i = 0; i < folderFiles.length; i++) {
             const file = folderFiles[i]
-            if (file.size > 100000000) {
-              showSnackbar(`File "${file.name}" too large! Upload limit is 100MB`, 'error')
+            if (file.size > sharedState.uploadLimitBytes.value) {
+              showSnackbar(`File "${file.name}" too large! Upload limit is ${Math.round(sharedState.uploadLimitBytes.value / 1073741824)}GB`, 'error')
               continue
             }
 
@@ -3030,6 +3048,9 @@ export function useFluxDrive() {
     subscriptionChecked,
     subscriptionPeriodEnd,
     paymentGateway: sharedState.paymentGateway,
+    uploadLimitBytes: sharedState.uploadLimitBytes,
+    config: sharedState.config,
+    fetchConfig,
     activeXHRs: sharedState.activeXHRs,
     loading,
     currentFolder,
