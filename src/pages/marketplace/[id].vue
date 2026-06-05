@@ -121,7 +121,7 @@
               <VIcon icon="mdi-cpu-64-bit" size="16" color="white" />
             </div>
             <div class="req-visual-content">
-              <div class="req-visual-value">{{ app.compose[0].cpu || 1 }}<span class="req-unit">{{ t('pages.marketplace.detail.unitCores') }}</span></div>
+              <div class="req-visual-value">{{ totalRequirements.cpu || 1 }}<span class="req-unit">{{ t('pages.marketplace.detail.unitCores') }}</span></div>
               <div class="req-visual-label">{{ t('pages.marketplace.detail.cpuPower') }}</div>
             </div>
           </div>
@@ -131,7 +131,7 @@
               <VIcon icon="mdi-memory" size="16" color="white" />
             </div>
             <div class="req-visual-content">
-              <div class="req-visual-value">{{ app.compose[0].ram || 512 }}<span class="req-unit">{{ t('pages.marketplace.detail.unitMB') }}</span></div>
+              <div class="req-visual-value">{{ totalRequirements.ram || 512 }}<span class="req-unit">{{ t('pages.marketplace.detail.unitMB') }}</span></div>
               <div class="req-visual-label">{{ t('pages.marketplace.detail.memory') }}</div>
             </div>
           </div>
@@ -141,7 +141,7 @@
               <VIcon icon="mdi-harddisk" size="16" color="white" />
             </div>
             <div class="req-visual-content">
-              <div class="req-visual-value">{{ app.compose[0].hdd || 1 }}<span class="req-unit">{{ t('pages.marketplace.detail.unitGB') }}</span></div>
+              <div class="req-visual-value">{{ totalRequirements.hdd || 1 }}<span class="req-unit">{{ t('pages.marketplace.detail.unitGB') }}</span></div>
               <div class="req-visual-label">{{ t('pages.marketplace.detail.storage') }}</div>
             </div>
           </div>
@@ -520,6 +520,17 @@ const validScreenshots = computed(() => {
   if (!app.value?.screenshots) return []
 
   return app.value.screenshots.filter(image => !failedImages.value.has(image))
+})
+
+// Total hardware requirements summed across all app components (compose entries)
+const totalRequirements = computed(() => {
+  const compose = app.value?.compose || []
+
+  return compose.reduce((totals, component) => ({
+    cpu: totals.cpu + (Number(component.cpu) || 0),
+    ram: totals.ram + (Number(component.ram) || 0),
+    hdd: totals.hdd + (Number(component.hdd) || 0),
+  }), { cpu: 0, ram: 0, hdd: 0 })
 })
 
 // Get app-specific pricing FAQ (using i18n translations)
