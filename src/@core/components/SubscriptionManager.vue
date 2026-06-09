@@ -458,6 +458,14 @@
           </ul>
         </template>
 
+        <!-- Refund notice (shown for both cancel variants) -->
+        <VAlert type="info" variant="tonal" density="compact" class="mb-2">
+          <div class="d-flex align-start">
+            <VIcon size="20" class="mr-2 mt-1" style="flex-shrink: 0;">mdi-lifebuoy</VIcon>
+            <span>{{ t('core.subscriptionManager.cancelRefundNotice') }}</span>
+          </div>
+        </VAlert>
+
         <VBtn color="error" variant="flat" size="large" density="compact" block class="mt-4" @click="cancelSubscription">
           <VIcon size="22" class="mr-2">mdi-cancel</VIcon>
           <span>{{ t('core.subscriptionManager.cancelSubscription') }}</span>
