@@ -24,6 +24,8 @@ export default [
   {
     title: 'menu.application.marketplaceWordPress',
     icon: { icon: 'mdi-wordpress', size: 20 },
-    to: 'marketplace-wordpress',
+    href: 'https://wordpress.runonflux.com',
+    target: '_blank',
+    rel: 'noopener noreferrer',
   },
 ]
