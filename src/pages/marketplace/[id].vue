@@ -890,7 +890,13 @@ const seoImage = computed(() => {
   return app.value.icon || app.value.logo || 'https://cloud.runonflux.com/images/logo.png'
 })
 
-const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/${route.params.id}`)
+// Stable canonical slug: always the app's lowercased name — the convention used
+// by internal links, the sitemap, and the backend resolver — regardless of
+// whether the visitor arrived via a differently-cased name or a uuid. Falling
+// back to route.params.id only while the app is still loading. This stops the
+// same app from emitting several different self-referencing canonical URLs.
+const canonicalSlug = computed(() => (app.value?.name || route.params.id || '').toString().toLowerCase())
+const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/${canonicalSlug.value}`)
 
 // When an app has a dedicated website (app.redirectUrl), funnel SEO signal to
 // it: canonical, og:url, structured data url, and offer url all point there
@@ -950,12 +956,18 @@ const structuredData = computed(() => {
     }
   }
 
-  // Add rating if available
-  if (newApp.rating) {
+  // Add rating only when the API provides BOTH a value and a real review count.
+  // Emitting a rating with a fabricated count (e.g. 1) violates Google's
+  // structured-data policy, so we skip the schema rating in that case — the
+  // star is still shown in the UI, just not claimed as structured data.
+  const apiRatingCount = newApp.ratingCount ?? newApp.reviewCount ?? newApp.reviews
+  if (newApp.rating && apiRatingCount != null) {
     productStructuredData.aggregateRating = {
       '@type': 'AggregateRating',
       'ratingValue': newApp.rating,
-      'ratingCount': 1,
+      'reviewCount': apiRatingCount,
+      'bestRating': '5',
+      'worstRating': '1',
     }
   }
 
