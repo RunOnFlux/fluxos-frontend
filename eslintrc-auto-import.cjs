@@ -306,6 +306,7 @@ module.exports = {
     "useElementHover": true,
     "useElementSize": true,
     "useElementVisibility": true,
+    "useEnterpriseOwners": true,
     "useEventBus": true,
     "useEventListener": true,
     "useEventSource": true,
