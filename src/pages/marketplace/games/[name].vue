@@ -202,7 +202,12 @@ const seoImage = computed(() => {
   return gameIcon.value || 'https://cloud.runonflux.com/images/games/FluxPlay_white.svg'
 })
 
-const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/games/${route.params.name}`)
+// Stable canonical slug: always the game's lowercased name — the convention used
+// by internal links, the sitemap, and the backend resolver — regardless of how
+// the visitor reached the page. Falls back to route.params.name only while the
+// game is still loading. Prevents multiple self-referencing canonicals per game.
+const canonicalSlug = computed(() => (game.value?.name || route.params.name || '').toString().toLowerCase())
+const seoUrl = computed(() => `https://cloud.runonflux.com/marketplace/games/${canonicalSlug.value}`)
 
 // When a game has a dedicated website (game.redirectUrl), funnel SEO signal to
 // it: canonical, og:url, and structured data url all point there so search

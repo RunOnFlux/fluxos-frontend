@@ -120,6 +120,18 @@ function generateSlug(name) {
 }
 
 /**
+ * Resolve the canonical slug for an app/game — lowercased name, matching the
+ * page's rel=canonical, the sitemap, and the internal links. The prerendered
+ * file is written to dist/<route>/index.html, so this must equal the canonical
+ * URL or the prerendered HTML lands at a path crawlers never request.
+ */
+function canonicalSlug(app) {
+  const raw = app.name || generateSlug(app.displayName)
+
+  return raw ? raw.toString().toLowerCase() : null
+}
+
+/**
  * Main function to fetch routes and generate the routes file
  */
 async function main() {
@@ -153,7 +165,7 @@ async function main() {
   // Add marketplace app routes (/marketplace/[id])
   const appRoutes = []
   for (const app of marketplaceApps) {
-    const slug = app.name || generateSlug(app.displayName)
+    const slug = canonicalSlug(app)
     if (slug) {
       appRoutes.push(`/marketplace/${slug}`)
     }
@@ -163,7 +175,7 @@ async function main() {
   // Use trending games for the games section (as per the API design)
   const gameRoutes = []
   for (const game of trendingGames) {
-    const slug = game.name || generateSlug(game.displayName)
+    const slug = canonicalSlug(game)
     if (slug) {
       gameRoutes.push(`/marketplace/games/${slug}`)
     }

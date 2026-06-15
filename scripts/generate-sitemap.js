@@ -193,6 +193,18 @@ function generateSlug(name) {
 }
 
 /**
+ * Resolve the canonical slug for an app/game. Must match the page's canonical
+ * URL (src/pages/marketplace/[id].vue), the internal links, and the backend
+ * resolver — all of which use the lowercased name. Diverging here would make
+ * the sitemap advertise URLs that contradict the page's rel=canonical.
+ */
+function canonicalSlug(app) {
+  const raw = app.name || generateSlug(app.displayName)
+
+  return raw ? raw.toString().toLowerCase() : null
+}
+
+/**
  * Resolve a page's last-modified date (YYYY-MM-DD) from git history.
  * Returns null when git or the file is unavailable so the caller can fall back.
  */
@@ -325,7 +337,7 @@ async function main() {
       redirectSkippedApps++
       continue
     }
-    const slug = app.name || generateSlug(app.displayName)
+    const slug = canonicalSlug(app)
     if (slug) {
       const loc = `/marketplace/${slug}`
       if (!existingLocs.has(loc)) {
@@ -347,7 +359,7 @@ async function main() {
       redirectSkippedGames++
       continue
     }
-    const slug = game.name || generateSlug(game.displayName)
+    const slug = canonicalSlug(game)
     if (slug) {
       const loc = `/marketplace/games/${slug}`
       if (!existingLocs.has(loc)) {

@@ -1,5 +1,12 @@
+# All crawlers — including AI search / citation bots (GPTBot, OAI-SearchBot,
+# ChatGPT-User, ClaudeBot, Claude-Web, PerplexityBot, Amazonbot, etc.) — are
+# welcome and share the rules below. A single User-agent: * block is used on
+# purpose: a crawler obeys only its most-specific matching group, so per-bot
+# blocks would silently drop these .html / soft-404 disallows for those bots.
 User-agent: *
 Allow: /
+
+# Private / authenticated areas
 Disallow: /administration/
 Disallow: /apps/manage/
 Disallow: /apps/management
@@ -9,8 +16,8 @@ Disallow: /successcheckout
 Disallow: /unauthorized
 Disallow: /marketplace/wordpress/configure
 
-# Block non-existent paths that were causing Soft 404 errors
-# These URLs were discovered by Google but don't exist in the app
+# Non-existent paths that were causing Soft 404 errors
+# (discovered by Google but not real routes in the app)
 Disallow: /login
 Disallow: /login.html
 Disallow: /hello
@@ -22,83 +29,5 @@ Disallow: /200
 
 # Block .html extensions (SPA doesn't use them)
 Disallow: /*.html
-
-# Explicit AI search / citation crawlers — allow with the same restrictions as User-agent: *
-User-agent: GPTBot
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
-
-User-agent: OAI-SearchBot
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
-
-User-agent: ChatGPT-User
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
-
-User-agent: ClaudeBot
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
-
-User-agent: Claude-Web
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
-
-User-agent: PerplexityBot
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
-
-User-agent: Amazonbot
-Allow: /
-Disallow: /administration/
-Disallow: /apps/manage/
-Disallow: /apps/management
-Disallow: /apps/register/configure
-Disallow: /checkout/
-Disallow: /successcheckout
-Disallow: /unauthorized
-Disallow: /marketplace/wordpress/configure
 
 Sitemap: https://cloud.runonflux.com/sitemap.xml

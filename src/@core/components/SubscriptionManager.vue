@@ -1995,7 +1995,7 @@
       <!-- Priority Nodes Tab (value=2) - moved before Components -->
       <VWindowItem :value="2">
         <div class="pa-4">
-          <div v-if="props.appSpec?.version >= 7">
+          <div v-if="showPriorityNodesTab">
             <VAlert
               type="info"
               variant="tonal"
@@ -3823,8 +3823,8 @@ const tabItems = computed(() => {
     baseItems.push({ label: t('core.subscriptionManager.tabGeolocation'), icon: 'mdi-earth', value: 1 })
   }
 
-  // Only show Priority/Enterprise Nodes tab for v7+ private apps (before Components tab)
-  if (props.appSpec?.version >= 7 && isPrivateApp.value) {
+  // Only show Priority/Enterprise Nodes tab for eligible v7+ private apps (before Components tab)
+  if (showPriorityNodesTab.value) {
     baseItems.push({
       label: props.appSpec?.version === 7
         ? t('core.subscriptionManager.tabEnterpriseNodes')
@@ -3853,6 +3853,59 @@ const appDetails = ref({
 })
 
 const isPrivateApp = ref(false)
+
+// Priority/Enterprise nodes entitlement.
+// The tab is only offered to app owners present in the enterprise nodes whitelist
+// (cached in memory for the page session via useEnterpriseOwners).
+const { loadEnterpriseOwners, isEnterpriseOwner } = useEnterpriseOwners()
+
+// The owner whose entitlement matters: the logged-in user when registering a new
+// app, or the app's own owner when managing an existing one.
+const currentUserZelid = computed(() => {
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (zelidauth) {
+      const auth = qs.parse(zelidauth)
+
+      return auth?.zelid || ''
+    }
+  } catch (error) {
+    console.error('Failed to parse zelidauth for enterprise owner check:', error)
+  }
+
+  return ''
+})
+
+const entitlementOwnerZelid = computed(() => {
+  return props.newApp
+    ? (currentUserZelid.value || appDetails.value.owner)
+    : (props.appSpec?.owner || appDetails.value.owner)
+})
+
+const appOwnerIsEnterpriseEligible = computed(() => isEnterpriseOwner(entitlementOwnerZelid.value))
+
+// Whether a pre-existing app already has priority nodes saved in its spec.
+const appHasExistingNodes = computed(() => {
+  const nodes = props.appSpec?.nodes
+
+  return Array.isArray(nodes) ? nodes.length > 0 : !!nodes
+})
+
+// Final visibility rule for the Priority/Enterprise Nodes tab.
+const showPriorityNodesTab = computed(() => {
+  if (!(props.appSpec?.version >= 7 && isPrivateApp.value)) return false
+
+  // v7 enterprise apps require nodes, so the tab is always available for them.
+  if (props.appSpec.version === 7) return true
+
+  // v8+: restrict to whitelisted enterprise owners...
+  if (appOwnerIsEnterpriseEligible.value) return true
+
+  // ...but keep it for pre-existing apps that already have priority nodes set.
+  if (!props.newApp && appHasExistingNodes.value) return true
+
+  return false
+})
 
 // Computed property to check if any component has syncthing (decentralized persistent storage) enabled
 // Syncthing is indicated by containerData starting with 'r:', 'g:', or 's:'
@@ -4669,6 +4722,10 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
 onMounted(() => {
   console.log('SubscriptionManager onMounted - props.appSpec:', props.appSpec)
   console.log('SubscriptionManager onMounted - props.appSpec.owner:', props.appSpec?.owner)
+
+  // Load (and cache for this page session) the enterprise nodes owner whitelist
+  // so the Priority/Enterprise Nodes tab can be gated by owner eligibility.
+  loadEnterpriseOwners()
 
   // Set default owner from logged-in user's zelid if not already set
   if (!appDetails.value.owner) {
