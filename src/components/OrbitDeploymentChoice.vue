@@ -85,7 +85,9 @@
             variant="flat"
             size="large"
             class="card-cta"
-            :to="{ name: 'apps-register-orbit' }"
+            :href="ORBIT_SITE_URL"
+            target="_blank"
+            rel="noopener noreferrer"
             @click.stop
           >
             <VIcon start>mdi-rocket-launch</VIcon>
@@ -166,6 +168,10 @@ import { useRouter } from 'vue-router'
 const { t } = useI18n()
 const router = useRouter()
 
+// Git deployments now live on a dedicated site. We keep the internal
+// apps-register-orbit page in place in case we need to bring it back.
+const ORBIT_SITE_URL = 'https://orbit.runonflux.com'
+
 const selectedMethod = ref(null)
 
 const selectMethod = method => {
@@ -173,7 +179,7 @@ const selectMethod = method => {
 
   // Navigate to the appropriate page
   if (method === 'orbit') {
-    router.push({ name: 'apps-register-orbit' })
+    window.open(ORBIT_SITE_URL, '_blank', 'noopener,noreferrer')
   }
   else if (method === 'docker') {
     router.push({ name: 'apps-register-configure' })
