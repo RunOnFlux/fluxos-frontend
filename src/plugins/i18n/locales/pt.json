@@ -5472,6 +5472,35 @@
   "landingServices": {
     "heroTitle": "Alojamento cloud Web3 descentralizado",
     "heroSubtitle": "Implementa apps Docker, servidores de jogos, sites WordPress e nós blockchain na Flux — uma rede cloud sem permissões com milhares de FluxNodes em mais de 50 países. Pagamento por utilização a partir de 0,99 $/mês.",
+    "faq": {
+      "title": "Perguntas frequentes",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "O que é o FluxCloud?",
+          "answer": "O FluxCloud é uma plataforma cloud Web3 descentralizada. Em vez de alugar servidores no centro de dados de uma única empresa, implementas aplicações em milhares de FluxNodes operados de forma independente em mais de 50 países — o que te dá redundância, resistência à censura e sem dependência de um fornecedor."
+        },
+        "cost": {
+          "question": "Quanto custa o FluxCloud?",
+          "answer": "O alojamento começa em 0,99 $/mês para uma instância básica de aplicação, com preços transparentes de pagamento por utilização consoante o CPU, RAM, armazenamento e número de instâncias que escolheres. Podes estimar qualquer implementação com a calculadora de custos antes de lançar."
+        },
+        "whatCanDeploy": {
+          "question": "O que posso implementar no FluxCloud?",
+          "answer": "Podes implementar contentores Docker e aplicações completas, ligar um repositório Git para builds automáticos com o Flux Orbit, lançar apps com um clique a partir do Marketplace, alojar servidores de jogos, correr sites WordPress, operar nós blockchain e guardar ficheiros em armazenamento IPFS descentralizado com o FluxDrive."
+        },
+        "vsTraditional": {
+          "question": "Em que é que o FluxCloud é diferente da AWS ou da Google Cloud?",
+          "answer": "As clouds tradicionais funcionam em centros de dados centralizados pertencentes a uma única empresa. O FluxCloud é descentralizado e sem permissões: as tuas aplicações são distribuídas por nós operados de forma independente em todo o mundo, por isso nenhum operador controla a disponibilidade — normalmente por uma fração do custo."
+        },
+        "signIn": {
+          "question": "Como inicio sessão no FluxCloud?",
+          "answer": "Podes iniciar sessão no FluxCloud com o teu email através de início de sessão único (SSO), ou ligando uma wallet de autocustódia — SSP ou Zelcore — para manteres o controlo total da tua conta e das tuas implementações."
+        },
+        "security": {
+          "question": "A minha aplicação é segura e resistente à censura?",
+          "answer": "Sim. Como as aplicações são executadas de forma redundante em muitos nós independentes em vez de num único fornecedor, não há um ponto único de falha nem uma entidade central que possa colocar a tua aplicação offline unilateralmente."
+        }
+      }
+    },
     "title": "Nossos serviços",
     "explore": "Explorar",
     "services": {

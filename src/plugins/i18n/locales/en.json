@@ -5473,6 +5473,35 @@
   "landingServices": {
     "heroTitle": "Decentralized Web3 Cloud Hosting",
     "heroSubtitle": "Deploy Docker apps, game servers, WordPress sites and blockchain nodes on Flux — a permissionless cloud network of thousands of FluxNodes across 50+ countries. Pay-as-you-go from $0.99/month.",
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "What is FluxCloud?",
+          "answer": "FluxCloud is a decentralized Web3 cloud platform. Instead of renting servers in a single company's data center, you deploy applications across thousands of independently operated FluxNodes in 50+ countries — giving you redundancy, censorship resistance and no vendor lock-in."
+        },
+        "cost": {
+          "question": "How much does FluxCloud cost?",
+          "answer": "Hosting starts at $0.99/month for a basic application instance, with transparent pay-as-you-go pricing based on the CPU, RAM, storage and number of instances you choose. You can estimate any deployment with the cost calculator before you launch."
+        },
+        "whatCanDeploy": {
+          "question": "What can I deploy on FluxCloud?",
+          "answer": "You can deploy Docker containers and full applications, connect a Git repository for automatic builds with Flux Orbit, launch one-click apps from the Marketplace, host game servers, run WordPress sites, operate blockchain nodes, and store files on decentralized IPFS storage with FluxDrive."
+        },
+        "vsTraditional": {
+          "question": "How is FluxCloud different from AWS or Google Cloud?",
+          "answer": "Traditional clouds run on centralized data centers owned by a single company. FluxCloud is permissionless and decentralized: your apps are scheduled across independently operated nodes worldwide, so no single operator controls availability — typically at a fraction of the cost."
+        },
+        "signIn": {
+          "question": "How do I sign in to FluxCloud?",
+          "answer": "You can sign in to FluxCloud with your email through single sign-on (SSO), or by connecting a self-custodial wallet — SSP or Zelcore — so you stay in full control of your account and deployments."
+        },
+        "security": {
+          "question": "Is my application secure and censorship-resistant?",
+          "answer": "Yes. Because applications run redundantly across many independent nodes rather than one provider, there is no single point of failure and no central party that can unilaterally take your application offline."
+        }
+      }
+    },
     "title": "Our Services",
     "explore": "Explore",
     "services": {

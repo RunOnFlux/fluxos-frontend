@@ -174,7 +174,7 @@ const exploreBanner = banner => {
 /* SEO/GEO hero */
 .landing-hero {
   text-align: center;
-  padding: 1.5rem 1rem 0.5rem;
+  padding: 1.5rem 1rem 2rem;
   max-width: 900px;
   margin: 0 auto;
 }

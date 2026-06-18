@@ -1,12 +1,20 @@
 <template>
   <LandingServices />
+  <FAQPanel
+    :panel="{ enabled: true, padding: { top: 64, right: 0, bottom: 0, left: 0 } }"
+    :app="null"
+    :faqs="homepageFaqs"
+    :title="t('landingServices.faq.title')"
+  />
 </template>
 
 <script setup>
 import { onMounted, computed } from 'vue'
 import LandingServices from "@/components/LandingServices.vue"
+import FAQPanel from '@/components/Marketplace/Panels/FAQPanel.vue'
 import { useI18n } from "vue-i18n"
 import { useHead } from '@unhead/vue'
+import { generateFAQSchema } from '@/composables/useSEO'
 import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 
 const { t } = useI18n()
@@ -63,6 +71,24 @@ const softwareApplicationSchema = {
   },
 }
 
+// Homepage FAQ — the visible content (rendered via FAQPanel) and the matching
+// FAQPage structured data are built from the same source so they stay in sync.
+// FAQPage schema requires the answers to be visible on the page, which the panel
+// provides. Computed so @unhead tracks locale changes.
+const homepageFaqs = computed(() => [
+  'whatIsFluxCloud',
+  'cost',
+  'whatCanDeploy',
+  'vsTraditional',
+  'signIn',
+  'security',
+].map(key => ({
+  question: t(`landingServices.faq.questions.${key}.question`),
+  answer: t(`landingServices.faq.questions.${key}.answer`),
+})))
+
+const faqSchema = computed(() => generateFAQSchema(homepageFaqs.value))
+
 useHead({
   title,
   meta: [
@@ -89,12 +115,16 @@ useHead({
   link: [
     { rel: 'canonical', href: pageUrl },
   ],
-  script: [
+  script: computed(() => [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify(softwareApplicationSchema),
     },
-  ],
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(faqSchema.value),
+    },
+  ]),
 })
 
 const sections = computed(() => [

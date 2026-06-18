@@ -5472,6 +5472,35 @@
   "landingServices": {
     "heroTitle": "Merkeziyetsiz Web3 Bulut Barındırma",
     "heroSubtitle": "Docker uygulamalarını, oyun sunucularını, WordPress sitelerini ve blok zinciri düğümlerini Flux üzerinde dağıtın — 50'den fazla ülkede binlerce FluxNode'dan oluşan izinsiz bir bulut ağı. Kullandıkça öde, aylık 0,99 $'dan başlar.",
+    "faq": {
+      "title": "Sıkça Sorulan Sorular",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "FluxCloud nedir?",
+          "answer": "FluxCloud, merkeziyetsiz bir Web3 bulut platformudur. Tek bir şirketin veri merkezinde sunucu kiralamak yerine, uygulamalarınızı 50'den fazla ülkede bağımsız olarak işletilen binlerce FluxNode üzerinde dağıtırsınız; bu da yedeklilik, sansüre dayanıklılık ve tedarikçi bağımlılığının olmaması anlamına gelir."
+        },
+        "cost": {
+          "question": "FluxCloud ne kadar?",
+          "answer": "Barındırma, temel bir uygulama örneği için aylık 0,99 $'dan başlar; seçtiğiniz CPU, RAM, depolama ve örnek sayısına göre şeffaf, kullandıkça öde fiyatlandırması sunar. Başlatmadan önce her dağıtımı maliyet hesaplayıcısıyla tahmin edebilirsiniz."
+        },
+        "whatCanDeploy": {
+          "question": "FluxCloud üzerinde neler dağıtabilirim?",
+          "answer": "Docker konteynerleri ve eksiksiz uygulamalar dağıtabilir, Flux Orbit ile otomatik derlemeler için bir Git deposu bağlayabilir, Marketplace'ten tek tıkla uygulamalar başlatabilir, oyun sunucuları barındırabilir, WordPress siteleri çalıştırabilir, blok zinciri düğümleri işletebilir ve FluxDrive ile merkeziyetsiz IPFS depolamada dosya saklayabilirsiniz."
+        },
+        "vsTraditional": {
+          "question": "FluxCloud, AWS veya Google Cloud'dan nasıl farklı?",
+          "answer": "Geleneksel bulutlar tek bir şirkete ait merkezi veri merkezlerinde çalışır. FluxCloud merkeziyetsiz ve izinsizdir: uygulamalarınız dünya genelinde bağımsız olarak işletilen düğümlere dağıtılır, böylece hiçbir operatör erişilebilirliği tek başına kontrol edemez — genellikle maliyetin küçük bir kısmına."
+        },
+        "signIn": {
+          "question": "FluxCloud'a nasıl giriş yaparım?",
+          "answer": "FluxCloud'a e-postanızla tek oturum açma (SSO) yoluyla giriş yapabilir veya kendi kontrolünüzdeki bir cüzdanı — SSP ya da Zelcore — bağlayarak hesabınız ve dağıtımlarınız üzerinde tam kontrolü koruyabilirsiniz."
+        },
+        "security": {
+          "question": "Uygulamam güvenli ve sansüre dayanıklı mı?",
+          "answer": "Evet. Uygulamalar tek bir sağlayıcı yerine birçok bağımsız düğümde yedekli olarak çalıştığından, tek bir arıza noktası ya da uygulamanızı tek taraflı olarak çevrimdışı bırakabilecek merkezi bir taraf yoktur."
+        }
+      }
+    },
     "title": "Hizmetlerimiz",
     "explore": "Keşfetmek",
     "services": {
