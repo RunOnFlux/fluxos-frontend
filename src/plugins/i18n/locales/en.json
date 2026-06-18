@@ -5471,6 +5471,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Decentralized Web3 Cloud Hosting",
+    "heroSubtitle": "Deploy Docker apps, game servers, WordPress sites and blockchain nodes on Flux — a permissionless cloud network of thousands of FluxNodes across 50+ countries. Pay-as-you-go from $0.99/month.",
     "title": "Our Services",
     "explore": "Explore",
     "services": {

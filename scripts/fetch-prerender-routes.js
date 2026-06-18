@@ -27,9 +27,8 @@ const GAMES_CATEGORY_UUIDS = [
 ]
 
 // Static routes that should always be pre-rendered
-// Note: Homepage '/' is excluded - it has static SEO meta tags in index.html
-// and prerendering it can cause hydration issues with interactive components
 const STATIC_ROUTES = [
+  '/', // Homepage (LandingServices) — fully static i18n content, safe to prerender
   '/marketplace',
   '/marketplace/wordpress',
   '/marketplace/games',

@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Merkeziyetsiz Web3 Bulut Barındırma",
+    "heroSubtitle": "Docker uygulamalarını, oyun sunucularını, WordPress sitelerini ve blok zinciri düğümlerini Flux üzerinde dağıtın — 50'den fazla ülkede binlerce FluxNode'dan oluşan izinsiz bir bulut ağı. Kullandıkça öde, aylık 0,99 $'dan başlar.",
     "title": "Hizmetlerimiz",
     "explore": "Keşfetmek",
     "services": {

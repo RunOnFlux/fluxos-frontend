@@ -32,6 +32,11 @@ delivered to crawlers.
 
 Operational notes:
 
+- The homepage `/` **is prerendered** (route added to `scripts/prerender.js` and
+  `scripts/fetch-prerender-routes.js`). Its content (`LandingServices.vue`) is
+  fully static i18n — no async data — so the snapshot captures the real `<h1>`,
+  service grid and the static JSON-LD from `index.html`. It was previously
+  excluded; that exclusion is no longer in effect.
 - Changes reach production only after merge to **`master`** + a release cut from
   master. Releases from other branches are ignored by the node updater.
 - Prerender runs **only at release time**, so marketplace apps added between

@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "탈중앙화 Web3 클라우드 호스팅",
+    "heroSubtitle": "Docker 앱, 게임 서버, WordPress 사이트, 블록체인 노드를 Flux에 배포하세요. 50개 이상의 국가에 분산된 수천 개의 FluxNode로 구성된 무허가형 클라우드 네트워크입니다. 사용한 만큼만 지불, 월 $0.99부터.",
     "title": "우리의 서비스",
     "explore": "탐구하다",
     "services": {

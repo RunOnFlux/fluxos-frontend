@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "分散型 Web3 クラウドホスティング",
+    "heroSubtitle": "Docker アプリ、ゲームサーバー、WordPress サイト、ブロックチェーンノードを Flux にデプロイ。50 か国以上に広がる数千の FluxNode で構成されたパーミッションレスなクラウドネットワークです。従量課金制で月額 $0.99 から。",
     "title": "当社のサービス",
     "explore": "探検する",
     "services": {

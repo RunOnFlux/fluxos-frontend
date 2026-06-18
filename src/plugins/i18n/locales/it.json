@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Hosting cloud Web3 decentralizzato",
+    "heroSubtitle": "Distribuisci app Docker, server di gioco, siti WordPress e nodi blockchain su Flux: una rete cloud permissionless con migliaia di FluxNodes in oltre 50 paesi. Pagamento a consumo da 0,99 $/mese.",
     "title": "I nostri servizi",
     "explore": "Esplorare",
     "services": {

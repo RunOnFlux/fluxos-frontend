@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Hosting en la nube Web3 descentralizado",
+    "heroSubtitle": "Implementa apps Docker, servidores de juegos, sitios WordPress y nodos blockchain en Flux: una red cloud sin permisos de miles de FluxNodes en más de 50 países. Pago por uso desde 0,99 $/mes.",
     "title": "Nuestros Servicios",
     "explore": "Explorar",
     "services": {

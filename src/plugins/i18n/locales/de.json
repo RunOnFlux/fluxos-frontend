@@ -5471,6 +5471,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Dezentrales Web3-Cloud-Hosting",
+    "heroSubtitle": "Stelle Docker-Apps, Gameserver, WordPress-Websites und Blockchain-Nodes auf Flux bereit – ein permissionless Cloud-Netzwerk aus Tausenden von FluxNodes in über 50 Ländern. Pay-as-you-go ab 0,99 $/Monat.",
     "title": "Unsere Leistungen",
     "explore": "Erkunden",
     "services": {

@@ -1,5 +1,15 @@
 <template>
   <div class="landing-page">
+    <!--
+      SEO/GEO hero: single semantic <h1> with intent keywords. Static i18n
+      content so it is captured by the prerender snapshot and visible to
+      crawlers that do not execute JavaScript. 
+    -->
+    <header class="landing-hero">
+      <h1 class="hero-heading">{{ t('landingServices.heroTitle') }}</h1>
+      <p class="hero-subheading">{{ t('landingServices.heroSubtitle') }}</p>
+    </header>
+
     <!-- Features Grid Section -->
     <section class="features-section">
       <div class="container">
@@ -159,6 +169,30 @@ const exploreBanner = banner => {
   width: 100%;
   overflow-x: hidden;
   margin-top: -0.5rem;
+}
+
+/* SEO/GEO hero */
+.landing-hero {
+  text-align: center;
+  padding: 1.5rem 1rem 0.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.hero-heading {
+  font-size: clamp(1.9rem, 4.5vw, 2.75rem);
+  font-weight: 800;
+  line-height: 1.2;
+  color: rgb(var(--v-theme-on-background));
+  margin-bottom: 0.75rem;
+}
+
+.hero-subheading {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  line-height: 1.6;
+  color: rgba(var(--v-theme-on-background), 0.75);
+  margin: 0 auto;
+  max-width: 720px;
 }
 
 /* Features Section */

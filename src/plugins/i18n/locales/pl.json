@@ -5441,6 +5441,8 @@
     "statistics": "Statystyki"
   },
   "landingServices": {
+    "heroTitle": "Zdecentralizowany hosting w chmurze Web3",
+    "heroSubtitle": "Wdrażaj aplikacje Docker, serwery gier, witryny WordPress i węzły blockchain na Flux — bezuprawnieniowej sieci chmurowej tysięcy FluxNodes w ponad 50 krajach. Płatność za użycie od 0,99 $/miesiąc.",
     "services": {
       "fluxCloud": {
         "name": "FluxCloud",

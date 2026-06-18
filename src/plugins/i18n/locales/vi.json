@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Lưu trữ đám mây Web3 phi tập trung",
+    "heroSubtitle": "Triển khai ứng dụng Docker, máy chủ game, trang WordPress và node blockchain trên Flux — mạng đám mây không cần cấp phép với hàng nghìn FluxNode tại hơn 50 quốc gia. Trả theo mức dùng từ 0,99 $/tháng.",
     "title": "Dịch vụ của chúng tôi",
     "explore": "Khám phá",
     "services": {

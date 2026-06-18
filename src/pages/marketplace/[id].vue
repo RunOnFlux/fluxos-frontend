@@ -446,8 +446,8 @@ const showImageViewer = computed({
 })
 
 // Network data
-const nodeCount = ref(8000) // Default fallback
-const countryCount = ref(63) // Default fallback
+const nodeCount = ref(7000) // Default fallback (replaced by live API count when available)
+const countryCount = ref(50) // Default fallback (replaced by live API count when available)
 
 // Server Locations Panel Configuration
 const serverLocationsPanel = {

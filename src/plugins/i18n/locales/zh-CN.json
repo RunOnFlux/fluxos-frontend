@@ -5470,6 +5470,8 @@
     }
   },
   "landingServices": {
+    "heroTitle": "去中心化 Web3 云托管",
+    "heroSubtitle": "在 Flux 上部署 Docker 应用、游戏服务器、WordPress 网站和区块链节点——一个由遍布 50 多个国家/地区的数千个 FluxNode 组成的无许可云网络。按量付费，每月低至 $0.99。",
     "title": "我们的服务",
     "explore": "探索",
     "services": {

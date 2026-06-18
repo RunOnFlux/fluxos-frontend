@@ -50,7 +50,7 @@ const background = Buffer.from(`
   <text x="100" y="210" font-family="DejaVu Sans, Arial, sans-serif" font-size="40" font-weight="700" fill="#ffffff" letter-spacing="1">FluxCloud</text>
   <text x="100" y="330" font-family="DejaVu Sans, Arial, sans-serif" font-size="62" font-weight="700" fill="#ffffff">Decentralized Web3</text>
   <text x="100" y="400" font-family="DejaVu Sans, Arial, sans-serif" font-size="62" font-weight="700" fill="#ffffff">Cloud Infrastructure</text>
-  <text x="100" y="470" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" font-weight="400" fill="#c7d2fe">8,000+ FluxNodes worldwide  ·  From $0.99/month</text>
+  <text x="100" y="470" font-family="DejaVu Sans, Arial, sans-serif" font-size="30" font-weight="400" fill="#c7d2fe">Thousands of FluxNodes worldwide  ·  From $0.99/month</text>
 </svg>`)
 
 async function main() {
