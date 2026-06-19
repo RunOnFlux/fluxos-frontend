@@ -5470,6 +5470,37 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Hébergement cloud Web3 décentralisé",
+    "heroSubtitle": "Déployez des applications Docker, des serveurs de jeu, des sites WordPress et des nœuds blockchain sur Flux — un réseau cloud sans permission de milliers de FluxNodes dans plus de 50 pays. Paiement à l'usage à partir de 0,99 $/mois.",
+    "faq": {
+      "title": "Foire aux questions",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "Qu'est-ce que FluxCloud ?",
+          "answer": "FluxCloud est une plateforme cloud Web3 décentralisée. Au lieu de louer des serveurs dans le centre de données d'une seule entreprise, vous déployez vos applications sur des milliers de FluxNodes exploités indépendamment dans plus de 50 pays, ce qui vous offre redondance, résistance à la censure et aucune dépendance à un fournisseur."
+        },
+        "cost": {
+          "question": "Combien coûte FluxCloud ?",
+          "answer": "L'hébergement démarre à 0,99 $/mois pour une instance d'application de base, avec une tarification transparente à l'usage selon le CPU, la RAM, le stockage et le nombre d'instances que vous choisissez. Vous pouvez estimer n'importe quel déploiement avec le calculateur de coûts avant de lancer."
+        },
+        "whatCanDeploy": {
+          "question": "Que puis-je déployer sur FluxCloud ?",
+          "answer": "Vous pouvez déployer des conteneurs Docker et des applications complètes, connecter un dépôt Git pour des builds automatiques avec Flux Orbit, lancer des applications en un clic depuis le Marketplace, héberger des serveurs de jeu, faire tourner des sites WordPress, exploiter des nœuds blockchain et stocker des fichiers sur le stockage IPFS décentralisé avec FluxDrive."
+        },
+        "vsTraditional": {
+          "question": "En quoi FluxCloud est-il différent d'AWS ou de Google Cloud ?",
+          "answer": "Les clouds traditionnels fonctionnent sur des centres de données centralisés appartenant à une seule entreprise. FluxCloud est décentralisé et sans permission : vos applications sont réparties sur des nœuds exploités indépendamment dans le monde entier, de sorte qu'aucun opérateur ne contrôle la disponibilité, généralement pour une fraction du coût."
+        },
+        "signIn": {
+          "question": "Comment me connecter à FluxCloud ?",
+          "answer": "Vous pouvez vous connecter à FluxCloud avec votre e-mail via l'authentification unique (SSO), ou en connectant un portefeuille auto-hébergé — SSP ou Zelcore — afin de garder le contrôle total de votre compte et de vos déploiements."
+        },
+        "security": {
+          "question": "Mon application est-elle sécurisée et résistante à la censure ?",
+          "answer": "Oui. Comme les applications s'exécutent de manière redondante sur de nombreux nœuds indépendants plutôt que chez un seul fournisseur, il n'y a aucun point de défaillance unique ni aucune entité centrale pouvant mettre votre application hors ligne de façon unilatérale."
+        }
+      }
+    },
     "title": "Nos prestations",
     "explore": "Explorer",
     "services": {

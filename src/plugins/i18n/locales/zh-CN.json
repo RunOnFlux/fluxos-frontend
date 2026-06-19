@@ -5470,6 +5470,37 @@
     }
   },
   "landingServices": {
+    "heroTitle": "去中心化 Web3 云托管",
+    "heroSubtitle": "在 Flux 上部署 Docker 应用、游戏服务器、WordPress 网站和区块链节点——一个由遍布 50 多个国家/地区的数千个 FluxNode 组成的无许可云网络。按量付费，每月低至 $0.99。",
+    "faq": {
+      "title": "常见问题",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "什么是 FluxCloud？",
+          "answer": "FluxCloud 是一个去中心化的 Web3 云平台。你无需在单一公司的数据中心租用服务器，而是将应用部署到遍布 50 多个国家/地区、由独立运营的数千个 FluxNode 上，从而获得冗余性、抗审查能力，并且不受单一供应商锁定。"
+        },
+        "cost": {
+          "question": "FluxCloud 的费用是多少？",
+          "answer": "基础应用实例的托管费用低至每月 $0.99，并根据你选择的 CPU、内存、存储和实例数量按量透明计费。在启动前，你可以使用费用计算器估算任何部署的成本。"
+        },
+        "whatCanDeploy": {
+          "question": "我可以在 FluxCloud 上部署什么？",
+          "answer": "你可以部署 Docker 容器和完整应用，通过 Flux Orbit 连接 Git 仓库实现自动构建，从 Marketplace 一键启动应用，托管游戏服务器，运行 WordPress 网站，运营区块链节点，并使用 FluxDrive 将文件存储在去中心化的 IPFS 存储中。"
+        },
+        "vsTraditional": {
+          "question": "FluxCloud 与 AWS 或 Google Cloud 有何不同？",
+          "answer": "传统云运行在由单一公司拥有的集中式数据中心。FluxCloud 是无需许可且去中心化的：你的应用被调度到全球独立运营的节点上，因此没有任何单一运营方能够控制可用性——而且通常只需一小部分成本。"
+        },
+        "signIn": {
+          "question": "如何登录 FluxCloud？",
+          "answer": "你可以通过单点登录（SSO）使用电子邮件登录 FluxCloud，或连接自托管钱包（SSP 或 Zelcore），从而完全掌控自己的账户和部署。"
+        },
+        "security": {
+          "question": "我的应用安全且抗审查吗？",
+          "answer": "是的。由于应用在众多独立节点上冗余运行，而非依赖单一供应商，因此不存在单点故障，也没有任何中心方能够单方面让你的应用下线。"
+        }
+      }
+    },
     "title": "我们的服务",
     "explore": "探索",
     "services": {

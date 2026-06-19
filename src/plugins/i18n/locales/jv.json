@@ -5460,6 +5460,37 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Hosting Cloud Web3 Desentralisasi",
+    "heroSubtitle": "Deploy aplikasi Docker, server game, situs WordPress, lan node blockchain ing Flux — jaringan cloud tanpa idin kanthi ewonan FluxNode ing luwih saka 50 negara. Mbayar miturut panggunaan wiwit $0,99/sasi.",
+    "faq": {
+      "title": "Pitakon sing Kerep Ditakokké",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "Apa iku FluxCloud?",
+          "answer": "FluxCloud iku platform cloud Web3 sing desentralisasi. Tinimbang nyéwa server ing pusat data siji perusahaan, sampéyan ndéploy aplikasi ing èwonan FluxNode sing dikelola kanthi mandiri ing luwih saka 50 negara, mènèhi redundansi, tahan sensor, lan ora gumantung marang siji vendor."
+        },
+        "cost": {
+          "question": "Pira regané FluxCloud?",
+          "answer": "Hosting diwiwiti saka $0,99/sasi kanggo instance aplikasi dhasar, kanthi rega mbayar miturut panggunaan sing transparan adhedhasar CPU, RAM, panyimpenan, lan jumlah instance sing sampéyan pilih. Sadurungé miwiti, sampéyan bisa ngira-ira biaya déploy apa waé nganggo kalkulator biaya."
+        },
+        "whatCanDeploy": {
+          "question": "Apa sing bisa dak-déploy ing FluxCloud?",
+          "answer": "Sampéyan bisa ndéploy kontainer Docker lan aplikasi lengkap, nyambungaké repositori Git kanggo build otomatis nganggo Flux Orbit, mbukak aplikasi sak-klik saka Marketplace, ngehost server game, mbukak situs WordPress, ngoperasikaké node blockchain, lan nyimpen file ing panyimpenan IPFS desentralisasi nganggo FluxDrive."
+        },
+        "vsTraditional": {
+          "question": "Apa bédané FluxCloud karo AWS utawa Google Cloud?",
+          "answer": "Cloud tradisional mlaku ing pusat data terpusat sing diduwèni siji perusahaan. FluxCloud iku tanpa idin lan desentralisasi: aplikasi sampéyan disebar ing node sing dikelola kanthi mandiri ing saindenging donya, mula ora ana operator siji sing ngontrol kasedhiyan — biasané kanthi biaya sing luwih murah."
+        },
+        "signIn": {
+          "question": "Kepriyé carané mlebu menyang FluxCloud?",
+          "answer": "Sampéyan bisa mlebu menyang FluxCloud nganggo email liwat single sign-on (SSO), utawa kanthi nyambungaké dompet self-custodial — SSP utawa Zelcore — supaya sampéyan tetep ngontrol kabèh akun lan déploy sampéyan."
+        },
+        "security": {
+          "question": "Apa aplikasiku aman lan tahan sensor?",
+          "answer": "Ya. Amarga aplikasi mlaku kanthi redundan ing akèh node mandiri tinimbang siji panyedhiya, ora ana titik gagal tunggal lan ora ana pihak pusat sing bisa ngmatèni aplikasi sampéyan kanthi sepihak."
+        }
+      }
+    },
     "title": "Layanan Kita",
     "explore": "Jelajahi",
     "services": {

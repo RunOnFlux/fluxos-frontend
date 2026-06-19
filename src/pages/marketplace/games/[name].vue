@@ -136,7 +136,7 @@ const selectedApp = ref(null)
 const selectedConfig = ref(null)
 
 // Network data
-const nodeCount = ref(8000) // Default fallback
+const nodeCount = ref(7000) // Default fallback (replaced by live API count when available)
 
 // Parse game icon to handle asset:// protocol
 const gameIcon = computed(() => parseLandingImage(game.value?.icon))

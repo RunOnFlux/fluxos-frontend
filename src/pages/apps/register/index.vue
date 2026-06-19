@@ -148,6 +148,7 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
+import { usePrerenderReady } from '@/composables/useSEO'
 import Api from '@/services/ApiClient'
 import { useFluxStore } from '@/stores/flux'
 import ServerLocationsPanel from '@/components/Marketplace/Panels/ServerLocationsPanel.vue'
@@ -192,9 +193,14 @@ const fluxCloudPrice = ref('$8.99') // Default fallback price
 const fluxCloudPriceLoading = ref(true)
 
 // Network data
-const nodeCount = ref(8000) // Default fallback
-const countryCount = ref(63) // Default fallback
+const nodeCount = ref(7000) // Default fallback (replaced by live API count when available)
+const countryCount = ref(50) // Default fallback (replaced by live API count when available)
 const networkDataLoading = ref(true)
+
+// Hold the prerender snapshot until the live node/country counts have loaded
+// (or fallback values are confirmed on error/timeout), so the prerendered HTML
+// carries the real network numbers instead of the loading-state fallbacks.
+const { markReady } = usePrerenderReady()
 
 // Hero subtitle with dynamic network data
 const heroSubtitle = computed(() =>
@@ -643,9 +649,21 @@ const fetchNetworkData = async () => {
       }
     }
 
-    // Update node count from store
+    // Update node count from store, or fall back to the lightweight count
+    // endpoint when the (heavy) server-locations store has not populated yet —
+    // e.g. during prerendering — so the real live count is still captured
+    // instead of the static default.
     if (serverLocations.fluxNodeCount > 0) {
       nodeCount.value = serverLocations.fluxNodeCount
+    } else {
+      try {
+        const { data } = await Api().get('/daemon/getfluxnodecount', { timeout: 5000 })
+        if (data?.status === 'success' && data.data?.total > 0) {
+          nodeCount.value = data.data.total
+        }
+      } catch (error) {
+        console.warn('Failed to fetch live FluxNode count, using fallback:', error.message)
+      }
     }
 
     // Calculate country count from store data
@@ -744,7 +762,11 @@ useHead({
       href: 'https://cloud.runonflux.com/apps/register',
     },
   ],
-  script: [
+
+  // Wrap in a computed so @unhead tracks changes: faqSchema depends on the
+  // live nodeCount/countryCount, which resolve asynchronously after mount.
+  // A plain array would freeze JSON.stringify(...value) at setup-time fallbacks.
+  script: computed(() => [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify(breadcrumbSchema.value),
@@ -761,7 +783,7 @@ useHead({
       type: 'application/ld+json',
       innerHTML: JSON.stringify(offerSchema.value),
     },
-  ],
+  ]),
 })
 
 onMounted(async () => {
@@ -780,6 +802,9 @@ onMounted(async () => {
     ])
   } catch (error) {
     console.error('Error loading data:', error)
+  } finally {
+    // Release the prerender snapshot once async SEO-relevant data has settled.
+    markReady()
   }
 })
 </script>

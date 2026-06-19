@@ -113,7 +113,7 @@ const {
 
 const pageUrl = 'https://cloud.runonflux.com/marketplace'
 const title = 'Marketplace - Deploy Decentralized Apps on Flux | FluxCloud'
-const description = 'Deploy decentralized apps on Flux\'s Web3 cloud. Docker containers, web apps, APIs on 8,000+ FluxNodes worldwide. One-click deployment, transparent pricing.'
+const description = 'Deploy decentralized apps on Flux\'s Web3 cloud. Docker containers, web apps, APIs on thousands of FluxNodes across 50+ countries. One-click deployment, transparent pricing.'
 const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 
 // Generate structured data
@@ -167,7 +167,7 @@ watch(loading, isLoading => {
 const isInitialLoading = ref(true)
 
 // Network data
-const nodeCount = ref(8000) // Default fallback
+const nodeCount = ref(7000) // Default fallback (replaced by live API count when available)
 const networkDataLoading = ref(true)
 
 // Hero subtitle with dynamic node count

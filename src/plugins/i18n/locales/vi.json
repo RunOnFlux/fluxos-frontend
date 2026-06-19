@@ -5470,6 +5470,37 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Lưu trữ đám mây Web3 phi tập trung",
+    "heroSubtitle": "Triển khai ứng dụng Docker, máy chủ game, trang WordPress và node blockchain trên Flux — mạng đám mây không cần cấp phép với hàng nghìn FluxNode tại hơn 50 quốc gia. Trả theo mức dùng từ 0,99 $/tháng.",
+    "faq": {
+      "title": "Câu hỏi thường gặp",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "FluxCloud là gì?",
+          "answer": "FluxCloud là nền tảng đám mây Web3 phi tập trung. Thay vì thuê máy chủ trong trung tâm dữ liệu của một công ty duy nhất, bạn triển khai ứng dụng trên hàng nghìn FluxNode được vận hành độc lập tại hơn 50 quốc gia, mang lại khả năng dự phòng, chống kiểm duyệt và không bị phụ thuộc vào nhà cung cấp."
+        },
+        "cost": {
+          "question": "FluxCloud có giá bao nhiêu?",
+          "answer": "Dịch vụ lưu trữ bắt đầu từ 0,99 $/tháng cho một phiên bản ứng dụng cơ bản, với mức giá trả theo mức dùng minh bạch dựa trên CPU, RAM, dung lượng lưu trữ và số phiên bản bạn chọn. Bạn có thể ước tính mọi lần triển khai bằng công cụ tính chi phí trước khi khởi chạy."
+        },
+        "whatCanDeploy": {
+          "question": "Tôi có thể triển khai gì trên FluxCloud?",
+          "answer": "Bạn có thể triển khai container Docker và ứng dụng đầy đủ, kết nối kho Git để tự động build với Flux Orbit, khởi chạy ứng dụng chỉ với một nhấp từ Marketplace, lưu trữ máy chủ game, chạy trang WordPress, vận hành node blockchain và lưu tệp trên bộ lưu trữ IPFS phi tập trung với FluxDrive."
+        },
+        "vsTraditional": {
+          "question": "FluxCloud khác gì so với AWS hay Google Cloud?",
+          "answer": "Các đám mây truyền thống chạy trên các trung tâm dữ liệu tập trung thuộc sở hữu của một công ty duy nhất. FluxCloud phi tập trung và không cần cấp phép: ứng dụng của bạn được phân bổ trên các node vận hành độc lập trên toàn thế giới, nên không một nhà điều hành nào kiểm soát tính khả dụng — thường chỉ với một phần nhỏ chi phí."
+        },
+        "signIn": {
+          "question": "Tôi đăng nhập vào FluxCloud bằng cách nào?",
+          "answer": "Bạn có thể đăng nhập vào FluxCloud bằng email thông qua đăng nhập một lần (SSO), hoặc kết nối ví tự quản lý — SSP hoặc Zelcore — để luôn toàn quyền kiểm soát tài khoản và các lần triển khai của mình."
+        },
+        "security": {
+          "question": "Ứng dụng của tôi có an toàn và chống kiểm duyệt không?",
+          "answer": "Có. Vì ứng dụng chạy dự phòng trên nhiều node độc lập thay vì một nhà cung cấp duy nhất, nên không có điểm lỗi đơn lẻ và không có bên trung tâm nào có thể đơn phương đưa ứng dụng của bạn ngoại tuyến."
+        }
+      }
+    },
     "title": "Dịch vụ của chúng tôi",
     "explore": "Khám phá",
     "services": {

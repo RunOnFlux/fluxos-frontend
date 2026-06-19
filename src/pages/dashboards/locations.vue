@@ -170,7 +170,7 @@ const { t } = useI18n()
 // SEO configuration
 useSEO({
   title: 'Flux Node Locations - Global Network Map | FluxCloud',
-  description: 'Explore the global distribution of 8,000+ FluxNodes. Interactive map showing node locations across 70+ countries. View network decentralization and geographic spread of Flux infrastructure worldwide.',
+  description: 'Explore the global distribution of thousands of FluxNodes. Interactive map showing node locations across 50+ countries. View network decentralization and geographic spread of Flux infrastructure worldwide.',
   url: 'https://cloud.runonflux.com/dashboards/locations',
   keywords: 'flux node map, node locations, global network, geographic distribution, flux nodes worldwide, decentralized network map, node distribution, blockchain network map',
   structuredData: [

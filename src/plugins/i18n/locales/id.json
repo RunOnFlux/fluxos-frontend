@@ -5470,6 +5470,37 @@
     }
   },
   "landingServices": {
+    "heroTitle": "Hosting Cloud Web3 Terdesentralisasi",
+    "heroSubtitle": "Terapkan aplikasi Docker, server game, situs WordPress, dan node blockchain di Flux — jaringan cloud tanpa izin dengan ribuan FluxNode di lebih dari 50 negara. Bayar sesuai pemakaian mulai dari $0,99/bulan.",
+    "faq": {
+      "title": "Pertanyaan yang Sering Diajukan",
+      "questions": {
+        "whatIsFluxCloud": {
+          "question": "Apa itu FluxCloud?",
+          "answer": "FluxCloud adalah platform cloud Web3 terdesentralisasi. Alih-alih menyewa server di pusat data satu perusahaan, Anda menerapkan aplikasi di ribuan FluxNode yang dioperasikan secara independen di lebih dari 50 negara, sehingga memberikan redundansi, ketahanan terhadap sensor, dan tanpa ketergantungan pada satu vendor."
+        },
+        "cost": {
+          "question": "Berapa biaya FluxCloud?",
+          "answer": "Hosting dimulai dari $0,99/bulan untuk satu instance aplikasi dasar, dengan harga bayar sesuai pemakaian yang transparan berdasarkan CPU, RAM, penyimpanan, dan jumlah instance yang Anda pilih. Anda dapat memperkirakan setiap penerapan dengan kalkulator biaya sebelum meluncurkannya."
+        },
+        "whatCanDeploy": {
+          "question": "Apa yang bisa saya terapkan di FluxCloud?",
+          "answer": "Anda dapat menerapkan kontainer Docker dan aplikasi lengkap, menghubungkan repositori Git untuk build otomatis dengan Flux Orbit, meluncurkan aplikasi sekali klik dari Marketplace, menghosting server game, menjalankan situs WordPress, mengoperasikan node blockchain, dan menyimpan file di penyimpanan IPFS terdesentralisasi dengan FluxDrive."
+        },
+        "vsTraditional": {
+          "question": "Apa bedanya FluxCloud dengan AWS atau Google Cloud?",
+          "answer": "Cloud tradisional berjalan di pusat data terpusat milik satu perusahaan. FluxCloud bersifat terdesentralisasi dan tanpa izin: aplikasi Anda didistribusikan ke node yang dioperasikan secara independen di seluruh dunia, sehingga tidak ada operator tunggal yang mengontrol ketersediaan — biasanya dengan biaya yang jauh lebih murah."
+        },
+        "signIn": {
+          "question": "Bagaimana cara masuk ke FluxCloud?",
+          "answer": "Anda dapat masuk ke FluxCloud dengan email melalui single sign-on (SSO), atau dengan menghubungkan dompet swakelola — SSP atau Zelcore — sehingga Anda tetap memegang kendali penuh atas akun dan penerapan Anda."
+        },
+        "security": {
+          "question": "Apakah aplikasi saya aman dan tahan sensor?",
+          "answer": "Ya. Karena aplikasi berjalan secara redundan di banyak node independen alih-alih satu penyedia, tidak ada titik kegagalan tunggal dan tidak ada pihak pusat yang dapat membuat aplikasi Anda offline secara sepihak."
+        }
+      }
+    },
     "title": "Layanan kami",
     "explore": "Jelajahi",
     "services": {
