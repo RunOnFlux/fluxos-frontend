@@ -147,7 +147,7 @@ const exploreBanner = banner => {
     fluxDrive: '/flux-drive',
     fluxEdge: 'https://runonflux.com/fluxedge/',
     fluxMarketplace: '/marketplace',
-    wordPressOnFlux: '/marketplace/wordpress',
+    wordPressOnFlux: 'https://wordpress.runonflux.com',
   }
 
   const url = routes[banner.key]
