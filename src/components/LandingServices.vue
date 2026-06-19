@@ -193,6 +193,7 @@ const exploreBanner = banner => {
   color: rgba(var(--v-theme-on-background), 0.75);
   margin: 0 auto;
   max-width: 720px;
+  text-wrap: balance;
 }
 
 /* Features Section */
