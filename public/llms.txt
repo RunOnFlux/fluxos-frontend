@@ -1,6 +1,6 @@
 # FluxCloud
 
-> FluxCloud (cloud.runonflux.com) is the user portal for the Flux Network — a decentralized Web3 cloud infrastructure operated across thousands of FluxNodes in 60+ countries. It enables anyone to deploy and manage applications, game servers, WordPress sites, and blockchain nodes on decentralized infrastructure starting at $0.99/month.
+> FluxCloud (cloud.runonflux.com) is the user portal for the Flux Network — a decentralized Web3 cloud infrastructure operated across thousands of FluxNodes in 50+ countries. It enables anyone to deploy and manage applications, game servers, WordPress sites, and blockchain nodes on decentralized infrastructure starting at $0.99/month.
 
 FluxCloud is the official frontend for the Flux Network, providing a web-based interface to manage Flux node operations, deploy applications via Docker or Git, host game servers, run WordPress sites, and operate blockchain nodes. The platform is operated by Flux Network, with the codebase maintained at https://github.com/runonflux. Authentication is wallet-based (ZelID, MetaMask, WalletConnect) and infrastructure is permissionless — applications run on independently operated FluxNodes rather than centralized data centers.
 
@@ -18,7 +18,7 @@ FluxCloud is the official frontend for the Flux Network, providing a web-based i
 
 ## Network facts
 
-- Thousands of FluxNodes operate the network across 60+ countries.
+- Thousands of FluxNodes operate the network across 50+ countries.
 - Applications are scheduled across independently operated nodes — no single operator controls availability.
 - Pricing starts at $0.99/month for a basic application instance.
 - The Flux Network is open-source; backend source is at https://github.com/runonflux/flux.
