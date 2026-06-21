@@ -2,6 +2,7 @@ import IDService from '@/services/IDService'
 import AppsService from '@/services/AppsService'
 import { useFluxStore } from "@/stores/flux"
 import { clearStickyBackendDNS } from '@/utils/stickyBackend'
+import { consumeConsoleHandoff } from '@/utils/consoleHandoff'
 import qs from 'qs'
 
 const GUARD_TIMEOUT_MS = 8000
@@ -43,6 +44,11 @@ export const setupGuards = router => {
 
   router.beforeEach(async (to, from, next) => {
     try {
+      // SSO handoff from the Console: if the URL carries a one-time handoff
+      // token, exchange it for a zelidauth and store it BEFORE we read the
+      // session below, so the normal validation path logs the user in.
+      await consumeConsoleHandoff()
+
       if (!to.matched.length || to.name === '$error') {
         return next()
       }

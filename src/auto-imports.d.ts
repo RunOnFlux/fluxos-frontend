@@ -36,6 +36,7 @@ declare global {
   const confirmedValidator: typeof import('./@core/utils/validators.js')['confirmedValidator']
   const connectBrowserMetaMask: typeof import('./utils/walletService.js')['connectBrowserMetaMask']
   const connectMetaMask: typeof import('./utils/walletService.js')['connectMetaMask']
+  const consumeConsoleHandoff: typeof import('./utils/consoleHandoff.js')['consumeConsoleHandoff']
   const controlledComputed: typeof import('@vueuse/core')['controlledComputed']
   const controlledRef: typeof import('@vueuse/core')['controlledRef']
   const convertToLatestVersion: typeof import('./utils/specConverter.js')['convertToLatestVersion']
@@ -499,6 +500,7 @@ declare module 'vue' {
     readonly confirmedValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['confirmedValidator']>
     readonly connectBrowserMetaMask: UnwrapRef<typeof import('./utils/walletService.js')['connectBrowserMetaMask']>
     readonly connectMetaMask: UnwrapRef<typeof import('./utils/walletService.js')['connectMetaMask']>
+    readonly consumeConsoleHandoff: UnwrapRef<typeof import('./utils/consoleHandoff.js')['consumeConsoleHandoff']>
     readonly controlledComputed: UnwrapRef<typeof import('@vueuse/core')['controlledComputed']>
     readonly controlledRef: UnwrapRef<typeof import('@vueuse/core')['controlledRef']>
     readonly convertToLatestVersion: UnwrapRef<typeof import('./utils/specConverter.js')['convertToLatestVersion']>
