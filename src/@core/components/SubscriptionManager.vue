@@ -1333,6 +1333,17 @@
                   </VChip>
                 </div>
 
+                <VAlert
+                  v-if="showSecretsAutoEnabledBanner"
+                  type="warning"
+                  variant="tonal"
+                  density="comfortable"
+                  icon="mdi-shield-lock"
+                  class="mb-3"
+                >
+                  {{ t('core.subscriptionManager.secretsAutoEnabledBanner', { keys: secretEnvVarKeys.join(', ') }) }}
+                </VAlert>
+
                 <div class="d-flex flex-wrap gap-2 env-buttons-container">
                   <VBadge
                     class="env-button-wrapper"
@@ -3547,6 +3558,91 @@
     </VCard>
   </VDialog>
 
+  <!-- Public (non-enterprise) registration warning -->
+  <VDialog v-model="enterpriseConfirm.show" max-width="560" persistent>
+    <VCard rounded="xl" class="overflow-hidden">
+      <VCardTitle class="d-flex align-center gap-3 text-white" :class="isPrivateApp ? 'bg-success' : 'bg-primary'" style="min-height: 52px; padding-block: 8px; padding-inline: 16px;">
+        <VIcon :icon="isPrivateApp ? 'mdi-shield-check' : 'mdi-shield-alert'" :color="isPrivateApp ? 'white' : 'orange'" size="28" />
+        <span class="text-h6">{{ isPrivateApp ? t('core.subscriptionManager.publicWarningEnterpriseOnTitle') : t('core.subscriptionManager.publicWarningTitle') }}</span>
+      </VCardTitle>
+      <VCardText class="py-6 px-6">
+        <!-- Enterprise ON: positive confirmation -->
+        <VAlert
+          v-if="isPrivateApp"
+          type="success"
+          variant="tonal"
+          density="comfortable"
+          icon="mdi-lock-check"
+          class="mb-4"
+        >
+          {{ t('core.subscriptionManager.publicWarningEnterpriseOnMessage') }}
+        </VAlert>
+
+        <!-- Enterprise OFF: public exposure warning -->
+        <template v-else>
+          <p class="text-body-1 mb-3">
+            {{ t('core.subscriptionManager.publicWarningIntro') }}
+          </p>
+          <ul class="text-body-2 text-medium-emphasis mb-4" style="padding-inline-start: 20px;">
+            <li class="mb-1">{{ t('core.subscriptionManager.publicWarningRisk1') }}</li>
+            <li class="mb-1">{{ t('core.subscriptionManager.publicWarningRisk2') }}</li>
+          </ul>
+
+          <VAlert
+            v-if="secretEnvVarKeys.length > 0"
+            type="error"
+            variant="tonal"
+            density="comfortable"
+            icon="mdi-key-alert"
+            class="mb-4"
+          >
+            {{ t('core.subscriptionManager.publicWarningSecretsDetected', { keys: secretEnvVarKeys.join(', ') }) }}
+          </VAlert>
+        </template>
+
+        <div class="d-flex align-center pa-3 rounded-lg" style="border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));">
+          <VSwitch
+            v-model="isPrivateApp"
+            inset
+            hide-details
+            density="compact"
+            color="primary"
+            class="ma-0 flex-grow-1"
+            :label="t('core.subscriptionManager.publicWarningEnterpriseSwitch')"
+          />
+        </div>
+        <p class="text-caption text-medium-emphasis mt-2 mb-0">
+          <VIcon size="16" class="mr-1" style="vertical-align: middle;">mdi-information-outline</VIcon>
+          {{ t('core.subscriptionManager.publicWarningPriceNote') }}
+        </p>
+      </VCardText>
+      <VCardActions class="pa-0 d-flex ga-0">
+        <VBtn
+          color="grey"
+          variant="flat"
+          size="large"
+          class="rounded-0 rounded-bl-xl"
+          style="flex: 1; max-width: 50%;"
+          @click="resolveEnterpriseConfirm('cancel')"
+        >
+          <VIcon start icon="mdi-close-circle" />
+          {{ t('common.buttons.cancel') }}
+        </VBtn>
+        <VBtn
+          :color="isPrivateApp ? 'primary' : 'warning'"
+          variant="flat"
+          size="large"
+          class="rounded-0 rounded-br-xl"
+          style="flex: 1; max-width: 50%;"
+          @click="resolveEnterpriseConfirm(isPrivateApp ? 'enterprise' : 'public')"
+        >
+          <VIcon start :icon="isPrivateApp ? 'mdi-shield-check' : 'mdi-arrow-right-circle'" />
+          {{ isPrivateApp ? t('core.subscriptionManager.publicWarningContinueEnterprise') : t('core.subscriptionManager.publicWarningContinuePublic') }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
+
   <!-- Manual Signing Dialog -->
   <ManualSignDialog
     v-model="showManualSignDialog"
@@ -3625,6 +3721,7 @@ import {
   getEnterprisePGPKeys,
   isWebCryptoAvailable,
 } from '@/utils/enterpriseCrypto'
+import { detectSecretEnvVars } from '@/utils/detectSecrets'
 import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } from '@/utils/specConverter'
 
 // Import payment images
@@ -4216,6 +4313,7 @@ function handleCommandPaste(event) {
   if (cmdArray && cmdArray.length > 1) {
     // Only intercept if multiple items — single quoted string falls through to normal paste
     event.preventDefault()
+
     // Remove empty rows before importing
     commandsDialog.entries = commandsDialog.entries.filter(e => e.trim() !== '')
     const newCmds = cmdArray.filter(cmd => cmd.trim().length > 0)
@@ -4230,6 +4328,7 @@ function handleCommandPaste(event) {
   const lines = trimmedPaste.split('\n').map(l => l.trim()).filter(l => l.length > 0)
   if (lines.length > 1) {
     event.preventDefault()
+
     // Remove empty rows before importing
     commandsDialog.entries = commandsDialog.entries.filter(e => e.trim() !== '')
     commandsDialog.entries.push(...lines)
@@ -4264,6 +4363,7 @@ function handleSpecImport(spec) {
 
     // Geolocation - required field, provide default if missing
     props.appSpec.geolocation = spec.geolocation || []
+
     // Decode geolocation into UI state (allowed/forbidden rows)
     decodeGeolocation(props.appSpec.geolocation)
 
@@ -4271,6 +4371,7 @@ function handleSpecImport(spec) {
     if (spec.nodes) {
       props.appSpec.nodes = spec.nodes || []
       appDetails.value.nodes = Array.isArray(spec.nodes) ? spec.nodes.join(', ') : spec.nodes
+
       // Populate selectedNodes UI state for Priority Nodes tab
       if (Array.isArray(spec.nodes) && spec.nodes.length > 0) {
         selectedNodes.value = spec.nodes.map(nodeIp => ({
@@ -6332,7 +6433,17 @@ watch(() => isPrivateApp.value, async (newValue, oldValue) => {
       }
       
       isPrivateApp.value = true
-      showToast('info', 'Enterprise mode enabled - nodes loaded')
+
+      // Skip the toast when Enterprise was turned on automatically for detected
+      // secrets — that flow shows its own, clearer message.
+      if (suppressEnterpriseEnabledToast.value) {
+        suppressEnterpriseEnabledToast.value = false
+      } else if (props.appSpec.version >= 8) {
+        // v8+ apps don't use enterprise nodes; encryption is what matters here
+        showToast('info', t('core.subscriptionManager.enterpriseModeEnabled'), 'mdi-shield-lock')
+      } else {
+        showToast('info', 'Enterprise mode enabled - nodes loaded')
+      }
     } else if (!newValue && oldValue) {
       // Enterprise mode disabled - clear nodes and settings
       selectedNodes.value = []
@@ -6351,6 +6462,77 @@ watch(() => isPrivateApp.value, async (newValue, oldValue) => {
     }
   }
 })
+
+// ============================================================================
+// SECRETS-IN-ENVIRONMENT PROTECTION (Docker registration, v8+ only)
+// ----------------------------------------------------------------------------
+// Non-enterprise apps publish their full compose (including environment
+// variables) on the network's public APIs. To stop users from leaking secrets,
+// we (1) auto-enable Enterprise mode when a secret-looking env var is detected
+// and (2) warn before registering any app as public.
+// ============================================================================
+
+// Environment variables whose key looks like a secret (e.g. DB_PASSWORD, API_KEY)
+const secretEnvVarMatches = computed(() => detectSecretEnvVars(props.appSpec?.compose))
+
+// Distinct secret keys, for display in banners/dialogs
+const secretEnvVarKeys = computed(() => [...new Set(secretEnvVarMatches.value.map(m => m.key))])
+
+// Whether the current spec version supports the Enterprise encryption flow we rely on
+const supportsEnterpriseEncryption = computed(() => specVersion.value >= 8)
+
+// True once we have auto-enabled Enterprise for the current set of secrets, so we
+// don't keep fighting a user who deliberately turns Enterprise back off.
+const hasAutoEnabledForSecrets = ref(false)
+
+// Set when we toggle Enterprise on programmatically, so the isPrivateApp watcher
+// skips its generic "Enterprise mode enabled" toast and we show our own instead.
+const suppressEnterpriseEnabledToast = ref(false)
+
+// Whether to show the persistent "we enabled Enterprise for you" banner
+const showSecretsAutoEnabledBanner = computed(() =>
+  hasAutoEnabledForSecrets.value && isPrivateApp.value && secretEnvVarMatches.value.length > 0)
+
+watch(secretEnvVarMatches, matches => {
+  const hasSecrets = matches.length > 0
+
+  // Reset the guard when there are no more secrets, so a future secret re-triggers
+  if (!hasSecrets) {
+    hasAutoEnabledForSecrets.value = false
+
+    return
+  }
+
+  // Auto-enable Enterprise (v8+) the first time secrets appear while it is off
+  if (hasSecrets && supportsEnterpriseEncryption.value && !isPrivateApp.value && !hasAutoEnabledForSecrets.value) {
+    suppressEnterpriseEnabledToast.value = true
+    isPrivateApp.value = true
+    hasAutoEnabledForSecrets.value = true
+
+    const keys = [...new Set(matches.map(m => m.key))].join(', ')
+    showToast('warning', t('core.subscriptionManager.secretsAutoEnabledEnterprise', { keys }), 'mdi-shield-lock', 7000)
+  }
+}, { deep: true })
+
+// Confirmation dialog shown before registering an app as public (non-enterprise)
+const enterpriseConfirm = reactive({ show: false })
+let enterpriseConfirmResolver = null
+
+function openEnterpriseConfirm() {
+  enterpriseConfirm.show = true
+
+  return new Promise(resolve => {
+    enterpriseConfirmResolver = resolve
+  })
+}
+
+function resolveEnterpriseConfirm(choice) {
+  enterpriseConfirm.show = false
+  if (enterpriseConfirmResolver) {
+    enterpriseConfirmResolver(choice)
+    enterpriseConfirmResolver = null
+  }
+}
 
 const composeTabs = computed(() => {
   return props.appSpec?.compose?.map((component, index) => ({
@@ -6981,6 +7163,7 @@ function handleEnvPaste(event) {
   const envArray = tryParseEnvArray(jsonCandidate)
   if (envArray) {
     event.preventDefault()
+
     // Remove empty rows left by "Add Env" button before importing
     envDialog.entries = envDialog.entries.filter(e => e.key.trim() !== '' || e.value.trim() !== '')
     let importedCount = 0
@@ -7531,6 +7714,23 @@ watch(tab, async newVal => {
       showToast('error', t('core.subscriptionManager.geolocationErrorsFound'))
 
       return
+    }
+
+    // --- STEP 0.5: Warn before registering as a public (non-enterprise) app ---
+    // Public apps publish their compose (including environment variables) on the
+    // network's public APIs. Give the user a last chance to enable Enterprise.
+    if (supportsEnterpriseEncryption.value && !isPrivateApp.value) {
+      const choice = await openEnterpriseConfirm()
+
+      if (choice === 'cancel') {
+        // User backed out — abort validation and let them adjust the spec
+        isVeryfitying.value = false
+
+        return
+      }
+
+      // If the user enabled Enterprise inside the dialog, isPrivateApp is now true
+      // and the spec will be encrypted during verifyAppSpec/registration below.
     }
 
     // --- STEP 1: Validate Spec ---
