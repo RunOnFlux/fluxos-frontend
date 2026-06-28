@@ -62,6 +62,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const definePage: typeof import('unplugin-vue-router/runtime')['definePage']
   const defineStore: typeof import('pinia')['defineStore']
+  const detectSecretEnvVars: typeof import('./utils/detectSecrets.js')['detectSecretEnvVars']
   const disableAnalytics: typeof import('./composables/useCookieConsent.js')['disableAnalytics']
   const disconnectWalletConnect: typeof import('./utils/walletService.js')['disconnectWalletConnect']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
@@ -133,6 +134,7 @@ declare global {
   const isRef: typeof import('vue')['isRef']
   const isRoundRobinBackend: typeof import('./utils/stickyBackend.js')['isRoundRobinBackend']
   const isSSPAvailable: typeof import('./utils/walletService.js')['isSSPAvailable']
+  const isSecretEnvKey: typeof import('./utils/detectSecrets.js')['isSecretEnvKey']
   const isToday: typeof import('./@core/utils/helpers.js')['isToday']
   const isWebCryptoAvailable: typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']
   const isZelcoreAvailable: typeof import('./utils/walletService.js')['isZelcoreAvailable']
@@ -526,6 +528,7 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly definePage: UnwrapRef<typeof import('unplugin-vue-router/runtime')['definePage']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
+    readonly detectSecretEnvVars: UnwrapRef<typeof import('./utils/detectSecrets.js')['detectSecretEnvVars']>
     readonly disableAnalytics: UnwrapRef<typeof import('./composables/useCookieConsent.js')['disableAnalytics']>
     readonly disconnectWalletConnect: UnwrapRef<typeof import('./utils/walletService.js')['disconnectWalletConnect']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
@@ -595,6 +598,7 @@ declare module 'vue' {
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
     readonly isRoundRobinBackend: UnwrapRef<typeof import('./utils/stickyBackend.js')['isRoundRobinBackend']>
     readonly isSSPAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isSSPAvailable']>
+    readonly isSecretEnvKey: UnwrapRef<typeof import('./utils/detectSecrets.js')['isSecretEnvKey']>
     readonly isToday: UnwrapRef<typeof import('./@core/utils/helpers.js')['isToday']>
     readonly isWebCryptoAvailable: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']>
     readonly isZelcoreAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isZelcoreAvailable']>
