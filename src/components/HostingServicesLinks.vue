@@ -32,8 +32,8 @@
               :src="service.img"
               :alt="service.anchor"
               class="service-thumb"
-              width="64"
-              height="64"
+              width="176"
+              height="92"
               loading="lazy"
               decoding="async"
               @error="onImgError"
@@ -109,7 +109,7 @@ const services = [
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
   gap: 1rem;
 }
 
@@ -138,8 +138,9 @@ const services = [
 }
 
 .service-thumb {
-  inline-size: 64px;
-  block-size: 64px;
+  inline-size: 176px;
+  block-size: auto;
+  aspect-ratio: 40 / 21;
   border-radius: 10px;
   object-fit: cover;
   flex-shrink: 0;
