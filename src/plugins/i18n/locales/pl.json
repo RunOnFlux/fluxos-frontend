@@ -5543,5 +5543,21 @@
     "fluxCloudSubtitle": "Zdecentralizowane zarządzanie aplikacjami",
     "fluxCloudDescription": "Monitoruj i zarządzaj wszystkimi aplikacjami Docker działającymi w zdecentralizowanej sieci chmurowej Flux. Wyświetlaj status w czasie rzeczywistym, wykorzystanie zasobów i metryki wydajności swoich rozproszonych aplikacji wdrożonych w naszej globalnej infrastrukturze opartej na blockchain. Kliknij dowolną aplikację, aby uzyskać dostęp do szczegółowych kontroli zarządzania i analiz.",
     "fluxCloudTitle": "FluxCloud"
+  },
+  "hostingLinks": {
+    "title": "Explore Flux Hosting",
+    "subtitle": "Dedicated game servers, apps and AI — deployed on the Flux decentralized cloud.",
+    "services": {
+      "minecraft": "Java & Bedrock servers, deploy in 30 seconds",
+      "palworld": "Dedicated servers for up to 32 players",
+      "enshrouded": "Dedicated survival servers, up to 16 players",
+      "rust": "Vanilla & modded servers, up to 200 players",
+      "windrose": "Co-op pirate survival dedicated servers",
+      "wordpress": "Decentralized, censorship-resistant WordPress",
+      "n8n": "Self-hosted n8n workflow automation",
+      "openclaw": "Self-hosted, model-agnostic AI assistant",
+      "hermes": "Self-host the Hermes AI agent",
+      "orbit": "Git push-to-deploy on the decentralized cloud"
+    }
   }
 }
