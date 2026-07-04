@@ -6,8 +6,8 @@
     and pass link equity from cloud.runonflux.com to the product subdomains.
     Links are followed on purpose (no rel="nofollow") — these are first-party
     related properties we want search engines to associate and rank.
-    Each card shows the destination's social share image (og:image), hot-linked
-    from the subdomain, lazily loaded and hidden if it fails to load.
+    Each card shows the destination's social share image (og:image) as a banner
+    on top, hot-linked from the subdomain, lazily loaded and hidden on load error.
   -->
   <section class="hosting-links" aria-labelledby="hosting-links-title">
     <div class="container">
@@ -32,17 +32,19 @@
               :src="service.img"
               :alt="service.anchor"
               class="service-thumb"
-              width="220"
-              height="115"
+              width="400"
+              height="210"
               loading="lazy"
               decoding="async"
               @error="onImgError"
             >
             <span class="service-text">
-              <span class="service-name">{{ service.anchor }}</span>
+              <span class="service-name-row">
+                <span class="service-name">{{ service.anchor }}</span>
+                <VIcon size="small" class="service-arrow">mdi-arrow-top-right</VIcon>
+              </span>
               <span class="service-desc">{{ service.desc }}</span>
             </span>
-            <VIcon size="small" class="service-arrow">mdi-arrow-top-right</VIcon>
           </a>
         </li>
       </ul>
@@ -109,8 +111,8 @@ const services = [
   padding: 0;
   margin: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 1.25rem;
 }
 
 .link-item {
@@ -119,31 +121,28 @@ const services = [
 
 .service-link {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
   width: 100%;
-  padding: 0.85rem 1rem;
-  border-radius: 12px;
+  padding: 0.75rem;
+  border-radius: 14px;
   text-decoration: none;
   background: rgba(var(--v-theme-on-surface), 0.03);
   border: 1px solid rgba(var(--v-theme-on-surface), 0.08);
   transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
-  position: relative;
 }
 
 .service-link:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   border-color: rgba(var(--v-theme-primary), 0.6);
   background: rgba(var(--v-theme-primary), 0.06);
 }
 
 .service-thumb {
-  inline-size: 220px;
+  inline-size: 100%;
   block-size: auto;
   aspect-ratio: 40 / 21;
   border-radius: 10px;
   object-fit: cover;
-  flex-shrink: 0;
   background: rgba(var(--v-theme-on-surface), 0.06);
 }
 
@@ -151,8 +150,14 @@ const services = [
   display: flex;
   flex-direction: column;
   gap: 0.2rem;
-  min-inline-size: 0;
-  padding-inline-end: 1.25rem;
+  padding: 0.85rem 0.5rem 0.35rem;
+}
+
+.service-name-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 .service-name {
@@ -166,10 +171,8 @@ const services = [
 }
 
 .service-arrow {
-  position: absolute;
-  top: 0.9rem;
-  inset-inline-end: 0.9rem;
   color: rgba(var(--v-theme-on-surface), 0.4);
+  flex-shrink: 0;
 }
 
 .service-link:hover .service-arrow {
