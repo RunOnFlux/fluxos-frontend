@@ -55,6 +55,9 @@
                   variant="tonal"
                   size="small"
                   rounded="pill"
+                  :href="serviceHref(banner) || undefined"
+                  :target="serviceHref(banner) ? '_blank' : undefined"
+                  :rel="serviceHref(banner) ? 'noopener noreferrer' : undefined"
                   @click="exploreBanner(banner)"
                 >
                   <span>{{ t('landingServices.explore') }}</span>
@@ -139,27 +142,33 @@ const getChipLabel = banner => {
   return t(`landingServices.services.${banner.key}.category`)
 }
 
-const exploreBanner = banner => {
-  // Map each service to its correct route or external page (verified from project structure)
-  const routes = {
-    fluxCloud: '/apps/register',
-    fluxAI: 'https://ai.runonflux.com/',
-    fluxDrive: '/flux-drive',
-    fluxEdge: 'https://runonflux.com/fluxedge/',
-    fluxMarketplace: '/marketplace',
-    wordPressOnFlux: 'https://wordpress.runonflux.com',
-  }
+// Map each service to its correct route or external page (verified from project structure)
+const serviceUrls = {
+  fluxCloud: '/apps/register',
+  fluxAI: 'https://ai.runonflux.com/',
+  fluxDrive: '/flux-drive',
+  fluxEdge: 'https://runonflux.com/fluxedge/',
+  fluxMarketplace: '/marketplace',
+  wordPressOnFlux: 'https://wordpress.runonflux.com',
+}
 
-  const url = routes[banner.key]
-  if (url) {
-    // Check if it's an external URL
-    if (url.startsWith('http')) {
-      window.open(url, '_blank')
-    } else {
-      // Internal route navigation using Vue Router (no page reload)
-      router.push(url)
-    }
-  }
+// External URLs are exposed as a real <a href> on the explore chip (see template)
+// so they are crawlable and pass link equity — window.open() would not be a link.
+const serviceHref = banner => {
+  const url = serviceUrls[banner.key]
+
+  return url && url.startsWith('http') ? url : null
+}
+
+const exploreBanner = banner => {
+  const url = serviceUrls[banner.key]
+
+  // External URLs navigate natively via the anchor href; nothing to do here.
+  if (!url || url.startsWith('http'))
+    return
+
+  // Internal route navigation using Vue Router (no page reload)
+  router.push(url)
 }
 </script>
 

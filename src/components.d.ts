@@ -73,6 +73,7 @@ declare module 'vue' {
     GroupsPanel: typeof import('./components/Marketplace/Panels/GroupsPanel.vue')['default']
     HeaderPanel: typeof import('./components/Marketplace/Panels/HeaderPanel.vue')['default']
     HeroSection: typeof import('./components/HeroSection.vue')['default']
+    HostingServicesLinks: typeof import('./components/HostingServicesLinks.vue')['default']
     I18n: typeof import('./@core/components/I18n.vue')['default']
     ImportJsonDialog: typeof import('./components/dialogs/ImportJsonDialog.vue')['default']
     ImportSpecDialog: typeof import('./components/dialogs/ImportSpecDialog.vue')['default']

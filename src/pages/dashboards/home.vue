@@ -1,5 +1,6 @@
 <template>
   <LandingServices />
+  <HostingServicesLinks />
   <FAQPanel
     :panel="{ enabled: true, padding: { top: 64, right: 0, bottom: 0, left: 0 } }"
     :app="null"
@@ -11,6 +12,7 @@
 <script setup>
 import { onMounted, computed } from 'vue'
 import LandingServices from "@/components/LandingServices.vue"
+import HostingServicesLinks from "@/components/HostingServicesLinks.vue"
 import FAQPanel from '@/components/Marketplace/Panels/FAQPanel.vue'
 import { useI18n } from "vue-i18n"
 import { useHead } from '@unhead/vue'

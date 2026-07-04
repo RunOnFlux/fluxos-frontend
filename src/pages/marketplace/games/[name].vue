@@ -29,6 +29,26 @@
         @click="router.push('/marketplace/games')"
       />
 
+      <!--
+        Dedicated-site link: a real, crawlable <a href> (VBtn renders as an
+        anchor when :href is set) to the game's own hosting landing site.
+        Reinforces the canonical/og:url that already point there and passes
+        link equity with keyword-rich anchor text. Shown only when the game
+        has a dedicated site (game.redirectUrl).
+      -->
+      <VBtn
+        v-if="game.redirectUrl"
+        :href="game.redirectUrl"
+        target="_blank"
+        rel="noopener noreferrer"
+        color="primary"
+        variant="flat"
+        class="dedicated-site-btn"
+        append-icon="mdi-arrow-top-right"
+      >
+        {{ (game.displayName || game.name) }} Server Hosting — Official Site
+      </VBtn>
+
       <!-- Dynamic Panels -->
       <div v-if="game.panels && game.panels.length" class="panels-container">
         <PanelRenderer
