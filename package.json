@@ -1,6 +1,6 @@
 {
   "name": "flux-gravity",
-  "version": "3.10.0",
+  ${1}3.11.0${2},
   "private": true,
   "type": "module",
   "scripts": {
