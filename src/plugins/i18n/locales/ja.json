@@ -5549,5 +5549,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Flux ホスティングを探索",
+    "subtitle": "専用ゲームサーバー、アプリ、AI — Flux 分散型クラウドにデプロイ。",
+    "services": {
+      "minecraft": "Java & Bedrock サーバー、30秒でデプロイ",
+      "palworld": "最大32人対応の専用サーバー",
+      "enshrouded": "専用サバイバルサーバー、最大16人",
+      "rust": "バニラ&MODサーバー、最大200人",
+      "windrose": "協力型海賊サバイバルの専用サーバー",
+      "wordpress": "分散型で検閲耐性のある WordPress",
+      "n8n": "セルフホストの n8n ワークフロー自動化",
+      "openclaw": "セルフホストでモデル非依存の AI アシスタント",
+      "hermes": "Hermes AI エージェントをセルフホスト",
+      "orbit": "分散型クラウドへ git push でデプロイ"
+    }
   }
 }

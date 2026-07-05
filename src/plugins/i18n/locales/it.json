@@ -5549,5 +5549,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Esplora Flux Hosting",
+    "subtitle": "Server di gioco dedicati, app e IA — distribuiti sul cloud decentralizzato Flux.",
+    "services": {
+      "minecraft": "Server Java e Bedrock, deploy in 30 secondi",
+      "palworld": "Server dedicati fino a 32 giocatori",
+      "enshrouded": "Server survival dedicati, fino a 16 giocatori",
+      "rust": "Server vanilla e moddati, fino a 200 giocatori",
+      "windrose": "Server dedicati di sopravvivenza piratesca in co-op",
+      "wordpress": "WordPress decentralizzato e resistente alla censura",
+      "n8n": "Automazione dei flussi n8n self-hosted",
+      "openclaw": "Assistente IA self-hosted e indipendente dal modello",
+      "hermes": "Ospita tu stesso l'agente IA Hermes",
+      "orbit": "Deploy con git push sul cloud decentralizzato"
+    }
   }
 }

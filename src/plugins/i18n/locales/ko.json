@@ -5549,5 +5549,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Flux 호스팅 살펴보기",
+    "subtitle": "전용 게임 서버, 앱, AI — Flux 탈중앙화 클라우드에 배포됩니다.",
+    "services": {
+      "minecraft": "Java & Bedrock 서버, 30초 만에 배포",
+      "palworld": "최대 32인용 전용 서버",
+      "enshrouded": "전용 서바이벌 서버, 최대 16인",
+      "rust": "바닐라 & 모드 서버, 최대 200인",
+      "windrose": "협동 해적 서바이벌 전용 서버",
+      "wordpress": "탈중앙화된 검열 저항 WordPress",
+      "n8n": "셀프 호스팅 n8n 워크플로 자동화",
+      "openclaw": "셀프 호스팅, 모델 독립적 AI 어시스턴트",
+      "hermes": "Hermes AI 에이전트를 직접 호스팅",
+      "orbit": "탈중앙화 클라우드에 git push로 배포"
+    }
   }
 }

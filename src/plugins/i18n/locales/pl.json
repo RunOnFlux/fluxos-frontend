@@ -5545,19 +5545,19 @@
     "fluxCloudTitle": "FluxCloud"
   },
   "hostingLinks": {
-    "title": "Explore Flux Hosting",
-    "subtitle": "Dedicated game servers, apps and AI — deployed on the Flux decentralized cloud.",
+    "title": "Poznaj Flux Hosting",
+    "subtitle": "Dedykowane serwery gier, aplikacje i AI — wdrażane w zdecentralizowanej chmurze Flux.",
     "services": {
-      "minecraft": "Java & Bedrock servers, deploy in 30 seconds",
-      "palworld": "Dedicated servers for up to 32 players",
-      "enshrouded": "Dedicated survival servers, up to 16 players",
-      "rust": "Vanilla & modded servers, up to 200 players",
-      "windrose": "Co-op pirate survival dedicated servers",
-      "wordpress": "Decentralized, censorship-resistant WordPress",
-      "n8n": "Self-hosted n8n workflow automation",
-      "openclaw": "Self-hosted, model-agnostic AI assistant",
-      "hermes": "Self-host the Hermes AI agent",
-      "orbit": "Git push-to-deploy on the decentralized cloud"
+      "minecraft": "Serwery Java i Bedrock, wdrożenie w 30 sekund",
+      "palworld": "Dedykowane serwery dla maks. 32 graczy",
+      "enshrouded": "Dedykowane serwery survivalowe, do 16 graczy",
+      "rust": "Serwery vanilla i z modami, do 200 graczy",
+      "windrose": "Dedykowane serwery pirackiego survivalu w co-op",
+      "wordpress": "Zdecentralizowany WordPress odporny na cenzurę",
+      "n8n": "Samodzielnie hostowana automatyzacja n8n",
+      "openclaw": "Samodzielnie hostowany asystent AI niezależny od modelu",
+      "hermes": "Hostuj samodzielnie agenta AI Hermes",
+      "orbit": "Wdrażanie przez git push w zdecentralizowanej chmurze"
     }
   }
 }

@@ -5549,5 +5549,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Jelajahi Flux Hosting",
+    "subtitle": "Server game khusus, aplikasi, dan AI — dideploy di cloud terdesentralisasi Flux.",
+    "services": {
+      "minecraft": "Server Java & Bedrock, deploy dalam 30 detik",
+      "palworld": "Server khusus hingga 32 pemain",
+      "enshrouded": "Server survival khusus, hingga 16 pemain",
+      "rust": "Server vanilla & mod, hingga 200 pemain",
+      "windrose": "Server khusus survival bajak laut co-op",
+      "wordpress": "WordPress terdesentralisasi dan tahan sensor",
+      "n8n": "Otomatisasi alur kerja n8n self-hosted",
+      "openclaw": "Asisten AI self-hosted, tidak terikat model",
+      "hermes": "Self-host agen AI Hermes",
+      "orbit": "Deploy lewat git push di cloud terdesentralisasi"
+    }
   }
 }

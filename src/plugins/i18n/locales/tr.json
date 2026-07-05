@@ -5549,5 +5549,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Flux Hosting'i Keşfedin",
+    "subtitle": "Özel oyun sunucuları, uygulamalar ve yapay zekâ — merkeziyetsiz Flux bulutunda dağıtılır.",
+    "services": {
+      "minecraft": "Java ve Bedrock sunucuları, 30 saniyede kurulum",
+      "palworld": "32 oyuncuya kadar özel sunucular",
+      "enshrouded": "Özel hayatta kalma sunucuları, 16 oyuncuya kadar",
+      "rust": "Vanilla ve modlu sunucular, 200 oyuncuya kadar",
+      "windrose": "Co-op korsan hayatta kalma için özel sunucular",
+      "wordpress": "Merkeziyetsiz, sansüre dayanıklı WordPress",
+      "n8n": "Kendi barındırdığınız n8n iş akışı otomasyonu",
+      "openclaw": "Kendi barındırdığınız, modelden bağımsız yapay zekâ asistanı",
+      "hermes": "Hermes yapay zekâ ajanını kendiniz barındırın",
+      "orbit": "Merkeziyetsiz bulutta git push ile dağıtım"
+    }
   }
 }
