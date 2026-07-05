@@ -693,11 +693,11 @@ const fetchNetworkData = async () => {
 
 // SEO meta tags
 useHead({
-  title: 'Deploy Your App on FluxCloud - Decentralized Cloud Computing',
+  title: 'Deploy Your App on FluxCloud - Hosting from $0.99/month',
   meta: [
     {
       name: 'description',
-      content: 'Deploy your applications on FluxCloud\'s decentralized network. Affordable, secure, and globally distributed cloud computing with no vendor lock-in.',
+      content: 'Deploy any Docker app on FluxCloud\'s decentralized network in minutes. Pay-as-you-go pricing from $0.99/month, servers in 50+ countries, no vendor lock-in.',
     },
     {
       name: 'keywords',
@@ -713,11 +713,11 @@ useHead({
     },
     {
       property: 'og:title',
-      content: 'Deploy Your App on FluxCloud - Decentralized Cloud Computing',
+      content: 'Deploy Your App on FluxCloud - Hosting from $0.99/month',
     },
     {
       property: 'og:description',
-      content: 'Deploy your applications on FluxCloud\'s decentralized network. Affordable, secure, and globally distributed cloud computing.',
+      content: 'Deploy any Docker app on FluxCloud\'s decentralized network in minutes. Pay-as-you-go pricing from $0.99/month, servers in 50+ countries, no vendor lock-in.',
     },
     {
       property: 'og:type',
@@ -745,11 +745,11 @@ useHead({
     },
     {
       name: 'twitter:title',
-      content: 'Deploy Your App on FluxCloud - Decentralized Cloud Computing',
+      content: 'Deploy Your App on FluxCloud - Hosting from $0.99/month',
     },
     {
       name: 'twitter:description',
-      content: 'Deploy your applications on FluxCloud\'s decentralized network. Affordable, secure, and globally distributed cloud computing with no vendor lock-in.',
+      content: 'Deploy any Docker app on FluxCloud\'s decentralized network in minutes. Pay-as-you-go pricing from $0.99/month, servers in 50+ countries, no vendor lock-in.',
     },
     {
       name: 'twitter:image',

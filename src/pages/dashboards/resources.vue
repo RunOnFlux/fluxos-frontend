@@ -329,8 +329,8 @@ const { t } = useI18n()
 
 // SEO configuration
 useSEO({
-  title: 'Flux Network Resources - Storage & Bandwidth Capacity | FluxCloud',
-  description: 'Monitor Flux network resources in real-time. View storage capacity, bandwidth availability, and resource distribution across Cumulus, Nimbus, and Stratus tiers. Track network capacity for hosting applications.',
+  title: 'Flux Network Resources - Live Capacity Stats | FluxCloud',
+  description: 'Monitor live Flux network capacity: storage, bandwidth, and compute across Cumulus, Nimbus, and Stratus tiers. See what is available to host your apps.',
   url: 'https://cloud.runonflux.com/dashboards/resources',
   keywords: 'flux resources, network capacity, storage capacity, bandwidth availability, node resources, flux network storage, decentralized storage, network monitoring',
   structuredData: [

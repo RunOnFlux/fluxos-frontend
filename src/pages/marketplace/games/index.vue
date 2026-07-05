@@ -429,8 +429,8 @@ const fetchFluxLocations = async () => {
 
 // SEO meta tags and structured data
 const pageUrl = 'https://cloud.runonflux.com/marketplace/games'
-const title = 'Game Server Hosting - FluxPlay on FluxCloud'
-const description = 'Host Minecraft, Palworld, Factorio, Satisfactory & Enshrouded servers on FluxCloud. Global servers, instant deployment, DDoS protection. Flexible plans.'
+const title = 'FluxPlay Game Server Hosting - Minecraft & More | FluxCloud'
+const description = 'Host Minecraft, Palworld, Factorio and more with FluxPlay on FluxCloud. DDoS-protected servers in 50+ countries, pay-as-you-go plans, deployed in minutes.'
 const imageUrl = 'https://cloud.runonflux.com/images/games/FluxPlay_white.svg'
 
 // Reactive structured data that updates when games load
