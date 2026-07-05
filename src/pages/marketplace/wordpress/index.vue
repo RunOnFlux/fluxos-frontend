@@ -398,7 +398,7 @@ const relatedLinks = computed(() => {
 
 // SEO constants
 const pageUrl = 'https://cloud.runonflux.com/marketplace/wordpress'
-const title = 'WordPress Hosting on FluxCloud - Decentralized & Scalable'
+const title = 'WordPress Hosting - Decentralized & Scalable | FluxCloud'
 const imageUrl = 'https://cloud.runonflux.com/banner/FluxWPMarketplace.webp'
 
 // Lowest plan price — derived from the same live plan data as the Product
@@ -411,10 +411,10 @@ const lowestPlanPrice = computed(() => {
 })
 
 const description = computed(() => {
-  const base = 'Deploy WordPress on decentralized FluxCloud. Multiple performance plans with MySQL, SSL, and automatic backups.'
+  const base = 'Launch WordPress on decentralized FluxCloud in minutes. Every plan includes MySQL, free SSL, and automatic backups.'
 
   return lowestPlanPrice.value != null
-    ? `${base} Affordable pricing from $${lowestPlanPrice.value.toFixed(2)}/month.`
+    ? `${base} Plans start from $${lowestPlanPrice.value.toFixed(2)}/month.`
     : base
 })
 

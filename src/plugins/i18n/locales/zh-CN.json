@@ -5549,5 +5549,21 @@
         "category": "内容管理系统"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "探索 Flux 托管",
+    "subtitle": "专用游戏服务器、应用与 AI——部署在 Flux 去中心化云上。",
+    "services": {
+      "minecraft": "Java 和 Bedrock 服务器，30 秒即可部署",
+      "palworld": "专用服务器，最多支持 32 名玩家",
+      "enshrouded": "专用生存服务器，最多 16 名玩家",
+      "rust": "原版与模组服务器，最多 200 名玩家",
+      "windrose": "合作海盗生存专用服务器",
+      "wordpress": "去中心化、抗审查的 WordPress",
+      "n8n": "自托管的 n8n 工作流自动化",
+      "openclaw": "自托管、模型无关的 AI 助手",
+      "hermes": "自托管 Hermes AI 智能体",
+      "orbit": "在去中心化云上通过 git push 部署"
+    }
   }
 }

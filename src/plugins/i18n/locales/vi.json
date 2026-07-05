@@ -5549,5 +5549,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Khám phá Flux Hosting",
+    "subtitle": "Máy chủ game chuyên dụng, ứng dụng và AI — triển khai trên đám mây phi tập trung Flux.",
+    "services": {
+      "minecraft": "Máy chủ Java & Bedrock, triển khai trong 30 giây",
+      "palworld": "Máy chủ chuyên dụng cho tối đa 32 người chơi",
+      "enshrouded": "Máy chủ sinh tồn chuyên dụng, tối đa 16 người chơi",
+      "rust": "Máy chủ vanilla & mod, tối đa 200 người chơi",
+      "windrose": "Máy chủ chuyên dụng sinh tồn cướp biển co-op",
+      "wordpress": "WordPress phi tập trung, chống kiểm duyệt",
+      "n8n": "Tự lưu trữ tự động hóa quy trình n8n",
+      "openclaw": "Trợ lý AI tự lưu trữ, không phụ thuộc mô hình",
+      "hermes": "Tự lưu trữ tác nhân AI Hermes",
+      "orbit": "Triển khai bằng git push trên đám mây phi tập trung"
+    }
   }
 }

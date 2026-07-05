@@ -152,8 +152,8 @@ const { t } = useI18n()
 
 // SEO configuration
 useSEO({
-  title: 'Flux Node Rewards - FLUX Token Mining & Staking | FluxCloud',
-  description: 'Track Flux node rewards and FLUX token distribution. View real-time rewards for Cumulus, Nimbus, and Stratus nodes. Monitor block rewards, node earnings, and staking returns on the Flux network.',
+  title: 'Flux Node Rewards - Live FLUX Earnings by Tier | FluxCloud',
+  description: 'Track live FLUX rewards for Cumulus, Nimbus, and Stratus nodes. See block rewards, per-node earnings, and estimated returns, updated in real time.',
   url: 'https://cloud.runonflux.com/dashboards/rewards',
   keywords: 'flux rewards, flux token, node rewards, FLUX mining, flux staking, node earnings, flux income, blockchain rewards, passive income, flux node profit',
   structuredData: [

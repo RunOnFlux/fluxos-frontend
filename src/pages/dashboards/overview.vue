@@ -478,8 +478,8 @@ import { storeToRefs } from "pinia"
 const { t } = useI18n()
 
 // SEO meta tags
-const title = 'Flux Network Overview - Real-Time Node Statistics | FluxCloud'
-const description = 'View real-time statistics of the Flux decentralized network. Track thousands of active FluxNodes across Cumulus, Nimbus, and Stratus tiers. Monitor network health, supply, and node distribution worldwide.'
+const title = 'Flux Network Overview - Live Node Stats | FluxCloud'
+const description = 'See live Flux network statistics: thousands of active nodes in 50+ countries, tier breakdowns, FLUX supply, and network health, updated in real time.'
 const pageUrl = 'https://cloud.runonflux.com/dashboards/overview'
 const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 

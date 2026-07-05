@@ -716,8 +716,8 @@ const { t } = useI18n()
 
 // SEO meta tags and structured data
 const pageUrl = 'https://cloud.runonflux.com/cost-calculator'
-const title = 'Cost Calculator - App Hosting from $0.99 | FluxCloud'
-const description = 'Calculate app hosting costs on Flux decentralized cloud. Transparent pricing from $0.99/month for Docker, web apps, APIs, databases. Pay-as-you-go pricing.'
+const title = 'Hosting Cost Calculator - Apps from $0.99/mo | FluxCloud'
+const description = 'Estimate your cloud hosting costs in seconds. Transparent pay-as-you-go pricing from $0.99/month for Docker apps, APIs, and databases. No hidden fees.'
 const imageUrl = 'https://cloud.runonflux.com/banner/FluxHostingBanner.png'
 
 // WebApplication structured data

@@ -112,8 +112,8 @@ const {
 } = useMarketplace()
 
 const pageUrl = 'https://cloud.runonflux.com/marketplace'
-const title = 'Marketplace - Deploy Decentralized Apps on Flux | FluxCloud'
-const description = 'Deploy decentralized apps on Flux\'s Web3 cloud. Docker containers, web apps, APIs on thousands of FluxNodes across 50+ countries. One-click deployment, transparent pricing.'
+const title = 'Flux Marketplace - One-Click App Deployment | FluxCloud'
+const description = 'Deploy WordPress, game servers, databases, and more in one click on FluxCloud. Pay-as-you-go hosting on thousands of nodes across 50+ countries.'
 const imageUrl = 'https://cloud.runonflux.com/images/logo.png'
 
 // Generate structured data

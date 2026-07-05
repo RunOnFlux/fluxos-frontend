@@ -5550,5 +5550,21 @@
         "category": "CMS"
       }
     }
+  },
+  "hostingLinks": {
+    "title": "Flux Hosting entdecken",
+    "subtitle": "Dedizierte Gameserver, Apps und KI — bereitgestellt auf der dezentralen Flux-Cloud.",
+    "services": {
+      "minecraft": "Java- & Bedrock-Server, Deploy in 30 Sekunden",
+      "palworld": "Dedizierte Server für bis zu 32 Spieler",
+      "enshrouded": "Dedizierte Survival-Server, bis zu 16 Spieler",
+      "rust": "Vanilla- & Modded-Server, bis zu 200 Spieler",
+      "windrose": "Dedizierte Server für Koop-Piraten-Survival",
+      "wordpress": "Dezentrales, zensurresistentes WordPress",
+      "n8n": "Selbst gehostete n8n-Workflow-Automatisierung",
+      "openclaw": "Selbst gehosteter, modellunabhängiger KI-Assistent",
+      "hermes": "Hosten Sie den Hermes-KI-Agenten selbst",
+      "orbit": "Git-Push-Deployment auf der dezentralen Cloud"
+    }
   }
 }
