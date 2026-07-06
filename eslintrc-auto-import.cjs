@@ -382,6 +382,7 @@ module.exports = {
     "usePreferredReducedMotion": true,
     "usePrerenderReady": true,
     "usePrevious": true,
+    "usePriceEstimate": true,
     "useProjection": true,
     "useRafFn": true,
     "useRefHistory": true,

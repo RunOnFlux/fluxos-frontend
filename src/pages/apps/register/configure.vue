@@ -96,33 +96,56 @@
 
             <!-- Show registration form if logged in -->
             <div v-else class="docker-setup">
-              <!-- Header -->
-              <div class="docker-header">
-                <VBtn
-                  variant="text"
-                  size="small"
-                  :to="{ name: 'apps-register' }"
-                  class="back-btn"
-                >
-                  <VIcon start>mdi-arrow-left</VIcon>
-                  {{ t('pages.apps.register.docker.header.backToDeploymentOptions') }}
-                </VBtn>
-                <div class="docker-header-content">
-                  <VIcon size="32" color="info" class="mr-3">mdi-docker</VIcon>
-                  <div>
-                    <h1 class="docker-title">{{ t('pages.apps.register.docker.header.deployWithDocker') }}</h1>
-                    <p class="docker-subtitle">{{ t('pages.apps.register.docker.header.fullControlDeployment') }}</p>
+              <!-- Back to deployment options (always available) -->
+              <VBtn
+                variant="text"
+                size="small"
+                :to="{ name: 'apps-register' }"
+                class="back-btn"
+              >
+                <VIcon start>mdi-arrow-left</VIcon>
+                {{ t('pages.apps.register.docker.header.backToDeploymentOptions') }}
+              </VBtn>
+
+              <!-- Simple mode: opinionated guided deploy -->
+              <SimpleDeploy
+                v-if="mode === 'simple' && adaptedAppSpec"
+                :spec="adaptedAppSpec"
+                @advanced="switchToAdvanced(false)"
+                @deploy="e => switchToAdvanced(true, e)"
+                @import="switchToAdvancedAndImport"
+              />
+
+              <!-- Advanced mode: full specification form -->
+              <template v-else>
+                <div class="docker-header">
+                  <div class="docker-header-content">
+                    <VIcon size="32" color="info" class="mr-3">mdi-docker</VIcon>
+                    <div>
+                      <h1 class="docker-title">{{ t('pages.apps.register.docker.header.deployWithDocker') }}</h1>
+                      <p class="docker-subtitle">{{ t('pages.apps.register.docker.header.fullControlDeployment') }}</p>
+                    </div>
+                    <VBtn
+                      variant="tonal"
+                      size="small"
+                      class="ml-auto"
+                      prepend-icon="mdi-arrow-left"
+                      @click="mode = 'simple'"
+                    >
+                      {{ t('core.simpleDeploy.backToSimple') }}
+                    </VBtn>
                   </div>
                 </div>
-              </div>
 
-              <SubscriptionManager
-                :app-spec="adaptedAppSpec"
-                new-app
-                :is-redeploy="isRedeploy"
-                :execute-local-command="executeLocalCommand"
-                @spec-converted="handleSpecConverted"
-              />
+                <SubscriptionManager
+                  ref="subscriptionManagerRef"
+                  :app-spec="adaptedAppSpec"
+                  new-app
+                  :is-redeploy="isRedeploy"
+                  :execute-local-command="executeLocalCommand"
+                  @spec-converted="handleSpecConverted"
+                />
+              </template>
             </div>
           </VCardText>
         </VCard>
@@ -155,6 +178,34 @@ const { privilege } = storeToRefs(fluxStore)
 // Check if user is logged in - using privilege from flux store (reactive)
 const isLoggedIn = computed(() => privilege.value !== 'none')
 
+// Editing mode: 'simple' (guided deploy) is the default; 'advanced' is the full form.
+const mode = ref('simple')
+const subscriptionManagerRef = ref(null)
+
+// Hand off from Simple mode to the Advanced form. Because SubscriptionManager
+// seeds its internal appDetails from the appSpec only when the reference
+// changes, we reassign adaptedAppSpec after mounting so it syncs the fields
+// Simple mode just edited (name, instances, ...). If `review` is true we jump
+// straight to the validate/register step.
+async function switchToAdvanced(review = false, enterprise = false) {
+  const expireBlocks = adaptedAppSpec.value?.expire
+  mode.value = 'advanced'
+  await nextTick()
+  if (adaptedAppSpec.value) {
+    adaptedAppSpec.value = { ...adaptedAppSpec.value }
+  }
+  await nextTick()
+  if (enterprise) subscriptionManagerRef.value?.setEnterprise?.(true)
+  if (expireBlocks) subscriptionManagerRef.value?.setPeriodBlocks?.(expireBlocks)
+  await nextTick()
+  if (review) subscriptionManagerRef.value?.goToReview?.()
+}
+
+async function switchToAdvancedAndImport() {
+  await switchToAdvanced(false)
+  subscriptionManagerRef.value?.openImport?.()
+}
+
 // Create a new app specification with default values
 const isRedeploy = ref(false)
 
@@ -164,7 +215,7 @@ const newAppSpec = ref({
   description: '',
   owner: '',
   contacts: [],
-  instances: 3,
+  instances: 1,
   staticip: false,
   enterprise: '', // Empty for public apps, encrypted content for private apps
   nodes: [], // Empty for public apps, node IPs for v7 private apps
@@ -181,9 +232,9 @@ const newAppSpec = ref({
       environmentParameters: [],
       commands: [],
       containerData: '',
-      cpu: 0.1,
-      ram: 100,
-      hdd: 1,
+      cpu: 1,
+      ram: 2000,
+      hdd: 20,
       repoauth: '',
     },
   ],
