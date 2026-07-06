@@ -376,6 +376,7 @@ declare global {
   const usePreferredReducedMotion: typeof import('@vueuse/core')['usePreferredReducedMotion']
   const usePrerenderReady: typeof import('./composables/useSEO.js')['usePrerenderReady']
   const usePrevious: typeof import('@vueuse/core')['usePrevious']
+  const usePriceEstimate: typeof import('./composables/usePriceEstimate.js')['usePriceEstimate']
   const useProjection: typeof import('@vueuse/math')['useProjection']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
@@ -840,6 +841,7 @@ declare module 'vue' {
     readonly usePreferredReducedMotion: UnwrapRef<typeof import('@vueuse/core')['usePreferredReducedMotion']>
     readonly usePrerenderReady: UnwrapRef<typeof import('./composables/useSEO.js')['usePrerenderReady']>
     readonly usePrevious: UnwrapRef<typeof import('@vueuse/core')['usePrevious']>
+    readonly usePriceEstimate: UnwrapRef<typeof import('./composables/usePriceEstimate.js')['usePriceEstimate']>
     readonly useProjection: UnwrapRef<typeof import('@vueuse/math')['useProjection']>
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
