@@ -62,18 +62,18 @@
               <template #activator="{ props: tooltipProps }">
                 <VBtn
                   v-bind="tooltipProps"
-                  icon
                   color="success"
                   variant="tonal"
                   density="comfortable"
+                  prepend-icon="mdi-file-import"
                   class="import-glow-btn border-frame-btn"
                   :disabled="!acceptedTerms"
                   @click="showSpecImportDialog = true"
                 >
-                  <VIcon size="22">mdi-file-import</VIcon>
+                  <span class="d-none d-sm-inline">{{ t('core.subscriptionManager.importComposeShort') }}</span>
                 </VBtn>
               </template>
-              <span>{{ acceptedTerms ? t('core.subscriptionManager.importSpec') : t('core.subscriptionManager.tos.acceptFirst') }}</span>
+              <span>{{ acceptedTerms ? t('core.subscriptionManager.importComposeTooltip') : t('core.subscriptionManager.tos.acceptFirst') }}</span>
             </VTooltip>
           </div>
         </div>
@@ -710,14 +710,37 @@
             <!-- Instances Section -->
             <div class="border rounded pa-3">
               <div>
-                <div class="d-flex align-center justify-space-between mb-2">
+                <div class="d-flex align-center justify-space-between mb-2 flex-wrap gap-2">
                   <VChip color="default" variant="tonal" class="mr-2" style="width: 110px" label>
                     <VIcon class="mr-1">mdi-laptop</VIcon>
                     {{ t('core.subscriptionManager.instances') }}
+                    <VTooltip location="top" max-width="280" activator="parent">
+                      <span>{{ t('core.subscriptionManager.instancesTooltip') }}</span>
+                    </VTooltip>
                   </VChip>
-                  <VChip color="success" variant="tonal" size="small">
-                    {{ t('core.subscriptionManager.instancesCount', { count: appDetails.instances }) }}
-                  </VChip>
+                  <div class="d-flex align-center gap-2 flex-wrap">
+                    <!-- Live price estimate (new apps only) -->
+                    <VChip
+                      v-if="props.newApp && (priceEstimate || priceEstimating)"
+                      color="info"
+                      variant="tonal"
+                      size="small"
+                      prepend-icon="mdi-tag-outline"
+                    >
+                      <template v-if="priceEstimating && !priceEstimate">
+                        {{ t('core.subscriptionManager.estimatedCalculating') }}
+                      </template>
+                      <template v-else>
+                        {{ t('core.subscriptionManager.estimatedTotal', { usd: priceEstimate.usd }) }}
+                      </template>
+                      <VTooltip location="top" max-width="280" activator="parent">
+                        <span>{{ t('core.subscriptionManager.estimatedTooltip') }}</span>
+                      </VTooltip>
+                    </VChip>
+                    <VChip color="success" variant="tonal" size="small">
+                      {{ t('core.subscriptionManager.instancesCount', { count: appDetails.instances }) }}
+                    </VChip>
+                  </div>
                 </div>
                 <VSlider
                   v-model="appDetails.instances"
@@ -1825,12 +1848,34 @@
                   </VCard>
                 </VDialog>
 
-                <div class="d-flex align-center mb-3">
-                  <VChip color="default" variant="tonal" style="width: 100%;" label>
+                <div class="d-flex align-center justify-space-between mb-3 flex-wrap gap-2">
+                  <VChip color="default" variant="tonal" label>
                     <VIcon class="mr-1">mdi-progress-wrench</VIcon>
                     {{ t('core.subscriptionManager.hardwareResource') }}
+                    <VTooltip location="top" max-width="300" activator="parent">
+                      <span>{{ t('core.subscriptionManager.hardwareResourceTooltip') }}</span>
+                    </VTooltip>
+                  </VChip>
+                  <!-- Live price estimate, co-located with the main cost lever (resources) -->
+                  <VChip
+                    v-if="props.newApp && (priceEstimate || priceEstimating)"
+                    color="info"
+                    variant="tonal"
+                    size="small"
+                    prepend-icon="mdi-tag-outline"
+                  >
+                    <template v-if="priceEstimating && !priceEstimate">
+                      {{ t('core.subscriptionManager.estimatedCalculating') }}
+                    </template>
+                    <template v-else>
+                      {{ t('core.subscriptionManager.estimatedTotal', { usd: priceEstimate.usd }) }}
+                    </template>
+                    <VTooltip location="top" max-width="280" activator="parent">
+                      <span>{{ t('core.subscriptionManager.estimatedTooltip') }}</span>
+                    </VTooltip>
                   </VChip>
                 </div>
+
                 <div class="border rounded pa-2">
                   <VRow dense>
                     <!-- CPU -->
@@ -1878,7 +1923,7 @@
                         <VSlider
                           v-model="component.ram"
                           :min="100"
-                          :max="65536"
+                          :max="59000"
                           :step="100"
                           :thumb-label="false"
                           :thumb-size="18"
@@ -1895,7 +1940,7 @@
                           density="compact"
                           variant="outlined"
                           class="text-field-fixed"
-                          @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
+                          @blur="component.ram = Math.min(59000, Math.max(100, Math.round(component.ram / 100) * 100))"
                           @keydown="enforceStep100"
                         />
                       </div>
@@ -1972,7 +2017,7 @@
                         density="compact"
                         variant="outlined"
                         class="hardware-input"
-                        @blur="component.ram = Math.max(100, Math.round(component.ram / 100) * 100)"
+                        @blur="component.ram = Math.min(59000, Math.max(100, Math.round(component.ram / 100) * 100))"
                         @keydown="enforceStep100"
                       />
                     </div>
@@ -3723,6 +3768,7 @@ import {
 } from '@/utils/enterpriseCrypto'
 import { detectSecretEnvVars } from '@/utils/detectSecrets'
 import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } from '@/utils/specConverter'
+import { usePriceEstimate } from '@/composables/usePriceEstimate'
 
 // Import payment images
 import StripeImg from '@images/Stripe.svg?url'
@@ -3734,6 +3780,18 @@ import SSPLogoWhiteImg from '@images/ssp-logo-white.svg?url'
 // Spec version constants
 const LATEST_SPEC_VERSION = SPEC_LATEST_VERSION
 const specVersion = computed(() => props.appSpec?.version || LATEST_SPEC_VERSION)
+
+// --- Live price estimate (new-app registration only) ---------------------
+// Instant, best-effort estimate shown while the user edits resources/instances.
+// The authoritative price is still computed by priceForAppSpec() at Register.
+const {
+  estimate: priceEstimate,
+  estimating: priceEstimating,
+  requestEstimate: requestPriceEstimate,
+  cancelEstimate: cancelPriceEstimate,
+} = usePriceEstimate()
+
+onUnmounted(() => cancelPriceEstimate())
 
 // Version feature flags - control UI visibility based on spec version
 const versionFlags = computed(() => ({
@@ -3950,6 +4008,24 @@ const appDetails = ref({
 })
 
 const isPrivateApp = ref(false)
+
+// Live estimate — refires on any pricing-relevant change (resources, instances,
+// period, static IP, enterprise) and prices Enterprise apps via the encrypted spec.
+watch(
+  () => (props.newApp
+    ? JSON.stringify([
+      props.appSpec?.compose?.map(c => [c.repotag, c.cpu, c.ram, c.hdd]),
+      props.appSpec?.instances,
+      props.appSpec?.expire,
+      props.appSpec?.staticip,
+      isPrivateApp.value,
+    ])
+    : null),
+  () => {
+    if (props.newApp) requestPriceEstimate(() => props.appSpec, { enterprise: isPrivateApp.value })
+  },
+  { immediate: true },
+)
 
 // Priority/Enterprise nodes entitlement.
 // The tab is only offered to app owners present in the enterprise nodes whitelist
@@ -6563,7 +6639,7 @@ function enforceStep100(event) {
   const selEnd = input.selectionEnd
   const newValue = current.substring(0, selStart) + event.key + current.substring(selEnd)
   const num = parseInt(newValue, 10)
-  if (num > 65536) {
+  if (num > 59000) {
     event.preventDefault()
   }
 }
@@ -7046,6 +7122,30 @@ const envDialog = reactive({
 const showEnvImportDialog = ref(false)
 const showCommandsImportDialog = ref(false)
 const showSpecImportDialog = ref(false)
+
+// Imperative hooks used by the Simple Deploy front-end (via configure.vue):
+// open the compose/spec import dialog, or jump straight to the validate/pay step.
+defineExpose({
+  openImport: () => {
+    showSpecImportDialog.value = true
+  },
+  goToReview: () => {
+    tab.value = 99
+  },
+
+  // Enterprise (encrypted) mode — driven by Simple mode's secret detection.
+  setEnterprise: v => {
+    isPrivateApp.value = !!v
+  },
+
+  // Subscription period — Simple mode picks an expire (in blocks); the Advanced
+  // form drives expire from renewalIndex, so map the blocks back to the index.
+  setPeriodBlocks: blocks => {
+    const opts = renewalOptions.value
+    const idx = opts.findIndex(o => o.value === blocks)
+    if (idx >= 0) appDetails.value.renewalIndex = idx
+  },
+})
 
 const envRowErrors = reactive({})
 const envValidationFailed = ref(false)

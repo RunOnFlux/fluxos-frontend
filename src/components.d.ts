@@ -111,6 +111,7 @@ declare module 'vue' {
     ScrollToTop: typeof import('./@core/components/ScrollToTop.vue')['default']
     ServerLocationsPanel: typeof import('./components/Marketplace/Panels/ServerLocationsPanel.vue')['default']
     Shortcuts: typeof import('./@core/components/Shortcuts.vue')['default']
+    SimpleDeploy: typeof import('./@core/components/SimpleDeploy.vue')['default']
     SmartChip: typeof import('./@core/components/SmartChip.vue')['default']
     SponsoredCard: typeof import('./components/Marketplace/SponsoredCard.vue')['default']
     StatusBar: typeof import('./@core/components/StatusBar.vue')['default']
