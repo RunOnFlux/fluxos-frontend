@@ -416,6 +416,15 @@ async function prerender() {
       },
     })
 
+    // Guard: block third-party analytics/ad trackers during prerender.
+    // Any tracking tag that runs here executes against http://localhost:${port},
+    // so it both pollutes the vendor's dataset with garbage build-time hits and
+    // can bake localhost beacons into the snapshot (this is exactly what happened
+    // with the Twitter pixel: tw_document_href=http://localhost:3333/). Aborting
+    // the requests network-side neutralizes any current or future tracker
+    // regardless of whether it honors the analytics:false cookie-consent flag.
+    await context.route(/(?:googletagmanager|google-analytics|ads-twitter|analytics\.twitter|doubleclick|facebook\.net|connect\.facebook|hotjar|posthog|plausible|segment|mixpanel|clarity\.ms|snap\.licdn)/i, route => route.abort())
+
     console.log(`⏳ Rendering routes (${CONCURRENCY} concurrent)...\n`)
 
     let successCount = 0
