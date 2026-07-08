@@ -363,6 +363,18 @@ watch(loading, isLoading => {
   if (!isLoading) markReady()
 }, { flush: 'post' })
 
+// Friendly-slug aliases: some games have a dedicated site under a short,
+// human-friendly name (minecraft.runonflux.com, rust.runonflux.com) that does
+// not match the backend app name (MinecraftServer, RustServer). Without this
+// map, visiting the natural URL /marketplace/games/minecraft finds no game and
+// falls back to the generic homepage shell. Mapping the friendly slug to the
+// canonical backend name (lowercased) makes the page resolve and canonical to
+// the dedicated subdomain, exactly like palworld/enshrouded already do.
+const GAME_SLUG_ALIASES = {
+  minecraft: 'minecraftserver',
+  rust: 'rustserver',
+}
+
 const loadGameDetails = async () => {
   loading.value = true
   error.value = null
@@ -382,9 +394,13 @@ const loadGameDetails = async () => {
     // Debug: List all game names
     console.log('📋 All game names:', games.value.map(game => game.name))
 
+    // Resolve friendly-slug aliases (e.g. minecraft -> minecraftserver) before matching
+    const requestedSlug = (gameName || '').toLowerCase()
+    const resolvedSlug = GAME_SLUG_ALIASES[requestedSlug] || requestedSlug
+
     // Find game by name (case-insensitive like FluxCloud)
     const foundGame = games.value.find(app =>
-      app.name?.toLowerCase() === gameName.toLowerCase(),
+      app.name?.toLowerCase() === resolvedSlug,
     )
 
     console.log('🎮 Found game:', foundGame ? foundGame.name : 'NOT FOUND')
