@@ -1157,7 +1157,7 @@
       "tosPrefix": "I accept the",
       "tosLink": "Terms & Conditions",
       "reviewDeploy": "Review & deploy",
-      "advancedNeeds": "Need multiple containers or ports, custom domains, commands, a static IP, or country-level location rules?",
+      "advancedNeeds": "Need multiple containers, custom domains, commands, a static IP, or country-level location rules?",
       "openAdvanced": "Open Advanced settings"
     },
     "subscriptionManager": {

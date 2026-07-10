@@ -1275,7 +1275,7 @@
       "tosPrefix": "Akceptuję",
       "tosLink": "Regulamin",
       "reviewDeploy": "Przejrzyj i wdróż",
-      "advancedNeeds": "Potrzebujesz wielu kontenerów lub portów, domen niestandardowych, poleceń, statycznego IP lub reguł lokalizacji na poziomie krajów?",
+      "advancedNeeds": "Potrzebujesz wielu kontenerów, własnych domen, poleceń, statycznego IP lub reguł lokalizacji na poziomie kraju?",
       "openAdvanced": "Otwórz ustawienia zaawansowane"
     }
   },

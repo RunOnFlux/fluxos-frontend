@@ -1622,7 +1622,7 @@
       "tosPrefix": "Saya menerima",
       "tosLink": "Syarat & Ketentuan",
       "reviewDeploy": "Tinjau & terapkan",
-      "advancedNeeds": "Butuh beberapa container atau port, domain khusus, perintah, IP statis, atau aturan lokasi tingkat negara?",
+      "advancedNeeds": "Perlu beberapa kontainer, domain khusus, perintah, IP statis, atau aturan lokasi tingkat negara?",
       "openAdvanced": "Buka pengaturan Lanjutan"
     }
   },

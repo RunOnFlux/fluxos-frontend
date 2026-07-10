@@ -1622,7 +1622,7 @@
       "tosPrefix": "Kabul ediyorum:",
       "tosLink": "Şartlar ve Koşullar",
       "reviewDeploy": "İncele ve dağıt",
-      "advancedNeeds": "Birden fazla konteyner veya port, özel alan adları, komutlar, statik IP veya ülke düzeyinde konum kuralları mı gerekiyor?",
+      "advancedNeeds": "Birden fazla konteyner, özel alan adları, komutlar, statik IP veya ülke düzeyinde konum kuralları mı gerekiyor?",
       "openAdvanced": "Gelişmiş ayarları aç"
     }
   },

@@ -1622,7 +1622,7 @@
       "tosPrefix": "Aceito os",
       "tosLink": "Termos e Condições",
       "reviewDeploy": "Revisar e implantar",
-      "advancedNeeds": "Precisa de vários contêineres ou portas, domínios personalizados, comandos, um IP estático ou regras de localização em nível de país?",
+      "advancedNeeds": "Precisa de vários contêineres, domínios personalizados, comandos, um IP estático ou regras de localização em nível de país?",
       "openAdvanced": "Abrir configurações avançadas"
     }
   },

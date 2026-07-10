@@ -1622,7 +1622,7 @@
       "tosPrefix": "J'accepte les",
       "tosLink": "Conditions générales",
       "reviewDeploy": "Vérifier et déployer",
-      "advancedNeeds": "Besoin de plusieurs conteneurs ou ports, de domaines personnalisés, de commandes, d'une IP statique ou de règles d'emplacement au niveau des pays ?",
+      "advancedNeeds": "Besoin de plusieurs conteneurs, de domaines personnalisés, de commandes, d'une IP statique ou de règles d'emplacement au niveau des pays ?",
       "openAdvanced": "Ouvrir les paramètres avancés"
     }
   },

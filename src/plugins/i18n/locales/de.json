@@ -1622,7 +1622,7 @@
       "tosPrefix": "Ich akzeptiere die",
       "tosLink": "Allgemeinen Geschäftsbedingungen",
       "reviewDeploy": "Überprüfen & bereitstellen",
-      "advancedNeeds": "Benötigen Sie mehrere Container oder Ports, eigene Domains, Befehle, eine statische IP oder Standortregeln auf Länderebene?",
+      "advancedNeeds": "Benötigen Sie mehrere Container, eigene Domains, Befehle, eine statische IP oder Standortregeln auf Länderebene?",
       "openAdvanced": "Erweiterte Einstellungen öffnen"
     }
   },
