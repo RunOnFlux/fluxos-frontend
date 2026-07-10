@@ -3767,6 +3767,7 @@ import {
   isWebCryptoAvailable,
 } from '@/utils/enterpriseCrypto'
 import { detectSecretEnvVars } from '@/utils/detectSecrets'
+import { isValidPort, isPortBanned, generateRandomPort } from '@/utils/fluxPorts'
 import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } from '@/utils/specConverter'
 import { usePriceEstimate } from '@/composables/usePriceEstimate'
 
@@ -6747,6 +6748,13 @@ function isValidAndUniquePortPair(component, componentIndex, idx) {
   // 1. Check if both are valid numbers
   if (!isValidPort(exposed) || !isValidPort(container)) return false
 
+  // 1b. The exposed port must not be reserved/banned by FluxOS.
+  if (isPortBanned(exposed)) {
+    showToast('error', `Exposed port ${exposed} is reserved and cannot be used.`)
+
+    return false
+  }
+
   // 2. Check global exposed port duplication (excluding self)
   const allExposedPorts = props.appSpec.compose.flatMap((c, i) =>
     i === componentIndex ? c.ports.filter((_, pIdx) => pIdx !== idx) : c.ports || [],
@@ -6790,23 +6798,23 @@ function saveAndExitEdit(component, componentIndex, portIndex) {
 }
 
 // Validate port input
-function validatePort(component, idx, type) {
+function validatePort(component, componentIndex, idx, type) {
   const value = type === 'exposed' ? component.ports[idx] : component.containerPorts[idx]
 
   if (!isValidPort(value)) {
     showToast('error', 'Port must be a number between 1 and 65535.')
     if (type === 'exposed') component.ports[idx] = null
     else component.containerPorts[idx] = null
-    
+
     return
   }
 
   if (type === 'exposed') {
-    const allExposedPorts = props.appSpec.compose.flatMap(c => c.ports || [])
-    const currentIndex = allExposedPorts.findIndex(p => p === value)
-    const duplicate = allExposedPorts.filter(p => p === value).length > 1
+    // Duplicate exposed port across all components (excluding this exact slot).
+    const duplicate = props.appSpec.compose.some((c, ci) =>
+      (c.ports || []).some((p, pi) => p === value && !(ci === componentIndex && pi === idx)))
 
-    if (duplicate || (currentIndex !== -1 && component.ports[idx] !== value)) {
+    if (duplicate) {
       showToast('error', `Port ${value} is already in use.`)
       component.ports[idx] = null
     }
@@ -6868,11 +6876,6 @@ function removePortPair(component, index) {
   editIndex.value = null
   delete focusState.value[index]
   document.removeEventListener('click', handleOutsideClick)
-}
-
-// Validate port number
-function isValidPort(value) {
-  return Number.isInteger(value) && value > 0 && value <= 65535
 }
 
 // Clean up global event listener on component unmount
@@ -7081,11 +7084,6 @@ watch(() => props.resetTrigger, (newTrigger, oldTrigger) => {
     })
   }
 })
-
-// Generate a random port between min and max
-function generateRandomPort(min = 30000, max = 39999) {
-  return Math.floor(Math.random() * (max - min + 1)) + min
-}
 
 // Watch for initialAction changes to update managementAction
 watch(() => props.initialAction, newAction => {

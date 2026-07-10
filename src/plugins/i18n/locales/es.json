@@ -1570,6 +1570,8 @@
       "networking": "Red",
       "appPort": "Puerto en el que escucha tu app",
       "appPortHint": "Enrutamos el tráfico público aquí y te damos una dirección HTTPS gratuita. Añade dominios personalizados en Avanzado.",
+      "addPort": "Añadir otro puerto",
+      "portInvalid": "Introduce un puerto válido (1–65535).",
       "envVars": "Variables de entorno",
       "optional": "opcional",
       "envKeyPlaceholder": "KEY",

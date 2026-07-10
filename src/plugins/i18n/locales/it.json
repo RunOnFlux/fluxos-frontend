@@ -1570,6 +1570,8 @@
       "networking": "Rete",
       "appPort": "Porta su cui la tua app è in ascolto",
       "appPortHint": "Instradiamo qui il traffico pubblico e ti forniamo un indirizzo HTTPS gratuito. Aggiungi domini personalizzati in Avanzata.",
+      "addPort": "Aggiungi un'altra porta",
+      "portInvalid": "Inserisci una porta valida (1–65535).",
       "envVars": "Variabili d'ambiente",
       "optional": "facoltativo",
       "envKeyPlaceholder": "KEY",

@@ -7,6 +7,7 @@
 export {}
 declare global {
   const $api: typeof import('./utils/api.js')['$api']
+  const BANNED_PORTS: typeof import('./utils/fluxPorts.js')['BANNED_PORTS']
   const COOKIE_MAX_AGE_1_YEAR: typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']
   const EVENT_STYLES: typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']
   const EffectScope: typeof import('vue')['EffectScope']
@@ -86,6 +87,7 @@ declare global {
   const generateItemListSchema: typeof import('./composables/useSEO.js')['generateItemListSchema']
   const generateOrganizationSchema: typeof import('./composables/useSEO.js')['generateOrganizationSchema']
   const generateProductSchema: typeof import('./composables/useSEO.js')['generateProductSchema']
+  const generateRandomPort: typeof import('./utils/fluxPorts.js')['generateRandomPort']
   const generateSoftwareApplicationSchema: typeof import('./composables/useSEO.js')['generateSoftwareApplicationSchema']
   const generateWebApplicationSchema: typeof import('./composables/useSEO.js')['generateWebApplicationSchema']
   const geolocation: typeof import('./utils/geolocation.js')['default']
@@ -128,6 +130,7 @@ declare global {
   const isMetaMaskLocked: typeof import('./utils/walletService.js')['isMetaMaskLocked']
   const isNullOrUndefined: typeof import('./@core/utils/helpers.js')['isNullOrUndefined']
   const isObject: typeof import('./@core/utils/helpers.js')['isObject']
+  const isPortBanned: typeof import('./utils/fluxPorts.js')['isPortBanned']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
@@ -136,6 +139,7 @@ declare global {
   const isSSPAvailable: typeof import('./utils/walletService.js')['isSSPAvailable']
   const isSecretEnvKey: typeof import('./utils/detectSecrets.js')['isSecretEnvKey']
   const isToday: typeof import('./@core/utils/helpers.js')['isToday']
+  const isValidPort: typeof import('./utils/fluxPorts.js')['isValidPort']
   const isWebCryptoAvailable: typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']
   const isZelcoreAvailable: typeof import('./utils/walletService.js')['isZelcoreAvailable']
   const kFormatter: typeof import('./@core/utils/formatters.js')['kFormatter']
@@ -474,6 +478,7 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly $api: UnwrapRef<typeof import('./utils/api.js')['$api']>
+    readonly BANNED_PORTS: UnwrapRef<typeof import('./utils/fluxPorts.js')['BANNED_PORTS']>
     readonly COOKIE_MAX_AGE_1_YEAR: UnwrapRef<typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']>
     readonly EVENT_STYLES: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
@@ -553,6 +558,7 @@ declare module 'vue' {
     readonly generateItemListSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateItemListSchema']>
     readonly generateOrganizationSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateOrganizationSchema']>
     readonly generateProductSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateProductSchema']>
+    readonly generateRandomPort: UnwrapRef<typeof import('./utils/fluxPorts.js')['generateRandomPort']>
     readonly generateSoftwareApplicationSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateSoftwareApplicationSchema']>
     readonly generateWebApplicationSchema: UnwrapRef<typeof import('./composables/useSEO.js')['generateWebApplicationSchema']>
     readonly geolocation: UnwrapRef<typeof import('./utils/geolocation.js')['default']>
@@ -593,6 +599,7 @@ declare module 'vue' {
     readonly isEmptyArray: UnwrapRef<typeof import('./@core/utils/helpers.js')['isEmptyArray']>
     readonly isNullOrUndefined: UnwrapRef<typeof import('./@core/utils/helpers.js')['isNullOrUndefined']>
     readonly isObject: UnwrapRef<typeof import('./@core/utils/helpers.js')['isObject']>
+    readonly isPortBanned: UnwrapRef<typeof import('./utils/fluxPorts.js')['isPortBanned']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
@@ -601,6 +608,7 @@ declare module 'vue' {
     readonly isSSPAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isSSPAvailable']>
     readonly isSecretEnvKey: UnwrapRef<typeof import('./utils/detectSecrets.js')['isSecretEnvKey']>
     readonly isToday: UnwrapRef<typeof import('./@core/utils/helpers.js')['isToday']>
+    readonly isValidPort: UnwrapRef<typeof import('./utils/fluxPorts.js')['isValidPort']>
     readonly isWebCryptoAvailable: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']>
     readonly isZelcoreAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isZelcoreAvailable']>
     readonly kFormatter: UnwrapRef<typeof import('./@core/utils/formatters.js')['kFormatter']>

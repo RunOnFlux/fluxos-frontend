@@ -1570,6 +1570,8 @@
       "networking": "ネットワーク",
       "appPort": "アプリがリッスンするポート",
       "appPortHint": "公開トラフィックをここにルーティングし、無料の HTTPS アドレスを提供します。カスタムドメインは詳細設定で追加できます。",
+      "addPort": "ポートを追加",
+      "portInvalid": "有効なポートを入力してください（1〜65535）。",
       "envVars": "環境変数",
       "optional": "任意",
       "envKeyPlaceholder": "KEY",

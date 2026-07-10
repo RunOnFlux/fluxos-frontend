@@ -1570,6 +1570,8 @@
       "networking": "网络",
       "appPort": "应用监听的端口",
       "appPortHint": "我们会将公共流量路由到此端口，并为您提供免费的 HTTPS 地址。可在“高级”中添加自定义域名。",
+      "addPort": "添加另一个端口",
+      "portInvalid": "请输入有效端口（1–65535）。",
       "envVars": "环境变量",
       "optional": "可选",
       "envKeyPlaceholder": "KEY",

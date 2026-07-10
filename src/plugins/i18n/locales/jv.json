@@ -1570,6 +1570,8 @@
       "networking": "Jaringan",
       "appPort": "Port sing dirungokake aplikasi sampeyan",
       "appPortHint": "Kita ngarahake lalu lintas umum mrene lan menehi sampeyan alamat HTTPS gratis. Tambahake domain kustom ing Lanjutan.",
+      "addPort": "Tambah port liyane",
+      "portInvalid": "Ketik port sing bener (1–65535).",
       "envVars": "Variabel lingkungan",
       "optional": "opsional",
       "envKeyPlaceholder": "KEY",

@@ -1223,6 +1223,8 @@
       "networking": "Sieć",
       "appPort": "Port, na którym nasłuchuje Twoja aplikacja",
       "appPortHint": "Kierujemy tu ruch publiczny i dajemy bezpłatny adres HTTPS. Domeny niestandardowe dodasz w trybie zaawansowanym.",
+      "addPort": "Dodaj kolejny port",
+      "portInvalid": "Podaj prawidłowy port (1–65535).",
       "envVars": "Zmienne środowiskowe",
       "optional": "opcjonalne",
       "envKeyPlaceholder": "KEY",

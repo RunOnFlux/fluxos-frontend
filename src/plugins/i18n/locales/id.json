@@ -1570,6 +1570,8 @@
       "networking": "Jaringan",
       "appPort": "Port yang didengarkan aplikasi Anda",
       "appPortHint": "Kami mengarahkan lalu lintas publik ke sini dan memberi Anda alamat HTTPS gratis. Tambahkan domain khusus di menu Lanjutan.",
+      "addPort": "Tambah port lain",
+      "portInvalid": "Masukkan port yang valid (1–65535).",
       "envVars": "Variabel lingkungan",
       "optional": "opsional",
       "envKeyPlaceholder": "KEY",

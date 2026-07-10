@@ -1570,6 +1570,8 @@
       "networking": "Netzwerk",
       "appPort": "Port, auf dem Ihre App lauscht",
       "appPortHint": "Wir leiten öffentlichen Datenverkehr hierhin und geben Ihnen eine kostenlose HTTPS-Adresse. Eigene Domains fügen Sie im erweiterten Modus hinzu.",
+      "addPort": "Weiteren Port hinzufügen",
+      "portInvalid": "Geben Sie einen gültigen Port ein (1–65535).",
       "envVars": "Umgebungsvariablen",
       "optional": "optional",
       "envKeyPlaceholder": "KEY",

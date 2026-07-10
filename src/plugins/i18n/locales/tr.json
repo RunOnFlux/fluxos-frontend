@@ -1570,6 +1570,8 @@
       "networking": "Ağ",
       "appPort": "Uygulamanızın dinlediği port",
       "appPortHint": "Genel trafiği buraya yönlendirir ve size ücretsiz bir HTTPS adresi veririz. Özel alan adlarını Gelişmiş'te ekleyin.",
+      "addPort": "Başka bir bağlantı noktası ekle",
+      "portInvalid": "Geçerli bir bağlantı noktası girin (1–65535).",
       "envVars": "Ortam değişkenleri",
       "optional": "isteğe bağlı",
       "envKeyPlaceholder": "KEY",
