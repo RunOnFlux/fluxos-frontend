@@ -1105,6 +1105,8 @@
       "networking": "Networking",
       "appPort": "Port your app listens on",
       "appPortHint": "We route public traffic here and give you a free HTTPS address. Add custom domains in Advanced.",
+      "addPort": "Add another port",
+      "portInvalid": "Enter a valid port (1–65535).",
       "envVars": "Environment variables",
       "optional": "optional",
       "envKeyPlaceholder": "KEY",
@@ -1155,7 +1157,7 @@
       "tosPrefix": "I accept the",
       "tosLink": "Terms & Conditions",
       "reviewDeploy": "Review & deploy",
-      "advancedNeeds": "Need multiple containers or ports, custom domains, commands, a static IP, or country-level location rules?",
+      "advancedNeeds": "Need multiple containers, custom domains, commands, a static IP, or country-level location rules?",
       "openAdvanced": "Open Advanced settings"
     },
     "subscriptionManager": {

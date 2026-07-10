@@ -1570,6 +1570,8 @@
       "networking": "Mạng",
       "appPort": "Cổng ứng dụng của bạn lắng nghe",
       "appPortHint": "Chúng tôi định tuyến lưu lượng công cộng đến đây và cung cấp cho bạn một địa chỉ HTTPS miễn phí. Thêm tên miền tùy chỉnh trong phần Nâng cao.",
+      "addPort": "Thêm cổng khác",
+      "portInvalid": "Nhập cổng hợp lệ (1–65535).",
       "envVars": "Biến môi trường",
       "optional": "tùy chọn",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "Tôi chấp nhận",
       "tosLink": "Điều khoản & Điều kiện",
       "reviewDeploy": "Xem lại & triển khai",
-      "advancedNeeds": "Cần nhiều container hoặc cổng, tên miền tùy chỉnh, lệnh, IP tĩnh, hoặc quy tắc vị trí theo quốc gia?",
+      "advancedNeeds": "Cần nhiều container, tên miền tùy chỉnh, lệnh, IP tĩnh hoặc quy tắc vị trí theo quốc gia?",
       "openAdvanced": "Mở cài đặt Nâng cao"
     }
   },

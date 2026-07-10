@@ -1570,6 +1570,8 @@
       "networking": "Red",
       "appPort": "Puerto en el que escucha tu app",
       "appPortHint": "Enrutamos el tráfico público aquí y te damos una dirección HTTPS gratuita. Añade dominios personalizados en Avanzado.",
+      "addPort": "Añadir otro puerto",
+      "portInvalid": "Introduce un puerto válido (1–65535).",
       "envVars": "Variables de entorno",
       "optional": "opcional",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "Acepto los",
       "tosLink": "Términos y Condiciones",
       "reviewDeploy": "Revisar y desplegar",
-      "advancedNeeds": "¿Necesitas varios contenedores o puertos, dominios personalizados, comandos, una IP estática o reglas de ubicación a nivel de país?",
+      "advancedNeeds": "¿Necesitas varios contenedores, dominios personalizados, comandos, una IP estática o reglas de ubicación a nivel de país?",
       "openAdvanced": "Abrir la configuración Avanzada"
     }
   },

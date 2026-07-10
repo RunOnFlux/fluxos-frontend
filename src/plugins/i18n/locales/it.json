@@ -1570,6 +1570,8 @@
       "networking": "Rete",
       "appPort": "Porta su cui la tua app è in ascolto",
       "appPortHint": "Instradiamo qui il traffico pubblico e ti forniamo un indirizzo HTTPS gratuito. Aggiungi domini personalizzati in Avanzata.",
+      "addPort": "Aggiungi un'altra porta",
+      "portInvalid": "Inserisci una porta valida (1–65535).",
       "envVars": "Variabili d'ambiente",
       "optional": "facoltativo",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "Accetto i",
       "tosLink": "Termini e Condizioni",
       "reviewDeploy": "Rivedi e distribuisci",
-      "advancedNeeds": "Hai bisogno di più container o porte, domini personalizzati, comandi, un IP statico o regole di posizione a livello di paese?",
+      "advancedNeeds": "Hai bisogno di più container, domini personalizzati, comandi, un IP statico o regole di posizione a livello di paese?",
       "openAdvanced": "Apri le impostazioni Avanzate"
     }
   },

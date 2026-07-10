@@ -1570,6 +1570,8 @@
       "networking": "Rede",
       "appPort": "Porta em que seu aplicativo escuta",
       "appPortHint": "Roteamos o tráfego público para cá e fornecemos um endereço HTTPS gratuito. Adicione domínios personalizados no modo Avançado.",
+      "addPort": "Adicionar outra porta",
+      "portInvalid": "Introduza uma porta válida (1–65535).",
       "envVars": "Variáveis de ambiente",
       "optional": "opcional",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "Aceito os",
       "tosLink": "Termos e Condições",
       "reviewDeploy": "Revisar e implantar",
-      "advancedNeeds": "Precisa de vários contêineres ou portas, domínios personalizados, comandos, um IP estático ou regras de localização em nível de país?",
+      "advancedNeeds": "Precisa de vários contêineres, domínios personalizados, comandos, um IP estático ou regras de localização em nível de país?",
       "openAdvanced": "Abrir configurações avançadas"
     }
   },

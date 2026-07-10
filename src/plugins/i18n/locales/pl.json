@@ -1223,6 +1223,8 @@
       "networking": "Sieć",
       "appPort": "Port, na którym nasłuchuje Twoja aplikacja",
       "appPortHint": "Kierujemy tu ruch publiczny i dajemy bezpłatny adres HTTPS. Domeny niestandardowe dodasz w trybie zaawansowanym.",
+      "addPort": "Dodaj kolejny port",
+      "portInvalid": "Podaj prawidłowy port (1–65535).",
       "envVars": "Zmienne środowiskowe",
       "optional": "opcjonalne",
       "envKeyPlaceholder": "KEY",
@@ -1273,7 +1275,7 @@
       "tosPrefix": "Akceptuję",
       "tosLink": "Regulamin",
       "reviewDeploy": "Przejrzyj i wdróż",
-      "advancedNeeds": "Potrzebujesz wielu kontenerów lub portów, domen niestandardowych, poleceń, statycznego IP lub reguł lokalizacji na poziomie krajów?",
+      "advancedNeeds": "Potrzebujesz wielu kontenerów, własnych domen, poleceń, statycznego IP lub reguł lokalizacji na poziomie kraju?",
       "openAdvanced": "Otwórz ustawienia zaawansowane"
     }
   },

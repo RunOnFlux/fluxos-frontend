@@ -1570,6 +1570,8 @@
       "networking": "网络",
       "appPort": "应用监听的端口",
       "appPortHint": "我们会将公共流量路由到此端口，并为您提供免费的 HTTPS 地址。可在“高级”中添加自定义域名。",
+      "addPort": "添加另一个端口",
+      "portInvalid": "请输入有效端口（1–65535）。",
       "envVars": "环境变量",
       "optional": "可选",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "我接受",
       "tosLink": "条款与条件",
       "reviewDeploy": "审核并部署",
-      "advancedNeeds": "需要多个容器或端口、自定义域名、命令、静态 IP，或按国家/地区设置位置规则？",
+      "advancedNeeds": "需要多个容器、自定义域名、命令、静态 IP 或国家/地区级别的位置规则？",
       "openAdvanced": "打开高级设置"
     }
   },

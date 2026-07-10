@@ -1570,6 +1570,8 @@
       "networking": "Netzwerk",
       "appPort": "Port, auf dem Ihre App lauscht",
       "appPortHint": "Wir leiten öffentlichen Datenverkehr hierhin und geben Ihnen eine kostenlose HTTPS-Adresse. Eigene Domains fügen Sie im erweiterten Modus hinzu.",
+      "addPort": "Weiteren Port hinzufügen",
+      "portInvalid": "Geben Sie einen gültigen Port ein (1–65535).",
       "envVars": "Umgebungsvariablen",
       "optional": "optional",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "Ich akzeptiere die",
       "tosLink": "Allgemeinen Geschäftsbedingungen",
       "reviewDeploy": "Überprüfen & bereitstellen",
-      "advancedNeeds": "Benötigen Sie mehrere Container oder Ports, eigene Domains, Befehle, eine statische IP oder Standortregeln auf Länderebene?",
+      "advancedNeeds": "Benötigen Sie mehrere Container, eigene Domains, Befehle, eine statische IP oder Standortregeln auf Länderebene?",
       "openAdvanced": "Erweiterte Einstellungen öffnen"
     }
   },

@@ -1570,6 +1570,8 @@
       "networking": "네트워킹",
       "appPort": "앱이 수신 대기하는 포트",
       "appPortHint": "여기로 공개 트래픽을 라우팅하고 무료 HTTPS 주소를 제공합니다. 사용자 지정 도메인은 고급에서 추가하세요.",
+      "addPort": "포트 추가",
+      "portInvalid": "유효한 포트를 입력하세요 (1–65535).",
       "envVars": "환경 변수",
       "optional": "선택",
       "envKeyPlaceholder": "KEY",
@@ -1620,7 +1622,7 @@
       "tosPrefix": "다음에 동의합니다:",
       "tosLink": "이용약관",
       "reviewDeploy": "검토 및 배포",
-      "advancedNeeds": "여러 컨테이너나 포트, 사용자 지정 도메인, 명령, 고정 IP 또는 국가 단위 위치 규칙이 필요하신가요?",
+      "advancedNeeds": "여러 컨테이너, 사용자 지정 도메인, 명령, 고정 IP 또는 국가 단위 위치 규칙이 필요하신가요?",
       "openAdvanced": "고급 설정 열기"
     }
   },

@@ -144,17 +144,45 @@
         <h2>{{ t('core.simpleDeploy.networking') }}</h2>
       </div>
       <div class="sd-field">
-        <label class="sd-lbl" for="sd-port">{{ t('core.simpleDeploy.appPort') }}<span class="sd-req" :aria-label="t('core.simpleDeploy.required')">*</span></label>
-        <VTextField
-          id="sd-port"
-          v-model.number="port"
-          density="comfortable"
-          variant="outlined"
-          hide-details
-          type="number"
-          inputmode="numeric"
-          style="max-width: 180px"
-        />
+        <label class="sd-lbl">{{ t('core.simpleDeploy.appPort') }}<span class="sd-req" :aria-label="t('core.simpleDeploy.required')">*</span></label>
+
+        <div class="sd-port-list">
+          <div v-for="(cp, idx) in component.containerPorts" :key="idx" class="sd-port-item">
+            <div class="sd-port-row">
+              <VTextField
+                v-model.number="component.containerPorts[idx]"
+                density="comfortable"
+                variant="outlined"
+                hide-details
+                type="number"
+                inputmode="numeric"
+                class="sd-port-input"
+                placeholder="8080"
+                :error="!!portError(idx)"
+                @update:model-value="onContainerPortInput(idx)"
+              />
+              <VIcon v-if="domainForPort(idx)" class="sd-port-arrow" size="16">mdi-arrow-right</VIcon>
+              <span v-if="domainForPort(idx)" class="sd-domain sd-port-domain">{{ domainForPort(idx) }}</span>
+              <VBtn
+                v-if="component.containerPorts.length > 1"
+                icon
+                variant="text"
+                size="small"
+                color="error"
+                :aria-label="t('core.simpleDeploy.remove')"
+                @click="removePort(idx)"
+              >
+                <VIcon size="18">mdi-close</VIcon>
+              </VBtn>
+            </div>
+            <div v-if="portError(idx)" class="sd-port-err">{{ portError(idx) }}</div>
+          </div>
+        </div>
+
+        <VBtn variant="tonal" size="small" prepend-icon="mdi-plus" class="sd-mt-xs" @click="addPort">
+          {{ t('core.simpleDeploy.addPort') }}
+        </VBtn>
+
         <div class="sd-hint">{{ t('core.simpleDeploy.appPortHint') }}</div>
       </div>
     </section>
@@ -441,6 +469,7 @@ import { ref, computed, watch, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { getUser } from '@/utils/firebase'
 import { detectSecretEnvVars } from '@/utils/detectSecrets'
+import { isValidPort, isPortBanned, generateRandomPort } from '@/utils/fluxPorts'
 
 const props = defineProps({
   // The shared, mutable app specification (version 8, compose format).
@@ -491,22 +520,96 @@ const appName = computed({
 // Preview of the free domain the app will be reachable at.
 const freeDomain = computed(() => (appName.value ? `${appName.value}.app.runonflux.io` : ''))
 
-const port = computed({
-  get: () => comp().ports?.[0] ?? null,
-  set: v => {
-    const c = comp()
-    if (v === '' || v === null || v === undefined || Number.isNaN(Number(v))) {
-      c.ports = []
-      c.containerPorts = []
-      c.domains = []
+// --- Ports ---------------------------------------------------------------
+// The user enters the port their container listens on. The public (exposed)
+// port is assigned automatically: mirrored when the container port is itself a
+// valid, unbanned, non-duplicate port (nicer URLs, and how ~75% of real apps
+// are set up), otherwise a stable random port in 30000-39999. Each port yields
+// its own free domain: the first at name.app.runonflux.io, the rest at
+// name_<exposed>.app.runonflux.io — matching the automatic FDM domains.
+function ensurePorts() {
+  const c = comp()
+  if (!Array.isArray(c.ports)) c.ports = []
+  if (!Array.isArray(c.containerPorts)) c.containerPorts = []
+  if (!Array.isArray(c.domains)) c.domains = []
 
-      return
-    }
-    const p = Number(v)
-    c.ports = [p]
-    c.containerPorts = [p]
-    c.domains = [c.domains?.[0] || '']
-  },
+  return c
+}
+
+// Reactive handle on the working component, so the template can v-model into
+// its parallel port arrays directly.
+const component = computed(() => comp())
+
+// Recompute the exposed port for row `idx` from its container port, keeping any
+// already-assigned random exposed port stable so the preview domain doesn't
+// churn on every keystroke.
+function recomputeExposed(idx) {
+  const c = ensurePorts()
+  const cp = c.containerPorts[idx]
+  const usedElsewhere = new Set(c.ports.filter((p, i) => i !== idx && isValidPort(p)))
+
+  if (!isValidPort(cp)) {
+    c.ports[idx] = null
+
+    return
+  }
+
+  if (!isPortBanned(cp) && !usedElsewhere.has(cp)) {
+    c.ports[idx] = cp // mirror
+
+    return
+  }
+
+  // Container port can't be public (privileged/banned/duplicate) → keep the
+  // existing auto-assigned exposed port if it's still usable, else pick one.
+  const current = c.ports[idx]
+  const currentUsable = isValidPort(current)
+    && !isPortBanned(current)
+    && !usedElsewhere.has(current)
+    && current !== cp
+  if (!currentUsable) c.ports[idx] = generateRandomPort(30000, 39999, usedElsewhere)
+}
+
+function onContainerPortInput(idx) {
+  recomputeExposed(idx)
+}
+
+function addPort() {
+  const c = ensurePorts()
+  c.containerPorts.push(null)
+  c.ports.push(null)
+  c.domains.push('')
+}
+
+function removePort(idx) {
+  const c = ensurePorts()
+  c.containerPorts.splice(idx, 1)
+  c.ports.splice(idx, 1)
+  c.domains.splice(idx, 1)
+}
+
+// Preview of the free domain a port is reachable at (empty until both the app
+// name and a valid exposed port exist).
+function domainForPort(idx) {
+  const exposed = comp().ports?.[idx]
+  if (!appName.value || !isValidPort(exposed)) return ''
+
+  return idx === 0
+    ? `${appName.value}.app.runonflux.io`
+    : `${appName.value}_${exposed}.app.runonflux.io`
+}
+
+function portError(idx) {
+  const cp = comp().containerPorts?.[idx]
+  if (cp === null || cp === undefined || cp === '') return ''
+
+  return isValidPort(cp) ? '' : t('core.simpleDeploy.portInvalid')
+}
+
+const portsValid = computed(() => {
+  const cps = comp().containerPorts || []
+
+  return cps.length > 0 && cps.every(cp => isValidPort(cp))
 })
 
 const cpu = computed({
@@ -760,7 +863,7 @@ watch([restrictLocation, selectedContinents], () => {
 const canDeploy = computed(() =>
   !!comp().repotag?.trim()
   && !!appName.value
-  && Number(port.value) > 0
+  && portsValid.value
   && isValidEmail(contactEmail.value)
   && (!storeData.value || !!dataPath.value.trim())
   && tosAccepted.value)
@@ -799,6 +902,10 @@ onMounted(() => {
   loadEnvRows()
   loadStorage()
   loadGeolocation()
+
+  // Show at least one port row (seeded from an imported spec, or empty).
+  const c = ensurePorts()
+  if (!c.containerPorts.length) addPort()
 })
 
 // --- Trigger the live estimate on any pricing-relevant change ------------
@@ -880,6 +987,16 @@ watch(
 .sd-env-key :deep(input), .sd-env-val :deep(input) { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; font-size: 13px; }
 .sd-env-eq { opacity: 0.45; font-weight: 700; }
 .sd-enterprise-alert { margin-top: 12px; }
+
+/* Ports */
+.sd-port-list { display: flex; flex-direction: column; gap: 10px; }
+.sd-port-item { display: flex; flex-direction: column; gap: 2px; }
+.sd-port-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.sd-port-input { flex: 0 0 130px; }
+.sd-port-input :deep(input) { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+.sd-port-arrow { opacity: 0.4; flex: none; }
+.sd-port-domain { margin-top: 0; min-width: 0; }
+.sd-port-err { font-size: 12px; color: rgb(var(--v-theme-error)); padding-left: 2px; }
 
 /* Resources */
 .sd-res { display: flex; align-items: center; gap: 14px; padding: 8px 0; }
