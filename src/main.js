@@ -42,6 +42,8 @@ import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
 import { createHead } from '@unhead/vue/client'
 import sanitizeHtml from '@/utils/sanitizeHtml'
+import { freezePrerenderedSnapshot } from '@/utils/prerenderSnapshot'
+import { router } from '@/plugins/1.router'
 
 // Styles
 import '@core/scss/template/index.scss'
@@ -226,11 +228,28 @@ const head = createHead()
 app.use(head)
 
 // Register other plugins (async to support lazy-loaded translations)
+// This installs the router, which kicks off the initial navigation.
 await registerPlugins(app)
 app.directive('sanitize-html', sanitizeHtml)
 
+// On a pre-rendered route, hold the snapshot on screen across the mount so the
+// page doesn't blank out and re-render (see @/utils/prerenderSnapshot).
+const releaseSnapshot = freezePrerenderedSnapshot()
+
+// Wait for the initial navigation so the route's lazy chunk is resolved and
+// mount() paints the page in one go instead of an empty shell first. Bounded:
+// a guard that never settles must not stop the app from mounting.
+await Promise.race([
+  router.isReady().catch(() => {}),
+  new Promise(resolve => setTimeout(resolve, 3000)),
+])
+
 // Mount vue app
-app.mount('#app')
+try {
+  app.mount('#app')
+} finally {
+  releaseSnapshot()
+}
 
 // Auto-reload when new build is deployed (service worker update)
 // Only reload on SW *update* (hadController=true), not first install (hadController=false)

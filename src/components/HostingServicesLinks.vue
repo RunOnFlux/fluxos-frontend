@@ -73,6 +73,7 @@ const services = [
   { anchor: 'Enshrouded Server Hosting', url: 'https://enshrouded.runonflux.com', img: 'https://enshrouded.runonflux.com/games/enshrouded/banner.webp', desc: 'enshrouded' },
   { anchor: 'Rust Server Hosting', url: 'https://rust.runonflux.com', img: 'https://rust.runonflux.com/games/rust/banner.webp', desc: 'rust' },
   { anchor: 'Windrose Server Hosting', url: 'https://windrose.runonflux.com', img: 'https://windrose.runonflux.com/games/windrose/banner.webp', desc: 'windrose' },
+  { anchor: 'Project Zomboid Server Hosting', url: 'https://projectzomboid.runonflux.com', img: 'https://projectzomboid.runonflux.com/games/projectzomboid/banner.webp', desc: 'projectzomboid' },
   { anchor: 'Web3 WordPress Hosting', url: 'https://wordpress.runonflux.com', img: 'https://wordpress.runonflux.com/apps/wordpress/banner.webp', desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: 'https://n8n.runonflux.com', img: 'https://n8n.runonflux.com/apps/n8n/banner.webp', desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: 'https://openclaw.runonflux.com', img: 'https://openclaw.runonflux.com/apps/openclaw/banner.webp', desc: 'openclaw' },
