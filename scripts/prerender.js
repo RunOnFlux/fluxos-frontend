@@ -266,6 +266,22 @@ function injectPrerenderMeta(html) {
 }
 
 /**
+ * Stamp the rendered route on the app root.
+ *
+ * main.js reads data-prerender-path to decide whether the markup already in
+ * #app is a snapshot of the page being opened. If it is, it keeps those nodes
+ * visible across the mount instead of letting Vue wipe the container and
+ * re-render on an empty screen (see src/utils/prerenderSnapshot.js).
+ */
+function stampPrerenderPath(html, route) {
+  return html.replace(/<div id="app"([^>]*)>/i, (match, attrs) => {
+    const cleaned = attrs.replace(/\s+data-prerender-path="[^"]*"/gi, '')
+
+    return `<div id="app"${cleaned} data-prerender-path="${route}">`
+  })
+}
+
+/**
  * Render a single page with retry logic and exponential backoff
  * @param {Object} context - Playwright browser context
  * @param {string} route - Route to render
@@ -335,6 +351,9 @@ async function renderPageWithRetry(context, route, port) {
 
       // Inject prerender meta tag
       html = injectPrerenderMeta(html)
+
+      // Tell the client which route this snapshot belongs to
+      html = stampPrerenderPath(html, route)
 
       await page.close()
 
