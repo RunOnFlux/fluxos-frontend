@@ -701,6 +701,23 @@
                       </VBtn>
                     </template>
                   </VTooltip>
+
+                  <VTooltip text="Reveal storage values" location="top">
+                    <template #activator="{ props }">
+                      <VBtn
+                        v-if="hasStorageMarker(appDetails.contacts, STORAGE_MARKERS.contacts)"
+                        v-bind="props"
+                        icon
+                        variant="flat"
+                        color="primary"
+                        class="ml-2"
+                        :loading="storageRevealing"
+                        @click="revealStorageValues(null, 'contactsResolved', t('core.subscriptionManager.contact'))"
+                      >
+                        <VIcon size="24">mdi-cloud-download</VIcon>
+                      </VBtn>
+                    </template>
+                  </VTooltip>
                 </div>
               </fieldset>
             </div>
@@ -1429,6 +1446,28 @@
                       </VTooltip>
                     </VBtn>
                   </VBadge>
+
+                  <VBtn
+                    v-if="hasStorageMarker(component.environmentParameters, STORAGE_MARKERS.environmentParameters)"
+                    variant="tonal"
+                    color="primary"
+                    prepend-icon="mdi-cloud-download-outline"
+                    :loading="storageRevealing"
+                    @click="revealStorageValues(component, 'environmentParametersResolved', t('core.subscriptionManager.environmentVariables'))"
+                  >
+                    Reveal storage values
+                  </VBtn>
+
+                  <VBtn
+                    v-if="hasStorageMarker(component.commands, STORAGE_MARKERS.commands)"
+                    variant="tonal"
+                    color="primary"
+                    prepend-icon="mdi-cloud-download-outline"
+                    :loading="storageRevealing"
+                    @click="revealStorageValues(component, 'commandsResolved', t('core.subscriptionManager.commands'))"
+                  >
+                    Reveal storage values
+                  </VBtn>
                 </div>
                 <div class="mb-3">
                   <div class="d-flex align-center mb-3">
@@ -3729,6 +3768,54 @@
       <span>{{ t('core.subscriptionManager.tos.errorMessage') }}</span>
     </div>
   </VSnackbar>
+
+  <!-- Flux Storage reveal dialog (shared across env / commands / contacts) -->
+  <VDialog v-model="storageRevealDialog" max-width="700">
+    <VCard>
+      <VCardTitle class="bg-primary text-white d-flex align-center">
+        <VIcon icon="mdi-cloud-download-outline" class="mr-2" />
+        {{ storageRevealTitle }} — Flux Storage
+      </VCardTitle>
+      <VCardText class="pt-4">
+        <div v-if="storageRevealing" class="text-center pa-6">
+          <VProgressCircular indeterminate color="primary" />
+        </div>
+        <template v-else-if="storageRevealResult">
+          <VAlert
+            v-if="storageRevealResult.status !== 'ok'"
+            type="warning"
+            variant="tonal"
+            class="mb-2"
+          >
+            {{ storageRevealResult.status === 'too-large'
+              ? 'Payload is too large to display.'
+              : (storageRevealResult.message || 'Failed to load values from Flux Storage.') }}
+          </VAlert>
+          <template v-else>
+            <div class="text-caption text-medium-emphasis mb-2 text-truncate">
+              {{ storageRevealResult.url }}
+            </div>
+            <VTable density="compact">
+              <tbody>
+                <tr v-for="(value, i) in storageRevealResult.values" :key="i">
+                  <td><kbd>{{ value }}</kbd></td>
+                </tr>
+              </tbody>
+            </VTable>
+          </template>
+        </template>
+        <VAlert v-else type="error" variant="tonal">
+          {{ storageRevealError || 'No data.' }}
+        </VAlert>
+      </VCardText>
+      <VCardActions>
+        <VSpacer />
+        <VBtn variant="tonal" @click="storageRevealDialog = false">
+          {{ t('common.actions.close') || 'Close' }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>
 
 <script setup>
@@ -3750,6 +3837,33 @@ const props = defineProps({
 // Define emits
 defineEmits(['specConverted'])
 const { t } = useI18n()
+
+// On-demand Flux Storage reveal (F_S_ENV / F_S_CMD / F_S_CONTACTS) for the update flow.
+// Lets the owner see what is stored behind a link before editing; raw links stay as-is.
+const {
+  revealing: storageRevealing,
+  fetchResolvedSpec: fetchResolvedStorageSpec,
+  extractField: extractStorageField,
+} = useFluxStorageReveal()
+const storageRevealDialog = ref(false)
+const storageRevealTitle = ref('')
+const storageRevealResult = ref(null)
+const storageRevealError = ref('')
+
+async function revealStorageValues(component, resolvedKey, title) {
+  storageRevealTitle.value = title
+  storageRevealResult.value = null
+  storageRevealError.value = ''
+  storageRevealDialog.value = true
+  try {
+    const isEnterprise = props.appSpec?.version >= 8 && !!props.appSpec?.enterprise
+    const spec = await fetchResolvedStorageSpec({ appName: props.appSpec?.name, isEnterprise })
+    storageRevealResult.value = extractStorageField(spec, { componentName: component?.name, resolvedKey })
+    if (!storageRevealResult.value) storageRevealError.value = 'No storage-backed value found for this field.'
+  } catch (error) {
+    storageRevealError.value = error?.message || 'Failed to reveal storage values.'
+  }
+}
 import geolocations from '@/utils/geolocation'
 import qs from 'qs'
 import { signWithWalletConnect, getConnectedAccount, payWithSSP, payWithZelcore, signWithSSP, signWithZelcore } from '@/utils/walletService'
@@ -3783,6 +3897,7 @@ import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } fr
 import { usePriceEstimate } from '@/composables/usePriceEstimate'
 import { useLoginSheet } from '@/composables/useLoginSheet'
 import { isSessionExpiringSoon, isAuthError } from '@/utils/session'
+import { useFluxStorageReveal, hasStorageMarker, STORAGE_MARKERS } from '@/composables/useFluxStorageReveal'
 
 // Import payment images
 import StripeImg from '@images/Stripe.svg?url'

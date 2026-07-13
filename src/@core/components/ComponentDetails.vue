@@ -12,6 +12,54 @@
         {{ snackbar.message }}
       </div>
     </VSnackbar>
+
+    <!-- Flux Storage reveal dialog -->
+    <VDialog v-model="revealDialog" max-width="700">
+      <VCard>
+        <VCardTitle class="bg-primary text-white d-flex align-center">
+          <VIcon icon="mdi-cloud-download-outline" class="mr-2" />
+          {{ revealTitle }} — Flux Storage
+        </VCardTitle>
+        <VCardText class="pt-4">
+          <div v-if="revealing" class="text-center pa-6">
+            <VProgressCircular indeterminate color="primary" />
+          </div>
+          <template v-else-if="revealResult">
+            <VAlert
+              v-if="revealResult.status !== 'ok'"
+              type="warning"
+              variant="tonal"
+              class="mb-2"
+            >
+              {{ revealResult.status === 'too-large'
+                ? 'Payload is too large to display.'
+                : (revealResult.message || 'Failed to load values from Flux Storage.') }}
+            </VAlert>
+            <template v-else>
+              <div class="text-caption text-medium-emphasis mb-2 text-truncate">
+                {{ revealResult.url }}
+              </div>
+              <VTable density="compact">
+                <tbody>
+                  <tr v-for="(value, i) in revealResult.values" :key="i">
+                    <td><kbd class="resource-kbd">{{ value }}</kbd></td>
+                  </tr>
+                </tbody>
+              </VTable>
+            </template>
+          </template>
+          <VAlert v-else type="error" variant="tonal">
+            {{ revealError || 'No data.' }}
+          </VAlert>
+        </VCardText>
+        <VCardActions>
+          <VSpacer />
+          <VBtn variant="tonal" @click="revealDialog = false">
+            {{ t('common.actions.close') || 'Close' }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
     <ListEntry
       :title="t('core.componentDetails.name')"
       :data="component.name"
@@ -221,6 +269,21 @@
       title-icon-scale="1.3"
       kbd-variant="secondary"
     />
+    <div
+      v-if="hasMarker(component?.environmentParameters, STORAGE_MARKERS.environmentParameters)"
+      class="ms-2 mb-3"
+    >
+      <VBtn
+        size="x-small"
+        variant="tonal"
+        color="primary"
+        prepend-icon="mdi-cloud-download-outline"
+        :loading="revealing"
+        @click="revealStorageField('environmentParametersResolved', t('core.componentDetails.environmentParameters'))"
+      >
+        Reveal storage values
+      </VBtn>
+    </div>
 
     <ListEntry
       :title="t('core.componentDetails.commands')"
@@ -230,6 +293,21 @@
       title-icon-scale="1.2"
       kbd-variant="secondary"
     />
+    <div
+      v-if="hasMarker(component?.commands, STORAGE_MARKERS.commands)"
+      class="ms-2 mb-3"
+    >
+      <VBtn
+        size="x-small"
+        variant="tonal"
+        color="primary"
+        prepend-icon="mdi-cloud-download-outline"
+        :loading="revealing"
+        @click="revealStorageField('commandsResolved', t('core.componentDetails.commands'))"
+      >
+        Reveal storage values
+      </VBtn>
+    </div>
 
     <ListEntry
       v-if="component?.secrets"
@@ -337,14 +415,41 @@
 import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ClipboardJS from 'clipboard'
+import { useFluxStorageReveal, hasStorageMarker, STORAGE_MARKERS } from '@/composables/useFluxStorageReveal'
 
 const props = defineProps({
   component: Object,
   index: Number,
   appName: String,
+  isEnterprise: { type: Boolean, default: false },
 })
 
 const { t } = useI18n()
+
+// On-demand Flux Storage reveal (F_S_ENV / F_S_CMD). Default view keeps showing the raw link.
+const { revealing, fetchResolvedSpec, extractField } = useFluxStorageReveal()
+const revealDialog = ref(false)
+const revealTitle = ref('')
+const revealResult = ref(null)
+const revealError = ref('')
+
+function hasMarker(values, marker) {
+  return hasStorageMarker(values, marker)
+}
+
+async function revealStorageField(resolvedKey, title) {
+  revealTitle.value = title
+  revealResult.value = null
+  revealError.value = ''
+  revealDialog.value = true
+  try {
+    const spec = await fetchResolvedSpec({ appName: props.appName, isEnterprise: props.isEnterprise })
+    revealResult.value = extractField(spec, { componentName: props.component?.name, resolvedKey })
+    if (!revealResult.value) revealError.value = 'No storage-backed value found for this field.'
+  } catch (error) {
+    revealError.value = error?.message || 'Failed to reveal storage values.'
+  }
+}
 
 const snackbar = ref({
   show: false,
