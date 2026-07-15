@@ -107,6 +107,27 @@ const staticUrls = [
     description: 'Comparison: FluxCloud vs Azure',
   },
   {
+    loc: '/compare/flux-vs-vultr',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Vultr',
+  },
+  {
+    loc: '/compare/flux-vs-linode',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Linode',
+  },
+  {
+    loc: '/compare/flux-vs-heroku',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Heroku',
+  },
+  {
     loc: '/compare/flux-vs-akash',
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
@@ -119,6 +140,20 @@ const staticUrls = [
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
     description: 'Guide: Cheapest cloud hosting',
+  },
+  {
+    loc: '/compare/what-is-decentralized-cloud-hosting',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'monthly',
+    description: 'Guide: What is decentralized cloud hosting',
+  },
+  {
+    loc: '/compare/web3-hosting-explained',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'monthly',
+    description: 'Guide: Web3 hosting explained',
   },
 
   // Dashboard Pages

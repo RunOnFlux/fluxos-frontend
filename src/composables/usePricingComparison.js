@@ -37,6 +37,8 @@ const COMPETITORS = Object.freeze([
   { name: 'Google Cloud', price: '$29.80', highlighted: false },
   { name: 'Azure', price: '$31.39', highlighted: false },
   { name: 'DigitalOcean', price: '$24.00', highlighted: false },
+  { name: 'Linode', price: '$24.00', highlighted: false },
+  { name: 'Vultr', price: '$21.00', highlighted: false },
 ])
 
 // Shared module-level state (singleton): resolves once per page session.

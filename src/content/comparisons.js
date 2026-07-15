@@ -364,6 +364,258 @@ const cheapestCloudHosting = {
   ],
 }
 
+const fluxVsVultr = {
+  slug: 'flux-vs-vultr',
+  competitor: 'Vultr',
+  datePublished: '2026-07-15',
+  dateModified: '2026-07-15',
+  metaTitle: 'FluxCloud vs Vultr — Cheaper Decentralized Cloud Alternative (2026)',
+  metaDescription:
+    'FluxCloud vs Vultr: a decentralized alternative to Vultr cloud compute with lower pay-as-you-go pricing, no bandwidth overage fees, and no single-provider lock-in.',
+  breadcrumbLabel: 'FluxCloud vs Vultr',
+  linkLabel: 'FluxCloud vs Vultr',
+  linkDesc: 'A decentralized alternative to Vultr cloud compute — lower cost, no bandwidth fees.',
+  h1: 'FluxCloud vs Vultr: a decentralized cloud compute alternative',
+  heroSubtitle:
+    'Vultr’s simple global compute, without the single provider — redundant across 50+ countries at a lower rate.',
+  intro:
+    '<p class="lead">Vultr built a following with straightforward, affordable cloud compute and a wide set of global locations. It is a solid, developer-friendly IaaS — but every Vultr instance still runs in one company’s data center, on one account, with bandwidth metered beyond the included transfer. <strong>FluxCloud</strong> keeps the simple, predictable model and removes the single provider: your app runs as redundant instances across thousands of independent nodes in 50+ countries, from $0.99/month.</p>',
+  tableTitle: 'FluxCloud vs Vultr — monthly cost for the same instance',
+  bodyHtml: `
+    <h2>Price and bandwidth</h2>
+    <p>Vultr is already competitively priced, so this is a close race — but on identical hardware (2 vCPU, 4 GB RAM, 20 GB SSD) FluxCloud comes in lower and, crucially, charges no egress fees. Vultr includes a monthly transfer allowance and bills overages beyond it; FluxCloud has no bandwidth metering at all, so a traffic spike never becomes a surprise charge.</p>
+    <h2>What decentralization adds</h2>
+    <ul>
+      <li><strong>No single point of failure</strong> — redundant instances across many independent nodes, not one instance in one region.</li>
+      <li><strong>No egress fees or transfer caps</strong> — one transparent rate.</li>
+      <li><strong>No lock-in, no central account to suspend</strong> — standard Docker or Git deployment; censorship-resistant by design.</li>
+      <li><strong>Pay by card or crypto</strong>, with the cost calculator up front.</li>
+    </ul>
+    <h2>Where Vultr still fits</h2>
+    <p>Vultr offers managed databases, block storage, bare metal and a clean API that many developers like, plus hourly billing and a broad location list. If you want those managed pieces from a single vendor, Vultr is a good pick. FluxCloud is for teams who want the same simplicity plus decentralization, lower cost and no bandwidth metering for containerized apps and app/game servers.</p>
+  `,
+  faqs: [
+    {
+      question: 'Is FluxCloud cheaper than Vultr?',
+      answer:
+        'On the same 2 vCPU / 4 GB / 20 GB instance, FluxCloud comes in below a comparable Vultr instance and adds no bandwidth overage fees. FluxCloud starts at $0.99/month for a basic instance. Vultr is already affordable, so the gap is smaller than against the hyperscalers, but FluxCloud’s lack of egress metering matters for high-traffic apps.',
+    },
+    {
+      question: 'What is a decentralized alternative to Vultr?',
+      answer:
+        'FluxCloud is a decentralized alternative to Vultr: instead of one instance in one data center, your app runs as redundant instances across thousands of independent nodes in 50+ countries — with no single point of failure, no bandwidth caps, and pay-as-you-go pricing from $0.99/month.',
+    },
+  ],
+}
+
+const fluxVsLinode = {
+  slug: 'flux-vs-linode',
+  competitor: 'Linode',
+  datePublished: '2026-07-15',
+  dateModified: '2026-07-15',
+  metaTitle: 'FluxCloud vs Linode (Akamai) — Decentralized Cloud Alternative',
+  metaDescription:
+    'FluxCloud vs Linode / Akamai: a decentralized alternative with lower pay-as-you-go pricing, no egress overage fees, and no single-provider lock-in.',
+  breadcrumbLabel: 'FluxCloud vs Linode',
+  linkLabel: 'FluxCloud vs Linode',
+  linkDesc: 'A decentralized alternative to Linode / Akamai — lower cost, no egress overages.',
+  h1: 'FluxCloud vs Linode: a decentralized alternative to Akamai’s cloud',
+  heroSubtitle:
+    'Linode’s flat, predictable pricing without the single provider — redundant across 50+ countries.',
+  intro:
+    '<p class="lead">Linode (now Akamai Cloud) earned a loyal developer base with flat, predictable pricing and a no-nonsense control panel. It is a dependable IaaS — but a Linode still runs in one provider’s data center, on one account, with transfer metered beyond the included allowance. <strong>FluxCloud</strong> keeps the predictable model and removes the single provider: redundant instances across thousands of independent nodes in 50+ countries, from $0.99/month.</p>',
+  tableTitle: 'FluxCloud vs Linode — monthly cost for the same instance',
+  bodyHtml: `
+    <h2>Predictable pricing, lower cost, no transfer overages</h2>
+    <p>Linode’s flat pricing is one of its best features, and on identical hardware (2 vCPU, 4 GB RAM, 20 GB SSD) FluxCloud comes in lower still — with no egress fees. Linode includes a transfer pool and bills overages beyond it; FluxCloud does not meter bandwidth at all.</p>
+    <h2>What you gain going decentralized</h2>
+    <ul>
+      <li><strong>No single point of failure</strong> — redundant across many independent nodes.</li>
+      <li><strong>No egress fees or transfer pools to watch</strong> — one transparent rate.</li>
+      <li><strong>No lock-in</strong> — standard Docker or Git deployment; move anytime.</li>
+      <li><strong>Censorship-resistant</strong>, pay by card or crypto.</li>
+    </ul>
+    <h2>Where Linode still fits</h2>
+    <p>Linode/Akamai brings managed databases, Kubernetes, an extensive guides library and, now, Akamai’s edge network. If you want those under one vendor, Linode is a strong choice. FluxCloud targets teams who want the same predictability plus decentralization, lower cost and no bandwidth metering for containerized workloads.</p>
+  `,
+  faqs: [
+    {
+      question: 'Is FluxCloud cheaper than Linode?',
+      answer:
+        'On the same 2 vCPU / 4 GB / 20 GB instance, FluxCloud comes in below a comparable Linode plan and adds no egress overage fees. FluxCloud starts at $0.99/month. Linode’s flat pricing is competitive, so the gap is smaller than against the hyperscalers, but FluxCloud’s lack of bandwidth metering can matter for busy apps.',
+    },
+    {
+      question: 'What is a decentralized alternative to Linode?',
+      answer:
+        'FluxCloud is a decentralized alternative to Linode (Akamai): your app runs as redundant instances across thousands of independent nodes in 50+ countries, with no single point of failure, no transfer caps, and pay-as-you-go pricing from $0.99/month.',
+    },
+  ],
+}
+
+const fluxVsHeroku = {
+  slug: 'flux-vs-heroku',
+  competitor: 'Heroku',
+  datePublished: '2026-07-15',
+  dateModified: '2026-07-15',
+  metaTitle: 'FluxCloud vs Heroku — Cheaper Git-Deploy Alternative Without Lock-in',
+  metaDescription:
+    'FluxCloud vs Heroku: deploy from Git without the dyno premium or the free-tier that disappeared. A decentralized alternative with transparent pricing and no lock-in.',
+  breadcrumbLabel: 'FluxCloud vs Heroku',
+  linkLabel: 'FluxCloud vs Heroku',
+  linkDesc: 'A cheaper, lock-in-free Git-deploy alternative to Heroku dynos.',
+  h1: 'FluxCloud vs Heroku: a decentralized Git-deploy alternative',
+  heroSubtitle:
+    'The git-push simplicity people loved about Heroku — without the dyno premium, the vanished free tier, or the lock-in.',
+  intro:
+    '<p class="lead">Heroku made deployment feel effortless: <code>git push</code> and you were live. But it runs on a single centralized platform, its dyno pricing sits at a premium, and the free tier that onboarded a generation of developers was retired in 2022. <strong>FluxCloud</strong> — via Flux Orbit — brings back the git-based deploy experience on a decentralized cloud: connect a repository, get automatic builds, and run redundantly across 50+ countries with transparent pricing from $0.99/month and no lock-in.</p>',
+  tableTitle: 'FluxCloud vs traditional cloud providers — monthly cost',
+  bodyHtml: `
+    <h2>How the pricing compares</h2>
+    <p>Heroku prices by “dyno” rather than by raw instance, so it does not map one-to-one onto the instance table above — which compares FluxCloud to the major IaaS providers. But the direction is clear: a Heroku Standard/Performance dyno with the RAM of the instance compared here typically costs far more than a FluxCloud instance, before add-ons like databases. FluxCloud charges one transparent rate for the CPU, RAM, storage and instances you choose, with no per-dyno premium and no egress fees.</p>
+    <h2>Git deployment, without the lock-in</h2>
+    <ul>
+      <li><strong>Deploy from Git (Flux Orbit).</strong> Connect a repository and FluxCloud builds and runs it — React, Vue, Next.js, Node.js and similar — with built-in CI/CD, much like the Heroku flow.</li>
+      <li><strong>No proprietary buildpacks or lock-in.</strong> It is standard containers underneath; move your workload whenever you want.</li>
+      <li><strong>No vanished free tier surprises.</strong> Transparent pay-as-you-go from $0.99/month; pay by card or crypto.</li>
+      <li><strong>Decentralized resilience.</strong> Redundant across independent nodes — no single platform that can suspend or sunset your app.</li>
+    </ul>
+    <h2>Where Heroku still fits</h2>
+    <p>Heroku’s add-on marketplace and fully-managed platform experience are still convenient if you want everything handled and are comfortable with the pricing and single-vendor model. FluxCloud is for teams who loved the git-push simplicity but want lower, transparent pricing, no lock-in, and decentralized resilience.</p>
+  `,
+  faqs: [
+    {
+      question: 'Is FluxCloud cheaper than Heroku?',
+      answer:
+        'Generally yes. Heroku prices by dyno at a premium; a dyno comparable to the instance in our table typically costs several times a FluxCloud instance, before paid add-ons. FluxCloud uses transparent pay-as-you-go pricing from $0.99/month with no per-dyno premium and no egress fees. Exact figures depend on your dyno type and add-ons.',
+    },
+    {
+      question: 'What is a good Heroku alternative for Git deployment?',
+      answer:
+        'FluxCloud with Flux Orbit is a decentralized Heroku alternative: connect a Git repository and it builds and runs your app with CI/CD, similar to Heroku’s git-push flow — but on a decentralized cloud, with transparent pricing, no proprietary lock-in, and no free-tier that can be withdrawn.',
+    },
+    {
+      question: 'Did FluxCloud remove a free tier like Heroku did?',
+      answer:
+        'FluxCloud’s model is transparent pay-as-you-go from $0.99/month for a basic instance rather than a free tier, so there is no free plan to be withdrawn — you pay a small, predictable rate for exactly the resources you use.',
+    },
+  ],
+}
+
+const whatIsDecentralizedCloud = {
+  slug: 'what-is-decentralized-cloud-hosting',
+  competitor: null,
+  category: 'guide',
+  datePublished: '2026-07-15',
+  dateModified: '2026-07-15',
+  metaTitle: 'What Is Decentralized Cloud Hosting? A 2026 Guide',
+  metaDescription:
+    'Decentralized cloud hosting explained: how running your app across thousands of independent nodes compares to traditional clouds on resilience, cost, censorship and lock-in.',
+  breadcrumbLabel: 'What is decentralized cloud hosting?',
+  linkLabel: 'What is decentralized cloud hosting?',
+  linkDesc: 'The plain-English explainer — how it works and why it’s cheaper and more resilient.',
+  h1: 'What is decentralized cloud hosting?',
+  heroSubtitle:
+    'Running your app across thousands of independent nodes instead of one company’s data centers — explained.',
+  ctaTitle: 'Try decentralized cloud hosting',
+  intro:
+    '<p class="lead">Decentralized cloud hosting runs your application across a network of independently operated servers — nodes — rather than in data centers owned by a single company. Instead of one provider controlling your app’s availability, pricing and policies, your workload is scheduled redundantly across many operators worldwide. <strong>FluxCloud</strong> is a decentralized cloud built on thousands of FluxNodes in 50+ countries, with hosting from $0.99/month.</p>',
+  tableTitle: 'What it costs vs traditional clouds — the same instance',
+  bodyHtml: `
+    <h2>How it works</h2>
+    <p>On a traditional cloud, you rent a slice of a company-owned data center; if that company has an outage, raises prices, or suspends your account, your app goes with it. On a decentralized cloud, thousands of independent operators contribute capacity to a shared network. When you deploy, your app runs as redundant instances scheduled across many of those nodes, so no single operator — and no single account — controls whether it stays online. FluxCloud handles the scheduling, health-checking and redundancy for you; you just deploy a container or a Git repository.</p>
+    <h2>Why it is cheaper</h2>
+    <p>Because capacity comes from operators who already run hardware, the overhead is far lower than building and maintaining proprietary data centers — and there are no egress (bandwidth) fees or per-service add-ons. On identical hardware, that makes decentralized hosting meaningfully cheaper than the major clouds, as the comparison below shows.</p>
+    <h2>The benefits</h2>
+    <ul>
+      <li><strong>No single point of failure.</strong> Redundancy across independent nodes rather than one provider’s SLA.</li>
+      <li><strong>Censorship resistance.</strong> No central party can unilaterally take your app offline.</li>
+      <li><strong>No vendor lock-in.</strong> Standard Docker containers and Git deployment — nothing proprietary.</li>
+      <li><strong>Lower, transparent cost.</strong> One pay-as-you-go rate, no bandwidth fees, pay by card or crypto.</li>
+    </ul>
+    <h2>What it is good for (and what it isn’t)</h2>
+    <p>Decentralized hosting excels at containerized apps, game servers, WordPress sites, blockchain nodes and general web workloads. It is not a drop-in replacement for a hyperscaler’s proprietary managed services (managed ML, serverless, specific compliance regimes) — if you depend on those, a traditional cloud may still fit. For most standard workloads, decentralized hosting is cheaper, more resilient and lock-in-free.</p>
+  `,
+  faqs: [
+    {
+      question: 'What is decentralized cloud hosting?',
+      answer:
+        'Decentralized cloud hosting runs your application across a network of independently operated servers (nodes) rather than in one company’s data centers. Your app runs as redundant instances scheduled across many operators, so there is no single point of failure and no central party that controls its availability. FluxCloud is a decentralized cloud built on thousands of nodes in 50+ countries, from $0.99/month.',
+    },
+    {
+      question: 'How is it different from AWS or traditional cloud hosting?',
+      answer:
+        'Traditional clouds like AWS run your app in data centers owned by one company, priced per-service with egress fees. Decentralized hosting schedules your app across many independent nodes worldwide, with no single point of failure, no egress fees, no lock-in, and typically lower cost — at the trade-off of not replicating a hyperscaler’s proprietary managed services.',
+    },
+    {
+      question: 'Is decentralized cloud hosting reliable?',
+      answer:
+        'Reliability comes from redundancy rather than one provider’s SLA: your app runs on multiple independent nodes at once, so if any node fails others keep it available. There is no single point of failure, and you can monitor live CPU, RAM and disk from your dashboard.',
+    },
+    {
+      question: 'How much does decentralized cloud hosting cost?',
+      answer:
+        'FluxCloud starts at $0.99/month for a basic instance with transparent pay-as-you-go pricing and no egress fees. On identical hardware it is meaningfully cheaper than the major centralized clouds. You can estimate any deployment with the cost calculator before you launch.',
+    },
+  ],
+}
+
+const web3HostingExplained = {
+  slug: 'web3-hosting-explained',
+  competitor: null,
+  category: 'guide',
+  datePublished: '2026-07-15',
+  dateModified: '2026-07-15',
+  metaTitle: 'Web3 Hosting Explained — Decentralized Hosting in 2026',
+  metaDescription:
+    'Web3 hosting explained: what decentralized, censorship-resistant hosting means, how it works, what you can run on it, and how it compares to traditional cloud hosting.',
+  breadcrumbLabel: 'Web3 hosting explained',
+  linkLabel: 'Web3 hosting explained',
+  linkDesc: 'What Web3 hosting means, how it works, and what you can run on it.',
+  h1: 'Web3 hosting explained',
+  heroSubtitle:
+    'Censorship-resistant, decentralized hosting — what it means and why it matters.',
+  ctaTitle: 'Deploy on Web3 hosting',
+  intro:
+    '<p class="lead">“Web3 hosting” means running your website or application on decentralized infrastructure rather than a single company’s servers. Instead of trusting one provider with your uptime, data and account, your app runs across a network of independent operators — resilient, censorship-resistant, and often payable in crypto. <strong>FluxCloud</strong> is Web3 hosting on thousands of FluxNodes in 50+ countries, from $0.99/month.</p>',
+  tableTitle: 'What Web3 hosting costs vs traditional clouds — the same instance',
+  bodyHtml: `
+    <h2>What makes hosting “Web3”</h2>
+    <p>Web3 hosting has three defining traits: it is <strong>decentralized</strong> (your app runs across many independent nodes, not one data center), <strong>censorship-resistant</strong> (no single company can unilaterally take it down), and <strong>self-custodial</strong> (you can sign in and pay with a crypto wallet, keeping control of your account). FluxCloud adds the convenience of a managed platform on top: a dashboard, one-click apps, Git deployment and IPFS-backed storage.</p>
+    <h2>What you can run on it</h2>
+    <ul>
+      <li><strong>Web apps and APIs</strong> — standard Docker containers or Git repositories (React, Vue, Next.js, Node.js and more).</li>
+      <li><strong>WordPress sites</strong> — decentralized, censorship-resistant, with the familiar dashboard.</li>
+      <li><strong>Game servers</strong> — Minecraft, Valheim, Rust, Palworld and others.</li>
+      <li><strong>Blockchain nodes</strong> — one-click hosting for many networks.</li>
+      <li><strong>Decentralized file storage</strong> — IPFS-backed storage via FluxDrive.</li>
+    </ul>
+    <h2>How it compares to traditional hosting</h2>
+    <p>Compared with a traditional host, Web3 hosting removes the single point of failure and the single point of control, adds crypto payment, and — on identical hardware — usually costs less, with no egress fees. The trade-off is that it does not replicate a hyperscaler’s proprietary managed services. For most sites, apps and servers, the resilience, independence and lower cost are the point.</p>
+  `,
+  faqs: [
+    {
+      question: 'What is Web3 hosting?',
+      answer:
+        'Web3 hosting runs your website or app on decentralized infrastructure — a network of independent nodes — instead of one company’s servers. It is decentralized (no single point of failure), censorship-resistant (no central party can take it down), and often self-custodial (sign in and pay with a crypto wallet). FluxCloud is Web3 hosting on thousands of nodes in 50+ countries, from $0.99/month.',
+    },
+    {
+      question: 'What can I host on Web3 / decentralized hosting?',
+      answer:
+        'On FluxCloud you can host web apps and APIs (Docker or Git deployment), WordPress sites, game servers, blockchain nodes, and decentralized IPFS file storage — the same kinds of workloads you would run on a traditional cloud, but across independent nodes.',
+    },
+    {
+      question: 'Is Web3 hosting more expensive than normal hosting?',
+      answer:
+        'No — on identical hardware it is usually cheaper. FluxCloud starts at $0.99/month with transparent pay-as-you-go pricing and no egress fees, undercutting the major centralized clouds on the same instance while adding decentralization and censorship resistance.',
+    },
+    {
+      question: 'Can I pay for Web3 hosting with crypto?',
+      answer:
+        'Yes. FluxCloud lets you pay by card or in crypto, and you can sign in with a self-custodial wallet (SSP or Zelcore) so you stay in full control of your account and deployments.',
+    },
+  ],
+}
+
 // Order matters: this drives the homepage comparisons section and the
 // "keep exploring" cross-links between pages.
 export const comparisonList = [
@@ -371,8 +623,13 @@ export const comparisonList = [
   fluxVsDigitalOcean,
   fluxVsGoogleCloud,
   fluxVsAzure,
+  fluxVsVultr,
+  fluxVsLinode,
+  fluxVsHeroku,
   fluxVsAkash,
   cheapestCloudHosting,
+  whatIsDecentralizedCloud,
+  web3HostingExplained,
 ]
 
 export const comparisons = Object.fromEntries(

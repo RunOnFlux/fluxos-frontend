@@ -12,7 +12,7 @@
         FluxCloud vs. the big clouds
       </h2>
       <p class="section-subtitle">
-        How decentralized hosting compares to AWS, Google Cloud, Azure, DigitalOcean and Akash — on price, resilience and lock-in.
+        How decentralized hosting compares to AWS, Google Cloud, Azure, DigitalOcean, Vultr, Linode, Heroku and Akash — on price, resilience and lock-in.
       </p>
 
       <ul class="links-grid">
@@ -33,6 +33,13 @@
           </RouterLink>
         </li>
       </ul>
+
+      <p v-if="guides.length" class="comparison-learn">
+        New to this?
+        <template v-for="(g, i) in guides" :key="g.slug">
+          <RouterLink :to="`/compare/${g.slug}`" class="comparison-learn-link">{{ g.linkLabel }}</RouterLink><span v-if="i < guides.length - 1"> · </span>
+        </template>
+      </p>
     </div>
   </section>
 </template>
@@ -40,7 +47,10 @@
 <script setup>
 import { comparisonList } from '@/content/comparisons'
 
-const comparisons = comparisonList
+// "vs X" pages (and the cheapest roundup) render as cards; the explainer guides
+// render as a compact "learn" line so the grid stays focused.
+const comparisons = comparisonList.filter(c => c.category !== 'guide')
+const guides = comparisonList.filter(c => c.category === 'guide')
 </script>
 
 <style scoped>
@@ -136,5 +146,21 @@ const comparisons = comparisonList
 
 .comparison-link:hover .comparison-arrow {
   color: rgb(var(--v-theme-primary));
+}
+
+.comparison-learn {
+  text-align: center;
+  margin: 1.75rem 0 0;
+  font-size: 0.9rem;
+  color: rgba(var(--v-theme-on-surface), 0.6);
+}
+
+.comparison-learn-link {
+  color: rgb(var(--v-theme-primary));
+  text-decoration: none;
+}
+
+.comparison-learn-link:hover {
+  text-decoration: underline;
 }
 </style>

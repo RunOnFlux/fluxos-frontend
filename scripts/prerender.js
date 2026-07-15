@@ -58,8 +58,13 @@ const FALLBACK_ROUTES = Object.freeze([
   '/compare/flux-vs-digitalocean',
   '/compare/flux-vs-google-cloud',
   '/compare/flux-vs-azure',
+  '/compare/flux-vs-vultr',
+  '/compare/flux-vs-linode',
+  '/compare/flux-vs-heroku',
   '/compare/flux-vs-akash',
   '/compare/cheapest-cloud-hosting',
+  '/compare/what-is-decentralized-cloud-hosting',
+  '/compare/web3-hosting-explained',
 
   // Dashboard pages (public info)
   '/dashboards/overview',
