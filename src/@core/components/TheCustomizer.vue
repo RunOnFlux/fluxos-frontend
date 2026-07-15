@@ -385,7 +385,12 @@ defineExpose({
 </script>
 
 <template>
-  <div class="d-lg-block d-none">
+  <!--
+    data-prerender-strip: this theme customizer is developer/runtime UI and is
+    removed from prerendered snapshots so it never dilutes indexable content
+    (see scripts/prerender.js). It still renders normally once Vue mounts. 
+  -->
+  <div class="d-lg-block d-none" data-prerender-strip>
     <VBtn
       v-if="!hideToggleButton"
       icon

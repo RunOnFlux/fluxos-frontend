@@ -239,7 +239,7 @@ onMounted(() => {
               </VIcon>
             </template>
             <template #default>
-              <span>Consider switching to a secure HTTPS connection for better security.</span>
+              <span data-prerender-strip>Consider switching to a secure HTTPS connection for better security.</span>
             </template>
           </VTooltip>
         </VBtn>

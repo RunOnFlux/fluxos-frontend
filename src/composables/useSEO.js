@@ -33,7 +33,6 @@ function escapeHtml(str) {
  * @param {string} [options.imageHeight='630'] - Image height for OG/Twitter
  * @param {string} [options.imageAlt] - Image alt text (defaults to title)
  * @param {string} [options.type='website'] - Open Graph type
- * @param {string} [options.keywords] - Comma-separated keywords
  * @param {Array<Object>} [options.structuredData] - Array of structured data objects
  * @param {Object} [options.meta] - Additional meta tags to merge
  * @param {Object} [options.link] - Additional link tags to merge
@@ -53,7 +52,6 @@ export function useSEO(options) {
     imageHeight,
     imageAlt,
     type = 'website',
-    keywords = '',
     structuredData = [],
     meta = [],
     link = [],
@@ -74,7 +72,6 @@ export function useSEO(options) {
   // and escape inside a computed to stay reactive and keep escaping correct.
   const safeTitle = computed(() => escapeHtml(toValue(title)))
   const safeDescription = computed(() => escapeHtml(toValue(description)))
-  const safeKeywords = computed(() => escapeHtml(toValue(keywords)))
 
   // Use title as default alt text if not provided
   const imgAlt = computed(() => escapeHtml(toValue(imageAlt) || toValue(title)))
@@ -116,13 +113,9 @@ export function useSEO(options) {
     { name: 'twitter:creator', content: '@RunOnFlux' },
   ]
 
-  // Add keywords if provided
-  if (toValue(keywords)) {
-    defaultMeta.push({
-      name: 'keywords',
-      content: safeKeywords,
-    })
-  }
+  // The meta keywords tag is intentionally not emitted: it is obsolete and
+  // ignored by every major search engine. Pages may still pass a `keywords`
+  // option (kept for backward compatibility) but it has no effect on output.
 
   // Default link tags
   const defaultLink = [

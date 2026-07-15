@@ -354,7 +354,11 @@
                   <h3 class="question-text">{{ faq.q }}</h3>
                 </div>
               </VExpansionPanelTitle>
-              <VExpansionPanelText class="faq-answer">
+              <!--
+                eager: keep the answer in the prerendered/indexable DOM even
+                while collapsed (Vuetify hides it via v-show). See FAQPanel.vue. 
+              -->
+              <VExpansionPanelText class="faq-answer" eager>
                 <div v-html="sanitizeAnswer(faq.a)"></div>
               </VExpansionPanelText>
             </VExpansionPanel>

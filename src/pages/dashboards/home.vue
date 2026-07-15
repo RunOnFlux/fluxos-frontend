@@ -1,6 +1,7 @@
 <template>
   <LandingServices />
   <HostingServicesLinks />
+  <ComparisonLinks />
   <FAQPanel
     :panel="{ enabled: true, padding: { top: 64, right: 0, bottom: 0, left: 0 } }"
     :app="null"
@@ -13,6 +14,7 @@
 import { onMounted, computed } from 'vue'
 import LandingServices from "@/components/LandingServices.vue"
 import HostingServicesLinks from "@/components/HostingServicesLinks.vue"
+import ComparisonLinks from "@/components/ComparisonLinks.vue"
 import FAQPanel from '@/components/Marketplace/Panels/FAQPanel.vue'
 import { useI18n } from "vue-i18n"
 import { useHead } from '@unhead/vue'
@@ -95,7 +97,6 @@ useHead({
   title,
   meta: [
     { name: 'description', content: description },
-    { name: 'keywords', content: 'decentralized cloud, Web3 hosting, blockchain infrastructure, FluxNodes, decentralized apps, game server hosting, WordPress hosting, docker hosting, container hosting, affordable cloud hosting' },
 
     // Open Graph
     { property: 'og:title', content: title },

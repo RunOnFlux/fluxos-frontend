@@ -77,6 +77,85 @@ const staticUrls = [
     description: 'WordPress Hosting',
   },
 
+  // Comparison hub + pages (see src/content/comparisons.js)
+  {
+    loc: '/compare',
+    source: 'src/pages/compare/index.vue',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'weekly',
+    description: 'Cloud hosting comparisons hub',
+  },
+  {
+    loc: '/compare/flux-vs-aws',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs AWS',
+  },
+  {
+    loc: '/compare/flux-vs-digitalocean',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs DigitalOcean',
+  },
+  {
+    loc: '/compare/flux-vs-google-cloud',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Google Cloud',
+  },
+  {
+    loc: '/compare/flux-vs-azure',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Azure',
+  },
+  {
+    loc: '/compare/flux-vs-vultr',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Vultr',
+  },
+  {
+    loc: '/compare/flux-vs-linode',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Linode',
+  },
+  {
+    loc: '/compare/flux-vs-akash',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Akash',
+  },
+  {
+    loc: '/compare/cheapest-cloud-hosting',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'monthly',
+    description: 'Guide: Cheapest cloud hosting',
+  },
+  {
+    loc: '/compare/what-is-decentralized-cloud-hosting',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'monthly',
+    description: 'Guide: What is decentralized cloud hosting',
+  },
+  {
+    loc: '/compare/web3-hosting-explained',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'monthly',
+    description: 'Guide: Web3 hosting explained',
+  },
+
   // Dashboard Pages
   {
     loc: '/dashboards/overview',

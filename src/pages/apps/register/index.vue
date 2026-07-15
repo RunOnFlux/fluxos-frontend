@@ -81,6 +81,14 @@
                 <div class="comparison-cell" :data-label="t('pages.apps.register.landing.pricing.storage')">{{ provider.storage }}</div>
                 <div class="comparison-cell price-cell" :data-label="t('pages.apps.register.landing.pricing.pricePerMonth')">
                   <span :class="{ 'best-price': provider.highlighted }">{{ provider.price }}</span>
+                  <VProgressCircular
+                    v-if="provider.loading"
+                    indeterminate
+                    size="14"
+                    width="2"
+                    color="primary"
+                    class="ml-2"
+                  />
                 </div>
               </div>
             </div>
@@ -149,6 +157,7 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useHead } from '@unhead/vue'
 import { usePrerenderReady } from '@/composables/useSEO'
+import { usePricingComparison } from '@/composables/usePricingComparison'
 import Api from '@/services/ApiClient'
 import { useFluxStore } from '@/stores/flux'
 import ServerLocationsPanel from '@/components/Marketplace/Panels/ServerLocationsPanel.vue'
@@ -188,9 +197,9 @@ const faqPanel = {
   questions: [],
 }
 
-// FluxCloud pricing data
-const fluxCloudPrice = ref('$8.99') // Default fallback price
-const fluxCloudPriceLoading = ref(true)
+// FluxCloud pricing + competitor comparison data (single source of truth shared
+// with the /compare pages, so the numbers never drift between pages).
+const { pricingComparison, calculateFluxCloudPrice } = usePricingComparison()
 
 // Network data
 const nodeCount = ref(7000) // Default fallback (replaced by live API count when available)
@@ -313,64 +322,6 @@ const benefits = computed(() => [
     color: 'warning',
     title: t('pages.apps.register.landing.benefits.dedicatedResources.title'),
     description: t('pages.apps.register.landing.benefits.dedicatedResources.description'),
-  },
-])
-
-// Pricing comparison data
-const pricingComparison = computed(() => [
-  {
-    name: 'FluxCloud',
-    instances: '1',
-    cpu: '2 vCPU',
-    ram: '4 GB',
-    storage: '20 GB SSD',
-    price: fluxCloudPriceLoading.value ? t('pages.costCalculator.calculating') : fluxCloudPrice.value,
-    highlighted: true,
-  },
-  {
-    name: 'Akash Network',
-    instances: '1',
-    cpu: '2 vCPU',
-    ram: '4 GB',
-    storage: '20 GB SSD',
-    price: '~$8.00*',
-    highlighted: false,
-  },
-  {
-    name: 'AWS EC2',
-    instances: '1',
-    cpu: '2 vCPU',
-    ram: '4 GB',
-    storage: '20 GB SSD',
-    price: '$33.12',
-    highlighted: false,
-  },
-  {
-    name: 'Google Cloud',
-    instances: '1',
-    cpu: '2 vCPU',
-    ram: '4 GB',
-    storage: '20 GB SSD',
-    price: '$29.80',
-    highlighted: false,
-  },
-  {
-    name: 'Azure',
-    instances: '1',
-    cpu: '2 vCPU',
-    ram: '4 GB',
-    storage: '20 GB SSD',
-    price: '$31.39',
-    highlighted: false,
-  },
-  {
-    name: 'DigitalOcean',
-    instances: '1',
-    cpu: '2 vCPU',
-    ram: '4 GB',
-    storage: '20 GB SSD',
-    price: '$24.00',
-    highlighted: false,
   },
 ])
 
@@ -545,72 +496,6 @@ const offerSchema = computed(() => ({
   },
 }))
 
-// Calculate FluxCloud price from cost calculator API
-const calculateFluxCloudPrice = async () => {
-  try {
-    fluxCloudPriceLoading.value = true
-
-    // Specifications matching the pricing comparison table
-    // 2 vCPU, 4 GB RAM, 20 GB SSD, 1 instance, 1 month
-    // Post-fork: 88000 blocks = 1 month (30 days)
-    const expire = 88000
-
-    const payload = JSON.stringify({
-      version: 8,
-      name: "pricingcalc",
-      description: "Pricing comparison calculation",
-      owner: "176iuPFBqD4yg3Fd7oPVhB3d4NXWxvQyxx",
-      compose: [{
-        name: "component",
-        description: "component",
-        repotag: "runonflux/jetpack2:latest",
-        ports: [3000],
-        domains: [""],
-        environmentParameters: [""],
-        commands: [""],
-        containerPorts: [3000],
-        containerData: "/tmp",
-        cpu: "2",
-        ram: "4000",
-        hdd: "20",
-        tiered: false,
-      }],
-      instances: 1,
-      nodes: [],
-      contacts: [""],
-      geolocation: [""],
-      expire: expire,
-      enterprise: "",
-      staticip: false,
-    })
-
-    const response = await Api().post(
-      '/apps/calculatefiatandfluxprice',
-      payload,
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        timeout: 10000,
-      },
-    )
-
-    if (response.data.status !== 'error' && response.data.data?.usd) {
-      const usdPrice = parseFloat(response.data.data.usd)
-      fluxCloudPrice.value = `$${usdPrice.toFixed(2)}`
-      console.log('FluxCloud price calculated:', fluxCloudPrice.value)
-    } else {
-      console.warn('Failed to calculate price, using default:', response.data)
-    }
-  } catch (error) {
-    console.error('Error calculating FluxCloud price:', error)
-
-    // Keep default price on error
-  } finally {
-    fluxCloudPriceLoading.value = false
-  }
-}
-
 // Fetch network data from Pinia store (no API call needed)
 const fetchNetworkData = async () => {
   try {
@@ -698,10 +583,6 @@ useHead({
     {
       name: 'description',
       content: 'Deploy any Docker app on FluxCloud\'s decentralized network in minutes. Pay-as-you-go pricing from $0.99/month, servers in 50+ countries, no vendor lock-in.',
-    },
-    {
-      name: 'keywords',
-      content: 'flux, cloud computing, decentralized hosting, docker deployment, blockchain, web3, dapp hosting',
     },
     {
       name: 'robots',

@@ -50,8 +50,20 @@ const FALLBACK_ROUTES = Object.freeze([
   '/marketplace/games',
   '/flux-drive',
   '/apps/register',
-  '/apps/register/orbit',
   '/cost-calculator',
+
+  // Comparison hub + "alternative to" pages (see src/content/comparisons.js)
+  '/compare',
+  '/compare/flux-vs-aws',
+  '/compare/flux-vs-digitalocean',
+  '/compare/flux-vs-google-cloud',
+  '/compare/flux-vs-azure',
+  '/compare/flux-vs-vultr',
+  '/compare/flux-vs-linode',
+  '/compare/flux-vs-akash',
+  '/compare/cheapest-cloud-hosting',
+  '/compare/what-is-decentralized-cloud-hosting',
+  '/compare/web3-hosting-explained',
 
   // Dashboard pages (public info)
   '/dashboards/overview',
@@ -113,13 +125,27 @@ function readFileAsync(filePath) {
 function createStaticServer(directory, port) {
   const indexHtmlPath = path.join(directory, 'index.html')
 
+  // Capture the pristine SPA shell ONCE, before any route render overwrites
+  // dist/index.html with a baked snapshot. Every SPA route must be served this
+  // clean shell (empty #app) — NOT a previously-baked page. Serving the baked
+  // homepage left its markup sitting in #app while the target route's async
+  // chunk loaded; a slow chunk kept the homepage on screen past the prerender's
+  // 2s "static page" grace window, so the snapshot captured the homepage under
+  // the wrong URL. With an empty #app the readiness waits (innerHTML length,
+  // data-prerender-pending) only pass once the real route has mounted.
+  const cleanShell = fs.readFileSync(indexHtmlPath)
+
   return new Promise((resolve, reject) => {
     const server = createServer(async (req, res) => {
-      let filePath = path.join(directory, req.url === '/' ? 'index.html' : req.url)
+      const urlPath = req.url.split('?')[0]
+      const filePath = path.join(directory, urlPath === '/' ? 'index.html' : urlPath)
 
-      // If path doesn't have extension, try index.html
+      // SPA route (no file extension): always serve the pristine shell.
       if (!path.extname(filePath)) {
-        filePath = indexHtmlPath
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.end(cleanShell)
+
+        return
       }
 
       try {
@@ -129,15 +155,9 @@ function createStaticServer(directory, port) {
         res.writeHead(200, { 'Content-Type': contentType })
         res.end(data)
       } catch {
-        // Fallback to index.html for SPA routing
-        try {
-          const data = await readFileAsync(indexHtmlPath)
-          res.writeHead(200, { 'Content-Type': 'text/html' })
-          res.end(data)
-        } catch {
-          res.writeHead(404)
-          res.end('Not found')
-        }
+        // Fallback to the clean shell for SPA routing
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.end(cleanShell)
       }
     })
 
@@ -339,6 +359,17 @@ async function renderPageWithRetry(context, route, port) {
 
       // Extra wait for head meta tags / JSON-LD to fully flush to the DOM
       await page.waitForTimeout(800)
+
+      // Strip internal runtime UI chrome from the snapshot before capturing it.
+      // Elements marked with data-prerender-strip (theme customizer, backend/
+      // frontend version footer, HTTPS-tooltip text, etc.) are developer/runtime
+      // affordances that only dilute indexable content and leak build version
+      // numbers into public HTML. Removing them via the DOM (rather than regex)
+      // is robust to Vuetify's markup and scoped-style hashes. Real users still
+      // get these elements once Vue mounts and re-renders the page.
+      await page.evaluate(() => {
+        document.querySelectorAll('[data-prerender-strip]').forEach(el => el.remove())
+      })
 
       // Get the rendered HTML
       let html = await page.content()

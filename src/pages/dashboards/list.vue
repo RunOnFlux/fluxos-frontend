@@ -148,7 +148,6 @@ useHead({
   title,
   meta: [
     { name: 'description', content: description },
-    { name: 'keywords', content: 'flux nodes, node list, flux network, node directory, decentralized nodes, flux node status' },
     { name: 'robots', content: 'index, follow' },
 
     // Open Graph

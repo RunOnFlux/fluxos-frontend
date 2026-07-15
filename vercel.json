@@ -1,6 +1,13 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    {
+      "source": "/apps/register/orbit",
+      "destination": "https://orbit.runonflux.com",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",
