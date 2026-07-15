@@ -8,6 +8,8 @@ export {}
 declare global {
   const $api: typeof import('./utils/api.js')['$api']
   const BANNED_PORTS: typeof import('./utils/fluxPorts.js')['BANNED_PORTS']
+  const COMPARISON_SPEC: typeof import('./composables/usePricingComparison.js')['COMPARISON_SPEC']
+  const COMPETITOR_PRICING_AS_OF: typeof import('./composables/usePricingComparison.js')['COMPETITOR_PRICING_AS_OF']
   const COOKIE_MAX_AGE_1_YEAR: typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']
   const EVENT_STYLES: typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']
   const EffectScope: typeof import('vue')['EffectScope']
@@ -382,6 +384,7 @@ declare global {
   const usePrerenderReady: typeof import('./composables/useSEO.js')['usePrerenderReady']
   const usePrevious: typeof import('@vueuse/core')['usePrevious']
   const usePriceEstimate: typeof import('./composables/usePriceEstimate.js')['usePriceEstimate']
+  const usePricingComparison: typeof import('./composables/usePricingComparison.js')['usePricingComparison']
   const useProjection: typeof import('@vueuse/math')['useProjection']
   const useRafFn: typeof import('@vueuse/core')['useRafFn']
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
@@ -480,6 +483,8 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly $api: UnwrapRef<typeof import('./utils/api.js')['$api']>
     readonly BANNED_PORTS: UnwrapRef<typeof import('./utils/fluxPorts.js')['BANNED_PORTS']>
+    readonly COMPARISON_SPEC: UnwrapRef<typeof import('./composables/usePricingComparison.js')['COMPARISON_SPEC']>
+    readonly COMPETITOR_PRICING_AS_OF: UnwrapRef<typeof import('./composables/usePricingComparison.js')['COMPETITOR_PRICING_AS_OF']>
     readonly COOKIE_MAX_AGE_1_YEAR: UnwrapRef<typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']>
     readonly EVENT_STYLES: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
@@ -852,6 +857,7 @@ declare module 'vue' {
     readonly usePrerenderReady: UnwrapRef<typeof import('./composables/useSEO.js')['usePrerenderReady']>
     readonly usePrevious: UnwrapRef<typeof import('@vueuse/core')['usePrevious']>
     readonly usePriceEstimate: UnwrapRef<typeof import('./composables/usePriceEstimate.js')['usePriceEstimate']>
+    readonly usePricingComparison: UnwrapRef<typeof import('./composables/usePricingComparison.js')['usePricingComparison']>
     readonly useProjection: UnwrapRef<typeof import('@vueuse/math')['useProjection']>
     readonly useRafFn: UnwrapRef<typeof import('@vueuse/core')['useRafFn']>
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>

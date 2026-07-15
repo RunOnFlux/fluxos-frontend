@@ -53,6 +53,9 @@ const FALLBACK_ROUTES = Object.freeze([
   '/apps/register/orbit',
   '/cost-calculator',
 
+  // Comparison / "alternative to" pages (see src/content/comparisons.js)
+  '/compare/flux-vs-aws',
+
   // Dashboard pages (public info)
   '/dashboards/overview',
   '/dashboards/resources',
@@ -113,13 +116,27 @@ function readFileAsync(filePath) {
 function createStaticServer(directory, port) {
   const indexHtmlPath = path.join(directory, 'index.html')
 
+  // Capture the pristine SPA shell ONCE, before any route render overwrites
+  // dist/index.html with a baked snapshot. Every SPA route must be served this
+  // clean shell (empty #app) — NOT a previously-baked page. Serving the baked
+  // homepage left its markup sitting in #app while the target route's async
+  // chunk loaded; a slow chunk kept the homepage on screen past the prerender's
+  // 2s "static page" grace window, so the snapshot captured the homepage under
+  // the wrong URL. With an empty #app the readiness waits (innerHTML length,
+  // data-prerender-pending) only pass once the real route has mounted.
+  const cleanShell = fs.readFileSync(indexHtmlPath)
+
   return new Promise((resolve, reject) => {
     const server = createServer(async (req, res) => {
-      let filePath = path.join(directory, req.url === '/' ? 'index.html' : req.url)
+      const urlPath = req.url.split('?')[0]
+      const filePath = path.join(directory, urlPath === '/' ? 'index.html' : urlPath)
 
-      // If path doesn't have extension, try index.html
+      // SPA route (no file extension): always serve the pristine shell.
       if (!path.extname(filePath)) {
-        filePath = indexHtmlPath
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.end(cleanShell)
+
+        return
       }
 
       try {
@@ -129,15 +146,9 @@ function createStaticServer(directory, port) {
         res.writeHead(200, { 'Content-Type': contentType })
         res.end(data)
       } catch {
-        // Fallback to index.html for SPA routing
-        try {
-          const data = await readFileAsync(indexHtmlPath)
-          res.writeHead(200, { 'Content-Type': 'text/html' })
-          res.end(data)
-        } catch {
-          res.writeHead(404)
-          res.end('Not found')
-        }
+        // Fallback to the clean shell for SPA routing
+        res.writeHead(200, { 'Content-Type': 'text/html' })
+        res.end(cleanShell)
       }
     })
 

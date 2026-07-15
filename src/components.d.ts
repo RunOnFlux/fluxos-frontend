@@ -100,6 +100,7 @@ declare module 'vue' {
     OrbitDeploymentChoice: typeof import('./components/OrbitDeploymentChoice.vue')['default']
     OrbitPricingCard: typeof import('./components/OrbitPricingCard.vue')['default']
     PanelRenderer: typeof import('./components/Marketplace/PanelRenderer.vue')['default']
+    PricingComparisonTable: typeof import('./components/PricingComparisonTable.vue')['default']
     PricingPlans: typeof import('./components/FluxDrive/PricingPlans.vue')['default']
     ProposalDetailDialog: typeof import('./components/xdao/ProposalDetailDialog.vue')['default']
     RelatedGamesPanel: typeof import('./components/Marketplace/Panels/RelatedGamesPanel.vue')['default']

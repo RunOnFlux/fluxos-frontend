@@ -77,6 +77,15 @@ const staticUrls = [
     description: 'WordPress Hosting',
   },
 
+  // Comparison Pages (see src/content/comparisons.js)
+  {
+    loc: '/compare/flux-vs-aws',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs AWS',
+  },
+
   // Dashboard Pages
   {
     loc: '/dashboards/overview',

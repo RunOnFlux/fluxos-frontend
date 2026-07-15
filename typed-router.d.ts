@@ -32,6 +32,7 @@ declare module 'vue-router/auto-routes' {
     'apps-register-configure': RouteRecordInfo<'apps-register-configure', '/apps/register/configure', Record<never, never>, Record<never, never>>,
     'apps-register-orbit': RouteRecordInfo<'apps-register-orbit', '/apps/register/orbit', Record<never, never>, Record<never, never>>,
     'checkout-gateway-plan': RouteRecordInfo<'checkout-gateway-plan', '/checkout/:gateway/:plan', { gateway: ParamValue<true>, plan: ParamValue<true> }, { gateway: ParamValue<false>, plan: ParamValue<false> }>,
+    'compare-slug': RouteRecordInfo<'compare-slug', '/compare/:slug', { slug: ParamValue<true> }, { slug: ParamValue<false> }>,
     'cost-calculator': RouteRecordInfo<'cost-calculator', '/cost-calculator', Record<never, never>, Record<never, never>>,
     'dashboards-home': RouteRecordInfo<'dashboards-home', '/dashboards/home', Record<never, never>, Record<never, never>>,
     'dashboards-list': RouteRecordInfo<'dashboards-list', '/dashboards/list', Record<never, never>, Record<never, never>>,
