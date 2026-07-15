@@ -15,10 +15,44 @@
           <PricingComparisonTable
             :title="entry.tableTitle"
             :note="methodologyNote"
+            :highlight-competitor="entry.tableCompetitor"
             @price-resolved="markReady"
           />
+
+          <p class="price-sources">
+            Competitor prices from each provider’s public pricing pages:
+            <template v-for="(s, i) in priceSources" :key="s.name">
+              <a :href="s.url" target="_blank" rel="noopener noreferrer nofollow">{{ s.name }}</a><span v-if="i < priceSources.length - 1"> · </span>
+            </template>
+          </p>
         </VCardText>
       </VCard>
+
+      <!--
+        At-a-glance feature comparison (unique per provider — good for scanning
+        and for AI/search extraction) 
+      -->
+      <div v-if="entry.featureRows" class="feature-compare">
+        <h2 class="feature-compare-title">At a glance: FluxCloud vs {{ rivalName }}</h2>
+        <div class="feature-table">
+          <div class="feature-row feature-head">
+            <div class="feature-cell">Feature</div>
+            <div class="feature-cell feature-flux">FluxCloud</div>
+            <div class="feature-cell">{{ rivalName }}</div>
+          </div>
+          <div
+            v-for="row in entry.featureRows"
+            :key="row.feature"
+            class="feature-row"
+          >
+            <div class="feature-cell feature-label" data-label="Feature">{{ row.feature }}</div>
+            <div class="feature-cell feature-flux" data-label="FluxCloud">
+              <VIcon icon="mdi-check-circle" size="16" color="success" class="feature-tick" />{{ row.flux }}
+            </div>
+            <div class="feature-cell" :data-label="rivalName">{{ row.rival }}</div>
+          </div>
+        </div>
+      </div>
 
       <div class="compare-body article" v-html="entry.bodyHtml"></div>
 
@@ -83,7 +117,7 @@ import {
   generateFAQSchema,
   generateBreadcrumbSchema,
 } from '@/composables/useSEO'
-import { comparisons, comparisonList, METHODOLOGY_NOTE } from '@/content/comparisons'
+import { comparisons, comparisonList, METHODOLOGY_NOTE, PRICE_SOURCES } from '@/content/comparisons'
 
 const route = useRoute()
 
@@ -92,6 +126,11 @@ const entry = computed(() => comparisons[route.params.slug])
 const SITE = 'https://cloud.runonflux.com'
 const pageUrl = computed(() => `${SITE}/compare/${route.params.slug}`)
 const methodologyNote = METHODOLOGY_NOTE
+const priceSources = PRICE_SOURCES
+
+// Label for the rival column of the feature table — the competitor, or a generic
+// stand-in for the roundup/guide pages that don't target a single provider.
+const rivalName = computed(() => entry.value?.competitor || 'Traditional clouds')
 
 // CTA heading: an explicit ctaTitle wins; otherwise derive from the competitor,
 // falling back to a generic line for roundup pages (competitor: null).
@@ -269,6 +308,74 @@ onMounted(async () => {
   background: transparent;
 }
 
+.price-sources {
+  margin: 1rem 0 0;
+  font-size: 0.8rem;
+  color: rgba(var(--v-theme-on-surface), 0.55);
+  line-height: 1.6;
+}
+
+.price-sources a {
+  color: rgba(var(--v-theme-on-surface), 0.75);
+  text-decoration: none;
+}
+
+.price-sources a:hover {
+  text-decoration: underline;
+}
+
+/* At-a-glance feature comparison table */
+.feature-compare {
+  margin: 2rem 0;
+}
+
+.feature-compare-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin: 0 0 1rem;
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.feature-table {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.feature-row {
+  display: grid;
+  grid-template-columns: 1.1fr 1.4fr 1.4fr;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  background: rgb(var(--v-theme-surface));
+  border-radius: 8px;
+  align-items: start;
+  font-size: 0.95rem;
+}
+
+.feature-head {
+  background: rgb(var(--v-theme-primary));
+  color: white;
+  font-weight: 600;
+}
+
+.feature-label {
+  font-weight: 600;
+}
+
+.feature-flux {
+  color: rgb(var(--v-theme-on-surface));
+}
+
+.feature-head .feature-flux {
+  color: white;
+}
+
+.feature-tick {
+  margin-right: 0.35rem;
+  vertical-align: -0.15rem;
+}
+
 .compare-faq {
   margin-top: 2.5rem;
 }
@@ -280,6 +387,38 @@ onMounted(async () => {
 
   .compare-h1 {
     font-size: 1.75rem;
+  }
+
+  .feature-row {
+    grid-template-columns: 1fr;
+    gap: 0.35rem;
+    padding: 1rem;
+  }
+
+  .feature-head {
+    display: none;
+  }
+
+  .feature-cell::before {
+    content: attr(data-label);
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    font-weight: 600;
+    color: rgba(var(--v-theme-on-surface), 0.5);
+    margin-bottom: 0.1rem;
+  }
+
+  .feature-label::before {
+    content: none;
+  }
+
+  .feature-label {
+    font-size: 1.05rem;
+    border-bottom: 1px solid rgba(var(--v-theme-on-surface), 0.12);
+    padding-bottom: 0.5rem;
+    margin-bottom: 0.35rem;
   }
 }
 </style>

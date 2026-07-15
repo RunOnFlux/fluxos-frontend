@@ -16,7 +16,7 @@
         v-for="(provider, index) in pricingComparison"
         :key="index"
         class="comparison-row"
-        :class="{ highlighted: provider.highlighted }"
+        :class="{ highlighted: provider.highlighted, 'rival-row': highlightCompetitor && provider.name === highlightCompetitor }"
       >
         <div class="comparison-cell provider-cell">
           <VIcon v-if="provider.highlighted" icon="mdi-star" color="warning" size="20" class="mr-2" />
@@ -66,6 +66,13 @@ defineProps({
 
   // Optional footnote (HTML allowed) — e.g. the methodology / capture date.
   note: {
+    type: String,
+    default: '',
+  },
+
+  // Optional: name of the competitor row to visually emphasise (the provider
+  // the current page is about). Matches a row's `name`.
+  highlightCompetitor: {
     type: String,
     default: '',
   },
@@ -141,6 +148,11 @@ onMounted(async () => {
 .comparison-row.highlighted {
   background: rgba(var(--v-theme-primary), 0.08);
   border: 2px solid rgb(var(--v-theme-primary));
+}
+
+.comparison-row.rival-row {
+  background: rgba(var(--v-theme-on-surface), 0.06);
+  border: 1px solid rgba(var(--v-theme-on-surface), 0.25);
 }
 
 .comparison-cell {
