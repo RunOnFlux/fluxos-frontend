@@ -452,55 +452,6 @@ const fluxVsLinode = {
   ],
 }
 
-const fluxVsHeroku = {
-  slug: 'flux-vs-heroku',
-  competitor: 'Heroku',
-  datePublished: '2026-07-15',
-  dateModified: '2026-07-15',
-  metaTitle: 'FluxCloud vs Heroku — Cheaper Git-Deploy Alternative Without Lock-in',
-  metaDescription:
-    'FluxCloud vs Heroku: deploy from Git without the dyno premium or the free-tier that disappeared. A decentralized alternative with transparent pricing and no lock-in.',
-  breadcrumbLabel: 'FluxCloud vs Heroku',
-  linkLabel: 'FluxCloud vs Heroku',
-  linkDesc: 'A cheaper, lock-in-free Git-deploy alternative to Heroku dynos.',
-  h1: 'FluxCloud vs Heroku: a decentralized Git-deploy alternative',
-  heroSubtitle:
-    'The git-push simplicity people loved about Heroku — without the dyno premium, the vanished free tier, or the lock-in.',
-  intro:
-    '<p class="lead">Heroku made deployment feel effortless: <code>git push</code> and you were live. But it runs on a single centralized platform, its dyno pricing sits at a premium, and the free tier that onboarded a generation of developers was retired in 2022. <strong>FluxCloud</strong> — via Flux Orbit — brings back the git-based deploy experience on a decentralized cloud: connect a repository, get automatic builds, and run redundantly across 50+ countries with transparent pricing from $0.99/month and no lock-in.</p>',
-  tableTitle: 'FluxCloud vs traditional cloud providers — monthly cost',
-  bodyHtml: `
-    <h2>How the pricing compares</h2>
-    <p>Heroku prices by “dyno” rather than by raw instance, so it does not map one-to-one onto the instance table above — which compares FluxCloud to the major IaaS providers. But the direction is clear: a Heroku Standard/Performance dyno with the RAM of the instance compared here typically costs far more than a FluxCloud instance, before add-ons like databases. FluxCloud charges one transparent rate for the CPU, RAM, storage and instances you choose, with no per-dyno premium and no egress fees.</p>
-    <h2>Git deployment, without the lock-in</h2>
-    <ul>
-      <li><strong>Deploy from Git (Flux Orbit).</strong> Connect a repository and FluxCloud builds and runs it — React, Vue, Next.js, Node.js and similar — with built-in CI/CD, much like the Heroku flow.</li>
-      <li><strong>No proprietary buildpacks or lock-in.</strong> It is standard containers underneath; move your workload whenever you want.</li>
-      <li><strong>No vanished free tier surprises.</strong> Transparent pay-as-you-go from $0.99/month; pay by card or crypto.</li>
-      <li><strong>Decentralized resilience.</strong> Redundant across independent nodes — no single platform that can suspend or sunset your app.</li>
-    </ul>
-    <h2>Where Heroku still fits</h2>
-    <p>Heroku’s add-on marketplace and fully-managed platform experience are still convenient if you want everything handled and are comfortable with the pricing and single-vendor model. FluxCloud is for teams who loved the git-push simplicity but want lower, transparent pricing, no lock-in, and decentralized resilience.</p>
-  `,
-  faqs: [
-    {
-      question: 'Is FluxCloud cheaper than Heroku?',
-      answer:
-        'Generally yes. Heroku prices by dyno at a premium; a dyno comparable to the instance in our table typically costs several times a FluxCloud instance, before paid add-ons. FluxCloud uses transparent pay-as-you-go pricing from $0.99/month with no per-dyno premium and no egress fees. Exact figures depend on your dyno type and add-ons.',
-    },
-    {
-      question: 'What is a good Heroku alternative for Git deployment?',
-      answer:
-        'FluxCloud with Flux Orbit is a decentralized Heroku alternative: connect a Git repository and it builds and runs your app with CI/CD, similar to Heroku’s git-push flow — but on a decentralized cloud, with transparent pricing, no proprietary lock-in, and no free-tier that can be withdrawn.',
-    },
-    {
-      question: 'Did FluxCloud remove a free tier like Heroku did?',
-      answer:
-        'FluxCloud’s model is transparent pay-as-you-go from $0.99/month for a basic instance rather than a free tier, so there is no free plan to be withdrawn — you pay a small, predictable rate for exactly the resources you use.',
-    },
-  ],
-}
-
 const whatIsDecentralizedCloud = {
   slug: 'what-is-decentralized-cloud-hosting',
   competitor: null,
@@ -625,7 +576,6 @@ export const comparisonList = [
   fluxVsAzure,
   fluxVsVultr,
   fluxVsLinode,
-  fluxVsHeroku,
   fluxVsAkash,
   cheapestCloudHosting,
   whatIsDecentralizedCloud,

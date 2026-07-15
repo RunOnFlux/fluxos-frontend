@@ -53,14 +53,14 @@ const FALLBACK_ROUTES = Object.freeze([
   '/apps/register/orbit',
   '/cost-calculator',
 
-  // Comparison / "alternative to" pages (see src/content/comparisons.js)
+  // Comparison hub + "alternative to" pages (see src/content/comparisons.js)
+  '/compare',
   '/compare/flux-vs-aws',
   '/compare/flux-vs-digitalocean',
   '/compare/flux-vs-google-cloud',
   '/compare/flux-vs-azure',
   '/compare/flux-vs-vultr',
   '/compare/flux-vs-linode',
-  '/compare/flux-vs-heroku',
   '/compare/flux-vs-akash',
   '/compare/cheapest-cloud-hosting',
   '/compare/what-is-decentralized-cloud-hosting',

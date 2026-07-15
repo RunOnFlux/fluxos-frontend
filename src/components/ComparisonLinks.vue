@@ -12,7 +12,7 @@
         FluxCloud vs. the big clouds
       </h2>
       <p class="section-subtitle">
-        How decentralized hosting compares to AWS, Google Cloud, Azure, DigitalOcean, Vultr, Linode, Heroku and Akash — on price, resilience and lock-in.
+        How decentralized hosting compares to AWS, Google Cloud, Azure, DigitalOcean, Vultr, Linode and Akash — on price, resilience and lock-in.
       </p>
 
       <ul class="links-grid">

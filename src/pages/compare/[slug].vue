@@ -143,7 +143,7 @@ const faqPanel = { enabled: true, title: '', subtitle: '', questions: [] }
 
 const breadcrumbItems = computed(() => [
   { text: 'Home', to: '/' },
-  { text: 'Compare' },
+  { text: 'Compare', to: '/compare' },
   { text: entry.value?.breadcrumbLabel || 'Compare' },
 ])
 
@@ -170,6 +170,7 @@ useSEO({
       generateFAQSchema(entry.value.faqs),
       generateBreadcrumbSchema([
         { name: 'Home', url: `${SITE}/` },
+        { name: 'Compare', url: `${SITE}/compare` },
         { name: entry.value.breadcrumbLabel, url: pageUrl.value },
       ]),
     ]

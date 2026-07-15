@@ -77,7 +77,14 @@ const staticUrls = [
     description: 'WordPress Hosting',
   },
 
-  // Comparison Pages (see src/content/comparisons.js)
+  // Comparison hub + pages (see src/content/comparisons.js)
+  {
+    loc: '/compare',
+    source: 'src/pages/compare/index.vue',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'weekly',
+    description: 'Cloud hosting comparisons hub',
+  },
   {
     loc: '/compare/flux-vs-aws',
     source: 'src/content/comparisons.js',
@@ -119,13 +126,6 @@ const staticUrls = [
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
     description: 'Comparison: FluxCloud vs Linode',
-  },
-  {
-    loc: '/compare/flux-vs-heroku',
-    source: 'src/content/comparisons.js',
-    priority: SEO_PRIORITY.MEDIUM,
-    changefreq: 'monthly',
-    description: 'Comparison: FluxCloud vs Heroku',
   },
   {
     loc: '/compare/flux-vs-akash',
