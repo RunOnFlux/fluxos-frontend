@@ -42,6 +42,7 @@ declare module 'vue' {
     CardStatisticsVertical: typeof import('./@core/components/cards/CardStatisticsVertical.vue')['default']
     CardStatisticsVerticalSimple: typeof import('./@core/components/CardStatisticsVerticalSimple.vue')['default']
     CheckoutContent: typeof import('./components/CheckoutContent.vue')['default']
+    ComparisonLinks: typeof import('./components/ComparisonLinks.vue')['default']
     ComponentDetails: typeof import('./@core/components/ComponentDetails.vue')['default']
     ConfirmCustomDialog: typeof import('./@core/components/ConfirmCustomDialog.vue')['default']
     CookieConsent: typeof import('./components/shared/CookieConsent.vue')['default']

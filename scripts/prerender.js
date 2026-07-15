@@ -55,6 +55,11 @@ const FALLBACK_ROUTES = Object.freeze([
 
   // Comparison / "alternative to" pages (see src/content/comparisons.js)
   '/compare/flux-vs-aws',
+  '/compare/flux-vs-digitalocean',
+  '/compare/flux-vs-google-cloud',
+  '/compare/flux-vs-azure',
+  '/compare/flux-vs-akash',
+  '/compare/cheapest-cloud-hosting',
 
   // Dashboard pages (public info)
   '/dashboards/overview',

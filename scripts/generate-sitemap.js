@@ -85,6 +85,41 @@ const staticUrls = [
     changefreq: 'monthly',
     description: 'Comparison: FluxCloud vs AWS',
   },
+  {
+    loc: '/compare/flux-vs-digitalocean',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs DigitalOcean',
+  },
+  {
+    loc: '/compare/flux-vs-google-cloud',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Google Cloud',
+  },
+  {
+    loc: '/compare/flux-vs-azure',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Azure',
+  },
+  {
+    loc: '/compare/flux-vs-akash',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.MEDIUM,
+    changefreq: 'monthly',
+    description: 'Comparison: FluxCloud vs Akash',
+  },
+  {
+    loc: '/compare/cheapest-cloud-hosting',
+    source: 'src/content/comparisons.js',
+    priority: SEO_PRIORITY.HIGH,
+    changefreq: 'monthly',
+    description: 'Guide: Cheapest cloud hosting',
+  },
 
   // Dashboard Pages
   {

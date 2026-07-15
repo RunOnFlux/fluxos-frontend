@@ -14,7 +14,7 @@
         <VCardText>
           <PricingComparisonTable
             :title="entry.tableTitle"
-            :note="entry.tableNote"
+            :note="methodologyNote"
             @price-resolved="markReady"
           />
         </VCardText>
@@ -31,7 +31,7 @@
       />
 
       <CtaSection
-        :title="`Ready to try the alternative to ${entry.competitor}?`"
+        :title="ctaTitle"
         subtitle="Deploy in about 30 seconds across 50+ regions. From $0.99/month — pay-as-you-go, no lock-in."
         button-text="Deploy your app"
         icon="mdi-rocket-launch-outline"
@@ -46,7 +46,7 @@
 
       <RelatedLinksGrid
         title="Keep exploring"
-        :links="entry.related"
+        :links="relatedLinks"
       />
     </div>
   </div>
@@ -83,7 +83,7 @@ import {
   generateFAQSchema,
   generateBreadcrumbSchema,
 } from '@/composables/useSEO'
-import { comparisons } from '@/content/comparisons'
+import { comparisons, comparisonList, METHODOLOGY_NOTE } from '@/content/comparisons'
 
 const route = useRoute()
 
@@ -91,6 +91,47 @@ const entry = computed(() => comparisons[route.params.slug])
 
 const SITE = 'https://cloud.runonflux.com'
 const pageUrl = computed(() => `${SITE}/compare/${route.params.slug}`)
+const methodologyNote = METHODOLOGY_NOTE
+
+// CTA heading: an explicit ctaTitle wins; otherwise derive from the competitor,
+// falling back to a generic line for roundup pages (competitor: null).
+const ctaTitle = computed(() =>
+  entry.value?.ctaTitle
+  || (entry.value?.competitor
+    ? `Ready to try the alternative to ${entry.value.competitor}?`
+    : 'Ready to deploy on the decentralized cloud?'),
+)
+
+// "Keep exploring": cross-link the other comparison pages (internal-linking for
+// SEO) plus the key tools. Stays in sync as comparisons are added.
+const TOOL_LINKS = [
+  {
+    title: 'Cost calculator',
+    description: 'Estimate your exact monthly cost by CPU, RAM, storage and instances.',
+    to: '/cost-calculator',
+    icon: 'mdi-calculator-variant-outline',
+  },
+  {
+    title: 'Deploy an app',
+    description: 'Launch a Docker app or a Git repository in about 30 seconds.',
+    to: '/apps/register',
+    icon: 'mdi-rocket-launch-outline',
+  },
+]
+
+const relatedLinks = computed(() => {
+  const others = comparisonList
+    .filter(c => c.slug !== route.params.slug)
+    .slice(0, 3)
+    .map(c => ({
+      title: c.linkLabel,
+      description: c.linkDesc,
+      to: `/compare/${c.slug}`,
+      icon: 'mdi-scale-balance',
+    }))
+
+  return [...others, ...TOOL_LINKS]
+})
 
 // Hold the prerender snapshot until the live price has settled (released by the
 // PricingComparisonTable @price-resolved event). markReady is a no-op if the
@@ -102,7 +143,7 @@ const faqPanel = { enabled: true, title: '', subtitle: '', questions: [] }
 
 const breadcrumbItems = computed(() => [
   { text: 'Home', to: '/' },
-  { text: 'Compare', to: '/compare/flux-vs-aws' },
+  { text: 'Compare' },
   { text: entry.value?.breadcrumbLabel || 'Compare' },
 ])
 
