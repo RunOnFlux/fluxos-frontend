@@ -3,6 +3,14 @@
   publish = "dist"
   command = "npm run build"
 
+# Git app registration moved to the dedicated site (orbit.runonflux.com).
+# 301 the retired internal path so old links/indexed URLs don't 404.
+[[redirects]]
+  from = "/apps/register/orbit"
+  to = "https://orbit.runonflux.com"
+  status = 301
+  force = true
+
 # SPA fallback - redirect all routes to index.html
 [[redirects]]
   from = "/*"

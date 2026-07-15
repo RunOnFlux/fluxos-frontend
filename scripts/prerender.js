@@ -50,7 +50,6 @@ const FALLBACK_ROUTES = Object.freeze([
   '/marketplace/games',
   '/flux-drive',
   '/apps/register',
-  '/apps/register/orbit',
   '/cost-calculator',
 
   // Comparison hub + "alternative to" pages (see src/content/comparisons.js)

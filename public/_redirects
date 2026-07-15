@@ -1,3 +1,7 @@
+# Git app registration moved to the dedicated site (orbit.runonflux.com).
+# 301 the retired internal path so old links/indexed URLs don't 404.
+/apps/register/orbit   https://orbit.runonflux.com   301!
+
 # Netlify/Cloudflare Pages SPA fallback
 # Redirect all requests to index.html to support client-side routing
 /*    /index.html   200
