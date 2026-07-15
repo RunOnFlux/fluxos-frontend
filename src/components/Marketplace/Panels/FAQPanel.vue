@@ -22,7 +22,14 @@
                 <h3 class="question-text">{{ faq.q || faq.question }}</h3>
               </div>
             </VExpansionPanelTitle>
-            <VExpansionPanelText class="faq-answer">
+            <!--
+              eager: render the answer into the DOM even while the panel is
+              collapsed (Vuetify then hides it with v-show, not v-if). This
+              keeps the answer text in the prerendered/indexable HTML for
+              crawlers and AI bots that read the visible DOM rather than the
+              FAQPage JSON-LD. UX is unchanged — the panel still opens/closes. 
+            -->
+            <VExpansionPanelText class="faq-answer" eager>
               <div v-html="sanitizeAnswer(faq.a || faq.answer)"></div>
             </VExpansionPanelText>
           </VExpansionPanel>
