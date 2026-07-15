@@ -95,7 +95,6 @@ useHead({
   title,
   meta: [
     { name: 'description', content: description },
-    { name: 'keywords', content: 'decentralized cloud, Web3 hosting, blockchain infrastructure, FluxNodes, decentralized apps, game server hosting, WordPress hosting, docker hosting, container hosting, affordable cloud hosting' },
 
     // Open Graph
     { property: 'og:title', content: title },

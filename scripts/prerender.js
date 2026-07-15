@@ -340,6 +340,17 @@ async function renderPageWithRetry(context, route, port) {
       // Extra wait for head meta tags / JSON-LD to fully flush to the DOM
       await page.waitForTimeout(800)
 
+      // Strip internal runtime UI chrome from the snapshot before capturing it.
+      // Elements marked with data-prerender-strip (theme customizer, backend/
+      // frontend version footer, HTTPS-tooltip text, etc.) are developer/runtime
+      // affordances that only dilute indexable content and leak build version
+      // numbers into public HTML. Removing them via the DOM (rather than regex)
+      // is robust to Vuetify's markup and scoped-style hashes. Real users still
+      // get these elements once Vue mounts and re-renders the page.
+      await page.evaluate(() => {
+        document.querySelectorAll('[data-prerender-strip]').forEach(el => el.remove())
+      })
+
       // Get the rendered HTML
       let html = await page.content()
 

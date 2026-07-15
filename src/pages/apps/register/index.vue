@@ -81,6 +81,14 @@
                 <div class="comparison-cell" :data-label="t('pages.apps.register.landing.pricing.storage')">{{ provider.storage }}</div>
                 <div class="comparison-cell price-cell" :data-label="t('pages.apps.register.landing.pricing.pricePerMonth')">
                   <span :class="{ 'best-price': provider.highlighted }">{{ provider.price }}</span>
+                  <VProgressCircular
+                    v-if="provider.loading"
+                    indeterminate
+                    size="14"
+                    width="2"
+                    color="primary"
+                    class="ml-2"
+                  />
                 </div>
               </div>
             </div>
@@ -324,7 +332,14 @@ const pricingComparison = computed(() => [
     cpu: '2 vCPU',
     ram: '4 GB',
     storage: '20 GB SSD',
-    price: fluxCloudPriceLoading.value ? t('pages.costCalculator.calculating') : fluxCloudPrice.value,
+
+    // Always show a real price (the fallback resolves to the live value once the
+    // API responds). Never persist the "Calculating…" placeholder: during
+    // prerender the price API may not resolve inside the snapshot window, and a
+    // frozen loading string was being baked into the indexable HTML for the one
+    // row that matters most. A spinner (provider.loading) covers the UX instead.
+    price: fluxCloudPrice.value,
+    loading: fluxCloudPriceLoading.value,
     highlighted: true,
   },
   {
@@ -698,10 +713,6 @@ useHead({
     {
       name: 'description',
       content: 'Deploy any Docker app on FluxCloud\'s decentralized network in minutes. Pay-as-you-go pricing from $0.99/month, servers in 50+ countries, no vendor lock-in.',
-    },
-    {
-      name: 'keywords',
-      content: 'flux, cloud computing, decentralized hosting, docker deployment, blockchain, web3, dapp hosting',
     },
     {
       name: 'robots',

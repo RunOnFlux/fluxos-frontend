@@ -4,6 +4,7 @@
     icon="mdi-server"
     class="rounded elevation-4 mb-0 pa-2 statusbar-card"
     style="width: 100%; position: relative; overflow: visible;"
+    data-prerender-strip
   >
     <VTooltip location="left">
       <template #activator="{ props }">

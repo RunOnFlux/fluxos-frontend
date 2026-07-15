@@ -2631,10 +2631,6 @@ useHead({
       content: 'Deploy your Git repositories directly to FluxCloud. No Docker knowledge required. Support for React, Vue, Next.js, Node.js, and more frameworks with built-in CI/CD.',
     },
     {
-      name: 'keywords',
-      content: 'flux git, git deployment, ci/cd, react deployment, vue deployment, next.js hosting, node.js deployment, decentralized hosting, web3 deployment',
-    },
-    {
       name: 'robots',
       content: 'index, follow',
     },

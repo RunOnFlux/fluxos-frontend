@@ -527,7 +527,6 @@ useHead({
   title,
   meta: [
     { name: 'description', content: description },
-    { name: 'keywords', content: 'Flux network, FluxNodes, node statistics, blockchain network, decentralized infrastructure, Cumulus, Nimbus, Stratus, network monitoring, node tiers' },
 
     // Open Graph
     { property: 'og:title', content: title },
