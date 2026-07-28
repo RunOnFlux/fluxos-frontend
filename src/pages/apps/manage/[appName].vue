@@ -1115,6 +1115,7 @@ import { useConfigStore } from "@core/stores/config"
 import { useI18n } from 'vue-i18n'
 import { useSEONoIndex } from '@/composables/useSEO'
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
+import { forgetSsoEmail } from "@/utils/firebase"
 import { paymentBridge } from "@/utils/fiatGateways"
 import LoadingSpinner from "@/components/Marketplace/LoadingSpinner.vue"
 import AuditViewer from "@core/components/AuditViewer.vue"
@@ -1938,6 +1939,7 @@ async function logout() {
   // Now clear auth data
   localStorage.removeItem("zelidauth")
   localStorage.removeItem("loginType")
+  forgetSsoEmail()
   clearStickyBackendDNS() // Clear sticky backend on auto logout
   fluxStore.setPrivilege("none")
   fluxStore.setZelid("")

@@ -1620,7 +1620,7 @@ import { useFluxStore } from '@/stores/flux'
 import { getDetectedBackendURL } from '@/utils/backend'
 import geolocationData from '@/utils/geolocation'
 import { paymentBridge } from '@/utils/fiatGateways'
-import { getUser } from '@/utils/firebase'
+import { getUser, getSsoEmail } from '@/utils/firebase'
 import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'
 import { payWithZelcore, payWithSSP, isSSPAvailable, isZelcoreAvailable, isBrowserMetaMaskAvailable, getConnectedAccount, hasWalletConnectSession, signWithWalletConnect as walletServiceSignWithWalletConnect, watchWalletAccount, signWithSSP as walletServiceSignWithSSP, signWithZelcore as walletServiceSignWithZelcore, sanitizeUnicodeForSigning } from '@/utils/walletService'
 import axios from 'axios'
@@ -5141,12 +5141,14 @@ watch(() => props.modelValue, (newValue, oldValue) => {
     // Re-fetch deployment info
     fetchDeploymentInfo()
 
-    // Auto-fill contact email for SSO users (after resetDialog clears the form)
+    // Auto-fill contact email for SSO users (after resetDialog clears the form).
+    // getSsoEmail, not getUser: the Firebase user is not restored yet right
+    // after a page load and never exists for a Console-handoff session.
     const loginType = localStorage.getItem('loginType')
     if (loginType === 'sso') {
-      const firebaseUser = getUser()
-      if (firebaseUser?.email) {
-        emailNotifications.value.email = firebaseUser.email
+      const ssoEmail = getSsoEmail()
+      if (ssoEmail) {
+        emailNotifications.value.email = ssoEmail
       }
     }
   }

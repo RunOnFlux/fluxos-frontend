@@ -477,6 +477,7 @@ import {
   loginWithApple,
   loginWithEmail,
   loginWithGoogle,
+  rememberSsoEmail,
 } from "@/utils/firebase"
 import { useConfigStore } from "@core/stores/config"
 import Logo from "@core/components/Logo.vue"
@@ -667,6 +668,7 @@ const handleSignedInUser = async user => {
         fluxStore.setZelid(authLogin.zelid)
         localStorage.setItem('loginType', 'sso')
         localStorage.setItem("zelidauth", qs.stringify(authLogin))
+        rememberSsoEmail(user.email)
         showSsoLoggedIn.value = false
         emit('loginSuccess')
         showToast("success", response.data.data.message)

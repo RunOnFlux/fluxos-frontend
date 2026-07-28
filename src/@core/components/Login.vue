@@ -574,6 +574,7 @@ import {
   loginWithApple,
   loginWithEmail,
   loginWithGoogle,
+  rememberSsoEmail,
 } from "@/utils/firebase"
 import { useConfigStore } from "@core/stores/config"
 import fluxIDLogo from "@images/FluxID.svg?url"
@@ -783,6 +784,7 @@ const handleSignedInUser = async (user, provider = 'email') => {
         fluxStore.setZelid(authLogin.zelid)
         localStorage.setItem('loginType', 'sso')
         localStorage.setItem("zelidauth", qs.stringify(authLogin))
+        rememberSsoEmail(user.email)
 
         // Track successful SSO authentication with specific provider
         const analytics = useAnalytics()
