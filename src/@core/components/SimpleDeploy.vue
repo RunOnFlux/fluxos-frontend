@@ -130,10 +130,10 @@
           variant="outlined"
           hide-details
           type="email"
-          :disabled="isSso"
-          :append-inner-icon="isSso ? 'mdi-lock-outline' : undefined"
+          :disabled="isContactLocked"
+          :append-inner-icon="isContactLocked ? 'mdi-lock-outline' : undefined"
         />
-        <div class="sd-hint">{{ isSso ? t('core.simpleDeploy.contactSsoHint') : t('core.simpleDeploy.contactHint') }}</div>
+        <div class="sd-hint">{{ isContactLocked ? t('core.simpleDeploy.contactSsoHint') : t('core.simpleDeploy.contactHint') }}</div>
       </div>
     </section>
 
@@ -465,9 +465,9 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch, watchEffect, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { getUser } from '@/utils/firebase'
+import { getSsoEmail } from '@/utils/firebase'
 import { detectSecretEnvVars } from '@/utils/detectSecrets'
 import { isValidPort, isPortBanned, generateRandomPort } from '@/utils/fluxPorts'
 
@@ -690,6 +690,23 @@ const contactEmail = computed({
   set: v => { props.spec.contacts = v ? [v] : [] },
 })
 
+// The parent rebuilds `spec` from its own draft (which never carries a contact)
+// whenever that draft changes — it does so right after we mount, to stamp the
+// owner. A one-shot fill would therefore be thrown away and leave the field
+// empty *and* locked, with no way to register. Refill whenever the spec comes
+// back empty instead.
+watchEffect(() => {
+  if (isSso.value && !contactEmail.value) {
+    const email = getSsoEmail()
+    if (email) contactEmail.value = email
+  }
+})
+
+// Never lock an empty field: without a resolvable SSO email (a session restored
+// from the Console handoff has no Firebase user) the user must still be able to
+// type one, or registration is impossible.
+const isContactLocked = computed(() => isSso.value && !!contactEmail.value)
+
 function isValidEmail(v) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v || '')
 }
@@ -891,13 +908,6 @@ function onDeploy() {
 onMounted(() => {
   // Default to a single instance unless the spec already sets one.
   if (!props.spec.instances || props.spec.instances < 1) props.spec.instances = 1
-
-  // Contact email is mandatory. For SSO users it's their account email,
-  // auto-filled and locked; other login types must provide one.
-  if (isSso.value && !contactEmail.value) {
-    const user = getUser()
-    if (user?.email) contactEmail.value = user.email
-  }
 
   loadEnvRows()
   loadStorage()

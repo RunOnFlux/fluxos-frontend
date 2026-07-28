@@ -227,29 +227,43 @@ const app = createApp(App)
 const head = createHead()
 app.use(head)
 
-// Register other plugins (async to support lazy-loaded translations)
-// This installs the router, which kicks off the initial navigation.
-await registerPlugins(app)
-app.directive('sanitize-html', sanitizeHtml)
+// Boot inside an async function — never with a top-level `await`.
+//
+// Rollup hoists shared helpers (the SFC `_export_sfc` helper, shared utils…)
+// into the *entry* chunk, so every lazily-imported route chunk statically
+// imports the entry chunk back. A top-level `await` here suspends the entry
+// chunk's evaluation, which suspends every route chunk that imports it — while
+// `router.isReady()` is itself waiting for exactly that route chunk. That is a
+// deadlock, and only the timeout below broke it: every production page load
+// stalled the full 3s before mounting. Keeping the awaits inside a function
+// lets the entry module finish evaluating immediately.
+const bootstrap = async () => {
+  // Register other plugins (async to support lazy-loaded translations)
+  // This installs the router, which kicks off the initial navigation.
+  await registerPlugins(app)
+  app.directive('sanitize-html', sanitizeHtml)
 
-// On a pre-rendered route, hold the snapshot on screen across the mount so the
-// page doesn't blank out and re-render (see @/utils/prerenderSnapshot).
-const releaseSnapshot = freezePrerenderedSnapshot()
+  // On a pre-rendered route, hold the snapshot on screen across the mount so
+  // the page doesn't blank out and re-render (see @/utils/prerenderSnapshot).
+  const releaseSnapshot = freezePrerenderedSnapshot()
 
-// Wait for the initial navigation so the route's lazy chunk is resolved and
-// mount() paints the page in one go instead of an empty shell first. Bounded:
-// a guard that never settles must not stop the app from mounting.
-await Promise.race([
-  router.isReady().catch(() => {}),
-  new Promise(resolve => setTimeout(resolve, 3000)),
-])
+  // Wait for the initial navigation so the route's lazy chunk is resolved and
+  // mount() paints the page in one go instead of an empty shell first. Bounded:
+  // a guard that never settles must not stop the app from mounting.
+  await Promise.race([
+    router.isReady().catch(() => {}),
+    new Promise(resolve => setTimeout(resolve, 3000)),
+  ])
 
-// Mount vue app
-try {
-  app.mount('#app')
-} finally {
-  releaseSnapshot()
+  // Mount vue app
+  try {
+    app.mount('#app')
+  } finally {
+    releaseSnapshot()
+  }
 }
+
+bootstrap()
 
 // Auto-reload when new build is deployed (service worker update)
 // Only reload on SW *update* (hadController=true), not first install (hadController=false)

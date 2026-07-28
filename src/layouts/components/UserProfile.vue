@@ -8,6 +8,7 @@ import { useRoute, useRouter } from "vue-router"
 import { eventBus } from "@/utils/eventBus"
 import { disconnectWalletConnect } from "@/utils/walletService"
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
+import { forgetSsoEmail } from "@/utils/firebase"
 import { paymentBridge } from "@/utils/fiatGateways"
 import { useI18n } from "vue-i18n"
 
@@ -89,6 +90,7 @@ async function logout() {
   // Clear auth data
   localStorage.removeItem("zelidauth")
   localStorage.removeItem("loginType")
+  forgetSsoEmail()
   clearStickyBackendDNS() // Clear sticky backend on logout
   fluxStore.setPrivilege("none")
   fluxStore.setZelid("")

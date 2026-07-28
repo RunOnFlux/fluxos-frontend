@@ -3721,7 +3721,7 @@
 </template>
 
 <script setup>
-import { ref, computed, watch, onMounted, onUnmounted, nextTick } from 'vue'
+import { ref, computed, watch, watchEffect, onMounted, onUnmounted, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import axios from 'axios'
 import { cloneDeep } from 'lodash-es'
@@ -3742,7 +3742,7 @@ const { t } = useI18n()
 import geolocations from '@/utils/geolocation'
 import qs from 'qs'
 import { signWithWalletConnect, getConnectedAccount, payWithSSP, payWithZelcore, signWithSSP, signWithZelcore } from '@/utils/walletService'
-import { getUser } from '@/utils/firebase'
+import { getUser, getSsoEmail } from '@/utils/firebase'
 import { getDetectedBackendURL } from "@/utils/backend"
 import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
@@ -4006,6 +4006,25 @@ const appDetails = ref({
   enterprise: '',
   nodes: '',
   renewalIndex: 0, // UI only
+})
+
+// Auto-fill the contact with the SSO account email for new apps. This has to be
+// an effect rather than a one-shot fill on mount: reseeding appDetails from a
+// replaced appSpec clears `contacts` (see the appSpec watcher below), and the
+// parent page replaces the spec right after we mount, which would silently drop
+// the address. Self-stabilising — once filled, the guard stops matching.
+watchEffect(() => {
+  if (!props.newApp || loginType.value !== 'sso') return
+
+  const current = appDetails.value.contacts
+  const filled = Array.isArray(current)
+    ? current.some(c => c && c.trim())
+    : !!(current && current.trim())
+
+  if (filled) return
+
+  const email = getSsoEmail()
+  if (email) appDetails.value.contacts = [email]
 })
 
 const isPrivateApp = ref(false)
@@ -4917,17 +4936,6 @@ onMounted(() => {
         }
       } catch (error) {
         console.error('Failed to parse zelidauth for default owner:', error)
-      }
-    }
-  }
-
-  // Auto-fill contact email for SSO users (only for new apps without existing contacts)
-  if (props.newApp && (!appDetails.value.contacts || appDetails.value.contacts.length === 0)) {
-    const loginTypeValue = loginType.value
-    if (loginTypeValue === 'sso') {
-      const firebaseUser = getUser()
-      if (firebaseUser?.email) {
-        appDetails.value.contacts = [firebaseUser.email]
       }
     }
   }

@@ -81,6 +81,7 @@ declare global {
   const fiatGateways: typeof import('./utils/fiatGateways.js')['default']
   const firebase: typeof import('./utils/firebase.js')['firebase']
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
+  const forgetSsoEmail: typeof import('./utils/firebase.js')['forgetSsoEmail']
   const formatDate: typeof import('./@core/utils/formatters.js')['formatDate']
   const formatDateToMonthShort: typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']
   const freezePrerenderedSnapshot: typeof import('./utils/prerenderSnapshot.js')['freezePrerenderedSnapshot']
@@ -110,6 +111,7 @@ declare global {
   const getPictureSources: typeof import('./composables/useOptimizedImage.js')['getPictureSources']
   const getRedirectResult: typeof import('./utils/firebase.js')['getRedirectResult']
   const getSpecFromPermanentMessages: typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']
+  const getSsoEmail: typeof import('./utils/firebase.js')['getSsoEmail']
   const getStickyBackendDNS: typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']
   const getUser: typeof import('./utils/firebase.js')['getUser']
   const getWagmiAdapterAsync: typeof import('./utils/walletService.js')['getWagmiAdapterAsync']
@@ -133,6 +135,7 @@ declare global {
   const isMetaMaskLocked: typeof import('./utils/walletService.js')['isMetaMaskLocked']
   const isNullOrUndefined: typeof import('./@core/utils/helpers.js')['isNullOrUndefined']
   const isObject: typeof import('./@core/utils/helpers.js')['isObject']
+  const isPaintingOverSnapshot: typeof import('./utils/prerenderSnapshot.js')['isPaintingOverSnapshot']
   const isPortBanned: typeof import('./utils/fluxPorts.js')['isPortBanned']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
@@ -207,6 +210,7 @@ declare global {
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
   const regexValidator: typeof import('./@core/utils/validators.js')['regexValidator']
   const registerPlugins: typeof import('./@core/utils/plugins.js')['registerPlugins']
+  const rememberSsoEmail: typeof import('./utils/firebase.js')['rememberSsoEmail']
   const requiredValidator: typeof import('./@core/utils/validators.js')['requiredValidator']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
@@ -556,6 +560,7 @@ declare module 'vue' {
     readonly fiatGateways: UnwrapRef<typeof import('./utils/fiatGateways.js')['default']>
     readonly firebase: UnwrapRef<typeof import('./utils/firebase.js')['firebase']>
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
+    readonly forgetSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['forgetSsoEmail']>
     readonly formatDate: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDate']>
     readonly formatDateToMonthShort: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']>
     readonly freezePrerenderedSnapshot: UnwrapRef<typeof import('./utils/prerenderSnapshot.js')['freezePrerenderedSnapshot']>
@@ -584,6 +589,7 @@ declare module 'vue' {
     readonly getOptimizedImagePath: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']>
     readonly getPictureSources: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getPictureSources']>
     readonly getSpecFromPermanentMessages: UnwrapRef<typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']>
+    readonly getSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['getSsoEmail']>
     readonly getStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']>
     readonly getUser: UnwrapRef<typeof import('./utils/firebase.js')['getUser']>
     readonly getWagmiAdapterAsync: UnwrapRef<typeof import('./utils/walletService.js')['getWagmiAdapterAsync']>
@@ -606,6 +612,7 @@ declare module 'vue' {
     readonly isEmptyArray: UnwrapRef<typeof import('./@core/utils/helpers.js')['isEmptyArray']>
     readonly isNullOrUndefined: UnwrapRef<typeof import('./@core/utils/helpers.js')['isNullOrUndefined']>
     readonly isObject: UnwrapRef<typeof import('./@core/utils/helpers.js')['isObject']>
+    readonly isPaintingOverSnapshot: UnwrapRef<typeof import('./utils/prerenderSnapshot.js')['isPaintingOverSnapshot']>
     readonly isPortBanned: UnwrapRef<typeof import('./utils/fluxPorts.js')['isPortBanned']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
@@ -680,6 +687,7 @@ declare module 'vue' {
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
     readonly regexValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['regexValidator']>
     readonly registerPlugins: UnwrapRef<typeof import('./@core/utils/plugins.js')['registerPlugins']>
+    readonly rememberSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['rememberSsoEmail']>
     readonly requiredValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['requiredValidator']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>

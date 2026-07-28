@@ -36,6 +36,25 @@ const normalizePath = p => {
   }
 }
 
+// True from the moment we freeze a matching snapshot until it has been faded
+// away, i.e. exactly while the first render is painting *underneath* markup that
+// already shows the page in its settled state.
+let paintingOverSnapshot = false
+
+/**
+ * Whether this render is painting underneath a pre-rendered snapshot of the same
+ * page. Components with an entry animation must skip it while this is true —
+ * replaying "fade in from opacity 0" under a snapshot that already shows the
+ * content makes that content vanish and re-appear, which reads as the page
+ * reloading itself. Always false on later navigations, in dev, and on routes
+ * that were not pre-rendered.
+ *
+ * @returns {boolean}
+ */
+export function isPaintingOverSnapshot() {
+  return paintingOverSnapshot
+}
+
 /**
  * Lift the pre-rendered markup out of `#app` into an overlay.
  *
@@ -75,6 +94,7 @@ export function freezePrerenderedSnapshot() {
 
   while (root.firstChild) shell.appendChild(root.firstChild)
   document.body.appendChild(shell)
+  paintingOverSnapshot = true
 
   let released = false
 
@@ -89,7 +109,10 @@ export function freezePrerenderedSnapshot() {
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         shell.style.opacity = '0'
-        setTimeout(() => shell.remove(), FADE_MS + 50)
+        setTimeout(() => {
+          shell.remove()
+          paintingOverSnapshot = false
+        }, FADE_MS + 50)
       })
     })
   }

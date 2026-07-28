@@ -19,8 +19,8 @@
             v-for="(banner, index) in allBanners"
             :key="index"
             class="feature-card"
-            :class="{ 'card-visible': showCards }"
-            :style="{ animationDelay: `${index * 0.1}s` }"
+            :class="{ 'card-visible': showCards, 'card-settled': skipEntryAnimation }"
+            :style="skipEntryAnimation ? null : { animationDelay: `${index * 0.1}s` }"
           >
             <div class="feature-image-wrapper">
               <img
@@ -76,13 +76,21 @@
 import { computed, ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { isPaintingOverSnapshot } from '@/utils/prerenderSnapshot'
 
 const router = useRouter()
 const { t } = useI18n()
 
-const showCards = ref(false)
+// On a pre-rendered route the snapshot already shows the cards in their settled
+// state, so replaying the entry animation would blank the grid and fade it back
+// in the moment the snapshot is lifted — the "page redraws itself" flash. Render
+// them already settled instead of animating.
+const skipEntryAnimation = isPaintingOverSnapshot()
+const showCards = ref(skipEntryAnimation)
 
 onMounted(() => {
+  if (skipEntryAnimation) return
+
   // Check if the initial loader is still present
   const loader = document.getElementById('loading-bg')
 
@@ -261,6 +269,15 @@ const exploreBanner = banner => {
 
 .feature-card.card-visible {
   animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Painting underneath a pre-rendered snapshot: the cards have to be in their
+   final state on the very first frame, or lifting the snapshot exposes them
+   mid-animation (see isPaintingOverSnapshot). */
+.feature-card.card-settled {
+  opacity: 1;
+  transform: none;
+  animation: none;
 }
 
 .feature-card:hover {
