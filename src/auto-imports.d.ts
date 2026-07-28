@@ -133,6 +133,7 @@ declare global {
   const isMetaMaskLocked: typeof import('./utils/walletService.js')['isMetaMaskLocked']
   const isNullOrUndefined: typeof import('./@core/utils/helpers.js')['isNullOrUndefined']
   const isObject: typeof import('./@core/utils/helpers.js')['isObject']
+  const isPaintingOverSnapshot: typeof import('./utils/prerenderSnapshot.js')['isPaintingOverSnapshot']
   const isPortBanned: typeof import('./utils/fluxPorts.js')['isPortBanned']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
@@ -606,6 +607,7 @@ declare module 'vue' {
     readonly isEmptyArray: UnwrapRef<typeof import('./@core/utils/helpers.js')['isEmptyArray']>
     readonly isNullOrUndefined: UnwrapRef<typeof import('./@core/utils/helpers.js')['isNullOrUndefined']>
     readonly isObject: UnwrapRef<typeof import('./@core/utils/helpers.js')['isObject']>
+    readonly isPaintingOverSnapshot: UnwrapRef<typeof import('./utils/prerenderSnapshot.js')['isPaintingOverSnapshot']>
     readonly isPortBanned: UnwrapRef<typeof import('./utils/fluxPorts.js')['isPortBanned']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>

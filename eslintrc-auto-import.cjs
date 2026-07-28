@@ -139,6 +139,7 @@ module.exports = {
     "isEmptyArray": true,
     "isNullOrUndefined": true,
     "isObject": true,
+    "isPaintingOverSnapshot": true,
     "isPortBanned": true,
     "isProxy": true,
     "isReactive": true,
