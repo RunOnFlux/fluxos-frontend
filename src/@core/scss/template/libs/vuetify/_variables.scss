@@ -1,6 +1,9 @@
 @use "sass:math";
 
-$font-family-custom: "Public Sans",sans-serif,-apple-system,blinkmacsystemfont,
+// "Public Sans Variable" is the self-hosted variable face (@fontsource-variable,
+// imported in src/main.js and preloaded from index.html); "Public Sans" stays
+// behind it for anyone who has the static family installed locally.
+$font-family-custom: "Public Sans Variable","Public Sans",sans-serif,-apple-system,blinkmacsystemfont,
   "Segoe UI",roboto,"Helvetica Neue",arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
 
 /* 👉 Typography custom variables */

@@ -140,7 +140,8 @@
   <link rel="preconnect" href="https://raw.githubusercontent.com" crossorigin />
 
   <!-- DNS-prefetch for additional resources -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+  <!-- Our own fonts are self-hosted; this is only for the Roboto face the
+       WalletConnect/AppKit bundle pulls in for its wallet modal. -->
   <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
   <link rel="dns-prefetch" href="https://www.google.com" />
   <link rel="dns-prefetch" href="https://www.gstatic.com" />
@@ -148,9 +149,17 @@
   <!-- Preload critical assets for faster LCP -->
   <link rel="preload" href="/images/logo.png" as="image" fetchpriority="high" />
 
-  <!-- Preconnect to Google Fonts for faster font loading -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!--
+    Body font. Fetched here rather than waiting for the stylesheet to reference
+    it, so the first render already has Public Sans instead of painting in a
+    fallback face and reflowing the page when the real one arrives. The path is
+    stable by build config (see assetFileNames in vite.config.js) and must stay
+    in step with the @fontsource-variable import in src/main.js — a mismatch
+    shows up as a "preloaded but not used" console warning plus a double fetch.
+    Only the latin subset is preloaded; the browser picks up latin-ext and
+    vietnamese from the stylesheet if the text needs them.
+  -->
+  <link rel="preload" href="/assets/fonts/public-sans-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin />
 
   <!-- Critical CSS inlined to avoid render-blocking request -->
   <style>
@@ -274,7 +283,10 @@
     .loading-screen {
       position: fixed;
       inset: 0;
-      z-index: 9999;
+      /* Above the pre-rendered snapshot overlay, which pins itself just under
+         this value (see src/utils/prerenderSnapshot.js) — on a pre-rendered
+         route the splash has to cover the snapshot as well as the app. */
+      z-index: 2147483600;
       background: var(--initial-loader-bg, #fff);
       display: flex;
       flex-direction: column;
@@ -296,7 +308,11 @@
       font-size: 1.2rem;
       font-weight: 600;
       letter-spacing: 1px;
-      background: linear-gradient(135deg, var(--initial-loader-color, #7367F0) 0%, #9c93ff 50%, var(--initial-loader-color, #7367F0) 100%);
+      /* The gradient ends are the theme's primary on a light splash, but the
+         primary is a mid-dark blue — on the dark splash it barely separated
+         from the background, so there the ends fall back to the foreground
+         colour and only the middle keeps the brand tint. */
+      background: linear-gradient(135deg, var(--initial-loader-text-edge, #7367F0) 0%, #9c93ff 50%, var(--initial-loader-text-edge, #7367F0) 100%);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -458,14 +474,32 @@
   </script>
 
   <script>
-    const loaderColor = localStorage.getItem('vuexy-initial-loader-bg') || '#FFFFFF'
-    const primaryColor = localStorage.getItem('vuexy-initial-loader-color') || '#7367F0'
+    // The app's default theme and its palette, resolved at build time from
+    // themeConfig.js and src/plugins/vuetify/theme.js by the inject-initial-theme
+    // plugin in vite.config.js. This script paints the splash before a single
+    // module has run, so it cannot read either of them itself — and guessing
+    // wrong is visible: hard-coded light defaults gave a first-time visitor a
+    // white splash in front of a dark app. The literal below is only the
+    // fallback for opening this file unbuilt.
+    const initialTheme = window.__FLUX_INITIAL_THEME__ || { name: 'dark', light: { bg: '#F8F7FA', primary: '#2B61D1' }, dark: { bg: '#25293C', primary: '#2B61D1' } }
 
-    // Detect theme from stored theme or background color brightness
-    const storedTheme = localStorage.getItem('vuexy-theme') || 'light'
+    const resolveTheme = name => name === 'system'
+      ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+      : name
 
-    // Determine text color based on theme
-    const isDarkTheme = storedTheme === 'dark' || (loaderColor && loaderColor.toLowerCase() !== '#ffffff' && loaderColor.toLowerCase() !== '#fff')
+    // A returning visitor's own choice always wins; the build-time default only
+    // covers the first visit, before the app has stored anything.
+    const themeName = resolveTheme(localStorage.getItem('vuexy-theme') || initialTheme.name)
+    const palette = initialTheme[themeName] || initialTheme.light
+
+    const loaderColor = localStorage.getItem('vuexy-initial-loader-bg') || palette.bg
+    const primaryColor = localStorage.getItem('vuexy-initial-loader-color') || palette.primary
+
+    // Read the theme itself rather than guessing it from how bright the stored
+    // background is: the light theme's background is #F8F7FA, not white, so the
+    // brightness test used to classify light-theme visitors as dark and paint
+    // white text on a light splash.
+    const isDarkTheme = themeName === 'dark'
     const textColor = isDarkTheme ? 'rgba(255, 255, 255, 0.87)' : 'rgba(0, 0, 0, 0.87)'
 
     // Convert hex to RGB for glow effects
@@ -484,6 +518,7 @@
 
     document.documentElement.style.setProperty('--initial-loader-bg', loaderColor)
     document.documentElement.style.setProperty('--initial-loader-color', primaryColor)
+    document.documentElement.style.setProperty('--initial-loader-text-edge', isDarkTheme ? textColor : primaryColor)
     document.documentElement.style.setProperty('--initial-loader-color-rgb', hexToRgb(primaryColor))
     document.documentElement.style.setProperty('--initial-text-color', textColor)
 
@@ -518,23 +553,38 @@
       }
 
       let dismissed = false
-      function handleDismiss() {
+      function handleDismiss(settleDelay) {
         if (dismissed) return
         dismissed = true
         setTimeout(() => {
           requestAnimationFrame(() => {
             requestAnimationFrame(() => dismissLoader())
           })
-        }, 500)
+        }, settleDelay)
       }
 
-      window.addEventListener('app-ready', handleDismiss)
+      // Which signal ends the splash depends on how the page was delivered.
+      //
+      // 'app-ready' fires from App.vue's onMounted — the app has mounted, but
+      // the router view is still empty for a few hundred milliseconds while the
+      // layout chunk resolves. On a plain SPA load the 500ms settle below is
+      // what covers that gap.
+      //
+      // A pre-rendered route carries data-prerender-path and gets a precise
+      // signal instead: src/utils/prerenderSnapshot.js dispatches 'app-rendered'
+      // at the moment the mounted app has actually painted the page, so the
+      // splash can lift straight away with nothing half-drawn behind it.
+      if (document.querySelector('#app[data-prerender-path]')) {
+        window.addEventListener('app-rendered', () => handleDismiss(0))
+      } else {
+        window.addEventListener('app-ready', () => handleDismiss(500))
+      }
 
-      // Fallback: remove loader after 12s even if app-ready never fires
+      // Fallback: remove loader after 12s even if the signal never fires
       setTimeout(() => {
         if (!dismissed) {
           console.warn('[Loader] Fallback timeout reached — removing splash screen')
-          handleDismiss()
+          handleDismiss(0)
         }
       }, 12000)
     }

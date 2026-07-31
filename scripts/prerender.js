@@ -302,13 +302,81 @@ function stampPrerenderPath(html, route) {
 }
 
 /**
+ * Freeze entry animations inside the snapshot.
+ *
+ * A snapshot is a serialized DOM: elements are captured with the classes they
+ * carried *after* their entry animation had finished. Serving that markup to a
+ * fresh browser starts those animations over from their first keyframe, so a
+ * page that is supposed to appear instantly instead paints, drops its animated
+ * sections back to opacity 0 and fades them in again — a visible redraw on
+ * every first load, before Vue has even mounted.
+ *
+ * Zeroing duration and delay rather than declaring `animation: none` keeps
+ * fill-mode semantics intact: a `forwards` animation lands on its final
+ * keyframe, which is exactly the state the snapshot was captured in, and an
+ * unfilled or infinite one falls back to the element's own styles. The rule is
+ * keyed off `data-prerender-path`, which the client keeps on the frozen
+ * snapshot and never sets on the container Vue mounts into, so the live app
+ * animates normally (see src/utils/prerenderSnapshot.js).
+ */
+function injectSnapshotFreezeStyle(html) {
+  const freezeStyle = '<style id="prerender-freeze">[data-prerender-path] *,[data-prerender-path] *::before,[data-prerender-path] *::after{animation-delay:0s !important;animation-duration:0s !important;transition:none !important}</style>'
+
+  // Drop any copy left by an earlier run before adding the current one
+  const cleanedHtml = html.replace(/<style id="prerender-freeze">[\s\S]*?<\/style>\s*/gi, '')
+
+  return cleanedHtml.replace('</head>', `  ${freezeStyle}\n  </head>`)
+}
+
+/**
+ * Pull the Flux splash markup out of the built SPA shell.
+ *
+ * Read once, before any route is written, because rendering '/' overwrites
+ * dist/index.html. Returns '' if the shell has no splash, in which case
+ * injectLoadingSplash leaves snapshots alone.
+ */
+function readLoadingSplash() {
+  try {
+    const shell = fs.readFileSync(path.join(distPath, 'index.html'), 'utf-8')
+    const match = shell.match(/<div id="loading-bg"[\s\S]*?<\/div>\s*(?=<div id="app")/i)
+
+    return match ? match[0].trimEnd() : ''
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * Put the Flux splash back into the snapshot.
+ *
+ * A snapshot is captured after the app has booted, so the browser that produced
+ * it had already dismissed and removed the splash — which is why pre-rendered
+ * routes were the only ones that lost it. Re-inserting the markup restores the
+ * same loading screen every other route shows; index.html holds it until the
+ * mounted app reports that it has painted (see src/utils/prerenderSnapshot.js),
+ * so the snapshot underneath is never seen mid-hand-off.
+ *
+ * The splash goes outside #app on purpose: it must not be caught by the freeze
+ * rule above, and its own logo animation has to keep running.
+ */
+function injectLoadingSplash(html, splashMarkup) {
+  if (!splashMarkup) return html
+
+  // Drop any copy already in the markup (a re-run over a previous snapshot)
+  const cleanedHtml = html.replace(/<div id="loading-bg"[\s\S]*?<\/div>\s*(?=<div id="app")/gi, '')
+
+  return cleanedHtml.replace(/<div id="app"/i, `${splashMarkup}\n  <div id="app"`)
+}
+
+/**
  * Render a single page with retry logic and exponential backoff
  * @param {Object} context - Playwright browser context
  * @param {string} route - Route to render
  * @param {number} port - Local server port
+ * @param {string} splashMarkup - Flux splash to put back into the snapshot
  * @returns {Promise<{success: boolean, html?: string, error?: string}>}
  */
-async function renderPageWithRetry(context, route, port) {
+async function renderPageWithRetry(context, route, port, splashMarkup) {
   let lastError = null
 
   for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
@@ -386,6 +454,12 @@ async function renderPageWithRetry(context, route, port) {
       // Tell the client which route this snapshot belongs to
       html = stampPrerenderPath(html, route)
 
+      // Keep the snapshot from replaying the entry animations it was captured after
+      html = injectSnapshotFreezeStyle(html)
+
+      // Restore the loading screen the capture browser had already dismissed
+      html = injectLoadingSplash(html, splashMarkup)
+
       await page.close()
 
       return { success: true, html }
@@ -415,6 +489,13 @@ async function prerender() {
   if (!fs.existsSync(distPath)) {
     console.error('❌ Error: dist directory not found. Run "npm run build" first.')
     process.exit(1)
+  }
+
+  // Read before the first route is written: rendering '/' overwrites the shell
+  const splashMarkup = readLoadingSplash()
+
+  if (!splashMarkup) {
+    console.warn('⚠️ No #loading-bg found in dist/index.html — snapshots will have no splash screen')
   }
 
   const port = 3333
@@ -482,7 +563,7 @@ async function prerender() {
 
     // Process routes in parallel batches
     const processRoute = async route => {
-      const result = await renderPageWithRetry(context, route, port)
+      const result = await renderPageWithRetry(context, route, port, splashMarkup)
 
       if (result.success) {
         // Determine output path
