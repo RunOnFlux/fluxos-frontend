@@ -57,6 +57,17 @@ import 'draggable-resizable-vue3/src/components/draggable-resizable-vue3/css/Dra
 // Element Plus - only import styles for components we use (ElTree)
 import 'element-plus/es/components/tree/style/css'
 
+// Body font. Self-hosted rather than fetched from Google Fonts on idle: the
+// deferred load meant the first render used a fallback face and the whole page
+// reflowed when Public Sans arrived a second or two later — and on a
+// pre-rendered route that reflow was a visible redraw, because the snapshot had
+// been captured with the real font already applied. One variable file covers
+// every weight (index.html preloads the latin subset so it is there for the
+// first paint); the browser fetches the other subsets only if the text needs
+// them.
+import '@fontsource-variable/public-sans/wght.css'
+import '@fontsource-variable/public-sans/wght-italic.css'
+
 // Fonts - Latin subset only (smaller than full font files)
 // Using latin + latin-ext for Polish language support
 import '@fontsource/montserrat/latin-700.css' // Bold - Latin

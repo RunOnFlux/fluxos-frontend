@@ -19,6 +19,45 @@ import purgecss from 'vite-plugin-purgecss';
 import { VitePWA } from 'vite-plugin-pwa';
 import { beasties } from 'vite-plugin-beasties';
 import { aliases } from './aliases.mjs';
+import { readFileSync } from 'node:fs';
+
+/**
+ * Hand index.html the app's default theme.
+ *
+ * The boot splash paints before any module has run, so it cannot read
+ * themeConfig or Vuetify — it used to hard-code light defaults, which meant a
+ * first-time visitor got a white splash in front of a dark app. Resolving the
+ * values here keeps a single source of truth; a shape change in either source
+ * fails the build instead of silently reintroducing the flash.
+ */
+const injectInitialTheme = () => ({
+  name: 'flux-inject-initial-theme',
+  async transformIndexHtml() {
+    const { themes } = await import('./src/plugins/vuetify/theme.js');
+    const themeConfigSource = readFileSync(fileURLToPath(new URL('./themeConfig.js', import.meta.url)), 'utf-8');
+    const declarations = [...themeConfigSource.matchAll(/^\s*theme:\s*'([a-z]+)',/gm)];
+
+    if (declarations.length !== 1) {
+      throw new Error(`inject-initial-theme: expected exactly one \`theme: '…'\` in themeConfig.js, found ${declarations.length}`);
+    }
+
+    const palette = name => ({ bg: themes[name].colors.background, primary: themes[name].colors.primary });
+
+    const initialTheme = {
+      name: declarations[0][1],
+      light: palette('light'),
+      dark: palette('dark'),
+    };
+
+    return {
+      tags: [{
+        tag: 'script',
+        children: `window.__FLUX_INITIAL_THEME__=${JSON.stringify(initialTheme)}`,
+        injectTo: 'head-prepend',
+      }],
+    };
+  },
+});
 
 export default defineConfig(({ mode }) => {
   const isDev = mode === 'development';
@@ -33,6 +72,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [
+      injectInitialTheme(),
       VueRouter({
         getRouteName: routeNode => {
           return getPascalCaseRouteName(routeNode)
@@ -424,6 +464,12 @@ export default defineConfig(({ mode }) => {
           pruneSource: false,
           // Reduce unused CSS rules in inlined styles
           reduceInlineStyles: true,
+          // ...but keep rules whose class is only ever added by JS. The splash
+          // screen's `.loading-screen.fade-out` matches nothing in the static
+          // HTML, so pruning it left the loader with an opacity transition and
+          // no end state: it sat fully opaque for the whole 800ms and then
+          // vanished in one frame instead of fading out.
+          allowRules: [/\.fade-out/],
           // Use media="print" trick for async loading
           noscriptFallback: true,
           // Merge inlined styles
@@ -500,6 +546,17 @@ export default defineConfig(({ mode }) => {
         // Limit worker threads to reduce memory consumption
         maxParallelFileOps: 2,
         output: {
+          // Fonts land on a stable path so index.html can preload them by name.
+          // Their filename already encodes family, subset, weight axis and
+          // style, so there is no version to bust; everything else keeps Vite's
+          // default hashed naming.
+          assetFileNames: assetInfo => {
+            const name = assetInfo.names?.[0] || assetInfo.name || '';
+
+            return /\.(woff2?|ttf|otf|eot)$/i.test(name)
+              ? 'assets/fonts/[name][extname]'
+              : 'assets/[name]-[hash][extname]';
+          },
           manualChunks: (id) => {
             // Polyfills strategy: Bundle buffer, process, eventemitter2 into main entry
             // This ensures they load BEFORE any async chunks
