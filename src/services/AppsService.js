@@ -53,24 +53,6 @@ export default {
     
     return Api().get(`/apps/appstart/${app}`, axiosConfig)
   },
-  pauseApp(zelidauthHeader, app) {
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-    
-    return Api().get(`/apps/apppause/${app}`, axiosConfig)
-  },
-  unpauseApp(zelidauthHeader, app) {
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-    
-    return Api().get(`/apps/appunpause/${app}`, axiosConfig)
-  },
   restartApp(zelidauthHeader, app) {
     const axiosConfig = {
       headers: {
