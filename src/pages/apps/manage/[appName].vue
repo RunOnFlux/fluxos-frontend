@@ -1610,7 +1610,13 @@ watch(currentTab, async newVal => {
         if (!globalZelidAuthorized.value || logoutTrigger.value) return
 
         try {
-          startPollingStats()
+          // History is a window the user chose, not a live feed — fetch it once.
+          // Polling it would re-request the whole range every few seconds.
+          if (enableHistoryStatistics.value) {
+            await fetchStats()
+          } else {
+            startPollingStats()
+          }
         } catch (err) {
           console.error('Polling stats error (delayed):', err)
         }
@@ -2452,7 +2458,11 @@ function processStatsData(statsData, timeStamp = null) {
   } else {
     cpuCores = appSpecification.value.cpu
   }
-  const rawCpu = ((cpuUsage / systemCpuUsage) * onlineCpus).toFixed(2) || 0
+
+  // Cores in use, so a small fraction for most apps. Rounding it here rather than at
+  // display floors anything under 0.005 cores to zero before it is scaled against the
+  // app's allocation, which reports a working app as using no CPU at all.
+  const rawCpu = (cpuUsage / systemCpuUsage) * onlineCpus || 0
    
   const cpuSize = (((rawCpu / (nanoCpus / cpuCores / 1e9)) * 100) / 100).toFixed(2)
 
@@ -2463,17 +2473,22 @@ function processStatsData(statsData, timeStamp = null) {
 
   cpuSet.value = cpuCores
 
-  const ioReadBytes = statsData.blkio_stats.io_service_bytes_recursive
-    ? statsData.blkio_stats.io_service_bytes_recursive.find(
-      i => i.op.toLowerCase() === "read",
-    )?.value || 0
-    : null
+  // One entry per device, and a container's data passes through several — its own
+  // loop device, device-mapper, then the physical disk. Taking the first entry reports
+  // whichever Docker happened to list first, which is routinely the loop device with
+  // no reads against it while the volume is genuinely being read. Sum them, as
+  // docker stats itself does.
+  const sumBlkioBytes = op => {
+    const entries = statsData.blkio_stats?.io_service_bytes_recursive
+    if (!entries) return null
 
-  const ioWriteBytes = statsData.blkio_stats.io_service_bytes_recursive
-    ? statsData.blkio_stats.io_service_bytes_recursive.find(
-      i => i.op.toLowerCase() === "write",
-    )?.value || 0
-    : null
+    return entries
+      .filter(i => i.op?.toLowerCase() === op)
+      .reduce((total, i) => total + (i.value || 0), 0)
+  }
+
+  const ioReadBytes = sumBlkioBytes("read")
+  const ioWriteBytes = sumBlkioBytes("write")
 
   const networkRxBytes = statsData.networks?.eth0?.rx_bytes ?? null
   const networkTxBytes = statsData.networks?.eth0?.tx_bytes ?? null
@@ -2572,8 +2587,16 @@ async function fetchStats() {
     inspectResponse = await executeLocalCommand(`/apps/appinspect/${appname}`)
     if (statsResponse.data.status === "error") {
       showToast("danger", statsResponse.data.data.message || statsResponse.data.data)
+
+      // clearCharts emptied them and suppressed the overlay, so without this the
+      // charts sit blank once the toast times out, which reads as an app using
+      // nothing rather than as a request that failed.
+      noData.value = true
+      additionalMessage.value = "(Could not read monitoring data)"
     } else if (inspectResponse.data.status === "error") {
       showToast("danger", inspectResponse.data.data.message || inspectResponse.data.data)
+      noData.value = true
+      additionalMessage.value = "(Could not read container state)"
     } else {
       if (!enableHistoryStatistics.value) {
         fetchProcesses(appname, containerName, sourceIP)
