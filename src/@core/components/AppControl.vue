@@ -307,8 +307,7 @@
                       variant="outlined"
                       color="dark"
                       class="mx-1 my-1"
-                      style="width: 100%; font-size: 13px"
-                      :style="modeType === '4' ? 'min-width: 180px' : 'width: 100%'"
+                      style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
                     >
                       <VIcon
                         left
@@ -335,8 +334,7 @@
                       variant="outlined"
                       color="dark"
                       class="mx-1 my-1"
-                      style="width: 100%; font-size: 13px"
-                      :style="modeType === '4' ? 'min-width: 180px' : 'width: 100%'"
+                      style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
                     >
                       <VIcon
                         left
@@ -363,8 +361,7 @@
                       variant="outlined"
                       color="dark"
                       class="mx-1 my-1"
-                      style="width: 100%; font-size: 13px"
-                      :style="modeType === '4' ? 'min-width: 180px' : 'width: 100%'"
+                      style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
                     >
                       <VIcon
                         left
@@ -432,8 +429,7 @@
                 variant="outlined"
                 color="dark"
                 class="mx-1 my-1"
-                style="width: 100%; font-size: 13px"
-                :style="modeType === '4' ? 'min-width: 180px; max-width: 500px' : 'width: 100%'"
+                style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
               >
                 <VIcon
                   left
@@ -460,8 +456,7 @@
                 variant="outlined"
                 color="dark"
                 class="mx-1 my-1"
-                style="width: 100%; font-size: 13px"
-                :style="modeType === '4' ? 'min-width: 180px; max-width: 500px' : 'width: 100%'"
+                style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
               >
                 <VIcon
                   left
@@ -488,8 +483,7 @@
                 variant="outlined"
                 color="dark"
                 class="mx-1 my-1"
-                style="width: 100%; font-size: 13px"
-                :style="modeType === '4' ? 'min-width: 180px; max-width: 500px' : 'width: 100%'"
+                style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
               >
                 <VIcon
                   left
@@ -516,8 +510,7 @@
                 variant="outlined"
                 color="dark"
                 class="mx-1 my-1"
-                style="width: 100%; font-size: 13px"
-                :style="modeType === '4' ? 'min-width: 180px; max-width: 500px' : 'width: 100%'"
+                style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
               >
                 <VIcon
                   left
@@ -544,8 +537,7 @@
                 variant="outlined"
                 color="dark"
                 class="mx-1 my-1"
-                style="width: 100%; font-size: 13px"
-                :style="modeType === '4' ? 'min-width: 180px; max-width: 500px' : 'width: 100%'"
+                style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
               >
                 <VIcon
                   left
@@ -574,8 +566,7 @@
                 variant="outlined"
                 color="dark"
                 class="mx-1 my-1"
-                style="width: 100%; font-size: 13px"
-                :style="modeType === '4' ? 'min-width: 180px; max-width: 500px' : 'width: 100%'"
+                style="width: 100%; min-width: 180px; max-width: 500px; font-size: 13px"
               >
                 <VIcon
                   left
