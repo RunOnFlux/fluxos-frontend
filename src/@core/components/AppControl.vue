@@ -261,7 +261,7 @@
         <VRow class="pa-1">
           <VCol
             xs="12"
-            :md="modeType === '4' ? 12 : 6"
+            md="12"
             sm="12"
             class="d-flex flex-wrap justify-start"
           >
@@ -397,7 +397,7 @@
   >
     <VCol
       xs="12"
-      :md="modeType === '4' ? 12 : 6"
+      md="12"
       sm="12"
       class="d-flex flex-wrap justify-start"
     >
@@ -2127,7 +2127,6 @@ function normalizeComponents(data) {
   height: 54px;
 }
 .card-height {
-  height: 370px;
   min-width: 300px;
   background-color: var(--v-theme-surface);
   border-radius: 8px;

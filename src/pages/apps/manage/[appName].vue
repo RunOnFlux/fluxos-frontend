@@ -3264,11 +3264,11 @@ function startPollingStats(action = false) {
 
   stopPollingStats()
 
-  timerStats.value = setInterval(async () => {
+  const poll = async () => {
     // Check authorization in each interval iteration
     if (!globalZelidAuthorized.value || logoutTrigger.value) {
       stopPollingStats()
-      
+
       return
     }
 
@@ -3276,7 +3276,13 @@ function startPollingStats(action = false) {
     pollingInProgress = true
     await fetchStats()
     pollingInProgress = false
-  }, refreshRateMonitoring.value)
+  }
+
+  // Draw the first sample straight away. Only scheduling the interval leaves the
+  // charts empty for a whole refresh period first — up to thirty seconds.
+  poll()
+
+  timerStats.value = setInterval(poll, refreshRateMonitoring.value)
 
   if (action === true) {
     buttonStats.value = false
