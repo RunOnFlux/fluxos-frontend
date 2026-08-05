@@ -79,6 +79,7 @@ declare global {
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const extractNodeIPFromResponse: typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']
   const fiatGateways: typeof import('./utils/fiatGateways.js')['default']
+  const findUploadFailure: typeof import('./utils/uploadResponse.js')['findUploadFailure']
   const firebase: typeof import('./utils/firebase.js')['firebase']
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
   const forgetSsoEmail: typeof import('./utils/firebase.js')['forgetSsoEmail']
@@ -201,6 +202,7 @@ declare global {
   const reactiveComputed: typeof import('@vueuse/core')['reactiveComputed']
   const reactiveOmit: typeof import('@vueuse/core')['reactiveOmit']
   const reactivePick: typeof import('@vueuse/core')['reactivePick']
+  const readCompletedUploads: typeof import('./utils/uploadResponse.js')['readCompletedUploads']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const refAutoReset: typeof import('@vueuse/core')['refAutoReset']
@@ -558,6 +560,7 @@ declare module 'vue' {
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly extractNodeIPFromResponse: UnwrapRef<typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']>
     readonly fiatGateways: UnwrapRef<typeof import('./utils/fiatGateways.js')['default']>
+    readonly findUploadFailure: UnwrapRef<typeof import('./utils/uploadResponse.js')['findUploadFailure']>
     readonly firebase: UnwrapRef<typeof import('./utils/firebase.js')['firebase']>
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
     readonly forgetSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['forgetSsoEmail']>
@@ -678,6 +681,7 @@ declare module 'vue' {
     readonly reactiveComputed: UnwrapRef<typeof import('@vueuse/core')['reactiveComputed']>
     readonly reactiveOmit: UnwrapRef<typeof import('@vueuse/core')['reactiveOmit']>
     readonly reactivePick: UnwrapRef<typeof import('@vueuse/core')['reactivePick']>
+    readonly readCompletedUploads: UnwrapRef<typeof import('./utils/uploadResponse.js')['readCompletedUploads']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refAutoReset: UnwrapRef<typeof import('@vueuse/core')['refAutoReset']>

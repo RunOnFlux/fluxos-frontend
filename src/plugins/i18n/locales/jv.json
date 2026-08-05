@@ -431,13 +431,13 @@
       "uploadFiles": "Unggah File",
       "alreadyInQueue": "'{fileName}' wis ana ing antrian unggahan",
       "uploadSuccess": "'{fileName}' wis diunggah",
-      "uploadError": "Kesalahan ngunggah '{fileName}': status {status}",
+      "uploadSuccessMultiple": "{count} file wis diunggah",
+      "uploadFailedWithReason": "Unggahan gagal: {message}",
       "uploadQueue": "Antrian Unggah",
       "total": "Total",
       "files": "file | file",
       "clearAll": "Resiki Kabeh",
-      "removeFile": "Busak File",
-      "uploadFailed": "Unggahan gagal kanggo '{fileName}'"
+      "removeFile": "Busak File"
     },
     "dropZone": {
       "onlyImageFiles": "Mung file gambar sing diidini",
