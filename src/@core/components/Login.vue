@@ -238,6 +238,18 @@
                         {{ t("core.login.signUp") }}
                       </VBtn>
                     </VCol>
+                    <VCol
+                      cols="12"
+                      class="text-center pt-2"
+                    >
+                      <a
+                        href="#"
+                        class="text-primary text-sm"
+                        @click.prevent="openForgotPassword"
+                      >
+                        {{ t("core.login.forgotPassword") }}
+                      </a>
+                    </VCol>
                   </VRow>
                 </VForm>
 
@@ -467,6 +479,70 @@
         </div>
       </VCard>
 
+      <!-- Forgot Password Dialog -->
+      <VDialog
+        v-model="forgotModalShow"
+        max-width="500px"
+      >
+        <VCard>
+          <VCardTitle class="bg-primary modal-title">
+            {{ t("core.login.resetPassword") }}
+          </VCardTitle>
+          <VCardText>
+            <p class="normal-case mb-4">
+              {{ t("core.login.resetPasswordDesc") }}
+            </p>
+            <VAlert
+              v-if="resetSent"
+              type="success"
+              variant="tonal"
+              class="mb-4"
+            >
+              {{ t("core.login.resetLinkSent") }}
+            </VAlert>
+            <VForm
+              ref="forgotFormRef"
+              @submit.prevent="sendResetLink"
+            >
+              <VTextField
+                v-model="forgotForm.email"
+                :label="t('core.login.email')"
+                type="email"
+                :rules="emailRules"
+                validate-on="blur submit"
+                required
+              />
+            </VForm>
+          </VCardText>
+          <VCardActions>
+            <VBtn
+              color="secondary"
+              variant="flat"
+              @click="closeForgotPassword"
+            >
+              {{ t("core.login.backToLogin") }}
+            </VBtn>
+            <VBtn
+              color="primary"
+              variant="flat"
+              :disabled="resetCooldown > 0 || showResetProcessing"
+              @click="sendResetLink"
+            >
+              <VProgressCircular
+                v-if="showResetProcessing"
+                indeterminate
+                color="secondary"
+                small
+              />
+              <span v-else-if="resetCooldown > 0">{{ resetCooldown }}s</span>
+              <span v-else>
+                {{ resetSent ? t("core.login.resendResetLink") : t("core.login.sendResetLink") }}
+              </span>
+            </VBtn>
+          </VCardActions>
+        </VCard>
+      </VDialog>
+
       <!-- Create Accont Dialog -->
       <VDialog
         v-model="modalShow"
@@ -575,6 +651,7 @@ import {
   loginWithEmail,
   loginWithGoogle,
   rememberSsoEmail,
+  sendPasswordReset,
 } from "@/utils/firebase"
 import { useConfigStore } from "@core/stores/config"
 import fluxIDLogo from "@images/FluxID.svg?url"
@@ -621,6 +698,15 @@ const loginForm = ref({ zelid: "", signature: "", loginPhrase: "" })
 const createSSOForm = ref({ email: "", pw1: "", pw2: "" })
 const createSSOFormRef = ref(null)
 const emailLoginFormRef = ref(null)
+
+// Password reset. Only email/password (SSO) accounts have a password at all —
+// zelcore, SSP, WalletConnect and MetaMask sign-ins never reach this form.
+const forgotModalShow = ref(false)
+const forgotForm = ref({ email: "" })
+const forgotFormRef = ref(null)
+const resetSent = ref(false)
+const resetCooldown = ref(0)
+const showResetProcessing = ref(false)
 
 const modalShow = ref(false)
 const ssoVerification = ref(false)
@@ -877,6 +963,48 @@ const emailLogin = async () => {
 
 const createAccount = () => {
   modalShow.value = true
+}
+
+const openForgotPassword = () => {
+  forgotForm.value.email = emailForm.value.email
+  resetSent.value = false
+  forgotModalShow.value = true
+}
+
+const closeForgotPassword = () => {
+  forgotModalShow.value = false
+  forgotForm.value.email = ""
+  resetSent.value = false
+}
+
+// Firebase throttles reset mails on its own side, so the button stays disabled
+// rather than firing a request that would just come back rejected.
+let resetCooldownTimer = null
+
+const startResetCooldown = () => {
+  resetCooldown.value = 60
+  clearInterval(resetCooldownTimer)
+  resetCooldownTimer = setInterval(() => {
+    resetCooldown.value -= 1
+    if (resetCooldown.value <= 0) clearInterval(resetCooldownTimer)
+  }, 1000)
+}
+
+const sendResetLink = async () => {
+  const result = await forgotFormRef.value?.validate()
+  if (!result.valid || resetCooldown.value > 0) return
+
+  try {
+    showResetProcessing.value = true
+    await nextTick()
+    await sendPasswordReset(forgotForm.value.email)
+    resetSent.value = true
+    startResetCooldown()
+  } catch (error) {
+    showToast("error", t("core.login.resetFailed"))
+  } finally {
+    showResetProcessing.value = false
+  }
 }
 
 const resetModal = () => {
@@ -1234,6 +1362,8 @@ onMounted(async () => {
 
 onUnmounted(() => {
   if (websocket.value) websocket.value.close()
+
+  clearInterval(resetCooldownTimer)
 
   eventBus.off("backendURLChanged", handleBackendChange)
 

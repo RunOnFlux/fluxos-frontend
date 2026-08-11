@@ -8,7 +8,10 @@ import { useRoute, useRouter } from "vue-router"
 import { eventBus } from "@/utils/eventBus"
 import { disconnectWalletConnect } from "@/utils/walletService"
 import { clearStickyBackendDNS } from "@/utils/stickyBackend"
-import { forgetSsoEmail } from "@/utils/firebase"
+
+// Aliased: this component already has a local `auth` holding the parsed zelidauth.
+import { auth as firebaseAuth, forgetSsoEmail, hasPasswordProvider } from "@/utils/firebase"
+import ChangePasswordDialog from "@core/components/ChangePasswordDialog.vue"
 import { paymentBridge } from "@/utils/fiatGateways"
 import { useI18n } from "vue-i18n"
 
@@ -172,7 +175,29 @@ async function openBillingPortal() {
   }
 }
 
-const userProfileList = [
+// Only an email/password SSO account has a password to change. Wallet logins
+// (zelcore, SSP, WalletConnect, MetaMask) and Google/Apple have none, and a
+// session handed over from the Console never populates auth.currentUser — so
+// watch the auth state rather than reading it once at setup.
+const changePasswordShow = ref(false)
+const canChangePassword = ref(false)
+
+let unsubscribeAuth = null
+
+onMounted(() => {
+  unsubscribeAuth = firebaseAuth.onAuthStateChanged(user => {
+    // A persisted Firebase session can outlive an SSO logout, so pair the
+    // provider check with the login type this session actually used.
+    canChangePassword.value
+      = localStorage.getItem("loginType") === 'sso' && hasPasswordProvider(user)
+  })
+})
+
+onUnmounted(() => {
+  unsubscribeAuth?.()
+})
+
+const userProfileList = computed(() => [
   { type: "divider" },
 
   {
@@ -181,7 +206,16 @@ const userProfileList = [
     title: t('core.subscriptionManager.billingPlan'),
     action: 'billing',
   },
-]
+
+  ...(canChangePassword.value
+    ? [{
+      type: "navItem",
+      icon: "tabler-key",
+      title: t('core.login.changePassword'),
+      action: 'changePassword',
+    }]
+    : []),
+])
 </script>
 
 <template>
@@ -263,7 +297,7 @@ const userProfileList = [
               <VListItem
                 v-if="item.type === 'navItem'"
                 :to="item.to"
-                @click="item.action === 'billing' ? openBillingPortal() : null"
+                @click="item.action === 'billing' ? openBillingPortal() : item.action === 'changePassword' ? changePasswordShow = true : null"
               >
                 <template #prepend>
                   <VIcon
@@ -309,6 +343,8 @@ const userProfileList = [
       <!-- !SECTION -->
     </VAvatar>
   </VBadge>
+
+  <ChangePasswordDialog v-model="changePasswordShow" />
 
   <VSnackbar
     v-model="snackbar.model"

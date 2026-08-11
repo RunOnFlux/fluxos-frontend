@@ -838,7 +838,25 @@
       "metamaskPendingRequest": "Por favor, complete a solicitação MetaMask anterior",
       "metamaskError": "Falha no login do MetaMask",
       "sspNotInstalled": "Carteira SSP não instalada",
-      "signMessageFailed": "Falha ao assinar a mensagem, tente novamente"
+      "signMessageFailed": "Falha ao assinar a mensagem, tente novamente",
+      "forgotPassword": "Esqueceu-se da palavra-passe?",
+      "resetPassword": "Repor a palavra-passe",
+      "resetPasswordDesc": "Introduza o email da sua conta e enviamos-lhe um link para definir uma nova palavra-passe.",
+      "sendResetLink": "Enviar link",
+      "resendResetLink": "Reenviar link",
+      "resetLinkSent": "Se existir uma conta com esse email, o link de reposição está a caminho. Verifique também a pasta de spam.",
+      "resetFailed": "Não foi possível enviar o email de reposição. Tente novamente.",
+      "backToLogin": "Voltar ao início de sessão",
+      "changePassword": "Alterar palavra-passe",
+      "changePasswordDesc": "Confirme a palavra-passe atual e escolha uma nova.",
+      "currentPassword": "Palavra-passe atual",
+      "newPassword": "Nova palavra-passe",
+      "confirmNewPassword": "Confirmar nova palavra-passe",
+      "changePasswordSuccess": "A sua palavra-passe foi alterada. A sessão neste dispositivo mantém-se.",
+      "currentPasswordWrong": "A palavra-passe atual está incorreta.",
+      "changePasswordFailed": "Não foi possível alterar a palavra-passe. Tente novamente.",
+      "requiresRecentLogin": "Por segurança, termine sessão e volte a entrar antes de alterar a palavra-passe.",
+      "save": "Guardar"
     },
     "mapComponent": {
       "loading": "Carregando..."

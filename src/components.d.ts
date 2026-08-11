@@ -41,6 +41,7 @@ declare module 'vue' {
     CardStatisticsHorizontal: typeof import('./@core/components/cards/CardStatisticsHorizontal.vue')['default']
     CardStatisticsVertical: typeof import('./@core/components/cards/CardStatisticsVertical.vue')['default']
     CardStatisticsVerticalSimple: typeof import('./@core/components/CardStatisticsVerticalSimple.vue')['default']
+    ChangePasswordDialog: typeof import('./@core/components/ChangePasswordDialog.vue')['default']
     CheckoutContent: typeof import('./components/CheckoutContent.vue')['default']
     ComparisonLinks: typeof import('./components/ComparisonLinks.vue')['default']
     ComponentDetails: typeof import('./@core/components/ComponentDetails.vue')['default']
