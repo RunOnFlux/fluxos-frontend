@@ -205,10 +205,12 @@
                       <VTextField
                         v-model="emailForm.password"
                         :label="t('core.login.password')"
-                        type="password"
+                        :type="reveal.login ? 'text' : 'password'"
+                        :append-inner-icon="reveal.login ? 'tabler-eye-off' : 'tabler-eye'"
                         :rules="passwordRules"
                         validate-on="blur submit"
                         required
+                        @click:append-inner="reveal.login = !reveal.login"
                       />
                     </VCol>
                     <VCol cols="6">
@@ -570,20 +572,24 @@
               <VTextField
                 v-model="createSSOForm.pw1"
                 :label="t('core.login.password')"
-                type="password"
+                :type="reveal.pw1 ? 'text' : 'password'"
+                :append-inner-icon="reveal.pw1 ? 'tabler-eye-off' : 'tabler-eye'"
                 :rules="passwordRules"
                 validate-on="blur submit"
                 required
                 class="mb-3"
+                @click:append-inner="reveal.pw1 = !reveal.pw1"
               />
               <VTextField
                 v-model="createSSOForm.pw2"
                 :label="t('core.login.confirmPassword')"
-                type="password"
+                :type="reveal.pw2 ? 'text' : 'password'"
+                :append-inner-icon="reveal.pw2 ? 'tabler-eye-off' : 'tabler-eye'"
                 :rules="passwordRulesMatch"
                 validate-on="blur submit"
                 required
                 class="mb-3"
+                @click:append-inner="reveal.pw2 = !reveal.pw2"
               />
             </VForm>
             <p
@@ -699,6 +705,10 @@ const createSSOForm = ref({ email: "", pw1: "", pw2: "" })
 const createSSOFormRef = ref(null)
 const emailLoginFormRef = ref(null)
 
+// One reveal toggle per password field — checking a password you just typed and
+// confirming one you already know are separate needs.
+const reveal = ref({ login: false, pw1: false, pw2: false })
+
 // Password reset. Only email/password (SSO) accounts have a password at all —
 // zelcore, SSP, WalletConnect and MetaMask sign-ins never reach this form.
 const forgotModalShow = ref(false)
@@ -732,6 +742,7 @@ const infoMessage = ref("")
 
 watch(currentTab, _ => {
   emailLoginFormRef.value?.reset()
+  reveal.value.login = false
 })
 
 const emailRules = [
@@ -1011,6 +1022,8 @@ const resetModal = () => {
   createSSOForm.value.email = ""
   createSSOForm.value.pw1 = ""
   createSSOForm.value.pw2 = ""
+  reveal.value.pw1 = false
+  reveal.value.pw2 = false
 }
 
 const cancelModal = () => {

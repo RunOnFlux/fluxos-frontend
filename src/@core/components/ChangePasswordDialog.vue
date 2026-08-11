@@ -19,6 +19,10 @@ const processing = ref(false)
 const done = ref(false)
 const errorMessage = ref("")
 
+// One toggle per field: revealing the current password and checking a new one
+// you just typed are separate needs.
+const reveal = ref({ current: false, pw1: false, pw2: false })
+
 const show = computed({
   get: () => props.modelValue,
   set: value => emit("update:modelValue", value),
@@ -38,6 +42,7 @@ const confirmRules = computed(() => [
 
 const reset = () => {
   form.value = { current: "", pw1: "", pw2: "" }
+  reveal.value = { current: false, pw1: false, pw2: false }
   errorMessage.value = ""
   done.value = false
   formRef.value?.resetValidation()
@@ -120,31 +125,37 @@ const submit = async () => {
             <VTextField
               v-model="form.current"
               :label="t('core.login.currentPassword')"
-              type="password"
+              :type="reveal.current ? 'text' : 'password'"
+              :append-inner-icon="reveal.current ? 'tabler-eye-off' : 'tabler-eye'"
               autocomplete="current-password"
               :rules="currentPasswordRules"
               validate-on="blur submit"
               required
               class="mb-3"
+              @click:append-inner="reveal.current = !reveal.current"
             />
             <VTextField
               v-model="form.pw1"
               :label="t('core.login.newPassword')"
-              type="password"
+              :type="reveal.pw1 ? 'text' : 'password'"
+              :append-inner-icon="reveal.pw1 ? 'tabler-eye-off' : 'tabler-eye'"
               autocomplete="new-password"
               :rules="passwordRules"
               validate-on="blur submit"
               required
               class="mb-3"
+              @click:append-inner="reveal.pw1 = !reveal.pw1"
             />
             <VTextField
               v-model="form.pw2"
               :label="t('core.login.confirmNewPassword')"
-              type="password"
+              :type="reveal.pw2 ? 'text' : 'password'"
+              :append-inner-icon="reveal.pw2 ? 'tabler-eye-off' : 'tabler-eye'"
               autocomplete="new-password"
               :rules="confirmRules"
               validate-on="blur submit"
               required
+              @click:append-inner="reveal.pw2 = !reveal.pw2"
             />
           </VForm>
         </template>
