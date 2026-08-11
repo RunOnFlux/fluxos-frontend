@@ -26,6 +26,7 @@ declare global {
   const avatarText: typeof import('./@core/utils/formatters.js')['avatarText']
   const base64ToUint8Array: typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']
   const betweenValidator: typeof import('./@core/utils/validators.js')['betweenValidator']
+  const changePassword: typeof import('./utils/firebase.js')['changePassword']
   const checkWebCryptoAvailability: typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']
   const clearConsent: typeof import('./composables/useCookieConsent.js')['clearConsent']
   const clearStickyBackendDNS: typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']
@@ -118,6 +119,7 @@ declare global {
   const h: typeof import('vue')['h']
   const hasAnalyticsConsent: typeof import('./composables/useCookieConsent.js')['hasAnalyticsConsent']
   const hasConsent: typeof import('./composables/useCookieConsent.js')['hasConsent']
+  const hasPasswordProvider: typeof import('./utils/firebase.js')['hasPasswordProvider']
   const hasWalletConnectSession: typeof import('./utils/walletService.js')['hasWalletConnectSession']
   const hexToRgb: typeof import('./@core/utils/colorConverter.js')['hexToRgb']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -220,6 +222,7 @@ declare global {
   const sanitizeHtml: typeof import('./utils/sanitizeHtml.js')['default']
   const sanitizeUnicodeForSigning: typeof import('./utils/walletService.js')['sanitizeUnicodeForSigning']
   const saveConsent: typeof import('./composables/useCookieConsent.js')['saveConsent']
+  const sendPasswordReset: typeof import('./utils/firebase.js')['sendPasswordReset']
   const setActivePinia: typeof import('pinia')['setActivePinia']
   const setMapStoreSuffix: typeof import('pinia')['setMapStoreSuffix']
   const setStickyBackendDNS: typeof import('./utils/stickyBackend.js')['setStickyBackendDNS']
@@ -505,6 +508,7 @@ declare module 'vue' {
     readonly avatarText: UnwrapRef<typeof import('./@core/utils/formatters.js')['avatarText']>
     readonly base64ToUint8Array: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']>
     readonly betweenValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['betweenValidator']>
+    readonly changePassword: UnwrapRef<typeof import('./utils/firebase.js')['changePassword']>
     readonly checkWebCryptoAvailability: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']>
     readonly clearConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['clearConsent']>
     readonly clearStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']>
@@ -596,6 +600,7 @@ declare module 'vue' {
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hasAnalyticsConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['hasAnalyticsConsent']>
     readonly hasConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['hasConsent']>
+    readonly hasPasswordProvider: UnwrapRef<typeof import('./utils/firebase.js')['hasPasswordProvider']>
     readonly hasWalletConnectSession: UnwrapRef<typeof import('./utils/walletService.js')['hasWalletConnectSession']>
     readonly hexToRgb: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['hexToRgb']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
@@ -697,6 +702,7 @@ declare module 'vue' {
     readonly sanitizeHtml: UnwrapRef<typeof import('./utils/sanitizeHtml.js')['default']>
     readonly sanitizeUnicodeForSigning: UnwrapRef<typeof import('./utils/walletService.js')['sanitizeUnicodeForSigning']>
     readonly saveConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['saveConsent']>
+    readonly sendPasswordReset: UnwrapRef<typeof import('./utils/firebase.js')['sendPasswordReset']>
     readonly setActivePinia: UnwrapRef<typeof import('pinia')['setActivePinia']>
     readonly setMapStoreSuffix: UnwrapRef<typeof import('pinia')['setMapStoreSuffix']>
     readonly setStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['setStickyBackendDNS']>

@@ -838,7 +838,25 @@
       "metamaskPendingRequest": "Please complete the previous MetaMask request",
       "metamaskError": "MetaMask login failed",
       "sspNotInstalled": "SSP Wallet not installed",
-      "signMessageFailed": "Failed to sign message, please try again"
+      "signMessageFailed": "Failed to sign message, please try again",
+      "forgotPassword": "Forgot your password?",
+      "resetPassword": "Reset your password",
+      "resetPasswordDesc": "Enter the email address on your account and we'll send you a link to set a new password.",
+      "sendResetLink": "Send reset link",
+      "resendResetLink": "Resend reset link",
+      "resetLinkSent": "If an account exists for that address, a reset link is on its way. Remember to check your spam folder.",
+      "resetFailed": "Could not send the reset email. Please try again.",
+      "backToLogin": "Back to login",
+      "changePassword": "Change password",
+      "changePasswordDesc": "Confirm your current password, then choose a new one.",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "changePasswordSuccess": "Your password has been changed. You stay signed in on this device.",
+      "currentPasswordWrong": "Current password is incorrect.",
+      "changePasswordFailed": "Could not change your password. Please try again.",
+      "requiresRecentLogin": "For security, please sign out and sign in again before changing your password.",
+      "save": "Save"
     },
     "mapComponent": {
       "loading": "Loading..."
