@@ -178,23 +178,33 @@ async function openBillingPortal() {
 // Only an email/password SSO account has a password to change. Wallet logins
 // (zelcore, SSP, WalletConnect, MetaMask) and Google/Apple have none, and a
 // session handed over from the Console never populates auth.currentUser — so
-// watch the auth state rather than reading it once at setup.
+// track the Firebase user rather than reading it once at setup.
 const changePasswordShow = ref(false)
-const canChangePassword = ref(false)
+const firebaseUser = ref(null)
 
 let unsubscribeAuth = null
 
 onMounted(() => {
   unsubscribeAuth = firebaseAuth.onAuthStateChanged(user => {
-    // A persisted Firebase session can outlive an SSO logout, so pair the
-    // provider check with the login type this session actually used.
-    canChangePassword.value
-      = localStorage.getItem("loginType") === 'sso' && hasPasswordProvider(user)
+    firebaseUser.value = user
   })
 })
 
 onUnmounted(() => {
   unsubscribeAuth?.()
+})
+
+const canChangePassword = computed(() => {
+  // Reading zelid forces this to re-evaluate on login. Firebase fires its
+  // auth-state change during signInWithEmailAndPassword, but `loginType` is only
+  // written to localStorage further down the login handler — so on the first
+  // pass it is still null and the entry would never appear for the session that
+  // just signed in.
+  const currentZelid = zelid.value
+
+  // A persisted Firebase session can outlive an SSO logout, so pair the provider
+  // check with the login type this session actually used.
+  return localStorage.getItem("loginType") === 'sso' && hasPasswordProvider(firebaseUser.value)
 })
 
 const userProfileList = computed(() => [
