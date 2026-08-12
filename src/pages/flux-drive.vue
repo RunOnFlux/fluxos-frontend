@@ -51,6 +51,7 @@
           @selectPlan="handlePlanSelection"
         />
         <StorageInfo />
+        <ApiKeys />
       </div>
     </template>
 
@@ -107,6 +108,7 @@ import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
 import PricingPlans from '@/components/FluxDrive/PricingPlans.vue'
 import FileManager from '@/components/FluxDrive/FileManager.vue'
 import StorageInfo from '@/components/FluxDrive/StorageInfo.vue'
+import ApiKeys from '@/components/FluxDrive/ApiKeys.vue'
 import CheckoutContent from '@/components/CheckoutContent.vue'
 import FeatureShowcase from '@/components/FeatureShowcase.vue'
 import TrustpilotPanel from '@/components/Marketplace/Panels/TrustpilotPanel.vue'
