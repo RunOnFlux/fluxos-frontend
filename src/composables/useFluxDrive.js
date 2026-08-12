@@ -67,6 +67,13 @@ const sharedState = {
   currentUploadFileName: ref(''),
   totalFilesToUpload: ref(0),
   currentUploadIndex: ref(0),
+
+  // API keys (metadata only — plaintext secrets are never held in state)
+  apiKeys: ref([]),
+  apiKeysLoading: ref(false),
+  apiKeysCreating: ref(false),
+  apiKeysLegacyCount: ref(0),
+  apiKeysMax: ref(10),
 }
 
 export function useFluxDrive() {
@@ -3041,6 +3048,88 @@ export function useFluxDrive() {
     console.log('✅ FluxDrive state reset complete')
   }
 
+  // ---------------------------------------------------------------------------
+  // API keys (Pro / programmatic access)
+  //
+  // Every call authenticates with the Zelcore signature triple, never with an API key — a leaked
+  // key therefore cannot mint or revoke other keys. Created plaintext is returned by the bridge
+  // exactly once and is never persisted client-side beyond the one-time reveal dialog.
+  // ---------------------------------------------------------------------------
+
+  /** Builds the {zelid, signature, loginPhrase} body every /api/v1 endpoint expects. */
+  const buildAuthBody = (extra = {}) => {
+    const zelidauth = localStorage.getItem('zelidauth')
+    const authData = zelidauth ?
+      (zelidauth.includes('zelid=') ?
+        Object.fromEntries(new URLSearchParams(zelidauth)) :
+        JSON.parse(zelidauth)) : {}
+
+    return new URLSearchParams({
+      zelid: authData.zelid || getZelid(),
+      signature: authData.signature || '',
+      loginPhrase: authData.loginPhrase ?? '',
+      ...extra,
+    })
+  }
+
+  /** POSTs to an /api/v1/apikeys endpoint and normalizes bridge errors into thrown Errors. */
+  const apiKeyRequest = async (action, extra = {}) => {
+    const response = await fetch(`${bridgeURL}/api/v1/apikeys/${action}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: buildAuthBody(extra),
+    })
+
+    const result = await response.json()
+
+    // The bridge signals an expired/invalid session with {warning} and HTTP 200, so status alone
+    // is not a sufficient success check.
+    if (result?.warning) throw new Error(t('components.fluxDrive.apiKeys.sessionExpired'))
+    if (result?.error) throw new Error(result.error)
+    if (!response.ok) throw new Error(`Request failed (${response.status})`)
+
+    return result
+  }
+
+  const fetchApiKeys = async () => {
+    sharedState.apiKeysLoading.value = true
+    try {
+      const result = await apiKeyRequest('list')
+
+      sharedState.apiKeys.value = Array.isArray(result.keys) ? result.keys : []
+      sharedState.apiKeysLegacyCount.value = result.legacyKeyCount ?? 0
+      sharedState.apiKeysMax.value = result.maxKeys ?? 10
+
+      return sharedState.apiKeys.value
+    } finally {
+      sharedState.apiKeysLoading.value = false
+    }
+  }
+
+  /** Mints a key. Returns {key, authorizationHeader, record} — `key` is shown once, never stored. */
+  const createApiKey = async name => {
+    sharedState.apiKeysCreating.value = true
+    try {
+      const result = await apiKeyRequest('create', { name: name ?? '' })
+
+      await fetchApiKeys()
+
+      return result
+    } finally {
+      sharedState.apiKeysCreating.value = false
+    }
+  }
+
+  const revokeApiKey = async id => {
+    await apiKeyRequest('revoke', { id })
+    await fetchApiKeys()
+  }
+
+  const revokeLegacyApiKeys = async () => {
+    await apiKeyRequest('revokelegacy')
+    await fetchApiKeys()
+  }
+
   return {
     // State
     isLoggedIn,
@@ -3081,6 +3170,17 @@ export function useFluxDrive() {
     totalStorage,
     fluxDrivePlans,
     fileHeaders,
+
+    // API keys
+    apiKeys: sharedState.apiKeys,
+    apiKeysLoading: sharedState.apiKeysLoading,
+    apiKeysCreating: sharedState.apiKeysCreating,
+    apiKeysLegacyCount: sharedState.apiKeysLegacyCount,
+    apiKeysMax: sharedState.apiKeysMax,
+    fetchApiKeys,
+    createApiKey,
+    revokeApiKey,
+    revokeLegacyApiKeys,
 
     // Computed
     storagePercentage,

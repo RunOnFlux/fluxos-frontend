@@ -10,6 +10,7 @@ declare module 'vue' {
     '[id]': typeof import('./components/Marketplace/[id].vue')['default']
     '[name]': typeof import('./components/Marketplace/games/[name].vue')['default']
     AddProposalTab: typeof import('./components/xdao/AddProposalTab.vue')['default']
+    ApiKeys: typeof import('./components/FluxDrive/ApiKeys.vue')['default']
     AppAutocomplete: typeof import('./@core/components/app-form-elements/AppAutocomplete.vue')['default']
     AppBarSearch: typeof import('./@core/components/AppBarSearch.vue')['default']
     AppCard: typeof import('./components/Marketplace/AppCard.vue')['default']
