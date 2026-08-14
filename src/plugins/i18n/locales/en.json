@@ -512,6 +512,10 @@
       "folderCreated": "Folder {folder} created!",
       "renamedSuccess": "{oldName} renamed to {newName}",
       "deleted": "{name} deleted",
+      "deleteInProgress": "Deleting {name}...",
+      "busyRetry": "The node is busy. Try again in {seconds} seconds.",
+      "busyWithOperation": "A {operation} is already running for this app. Try again in {seconds} seconds.",
+      "operationDidNotFinish": "The operation did not finish ({status})",
       "files": {
         "emptyDirectory": "Empty Directory"
       }

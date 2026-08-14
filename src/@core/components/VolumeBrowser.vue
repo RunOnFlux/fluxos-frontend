@@ -525,6 +525,7 @@ import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
 import { useI18n } from "vue-i18n"
 import { useDisplay } from 'vuetify'
+import { describeRefusal, operationKindLabel, pollOperation, startedJob } from '@/utils/volumeOperations'
 
 const { smAndDown } = useDisplay()
 const configStore = useConfigStore()
@@ -938,6 +939,39 @@ function getUsageColor(percentage) {
   return 'error'
 }
 
+// A 503 here means the node is busy, not that the request was wrong: either
+// another operation holds this app's single slot, or the node is still fetching
+// the image the work runs in. Returns true once it has said so, leaving the
+// caller's existing handling for everything else.
+function reportedAsBusy(error) {
+  const refusal = describeRefusal(error)
+  if (!refusal) return false
+
+  const running = operationKindLabel(refusal.operation)
+
+  showToast('warning', running
+    ? t('core.volumeBrowser.busyWithOperation', { operation: running, seconds: refusal.retryAfterSeconds })
+    : t('core.volumeBrowser.busyRetry', { seconds: refusal.retryAfterSeconds }))
+
+  return true
+}
+
+// Waits out an operation the node kept. Nothing has happened on the volume
+// until it reaches a terminal state, so reporting success before then shows the
+// file as gone while it is still there. True when the job succeeded.
+async function jobSucceeded(job) {
+  const view = await pollOperation(props.executeLocalCommand, job)
+  if (!view) return false // Silent return during logout
+
+  if (view.status === 'Succeeded') return true
+
+  showToast('danger', view.error?.detail
+    || view.error?.title
+    || t('core.volumeBrowser.operationDidNotFinish', { status: view.status }))
+
+  return false
+}
+
 async function createFolder(path) {
   createDirectoryDialogVisible.value = false
   try {
@@ -963,8 +997,10 @@ async function createFolder(path) {
     }
   } catch (error) {
     loadingFolder.value = false
-    console.error(error.message)
-    showToast('danger', error.message || error)
+    if (!reportedAsBusy(error)) {
+      console.error(error.message)
+      showToast('danger', error.message || error)
+    }
   }
 
   newDirName.value = ''
@@ -1075,7 +1111,7 @@ async function confirmRename() {
       loadFolder(currentFolder.value, true)
     }
   } catch (error) {
-    showToast('danger', error.message || error)
+    if (!reportedAsBusy(error)) showToast('danger', error.message || error)
   }
 }
 
@@ -1091,12 +1127,27 @@ async function deleteFile(name) {
 
     if (response.data.status === 'error') {
       showToast('danger', response.data.data.message || response.data.data)
-    } else {
-      loadFolder(currentFolder.value, true)
-      showToast('success', t('core.volumeBrowser.deleted', { name }))
+
+      return
     }
+
+    // A delete large enough to outlive the node's inline deadline is handed
+    // back as a job and carries on. Reloading now would list the entry as still
+    // present and report it deleted in the same breath.
+    const job = startedJob(response)
+    if (job) {
+      showToast('info', t('core.volumeBrowser.deleteInProgress', { name }))
+      if (!await jobSucceeded(job)) {
+        loadFolder(currentFolder.value, true)
+
+        return
+      }
+    }
+
+    loadFolder(currentFolder.value, true)
+    showToast('success', t('core.volumeBrowser.deleted', { name }))
   } catch (error) {
-    showToast('danger', error.message || error)
+    if (!reportedAsBusy(error)) showToast('danger', error.message || error)
   }
 }
 
