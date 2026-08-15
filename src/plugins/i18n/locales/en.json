@@ -2962,7 +2962,6 @@
         "locations": "Locations",
         "loginRequired": "Login Required",
         "applicationExpired": "Application Expired",
-        "ownershipTransferred": "Ownership transferred",
         "cannotCalculateExpiration": "Not possible to calculate expiration",
         "modeOptions": {
           "all": "All",
