@@ -360,19 +360,6 @@ function expireOf(msg) {
   return msg.appSpecifications.expire || defaultExpire
 }
 
-// Whether the app still holds a registration on the network. An app past its
-// paid life is dropped from the global specs entirely, so absence is expiry.
-// Null when the lookup did not answer, which is not evidence either way.
-async function appIsStillRegistered(name) {
-  try {
-    const { data } = await AppsService.getAppSpecifics(name)
-
-    return data.status === 'success' && Boolean(data.data?.name)
-  } catch (error) {
-    return null
-  }
-}
-
 // --- 🟥 EXPIRED APPS (user, decrypted if needed) ---
 async function getExpiredApps() {
   loading.value.expired = true
@@ -412,25 +399,13 @@ async function getExpiredApps() {
         ),
     )
 
-    // Absent from the active list means one of two things, and they are not the
-    // same: the paid life ran out, or the app is still registered under a
-    // different owner. Only the first belongs to this user. The permanent
-    // messages behind this list are immutable, so an app that moved on would
-    // otherwise sit here forever under the identity that no longer holds it.
-    const registered = await Promise.all(
-      filtered.map(msg => appIsStillRegistered(msg.appSpecifications.name)),
-    )
-
-    const expired = filtered.filter((msg, index) => {
-      // With no answer, the user's own last message is all there is to go on,
-      // and its expire is a floor - the app may have been renewed since.
-      if (registered[index] === null) {
-        return daemonBlockCount.value <= 0
-          || daemonBlockCount.value >= msg.height + expireOf(msg)
-      }
-
-      return !registered[index]
-    })
+    // Absent from the active list means one of two things, and only one of them
+    // belongs here. An app cannot expire before the block its owner paid to, so
+    // one that is already gone did not lapse - it left this owner, and an app
+    // that is not theirs is not theirs to list. With no block height there is
+    // nothing to compare against and the whole set is listed.
+    const expired = filtered.filter(msg => daemonBlockCount.value <= 0
+      || daemonBlockCount.value >= msg.height + expireOf(msg))
 
     // Decrypt each expired app as needed
     expiredApps.value = await decryptEnterpriseApps(expired.map(msg => msg.appSpecifications))
