@@ -437,7 +437,16 @@
                 <div
                   v-else
                   class="mb-1"
-                />
+                >
+                  <VChip
+                    v-if="item.ownershipTransferred"
+                    color="warning"
+                    size="x-small"
+                    rounded="pill"
+                  >
+                    {{ t('pages.apps.table.ownershipTransferred') }}
+                  </VChip>
+                </div>
               </small>
             </div>
           </template>
