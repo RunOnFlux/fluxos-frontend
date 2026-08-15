@@ -360,6 +360,19 @@ function expireOf(msg) {
   return msg.appSpecifications.expire || defaultExpire
 }
 
+// Whether the app still holds a registration on the network. An app past its
+// paid life is dropped from the global specs entirely, so absence is expiry.
+// Null when the lookup did not answer, which is not evidence either way.
+async function appIsStillRegistered(name) {
+  try {
+    const { data } = await AppsService.getAppSpecifics(name)
+
+    return data.status === 'success' && Boolean(data.data?.name)
+  } catch (error) {
+    return null
+  }
+}
+
 // --- 🟥 EXPIRED APPS (user, decrypted if needed) ---
 async function getExpiredApps() {
   loading.value.expired = true
@@ -400,20 +413,27 @@ async function getExpiredApps() {
     )
 
     // Absent from the active list means one of two things, and they are not the
-    // same: the paid life ran out, or the app is still running under a different
-    // owner. With no block height the two are indistinguishable and both read as
-    // expired.
-    const notMine = filtered.map(msg => {
-      const stillPaidFor = daemonBlockCount.value > 0
-        && daemonBlockCount.value < msg.height + expireOf(msg)
+    // same: the paid life ran out, or the app is still registered under a
+    // different owner. Only the first belongs to this user. The permanent
+    // messages behind this list are immutable, so an app that moved on would
+    // otherwise sit here forever under the identity that no longer holds it.
+    const registered = await Promise.all(
+      filtered.map(msg => appIsStillRegistered(msg.appSpecifications.name)),
+    )
 
-      return stillPaidFor
-        ? { ...msg.appSpecifications, ownershipTransferred: true }
-        : msg.appSpecifications
+    const expired = filtered.filter((msg, index) => {
+      // With no answer, the user's own last message is all there is to go on,
+      // and its expire is a floor - the app may have been renewed since.
+      if (registered[index] === null) {
+        return daemonBlockCount.value <= 0
+          || daemonBlockCount.value >= msg.height + expireOf(msg)
+      }
+
+      return !registered[index]
     })
 
     // Decrypt each expired app as needed
-    expiredApps.value = await decryptEnterpriseApps(notMine)
+    expiredApps.value = await decryptEnterpriseApps(expired.map(msg => msg.appSpecifications))
   } catch (error) {
     expiredApps.value = []
     showSnackbar(t('menu.application.failedToLoadExpiredApps'))
