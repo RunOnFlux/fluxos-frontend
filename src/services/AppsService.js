@@ -53,24 +53,6 @@ export default {
     
     return Api().get(`/apps/appstart/${app}`, axiosConfig)
   },
-  pauseApp(zelidauthHeader, app) {
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-    
-    return Api().get(`/apps/apppause/${app}`, axiosConfig)
-  },
-  unpauseApp(zelidauthHeader, app) {
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-    
-    return Api().get(`/apps/appunpause/${app}`, axiosConfig)
-  },
   restartApp(zelidauthHeader, app) {
     const axiosConfig = {
       headers: {
@@ -372,37 +354,6 @@ export default {
     }
     
     return Api().get(`/apps/appmonitor/${app}`, axiosConfig)
-  },
-  startAppMonitoring(zelidauthHeader, app) {
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-    if (app) {
-      return Api().get(`/apps/startmonitoring/${app}`, axiosConfig)
-    }
-    
-    return Api().get('/apps/startmonitoring', axiosConfig)
-  },
-  stopAppMonitoring(zelidauthHeader, app, deleteData) {
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-    if (app && deleteData) { // stop monitoring of specific app or app component and delete data
-      return Api().get(`/apps/stopmonitoring/${app}/${deleteData}`, axiosConfig)
-    }
-    if (app) { // stop monitoring of specific app or app component
-      return Api().get(`/apps/stopmonitoring/${app}`, axiosConfig)
-    }
-    if (deleteData) { // stop monitoring of all apps and delete data
-      return Api().get(`/apps/stopmonitoring?deletedata=${deleteData}`, axiosConfig)
-    }
-
-    // stop monitoring of all apps
-    return Api().get('/apps/stopmonitoring', axiosConfig)
   },
   justAPI() {
     return Api()

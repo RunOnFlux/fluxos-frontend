@@ -1468,6 +1468,10 @@ const ioChart = shallowRef(null)
 
 let pollingInProgress = false
 
+// The same failure comes back on every poll, so the last one reported is kept to say it
+// once per episode rather than every few seconds.
+let lastStatsError = null
+
 // Computed Section
 const overviewTitle = computed(() =>
   enableHistoryStatistics.value ? t('pages.apps.manage.titles.historyStatsOverview') : t('pages.apps.manage.titles.statsProcessesOverview'),
@@ -1610,7 +1614,13 @@ watch(currentTab, async newVal => {
         if (!globalZelidAuthorized.value || logoutTrigger.value) return
 
         try {
-          startPollingStats()
+          // History is a window the user chose, not a live feed — fetch it once.
+          // Polling it would re-request the whole range every few seconds.
+          if (enableHistoryStatistics.value) {
+            await fetchStats()
+          } else {
+            startPollingStats()
+          }
         } catch (err) {
           console.error('Polling stats error (delayed):', err)
         }
@@ -2452,9 +2462,13 @@ function processStatsData(statsData, timeStamp = null) {
   } else {
     cpuCores = appSpecification.value.cpu
   }
-  const rawCpu = ((cpuUsage / systemCpuUsage) * onlineCpus).toFixed(2) || 0
+
+  // Cores in use, so a small fraction for most apps. Rounding it here rather than at
+  // display floors anything under 0.005 cores to zero before it is scaled against the
+  // app's allocation, which reports a working app as using no CPU at all.
+  const rawCpu = (cpuUsage / systemCpuUsage) * onlineCpus || 0
    
-  const cpuSize = (((rawCpu / (nanoCpus / cpuCores / 1e9)) * 100) / 100).toFixed(2)
+  const cpuSize = (rawCpu / (nanoCpus / cpuCores / 1e9)).toFixed(2)
 
    
   const cpuPercent = (((rawCpu / (nanoCpus / cpuCores / 1e9)) * 100) / cpuCores).toFixed(
@@ -2463,17 +2477,22 @@ function processStatsData(statsData, timeStamp = null) {
 
   cpuSet.value = cpuCores
 
-  const ioReadBytes = statsData.blkio_stats.io_service_bytes_recursive
-    ? statsData.blkio_stats.io_service_bytes_recursive.find(
-      i => i.op.toLowerCase() === "read",
-    )?.value || 0
-    : null
+  // One entry per device, and a container's data passes through several — its own
+  // loop device, device-mapper, then the physical disk. Taking the first entry reports
+  // whichever Docker happened to list first, which is routinely the loop device with
+  // no reads against it while the volume is genuinely being read. Sum them, as
+  // docker stats itself does.
+  const sumBlkioBytes = op => {
+    const entries = statsData.blkio_stats?.io_service_bytes_recursive
+    if (!entries) return null
 
-  const ioWriteBytes = statsData.blkio_stats.io_service_bytes_recursive
-    ? statsData.blkio_stats.io_service_bytes_recursive.find(
-      i => i.op.toLowerCase() === "write",
-    )?.value || 0
-    : null
+    return entries
+      .filter(i => i.op?.toLowerCase() === op)
+      .reduce((total, i) => total + (i.value || 0), 0)
+  }
+
+  const ioReadBytes = sumBlkioBytes("read")
+  const ioWriteBytes = sumBlkioBytes("write")
 
   const networkRxBytes = statsData.networks?.eth0?.rx_bytes ?? null
   const networkTxBytes = statsData.networks?.eth0?.tx_bytes ?? null
@@ -2529,6 +2548,22 @@ function processStatsData(statsData, timeStamp = null) {
   )
 }
 
+// The overlay is drawn by a chart plugin, so raising the flag is not enough on its own —
+// nothing redraws until the charts are told to. Repeat failures arrive on the polling
+// interval, so the toast is shown once and repeats only after a recovery or a chart reset.
+function reportStatsFailure(error, message) {
+  const key = typeof error === "string" ? error : JSON.stringify(error)
+
+  if (key !== lastStatsError) {
+    showToast("danger", error)
+    lastStatsError = key
+  }
+
+  noData.value = true
+  additionalMessage.value = message
+  updateCharts()
+}
+
 async function fetchStats() {
   try {
     // Skip if logout is in progress or not authorized
@@ -2571,10 +2606,19 @@ async function fetchStats() {
     }
     inspectResponse = await executeLocalCommand(`/apps/appinspect/${appname}`)
     if (statsResponse.data.status === "error") {
-      showToast("danger", statsResponse.data.data.message || statsResponse.data.data)
+      // Without this the charts sit blank once the toast times out, which reads as an
+      // app using nothing rather than as a request that failed.
+      reportStatsFailure(
+        statsResponse.data.data.message || statsResponse.data.data,
+        "(Could not read monitoring data)",
+      )
     } else if (inspectResponse.data.status === "error") {
-      showToast("danger", inspectResponse.data.data.message || inspectResponse.data.data)
+      reportStatsFailure(
+        inspectResponse.data.data.message || inspectResponse.data.data,
+        "(Could not read container state)",
+      )
     } else {
+      lastStatsError = null
       if (!enableHistoryStatistics.value) {
         fetchProcesses(appname, containerName, sourceIP)
       }
@@ -2587,6 +2631,10 @@ async function fetchStats() {
         } else {
           additionalMessage.value = "(Container not running)"
         }
+
+        // Same as above: the flag alone leaves the overlay unpainted until something
+        // else happens to redraw the charts.
+        updateCharts()
         stopPollingStats(true)
 
         return
@@ -3241,11 +3289,11 @@ function startPollingStats(action = false) {
 
   stopPollingStats()
 
-  timerStats.value = setInterval(async () => {
+  const poll = async () => {
     // Check authorization in each interval iteration
     if (!globalZelidAuthorized.value || logoutTrigger.value) {
       stopPollingStats()
-      
+
       return
     }
 
@@ -3253,7 +3301,13 @@ function startPollingStats(action = false) {
     pollingInProgress = true
     await fetchStats()
     pollingInProgress = false
-  }, refreshRateMonitoring.value)
+  }
+
+  // Draw the first sample straight away. Only scheduling the interval leaves the
+  // charts empty for a whole refresh period first — up to thirty seconds.
+  poll()
+
+  timerStats.value = setInterval(poll, refreshRateMonitoring.value)
 
   if (action === true) {
     buttonStats.value = false
@@ -3271,6 +3325,9 @@ function stopPollingStats(action = false) {
 }
 
 function clearCharts() {
+  // Emptying the charts ends the current episode, so the next failure is worth saying again.
+  lastStatsError = null
+
   if (!memoryChart.value) {
     return
   }
