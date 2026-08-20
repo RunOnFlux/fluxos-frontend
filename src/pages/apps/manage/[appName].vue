@@ -2468,7 +2468,7 @@ function processStatsData(statsData, timeStamp = null) {
   // app's allocation, which reports a working app as using no CPU at all.
   const rawCpu = (cpuUsage / systemCpuUsage) * onlineCpus || 0
    
-  const cpuSize = (((rawCpu / (nanoCpus / cpuCores / 1e9)) * 100) / 100).toFixed(2)
+  const cpuSize = (rawCpu / (nanoCpus / cpuCores / 1e9)).toFixed(2)
 
    
   const cpuPercent = (((rawCpu / (nanoCpus / cpuCores / 1e9)) * 100) / cpuCores).toFixed(
