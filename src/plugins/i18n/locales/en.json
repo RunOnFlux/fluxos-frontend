@@ -514,8 +514,12 @@
       "deleted": "{name} deleted",
       "deleteInProgress": "Deleting {name}...",
       "busyRetry": "The node is busy. Try again in {seconds} seconds.",
-      "busyWithOperation": "A {operation} is already running for this app. Try again in {seconds} seconds.",
+      "busyRetryReason": "{reason}. Try again in {seconds} seconds.",
+      "busyWithOperation": "Another {operation} operation is already running for this app. Try again in {seconds} seconds.",
       "operationDidNotFinish": "The operation did not finish ({status})",
+      "operationStillRunning": "The operation is taking longer than expected and is still running on the node. Refresh the folder shortly to see the result.",
+      "operationLostTrack": "Lost contact with the operation while it was running. It may still finish on the node - refresh the folder shortly to see the result.",
+      "uploadNetworkError": "Network error while uploading {name}",
       "files": {
         "emptyDirectory": "Empty Directory"
       }

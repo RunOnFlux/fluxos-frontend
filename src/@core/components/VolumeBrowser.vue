@@ -525,7 +525,7 @@ import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
 import { useI18n } from "vue-i18n"
 import { useDisplay } from 'vuetify'
-import { describeRefusal, operationKindLabel, pollOperation, startedJob } from '@/utils/volumeOperations'
+import { describeRefusal, operationKindLabel, operationProgressText, pollOperation, startedJob } from '@/utils/volumeOperations'
 
 const { smAndDown } = useDisplay()
 const configStore = useConfigStore()
@@ -948,28 +948,72 @@ function reportedAsBusy(error) {
   if (!refusal) return false
 
   const running = operationKindLabel(refusal.operation)
+  if (running) {
+    showToast('warning', t('core.volumeBrowser.busyWithOperation', { operation: running, seconds: refusal.retryAfterSeconds }))
 
-  showToast('warning', running
-    ? t('core.volumeBrowser.busyWithOperation', { operation: running, seconds: refusal.retryAfterSeconds })
+    return true
+  }
+
+  // Without an operation to name, the node's own sentence is the only thing
+  // separating a node still settling after boot from one at its limit. Dropping
+  // it leaves "the node is busy" for both. Its own punctuation comes off so the
+  // sentence that follows reads as one.
+  const reason = refusal.message.replace(/[.;,\s]+$/, '')
+
+  showToast('warning', reason
+    ? t('core.volumeBrowser.busyRetryReason', { reason, seconds: refusal.retryAfterSeconds })
     : t('core.volumeBrowser.busyRetry', { seconds: refusal.retryAfterSeconds }))
 
   return true
 }
 
-// Waits out an operation the node kept. Nothing has happened on the volume
-// until it reaches a terminal state, so reporting success before then shows the
-// file as gone while it is still there. True when the job succeeded.
-async function jobSucceeded(job) {
-  const view = await pollOperation(props.executeLocalCommand, job)
-  if (!view) return false // Silent return during logout
+// Waits out an operation the node kept, showing what it reports while it runs.
+// Nothing has happened on the volume until it reaches a terminal state, so
+// reporting success before then shows the file as gone while it is still there.
+// True when the job succeeded, false when it did not, null during a logout.
+async function jobSucceeded(job, title) {
+  operationTitle.value = title
+  optionalInfoMessage.value = ''
+  progressVisable.value = true
 
-  if (view.status === 'Succeeded') return true
+  try {
+    const view = await pollOperation(props.executeLocalCommand, job, {
+      onProgress: running => {
+        optionalInfoMessage.value = operationProgressText(running)
+      },
+    })
 
-  showToast('danger', view.error?.detail
-    || view.error?.title
-    || t('core.volumeBrowser.operationDidNotFinish', { status: view.status }))
+    if (!view) return null // Silent return during logout
 
-  return false
+    if (view.status === 'Succeeded') return true
+
+    // Watched for longer than anyone should wait, not failed: the job is still
+    // running on the node and saying otherwise sends the owner looking for a
+    // problem that is not there.
+    if (view.timedOut) {
+      showToast('warning', t('core.volumeBrowser.operationStillRunning'))
+
+      return false
+    }
+
+    showToast('danger', view.error?.detail
+      || view.error?.title
+      || t('core.volumeBrowser.operationDidNotFinish', { status: view.status }))
+
+    return false
+  } catch (error) {
+    // The job outlived our ability to read it, which says nothing about the
+    // work: it is still running on the node. Reporting it as failed would be a
+    // guess, and the listing reloaded afterwards is what actually answers.
+    console.error(error)
+    showToast('warning', t('core.volumeBrowser.operationLostTrack'))
+
+    return false
+  } finally {
+    progressVisable.value = false
+    operationTitle.value = ''
+    optionalInfoMessage.value = ''
+  }
 }
 
 async function createFolder(path) {
@@ -1136,8 +1180,13 @@ async function deleteFile(name) {
     // present and report it deleted in the same breath.
     const job = startedJob(response)
     if (job) {
-      showToast('info', t('core.volumeBrowser.deleteInProgress', { name }))
-      if (!await jobSucceeded(job)) {
+      const outcome = await jobSucceeded(job, t('core.volumeBrowser.deleteInProgress', { name }))
+      if (outcome === null) return // Silent return during logout
+
+      // Anything short of Succeeded leaves the volume as the only authority on
+      // what is still there, including the cases where the work may well have
+      // finished after we stopped watching.
+      if (!outcome) {
         loadFolder(currentFolder.value, true)
 
         return
@@ -1413,7 +1462,9 @@ async function saveContent() {
     await refreshFolder()
   } catch (error) {
     console.error('[SAVE] Upload failed:', error)
-    showToast('danger', t('core.volumeBrowser.errorSavingFile', { error: error.message }))
+    if (!reportedAsBusy(error)) {
+      showToast('danger', t('core.volumeBrowser.errorSavingFile', { error: error.message }))
+    }
   } finally {
     hasChanged.value = false
     saving.value = false
@@ -1465,6 +1516,30 @@ function getUploadFolder() {
   }
 }
 
+// The upload endpoint takes the same one-operation-per-app slot as everything
+// else that writes to the volume, refuses with the same envelope and carries the
+// same Retry-After. So a refusal is shaped into what describeRefusal already
+// reads rather than given a second reading of its own to keep in step, and the
+// body is read whatever the status line says.
+function uploadError(xhr) {
+  let body = null
+  try {
+    body = JSON.parse(xhr.responseText)
+  } catch {
+    body = null
+  }
+
+  const error = new Error(body?.data?.message || `HTTP ${xhr.status}`)
+
+  error.response = {
+    status: xhr.status,
+    data: body,
+    headers: { 'retry-after': xhr.getResponseHeader('Retry-After') },
+  }
+
+  return error
+}
+
 async function upload(file, isContentUpload = false) {
   return new Promise((resolve, reject) => {
     if (typeof XMLHttpRequest === 'undefined') {
@@ -1496,12 +1571,11 @@ async function upload(file, isContentUpload = false) {
 
     file.uploading = true
 
-    xhr.onerror = function error(e) {
+    xhr.onerror = function error() {
       file.uploading = false
       file.uploaded = false
       file.progress = 0
-      showToast('danger', `An error occurred while uploading ${file.selected_file?.name || file.file_name}`)
-      reject(e)
+      reject(new Error(t('core.volumeBrowser.uploadNetworkError', { name: file.selected_file?.name || file.file_name })))
     }
 
     xhr.onload = function onload() {
@@ -1510,9 +1584,13 @@ async function upload(file, isContentUpload = false) {
         file.uploading = false
         file.uploaded = false
         file.progress = 0
-        showToast('danger', `Upload failed with status ${xhr.status}`)
-        reject(xhr.status)
-        
+
+        // Rejected rather than reported here: the caller reports, and the two
+        // toasts this used to raise shared one snackbar, so the second - built
+        // from a rejection value that was a bare status code and had no
+        // `message` - was the only one anybody read.
+        reject(uploadError(xhr))
+
         return
       }
       file.uploaded = true

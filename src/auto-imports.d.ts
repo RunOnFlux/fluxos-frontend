@@ -190,6 +190,7 @@ declare global {
   const onWatcherCleanup: typeof import('vue')['onWatcherCleanup']
   const openWalletConnect: typeof import('./utils/walletService.js')['openWalletConnect']
   const operationKindLabel: typeof import('./utils/volumeOperations.js')['operationKindLabel']
+  const operationProgressText: typeof import('./utils/volumeOperations.js')['operationProgressText']
   const paginationMeta: typeof import('./utils/paginationMeta.js')['paginationMeta']
   const passwordValidator: typeof import('./@core/utils/validators.js')['passwordValidator']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
@@ -674,6 +675,7 @@ declare module 'vue' {
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly openWalletConnect: UnwrapRef<typeof import('./utils/walletService.js')['openWalletConnect']>
     readonly operationKindLabel: UnwrapRef<typeof import('./utils/volumeOperations.js')['operationKindLabel']>
+    readonly operationProgressText: UnwrapRef<typeof import('./utils/volumeOperations.js')['operationProgressText']>
     readonly paginationMeta: UnwrapRef<typeof import('./utils/paginationMeta.js')['paginationMeta']>
     readonly passwordValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['passwordValidator']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>

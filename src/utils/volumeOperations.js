@@ -26,6 +26,17 @@ const DEFAULT_POLL_SECONDS = 2
 // A job that outlives this has stopped being something to watch a spinner for.
 const DEFAULT_POLL_TIMEOUT_MS = 10 * 60 * 1000
 
+// How many polls may fail in a row before the job is given up on.
+//
+// A poll is a plain read against a node that is, by definition, busy doing the
+// work. A proxy hiccup, a restart or a request that times out between two of
+// them says nothing about the operation, and this window is minutes wide where
+// the request it replaces was one round trip - so treating the first failure as
+// the operation's failure reports a delete that is still running as broken, and
+// leaves the entry listed. Consecutive, so a node that has genuinely gone is
+// still an answer rather than something to wait out to the timeout.
+const MAX_CONSECUTIVE_POLL_FAILURES = 3
+
 function delay(ms) {
   return new Promise(resolve => {
     setTimeout(resolve, ms)
@@ -80,13 +91,33 @@ export function startedJob(response) {
 //
 // Completion is read from the status field and never from the HTTP code: a job
 // that failed is a 200 whose status says Failed. Returns null if `execute`
-// returns nothing, which is how it reports a logout mid-poll.
+// returns nothing, which is how it reports a logout mid-poll. Throws only once
+// the job can no longer be read at all - a single failed poll is a failed poll,
+// not a failed operation.
+//
+// A view carrying `timedOut` is the one non-terminal thing returned: the job is
+// still running and was simply watched for longer than anyone should be made to
+// wait. It is not a failure and must not be reported as one.
 export async function pollOperation(execute, job, options = {}) {
   const { timeoutMs = DEFAULT_POLL_TIMEOUT_MS, onProgress = null } = options
   const giveUpAt = Date.now() + timeoutMs
 
+  let consecutiveFailures = 0
+
   for (;;) {
-    const response = await execute(job.statusUrl)
+    let response
+    try {
+      response = await execute(job.statusUrl)
+      consecutiveFailures = 0
+    } catch (error) {
+      consecutiveFailures += 1
+      if (consecutiveFailures >= MAX_CONSECUTIVE_POLL_FAILURES || Date.now() >= giveUpAt) throw error
+
+      await delay(DEFAULT_POLL_SECONDS * 1000)
+
+      continue
+    }
+
     if (!response) return null
 
     const view = response.data?.data ?? {}
@@ -103,4 +134,22 @@ export async function pollOperation(execute, job, options = {}) {
 
     await delay(waitSeconds * 1000)
   }
+}
+
+// The line worth putting in front of someone while a job runs.
+//
+// The node appends a step only when it changes, so the last one is the current
+// one. A percentage is offered only where the node offered a denominator -
+// which it does for the operations whose size is knowable, and deliberately
+// does not for the ones whose size can only be guessed at.
+export function operationProgressText(view) {
+  const steps = view?.progress
+  const message = Array.isArray(steps) && steps.length ? steps[steps.length - 1].message : ''
+
+  const { bytesDone, bytesTotal } = view?.detail ?? {}
+  if (!(bytesTotal > 0) || !(bytesDone >= 0)) return message || ''
+
+  const percent = Math.min(100, Math.round((bytesDone / bytesTotal) * 100))
+
+  return message ? `${message} (${percent}%)` : `${percent}%`
 }
