@@ -1468,6 +1468,10 @@ const ioChart = shallowRef(null)
 
 let pollingInProgress = false
 
+// The same failure comes back on every poll, so the last one reported is kept to say it
+// once per episode rather than every few seconds.
+let lastStatsError = null
+
 // Computed Section
 const overviewTitle = computed(() =>
   enableHistoryStatistics.value ? t('pages.apps.manage.titles.historyStatsOverview') : t('pages.apps.manage.titles.statsProcessesOverview'),
@@ -2544,6 +2548,22 @@ function processStatsData(statsData, timeStamp = null) {
   )
 }
 
+// The overlay is drawn by a chart plugin, so raising the flag is not enough on its own —
+// nothing redraws until the charts are told to. Repeat failures arrive on the polling
+// interval, so the toast is shown once and repeats only after a recovery or a chart reset.
+function reportStatsFailure(error, message) {
+  const key = typeof error === "string" ? error : JSON.stringify(error)
+
+  if (key !== lastStatsError) {
+    showToast("danger", error)
+    lastStatsError = key
+  }
+
+  noData.value = true
+  additionalMessage.value = message
+  updateCharts()
+}
+
 async function fetchStats() {
   try {
     // Skip if logout is in progress or not authorized
@@ -2586,18 +2606,19 @@ async function fetchStats() {
     }
     inspectResponse = await executeLocalCommand(`/apps/appinspect/${appname}`)
     if (statsResponse.data.status === "error") {
-      showToast("danger", statsResponse.data.data.message || statsResponse.data.data)
-
-      // clearCharts emptied them and suppressed the overlay, so without this the
-      // charts sit blank once the toast times out, which reads as an app using
-      // nothing rather than as a request that failed.
-      noData.value = true
-      additionalMessage.value = "(Could not read monitoring data)"
+      // Without this the charts sit blank once the toast times out, which reads as an
+      // app using nothing rather than as a request that failed.
+      reportStatsFailure(
+        statsResponse.data.data.message || statsResponse.data.data,
+        "(Could not read monitoring data)",
+      )
     } else if (inspectResponse.data.status === "error") {
-      showToast("danger", inspectResponse.data.data.message || inspectResponse.data.data)
-      noData.value = true
-      additionalMessage.value = "(Could not read container state)"
+      reportStatsFailure(
+        inspectResponse.data.data.message || inspectResponse.data.data,
+        "(Could not read container state)",
+      )
     } else {
+      lastStatsError = null
       if (!enableHistoryStatistics.value) {
         fetchProcesses(appname, containerName, sourceIP)
       }
@@ -2610,6 +2631,10 @@ async function fetchStats() {
         } else {
           additionalMessage.value = "(Container not running)"
         }
+
+        // Same as above: the flag alone leaves the overlay unpainted until something
+        // else happens to redraw the charts.
+        updateCharts()
         stopPollingStats(true)
 
         return
@@ -3300,6 +3325,9 @@ function stopPollingStats(action = false) {
 }
 
 function clearCharts() {
+  // Emptying the charts ends the current episode, so the next failure is worth saying again.
+  lastStatsError = null
+
   if (!memoryChart.value) {
     return
   }
