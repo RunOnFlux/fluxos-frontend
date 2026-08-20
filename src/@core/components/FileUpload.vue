@@ -252,8 +252,14 @@ const showToast = (message, color = 'success') => {
   snackbar.value = true
 }
 
+// Groups are sent one request after the other, so files in a group that has
+// not started yet still look startable. Without this the button stays live
+// during an upload and a second click sends those groups in parallel - the
+// thing sending them sequentially exists to avoid.
+const uploadInProgress = ref(false)
+
 const filesToUpload = computed(() => {
-  return files.length > 0 && files.some(f => !f.uploading && !f.uploaded && f.progress === 0)
+  return !uploadInProgress.value && files.length > 0 && files.some(f => !f.uploading && !f.uploaded && f.progress === 0)
 })
 
 // Organize files into tree structure
@@ -487,6 +493,8 @@ const uploadUrlFor = folder => {
 }
 
 const startUpload = async () => {
+  if (uploadInProgress.value) return
+
   const pending = files.filter(f => !f.uploaded && !f.uploading)
   const groups = new Map()
 
@@ -500,8 +508,13 @@ const startUpload = async () => {
 
   // The endpoint runs one upload operation per app at a time, so each
   // destination folder goes as its own request, one after the other.
-  for (const [folder, group] of groups) {
-    await uploadGroup(uploadUrlFor(folder), group)
+  uploadInProgress.value = true
+  try {
+    for (const [folder, group] of groups) {
+      await uploadGroup(uploadUrlFor(folder), group)
+    }
+  } finally {
+    uploadInProgress.value = false
   }
 }
 
@@ -523,6 +536,12 @@ const uploadGroup = (uploadUrl, group) => new Promise(resolve => {
   const finish = (message, color) => {
     group.forEach(f => {
       f.uploading = false
+
+      // A file that did not land goes back to where it started. Progress is
+      // what the queue reads to decide whether a file may be removed, cleared
+      // or sent again, so leaving it non-zero freezes the queue on a refusal
+      // with no way out but closing the dialog.
+      if (!f.uploaded) f.progress = 0
     })
     showToast(message, color)
     resolve()
@@ -549,10 +568,15 @@ const uploadGroup = (uploadUrl, group) => new Promise(resolve => {
   xhr.onload = () => {
     markLandedFiles()
 
-    // A refused upload answers 200 and reports the reason in the body.
-    const failure = xhr.status >= 200 && xhr.status < 300
-      ? findUploadFailure(xhr.responseText)
-      : { message: `HTTP ${xhr.status}` }
+    // A refused upload answers 200 and reports the reason in the body. A
+    // refusal to start - the app already has a file operation running, or the
+    // node has not settled its containers yet - answers 503 and carries the
+    // same envelope. The body is read first either way, and the status line is
+    // only what is left to say when it carries nothing.
+    const accepted = xhr.status >= 200 && xhr.status < 300
+
+    const failure = findUploadFailure(xhr.responseText)
+      || (accepted ? null : { message: `HTTP ${xhr.status}` })
 
     if (failure) {
       finish(t('core.fileUpload.uploadFailedWithReason', {
