@@ -547,6 +547,13 @@ export function useFluxDrive() {
   const selectedPlan = ref('')
   const pendingPlanSelection = ref(null) // Track plan selected before login
   const searchQuery = ref('')
+
+  // Whether the current list came from searchFile (its own capped result set, paged in the
+  // browser) rather than from loadFiles (paged by the server). They cannot page alike.
+  const isSearchResult = ref(false)
+
+  // page:size:folder of the most recent load, so a watcher can skip a fetch it already has.
+  const loadedPageKey = ref('')
   const currentPage = ref(1)
   const filesPerPage = ref(5)
   const totalFiles = ref(0)
@@ -1141,6 +1148,7 @@ export function useFluxDrive() {
     }
 
     console.log('📂 Loading files for folder:', currentFolder.value)
+    isSearchResult.value = false
     if (showAllFiles) {
       console.log('🔧 RECOVERY MODE: Loading ALL files to find orphaned items')
 
@@ -1233,8 +1241,11 @@ export function useFluxDrive() {
         zelid: authData.zelid || getZelid(),
         signature: authData.signature || '',
         loginPhrase: authData.loginPhrase,
-        page: '1',  // Always fetch from page 1 since we handle pagination on frontend
-        size: '100',  // Increase size to see more files
+        // Server-side pagination. This used to pin the request to page 1 / size 100 and
+        // slice client-side, which silently capped every folder at its 100 newest files —
+        // unusable for the accounts holding six figures of files in a single folder.
+        page: String(currentPage.value),
+        size: String(filesPerPage.value),
         includeVersions: true,  // Request versions data
         includeFolders: true,    // FluxCloud compatibility
       }
@@ -1252,6 +1263,8 @@ export function useFluxDrive() {
         requestParams.currentFolder = '' // Empty folder param
         // Don't include includeFolders to see if that helps
       }
+
+      loadedPageKey.value = `${currentPage.value}:${filesPerPage.value}:${currentFolder.value}`
 
       const requestBody = new URLSearchParams(requestParams)
 
@@ -1321,30 +1334,15 @@ export function useFluxDrive() {
         console.log('📊 Files array length:', result.files.length)
         console.log('📂 Current folder for filtering:', currentFolder.value)
 
-        // If we're not in root but got files, the API might not support folder filtering
-        // In that case, we need to filter client-side
-        let filteredFiles = result.files
-        if (currentFolder.value !== '/' && result.files.length > 0) {
-          console.log('🔍 Checking if API supports folder filtering...')
-
-          // When using UUID (FluxCloud approach), API properly filters files
-          // Only check for filtering issues if we're using path-based approach (fallback)
-          if (sharedState.currentFolderUuid.value) {
-            console.log('✅ Using UUID-based loading - API filtering should work correctly')
-
-            // Trust the API response when using UUID
-          } else {
-            // Only do filtering check for path-based fallback
-            const hasProperFolderSupport = result.files.some(file =>
-              file.folder === folderParam || file.path?.includes(currentFolder.value),
-            )
-
-            if (!hasProperFolderSupport) {
-              console.log('⚠️ Path-based API does not support folder filtering, simulating empty folder')
-              filteredFiles = [] // Show empty folder since API doesn't filter
-            }
-          }
-        }
+        // The API filters by folder on the server, for both addressing modes: a uuid is
+        // matched against `parent`, a path string against the file's `path` array. There
+        // used to be a client-side guard here that tried to detect an API which did not
+        // filter, and emptied the list when it decided so. It could never succeed — the API
+        // returns no `folder` field, and it compared `file.path` (segment names, e.g.
+        // ['crawler-url-output']) against currentFolder.value, which carries a leading slash.
+        // So on every path-based load it blanked the folder, leaving only the '..' row and
+        // making a folder of any size look like it held a single item.
+        const filteredFiles = result.files
 
         // Group files by name to create versions (server doesn't properly handle existingFile param)
         const fileGroups = {}
@@ -1547,6 +1545,7 @@ export function useFluxDrive() {
 
     searching.value = true
     loading.value = true
+    isSearchResult.value = true
     files.value = []
 
     try {
@@ -1606,9 +1605,15 @@ export function useFluxDrive() {
           }
         }).filter(f => f !== null)
 
+        // Search returns one capped result set rather than a page, so the total is simply
+        // what came back — the folder's own total does not describe it.
+        totalFiles.value = files.value.length
+        currentPage.value = 1
+
         resultMessage.value = `<div class="alert alert-success">Found ${files.value.length} files</div>`
       } else {
         files.value = []
+        totalFiles.value = 0
         resultMessage.value = `<div class="alert alert-warning">No files found</div>`
       }
     } catch (error) {
@@ -2423,6 +2428,7 @@ export function useFluxDrive() {
 
       // Clear previous folder's state
       files.value = []
+      currentPage.value = 1
 
       // Reload files for new folder (with message clearing)
       await loadFiles(true)
@@ -2463,6 +2469,7 @@ export function useFluxDrive() {
 
     // Clear previous folder's state
     files.value = []
+    currentPage.value = 1
 
     // Properly rebuild folder hierarchy by truncating to the clicked breadcrumb level
     if (breadcrumb.path === '/') {
@@ -2726,7 +2733,10 @@ export function useFluxDrive() {
     }
   }
 
-  const deleteFile = async (file, skipConfirm = false) => {
+  // deferStorageRefresh lets a bulk caller skip the per-file storage round trip and do one
+  // at the end instead. Deleting a hundred files should not mean two hundred API calls
+  // against a rate-limited endpoint.
+  const deleteFile = async (file, skipConfirm = false, deferStorageRefresh = false) => {
     const itemType = file.isFolder ? 'folder' : 'file'
 
     // Skip confirmation is used for programmatic calls or when confirmation is handled elsewhere
@@ -2771,7 +2781,7 @@ export function useFluxDrive() {
           resultMessage.value = `<div class="alert alert-success">File "${file.name}" deleted successfully</div>`
 
           // Fetch updated storage info from API
-          await fetchStorageInfo()
+          if (!deferStorageRefresh) await fetchStorageInfo()
 
           // Clear success message after delay
           setTimeout(() => {
@@ -3151,6 +3161,8 @@ export function useFluxDrive() {
     selectedPlan,
     files,
     searchQuery,
+    isSearchResult,
+    loadedPageKey,
     currentPage,
     filesPerPage,
     totalFiles,

@@ -4211,7 +4211,17 @@
         "displayLogicDebug": "Debug logiki wyświetlania:",
         "cancelSubscription": "Anuluj subskrypcję",
         "cancelSubscriptionNote": "Po anulowaniu możesz ponownie zasubskrybować w dowolnym momencie.",
-        "noFilesMatch": "Brak plików pasujących do \"{query}\""
+        "noFilesMatch": "Brak plików pasujących do \"{query}\"",
+        "selectItem": "Zaznacz element",
+        "selectAllOnPage": "Zaznacz wszystko na tej stronie",
+        "itemsSelected": "Zaznaczono: {count}",
+        "clearSelection": "Wyczyść zaznaczenie",
+        "deleteSelected": "Usuń zaznaczone",
+        "bulkDeleteTitle": "Usunąć {count} elementów?",
+        "bulkDeleteWarning": "Spowoduje to trwałe usunięcie ich z FluxDrive. Tej operacji nie można cofnąć.",
+        "bulkDeleteProgress": "Usuwanie {done} z {total}...",
+        "bulkDeleteDone": "Usunięto {count} elementów",
+        "bulkDeletePartial": "Usunięto {done} elementów, {failed} nie udało się usunąć"
       },
       "pricingPlans": {
         "customPricing": "Indywidualny",

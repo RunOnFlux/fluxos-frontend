@@ -2366,7 +2366,17 @@
         "cancelSubscriptionConfirm": "Yes, Cancel Subscription",
         "cancelSubscriptionCancel": "Keep Subscription",
         "cancelSubscriptionSuccess": "Subscription canceled successfully. Your access will remain until the end of your current billing period.",
-        "cancelSubscriptionError": "Failed to cancel subscription"
+        "cancelSubscriptionError": "Failed to cancel subscription",
+        "selectItem": "Select item",
+        "selectAllOnPage": "Select everything on this page",
+        "itemsSelected": "{count} selected",
+        "clearSelection": "Clear selection",
+        "deleteSelected": "Delete selected",
+        "bulkDeleteTitle": "Delete {count} items?",
+        "bulkDeleteWarning": "This permanently removes them from your FluxDrive. It cannot be undone.",
+        "bulkDeleteProgress": "Deleting {done} of {total}...",
+        "bulkDeleteDone": "Deleted {count} items",
+        "bulkDeletePartial": "Deleted {done} items, {failed} could not be deleted"
       },
       "storageInfo": {
         "title": "Storage Usage",
