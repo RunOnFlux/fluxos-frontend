@@ -1,6 +1,6 @@
 # Git app registration moved to the dedicated site (orbit.runonflux.com).
 # 301 the retired internal path so old links/indexed URLs don't 404.
-/apps/register/orbit   https://orbit.runonflux.com   301!
+/apps/register/orbit   https://orbit.runonflux.com/   301!
 
 # WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
 # 301 the retired marketing landing so the indexed URL and its link equity

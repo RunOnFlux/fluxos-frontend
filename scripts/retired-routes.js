@@ -25,6 +25,13 @@ export const RETIRED_ROUTES = Object.freeze([
     body: 'WordPress hosting on Flux now lives on its own site.',
     linkText: 'Continue to wordpress.runonflux.com',
   },
+  {
+    from: '/apps/register/orbit',
+    to: 'https://orbit.runonflux.com/',
+    title: 'Orbit has moved',
+    body: 'Deploying to Flux straight from a Git repository now lives on its own site.',
+    linkText: 'Continue to orbit.runonflux.com',
+  },
 ])
 
 export const RETIRED_ROUTE_PATHS = Object.freeze(RETIRED_ROUTES.map(route => route.from))

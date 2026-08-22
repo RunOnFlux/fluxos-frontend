@@ -4,7 +4,7 @@
   "redirects": [
     {
       "source": "/apps/register/orbit",
-      "destination": "https://orbit.runonflux.com",
+      "destination": "https://orbit.runonflux.com/",
       "permanent": true
     },
     {
