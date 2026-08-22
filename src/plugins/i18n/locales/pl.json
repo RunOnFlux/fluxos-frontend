@@ -2054,7 +2054,7 @@
                 {
                   "title": "Hosting WordPress",
                   "description": "Wdrażaj witryny WordPress na zdecentralizowanej infrastrukturze z instalacją jednym kliknięciem",
-                  "url": "/marketplace/wordpress",
+                  "url": "https://wordpress.runonflux.com",
                   "icon": "mdi-wordpress"
                 },
                 {
@@ -3182,7 +3182,7 @@
           {
             "title": "Hosting WordPress",
             "description": "Uruchom witryny WordPress z automatycznymi kopiami zapasowymi i ochroną DDoS",
-            "url": "/marketplace/wordpress",
+            "url": "https://wordpress.runonflux.com",
             "icon": "mdi-wordpress"
           },
           {

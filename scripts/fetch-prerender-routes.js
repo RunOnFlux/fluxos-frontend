@@ -12,6 +12,8 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { isRetiredRoute } from './retired-routes.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 
@@ -30,7 +32,6 @@ const GAMES_CATEGORY_UUIDS = [
 const STATIC_ROUTES = [
   '/', // Homepage (LandingServices) — fully static i18n content, safe to prerender
   '/marketplace',
-  '/marketplace/wordpress',
   '/marketplace/games',
   '/flux-drive',
   '/apps/register',
@@ -184,8 +185,11 @@ async function main() {
   routes.push(...appRoutes)
   routes.push(...gameRoutes)
 
-  // Remove duplicates
-  const uniqueRoutes = [...new Set(routes)]
+  // Remove duplicates, then drop retired routes. A retired route is served by a
+  // build-time redirect stub (scripts/post-build-redirect-stubs.js); prerendering
+  // it would overwrite that stub with the very page we are retiring. The filter
+  // also guards against a marketplace app whose slug collides with one.
+  const uniqueRoutes = [...new Set(routes)].filter(route => !isRetiredRoute(route))
 
   console.log(`\n   📄 Static routes: ${STATIC_ROUTES.length}`)
   console.log(`   📄 App routes: ${appRoutes.length}`)

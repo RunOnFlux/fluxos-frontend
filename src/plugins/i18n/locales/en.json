@@ -3443,7 +3443,7 @@
           {
             "title": "WordPress Hosting",
             "description": "Launch WordPress sites with automatic backups and DDoS protection",
-            "url": "/marketplace/wordpress",
+            "url": "https://wordpress.runonflux.com",
             "icon": "mdi-wordpress"
           },
           {
@@ -4821,7 +4821,7 @@
                 {
                   "title": "WordPress Hosting",
                   "description": "Deploy WordPress sites on decentralized infrastructure with one-click installation",
-                  "url": "/marketplace/wordpress",
+                  "url": "https://wordpress.runonflux.com",
                   "icon": "mdi-wordpress"
                 },
                 {

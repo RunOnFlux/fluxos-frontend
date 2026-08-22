@@ -177,6 +177,14 @@ export default [
     },
   },
   {
+    // Build scripts in scripts/ run under plain Node ESM, where relative imports
+    // must carry the .js extension. The bundler-oriented rule above forbids it.
+    files: ['scripts/**/*.js'],
+    rules: {
+      'import/extensions': 'off',
+    },
+  },
+  {
     ignores: ['node_modules/', 'dist/', '*.d.ts', 'vendor/', 'vite.config.js', 'eslint.config.js','*auto-imports.d.ts', '.backups/', '**/icons-optimized.js'],
   },
 ]

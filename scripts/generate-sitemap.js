@@ -69,13 +69,9 @@ const staticUrls = [
     changefreq: 'weekly',
     description: 'Games Landing Page',
   },
-  {
-    loc: '/marketplace/wordpress',
-    source: 'src/pages/marketplace/wordpress/index.vue',
-    priority: SEO_PRIORITY.HIGH,
-    changefreq: 'weekly',
-    description: 'WordPress Hosting',
-  },
+  // WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
+  // /marketplace/wordpress 301s there, so it is deliberately absent from the
+  // sitemap — the dedicated site owns the WordPress search intent.
 
   // Comparison hub + pages (see src/content/comparisons.js)
   {

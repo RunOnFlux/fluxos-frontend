@@ -2,6 +2,13 @@
 # 301 the retired internal path so old links/indexed URLs don't 404.
 /apps/register/orbit   https://orbit.runonflux.com   301!
 
+# WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
+# 301 the retired marketing landing so the indexed URL and its link equity
+# consolidate there instead of competing with it on the same root domain.
+# Exact path only: the in-app deploy funnel at /marketplace/wordpress/configure
+# must keep serving normally.
+/marketplace/wordpress   https://wordpress.runonflux.com/   301!
+
 # Netlify/Cloudflare Pages SPA fallback
 # Redirect all requests to index.html to support client-side routing
 /*    /index.html   200

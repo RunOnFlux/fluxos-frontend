@@ -3371,7 +3371,7 @@
           {
             "title": "Hosting WordPress",
             "description": "Pasang situs WordPress karo serepan otomatis lan pangayoman DDoS",
-            "url": "/marketplace/wordpress",
+            "url": "https://wordpress.runonflux.com",
             "icon": "mdi-wordpress"
           },
           {
@@ -4738,7 +4738,7 @@
                 {
                   "title": "Hosting WordPress",
                   "description": "Pasang situs WordPress ing jaringan desentralisasi",
-                  "url": "/marketplace/wordpress",
+                  "url": "https://wordpress.runonflux.com",
                   "icon": "mdi-wordpress"
                 },
                 {
