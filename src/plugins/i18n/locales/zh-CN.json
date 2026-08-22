@@ -5127,6 +5127,7 @@
       "rust": "原版与模组服务器，最多 200 名玩家",
       "windrose": "合作海盗生存专用服务器",
       "projectzomboid": "Steam 创意工坊模组，最多 32 名玩家",
+      "fivem": "含 txAdmin 与 MySQL 的角色扮演服务器",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",
       "openclaw": "自托管、模型无关的 AI 助手",

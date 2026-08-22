@@ -5127,6 +5127,7 @@
       "rust": "バニラ&MODサーバー、最大200人",
       "windrose": "協力型海賊サバイバルの専用サーバー",
       "projectzomboid": "Steam Workshop の MOD、最大32人",
+      "fivem": "txAdmin と MySQL 付きのロールプレイサーバー",
       "wordpress": "分散型で検閲耐性のある WordPress",
       "n8n": "セルフホストの n8n ワークフロー自動化",
       "openclaw": "セルフホストでモデル非依存の AI アシスタント",
