@@ -363,10 +363,21 @@ async function getActiveApps() {
 // used when a message carries no explicit expire.
 const registrationForkBlock = 2020000
 
-function expireOf(msg) {
+// The block an app's registration runs out at, worked out the way the node works it out
+// (FluxOS appDatabase/registryManager.js). Two things move: after the PON fork a message that
+// names no expire defaults to 88000 blocks rather than 22000, and the chain itself runs 4x
+// faster past the fork - so a registration that started before it and reaches past it keeps
+// its remaining blocks, which are simply spent four times as quickly.
+function expirationBlockOf(msg) {
   const defaultExpire = msg.height >= registrationForkBlock ? 88000 : 22000
+  const expireIn = msg.appSpecifications.expire || defaultExpire
+  const expiration = msg.height + expireIn
 
-  return msg.appSpecifications.expire || defaultExpire
+  if (msg.height < registrationForkBlock && expiration > registrationForkBlock) {
+    return registrationForkBlock + (expiration - registrationForkBlock) * 4
+  }
+
+  return expiration
 }
 
 // --- 🟥 EXPIRED APPS (user, decrypted if needed) ---
@@ -414,7 +425,7 @@ async function getExpiredApps() {
     // that is not theirs is not theirs to list. With no block height there is
     // nothing to compare against and the whole set is listed.
     const expired = filtered.filter(msg => daemonBlockCount.value <= 0
-      || daemonBlockCount.value >= msg.height + expireOf(msg))
+      || daemonBlockCount.value >= expirationBlockOf(msg))
 
     // Decrypt each expired app as needed
     expiredApps.value = await decryptEnterpriseApps(expired.map(msg => msg.appSpecifications))
