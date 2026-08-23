@@ -526,6 +526,7 @@ import { useConfigStore } from "@core/stores/config"
 import { useI18n } from "vue-i18n"
 import { useDisplay } from 'vuetify'
 import { describeRefusal, operationKindLabel, operationProgressText, pollOperation, startedJob } from '@/utils/volumeOperations'
+import { findUploadFailure } from '@/utils/uploadResponse'
 
 const { smAndDown } = useDisplay()
 const configStore = useConfigStore()
@@ -1529,7 +1530,12 @@ function uploadError(xhr) {
     body = null
   }
 
-  const error = new Error(body?.data?.message || `HTTP ${xhr.status}`)
+  // A refusal that reaches us mid-transfer arrives inside the streamed body, after the progress
+  // fragments and the names of whatever already landed, so the whole document is not JSON and
+  // the parse above has nothing to offer. findUploadFailure reads the envelope out of the stream.
+  const streamed = findUploadFailure(xhr.responseText)
+
+  const error = new Error(body?.data?.message || streamed?.message || `HTTP ${xhr.status}`)
 
   error.response = {
     status: xhr.status,
@@ -1579,8 +1585,15 @@ async function upload(file, isContentUpload = false) {
     }
 
     xhr.onload = function onload() {
-      if (xhr.status < 200 || xhr.status >= 300) {
-        console.error(xhr.status)
+      // The status line is not the answer on its own. This endpoint refuses with HTTP 200 and
+      // reports the reason in the body - out of space, a rejected filename, an unmounted volume
+      // - so checking the status alone reported a file as saved that was never written. The
+      // body is read whatever the status says, and the status is only what is left when the
+      // body carries nothing.
+      const accepted = xhr.status >= 200 && xhr.status < 300
+
+      if (!accepted || findUploadFailure(xhr.responseText)) {
+        console.error('[UPLOAD] refused:', xhr.status, xhr.responseText)
         file.uploading = false
         file.uploaded = false
         file.progress = 0
