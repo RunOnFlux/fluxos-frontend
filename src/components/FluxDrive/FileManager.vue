@@ -2930,10 +2930,11 @@ const confirmBulkDelete = async () => {
 watch([currentPage, filesPerPage], () => {
   if (isSearchResult.value) return
 
-  // Folder navigation resets the page and loads in the same tick; without this the watcher
-  // would then fire a second, identical request for the page just fetched.
+  // The page this key names has already been fetched, so there is nothing to ask for.
   if (loadedPageKey.value === `${currentPage.value}:${filesPerPage.value}:${currentFolder.value}`) return
 
+  // A load already running turns this call away, so loadFiles re-checks the page once it
+  // finishes rather than leaving the pager on a page it never fetched.
   loadFiles(false, false)
 })
 

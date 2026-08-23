@@ -1528,6 +1528,16 @@ export function useFluxDrive() {
       if (files.value.length > 0) {
         sharedState.filesLoaded.value = true
       }
+
+      // A page or size change that arrived while this load was in flight was turned away by the
+      // duplicate-call guard at the top, which leaves the pager sitting on a number whose page
+      // was never fetched. Now that the slot is free, go and get it. loadedPageKey is written
+      // just before the request, so it names the page this call actually asked for.
+      const settledKey = `${currentPage.value}:${filesPerPage.value}:${currentFolder.value}`
+      if (!showAllFiles && !isSearchResult.value && loadedPageKey.value && loadedPageKey.value !== settledKey) {
+        console.log('🔁 State moved on during the load, fetching', settledKey)
+        loadFiles(false, false)
+      }
       console.log('✅ loadFiles completed - Final state:', {
         loading: loading.value,
         hasActiveSubscription: hasActiveSubscription.value,
