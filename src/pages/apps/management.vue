@@ -350,6 +350,16 @@ async function getActiveApps() {
   }
 }
 
+// Apps registered after the PON fork default to a longer subscription. Only
+// used when a message carries no explicit expire.
+const registrationForkBlock = 2020000
+
+function expireOf(msg) {
+  const defaultExpire = msg.height >= registrationForkBlock ? 88000 : 22000
+
+  return msg.appSpecifications.expire || defaultExpire
+}
+
 // --- 🟥 EXPIRED APPS (user, decrypted if needed) ---
 async function getExpiredApps() {
   loading.value.expired = true
@@ -389,8 +399,16 @@ async function getExpiredApps() {
         ),
     )
 
+    // Absent from the active list means one of two things, and only one of them
+    // belongs here. An app cannot expire before the block its owner paid to, so
+    // one that is already gone did not lapse - it left this owner, and an app
+    // that is not theirs is not theirs to list. With no block height there is
+    // nothing to compare against and the whole set is listed.
+    const expired = filtered.filter(msg => daemonBlockCount.value <= 0
+      || daemonBlockCount.value >= msg.height + expireOf(msg))
+
     // Decrypt each expired app as needed
-    expiredApps.value = await decryptEnterpriseApps(filtered.map(msg => msg.appSpecifications))
+    expiredApps.value = await decryptEnterpriseApps(expired.map(msg => msg.appSpecifications))
   } catch (error) {
     expiredApps.value = []
     showSnackbar(t('menu.application.failedToLoadExpiredApps'))
@@ -425,7 +443,15 @@ async function getApps() {
   } else {
     // Must run sequentially: getExpiredApps filters based on activeApps.value
     await getActiveApps()
-    await getExpiredApps()
+
+    // An active list that failed to load is empty, not authoritative. Running the
+    // set difference against it puts every app the user owns into the expired tab.
+    if (apiError.value) {
+      expiredApps.value = []
+      loading.value.expired = false
+    } else {
+      await getExpiredApps()
+    }
   }
 }
 
