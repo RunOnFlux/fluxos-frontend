@@ -2889,11 +2889,15 @@ const confirmBulkDelete = async () => {
 
   // Sequential on purpose. These are individual API calls against a rate-limited endpoint,
   // and a hundred parallel deletes would trip the limiter and fail most of the batch.
+  //
+  // The outcome is read from the return value, not from a thrown error: the composable reports
+  // its own failures and does not rethrow, so a try/catch here would count none of them and
+  // call a batch that deleted nothing a clean sweep.
   for (const item of items) {
-    try {
-      await deleteFileFromComposable(item, true, true)
-    } catch (error) {
-      console.error('Bulk delete failed for', item.name, error)
+    const deleted = await deleteFileFromComposable(item, true, true)
+
+    if (!deleted) {
+      console.error('Bulk delete failed for', item.name)
       failed += 1
     }
     bulkProgress.value.done += 1

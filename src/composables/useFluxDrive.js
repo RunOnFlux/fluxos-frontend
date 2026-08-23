@@ -2734,14 +2734,19 @@ export function useFluxDrive() {
     }
   }
 
-  // deferStorageRefresh lets a bulk caller skip the per-file storage round trip and do one
-  // at the end instead. Deleting a hundred files should not mean two hundred API calls
-  // against a rate-limited endpoint.
-  const deleteFile = async (file, skipConfirm = false, deferStorageRefresh = false) => {
+  // `bulk` marks a caller that deletes many items in a row: it reports the outcome itself and
+  // refreshes storage once at the end, so the per-file snackbar and the per-file storage round
+  // trip are skipped. Deleting a hundred files should not mean two hundred API calls against a
+  // rate-limited endpoint, nor a hundred stacked snackbars.
+  //
+  // Returns whether the item was actually deleted. That is what a bulk caller counts: this used
+  // to swallow the error and return undefined, so a batch that failed on every file still
+  // reported itself as a clean sweep.
+  const deleteFile = async (file, skipConfirm = false, bulk = false) => {
     const itemType = file.isFolder ? 'folder' : 'file'
 
     // Skip confirmation is used for programmatic calls or when confirmation is handled elsewhere
-    if (!skipConfirm && !confirm(`Are you sure you want to delete this ${itemType}: ${file.name}?`)) return
+    if (!skipConfirm && !confirm(`Are you sure you want to delete this ${itemType}: ${file.name}?`)) return false
 
     file.deleting = true
 
@@ -2774,30 +2779,43 @@ export function useFluxDrive() {
 
       const result = await response.json()
 
-      if (!result.error && !result.warning) {
-        // Remove from local list
-        const index = files.value.findIndex(f => f.id === file.id)
-        if (index > -1) {
-          files.value.splice(index, 1)
-          resultMessage.value = `<div class="alert alert-success">File "${file.name}" deleted successfully</div>`
-
-          // Fetch updated storage info from API
-          if (!deferStorageRefresh) await fetchStorageInfo()
-
-          // Clear success message after delay
-          setTimeout(() => {
-            resultMessage.value = ''
-          }, 4000) // Show for 4 seconds
-        }
-      } else {
+      if (result.error || result.warning) {
         throw new Error(result.error || result.warning || 'Failed to delete file')
       }
+
+      // Remove from local list. A row the list no longer holds is still a successful delete —
+      // reporting it as one used to depend on finding it here.
+      const index = files.value.findIndex(f => f.id === file.id)
+      if (index > -1) files.value.splice(index, 1)
+
+      file.deleting = false
+
+      if (!bulk) {
+        resultMessage.value = `<div class="alert alert-success">File "${file.name}" deleted successfully</div>`
+
+        // Fetch updated storage info from API
+        await fetchStorageInfo()
+
+        // Clear success message after delay
+        setTimeout(() => {
+          resultMessage.value = ''
+        }, 4000) // Show for 4 seconds
+      }
+
+      return true
     } catch (error) {
       console.error('Delete error:', error)
+
       const errorMsg = error.message || 'Failed to delete file'
-      resultMessage.value = `<div class="alert alert-danger">Delete failed: ${errorMsg}</div>`
-      showSnackbar(`Delete failed: ${errorMsg}`, 'error')
+
       file.deleting = false
+
+      if (!bulk) {
+        resultMessage.value = `<div class="alert alert-danger">Delete failed: ${errorMsg}</div>`
+        showSnackbar(`Delete failed: ${errorMsg}`, 'error')
+      }
+
+      return false
     }
   }
 
