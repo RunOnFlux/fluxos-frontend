@@ -721,8 +721,10 @@
                   @touchend="!item.isGoBack && handleTouchEnd($event, item)"
                   @touchmove="handleTouchMove"
                 >
-                  <!-- Selection checkbox (top-left corner). Shown once a selection is
-                       under way, or on hover, so it does not clutter the default view. -->
+                  <!--
+                    Selection checkbox (top-left corner). Shown once a selection is
+                    under way, or on hover, so it does not clutter the default view.
+                  -->
                   <VCheckbox
                     v-if="!item.isGoBack"
                     :model-value="isSelected(item)"
@@ -822,9 +824,11 @@
           </div>
 
           <!-- Modern Circle Pagination Footer -->
-          <!-- Gated on the server total, not on what is loaded: with server-side paging the
-               loaded array only ever holds one page, so a hardcoded "more than 5 loaded"
-               would hide the pager for every folder whose page size is 5 or less. -->
+          <!--
+            Gated on the server total, not on what is loaded: with server-side paging the
+            loaded array only ever holds one page, so a hardcoded "more than 5 loaded"
+            would hide the pager for every folder whose page size is 5 or less.
+          -->
           <div v-if="totalFiles > filesPerPage" class="modern-pagination mt-4">
             <!-- Show full pagination if more than current limit -->
             <div v-if="totalFiles > filesPerPage" class="d-flex align-center justify-space-between w-100">

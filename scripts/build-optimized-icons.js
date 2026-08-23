@@ -15,7 +15,6 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 // Icons actually used in the application
 // These lists are maintained in src/plugins/vuetify/icon-sets.js
-// eslint-disable-next-line import/extensions
 import { usedMdiIcons, usedTablerIcons } from '../src/plugins/vuetify/icon-sets.js'
 
 async function buildOptimizedIcons() {

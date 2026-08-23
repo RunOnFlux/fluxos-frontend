@@ -69,6 +69,7 @@ const staticUrls = [
     changefreq: 'weekly',
     description: 'Games Landing Page',
   },
+
   // WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
   // /marketplace/wordpress 301s there, so it is deliberately absent from the
   // sitemap — the dedicated site owns the WordPress search intent.

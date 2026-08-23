@@ -1241,6 +1241,7 @@ export function useFluxDrive() {
         zelid: authData.zelid || getZelid(),
         signature: authData.signature || '',
         loginPhrase: authData.loginPhrase,
+
         // Server-side pagination. This used to pin the request to page 1 / size 100 and
         // slice client-side, which silently capped every folder at its 100 newest files —
         // unusable for the accounts holding six figures of files in a single folder.

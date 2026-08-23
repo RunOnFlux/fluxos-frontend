@@ -214,6 +214,7 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
   })
   if (pubRes.data.status !== 'success') {
     console.warn(`${tag} ⚠️ pubkey fail`, pubRes.data)
+    
     return { ok: false }
   }
 
@@ -234,6 +235,7 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
     if (msg === 'Application not found') {
       return { ok: false, notFound: true }
     }
+    
     return { ok: false, data: encryptedRes.data }
   }
 
@@ -242,6 +244,7 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
 
   const plain = await decryptEnterpriseWithAes(encryptedPayload, aesKey)
   const extraFields = JSON.parse(plain)
+  
   return { ok: true, extraFields }
 }
 
@@ -252,12 +255,14 @@ async function decryptIfEnterprise(spec, idx = 0) {
   try {
     if (!isWebCryptoAvailable()) {
       console.warn(`${tag} ⚠️ WebCrypto not available, skipping enterprise decryption`)
+      
       return spec
     }
 
     const ownerRes = await AppsService.getAppOriginalOwner(spec.name)
     if (ownerRes.data.status !== 'success') {
       console.warn(`${tag} ⚠️ owner fail`, ownerRes.data)
+      
       return spec
     }
     const owner = ownerRes.data.data
@@ -271,24 +276,28 @@ async function decryptIfEnterprise(spec, idx = 0) {
       if (result.notFound) break
       if (attempt < maxRetries) {
         console.warn(`${tag} ⚠️ attempt ${attempt}/${maxRetries} failed, retrying`)
-        await new Promise((r) => setTimeout(r, 1000))
+        await new Promise(r => setTimeout(r, 1000))
       }
     }
 
     if (result.notFound) {
       console.warn(`${tag} Application not found - will be filtered from list`)
+      
       return null
     }
 
     if (!result.ok) {
       console.warn(`${tag} ⚠️ decrypt failed after ${maxRetries} attempts`, result.data)
+      
       return spec
     }
 
     console.log(`${tag} ✅ decrypted (attempt ${result.attempt || 1}/${maxRetries})`)
+    
     return { ...spec, ...result.extraFields, enterprise: null }
   } catch (e) {
     console.error(`${tag} 💥 decrypt failed`, e)
+    
     return spec
   }
 }
