@@ -492,6 +492,38 @@ const uploadUrlFor = folder => {
   return `${uploadUrl}?folder=${encodeURIComponent(fullFolderPath)}`
 }
 
+// FluxOS parses the upload with formidable at maxFileSize 5GB, and formidable defaults
+// maxTotalFileSize to that same number - so the cap counts the whole request, not each file in
+// it. One file per request never met it; a whole folder in one request does. Five 2GB files,
+// which used to be five accepted uploads, would come back as a single refusal. So a group is
+// split into requests that each stay under the cap.
+const MAX_REQUEST_BYTES = 5 * 1024 * 1024 * 1024
+
+// A file at or over the cap on its own is sent on its own: it cannot be made to fit, and the
+// node's refusal names the reason.
+const batchesWithinRequestLimit = group => {
+  const batches = []
+  let batch = []
+  let bytes = 0
+
+  group.forEach(f => {
+    const size = f.file.size || 0
+
+    if (batch.length > 0 && bytes + size > MAX_REQUEST_BYTES) {
+      batches.push(batch)
+      batch = []
+      bytes = 0
+    }
+
+    batch.push(f)
+    bytes += size
+  })
+
+  if (batch.length > 0) batches.push(batch)
+
+  return batches
+}
+
 const startUpload = async () => {
   if (uploadInProgress.value) return
 
@@ -511,7 +543,11 @@ const startUpload = async () => {
   uploadInProgress.value = true
   try {
     for (const [folder, group] of groups) {
-      await uploadGroup(uploadUrlFor(folder), group)
+      const uploadUrl = uploadUrlFor(folder)
+
+      for (const batch of batchesWithinRequestLimit(group)) {
+        await uploadGroup(uploadUrl, batch)
+      }
     }
   } finally {
     uploadInProgress.value = false
