@@ -465,6 +465,37 @@
               :width="4"
             />
           </div>
+          <!-- Selection Toolbar -->
+          <VSlideYTransition>
+            <div v-if="selectedCount > 0" class="selection-toolbar d-flex align-center ga-3 mb-3 pa-2 rounded">
+              <VChip color="primary" variant="tonal" size="small">
+                {{ t('components.fluxDrive.fileManager.itemsSelected', { count: selectedCount }) }}
+              </VChip>
+
+              <VBtn
+                variant="text"
+                size="small"
+                color="error"
+                prepend-icon="mdi-delete-outline"
+                :loading="bulkDeleting"
+                @click="showBulkDeleteDialog = true"
+              >
+                {{ t('components.fluxDrive.fileManager.deleteSelected') }}
+              </VBtn>
+
+              <VSpacer />
+
+              <VBtn
+                variant="text"
+                size="small"
+                :disabled="bulkDeleting"
+                @click="clearSelection"
+              >
+                {{ t('components.fluxDrive.fileManager.clearSelection') }}
+              </VBtn>
+            </div>
+          </VSlideYTransition>
+
           <!-- List View -->
           <div v-if="viewType === 'list'">
             <VDataTable
@@ -479,6 +510,31 @@
               :key="`table-${files.length}`"
               hide-default-footer
             >
+              <template #header.select>
+                <VCheckbox
+                  :model-value="allOnPageSelected"
+                  :indeterminate="someOnPageSelected"
+                  :aria-label="t('components.fluxDrive.fileManager.selectAllOnPage')"
+                  density="compact"
+                  hide-details
+                  color="primary"
+                  @update:model-value="toggleSelectAllOnPage"
+                />
+              </template>
+
+              <template #item.select="{ item }">
+                <VCheckbox
+                  v-if="!item.isGoBack"
+                  :model-value="isSelected(item)"
+                  :aria-label="t('components.fluxDrive.fileManager.selectItem')"
+                  density="compact"
+                  hide-details
+                  color="primary"
+                  @update:model-value="toggleSelect(item)"
+                  @click.stop
+                />
+              </template>
+
               <template #item.preview="{ item }">
                 <div class="d-flex align-center justify-center" style="width: 60px;">
                   <VBtn
@@ -525,12 +581,12 @@
               <template #item.name="{ item }">
                 <div
                   class="text-truncate text-no-wrap"
-                  style="max-width: 300px;"
+                  style="max-width: 100%;"
                   :title="item.isGoBack ? t('components.fluxDrive.fileManager.goBackToParent') : item.name"
                   :class="{ 'cursor-pointer': item.isFolder || item.isGoBack }"
                   @click="(item.isFolder || item.isGoBack) ? handleOpenFolder(item) : null"
                 >
-                  {{ item.name_abbr || item.name }}
+                  {{ item.name }}
                 </div>
               </template>
 
@@ -665,6 +721,23 @@
                   @touchend="!item.isGoBack && handleTouchEnd($event, item)"
                   @touchmove="handleTouchMove"
                 >
+                  <!--
+                    Selection checkbox (top-left corner). Shown once a selection is
+                    under way, or on hover, so it does not clutter the default view.
+                  -->
+                  <VCheckbox
+                    v-if="!item.isGoBack"
+                    :model-value="isSelected(item)"
+                    :aria-label="t('components.fluxDrive.fileManager.selectItem')"
+                    density="compact"
+                    hide-details
+                    color="primary"
+                    class="grid-select-checkbox"
+                    :class="{ 'grid-select-visible': selectedCount > 0 }"
+                    @click.stop
+                    @update:model-value="toggleSelect(item)"
+                  />
+
                   <!-- Three-dot menu button (top-right corner) -->
                   <VBtn
                     v-if="!item.isGoBack"
@@ -711,7 +784,7 @@
 
                   <!-- File/Folder Name -->
                   <div class="text-caption font-weight-medium text-truncate mb-1 px-1" :title="item.name">
-                    {{ item.name_abbr || item.name }}
+                    {{ item.name }}
                   </div>
 
                   <!-- File Info (Size + Date) -->
@@ -751,9 +824,14 @@
           </div>
 
           <!-- Modern Circle Pagination Footer -->
-          <div v-if="stableFiles.length > 5" class="modern-pagination mt-4">
+          <!--
+            Gated on the server total, not on what is loaded: with server-side paging the
+            loaded array only ever holds one page, so a hardcoded "more than 5 loaded"
+            would hide the pager for every folder whose page size is 5 or less.
+          -->
+          <div v-if="totalFiles > filesPerPage" class="modern-pagination mt-4">
             <!-- Show full pagination if more than current limit -->
-            <div v-if="stableFiles.length > filesPerPage" class="d-flex align-center justify-space-between w-100">
+            <div v-if="totalFiles > filesPerPage" class="d-flex align-center justify-space-between w-100">
               <!-- Left: File count info -->
               <VChip
                 variant="tonal"
@@ -764,8 +842,8 @@
                 <VIcon icon="mdi-file-multiple-outline" size="14" class="me-1" />
                 {{ t('components.fluxDrive.fileManager.paginationInfo', {
                   start: (currentPage - 1) * filesPerPage + 1,
-                  end: Math.min(currentPage * filesPerPage, stableFiles.length),
-                  total: stableFiles.length
+                  end: Math.min(currentPage * filesPerPage, totalFiles),
+                  total: totalFiles
                 }) }}
               </VChip>
 
@@ -809,7 +887,7 @@
                   variant="flat"
                   size="28"
                   class="pagination-circle"
-                  :disabled="currentPage === Math.ceil(stableFiles.length / filesPerPage)"
+                  :disabled="currentPage >= Math.ceil(totalFiles / filesPerPage)"
                   @click="currentPage++"
                 >
                   <VIcon icon="mdi-chevron-right" />
@@ -1116,6 +1194,89 @@
     </VDialog>
 
     <!-- Delete Confirmation Dialog -->
+    <!-- Bulk Delete Confirmation -->
+    <VDialog
+      v-model="showBulkDeleteDialog"
+      max-width="440"
+      attach
+    >
+      <VCard>
+        <VCardTitle class="d-flex align-center px-3 py-1 bg-primary text-white">
+          <VIcon icon="mdi-delete-sweep" class="me-3" style="color: rgba(255,255,255,0.9);" />
+          <h3 class="text-subtitle-1 text-white">
+            {{ t('components.fluxDrive.fileManager.bulkDeleteTitle', { count: selectedCount }) }}
+          </h3>
+        </VCardTitle>
+        <VCardText class="pa-6 pt-4">
+          <p class="text-body-1 mb-4">
+            {{ t('components.fluxDrive.fileManager.bulkDeleteWarning') }}
+          </p>
+          <VCard variant="outlined" class="pa-3" density="compact">
+            <div
+              v-for="item in selectedItems.slice(0, 5)"
+              :key="item.id"
+              class="d-flex align-center mb-1"
+            >
+              <VIcon
+                :icon="item.isFolder ? 'mdi-folder' : 'mdi-file-document'"
+                :color="item.isFolder ? 'amber' : 'blue'"
+                size="18"
+                class="me-2"
+              />
+              <span class="text-body-2 text-truncate">{{ item.name }}</span>
+            </div>
+            <div v-if="selectedCount > 5" class="text-caption text-medium-emphasis mt-1">
+              + {{ selectedCount - 5 }}
+            </div>
+          </VCard>
+        </VCardText>
+        <VCardActions class="pa-6 pt-0">
+          <VSpacer />
+          <VBtn
+            variant="flat"
+            color="primary"
+            density="compact"
+            class="text-caption"
+            @click="showBulkDeleteDialog = false"
+          >
+            {{ t('components.fluxDrive.fileManager.cancel') }}
+          </VBtn>
+          <VBtn
+            variant="flat"
+            color="error"
+            density="compact"
+            class="text-caption"
+            @click="confirmBulkDelete"
+          >
+            {{ t('components.fluxDrive.fileManager.delete') }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
+
+    <!-- Bulk Delete Progress -->
+    <VDialog
+      v-model="bulkDeleting"
+      max-width="360"
+      persistent
+      attach
+    >
+      <VCard>
+        <VCardText class="pa-6 text-center">
+          <VProgressLinear
+            :model-value="bulkProgress.total ? (bulkProgress.done / bulkProgress.total) * 100 : 0"
+            color="primary"
+            height="6"
+            rounded
+            class="mb-4"
+          />
+          <div class="text-body-2">
+            {{ t('components.fluxDrive.fileManager.bulkDeleteProgress', { done: bulkProgress.done, total: bulkProgress.total }) }}
+          </div>
+        </VCardText>
+      </VCard>
+    </VDialog>
+
     <VDialog
       v-model="showDeleteDialog"
       max-width="400"
@@ -2529,6 +2690,9 @@ const {
   searching,
   files: allFiles,
   searchQuery,
+  isSearchResult,
+  loadedPageKey,
+  fetchStorageInfo,
   currentPage,
   filesPerPage,
   totalFiles,
@@ -2666,12 +2830,150 @@ const subscriptionExpiryMessage = computed(() => {
 
 // Override fileHeaders with translated versions
 const fileHeaders = computed(() => [
+  { title: '', key: 'select', sortable: false, width: 48 },
   { title: '', key: 'preview', sortable: false, width: 60 },
   { title: t('components.fluxDrive.fileManager.columnName'), key: 'name', sortable: true },
   { title: t('components.fluxDrive.fileManager.columnUpdated'), key: 'timestamp', sortable: true, width: 160 },
   { title: t('components.fluxDrive.fileManager.columnSize'), key: 'size', sortable: true, width: 90 },
   { title: '', key: 'actions', sortable: false, width: 40 },
 ])
+
+// --- Multi-select -----------------------------------------------------------------
+// Selection is per page, deliberately: paging is served, so the rows the user can see are
+// the rows the browser has. "Select all" therefore means this page, and is labelled so —
+// silently acting on 130k unseen files because someone ticked a box would be indefensible.
+const selectedIds = ref([])
+const bulkDeleting = ref(false)
+const showBulkDeleteDialog = ref(false)
+const bulkProgress = ref({ done: 0, total: 0 })
+
+// The '..' row is navigation, never a target.
+const selectableItems = computed(() => paginatedFiles.value.filter(item => !item.isGoBack))
+const selectedItems = computed(() => selectableItems.value.filter(item => selectedIds.value.includes(item.id)))
+const selectedCount = computed(() => selectedItems.value.length)
+
+const allOnPageSelected = computed(() => selectableItems.value.length > 0 && selectedCount.value === selectableItems.value.length)
+const someOnPageSelected = computed(() => selectedCount.value > 0 && !allOnPageSelected.value)
+
+const isSelected = item => selectedIds.value.includes(item.id)
+
+const toggleSelect = item => {
+  selectedIds.value = isSelected(item)
+    ? selectedIds.value.filter(id => id !== item.id)
+    : [...selectedIds.value, item.id]
+}
+
+const toggleSelectAllOnPage = () => {
+  selectedIds.value = allOnPageSelected.value ? [] : selectableItems.value.map(item => item.id)
+}
+
+const clearSelection = () => {
+  selectedIds.value = []
+}
+
+// A selection describes rows that are on screen, so it cannot survive changing what is on
+// screen. Without this, deleting "selected" after paging away acts on rows the user last
+// saw somewhere else entirely.
+watch([currentPage, currentFolder, filesPerPage], clearSelection)
+
+const confirmBulkDelete = async () => {
+  const items = [...selectedItems.value]
+
+  showBulkDeleteDialog.value = false
+  if (items.length === 0) return
+
+  bulkDeleting.value = true
+  bulkProgress.value = { done: 0, total: items.length }
+
+  let failed = 0
+
+  // Sequential on purpose. These are individual API calls against a rate-limited endpoint,
+  // and a hundred parallel deletes would trip the limiter and fail most of the batch.
+  //
+  // The outcome is read from the return value, not from a thrown error: the composable reports
+  // its own failures and does not rethrow, so a try/catch here would count none of them and
+  // call a batch that deleted nothing a clean sweep.
+  for (const item of items) {
+    const deleted = await deleteFileFromComposable(item, true, true)
+
+    if (!deleted) {
+      console.error('Bulk delete failed for', item.name)
+      failed += 1
+    }
+    bulkProgress.value.done += 1
+  }
+
+  bulkDeleting.value = false
+  clearSelection()
+  await loadFiles(false)
+  await fetchStorageInfo()
+
+  const deleted = items.length - failed
+  if (failed > 0) {
+    showLocalMessage(
+      t('components.fluxDrive.fileManager.bulkDeletePartial', { done: deleted, failed }),
+      'warning',
+      'mdi-alert',
+    )
+  } else {
+    showLocalMessage(
+      t('components.fluxDrive.fileManager.bulkDeleteDone', { count: deleted }),
+      'success',
+      'mdi-check-circle',
+    )
+  }
+}
+
+// Paging is served now, so moving between pages has to go and get them. Watched as a pair
+// so changing the page size — which also resets the page to 1 — costs one request, not two.
+// Search results are already in memory and page without a round trip.
+watch([currentPage, filesPerPage], () => {
+  if (isSearchResult.value) return
+
+  // The page this key names has already been fetched, so there is nothing to ask for.
+  if (loadedPageKey.value === `${currentPage.value}:${filesPerPage.value}:${currentFolder.value}`) return
+
+  // A load already running turns this call away, so loadFiles re-checks the page once it
+  // finishes rather than leaving the pager on a page it never fetched.
+  loadFiles(false, false)
+})
+
+// A fullscreen dialog reads as its own page, so Back is how people expect to leave it.
+// Neither of these registers with history, so Back unwinds past the entire FluxDrive route
+// instead — usually landing on App Marketplace, losing the folder you were in. Give each
+// dialog a history entry while it is open and close it on popstate.
+const bindDialogToHistory = (dialogRef, stateKey) => {
+  let closedByBack = false
+
+  const onPopState = () => {
+    if (!dialogRef.value) return
+    closedByBack = true
+    dialogRef.value = false
+  }
+
+  watch(dialogRef, (isOpen, wasOpen) => {
+    if (isOpen) {
+      closedByBack = false
+      window.history.pushState({ [stateKey]: true }, '')
+      window.addEventListener('popstate', onPopState)
+
+      return
+    }
+
+    if (!wasOpen) return
+    window.removeEventListener('popstate', onPopState)
+
+    // Closed from the UI (the X, or Esc), so our entry is still on the stack. Drop it,
+    // otherwise the next Back press is spent undoing it and appears to do nothing.
+    if (!closedByBack && window.history.state?.[stateKey]) window.history.back()
+    closedByBack = false
+  })
+
+  onBeforeUnmount(() => window.removeEventListener('popstate', onPopState))
+}
+
+bindDialogToHistory(showFileModal, 'fluxdrivePreview')
+bindDialogToHistory(showEditorDialog, 'fluxdriveEditor')
 
 // Override previewFile to automatically open editor for text files
 const previewFile = file => {
@@ -2703,6 +3005,11 @@ const files = computed(() => {
 
 // Paginated files for display
 const paginatedFiles = computed(() => {
+  // Browsing is paged by the server, so the response IS the page — slicing it again would
+  // show filesPerPage of filesPerPage. Search results still page in the browser, because
+  // that endpoint returns one capped result set rather than a page.
+  if (!isSearchResult.value) return stableFiles.value
+
   const start = (currentPage.value - 1) * filesPerPage.value
   const end = start + filesPerPage.value
   const result = stableFiles.value.slice(start, end)
@@ -2726,7 +3033,7 @@ const paginatedFiles = computed(() => {
 
 // Pagination range for modern pagination
 const paginationRange = computed(() => {
-  const totalPages = Math.ceil(stableFiles.value.length / filesPerPage.value)
+  const totalPages = Math.ceil(totalFiles.value / filesPerPage.value)
   const current = currentPage.value
   const delta = 2 // Pages to show on each side of current page
   const range = []
@@ -3577,8 +3884,11 @@ const confirmDelete = async () => {
       // Refresh file list to update UI and storage stats
       await loadFiles(false)
 
-      // Check if current page is now empty and move to previous page if needed
-      const totalPages = Math.ceil(allFiles.value.length / filesPerPage.value)
+      // Check if current page is now empty and move to previous page if needed.
+      // Counted from the server total, not from the loaded array: with server-side paging
+      // that array only ever holds one page, so it would resolve to 1 and bounce the user
+      // back to the first page after every delete.
+      const totalPages = Math.ceil(totalFiles.value / filesPerPage.value)
       if (currentPage.value > totalPages && totalPages > 0) {
         currentPage.value = totalPages
       }
@@ -3899,6 +4209,20 @@ const handleUpgradePlan = planId => {
 }
 
 /* Prevent text wrapping in table */
+.grid-select-checkbox {
+  position: absolute;
+  top: 2px;
+  left: 6px;
+  z-index: 2;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.file-grid-item:hover .grid-select-checkbox,
+.grid-select-checkbox.grid-select-visible {
+  opacity: 1;
+}
+
 .file-list-table :deep(.v-data-table__td) {
   white-space: nowrap !important;
   overflow: hidden !important;

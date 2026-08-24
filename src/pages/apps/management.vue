@@ -214,6 +214,7 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
   })
   if (pubRes.data.status !== 'success') {
     console.warn(`${tag} ⚠️ pubkey fail`, pubRes.data)
+    
     return { ok: false }
   }
 
@@ -234,6 +235,7 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
     if (msg === 'Application not found') {
       return { ok: false, notFound: true }
     }
+    
     return { ok: false, data: encryptedRes.data }
   }
 
@@ -242,6 +244,7 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
 
   const plain = await decryptEnterpriseWithAes(encryptedPayload, aesKey)
   const extraFields = JSON.parse(plain)
+  
   return { ok: true, extraFields }
 }
 
@@ -252,12 +255,14 @@ async function decryptIfEnterprise(spec, idx = 0) {
   try {
     if (!isWebCryptoAvailable()) {
       console.warn(`${tag} ⚠️ WebCrypto not available, skipping enterprise decryption`)
+      
       return spec
     }
 
     const ownerRes = await AppsService.getAppOriginalOwner(spec.name)
     if (ownerRes.data.status !== 'success') {
       console.warn(`${tag} ⚠️ owner fail`, ownerRes.data)
+      
       return spec
     }
     const owner = ownerRes.data.data
@@ -271,24 +276,28 @@ async function decryptIfEnterprise(spec, idx = 0) {
       if (result.notFound) break
       if (attempt < maxRetries) {
         console.warn(`${tag} ⚠️ attempt ${attempt}/${maxRetries} failed, retrying`)
-        await new Promise((r) => setTimeout(r, 1000))
+        await new Promise(r => setTimeout(r, 1000))
       }
     }
 
     if (result.notFound) {
       console.warn(`${tag} Application not found - will be filtered from list`)
+      
       return null
     }
 
     if (!result.ok) {
       console.warn(`${tag} ⚠️ decrypt failed after ${maxRetries} attempts`, result.data)
+      
       return spec
     }
 
     console.log(`${tag} ✅ decrypted (attempt ${result.attempt || 1}/${maxRetries})`)
+    
     return { ...spec, ...result.extraFields, enterprise: null }
   } catch (e) {
     console.error(`${tag} 💥 decrypt failed`, e)
+    
     return spec
   }
 }
@@ -350,6 +359,27 @@ async function getActiveApps() {
   }
 }
 
+// Apps registered after the PON fork default to a longer subscription. Only
+// used when a message carries no explicit expire.
+const registrationForkBlock = 2020000
+
+// The block an app's registration runs out at, worked out the way the node works it out
+// (FluxOS appDatabase/registryManager.js). Two things move: after the PON fork a message that
+// names no expire defaults to 88000 blocks rather than 22000, and the chain itself runs 4x
+// faster past the fork - so a registration that started before it and reaches past it keeps
+// its remaining blocks, which are simply spent four times as quickly.
+function expirationBlockOf(msg) {
+  const defaultExpire = msg.height >= registrationForkBlock ? 88000 : 22000
+  const expireIn = msg.appSpecifications.expire || defaultExpire
+  const expiration = msg.height + expireIn
+
+  if (msg.height < registrationForkBlock && expiration > registrationForkBlock) {
+    return registrationForkBlock + (expiration - registrationForkBlock) * 4
+  }
+
+  return expiration
+}
+
 // --- 🟥 EXPIRED APPS (user, decrypted if needed) ---
 async function getExpiredApps() {
   loading.value.expired = true
@@ -389,8 +419,16 @@ async function getExpiredApps() {
         ),
     )
 
+    // Absent from the active list means one of two things, and only one of them
+    // belongs here. An app cannot expire before the block its owner paid to, so
+    // one that is already gone did not lapse - it left this owner, and an app
+    // that is not theirs is not theirs to list. With no block height there is
+    // nothing to compare against and the whole set is listed.
+    const expired = filtered.filter(msg => daemonBlockCount.value <= 0
+      || daemonBlockCount.value >= expirationBlockOf(msg))
+
     // Decrypt each expired app as needed
-    expiredApps.value = await decryptEnterpriseApps(filtered.map(msg => msg.appSpecifications))
+    expiredApps.value = await decryptEnterpriseApps(expired.map(msg => msg.appSpecifications))
   } catch (error) {
     expiredApps.value = []
     showSnackbar(t('menu.application.failedToLoadExpiredApps'))
@@ -425,7 +463,15 @@ async function getApps() {
   } else {
     // Must run sequentially: getExpiredApps filters based on activeApps.value
     await getActiveApps()
-    await getExpiredApps()
+
+    // An active list that failed to load is empty, not authoritative. Running the
+    // set difference against it puts every app the user owns into the expired tab.
+    if (apiError.value) {
+      expiredApps.value = []
+      loading.value.expired = false
+    } else {
+      await getExpiredApps()
+    }
   }
 }
 

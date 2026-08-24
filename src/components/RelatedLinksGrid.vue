@@ -5,16 +5,19 @@
       <p v-if="resolvedSubtitle" class="links-subtitle">{{ resolvedSubtitle }}</p>
 
       <div class="links-grid" :style="gridStyle">
-        <RouterLink
+        <component
+          :is="isExternal(link.to) ? 'a' : RouterLink"
           v-for="(link, index) in resolvedLinks"
           :key="index"
-          :to="link.to"
+          v-bind="isExternal(link.to)
+            ? { href: link.to, target: '_blank', rel: 'noopener noreferrer' }
+            : { to: link.to }"
           class="link-card"
         >
           <VIcon :icon="link.icon || 'mdi-link'" :size="iconSize" :color="link.color || iconColor" class="link-icon" />
           <h3 class="link-title">{{ link.title }}</h3>
           <p class="link-description">{{ link.description }}</p>
-        </RouterLink>
+        </component>
       </div>
     </VCardText>
   </VCard>
@@ -23,6 +26,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   // Header content
@@ -69,6 +73,10 @@ const props = defineProps({
 })
 
 const { t, te, tm, locale, messages } = useI18n()
+
+// Links to the dedicated sites (wordpress.runonflux.com, orbit.runonflux.com, ...)
+// are absolute URLs — RouterLink cannot resolve those, so render a plain anchor.
+const isExternal = to => typeof to === 'string' && /^https?:\/\//i.test(to)
 
 // Helper function to check if a string is an i18n key
 const isI18nKey = str => {

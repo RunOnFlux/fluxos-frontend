@@ -431,8 +431,8 @@
       "uploadFiles": "Dateien hochladen",
       "alreadyInQueue": "„{fileName}“ befindet sich bereits in der Upload-Warteschlange",
       "uploadSuccess": "„{fileName}“ wurde hochgeladen",
-      "uploadError": "Fehler beim Hochladen von „{fileName}“: Status {status}",
-      "uploadFailed": "Der Upload für „{fileName}“ ist fehlgeschlagen.",
+      "uploadSuccessMultiple": "{count} Dateien wurden hochgeladen",
+      "uploadFailedWithReason": "Hochladen fehlgeschlagen: {message}",
       "uploadQueue": "Upload-Warteschlange",
       "total": "Gesamt",
       "files": "Datei | Dateien",
@@ -3371,7 +3371,7 @@
           {
             "title": "WordPress-Hosting",
             "description": "Starten Sie WordPress-Sites mit automatischen Backups und DDoS-Schutz",
-            "url": "/marketplace/wordpress",
+            "url": "https://wordpress.runonflux.com",
             "icon": "mdi-wordpress"
           },
           {
@@ -4749,7 +4749,7 @@
                 {
                   "title": "WordPress-Hosting",
                   "description": "Stellen Sie WordPress-Sites mit einer Ein-Klick-Installation in einer dezentralen Infrastruktur bereit",
-                  "url": "/marketplace/wordpress",
+                  "url": "https://wordpress.runonflux.com",
                   "icon": "mdi-wordpress"
                 },
                 {
@@ -5128,6 +5128,7 @@
       "rust": "Vanilla- & Modded-Server, bis zu 200 Spieler",
       "windrose": "Dedizierte Server für Koop-Piraten-Survival",
       "projectzomboid": "Steam-Workshop-Mods, bis zu 32 Spieler",
+      "fivem": "Roleplay-Server mit txAdmin und MySQL",
       "wordpress": "Dezentrales, zensurresistentes WordPress",
       "n8n": "Selbst gehostete n8n-Workflow-Automatisierung",
       "openclaw": "Selbst gehosteter, modellunabhängiger KI-Assistent",

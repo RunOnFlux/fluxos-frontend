@@ -7,7 +7,15 @@
 # 301 the retired internal path so old links/indexed URLs don't 404.
 [[redirects]]
   from = "/apps/register/orbit"
-  to = "https://orbit.runonflux.com"
+  to = "https://orbit.runonflux.com/"
+  status = 301
+  force = true
+
+# WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
+# Exact path only — /marketplace/wordpress/configure keeps serving the deploy funnel.
+[[redirects]]
+  from = "/marketplace/wordpress"
+  to = "https://wordpress.runonflux.com/"
   status = 301
   force = true
 

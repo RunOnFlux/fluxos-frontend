@@ -66,6 +66,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const definePage: typeof import('unplugin-vue-router/runtime')['definePage']
   const defineStore: typeof import('pinia')['defineStore']
+  const describeRefusal: typeof import('./utils/volumeOperations.js')['describeRefusal']
   const detectSecretEnvVars: typeof import('./utils/detectSecrets.js')['detectSecretEnvVars']
   const disableAnalytics: typeof import('./composables/useCookieConsent.js')['disableAnalytics']
   const disconnectWalletConnect: typeof import('./utils/walletService.js')['disconnectWalletConnect']
@@ -80,6 +81,7 @@ declare global {
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const extractNodeIPFromResponse: typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']
   const fiatGateways: typeof import('./utils/fiatGateways.js')['default']
+  const findUploadFailure: typeof import('./utils/uploadResponse.js')['findUploadFailure']
   const firebase: typeof import('./utils/firebase.js')['firebase']
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
   const forgetSsoEmail: typeof import('./utils/firebase.js')['forgetSsoEmail']
@@ -188,12 +190,15 @@ declare global {
   const onUpdated: typeof import('vue')['onUpdated']
   const onWatcherCleanup: typeof import('vue')['onWatcherCleanup']
   const openWalletConnect: typeof import('./utils/walletService.js')['openWalletConnect']
+  const operationKindLabel: typeof import('./utils/volumeOperations.js')['operationKindLabel']
+  const operationProgressText: typeof import('./utils/volumeOperations.js')['operationProgressText']
   const paginationMeta: typeof import('./utils/paginationMeta.js')['paginationMeta']
   const passwordValidator: typeof import('./@core/utils/validators.js')['passwordValidator']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const payWithSSP: typeof import('./utils/walletService.js')['payWithSSP']
   const payWithZelcore: typeof import('./utils/walletService.js')['payWithZelcore']
   const paymentBridge: typeof import('./utils/fiatGateways.js')['paymentBridge']
+  const pollOperation: typeof import('./utils/volumeOperations.js')['pollOperation']
   const prefixWithPlus: typeof import('./@core/utils/formatters.js')['prefixWithPlus']
   const provide: typeof import('vue')['provide']
   const provideLocal: typeof import('@vueuse/core')['provideLocal']
@@ -203,6 +208,7 @@ declare global {
   const reactiveComputed: typeof import('@vueuse/core')['reactiveComputed']
   const reactiveOmit: typeof import('@vueuse/core')['reactiveOmit']
   const reactivePick: typeof import('@vueuse/core')['reactivePick']
+  const readCompletedUploads: typeof import('./utils/uploadResponse.js')['readCompletedUploads']
   const readonly: typeof import('vue')['readonly']
   const ref: typeof import('vue')['ref']
   const refAutoReset: typeof import('@vueuse/core')['refAutoReset']
@@ -234,6 +240,7 @@ declare global {
   const signWithSSP: typeof import('./utils/walletService.js')['signWithSSP']
   const signWithWalletConnect: typeof import('./utils/walletService.js')['signWithWalletConnect']
   const signWithZelcore: typeof import('./utils/walletService.js')['signWithZelcore']
+  const startedJob: typeof import('./utils/volumeOperations.js')['startedJob']
   const storeToRefs: typeof import('pinia')['storeToRefs']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
@@ -548,6 +555,7 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly definePage: UnwrapRef<typeof import('unplugin-vue-router/runtime')['definePage']>
     readonly defineStore: UnwrapRef<typeof import('pinia')['defineStore']>
+    readonly describeRefusal: UnwrapRef<typeof import('./utils/volumeOperations.js')['describeRefusal']>
     readonly detectSecretEnvVars: UnwrapRef<typeof import('./utils/detectSecrets.js')['detectSecretEnvVars']>
     readonly disableAnalytics: UnwrapRef<typeof import('./composables/useCookieConsent.js')['disableAnalytics']>
     readonly disconnectWalletConnect: UnwrapRef<typeof import('./utils/walletService.js')['disconnectWalletConnect']>
@@ -562,6 +570,7 @@ declare module 'vue' {
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly extractNodeIPFromResponse: UnwrapRef<typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']>
     readonly fiatGateways: UnwrapRef<typeof import('./utils/fiatGateways.js')['default']>
+    readonly findUploadFailure: UnwrapRef<typeof import('./utils/uploadResponse.js')['findUploadFailure']>
     readonly firebase: UnwrapRef<typeof import('./utils/firebase.js')['firebase']>
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
     readonly forgetSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['forgetSsoEmail']>
@@ -668,12 +677,15 @@ declare module 'vue' {
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly onWatcherCleanup: UnwrapRef<typeof import('vue')['onWatcherCleanup']>
     readonly openWalletConnect: UnwrapRef<typeof import('./utils/walletService.js')['openWalletConnect']>
+    readonly operationKindLabel: UnwrapRef<typeof import('./utils/volumeOperations.js')['operationKindLabel']>
+    readonly operationProgressText: UnwrapRef<typeof import('./utils/volumeOperations.js')['operationProgressText']>
     readonly paginationMeta: UnwrapRef<typeof import('./utils/paginationMeta.js')['paginationMeta']>
     readonly passwordValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['passwordValidator']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly payWithSSP: UnwrapRef<typeof import('./utils/walletService.js')['payWithSSP']>
     readonly payWithZelcore: UnwrapRef<typeof import('./utils/walletService.js')['payWithZelcore']>
     readonly paymentBridge: UnwrapRef<typeof import('./utils/fiatGateways.js')['paymentBridge']>
+    readonly pollOperation: UnwrapRef<typeof import('./utils/volumeOperations.js')['pollOperation']>
     readonly prefixWithPlus: UnwrapRef<typeof import('./@core/utils/formatters.js')['prefixWithPlus']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
@@ -683,6 +695,7 @@ declare module 'vue' {
     readonly reactiveComputed: UnwrapRef<typeof import('@vueuse/core')['reactiveComputed']>
     readonly reactiveOmit: UnwrapRef<typeof import('@vueuse/core')['reactiveOmit']>
     readonly reactivePick: UnwrapRef<typeof import('@vueuse/core')['reactivePick']>
+    readonly readCompletedUploads: UnwrapRef<typeof import('./utils/uploadResponse.js')['readCompletedUploads']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refAutoReset: UnwrapRef<typeof import('@vueuse/core')['refAutoReset']>
@@ -714,6 +727,7 @@ declare module 'vue' {
     readonly signWithSSP: UnwrapRef<typeof import('./utils/walletService.js')['signWithSSP']>
     readonly signWithWalletConnect: UnwrapRef<typeof import('./utils/walletService.js')['signWithWalletConnect']>
     readonly signWithZelcore: UnwrapRef<typeof import('./utils/walletService.js')['signWithZelcore']>
+    readonly startedJob: UnwrapRef<typeof import('./utils/volumeOperations.js')['startedJob']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>

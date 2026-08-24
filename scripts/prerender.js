@@ -25,6 +25,8 @@ import { fileURLToPath } from 'url'
 import { chromium } from 'playwright'
 import { createServer } from 'http'
 
+import { isRetiredRoute } from './retired-routes.js'
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
 const distPath = path.join(__dirname, '../dist')
@@ -46,7 +48,6 @@ const FALLBACK_ROUTES = Object.freeze([
   // Main landing pages
   '/', // Homepage (LandingServices) — fully static i18n content, safe to prerender
   '/marketplace',
-  '/marketplace/wordpress',
   '/marketplace/games',
   '/flux-drive',
   '/apps/register',
@@ -479,8 +480,10 @@ async function renderPageWithRetry(context, route, port, splashMarkup) {
 }
 
 async function prerender() {
-  // Load routes inside function to avoid global memory retention
-  const routes = loadRoutes()
+  // Load routes inside function to avoid global memory retention.
+  // Retired routes are filtered here too: prerender-routes.json may be stale and
+  // still list one, and rendering it would overwrite its redirect stub in dist/.
+  const routes = loadRoutes().filter(route => !isRetiredRoute(route))
 
   console.log('\n🚀 Starting pre-rendering for SEO...')
   console.log(`📄 Routes to pre-render: ${routes.length}\n`)

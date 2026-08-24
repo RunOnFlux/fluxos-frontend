@@ -4,7 +4,12 @@
   "redirects": [
     {
       "source": "/apps/register/orbit",
-      "destination": "https://orbit.runonflux.com",
+      "destination": "https://orbit.runonflux.com/",
+      "permanent": true
+    },
+    {
+      "source": "/marketplace/wordpress",
+      "destination": "https://wordpress.runonflux.com/",
       "permanent": true
     }
   ],

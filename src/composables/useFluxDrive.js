@@ -67,6 +67,13 @@ const sharedState = {
   currentUploadFileName: ref(''),
   totalFilesToUpload: ref(0),
   currentUploadIndex: ref(0),
+
+  // API keys (metadata only — plaintext secrets are never held in state)
+  apiKeys: ref([]),
+  apiKeysLoading: ref(false),
+  apiKeysCreating: ref(false),
+  apiKeysLegacyCount: ref(0),
+  apiKeysMax: ref(10),
 }
 
 export function useFluxDrive() {
@@ -540,6 +547,13 @@ export function useFluxDrive() {
   const selectedPlan = ref('')
   const pendingPlanSelection = ref(null) // Track plan selected before login
   const searchQuery = ref('')
+
+  // Whether the current list came from searchFile (its own capped result set, paged in the
+  // browser) rather than from loadFiles (paged by the server). They cannot page alike.
+  const isSearchResult = ref(false)
+
+  // page:size:folder of the most recent load, so a watcher can skip a fetch it already has.
+  const loadedPageKey = ref('')
   const currentPage = ref(1)
   const filesPerPage = ref(5)
   const totalFiles = ref(0)
@@ -1134,6 +1148,7 @@ export function useFluxDrive() {
     }
 
     console.log('📂 Loading files for folder:', currentFolder.value)
+    isSearchResult.value = false
     if (showAllFiles) {
       console.log('🔧 RECOVERY MODE: Loading ALL files to find orphaned items')
 
@@ -1226,8 +1241,12 @@ export function useFluxDrive() {
         zelid: authData.zelid || getZelid(),
         signature: authData.signature || '',
         loginPhrase: authData.loginPhrase,
-        page: '1',  // Always fetch from page 1 since we handle pagination on frontend
-        size: '100',  // Increase size to see more files
+
+        // Server-side pagination. This used to pin the request to page 1 / size 100 and
+        // slice client-side, which silently capped every folder at its 100 newest files —
+        // unusable for the accounts holding six figures of files in a single folder.
+        page: String(currentPage.value),
+        size: String(filesPerPage.value),
         includeVersions: true,  // Request versions data
         includeFolders: true,    // FluxCloud compatibility
       }
@@ -1245,6 +1264,8 @@ export function useFluxDrive() {
         requestParams.currentFolder = '' // Empty folder param
         // Don't include includeFolders to see if that helps
       }
+
+      loadedPageKey.value = `${currentPage.value}:${filesPerPage.value}:${currentFolder.value}`
 
       const requestBody = new URLSearchParams(requestParams)
 
@@ -1314,30 +1335,15 @@ export function useFluxDrive() {
         console.log('📊 Files array length:', result.files.length)
         console.log('📂 Current folder for filtering:', currentFolder.value)
 
-        // If we're not in root but got files, the API might not support folder filtering
-        // In that case, we need to filter client-side
-        let filteredFiles = result.files
-        if (currentFolder.value !== '/' && result.files.length > 0) {
-          console.log('🔍 Checking if API supports folder filtering...')
-
-          // When using UUID (FluxCloud approach), API properly filters files
-          // Only check for filtering issues if we're using path-based approach (fallback)
-          if (sharedState.currentFolderUuid.value) {
-            console.log('✅ Using UUID-based loading - API filtering should work correctly')
-
-            // Trust the API response when using UUID
-          } else {
-            // Only do filtering check for path-based fallback
-            const hasProperFolderSupport = result.files.some(file =>
-              file.folder === folderParam || file.path?.includes(currentFolder.value),
-            )
-
-            if (!hasProperFolderSupport) {
-              console.log('⚠️ Path-based API does not support folder filtering, simulating empty folder')
-              filteredFiles = [] // Show empty folder since API doesn't filter
-            }
-          }
-        }
+        // The API filters by folder on the server, for both addressing modes: a uuid is
+        // matched against `parent`, a path string against the file's `path` array. There
+        // used to be a client-side guard here that tried to detect an API which did not
+        // filter, and emptied the list when it decided so. It could never succeed — the API
+        // returns no `folder` field, and it compared `file.path` (segment names, e.g.
+        // ['crawler-url-output']) against currentFolder.value, which carries a leading slash.
+        // So on every path-based load it blanked the folder, leaving only the '..' row and
+        // making a folder of any size look like it held a single item.
+        const filteredFiles = result.files
 
         // Group files by name to create versions (server doesn't properly handle existingFile param)
         const fileGroups = {}
@@ -1522,6 +1528,16 @@ export function useFluxDrive() {
       if (files.value.length > 0) {
         sharedState.filesLoaded.value = true
       }
+
+      // A page or size change that arrived while this load was in flight was turned away by the
+      // duplicate-call guard at the top, which leaves the pager sitting on a number whose page
+      // was never fetched. Now that the slot is free, go and get it. loadedPageKey is written
+      // just before the request, so it names the page this call actually asked for.
+      const settledKey = `${currentPage.value}:${filesPerPage.value}:${currentFolder.value}`
+      if (!showAllFiles && !isSearchResult.value && loadedPageKey.value && loadedPageKey.value !== settledKey) {
+        console.log('🔁 State moved on during the load, fetching', settledKey)
+        loadFiles(false, false)
+      }
       console.log('✅ loadFiles completed - Final state:', {
         loading: loading.value,
         hasActiveSubscription: hasActiveSubscription.value,
@@ -1540,6 +1556,7 @@ export function useFluxDrive() {
 
     searching.value = true
     loading.value = true
+    isSearchResult.value = true
     files.value = []
 
     try {
@@ -1599,9 +1616,15 @@ export function useFluxDrive() {
           }
         }).filter(f => f !== null)
 
+        // Search returns one capped result set rather than a page, so the total is simply
+        // what came back — the folder's own total does not describe it.
+        totalFiles.value = files.value.length
+        currentPage.value = 1
+
         resultMessage.value = `<div class="alert alert-success">Found ${files.value.length} files</div>`
       } else {
         files.value = []
+        totalFiles.value = 0
         resultMessage.value = `<div class="alert alert-warning">No files found</div>`
       }
     } catch (error) {
@@ -2416,6 +2439,7 @@ export function useFluxDrive() {
 
       // Clear previous folder's state
       files.value = []
+      currentPage.value = 1
 
       // Reload files for new folder (with message clearing)
       await loadFiles(true)
@@ -2456,6 +2480,7 @@ export function useFluxDrive() {
 
     // Clear previous folder's state
     files.value = []
+    currentPage.value = 1
 
     // Properly rebuild folder hierarchy by truncating to the clicked breadcrumb level
     if (breadcrumb.path === '/') {
@@ -2719,11 +2744,19 @@ export function useFluxDrive() {
     }
   }
 
-  const deleteFile = async (file, skipConfirm = false) => {
+  // `bulk` marks a caller that deletes many items in a row: it reports the outcome itself and
+  // refreshes storage once at the end, so the per-file snackbar and the per-file storage round
+  // trip are skipped. Deleting a hundred files should not mean two hundred API calls against a
+  // rate-limited endpoint, nor a hundred stacked snackbars.
+  //
+  // Returns whether the item was actually deleted. That is what a bulk caller counts: this used
+  // to swallow the error and return undefined, so a batch that failed on every file still
+  // reported itself as a clean sweep.
+  const deleteFile = async (file, skipConfirm = false, bulk = false) => {
     const itemType = file.isFolder ? 'folder' : 'file'
 
     // Skip confirmation is used for programmatic calls or when confirmation is handled elsewhere
-    if (!skipConfirm && !confirm(`Are you sure you want to delete this ${itemType}: ${file.name}?`)) return
+    if (!skipConfirm && !confirm(`Are you sure you want to delete this ${itemType}: ${file.name}?`)) return false
 
     file.deleting = true
 
@@ -2756,30 +2789,43 @@ export function useFluxDrive() {
 
       const result = await response.json()
 
-      if (!result.error && !result.warning) {
-        // Remove from local list
-        const index = files.value.findIndex(f => f.id === file.id)
-        if (index > -1) {
-          files.value.splice(index, 1)
-          resultMessage.value = `<div class="alert alert-success">File "${file.name}" deleted successfully</div>`
-
-          // Fetch updated storage info from API
-          await fetchStorageInfo()
-
-          // Clear success message after delay
-          setTimeout(() => {
-            resultMessage.value = ''
-          }, 4000) // Show for 4 seconds
-        }
-      } else {
+      if (result.error || result.warning) {
         throw new Error(result.error || result.warning || 'Failed to delete file')
       }
+
+      // Remove from local list. A row the list no longer holds is still a successful delete —
+      // reporting it as one used to depend on finding it here.
+      const index = files.value.findIndex(f => f.id === file.id)
+      if (index > -1) files.value.splice(index, 1)
+
+      file.deleting = false
+
+      if (!bulk) {
+        resultMessage.value = `<div class="alert alert-success">File "${file.name}" deleted successfully</div>`
+
+        // Fetch updated storage info from API
+        await fetchStorageInfo()
+
+        // Clear success message after delay
+        setTimeout(() => {
+          resultMessage.value = ''
+        }, 4000) // Show for 4 seconds
+      }
+
+      return true
     } catch (error) {
       console.error('Delete error:', error)
+
       const errorMsg = error.message || 'Failed to delete file'
-      resultMessage.value = `<div class="alert alert-danger">Delete failed: ${errorMsg}</div>`
-      showSnackbar(`Delete failed: ${errorMsg}`, 'error')
+
       file.deleting = false
+
+      if (!bulk) {
+        resultMessage.value = `<div class="alert alert-danger">Delete failed: ${errorMsg}</div>`
+        showSnackbar(`Delete failed: ${errorMsg}`, 'error')
+      }
+
+      return false
     }
   }
 
@@ -3041,6 +3087,88 @@ export function useFluxDrive() {
     console.log('✅ FluxDrive state reset complete')
   }
 
+  // ---------------------------------------------------------------------------
+  // API keys (Pro / programmatic access)
+  //
+  // Every call authenticates with the Zelcore signature triple, never with an API key — a leaked
+  // key therefore cannot mint or revoke other keys. Created plaintext is returned by the bridge
+  // exactly once and is never persisted client-side beyond the one-time reveal dialog.
+  // ---------------------------------------------------------------------------
+
+  /** Builds the {zelid, signature, loginPhrase} body every /api/v1 endpoint expects. */
+  const buildAuthBody = (extra = {}) => {
+    const zelidauth = localStorage.getItem('zelidauth')
+    const authData = zelidauth ?
+      (zelidauth.includes('zelid=') ?
+        Object.fromEntries(new URLSearchParams(zelidauth)) :
+        JSON.parse(zelidauth)) : {}
+
+    return new URLSearchParams({
+      zelid: authData.zelid || getZelid(),
+      signature: authData.signature || '',
+      loginPhrase: authData.loginPhrase ?? '',
+      ...extra,
+    })
+  }
+
+  /** POSTs to an /api/v1/apikeys endpoint and normalizes bridge errors into thrown Errors. */
+  const apiKeyRequest = async (action, extra = {}) => {
+    const response = await fetch(`${bridgeURL}/api/v1/apikeys/${action}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: buildAuthBody(extra),
+    })
+
+    const result = await response.json()
+
+    // The bridge signals an expired/invalid session with {warning} and HTTP 200, so status alone
+    // is not a sufficient success check.
+    if (result?.warning) throw new Error(t('components.fluxDrive.apiKeys.sessionExpired'))
+    if (result?.error) throw new Error(result.error)
+    if (!response.ok) throw new Error(`Request failed (${response.status})`)
+
+    return result
+  }
+
+  const fetchApiKeys = async () => {
+    sharedState.apiKeysLoading.value = true
+    try {
+      const result = await apiKeyRequest('list')
+
+      sharedState.apiKeys.value = Array.isArray(result.keys) ? result.keys : []
+      sharedState.apiKeysLegacyCount.value = result.legacyKeyCount ?? 0
+      sharedState.apiKeysMax.value = result.maxKeys ?? 10
+
+      return sharedState.apiKeys.value
+    } finally {
+      sharedState.apiKeysLoading.value = false
+    }
+  }
+
+  /** Mints a key. Returns {key, authorizationHeader, record} — `key` is shown once, never stored. */
+  const createApiKey = async name => {
+    sharedState.apiKeysCreating.value = true
+    try {
+      const result = await apiKeyRequest('create', { name: name ?? '' })
+
+      await fetchApiKeys()
+
+      return result
+    } finally {
+      sharedState.apiKeysCreating.value = false
+    }
+  }
+
+  const revokeApiKey = async id => {
+    await apiKeyRequest('revoke', { id })
+    await fetchApiKeys()
+  }
+
+  const revokeLegacyApiKeys = async () => {
+    await apiKeyRequest('revokelegacy')
+    await fetchApiKeys()
+  }
+
   return {
     // State
     isLoggedIn,
@@ -3062,6 +3190,8 @@ export function useFluxDrive() {
     selectedPlan,
     files,
     searchQuery,
+    isSearchResult,
+    loadedPageKey,
     currentPage,
     filesPerPage,
     totalFiles,
@@ -3081,6 +3211,17 @@ export function useFluxDrive() {
     totalStorage,
     fluxDrivePlans,
     fileHeaders,
+
+    // API keys
+    apiKeys: sharedState.apiKeys,
+    apiKeysLoading: sharedState.apiKeysLoading,
+    apiKeysCreating: sharedState.apiKeysCreating,
+    apiKeysLegacyCount: sharedState.apiKeysLegacyCount,
+    apiKeysMax: sharedState.apiKeysMax,
+    fetchApiKeys,
+    createApiKey,
+    revokeApiKey,
+    revokeLegacyApiKeys,
 
     // Computed
     storagePercentage,

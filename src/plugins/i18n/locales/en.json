@@ -431,13 +431,13 @@
       "uploadFiles": "Upload Files",
       "alreadyInQueue": "'{fileName}' is already in the upload queue",
       "uploadSuccess": "'{fileName}' has been uploaded",
-      "uploadError": "Error uploading '{fileName}': status {status}",
+      "uploadSuccessMultiple": "{count} files have been uploaded",
+      "uploadFailedWithReason": "Upload failed: {message}",
       "uploadQueue": "Upload Queue",
       "total": "Total",
       "files": "file | files",
       "clearAll": "Clear All",
-      "removeFile": "Remove File",
-      "uploadFailed": "Upload failed for '{fileName}'"
+      "removeFile": "Remove File"
     },
     "dropZone": {
       "onlyImageFiles": "Only image files are allowed",
@@ -512,6 +512,14 @@
       "folderCreated": "Folder {folder} created!",
       "renamedSuccess": "{oldName} renamed to {newName}",
       "deleted": "{name} deleted",
+      "deleteInProgress": "Deleting {name}...",
+      "busyRetry": "The node is busy. Try again in {seconds} seconds.",
+      "busyRetryReason": "{reason}. Try again in {seconds} seconds.",
+      "busyWithOperation": "Another {operation} operation is already running for this app. Try again in {seconds} seconds.",
+      "operationDidNotFinish": "The operation did not finish ({status})",
+      "operationStillRunning": "The operation is taking longer than expected and is still running on the node. Refresh the folder shortly to see the result.",
+      "operationLostTrack": "Lost contact with the operation while it was running. It may still finish on the node - refresh the folder shortly to see the result.",
+      "uploadNetworkError": "Network error while uploading {name}",
       "files": {
         "emptyDirectory": "Empty Directory"
       }
@@ -2366,7 +2374,17 @@
         "cancelSubscriptionConfirm": "Yes, Cancel Subscription",
         "cancelSubscriptionCancel": "Keep Subscription",
         "cancelSubscriptionSuccess": "Subscription canceled successfully. Your access will remain until the end of your current billing period.",
-        "cancelSubscriptionError": "Failed to cancel subscription"
+        "cancelSubscriptionError": "Failed to cancel subscription",
+        "selectItem": "Select item",
+        "selectAllOnPage": "Select everything on this page",
+        "itemsSelected": "{count} selected",
+        "clearSelection": "Clear selection",
+        "deleteSelected": "Delete selected",
+        "bulkDeleteTitle": "Delete {count} items?",
+        "bulkDeleteWarning": "This permanently removes them from your FluxDrive. It cannot be undone.",
+        "bulkDeleteProgress": "Deleting {done} of {total}...",
+        "bulkDeleteDone": "Deleted {count} items",
+        "bulkDeletePartial": "Deleted {done} items, {failed} could not be deleted"
       },
       "storageInfo": {
         "title": "Storage Usage",
@@ -2440,6 +2458,42 @@
           "unlimitedBandwidth": "Unlimited Bandwidth"
         },
         "customizable": "Customizable"
+      },
+      "apiKeys": {
+        "title": "API Keys",
+        "description": "Generate an API key to use FluxDrive programmatically from your own apps and scripts.",
+        "viewDocs": "View API documentation",
+        "create": "Create key",
+        "createTitle": "Create API key",
+        "nameLabel": "Key name",
+        "nameHint": "A label to help you recognise this key later, e.g. \"production backup\".",
+        "generate": "Generate",
+        "cancel": "Cancel",
+        "revealTitle": "Your new API key",
+        "revealWarning": "This key is shown only once. Copy it now — for your security it cannot be retrieved again.",
+        "exampleTitle": "Example request",
+        "copy": "Copy",
+        "copied": "Copied to clipboard",
+        "copyFailed": "Could not copy to clipboard",
+        "savedIt": "I've saved it",
+        "colName": "Name",
+        "colKey": "Key",
+        "colCreated": "Created",
+        "colLastUsed": "Last used",
+        "colActions": "Actions",
+        "never": "Never",
+        "empty": "You don't have any API keys yet.",
+        "revoke": "Revoke",
+        "revokeTitle": "Revoke API key",
+        "revokeConfirm": "Revoke \"{name}\"? Any application using this key will immediately lose access.",
+        "revoked": "API key revoked",
+        "limitReached": "You've reached the maximum of {max} API keys. Revoke one to create another.",
+        "sessionExpired": "Your session has expired. Please sign in again.",
+        "legacyTitle": "Older keys detected",
+        "legacyMessage": "You have {count} key(s) created before key names and usage tracking were added. They still work, but we recommend replacing them.",
+        "legacyRevoke": "Revoke old keys",
+        "revokeLegacyConfirm": "Revoke all {count} older key(s)? Any application still using them will immediately lose access.",
+        "inactiveSubscription": "API access requires an active subscription. Renew your plan to create new keys — existing keys stay listed here and can still be revoked."
       }
     }
   },
@@ -3389,7 +3443,7 @@
           {
             "title": "WordPress Hosting",
             "description": "Launch WordPress sites with automatic backups and DDoS protection",
-            "url": "/marketplace/wordpress",
+            "url": "https://wordpress.runonflux.com",
             "icon": "mdi-wordpress"
           },
           {
@@ -4767,7 +4821,7 @@
                 {
                   "title": "WordPress Hosting",
                   "description": "Deploy WordPress sites on decentralized infrastructure with one-click installation",
-                  "url": "/marketplace/wordpress",
+                  "url": "https://wordpress.runonflux.com",
                   "icon": "mdi-wordpress"
                 },
                 {
@@ -5146,6 +5200,7 @@
       "rust": "Vanilla & modded servers, up to 200 players",
       "windrose": "Co-op pirate survival dedicated servers",
       "projectzomboid": "Steam Workshop mods, up to 32 players",
+      "fivem": "Roleplay servers with txAdmin and MySQL included",
       "wordpress": "Decentralized, censorship-resistant WordPress",
       "n8n": "Self-hosted n8n workflow automation",
       "openclaw": "Self-hosted, model-agnostic AI assistant",

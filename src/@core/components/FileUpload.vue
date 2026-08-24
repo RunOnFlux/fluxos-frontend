@@ -225,6 +225,7 @@
 <script setup>
 import { ref, computed, reactive } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { findUploadFailure, readCompletedUploads } from '@/utils/uploadResponse'
 
 const props = defineProps({
   uploadFolder: { type: String, required: true },
@@ -251,8 +252,14 @@ const showToast = (message, color = 'success') => {
   snackbar.value = true
 }
 
+// Groups are sent one request after the other, so files in a group that has
+// not started yet still look startable. Without this the button stays live
+// during an upload and a second click sends those groups in parallel - the
+// thing sending them sequentially exists to avoid.
+const uploadInProgress = ref(false)
+
 const filesToUpload = computed(() => {
-  return files.length > 0 && files.some(f => !f.uploading && !f.uploaded && f.progress === 0)
+  return !uploadInProgress.value && files.length > 0 && files.some(f => !f.uploading && !f.uploaded && f.progress === 0)
 })
 
 // Organize files into tree structure
@@ -455,55 +462,126 @@ const removeFile = target => {
   if (index !== -1) files.splice(index, 1)
 }
 
-const startUpload = () => {
-  files.forEach(f => {
-    if (!f.uploaded && !f.uploading) upload(f)
-  })
+// The folder a file lands in, relative to the folder the browser is showing.
+const destinationFolder = file => {
+  if (!file.relativePath) return ''
+
+  const pathParts = file.relativePath.split('/')
+  pathParts.pop()
+
+  return pathParts.join('/')
 }
 
-const upload = file => {
-  const xhr = new XMLHttpRequest()
+// Base URL format: /ioutils/fileupload/volume/app/component/currentFolder.
+// A subfolder replaces that last segment and travels as a query parameter,
+// which the backend reads when the route parameter is absent.
+const uploadUrlFor = folder => {
+  if (!folder) return props.uploadFolder
 
-  // Build upload URL with path parameter - auto-detect if file has folder structure
+  const urlParts = props.uploadFolder.split('/')
+  const lastSegment = urlParts[urlParts.length - 1]
   let uploadUrl = props.uploadFolder
-  if (file.file.relativePath) {
-    // Extract directory path from relativePath (remove filename)
-    const pathParts = file.file.relativePath.split('/')
-    pathParts.pop() // Remove filename
-    const dirPath = pathParts.join('/')
+  let fullFolderPath = folder
 
-    console.log('🔍 Folder upload debug:', {
-      relativePath: file.file.relativePath,
-      pathParts,
-      dirPath,
-      baseUrl: props.uploadFolder,
-    })
-
-    // Extract current folder from base URL and combine with new folder path
-    // Base URL format: /ioutils/fileupload/volume/app/component/currentFolder
-    // We need to strip the last path segment (currentFolder) and pass full path via query param
-    if (dirPath) {
-      const urlParts = props.uploadFolder.split('/')
-      const lastSegment = urlParts[urlParts.length - 1]
-
-      // Check if URL ends with current folder path (encoded)
-      // If so, combine it with the new subfolder path
-      let fullFolderPath = dirPath
-      if (lastSegment && lastSegment !== 'volume') {
-        // Current folder exists in URL, need to prepend it
-        fullFolderPath = decodeURIComponent(lastSegment) + '/' + dirPath
-
-        // Remove the last segment from base URL
-        urlParts.pop()
-        uploadUrl = urlParts.join('/')
-      }
-
-      // Add folder as query parameter (backend checks req.query.folder after req.params.folder)
-      uploadUrl = `${uploadUrl}?folder=${encodeURIComponent(fullFolderPath)}`
-    }
+  if (lastSegment && lastSegment !== 'volume') {
+    fullFolderPath = `${decodeURIComponent(lastSegment)}/${folder}`
+    urlParts.pop()
+    uploadUrl = urlParts.join('/')
   }
 
-  console.log('📤 Upload URL:', uploadUrl)
+  return `${uploadUrl}?folder=${encodeURIComponent(fullFolderPath)}`
+}
+
+// FluxOS parses the upload with formidable at maxFileSize 5GB, and formidable defaults
+// maxTotalFileSize to that same number - so the cap counts the whole request, not each file in
+// it. One file per request never met it; a whole folder in one request does. Five 2GB files,
+// which used to be five accepted uploads, would come back as a single refusal. So a group is
+// split into requests that each stay under the cap.
+const MAX_REQUEST_BYTES = 5 * 1024 * 1024 * 1024
+
+// A file at or over the cap on its own is sent on its own: it cannot be made to fit, and the
+// node's refusal names the reason.
+const batchesWithinRequestLimit = group => {
+  const batches = []
+  let batch = []
+  let bytes = 0
+
+  group.forEach(f => {
+    const size = f.file.size || 0
+
+    if (batch.length > 0 && bytes + size > MAX_REQUEST_BYTES) {
+      batches.push(batch)
+      batch = []
+      bytes = 0
+    }
+
+    batch.push(f)
+    bytes += size
+  })
+
+  if (batch.length > 0) batches.push(batch)
+
+  return batches
+}
+
+const startUpload = async () => {
+  if (uploadInProgress.value) return
+
+  const pending = files.filter(f => !f.uploaded && !f.uploading)
+  const groups = new Map()
+
+  pending.forEach(f => {
+    const folder = destinationFolder(f.file)
+    const group = groups.get(folder)
+
+    if (group) group.push(f)
+    else groups.set(folder, [f])
+  })
+
+  // The endpoint runs one upload operation per app at a time, so each
+  // destination folder goes as its own request, one after the other.
+  uploadInProgress.value = true
+  try {
+    for (const [folder, group] of groups) {
+      const uploadUrl = uploadUrlFor(folder)
+
+      for (const batch of batchesWithinRequestLimit(group)) {
+        await uploadGroup(uploadUrl, batch)
+      }
+    }
+  } finally {
+    uploadInProgress.value = false
+  }
+}
+
+const uploadGroup = (uploadUrl, group) => new Promise(resolve => {
+  const xhr = new XMLHttpRequest()
+  const names = group.map(f => f.file.name)
+  let landed = { cursor: 0, completed: 0, readable: true }
+
+  const markLandedFiles = () => {
+    if (!landed.readable) return
+
+    landed = readCompletedUploads(xhr.responseText, names, landed)
+    group.slice(0, landed.completed).forEach(f => {
+      f.uploaded = true
+      f.progress = 100
+    })
+  }
+
+  const finish = (message, color) => {
+    group.forEach(f => {
+      f.uploading = false
+
+      // A file that did not land goes back to where it started. Progress is
+      // what the queue reads to decide whether a file may be removed, cleared
+      // or sent again, so leaving it non-zero freezes the queue on a refusal
+      // with no way out but closing the dialog.
+      if (!f.uploaded) f.progress = 0
+    })
+    showToast(message, color)
+    resolve()
+  }
 
   xhr.open('POST', uploadUrl, true)
 
@@ -512,38 +590,71 @@ const upload = file => {
   }
 
   xhr.upload.onprogress = e => {
-    if (e.lengthComputable) {
-      file.progress = (e.loaded / e.total) * 100
-    }
+    if (!e.lengthComputable) return
+
+    const progress = (e.loaded / e.total) * 100
+
+    group.forEach(f => {
+      if (!f.uploaded) f.progress = progress
+    })
   }
 
+  xhr.onprogress = markLandedFiles
+
   xhr.onload = () => {
-    file.uploading = false
-    if (xhr.status >= 200 && xhr.status < 300) {
-      file.uploaded = true
-      file.progress = 100
-      showToast(t('core.fileUpload.uploadSuccess', { fileName: file.file.name }), 'success')
-      setTimeout(() => {
-        removeFile(file)
-      }, 1500)
-    } else {
-      showToast(t('core.fileUpload.uploadError', { fileName: file.file.name, status: xhr.status }), 'error')
+    markLandedFiles()
+
+    // A refused upload answers 200 and reports the reason in the body. A
+    // refusal to start - the app already has a file operation running, or the
+    // node has not settled its containers yet - answers 503 and carries the
+    // same envelope. The body is read first either way, and the status line is
+    // only what is left to say when it carries nothing.
+    const accepted = xhr.status >= 200 && xhr.status < 300
+
+    const failure = findUploadFailure(xhr.responseText)
+      || (accepted ? null : { message: `HTTP ${xhr.status}` })
+
+    if (failure) {
+      finish(t('core.fileUpload.uploadFailedWithReason', {
+        message: failure.message || t('common.messages.errorOccurred'),
+      }), 'error')
+
+      return
     }
+
+    group.forEach(f => {
+      f.uploaded = true
+      f.progress = 100
+    })
+
+    finish(group.length === 1
+      ? t('core.fileUpload.uploadSuccess', { fileName: group[0].file.name })
+      : t('core.fileUpload.uploadSuccessMultiple', { count: group.length }), 'success')
+
+    setTimeout(() => {
+      group.forEach(f => removeFile(f))
+    }, 1500)
   }
 
   xhr.onerror = () => {
-    file.uploading = false
-    showToast(t('core.fileUpload.uploadFailed', { fileName: file.file.name }), 'error')
-    removeFile(file)
+    finish(t('core.fileUpload.uploadFailedWithReason', {
+      message: t('common.messages.connectionError'),
+    }), 'error')
+    group.forEach(f => removeFile(f))
   }
 
   const formData = new FormData()
 
-  formData.append(file.file.name, file.file)
+  // The backend names each file after the field it arrives under.
+  group.forEach(f => {
+    formData.append(f.file.name, f.file)
+  })
 
-  file.uploading = true
+  group.forEach(f => {
+    f.uploading = true
+  })
   xhr.send(formData)
-}
+})
 </script>
 
 <style scoped>
