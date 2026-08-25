@@ -180,6 +180,24 @@
               </VBtn>
             </div>
 
+            <!-- Refresh the current folder listing in place (no full page reload) -->
+            <VBtn
+              variant="text"
+              size="small"
+              height="32"
+              min-width="32"
+              class="px-0"
+              :disabled="!hasActiveSubscription || loading"
+              :loading="loading"
+              @click="loadFiles(false)"
+            >
+              <VIcon
+                icon="mdi-refresh"
+                size="20"
+              />
+              <VTooltip activator="parent" location="bottom">{{ t('components.fluxDrive.fileManager.refresh') }}</VTooltip>
+            </VBtn>
+
             <!-- Action Buttons - Disabled when subscription expired -->
             <VBtn
               color="primary"

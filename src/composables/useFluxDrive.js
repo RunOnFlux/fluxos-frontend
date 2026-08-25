@@ -3107,10 +3107,16 @@ export function useFluxDrive() {
   }
 
   /** Mints a key. Returns {key, authorizationHeader, record} — `key` is shown once, never stored. */
-  const createApiKey = async name => {
+  const createApiKey = async (name, scopes) => {
     sharedState.apiKeysCreating.value = true
     try {
-      const result = await apiKeyRequest('create', { name: name ?? '' })
+      const extra = { name: name ?? '' }
+
+      // Comma-separated because the body is form-encoded; omitted entirely (never sent empty)
+      // when the caller wants the bridge default of full access.
+      if (Array.isArray(scopes) && scopes.length > 0) extra.scopes = scopes.join(',')
+
+      const result = await apiKeyRequest('create', extra)
 
       await fetchApiKeys()
 
