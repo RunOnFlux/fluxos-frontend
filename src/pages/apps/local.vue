@@ -54,7 +54,7 @@
             active-apps-tab
             :api-error="apiError"
             show-status
-            :show-control="isFluxAdminLoggedIn"
+            :show-control="canRemoveApp"
             privilege="none"
           />
         </div>
@@ -187,6 +187,16 @@ onMounted(async () => {
 })
 
 const isFluxAdminLoggedIn = computed(() => privilege.value === 'fluxteam' || privilege.value === 'admin')
+
+// Uninstalling is the app owner's call, or the team's on their behalf - never the
+// operator's. Hosting an app is not owning it, and an operator who can remove one
+// can script that against every install and keep a customer's app off the node
+// indefinitely. FluxOS refuses appremove for the node admin, so showing this to
+// them offers a button that can only fail.
+//
+// Narrower than isFluxAdminLoggedIn on purpose, and separate from it because that
+// computed also gates the Install control, which IS the operator's.
+const canRemoveApp = computed(() => privilege.value === 'fluxteam')
 
 onBeforeUnmount(() => {
   eventBus.off('backendURLChanged', loadInstalledApps)
