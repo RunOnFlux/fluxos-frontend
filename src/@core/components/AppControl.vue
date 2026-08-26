@@ -1314,6 +1314,25 @@ function showToast(type, message, icon = null, timeout = 4000) {
   }, timeout)
 }
 
+// `success` on appstart/appstop/apprestart/appkill means the request was ACCEPTED,
+// not that the container has reached the state asked for - the response body says
+// which of the two happened ("Application X stopped" vs "will be stopped: reason").
+// A single refetch therefore reads the old state whenever the container is still
+// moving, and nothing looks again: the panel sits on a stale state beside a green
+// toast until something else happens to refresh it.
+//
+// Refreshed on a spreading schedule instead, so it converges on what actually
+// happened without polling the node hard. Bounded rather than conditional: the
+// status this component holds is fetched by whoever listens for updateAppStatus,
+// so there is nothing here to compare against a desired state.
+const SETTLE_REFRESH_MS = [0, 2000, 5000, 10000, 20000]
+
+function refreshUntilSettled() {
+  SETTLE_REFRESH_MS.forEach(ms => {
+    setTimeout(() => eventBus.emit('updateAppStatus'), ms)
+  })
+}
+
 async function handleAppOperation(app, title, endpoint, delay = 0) {
   output.value = []
   operationTask.value = ''
@@ -1332,7 +1351,7 @@ async function handleAppOperation(app, title, endpoint, delay = 0) {
 
     if (response.data?.status === 'success') {
       showToast('success', message)
-      eventBus.emit("updateAppStatus")
+      refreshUntilSettled()
       if (title === 'Removing') {
         eventBus.emit("updateInstanceList")
         refreshList.value += 1
