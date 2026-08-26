@@ -1396,7 +1396,7 @@ async function handleAppOperationWithOutput(appName, title, endpoint) {
     
     if (title === 'Removing') {
       eventBus.emit("updateInstanceList")
-      refreshLis.value += 1
+      refreshList.value += 1
     } else {
       eventBus.emit("updateAppStatus")
     }
