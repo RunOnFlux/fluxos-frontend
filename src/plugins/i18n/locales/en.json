@@ -3026,6 +3026,7 @@
         "repotagsPlaceholder": "Type and press enter",
         "matchAllTags": "Include all tags (match all)",
         "clearFilters": "Clear All Filters",
+        "encrypted": "encrypted",
         "loading": "Loading...",
         "signInRequired": "Login Required",
         "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",

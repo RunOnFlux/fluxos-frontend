@@ -358,20 +358,26 @@ async function resolveVisibleApps(visible) {
 /**
  * One app's encrypted fields, from whichever source this viewer is entitled to:
  * a decrypt when they own it, the flux team's component-and-resources endpoint
- * when they do not. Returns null when neither applies, and the row keeps the
- * public spec it already had.
+ * when they do not.
+ *
+ * Always answers with a resolved row, never with "nothing happened". A row left
+ * untouched is indistinguishable from one whose totals are genuinely zero, and
+ * the table would have to guess which; resourcesWithheld says so outright,
+ * decided here where the reason is known.
  */
 async function resolveEncryptedApp(spec) {
+  const withheld = { ...spec, resourcesWithheld: true }
+
   if (spec.owner === signedInZelid()) return decryptIfEnterprise(spec)
 
-  if (privilege.value !== 'fluxteam') return null
+  if (privilege.value !== 'fluxteam') return withheld
 
   const response = await AppsService
     .getAppComponentNames(spec.name, localStorage.getItem('zelidauth'))
     .catch(() => null)
 
   const { status, data } = response?.data || {}
-  if (status !== 'success' || !data?.resources) return null
+  if (status !== 'success' || !data?.resources) return withheld
 
   // Onto a copy, and only the totals: the row renders cpu/ram/hdd, and a
   // component list here would be a compose that is not one.

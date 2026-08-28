@@ -420,14 +420,7 @@
                 <VIcon start icon="mdi-alert" size="12" />
                 {{ t('core.subscriptionManager.paymentIssue') }}
               </VChip>
-              <UsageChips
-                :items="[
-                  { icon: 'mdi-speedometer', value: getServiceUsageValue(1, item.name, item), color: 'success' },
-                  { icon: 'mdi-memory', value: getServiceUsageValue(0, item.name, item), color: 'success' },
-                  { icon: 'mdi-harddisk', value: getServiceUsageValue(2, item.name, item), color: 'success' },
-                  { icon: 'mdi-map-marker', value: item.instances || 3, color: 'warning' }
-                ].filter(chip => chip.value > 0)"
-              />
+              <UsageChips :items="usageChipsFor(item)" />
               <small style="font-size: 12px">
                 <ExpiryLabel
                   v-if="activeAppsTab"
@@ -910,6 +903,31 @@ function getServiceUsageValue(index, name, app) {
     +(app.cpu || 0).toFixed(1),
     +app.hdd || 0,
   ][index]
+}
+
+/**
+ * The resource chips for a row, or one chip saying why there are none.
+ *
+ * A withheld total is not a zero. Filtering it out with the zeroes left a row
+ * carrying only its instance count, which reads as an app that asked for no
+ * cpu, memory or disk rather than one whose sizing this viewer is not shown.
+ */
+function usageChipsFor(item) {
+  const instances = { icon: 'mdi-map-marker', value: item.instances || 3, color: 'warning' }
+
+  if (item.resourcesWithheld) {
+    return [
+      { icon: 'mdi-lock-outline', value: t('pages.apps.table.encrypted'), color: 'default' },
+      instances,
+    ]
+  }
+
+  return [
+    { icon: 'mdi-speedometer', value: getServiceUsageValue(1, item.name, item), color: 'success' },
+    { icon: 'mdi-memory', value: getServiceUsageValue(0, item.name, item), color: 'success' },
+    { icon: 'mdi-harddisk', value: getServiceUsageValue(2, item.name, item), color: 'success' },
+    instances,
+  ].filter(chip => chip.value > 0)
 }
 
 function getServiceUsage(serviceName, spec) {
