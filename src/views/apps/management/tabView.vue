@@ -908,9 +908,9 @@ function getServiceUsageValue(index, name, app) {
 /**
  * The resource chips for a row, or one chip saying why there are none.
  *
- * A withheld total is not a zero. Filtering it out with the zeroes left a row
- * carrying only its instance count, which reads as an app that asked for no
- * cpu, memory or disk rather than one whose sizing this viewer is not shown.
+ * A withheld total is not a zero, and the filter below drops chips with no
+ * value. A row carrying only its instance count reads as an app that asked for
+ * no cpu, memory or disk.
  */
 function usageChipsFor(item) {
   const instances = { icon: 'mdi-map-marker', value: item.instances || 3, color: 'warning' }

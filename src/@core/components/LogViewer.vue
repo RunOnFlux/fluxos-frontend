@@ -327,8 +327,8 @@ watchEffect(() => {
     manualFetchLogs()
     hasRun.value = true
 
-  // Exactly one, not "fewer than two": an empty list met that and then indexed
-  // [0] of it, so a component list this viewer cannot see threw here.
+  // Exactly one, not "fewer than two": an empty list satisfies "fewer than two"
+  // and has no [0] to select.
   } else if (componentOptions.value.length === 1) {
     [selectedApp.value] = componentOptions.value
     manualFetchLogs()

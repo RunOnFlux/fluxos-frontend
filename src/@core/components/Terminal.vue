@@ -334,8 +334,8 @@ watchEffect(() => {
   if (props.appSpec && props.appSpec?.version <= 3) {
     selectedApp.value = props.appSpec.name
 
-  // Exactly one, not "fewer than two": an empty list met that and then indexed
-  // [0] of it, so a component list this viewer cannot see threw here.
+  // Exactly one, not "fewer than two": an empty list satisfies "fewer than two"
+  // and has no [0] to select.
   } else if (componentNames.value.length === 1) {
     [selectedApp.value] = componentNames.value
   }

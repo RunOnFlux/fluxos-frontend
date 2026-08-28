@@ -620,11 +620,9 @@ const usagePercentage = computed(() => {
   return (storage.used / storage.total) * 100
 })
 
-// From the component list, not from compose: an encrypted app's compose is
-// empty whatever it holds, so this never selected the only component while
-// isComposeSingle - computed from the same list the dropdown is filled from -
-// disabled the dropdown for having exactly one. Disabled and unselected, with
-// everything downstream then asking about a component named nothing.
+// The component list, which is also what isComposeSingle counts and what the
+// dropdown offers. compose is empty for an app this viewer may not decrypt, so
+// it is the source for none of the three.
 watch(
   () => props.components,
   components => {
@@ -890,10 +888,9 @@ async function storageStats() {
 
     volumePath.value = volumeInfo.value?.data?.data
 
-    // Read through, both ways. A success carrying no mount and an error whose
-    // body is not the shape this expects are both answers this has to survive:
-    // reaching into them threw a TypeError that surfaced as a page-level error
-    // banner rather than as the failed lookup it was.
+    // Read through, both ways: a success can carry no mount, and an error body
+    // is not always the shape a message is read from. Both are ordinary answers
+    // here, and neither is worth a TypeError.
     const body = volumeInfo.value?.data?.data
 
     if (volumeInfo.value?.data?.status === 'success' && body) {

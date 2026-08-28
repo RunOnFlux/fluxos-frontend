@@ -264,9 +264,9 @@ async function decryptIfEnterprise(spec, idx = 0) {
   if (!(spec.version >= 8 && spec.enterprise)) return spec
 
   // Only the owner can decrypt, so for anyone else this is three round trips
-  // per app to be refused at the last one. On the flux team's list - every app
-  // on the network - that was thousands of requests to render ten rows, and the
-  // encrypted fields were never going to arrive.
+  // per app to be refused at the last one - and on the flux team's list, which
+  // is every app on the network, thousands of them for fields that cannot
+  // arrive.
   if (spec.owner !== signedInZelid()) return spec
 
   try {
@@ -329,9 +329,9 @@ const resolvedEncryptedApps = ref(new Map())
 /**
  * Resolve the encrypted fields of the rows currently on screen, and only those.
  *
- * Doing it for the whole list meant three round trips for every enterprise app
- * on the network - over a thousand, to render ten rows - and it does not scale
- * with the network. The table says what it is showing; this answers for that.
+ * The table says what it is showing; this answers for that. Resolving the whole
+ * list instead costs three round trips per enterprise app on the network - over
+ * a thousand of them, to render ten rows - and grows with the network.
  */
 async function resolveVisibleApps(visible) {
   const pending = visible.filter(spec => spec?.version >= 8
@@ -361,9 +361,9 @@ async function resolveVisibleApps(visible) {
  * when they do not.
  *
  * Always answers with a resolved row, never with "nothing happened". A row left
- * untouched is indistinguishable from one whose totals are genuinely zero, and
- * the table would have to guess which; resourcesWithheld says so outright,
- * decided here where the reason is known.
+ * untouched is indistinguishable from one whose totals are genuinely zero, which
+ * leaves the table guessing; resourcesWithheld says which it is, decided here
+ * where the reason is known.
  */
 async function resolveEncryptedApp(spec) {
   const withheld = { ...spec, resourcesWithheld: true }
