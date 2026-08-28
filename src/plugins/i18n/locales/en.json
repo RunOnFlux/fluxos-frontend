@@ -478,6 +478,7 @@
     },
     "volumeBrowser": {
       "title": "Volume Browser",
+      "noVolumeData": "No volume data available for this component",
       "selectComponent": "Select Component",
       "downloading": "Downloading...",
       "downloadCompleted": "Download Completed",

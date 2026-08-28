@@ -620,11 +620,16 @@ const usagePercentage = computed(() => {
   return (storage.used / storage.total) * 100
 })
 
+// From the component list, not from compose: an encrypted app's compose is
+// empty whatever it holds, so this never selected the only component while
+// isComposeSingle - computed from the same list the dropdown is filled from -
+// disabled the dropdown for having exactly one. Disabled and unselected, with
+// everything downstream then asking about a component named nothing.
 watch(
-  () => props.appSpec?.compose,
-  newCompose => {
-    if (newCompose && newCompose.length === 1) {
-      selectedAppVolume.value = newCompose[0].name
+  () => props.components,
+  components => {
+    if (components?.length === 1) {
+      selectedAppVolume.value = components[0].name
     }
   },
   { immediate: true },
@@ -885,11 +890,17 @@ async function storageStats() {
 
     volumePath.value = volumeInfo.value?.data?.data
 
-    if (volumeInfo.value?.data?.status === 'success') {
+    // Read through, both ways. A success carrying no mount and an error whose
+    // body is not the shape this expects are both answers this has to survive:
+    // reaching into them threw a TypeError that surfaced as a page-level error
+    // banner rather than as the failed lookup it was.
+    const body = volumeInfo.value?.data?.data
+
+    if (volumeInfo.value?.data?.status === 'success' && body) {
       storage.total = getHddByName(appSpecification.value, selectedAppVolume.value) * 1024 * 1024 * 1024
-      storage.used = volumeInfo.value.data.data.used
+      storage.used = body.used ?? 0
     } else {
-      showToast('danger', volumeInfo.value.data.data.message || volumeInfo.value.data.data)
+      showToast('danger', body?.message || body || t('core.volumeBrowser.noVolumeData'))
     }
   } catch (error) {
     showToast('danger', error.message || error)
