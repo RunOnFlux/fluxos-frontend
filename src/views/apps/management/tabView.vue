@@ -661,7 +661,7 @@ const props = defineProps({
     default: () => [],
   },
 })
-const emit = defineEmits(["openAppManagement"])
+const emit = defineEmits(["openAppManagement", "visibleAppsChanged"])
 const { t } = useI18n()
 const { openLoginBottomSheet, closeLoginBottomSheet } = useLoginSheet()
 
@@ -823,6 +823,19 @@ const pageCount = computed(() =>
   Math.ceil(filteredApps.value.length / tableOptions.value.perPage),
 )
 
+// The rows actually on screen. Anything a parent does per app - decrypting a
+// spec it can read, asking for what a spec it cannot read will not tell it -
+// belongs against this rather than against the whole corpus, which on the flux
+// team's list is every app on the network to draw ten rows.
+const visibleApps = computed(() => {
+  const { currentPage, perPage } = tableOptions.value
+  const start = (currentPage - 1) * perPage
+
+  return filteredApps.value.slice(start, start + perPage)
+})
+
+watch(visibleApps, apps => emit("visibleAppsChanged", apps), { immediate: true })
+
 const isMobile = ref(false)
 
 const defaultFields = computed(() => [
@@ -883,16 +896,19 @@ async function loadLocations(name) {
 }
 
 function getServiceUsageValue(index, name, app) {
-  if (Array.isArray(app.compose)) {
+  // An empty compose is not a composed app with nothing in it - it is an
+  // encrypted one whose components this viewer may not read. There is no
+  // per-component sizing to sum, so the app-level totals are what to show.
+  if (Array.isArray(app.compose) && app.compose.length) {
     const usage = getServiceUsage(name, app.compose)
 
     return usage[index]
   }
 
   return [
-    +app.ram,
-    +app.cpu.toFixed(1),
-    +app.hdd,
+    +app.ram || 0,
+    +(app.cpu || 0).toFixed(1),
+    +app.hdd || 0,
   ][index]
 }
 
