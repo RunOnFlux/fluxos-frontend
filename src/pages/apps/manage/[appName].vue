@@ -442,53 +442,116 @@
                   </VChip>
                 </div>
 
-                <VTabs
-                  v-model="activeTabLocalIndexSpec"
-                  align-tabs="start"
-                  background-color="transparent"
-                  color="primary"
-                  hide-slider
-                  density="comfortable"
-                  class="v-tabs-pill"
+                <!--
+                  An enterprise app arrives with an empty compose unless the viewer
+                  owns it, and an empty component list is indistinguishable from an
+                  app that has no components. This says which it is, and shows what
+                  the app costs, which is not part of what is withheld.
+                -->
+                <VSheet
+                  v-if="compositionEncrypted"
+                  class="encrypted-composition"
+                  rounded
                 >
-                  <VTab
-                    v-for="(component, index) in normalizeComponents(appSpecification)"
-                    :key="index"
-                    :value="index"
-                    class="v-tabs-pill text-no-transform"
+                  <VIcon
+                    size="26"
+                    class="encrypted-composition__icon"
                   >
-                    <VIcon
-                      size="18"
-                      class="mr-1"
+                    mdi-lock-outline
+                  </VIcon>
+                  <div>
+                    <h4 class="encrypted-composition__title">
+                      {{ t('pages.apps.manage.encryptedComposition.title') }}
+                    </h4>
+                    <p class="encrypted-composition__body">
+                      {{ t('pages.apps.manage.encryptedComposition.ownerOnly') }}
+                    </p>
+                    <div
+                      v-if="withheldSpecResources"
+                      class="encrypted-composition__chips"
                     >
-                      mdi-cube
-                    </VIcon>
-                    {{ component.name }}
-                  </VTab>
-                </VTabs>
+                      <VChip
+                        size="small"
+                        variant="tonal"
+                        prepend-icon="mdi-speedometer"
+                      >
+                        {{ withheldSpecResources.cpu }}
+                      </VChip>
+                      <VChip
+                        size="small"
+                        variant="tonal"
+                        prepend-icon="mdi-memory"
+                      >
+                        {{ withheldSpecResources.ram }} MB
+                      </VChip>
+                      <VChip
+                        size="small"
+                        variant="tonal"
+                        prepend-icon="mdi-harddisk"
+                      >
+                        {{ withheldSpecResources.hdd }} GB
+                      </VChip>
+                      <VChip
+                        v-if="componentList.length"
+                        size="small"
+                        variant="tonal"
+                        prepend-icon="mdi-cube-outline"
+                      >
+                        {{ componentList.length }}
+                      </VChip>
+                    </div>
+                  </div>
+                </VSheet>
 
-                <VWindow
-                  v-model="activeTabLocalIndexSpec"
-                  class="pa-4"
-                  :touch="false"
-                >
-                  <VWindowItem
-                    v-for="(component, index) in normalizeComponents(appSpecification)"
-                    :key="index"
-                    :value="index"
+                <template v-else>
+                  <VTabs
+                    v-model="activeTabLocalIndexSpec"
+                    align-tabs="start"
+                    background-color="transparent"
+                    color="primary"
+                    hide-slider
+                    density="comfortable"
+                    class="v-tabs-pill"
                   >
-                    <VSlideYTransition mode="out-in">
-                      <div>
-                        <ComponentDetails
-                          :component="component"
-                          :app-name="appSpecification.name || ''"
-                          :index="index"
-                          :is-enterprise="appSpecification.version >= 8 && !!appSpecification.enterprise"
-                        />
-                      </div>
-                    </VSlideYTransition>
-                  </VWindowItem>
-                </VWindow>
+                    <VTab
+                      v-for="(component, index) in normalizeComponents(appSpecification)"
+                      :key="index"
+                      :value="index"
+                      class="v-tabs-pill text-no-transform"
+                    >
+                      <VIcon
+                        size="18"
+                        class="mr-1"
+                      >
+                        mdi-cube
+                      </VIcon>
+                      {{ component.name }}
+                    </VTab>
+                  </VTabs>
+
+                  <VWindow
+                    v-model="activeTabLocalIndexSpec"
+                    class="pa-4"
+                    :touch="false"
+                  >
+                    <VWindowItem
+                      v-for="(component, index) in normalizeComponents(appSpecification)"
+                      :key="index"
+                      :value="index"
+                    >
+                      <VSlideYTransition mode="out-in">
+                        <div>
+                          <ComponentDetails
+                            :component="component"
+                            :app-name="appSpecification.name || ''"
+                            :index="index"
+                            :is-enterprise="appSpecification.version >= 8 && !!appSpecification.enterprise"
+                          />
+                        </div>
+                      </VSlideYTransition>
+                    </VWindowItem>
+                  </VWindow>
+                </template>
               </div>
             </div>
 
@@ -587,7 +650,7 @@
                   <template v-if="appSpecification">
                     <VSelect
                       v-model="selectedContainerMonitoring"
-                      :items="appSpecification.compose?.map((c) => c.name)"
+                      :items="componentList.map((c) => c.name)"
                       :label="selectedContainerMonitoring ? t('pages.apps.manage.labels.component') : t('pages.apps.manage.labels.selectComponent')"
                       density="comfortable"
                       style="max-width: 320px;"
@@ -955,6 +1018,7 @@
             <div v-else-if="appSpecification && tab.value === '5'">
               <LogViewer
                 :app-specification="appSpecification"
+                :components="componentList"
                 :execute-local-command="executeLocalCommand"
               />
             </div>
@@ -962,11 +1026,13 @@
             <div v-else-if="appSpecification && tab.value === '6'">
               <Terminal
                 :app-spec="appSpecification"
+                :components="componentList"
                 :selected-ip="selectedIp"
                 :logout="logout"
               />
               <VolumeBrowser
                 :app-spec="appSpecification"
+                :components="componentList"
                 :is-compose-single="isComposeSingle"
                 :execute-local-command="executeLocalCommand"
                 :ip-access="ipAccess"
@@ -975,8 +1041,9 @@
             </div>
 
             <div v-else-if="appSpecification && tab.value === '7'">
-              <AppControl 
+              <AppControl
                 :app-spec="appSpecification"
+                :components="componentList"
                 :execute-local-command="executeLocalCommand"
                 :instances="instances.data.map((i) => i.ip)"
                 :current-instance-ip="selectedIp"
@@ -1154,6 +1221,10 @@ const inspectResult = ref([])
 const changesResult = ref([])
 const route = useRoute()
 const fluxStore = useFluxStore()
+
+// The backend's own verdict on this session, so a check against it here is the
+// same check the API applies.
+const { privilege } = storeToRefs(fluxStore)
 const currentTab = ref("1")
 const subscriptionResetTrigger = ref(Date.now())
 const subscriptionAction = ref('renewal')
@@ -1352,6 +1423,67 @@ const isComposeApp = computed(() =>
 
 const isOwnerZelidauth = computed(() => zelidauthOwner.value.includes(appSpecificationGlobal.value?.owner))
 
+// Ownership of whichever spec is in hand, rather than of the global one. The two
+// fetch paths run independently and the local one can arrive first, so reading
+// isOwnerZelidauth there answers against a spec that has not loaded yet.
+function viewerOwns(spec) {
+  return Boolean(spec?.owner) && zelidauthOwner.value.includes(spec.owner)
+}
+
+function isEnterpriseSpec(spec) {
+  return Boolean(spec && spec.version >= 8 && spec.enterprise && spec.enterprise !== '')
+}
+
+// Whether this app's components are encrypted FROM THIS VIEWER, which is a fact
+// about who is asking and holds before any request is made. Deliberately not
+// "the component list came back empty": that is the ambiguity this panel exists
+// to remove, and reading it as permission would tell an owner whose decrypt
+// merely failed that their own app is encrypted from them.
+const compositionEncrypted = computed(() => {
+  const spec = appSpecification.value || appSpecificationGlobal.value
+
+  return isEnterpriseSpec(spec) && !viewerOwns(spec)
+})
+
+// What the flux team is told about an app they may not decrypt. Empty for
+// everyone else, who are never asked to be told.
+const withheldSpecComponents = ref([])
+const withheldSpecResources = ref(null)
+
+async function loadComponentNamesForNonOwner(spec) {
+  withheldSpecComponents.value = []
+  withheldSpecResources.value = null
+
+  // Only the flux team is admitted, so for anyone else this is a round trip
+  // whose only possible outcome is 401. privilege comes from the backend's own
+  // verdict, so it is the same test the endpoint applies.
+  if (!isEnterpriseSpec(spec) || viewerOwns(spec) || privilege.value !== 'fluxteam') return
+
+  const response = await AppsService
+    .getAppComponentNames(spec.name, localStorage.getItem('zelidauth'))
+    .catch(() => null)
+
+  const { status, data } = response?.data || {}
+  if (status !== 'success') return
+
+  withheldSpecComponents.value = Array.isArray(data?.components) ? data.components : []
+  withheldSpecResources.value = data?.resources ?? null
+}
+
+// The one source of component names for every tab: the specification where this
+// viewer can read it, the names endpoint where they cannot. Never written back
+// into appSpecification.compose - an update is composed from that, and a list of
+// names standing in for a specification is how a customer's configuration gets
+// overwritten with blanks.
+const componentList = computed(() => {
+  if (compositionEncrypted.value) return withheldSpecComponents.value
+
+  return (normalizeComponents(appSpecification.value) || []).map(component => ({
+    name: component.name,
+    masterSlave: Boolean(component.containerData?.includes('g:')),
+  }))
+})
+
 // Get current user's zelid from the stored zelidauth
 const currentUserZelid = computed(() => {
   try {
@@ -1488,7 +1620,7 @@ const isComposeSingle = computed(() => {
     return true
   }
 
-  return appSpecification.value.compose?.length === 1
+  return componentList.value.length === 1
 })
 
 //Watch Section
@@ -1496,12 +1628,8 @@ watchEffect(() => {
   try {
     if (appSpecification.value && appSpecification.value.version <= 3) {
       selectedContainerMonitoring.value = appSpecification.value.name
-    } else if (
-      appSpecification.value &&
-      Array.isArray(appSpecification.value.compose) &&
-      appSpecification.value.compose.length === 1
-    ) {
-      selectedContainerMonitoring.value = appSpecification.value.compose[0].name
+    } else if (componentList.value.length === 1) {
+      selectedContainerMonitoring.value = componentList.value[0].name
     }
   } catch (err) {
     console.error('watchEffect error (selectedContainerMonitoring):', err)
@@ -1998,13 +2126,8 @@ async function getApplicationManagementAndStatus(skip = false) {
 
   const appInfoArray = []
 
-  if (
-    appSpecification.value?.version >= 4 &&
-    Array.isArray(appSpecification.value.compose)
-  ) {
-    for (const component of appSpecification.value.compose) {
-      // console.log(`${component.name}_${appSpecification.value.name}`)
-
+  if (appSpecification.value?.version >= 4 && componentList.value.length) {
+    for (const component of componentList.value) {
       const infoObject = getComponentInfo(
         getAllAppsResponse.value.data,
         `${component.name}_${appSpecification.value.name}`,
@@ -2113,8 +2236,11 @@ async function getInstalledApplicationSpecifics(silent = false) {
         // reuse already-decrypted global spec
         spec.contacts = callBResponse.value.data.contacts
         spec.compose  = callBResponse.value.data.compose
-      } else if (isEnterprise && !sameEnterpriseSpec) {
-        // decrypt locally
+      } else if (isEnterprise && !sameEnterpriseSpec && viewerOwns(spec)) {
+        // decrypt locally - only the owner can, so asking as anyone else spends a
+        // round trip to be refused and then abandons the spec on the error path
+        // below, leaving the tab empty. compose stays as it arrived instead, and
+        // the Composition section says why.
         const decrypted = await getDecryptedEnterpriseFields({ local: true })
         if (!decrypted) {
           if (!silent) showToast('danger', 'Unable to get decrypted app spec')
@@ -2269,17 +2395,23 @@ async function getGlobalApplicationSpecifics(silent = false) {
     return
   }
 
-  const isEnterprise = appSpec.version >= 8 && appSpec.enterprise && appSpec.enterprise !== ''
-  if (isEnterprise && typeof getDecryptedEnterpriseFields === 'function') {
+  // Branched on who is asking, before either request is made. The owner decrypts;
+  // everyone else asks for the component names, which is all they can be given
+  // and all the per-component tools need. Reading it off an empty compose instead
+  // would confuse "withheld from you" with "the decrypt failed".
+  const isEnterprise = isEnterpriseSpec(appSpec)
+  if (isEnterprise && viewerOwns(appSpec) && typeof getDecryptedEnterpriseFields === 'function') {
     const decrypted = await getDecryptedEnterpriseFields()
     if (!decrypted) return
     Object.assign(appSpec, decrypted)
+  } else if (isEnterprise) {
+    await loadComponentNamesForNonOwner(appSpec)
   }
 
   callBResponse.value.status = status
   callBResponse.value.data   = appSpec
   appSpecificationGlobal.value = appSpec
-  masterSlaveApp.value = appSpec.version > 3 && Array.isArray(appSpec.compose) && appSpec.compose.some(c => c.containerData?.includes('g:'))
+  masterSlaveApp.value = componentList.value.some(component => component.masterSlave)
 
 }
 
@@ -2329,7 +2461,7 @@ const getApplicationData = async (mode = "inspect") => {
 
   try {
     if (appSpecification.value?.version >= 4) {
-      for (const component of appSpecification.value.compose) {
+      for (const component of componentList.value) {
         const url = `/apps/app${mode}/${component.name}_${appSpecification.value.name}`
         const response = await executeLocalCommand(url)
 
@@ -4125,5 +4257,48 @@ input[type="number"] {
     margin-bottom: 5px;
     padding: 6px;
     height: 54px;
+  }
+
+  /* Deliberately not a warning colour: an encrypted app is a normal state, and
+     amber here would teach operators to read encryption as breakage. */
+  .encrypted-composition {
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    padding: 26px 24px;
+    border: 1px solid rgba(var(--v-border-color), var(--v-border-opacity));
+  }
+
+  .encrypted-composition__icon {
+    flex: none;
+    margin-block-start: 1px;
+    opacity: 0.7;
+  }
+
+  .encrypted-composition__title {
+    margin-block-end: 5px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  .encrypted-composition__body {
+    max-inline-size: 62ch;
+    margin-block-end: 9px;
+    font-size: 13.5px;
+    opacity: 0.8;
+  }
+
+  .encrypted-composition__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-block-start: 4px;
+  }
+
+  @media (max-width: 600px) {
+    .encrypted-composition {
+      flex-direction: column;
+      gap: 12px;
+    }
   }
 </style>

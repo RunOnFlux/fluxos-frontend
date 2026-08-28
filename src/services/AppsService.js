@@ -179,6 +179,18 @@ export default {
 
     return Api().get(`/apps/appspecifications/${name}?resolvestorage=true`, axiosConfig)
   },
+
+  // Component names and their election mode, for a caller who may not decrypt the
+  // specification. Refused for anyone but the flux team. Deliberately not a
+  // specification - it carries only {name, masterSlave} - and must never be
+  // merged into one.
+  getAppComponentNames(name, zelidauthHeader) {
+    const axiosConfig = {
+      headers: { zelidauth: zelidauthHeader },
+    }
+
+    return Api().get(`/apps/appcomponentnames/${name}`, axiosConfig)
+  },
   getAppOwner(name) {
     return Api().get(`/apps/appowner/${name}`)
   },

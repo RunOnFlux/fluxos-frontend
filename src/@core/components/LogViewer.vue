@@ -276,6 +276,11 @@ import AnsiToHtml from 'ansi-to-html'
 const props = defineProps({
   appSpecification: { type: Object, required: true },
   executeLocalCommand: { type: Function, required: true },
+
+  // [{ name, masterSlave }]. Where a component list comes from is the caller's
+  // decision - the specification, or the names endpoint for a viewer who may not
+  // read it - so this never reaches into compose itself.
+  components: { type: Array, default: () => [] },
 })
   
 const { t } = useI18n()
@@ -304,12 +309,14 @@ const total = ref(0)
 const hasRun = ref(false)
 const allLogs = ref(false)
 
+const componentOptions = computed(() => props.components.map(component => component.name))
+
 const isComposeSingle = computed(() => {
   if (props.appSpecification?.version <= 3) {
     return true
   }
 
-  return props.appSpecification.compose?.length === 1
+  return componentOptions.value.length === 1
 })
 
 watchEffect(() => {
@@ -320,8 +327,10 @@ watchEffect(() => {
     manualFetchLogs()
     hasRun.value = true
 
-  } else if (props.appSpecification && props.appSpecification?.compose && props.appSpecification?.compose.length < 2) {
-    selectedApp.value = props.appSpecification?.compose[0].name
+  // Exactly one, not "fewer than two": an empty list met that and then indexed
+  // [0] of it, so a component list this viewer cannot see threw here.
+  } else if (componentOptions.value.length === 1) {
+    [selectedApp.value] = componentOptions.value
     manualFetchLogs()
     hasRun.value = true
   }
@@ -334,7 +343,6 @@ const filteredLogs = computed(() => {
   return logs.value.filter(log => log.toLowerCase().includes(keyword))
 })
   
-const componentOptions = computed(() => props.appSpecification.compose?.map(c => c.name) || [])
   
 function extractTimestamp(log) {
   return log.split(' ')[0]
@@ -428,7 +436,9 @@ async function manualFetchLogs() {
 async function fetchLogs() {
   if (!selectedApp.value) return
 
-  const appname = props.appSpecification?.compose
+  // On the version, not on the presence of compose: an enterprise app this
+  // viewer cannot decrypt still has a compose, it is just empty.
+  const appname = props.appSpecification?.version >= 4
     ? `${selectedApp.value}_${props.appSpecification.name}`
     : props.appSpecification.name
 

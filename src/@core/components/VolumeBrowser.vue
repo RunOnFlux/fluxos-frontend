@@ -44,7 +44,7 @@
     <VSelect
       v-if="appSpecification?.compose"
       v-model="selectedAppVolume"
-      :items="appSpecification.compose.map(c => c.name)"
+      :items="components.map(c => c.name)"
       :disabled="isComposeSingle"
       :label="t('core.volumeBrowser.selectComponent')"
       class="mb-4"
@@ -515,6 +515,14 @@ const props = defineProps({
     required: true,
   },
 
+  // [{ name, masterSlave }]. Where a component list comes from is the caller's
+  // decision - the specification, or the names endpoint for a viewer who may not
+  // read it - so this never reaches into compose itself.
+  components: {
+    type: Array,
+    default: () => [],
+  },
+
 })
 
 // Lazy-load Monaco Editor to reduce main bundle size
@@ -828,9 +836,12 @@ function showToast(type, message, icon = null) {
 
 function getHddByName(applications, appName) {
   if (applications?.compose) {
+    // A viewer who may not read the specification can still pick a component by
+    // name, and there is no sizing to look up for it. Optional, or the lookup
+    // returns undefined and the total is read off it.
     const app = applications.compose.find(application => application.name === appName)
-      
-    return app.hdd
+
+    return app?.hdd ?? 0
   } else {
     return applications.hdd
   }

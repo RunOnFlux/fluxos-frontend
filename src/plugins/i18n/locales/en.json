@@ -2938,6 +2938,10 @@
           "global": "Global Specification"
         },
         "composition": "Composition",
+        "encryptedComposition": {
+          "title": "Components are encrypted",
+          "ownerOnly": "Only this app's owner can decrypt its component configuration."
+        },
         "messages": {
           "awaitingLaunch": "Application is awaiting launching...",
           "fileChangesDescription": "File changes inside Docker container (Kind: 0 = Modified, Kind: 1 = Added, Kind: 2 = Deleted)",
