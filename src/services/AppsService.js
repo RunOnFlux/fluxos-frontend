@@ -10,15 +10,6 @@ export default {
     
     return Api().get('/apps/listrunningapps', axiosConfig)
   },
-  listAllApps() {
-    const axiosConfig = {
-      headers: {
-        'x-apicache-bypass': true,
-      },
-    }
-    
-    return Api().get('/apps/listallapps', axiosConfig)
-  },
   installedApps() {
     const axiosConfig = {
       headers: {

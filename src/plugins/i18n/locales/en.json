@@ -1,6 +1,7 @@
 {
   "common": {
     "off": "off",
+    "notAvailable": "Not available",
     "buttons": {
       "cancel": "Cancel",
       "close": "Close",
@@ -2941,7 +2942,8 @@
         "composition": "Composition",
         "encryptedComposition": {
           "title": "Components are encrypted",
-          "ownerOnly": "Only this app's owner can decrypt its component configuration."
+          "ownerOnly": "Only this app's owner can decrypt its component configuration.",
+          "image": "encrypted"
         },
         "messages": {
           "awaitingLaunch": "Application is awaiting launching...",

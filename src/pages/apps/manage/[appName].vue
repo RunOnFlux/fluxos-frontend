@@ -1484,6 +1484,19 @@ const componentList = computed(() => {
   }))
 })
 
+// Each component's image, by component name, from the specification the viewer
+// can read. Empty when the composition is withheld, which imageFor answers for.
+const componentImages = computed(() => {
+  if (compositionEncrypted.value) return {}
+
+  const images = {}
+  for (const component of normalizeComponents(appSpecification.value) || []) {
+    if (component?.name && component.repotag) images[component.name] = component.repotag
+  }
+
+  return images
+})
+
 // Get current user's zelid from the stored zelidauth
 const currentUserZelid = computed(() => {
   try {
@@ -1794,7 +1807,10 @@ function getIconColor(state, status) {
   return getAlertColor(state, status)
 }
 
-function getComponentInfo(apps, appName) {
+// The container listing answers what a component is doing - the image comes from
+// the application's own specification, which this page already holds, decrypted
+// in the browser where the viewer is its owner.
+function getComponentInfo(apps, appName, image) {
   if (!Array.isArray(apps)) return false
 
   const match = apps.find(
@@ -1809,8 +1825,17 @@ function getComponentInfo(apps, appName) {
       : appName,
     state: match.State ?? t('common.notAvailable'),
     status: match.Status?.toLowerCase() ?? t('common.notAvailable'),
-    image: match.Image ?? t('common.notAvailable'),
+    image,
   }
+}
+
+// A viewer who cannot read the specification cannot read the image either: it is
+// part of what the specification withholds, and is shown as withheld rather than
+// as merely unavailable.
+function imageFor(componentName) {
+  if (compositionEncrypted.value) return t('pages.apps.manage.encryptedComposition.image')
+
+  return componentImages.value[componentName] ?? t('common.notAvailable')
 }
 
 function normalizeComponents(data) {
@@ -2131,6 +2156,7 @@ async function getApplicationManagementAndStatus(skip = false) {
       const infoObject = getComponentInfo(
         getAllAppsResponse.value.data,
         `${component.name}_${appSpecification.value.name}`,
+        imageFor(component.name),
       )
 
       if (infoObject) appInfoArray.push(infoObject)
@@ -2139,6 +2165,7 @@ async function getApplicationManagementAndStatus(skip = false) {
     const infoObject = getComponentInfo(
       getAllAppsResponse.value.data,
       appSpecification.value.name,
+      imageFor(appSpecification.value.name),
     )
 
     if (infoObject) appInfoArray.push(infoObject)
