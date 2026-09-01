@@ -294,7 +294,10 @@ async function decryptIfEnterprise(spec, idx = 0) {
 
     console.log(`${tag} ✅ decrypted (attempt ${result.attempt || 1}/${maxRetries})`)
     
-    return { ...spec, ...result.extraFields, enterprise: null }
+    // wasEnterprise preserves the private-app intent for clone/redeploy: the
+    // encrypted blob itself is null (it cannot be reused for a new registration)
+    // but the deploy forms use this marker to pre-enable the Enterprise toggle.
+    return { ...spec, ...result.extraFields, enterprise: null, wasEnterprise: true }
   } catch (e) {
     console.error(`${tag} 💥 decrypt failed`, e)
     
