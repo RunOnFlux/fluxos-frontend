@@ -1108,6 +1108,7 @@
       "instancesWarningOne": "Le minimum recommandé pour un réseau décentralisé est de 3 instances. Avec une seule instance, votre application peut connaître quelques minutes d'arrêt si le nœud exécutant l'application est redémarré ou arrêté.",
       "instancesWarningSyncthing": "Le nombre minimum d'instances pour les applications avec stockage persistant décentralisé est de 2. Pour utiliser moins d'instances, désactivez la synchronisation des données dans les paramètres du chemin du volume.",
       "instancesAutoAdjusted": "Instances automatiquement ajustées de {from} à {to} car la synchronisation des données nécessite un minimum de {to} instances.",
+      "renewalPeriodAutoAdjusted": "Période de renouvellement automatiquement ajustée de {from} à {to}",
       "instancesWarningLegacy": "La réduction des instances en dessous de 3 n'est disponible que pour les applications avec la version de spécification 8 ou supérieure. Mettez à jour la spécification de votre application pour activer cette fonctionnalité.",
       "period": "Période",
       "renewal": "Renouvellement",

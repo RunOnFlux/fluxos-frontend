@@ -1108,6 +1108,7 @@
       "instancesWarningOne": "Merkezi olmayan bir ağ için önerilen minimum bulut sunucusu sayısı 3'tür. Yalnızca 1 örnekle, uygulamayı çalıştıran düğüm yeniden başlatılırsa veya kapatılırsa uygulamanızda birkaç dakikalık kesinti yaşanabilir.",
       "instancesWarningSyncthing": "Merkezi olmayan kalıcı depolamaya sahip uygulamalar için minimum örnek sayısı 2'dir. Daha az örnek kullanmak için birim yolu ayarlarında veri senkronizasyonunu devre dışı bırakın.",
       "instancesAutoAdjusted": "Veri senkronizasyonu en az {to} örnek gerektirdiğinden, örnekler otomatik olarak {from}'den {to}'ye ayarlandı.",
+      "renewalPeriodAutoAdjusted": "Yenileme süresi otomatik olarak {from} yerine {to} olarak ayarlandı",
       "instancesWarningLegacy": "Örneklerin sayısının 3'ün altına düşürülmesi yalnızca spesifikasyon sürümü 8 veya üzeri olan uygulamalar için mümkündür. Bu özelliği etkinleştirmek için uygulama spesifikasyonunuzu güncelleyin.",
       "period": "Dönem",
       "renewal": "Yenileme",

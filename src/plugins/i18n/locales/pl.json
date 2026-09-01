@@ -446,6 +446,7 @@
       "thirtyMinutesRemaining": "Pozostało 30 minut",
       "instancesWarningSyncthing": "Minimalna liczba instancji dla aplikacji z zdecentralizowaną trwałą pamięcią to 2. Aby użyć mniejszej liczby instancji, wyłącz synchronizację danych w ustawieniach ścieżki woluminu.",
       "instancesAutoAdjusted": "Instancje zostały automatycznie dostosowane z {from} do {to}, ponieważ synchronizacja danych wymaga minimum {to} instancji.",
+      "renewalPeriodAutoAdjusted": "Okres odnowienia automatycznie dostosowany z {from} na {to}",
       "afterCancellationExpire": "Po anulowaniu Twoja aplikacja wygaśnie około",
       "enterpriseNodesTabDescription": "Tylko wybrane węzły Enterprise będą mogły uruchomić Twoją aplikację i są używane do szyfrowania. Tylko te węzły mogą uzyskać dostęp do Twojego prywatnego obrazu i sekretów.",
       "commands": "Polecenia",

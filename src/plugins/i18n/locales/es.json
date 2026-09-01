@@ -1108,6 +1108,7 @@
       "instancesWarningOne": "El mínimo recomendado para una red descentralizada es 3 instancias. Con solo 1 instancia, su aplicación puede experimentar algunos minutos de tiempo de inactividad si el nodo que ejecuta la aplicación se reinicia o se apaga.",
       "instancesWarningSyncthing": "Las instancias mínimas para aplicaciones con almacenamiento persistente descentralizado son 2. Para usar menos instancias, deshabilite la sincronización de datos en la configuración de la ruta del volumen.",
       "instancesAutoAdjusted": "Instancias ajustadas automáticamente de {from} a {to} porque la sincronización de datos requiere un mínimo de {to} instancias.",
+      "renewalPeriodAutoAdjusted": "Período de renovación ajustado automáticamente de {from} a {to}",
       "instancesWarningLegacy": "La reducción de instancias por debajo de 3 solo está disponible para aplicaciones con la versión de especificación 8 o superior. Actualice las especificaciones de su aplicación para habilitar esta función.",
       "period": "Período",
       "renewal": "Renovación",
