@@ -169,6 +169,7 @@ declare global {
   const markRaw: typeof import('vue')['markRaw']
   const memoryMonitor: typeof import('./utils/memoryMonitor.js')['default']
   const nextTick: typeof import('vue')['nextTick']
+  const normalizeSpecForRedeploy: typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
   const onBeforeRouteLeave: typeof import('vue-router/auto')['onBeforeRouteLeave']
@@ -656,6 +657,7 @@ declare module 'vue' {
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly memoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['default']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly normalizeSpecForRedeploy: UnwrapRef<typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
     readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router/auto')['onBeforeRouteLeave']>
