@@ -1277,6 +1277,8 @@
       "visitFluxNode": "Besuchen Sie FluxNode",
       "signMessage": "Nachricht unterschreiben",
       "retrySigning": "Versuchen Sie es erneut",
+      "sessionExpired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "signInAgain": "Erneut anmelden",
       "cancelSigning": "Signieren abbrechen",
       "enablePaymentAnyway": "Aktivieren Sie „Zahlung trotzdem“.",
       "testCompleted": "Test abgeschlossen",

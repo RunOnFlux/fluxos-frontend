@@ -1277,6 +1277,8 @@
       "visitFluxNode": "Kunjungi FluxNode",
       "signMessage": "Tandhatangani Pesen",
       "retrySigning": "Cobi Malih Nyandhak",
+      "sessionExpired": "Sesi sampeyan wis kadaluwarsa. Mangga mlebu maneh.",
+      "signInAgain": "Mlebu Maneh",
       "cancelSigning": "Batalake Nyandhak",
       "enablePaymentAnyway": "Tetep Aktifake Pambayaran",
       "testCompleted": "Uji Rampung",

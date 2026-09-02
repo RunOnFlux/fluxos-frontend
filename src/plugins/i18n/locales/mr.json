@@ -1277,6 +1277,8 @@
       "visitFluxNode": "FluxNode ला भेट द्या",
       "signMessage": "स्वाक्षरी संदेश",
       "retrySigning": "स्वाक्षरी करण्याचा पुन्हा प्रयत्न करा",
+      "sessionExpired": "तुमचे सत्र कालबाह्य झाले आहे. कृपया पुन्हा साइन इन करा.",
+      "signInAgain": "पुन्हा साइन इन करा",
       "cancelSigning": "स्वाक्षरी रद्द करा",
       "enablePaymentAnyway": "तरीही पेमेंट सक्षम करा",
       "testCompleted": "चाचणी पूर्ण झाली",

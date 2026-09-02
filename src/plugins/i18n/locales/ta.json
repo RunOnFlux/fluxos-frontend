@@ -1277,6 +1277,8 @@
       "visitFluxNode": "FluxNode ஐப் பார்வையிடவும்",
       "signMessage": "கையொப்பம் செய்தி",
       "retrySigning": "மீண்டும் கையொப்பமிட முயற்சிக்கவும்",
+      "sessionExpired": "உங்கள் அமர்வு காலாவதியாகிவிட்டது. மீண்டும் உள்நுழையவும்.",
+      "signInAgain": "மீண்டும் உள்நுழைக",
       "cancelSigning": "கையொப்பத்தை ரத்துசெய்",
       "enablePaymentAnyway": "எப்படியும் கட்டணத்தை இயக்கு",
       "testCompleted": "சோதனை முடிந்தது",

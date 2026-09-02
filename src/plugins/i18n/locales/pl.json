@@ -321,6 +321,8 @@
       "publicKeyLabel": "Klucz Publiczny:",
       "blockchainConfirmationTime": "Czas potwierdzenia blockchain",
       "retrySigning": "Ponów podpisywanie",
+      "sessionExpired": "Twoja sesja wygasła. Zaloguj się ponownie.",
+      "signInAgain": "Zaloguj się ponownie",
       "autoSelect": "Automatyczny wybór",
       "testCompleted": "Test ukończony",
       "instancesWarningTwo": "Minimalna zalecana ilość dla sieci zdecentralizowanej to 3 instancje.",

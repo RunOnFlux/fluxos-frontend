@@ -1277,6 +1277,8 @@
       "visitFluxNode": "访问 FluxNode",
       "signMessage": "签名留言",
       "retrySigning": "重试签名",
+      "sessionExpired": "会话已过期，请重新登录。",
+      "signInAgain": "重新登录",
       "cancelSigning": "取消签名",
       "enablePaymentAnyway": "无论如何启用付款",
       "testCompleted": "测试完成",

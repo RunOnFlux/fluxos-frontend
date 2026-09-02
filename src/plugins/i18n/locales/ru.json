@@ -1277,6 +1277,8 @@
       "visitFluxNode": "Посетите FluxNode",
       "signMessage": "Подписать сообщение",
       "retrySigning": "Повторить попытку подписания",
+      "sessionExpired": "Сессия истекла. Пожалуйста, войдите снова.",
+      "signInAgain": "Войти снова",
       "cancelSigning": "Отменить подписание",
       "enablePaymentAnyway": "Включить оплату в любом случае",
       "testCompleted": "Тест завершен",

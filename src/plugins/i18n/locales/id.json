@@ -1277,6 +1277,8 @@
       "visitFluxNode": "Kunjungi FluxNode",
       "signMessage": "Tandatangani Pesan",
       "retrySigning": "Coba Lagi Menandatangani",
+      "sessionExpired": "Sesi Anda telah berakhir. Silakan masuk lagi.",
+      "signInAgain": "Masuk Lagi",
       "cancelSigning": "Batalkan Penandatanganan",
       "enablePaymentAnyway": "Tetap Aktifkan Pembayaran",
       "testCompleted": "Tes Selesai",

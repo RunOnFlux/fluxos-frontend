@@ -1277,6 +1277,8 @@
       "visitFluxNode": "FluxNode にアクセス",
       "signMessage": "メッセージに署名する",
       "retrySigning": "署名を再試行する",
+      "sessionExpired": "セッションの有効期限が切れました。もう一度サインインしてください。",
+      "signInAgain": "再サインイン",
       "cancelSigning": "署名のキャンセル",
       "enablePaymentAnyway": "とにかく支払いを有効にする",
       "testCompleted": "テストが完了しました",
