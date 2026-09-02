@@ -852,7 +852,8 @@
       "name": "Nazwa",
       "downloadFolderAsArchive": "Pobierz folder jako archiwum",
       "folderCreated": "Folder {folder} utworzony!",
-      "directoryDownloadInitiated": "Pobieranie katalogu rozpoczęte. Proszę czekać..."
+      "directoryDownloadInitiated": "Pobieranie katalogu rozpoczęte. Proszę czekać...",
+      "noVolumeData": "Brak danych wolumenu dla tego komponentu"
     },
     "notifications": {
       "newCount": "{count} Nowe",
@@ -1398,7 +1399,12 @@
         "persistentStorage": "Trwała pamięć",
         "rootFilesystem": "Główny system plików (rootfs)",
         "composition": "Kompozycja",
-        "searchIpPlaceholder": "Szukaj IP..."
+        "searchIpPlaceholder": "Szukaj IP...",
+        "encryptedComposition": {
+          "title": "Komponenty są zaszyfrowane",
+          "ownerOnly": "Tylko właściciel tej aplikacji może odszyfrować konfigurację jej komponentów.",
+          "image": "zaszyfrowane"
+        }
       },
       "register": {
         "orbit": {
@@ -1719,7 +1725,8 @@
         "checking": "Sprawdzanie...",
         "signInDescription": "Aby zarządzać i monitorować swoje aplikacje w sieci Flux, musisz uwierzytelnić się za pomocą swojej tożsamości Flux.",
         "minHdd": "Min. HDD (GB)",
-        "locations": "Lokalizacje"
+        "locations": "Lokalizacje",
+        "encrypted": "zaszyfrowane"
       },
       "redeploy": {
         "tooltip": "Wdróż ponownie",
@@ -4909,7 +4916,8 @@
       "shortTitle": "Gwarancja zwrotu pieniędzy",
       "description": "Wypróbuj naszą usługę bez ryzyka. Jeśli nie będziesz w pełni zadowolony w ciągu pierwszych 30 dni, zwrócimy Ci pieniądze bez zadawania pytań."
     },
-    "off": "taniej"
+    "off": "taniej",
+    "notAvailable": "Niedostępne"
   },
   "menu": {
     "application": {

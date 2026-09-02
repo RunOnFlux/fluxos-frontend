@@ -226,7 +226,8 @@
       "necessaryDescription": "Estes cookies são essenciais para o bom funcionamento do site. Eles não podem ser desativados.",
       "analytics": "Cookies analíticos",
       "analyticsDescription": "Estes cookies ajudam-nos a compreender como os visitantes interagem com o nosso website, recolhendo e reportando informações de forma anónima."
-    }
+    },
+    "notAvailable": "Não disponível"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} excluído",
       "files": {
         "emptyDirectory": "Diretório vazio"
-      }
+      },
+      "noVolumeData": "Não há dados de volume para este componente"
     },
     "auditViewer": {
       "title": "Registo de Auditoria",
@@ -2932,6 +2934,11 @@
           "networkTx": "TX na eth0",
           "ioRead": "Ler",
           "ioWrite": "Escrever"
+        },
+        "encryptedComposition": {
+          "title": "Os componentes estão cifrados",
+          "ownerOnly": "Apenas o proprietário desta aplicação pode decifrar a configuração dos seus componentes.",
+          "image": "cifrado"
         }
       },
       "redeploy": {
@@ -2991,7 +2998,8 @@
           "name": "Nome",
           "status": "Status",
           "description": "Descrição"
-        }
+        },
+        "encrypted": "cifrado"
       },
       "register": {
         "landing": {

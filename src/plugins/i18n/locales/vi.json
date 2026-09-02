@@ -226,7 +226,8 @@
       "necessaryDescription": "Những cookie này rất cần thiết để trang web hoạt động bình thường. Họ không thể bị vô hiệu hóa.",
       "analytics": "Cookie phân tích",
       "analyticsDescription": "Những cookie này giúp chúng tôi hiểu cách khách truy cập tương tác với trang web của chúng tôi bằng cách thu thập và báo cáo thông tin ẩn danh."
-    }
+    },
+    "notAvailable": "Không khả dụng"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} đã bị xóa",
       "files": {
         "emptyDirectory": "Thư mục trống"
-      }
+      },
+      "noVolumeData": "Không có dữ liệu ổ đĩa cho thành phần này"
     },
     "auditViewer": {
       "title": "Nhật Ký Kiểm Toán",
@@ -2914,6 +2916,11 @@
           "networkTx": "TX trên eth0",
           "ioRead": "Đọc",
           "ioWrite": "Viết"
+        },
+        "encryptedComposition": {
+          "title": "Các thành phần đã được mã hoá",
+          "ownerOnly": "Chỉ chủ sở hữu ứng dụng này mới có thể giải mã cấu hình các thành phần.",
+          "image": "đã mã hoá"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "Tên",
           "status": "Trạng thái",
           "description": "Sự miêu tả"
-        }
+        },
+        "encrypted": "đã mã hoá"
       },
       "register": {
         "landing": {

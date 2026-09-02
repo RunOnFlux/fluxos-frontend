@@ -226,7 +226,8 @@
       "necessaryDescription": "Cookie iki penting supaya situs web bisa mlaku kanthi bener. Cookie iki ora bisa dinonaktifake.",
       "analytics": "Cookie Analitik",
       "analyticsDescription": "Cookie iki mbantu kita ngerti kepiye pengunjung sesambungan karo situs web kita kanthi ngumpulake lan nglaporake informasi kanthi anonim."
-    }
+    },
+    "notAvailable": "Ora kasedhiya"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} dibusak",
       "files": {
         "emptyDirectory": "Direktori Kosong"
-      }
+      },
+      "noVolumeData": "Ora ana data volume kanggo komponen iki"
     },
     "auditViewer": {
       "title": "Log Audit",
@@ -2915,6 +2917,11 @@
           "networkTx": "TX ing eth0",
           "ioRead": "Maca",
           "ioWrite": "Nulis"
+        },
+        "encryptedComposition": {
+          "title": "Komponen wis dienkripsi",
+          "ownerOnly": "Mung sing duwe aplikasi iki sing bisa ndekripsi konfigurasi komponene.",
+          "image": "dienkripsi"
         }
       },
       "redeploy": {
@@ -2974,7 +2981,8 @@
           "name": "Jeneng",
           "status": "Status",
           "description": "Katrangan"
-        }
+        },
+        "encrypted": "dienkripsi"
       },
       "register": {
         "landing": {

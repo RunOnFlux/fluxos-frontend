@@ -226,7 +226,8 @@
       "necessaryDescription": "これらの Cookie は、Web サイトが適切に機能するために不可欠です。これらを無効にすることはできません。",
       "analytics": "分析クッキー",
       "analyticsDescription": "これらの Cookie は、情報を匿名で収集および報告することで、訪問者が当社 Web サイトとどのようにやり取りするかを理解するのに役立ちます。"
-    }
+    },
+    "notAvailable": "利用できません"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} が削除されました",
       "files": {
         "emptyDirectory": "空のディレクトリ"
-      }
+      },
+      "noVolumeData": "このコンポーネントのボリュームデータはありません"
     },
     "auditViewer": {
       "title": "監査ログ",
@@ -2914,6 +2916,11 @@
           "networkTx": "eth0 の TX",
           "ioRead": "読む",
           "ioWrite": "書く"
+        },
+        "encryptedComposition": {
+          "title": "コンポーネントは暗号化されています",
+          "ownerOnly": "このアプリの所有者のみがコンポーネント構成を復号できます。",
+          "image": "暗号化済み"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "名前",
           "status": "状態",
           "description": "説明"
-        }
+        },
+        "encrypted": "暗号化済み"
       },
       "register": {
         "landing": {

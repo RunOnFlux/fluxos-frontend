@@ -226,7 +226,8 @@
       "necessaryDescription": "这些 cookie 对于网站的正常运行至关重要。它们不能被禁用。",
       "analytics": "分析 Cookie",
       "analyticsDescription": "这些 cookie 通过匿名收集和报告信息帮助我们了解访问者如何与我们的网站互动。"
-    }
+    },
+    "notAvailable": "不可用"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name}已删除",
       "files": {
         "emptyDirectory": "空目录"
-      }
+      },
+      "noVolumeData": "此组件没有卷数据"
     },
     "auditViewer": {
       "title": "审计日志",
@@ -2914,6 +2916,11 @@
           "networkTx": "eth0 上的 TX",
           "ioRead": "读",
           "ioWrite": "写"
+        },
+        "encryptedComposition": {
+          "title": "组件已加密",
+          "ownerOnly": "只有此应用的所有者才能解密其组件配置。",
+          "image": "已加密"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "姓名",
           "status": "地位",
           "description": "描述"
-        }
+        },
+        "encrypted": "已加密"
       },
       "register": {
         "landing": {

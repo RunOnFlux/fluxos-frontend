@@ -226,7 +226,8 @@
       "necessaryDescription": "Bu çerezler web sitesinin düzgün çalışması için gereklidir. Engelli olamazlar.",
       "analytics": "Analiz Çerezleri",
       "analyticsDescription": "Bu çerezler, bilgileri anonim olarak toplayıp raporlayarak ziyaretçilerin web sitemizle nasıl etkileşimde bulunduğunu anlamamıza yardımcı olur."
-    }
+    },
+    "notAvailable": "Kullanılamıyor"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} silindi",
       "files": {
         "emptyDirectory": "Boş Dizin"
-      }
+      },
+      "noVolumeData": "Bu bileşen için birim verisi yok"
     },
     "auditViewer": {
       "title": "Denetim Günlüğü",
@@ -2914,6 +2916,11 @@
           "networkTx": "eth0'da Teksas",
           "ioRead": "Okumak",
           "ioWrite": "Yazmak"
+        },
+        "encryptedComposition": {
+          "title": "Bileşenler şifrelenmiş",
+          "ownerOnly": "Bu uygulamanın bileşen yapılandırmasını yalnızca sahibi çözebilir.",
+          "image": "şifrelenmiş"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "İsim",
           "status": "Durum",
           "description": "Tanım"
-        }
+        },
+        "encrypted": "şifrelenmiş"
       },
       "register": {
         "landing": {
