@@ -534,6 +534,7 @@
                               :component="component"
                               :app-name="item.name || ''"
                               :index="index"
+                              :is-enterprise="item.version >= 8 && !!item.enterprise"
                             />
                           </div>
                         </VSlideYTransition>

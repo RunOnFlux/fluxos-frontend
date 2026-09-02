@@ -1627,6 +1627,14 @@
       "reviewDeploy": "Tinjau & terapkan",
       "advancedNeeds": "Perlu beberapa kontainer, domain khusus, perintah, IP statis, atau aturan lokasi tingkat negara?",
       "openAdvanced": "Buka pengaturan Lanjutan"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Tampilkan nilai penyimpanan",
+      "tooLarge": "Muatan terlalu besar untuk ditampilkan.",
+      "loadFailed": "Gagal memuat nilai dari Flux Storage.",
+      "noData": "Tidak ada data.",
+      "notFound": "Tidak ada nilai tersimpan yang ditemukan.",
+      "revealFailed": "Gagal menampilkan nilai penyimpanan."
     }
   },
   "components": {

@@ -1653,6 +1653,14 @@
       "backendError": "Failed to fetch backend version",
       "error": "Unreachable",
       "manageCookiesTooltip": "Manage cookie preferences and privacy settings"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Reveal storage values",
+      "tooLarge": "Payload is too large to display.",
+      "loadFailed": "Failed to load values from Flux Storage.",
+      "noData": "No data.",
+      "notFound": "No storage-backed value found.",
+      "revealFailed": "Failed to reveal storage values."
     }
   },
   "components": {

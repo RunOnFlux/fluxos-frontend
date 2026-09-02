@@ -483,6 +483,7 @@
                           :component="component"
                           :app-name="appSpecification.name || ''"
                           :index="index"
+                          :is-enterprise="appSpecification.version >= 8 && !!appSpecification.enterprise"
                         />
                       </div>
                     </VSlideYTransition>

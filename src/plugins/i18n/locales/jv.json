@@ -1627,6 +1627,14 @@
       "reviewDeploy": "Tinjau & deploy",
       "advancedNeeds": "Butuh sawetara kontainer, domain khusus, printah, IP statis, utawa aturan lokasi tingkat negara?",
       "openAdvanced": "Bukak setelan Lanjutan"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Tuduhake nilai panyimpenan",
+      "tooLarge": "Muatan kegedhen kanggo ditampilake.",
+      "loadFailed": "Gagal njupuk nilai saka Flux Storage.",
+      "noData": "Ora ana data.",
+      "notFound": "Ora ana nilai kesimpen sing ketemu.",
+      "revealFailed": "Gagal nuduhake nilai panyimpenan."
     }
   },
   "components": {

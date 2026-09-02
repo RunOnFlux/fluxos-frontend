@@ -158,15 +158,26 @@ export default {
 
     return Api().get(`/apps/appspecifications/${name}`, axiosConfig)
   },
-  getAppEncryptedSpecifics(name, zelidauthHeader, data) {
+  getAppEncryptedSpecifics(name, zelidauthHeader, data, resolveStorage = false) {
     const axiosConfig = {
       headers: {
         zelidauth: zelidauthHeader,
         'enterprise-key': data,
       },
     }
-    
-    return Api().get(`/apps/appspecifications/${name}/true`, axiosConfig)
+    const suffix = resolveStorage ? '?resolvestorage=true' : ''
+
+    return Api().get(`/apps/appspecifications/${name}/true${suffix}`, axiosConfig)
+  },
+  getAppResolvedSpecifics(name, zelidauthHeader) {
+    const axiosConfig = {
+      headers: {
+        zelidauth: zelidauthHeader,
+        'x-apicache-bypass': true,
+      },
+    }
+
+    return Api().get(`/apps/appspecifications/${name}?resolvestorage=true`, axiosConfig)
   },
   getAppOwner(name) {
     return Api().get(`/apps/appowner/${name}`)

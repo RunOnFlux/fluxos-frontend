@@ -1627,6 +1627,14 @@
       "reviewDeploy": "İncele ve dağıt",
       "advancedNeeds": "Birden fazla konteyner, özel alan adları, komutlar, statik IP veya ülke düzeyinde konum kuralları mı gerekiyor?",
       "openAdvanced": "Gelişmiş ayarları aç"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Depolama değerlerini göster",
+      "tooLarge": "Yük görüntülenemeyecek kadar büyük.",
+      "loadFailed": "Değerler Flux Storage'dan yüklenemedi.",
+      "noData": "Veri yok.",
+      "notFound": "Depolamada değer bulunamadı.",
+      "revealFailed": "Depolama değerleri gösterilemedi."
     }
   },
   "components": {

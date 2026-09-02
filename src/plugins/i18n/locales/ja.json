@@ -1627,6 +1627,14 @@
       "reviewDeploy": "確認してデプロイ",
       "advancedNeeds": "複数のコンテナ、カスタムドメイン、コマンド、静的IP、または国単位の地域ルールが必要ですか？",
       "openAdvanced": "詳細設定を開く"
+    },
+    "fluxStorageReveal": {
+      "reveal": "ストレージの値を表示",
+      "tooLarge": "データが大きすぎて表示できません。",
+      "loadFailed": "Flux Storage から値を読み込めませんでした。",
+      "noData": "データがありません。",
+      "notFound": "ストレージに保存された値が見つかりません。",
+      "revealFailed": "ストレージの値を表示できませんでした。"
     }
   },
   "components": {

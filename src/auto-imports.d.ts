@@ -17,6 +17,7 @@ declare global {
   const MemoryMonitor: typeof import('./utils/memoryMonitor.js')['MemoryMonitor']
   const SESSION_MAX_AGE_MS: typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']
   const SESSION_SIGNING_MARGIN_MS: typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']
+  const STORAGE_MARKERS: typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const alphaDashValidator: typeof import('./@core/utils/validators.js')['alphaDashValidator']
   const alphaValidator: typeof import('./@core/utils/validators.js')['alphaValidator']
@@ -127,6 +128,7 @@ declare global {
   const hasAnalyticsConsent: typeof import('./composables/useCookieConsent.js')['hasAnalyticsConsent']
   const hasConsent: typeof import('./composables/useCookieConsent.js')['hasConsent']
   const hasPasswordProvider: typeof import('./utils/firebase.js')['hasPasswordProvider']
+  const hasStorageMarker: typeof import('./composables/useFluxStorageReveal.js')['hasStorageMarker']
   const hasWalletConnectSession: typeof import('./utils/walletService.js')['hasWalletConnectSession']
   const hexToRgb: typeof import('./@core/utils/colorConverter.js')['hexToRgb']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -345,6 +347,7 @@ declare global {
   const useFloor: typeof import('@vueuse/math')['useFloor']
   const useFluxDrive: typeof import('./composables/useFluxDrive.js')['useFluxDrive']
   const useFluxShare: typeof import('./composables/useFluxShare.js')['useFluxShare']
+  const useFluxStorageReveal: typeof import('./composables/useFluxStorageReveal.js')['useFluxStorageReveal']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -515,6 +518,7 @@ declare module 'vue' {
     readonly MemoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['MemoryMonitor']>
     readonly SESSION_MAX_AGE_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']>
     readonly SESSION_SIGNING_MARGIN_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']>
+    readonly STORAGE_MARKERS: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly alphaDashValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaDashValidator']>
     readonly alphaValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaValidator']>
@@ -624,6 +628,7 @@ declare module 'vue' {
     readonly hasAnalyticsConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['hasAnalyticsConsent']>
     readonly hasConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['hasConsent']>
     readonly hasPasswordProvider: UnwrapRef<typeof import('./utils/firebase.js')['hasPasswordProvider']>
+    readonly hasStorageMarker: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['hasStorageMarker']>
     readonly hasWalletConnectSession: UnwrapRef<typeof import('./utils/walletService.js')['hasWalletConnectSession']>
     readonly hexToRgb: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['hexToRgb']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
@@ -841,6 +846,7 @@ declare module 'vue' {
     readonly useFloor: UnwrapRef<typeof import('@vueuse/math')['useFloor']>
     readonly useFluxDrive: UnwrapRef<typeof import('./composables/useFluxDrive.js')['useFluxDrive']>
     readonly useFluxShare: UnwrapRef<typeof import('./composables/useFluxShare.js')['useFluxShare']>
+    readonly useFluxStorageReveal: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['useFluxStorageReveal']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>
