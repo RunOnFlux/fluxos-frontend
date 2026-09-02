@@ -754,8 +754,10 @@ const secretKeys = computed(() => {
 const hasSecrets = computed(() => secretKeys.value.length > 0)
 
 // The app is Enterprise (encrypted, private) if it contains secret-like env
-// vars OR pulls from a private registry (its credentials must stay private).
-const isEnterprise = computed(() => hasSecrets.value || isPrivate.value)
+// vars, pulls from a private registry (its credentials must stay private),
+// was cloned/redeployed from an app that was registered as Enterprise, or
+// still carries a non-empty encrypted enterprise field (list decryption failed).
+const isEnterprise = computed(() => hasSecrets.value || isPrivate.value || !!props.spec.wasEnterprise || !!(props.spec.enterprise && props.spec.enterprise !== ''))
 
 function stepInstances(delta) {
   instances.value = Math.max(minInstances.value, Math.min(100, (instances.value || 1) + delta))
@@ -825,6 +827,8 @@ const priceSub = computed(() => {
 // --- Subscription period (expire, in blocks) -----------------------------
 // Longer periods get a discount, matching the Advanced renewal options.
 const PERIODS = [
+  { blocks: 22000, labelKey: 'renewal1Week', discount: 0 },
+  { blocks: 44000, labelKey: 'renewal2Weeks', discount: 0 },
   { blocks: 88000, labelKey: 'renewal1Month', discount: 0 },
   { blocks: 264000, labelKey: 'renewal3Months', discount: 3 },
   { blocks: 528000, labelKey: 'renewal6Months', discount: 6 },

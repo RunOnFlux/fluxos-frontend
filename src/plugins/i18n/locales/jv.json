@@ -1108,6 +1108,7 @@
       "instancesWarningOne": "Jumlah minimal sing disaranake kanggo jaringan desentralisasi yaiku 3 instansi. Kanthi mung 1 instansi, aplikasi sampeyan bisa nemoni wektu mati sawetara menit yen node sing mlakokake aplikasi kasebut dibaleni utawa dipateni.",
       "instancesWarningSyncthing": "Jumlah instansi minimal kanggo aplikasi kanthi panyimpenan desentralisasi sing terus ana yaiku 2. Kanggo nggunakake luwih sithik instansi, mateni sinkronisasi data ing setelan jalur volume.",
       "instancesAutoAdjusted": "Instansi kanthi otomatis diatur saka {from} dadi {to} amarga sinkronisasi data mbutuhake paling ora {to} instansi.",
+      "renewalPeriodAutoAdjusted": "Periode pembaruan otomatis disesuaikan saka {from} dadi {to}",
       "instancesWarningLegacy": "Nyuda instansi ing sangisore 3 mung kasedhiya kanggo aplikasi sing duwe versi spesifikasi 8 utawa luwih dhuwur. Nganyari spesifikasi aplikasi sampeyan kanggo ngaktifake fitur iki.",
       "period": "Periode",
       "renewal": "Pembaruan",

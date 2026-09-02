@@ -259,6 +259,7 @@ import { useI18n } from 'vue-i18n'
 import qs from 'qs'
 import AppsService from '@/services/AppsService'
 import { eventBus } from '@/utils/eventBus'
+import { normalizeSpecForRedeploy } from '@/utils/redeploySpec'
 
 import { useRouter } from 'vue-router'
 
@@ -320,7 +321,7 @@ function exportSpec(appSpecs) {
 }
 
 function cloneApp(appSpecs) {
-  const specs = { ...appSpecs }
+  const specs = normalizeSpecForRedeploy(appSpecs)
 
   // Generate new name: originalName + timestamp (13 digits)
   // Strip existing timestamp suffix if present (from previous clone)

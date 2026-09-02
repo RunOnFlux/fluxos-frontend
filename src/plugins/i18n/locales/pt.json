@@ -1126,6 +1126,7 @@
       "instancesWarningOne": "O mínimo recomendado para uma rede descentralizada é de 3 instâncias. Com apenas uma instância, seu aplicativo poderá passar por alguns minutos de inatividade se o nó que executa o aplicativo for reinicializado ou desligado.",
       "instancesWarningSyncthing": "O mínimo de instâncias para aplicativos com armazenamento persistente descentralizado é 2. Para usar menos instâncias, desative a sincronização de dados nas configurações do caminho do volume.",
       "instancesAutoAdjusted": "Instâncias ajustadas automaticamente de {from} para {to} porque a sincronização de dados requer no mínimo {to} instâncias.",
+      "renewalPeriodAutoAdjusted": "Período de renovação ajustado automaticamente de {from} para {to}",
       "instancesWarningLegacy": "A redução de instâncias abaixo de 3 está disponível apenas para aplicativos com especificação versão 8 ou superior. Atualize as especificações do seu aplicativo para ativar esse recurso.",
       "period": "Período",
       "renewal": "Renovação",

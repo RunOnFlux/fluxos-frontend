@@ -1108,6 +1108,7 @@
       "instancesWarningOne": "Mức tối thiểu được đề xuất cho một mạng phi tập trung là 3 phiên bản. Chỉ với 1 phiên bản, ứng dụng của bạn có thể ngừng hoạt động trong vài phút nếu nút chạy ứng dụng được khởi động lại hoặc tắt.",
       "instancesWarningSyncthing": "Phiên bản tối thiểu cho các ứng dụng có bộ lưu trữ liên tục phi tập trung là 2. Để sử dụng ít phiên bản hơn, hãy tắt đồng bộ hóa dữ liệu trong cài đặt đường dẫn ổ đĩa.",
       "instancesAutoAdjusted": "Số phiên bản đã được tự động điều chỉnh từ {from} thành {to} vì đồng bộ hóa dữ liệu yêu cầu tối thiểu {to} phiên bản.",
+      "renewalPeriodAutoAdjusted": "Kỳ hạn gia hạn đã tự động điều chỉnh từ {from} thành {to}",
       "instancesWarningLegacy": "Việc giảm phiên bản xuống dưới 3 chỉ khả dụng cho các ứng dụng có thông số kỹ thuật phiên bản 8 trở lên. Cập nhật đặc tả ứng dụng của bạn để bật tính năng này.",
       "period": "Giai đoạn",
       "renewal": "Gia hạn",

@@ -4447,10 +4447,6 @@ function handleSpecImport(spec) {
       props.appSpec.owner = spec.owner
       appDetails.value.owner = spec.owner
     }
-    if (spec.repotag) props.appSpec.repotag = spec.repotag
-    if (spec.port) props.appSpec.port = spec.port
-    if (spec.domains) props.appSpec.domains = spec.domains
-    if (spec.tiered !== undefined) props.appSpec.tiered = spec.tiered
     if (spec.version) props.appSpec.version = spec.version
 
     // Contacts - required field, provide default if missing
@@ -4463,7 +4459,7 @@ function handleSpecImport(spec) {
     // Decode geolocation into UI state (allowed/forbidden rows)
     decodeGeolocation(props.appSpec.geolocation)
 
-    if (spec.expire) props.appSpec.expire = spec.expire
+    if (spec.expire != null) props.appSpec.expire = spec.expire
     if (spec.nodes) {
       props.appSpec.nodes = spec.nodes || []
       appDetails.value.nodes = Array.isArray(spec.nodes) ? spec.nodes.join(', ') : spec.nodes
@@ -4517,6 +4513,15 @@ function handleSpecImport(spec) {
       if (spec.tiered !== undefined) component.tiered = spec.tiered
       props.appSpec.compose = [component]
     }
+
+    // The appSpec watcher only fires on reference changes, so it never sees
+    // the in-place mutations above. Derive the same form state it would set
+    // so the enterprise toggle and renewal period reflect the imported spec.
+    const importedRenewalIndex = renewalIndexForSpec(props.appSpec)
+    if (importedRenewalIndex !== null) {
+      appDetails.value.renewalIndex = importedRenewalIndex
+    }
+    isPrivateApp.value = privateAppForSpec(props.appSpec)
 
     // If currently on Validate & Register tab, trigger re-validation
     if (tab.value === 99) {
@@ -4788,6 +4793,74 @@ function cancelSubscription() {
 // but the full definition depends on reactive refs that come later
 let renewalOptionsForWatcher = null
 
+// Derive whether a spec represents a private (enterprise) app.
+// For v7: nodes present. For v8+: non-empty encrypted enterprise content, or
+// the wasEnterprise marker carried by cloned/redeployed specs whose
+// encrypted blob was stripped by the management list decryption.
+function privateAppForSpec(spec) {
+  if (!spec) return false
+  if (spec.version === 7 && spec.nodes && spec.nodes.length > 0) return true
+  if (spec.version >= 8 && ((spec.enterprise && spec.enterprise !== '') || spec.wasEnterprise)) return true
+
+  return false
+}
+
+// Map a spec's expire (with pre-fork conversion) onto a renewal option index.
+// Returns null while renewal options are not initialized yet.
+function renewalIndexForSpec(spec) {
+  if (!spec) return null
+
+  let expireForMatching
+  if (spec.version < 6) {
+    // Spec < 6: Always use 88000 (fixed 1 month)
+    expireForMatching = 88000
+  } else {
+    // Spec >= 6: Use original expire value from API
+    const defaultExpire = 88000
+    const originalExpire = spec.expire ?? defaultExpire
+    expireForMatching = originalExpire
+
+    // Fork-aware conversion for renewalIndex matching:
+    // Apps registered before fork have expire in pre-fork blocks
+    // Convert to post-fork equivalent to match renewal options
+    if (spec.height && spec.height < FORK_BLOCK_HEIGHT) {
+      expireForMatching = Math.round(originalExpire * 4)
+      console.log('Fork-aware conversion for renewalIndex: original', originalExpire, '× 4 =', expireForMatching)
+    }
+  }
+
+  console.log('Setting renewalIndex - expire for matching:', expireForMatching, 'original expire:', spec.expire, 'spec version:', spec.version, 'height:', spec.height)
+
+  // Find exact match in renewal options
+  // Use the forward declaration to avoid temporal dead zone errors on first run
+  const options = renewalOptionsForWatcher
+  if (!options || options.length === 0) return null
+
+  let foundIndex = options.findIndex(opt => opt.value === expireForMatching)
+
+  // If no exact match, find closest renewal option
+  if (foundIndex === -1) {
+    const fallbackIndex = Math.min(2, options.length - 1)
+    let closestIndex = fallbackIndex
+    let closestDiff = Math.abs(options[fallbackIndex].value - expireForMatching)
+
+    options.forEach((opt, idx) => {
+      const diff = Math.abs(opt.value - expireForMatching)
+      if (diff < closestDiff) {
+        closestDiff = diff
+        closestIndex = idx
+      }
+    })
+
+    foundIndex = closestIndex
+    console.log('No exact match - closest option at index:', foundIndex, 'value:', options[foundIndex].value, 'diff:', Math.abs(options[foundIndex].value - expireForMatching))
+  } else {
+    console.log('Found exact match at index:', foundIndex, 'value:', options[foundIndex].value)
+  }
+
+  return foundIndex
+}
+
 // Watch for changes in appSpec to update appDetails
 watch(() => props.appSpec, (newSpec, oldSpec) => {
   console.log('SubscriptionManager: appSpec changed:', newSpec)
@@ -4823,15 +4896,7 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
     console.log('SubscriptionManager: appDetails.owner after update:', appDetails.value.owner)
     
     // Determine if this is a private app based on existing data
-    // For v7: check if nodes exist
-    // For v8+: check if enterprise field has encrypted content
-    if (newSpec.version === 7 && newSpec.nodes && newSpec.nodes.length > 0) {
-      isPrivateApp.value = true
-    } else if (newSpec.version >= 8 && newSpec.enterprise && newSpec.enterprise !== '') {
-      isPrivateApp.value = true
-    } else {
-      isPrivateApp.value = false
-    }
+    isPrivateApp.value = privateAppForSpec(newSpec)
     
     appDetails.value.nodes = newSpec.nodes ? newSpec.nodes.join(', ') : ''
 
@@ -4848,53 +4913,8 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
 
     // Set up renewal settings
     // Find the correct renewalIndex based on original expire value with fork-aware conversion
-    let expireForMatching
-
-    if (newSpec.version < 6) {
-      // Spec < 6: Always use 88000 (fixed 1 month)
-      expireForMatching = 88000
-    } else {
-      // Spec >= 6: Use original expire value from API
-      const defaultExpire = 88000
-      const originalExpire = newSpec.expire ?? defaultExpire
-      expireForMatching = originalExpire
-
-      // Fork-aware conversion for renewalIndex matching:
-      // Apps registered before fork have expire in pre-fork blocks
-      // Convert to post-fork equivalent to match renewal options
-      if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
-        expireForMatching = Math.round(originalExpire * 4)
-        console.log('Fork-aware conversion for renewalIndex: original', originalExpire, '× 4 =', expireForMatching)
-      }
-    }
-
-    console.log('Setting renewalIndex - expire for matching:', expireForMatching, 'original expire:', newSpec.expire, 'spec version:', newSpec.version, 'height:', newSpec.height)
-
-    // Find exact match in renewal options
-    // Use the forward declaration to avoid temporal dead zone errors on first run
-    const options = renewalOptionsForWatcher
-    if (options && options.length > 0) {
-      let foundIndex = options.findIndex(opt => opt.value === expireForMatching)
-
-      // If no exact match, find closest renewal option
-      if (foundIndex === -1) {
-        let closestIndex = 2  // Default to 1 month (88000)
-        let closestDiff = Math.abs(options[2].value - expireForMatching)
-
-        options.forEach((opt, idx) => {
-          const diff = Math.abs(opt.value - expireForMatching)
-          if (diff < closestDiff) {
-            closestDiff = diff
-            closestIndex = idx
-          }
-        })
-
-        foundIndex = closestIndex
-        console.log('No exact match - closest option at index:', foundIndex, 'value:', options[foundIndex].value, 'diff:', Math.abs(options[foundIndex].value - expireForMatching))
-      } else {
-        console.log('Found exact match at index:', foundIndex, 'value:', options[foundIndex].value)
-      }
-
+    const foundIndex = renewalIndexForSpec(newSpec)
+    if (foundIndex !== null) {
       appDetails.value.renewalIndex = foundIndex
     } else {
       // Options not available yet (first immediate run), use default
@@ -5826,8 +5846,20 @@ watch(() => appDetails.value.renewalIndex, newIndex => {
 // This can happen when remaining subscription time increases (fewer extension options available)
 watch(() => renewalOptions.value.length, newLength => {
   if (appDetails.value.renewalIndex >= newLength) {
+    const oldExpire = props.appSpec?.expire
+    const clampedIndex = Math.max(0, newLength - 1)
+
     // Clamp to last available option
-    appDetails.value.renewalIndex = Math.max(0, newLength - 1)
+    appDetails.value.renewalIndex = clampedIndex
+
+    // Silent jumps between priced periods are confusing — inform the user
+    // when they are actively choosing a period (not during initial load).
+    if (renewalEnabled.value || props.newApp) {
+      showToast('info', t('core.subscriptionManager.renewalPeriodAutoAdjusted', {
+        from: typeof oldExpire === 'number' ? formatBlocksAsDuration(oldExpire) : '',
+        to: renewalOptions.value[clampedIndex]?.label || '',
+      }))
+    }
   }
 })
 
@@ -7148,8 +7180,14 @@ defineExpose({
   // form drives expire from renewalIndex, so map the blocks back to the index.
   setPeriodBlocks: blocks => {
     const opts = renewalOptions.value
-    const idx = opts.findIndex(o => o.value === blocks)
-    if (idx >= 0) appDetails.value.renewalIndex = idx
+    if (!opts.length) return
+    let idx = opts.findIndex(o => o.value === blocks)
+    if (idx < 0) {
+      // No exact match (options are offset by remaining subscription time) —
+      // fall back to the closest period instead of silently doing nothing.
+      idx = opts.reduce((best, opt, i) => (Math.abs(opt.value - blocks) < Math.abs(opts[best].value - blocks) ? i : best), 0)
+    }
+    appDetails.value.renewalIndex = idx
   },
 })
 
@@ -8074,6 +8112,11 @@ async function verifyAppSpec() {
   appSpecFormated.value = null
   try {
     const appSpecTemp = cloneDeep(props.appSpec)
+
+    // wasEnterprise (clone/redeploy of decrypted apps) and _isV3Original
+    // (spec adapter flag) are UI-only markers; never send them to the backend.
+    delete appSpecTemp.wasEnterprise
+    delete appSpecTemp._isV3Original
 
     // ========================================================================
     // CONVERT APP NAME TO LOWERCASE (only for new app registration)

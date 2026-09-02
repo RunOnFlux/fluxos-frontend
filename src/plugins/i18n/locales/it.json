@@ -1108,6 +1108,7 @@
       "instancesWarningOne": "Il minimo consigliato per una rete decentralizzata è 3 istanze. Con solo 1 istanza, la tua app potrebbe riscontrare alcuni minuti di inattività se il nodo che esegue l'app viene riavviato o arrestato.",
       "instancesWarningSyncthing": "Le istanze minime per le app con archiviazione persistente decentralizzata sono 2. Per utilizzare meno istanze, disabilita la sincronizzazione dei dati nelle impostazioni del percorso del volume.",
       "instancesAutoAdjusted": "Istanze regolate automaticamente da {from} a {to} perché la sincronizzazione dei dati richiede un minimo di {to} istanze.",
+      "renewalPeriodAutoAdjusted": "Periodo di rinnovo modificato automaticamente da {from} a {to}",
       "instancesWarningLegacy": "La riduzione delle istanze al di sotto di 3 è disponibile solo per le app con la versione specifica 8 o successiva. Aggiorna le specifiche dell'app per abilitare questa funzionalità.",
       "period": "Periodo",
       "renewal": "Rinnovo",
