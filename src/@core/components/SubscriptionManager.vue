@@ -2481,12 +2481,23 @@
             <div class="d-flex justify-center align-center mt-4">
               <!-- Sign Message Button (only for non-SSO logins) -->
               <VBtn
-                v-if="hasCalculatedPrice && !signature && !isSigning && !signingFailed && loginType !== 'sso' && !(hasValidatedSpec && verifyAppSpecResponse === false) && !(hasCalculatedPrice && !appSpecPrice?.flux && appSpecPrice?.flux !== 0) && !(hasCheckedExpiry && !isExpiryValid && !newApp)"
+                v-if="hasCalculatedPrice && !signature && !isSigning && !signingFailed && !sessionExpired && loginType !== 'sso' && !(hasValidatedSpec && verifyAppSpecResponse === false) && !(hasCalculatedPrice && !appSpecPrice?.flux && appSpecPrice?.flux !== 0) && !(hasCheckedExpiry && !isExpiryValid && !newApp)"
                 variant="flat"
                 style="width: 100%"
                 @click="dataSign()"
               >
                 <VIcon start size="24">mdi-file-sign</VIcon> {{ t('core.subscriptionManager.signMessage') }}
+              </VBtn>
+
+              <!-- Sign in again (the session, not the message, was rejected) -->
+              <VBtn
+                v-else-if="sessionExpired && !signature"
+                variant="flat"
+                color="error"
+                style="width: 100%"
+                @click="openLoginBottomSheet()"
+              >
+                <VIcon start size="20">mdi-login-variant</VIcon> {{ t('core.subscriptionManager.signInAgain') }}
               </VBtn>
 
               <!-- Retry Signing Button (when signing or registration failed) -->
@@ -3770,6 +3781,8 @@ import { detectSecretEnvVars } from '@/utils/detectSecrets'
 import { isValidPort, isPortBanned, generateRandomPort } from '@/utils/fluxPorts'
 import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } from '@/utils/specConverter'
 import { usePriceEstimate } from '@/composables/usePriceEstimate'
+import { useLoginSheet } from '@/composables/useLoginSheet'
+import { isSessionExpiringSoon, isAuthError } from '@/utils/session'
 
 // Import payment images
 import StripeImg from '@images/Stripe.svg?url'
@@ -3815,6 +3828,12 @@ const websocket = ref(null)
 const loginType  = ref(localStorage.getItem('loginType'))
 const isSigning = ref(false) // Track if signing is in progress
 const signingFailed = ref(false) // Track if signing failed
+
+// Set when the failure was the login session rather than the message: signing
+// again cannot help, only a fresh login can.
+const sessionExpired = ref(false)
+
+const { showLoginSheet, openLoginBottomSheet } = useLoginSheet()
 const clipboardInstance = ref(null) // ClipboardJS instance for proper cleanup
 const tab = ref(0)
 const previousTab = ref(0) // Track previous tab for TOS validation
@@ -8770,8 +8789,19 @@ async function dataSign() {
   if (marketPlaceApp) {
     isMarketplaceApp.value = true
   }
+
+  // A login session the node has already dropped (or is about to) will refuse
+  // the registration after the wallet has happily signed it. Catch that here so
+  // the user is sent to log in instead of re-signing a message that cannot land.
+  if (isSessionExpiringSoon()) {
+    handleExpiredSession()
+
+    return
+  }
+
   isSigning.value = true
   signingFailed.value = false // Reset failed state when starting new sign attempt
+  sessionExpired.value = false
   timestamp.value = Date.now()
   dataToSign.value = `${updatetype.value}${version}${JSON.stringify(appSpecFormated.value)}${timestamp.value}`
   await signMethod()
@@ -8792,6 +8822,22 @@ function cancelSigning() {
     signClient.value = null
   }
   showToast('info', 'Signing cancelled')
+}
+
+// Once a fresh session exists, put the signing controls back.
+watch(showLoginSheet, open => {
+  if (!open && sessionExpired.value && !isSessionExpiringSoon()) {
+    sessionExpired.value = false
+  }
+})
+
+// The login session is gone: drop the stale signature and ask for a fresh login.
+function handleExpiredSession() {
+  isSigning.value = false
+  signature.value = ''
+  signingFailed.value = false
+  sessionExpired.value = true
+  showToast('error', t('core.subscriptionManager.sessionExpired'))
 }
 
 // Propagate signed message
@@ -8878,11 +8924,17 @@ async function propagateSignedMessage() {
       errorMessage = error.message
     }
 
-    showToast('error', errorMessage)
+    if (isAuthError(error)) {
+      // The message was signed fine; the node rejected our session. Say so,
+      // instead of offering a re-sign that will fail the same way.
+      handleExpiredSession()
+    } else {
+      showToast('error', errorMessage)
 
-    // Reset signature so user must sign again
-    signature.value = ''
-    signingFailed.value = true
+      // Reset signature so user must sign again
+      signature.value = ''
+      signingFailed.value = true
+    }
   } finally {
     isPropagating.value = false
   }

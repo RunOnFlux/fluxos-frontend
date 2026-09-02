@@ -1277,6 +1277,8 @@
       "visitFluxNode": "FluxNode দেখুন",
       "signMessage": "সাইন মেসেজ",
       "retrySigning": "স্বাক্ষর করার জন্য পুনরায় চেষ্টা করুন",
+      "sessionExpired": "আপনার সেশনের মেয়াদ শেষ হয়েছে। অনুগ্রহ করে আবার সাইন ইন করুন।",
+      "signInAgain": "আবার সাইন ইন করুন",
       "cancelSigning": "স্বাক্ষর করা বাতিল করুন",
       "enablePaymentAnyway": "যেভাবেই হোক পেমেন্ট সক্রিয় করুন",
       "testCompleted": "পরীক্ষা সম্পন্ন হয়েছে",

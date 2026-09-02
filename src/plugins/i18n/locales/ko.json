@@ -1277,6 +1277,8 @@
       "visitFluxNode": "FluxNode 방문",
       "signMessage": "메시지 서명",
       "retrySigning": "서명 재시도",
+      "sessionExpired": "세션이 만료되었습니다. 다시 로그인해 주세요.",
+      "signInAgain": "다시 로그인",
       "cancelSigning": "서명 취소",
       "enablePaymentAnyway": "어쨌든 결제 활성화",
       "testCompleted": "테스트 완료",

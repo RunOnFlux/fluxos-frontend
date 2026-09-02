@@ -1392,6 +1392,8 @@
       "visitFluxNode": "Visit FluxNode",
       "signMessage": "Sign Message",
       "retrySigning": "Retry Signing",
+      "sessionExpired": "Your session has expired. Please sign in again.",
+      "signInAgain": "Sign In Again",
       "cancelSigning": "Cancel Signing",
       "enablePaymentAnyway": "Enable Payment Anyway",
       "testCompleted": "Test Completed",

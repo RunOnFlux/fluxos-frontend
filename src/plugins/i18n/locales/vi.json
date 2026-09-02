@@ -1277,6 +1277,8 @@
       "visitFluxNode": "Ghé thăm FluxNode",
       "signMessage": "Ký tin nhắn",
       "retrySigning": "Thử lại ký",
+      "sessionExpired": "Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.",
+      "signInAgain": "Đăng nhập lại",
       "cancelSigning": "Hủy ký",
       "enablePaymentAnyway": "Cho phép thanh toán bằng mọi cách",
       "testCompleted": "Đã hoàn thành kiểm tra",

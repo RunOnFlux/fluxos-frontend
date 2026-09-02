@@ -1109,6 +1109,7 @@ import IDService from "@/services/IDService"
 import firebase from "firebase/compat/app"
 import "firebase/compat/auth"
 import qs from "qs"
+import { isSessionExpired } from '@/utils/session'
 import DaemonService from "@/services/DaemonService"
 import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
@@ -1916,12 +1917,7 @@ async function getZelidAuthority() {
   const zelidauth = localStorage.getItem("zelidauth")
   const auth = qs.parse(zelidauth || "")
 
-  const timestamp = Date.now()
-  const maxTime = 1.5 * 60 * 60 * 1000 // 1.5 hours
-  const mesTime = auth?.loginPhrase?.substring(0, 13) || 0
-  const expiryTime = +mesTime + maxTime
-
-  if (+mesTime > 0 && timestamp < expiryTime) {
+  if (!isSessionExpired(auth)) {
     globalZelidAuthorized.value = true
   } else {
     globalZelidAuthorized.value = false

@@ -1277,6 +1277,8 @@
       "visitFluxNode": "FluxNode'u ziyaret edin",
       "signMessage": "Mesajı İmzala",
       "retrySigning": "İmzalamayı Yeniden Dene",
+      "sessionExpired": "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+      "signInAgain": "Tekrar Giriş Yap",
       "cancelSigning": "İmzalamayı İptal Et",
       "enablePaymentAnyway": "Ödemeyi Yine de Etkinleştir",
       "testCompleted": "Test Tamamlandı",

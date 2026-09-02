@@ -1277,6 +1277,8 @@
       "visitFluxNode": "قم بزيارة FluxNode",
       "signMessage": "توقيع الرسالة",
       "retrySigning": "إعادة محاولة التوقيع",
+      "sessionExpired": "انتهت جلستك. يرجى تسجيل الدخول مرة أخرى.",
+      "signInAgain": "تسجيل الدخول مرة أخرى",
       "cancelSigning": "إلغاء التوقيع",
       "enablePaymentAnyway": "تمكين الدفع على أي حال",
       "testCompleted": "اكتمل الاختبار",
