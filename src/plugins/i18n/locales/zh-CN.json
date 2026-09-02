@@ -1627,6 +1627,14 @@
       "reviewDeploy": "审核并部署",
       "advancedNeeds": "需要多个容器、自定义域名、命令、静态 IP 或国家/地区级别的位置规则？",
       "openAdvanced": "打开高级设置"
+    },
+    "fluxStorageReveal": {
+      "reveal": "显示存储值",
+      "tooLarge": "内容过大，无法显示。",
+      "loadFailed": "无法从 Flux Storage 加载值。",
+      "noData": "暂无数据。",
+      "notFound": "未找到已存储的值。",
+      "revealFailed": "无法显示存储值。"
     }
   },
   "components": {

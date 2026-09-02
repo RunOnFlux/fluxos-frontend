@@ -62,8 +62,8 @@
               class="mb-2"
             >
               {{ revealResult.status === 'too-large'
-                ? 'Payload is too large to display.'
-                : (revealResult.message || 'Failed to load contacts from Flux Storage.') }}
+                ? t('core.fluxStorageReveal.tooLarge')
+                : (revealResult.message || t('core.fluxStorageReveal.loadFailed')) }}
             </VAlert>
             <template v-else>
               <div class="text-caption text-medium-emphasis mb-2 text-truncate">
@@ -79,13 +79,13 @@
             </template>
           </template>
           <VAlert v-else type="error" variant="tonal">
-            {{ revealError || 'No data.' }}
+            {{ revealError || t('core.fluxStorageReveal.noData') }}
           </VAlert>
         </VCardText>
         <VCardActions>
           <VSpacer />
           <VBtn variant="tonal" @click="revealDialog = false">
-            {{ t('common.actions.close') || 'Close' }}
+            {{ t('common.buttons.close') }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -138,7 +138,7 @@
         :loading="revealing"
         @click="revealContacts"
       >
-        Reveal storage values
+        {{ t('core.fluxStorageReveal.reveal') }}
       </VBtn>
     </div>
     <ListEntry
@@ -289,9 +289,9 @@ async function revealContacts() {
     const isEnterprise = props.app?.version >= 8 && !!props.app?.enterprise
     const spec = await fetchResolvedSpec({ appName: props.app?.name, isEnterprise })
     revealResult.value = extractField(spec, { resolvedKey: 'contactsResolved' })
-    if (!revealResult.value) revealError.value = 'No storage-backed contacts found.'
+    if (!revealResult.value) revealError.value = t('core.fluxStorageReveal.notFound')
   } catch (error) {
-    revealError.value = error?.message || 'Failed to reveal storage contacts.'
+    revealError.value = error?.message || t('core.fluxStorageReveal.revealFailed')
   }
 }
 

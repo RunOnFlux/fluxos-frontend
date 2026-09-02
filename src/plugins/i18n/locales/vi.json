@@ -1627,6 +1627,14 @@
       "reviewDeploy": "Xem lại & triển khai",
       "advancedNeeds": "Cần nhiều container, tên miền tùy chỉnh, lệnh, IP tĩnh hoặc quy tắc vị trí theo quốc gia?",
       "openAdvanced": "Mở cài đặt Nâng cao"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Hiện giá trị lưu trữ",
+      "tooLarge": "Dữ liệu quá lớn để hiển thị.",
+      "loadFailed": "Không tải được giá trị từ Flux Storage.",
+      "noData": "Không có dữ liệu.",
+      "notFound": "Không tìm thấy giá trị đã lưu trữ.",
+      "revealFailed": "Không hiển thị được giá trị lưu trữ."
     }
   },
   "components": {

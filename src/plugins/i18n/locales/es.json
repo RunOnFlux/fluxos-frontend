@@ -1627,6 +1627,14 @@
       "reviewDeploy": "Revisar y desplegar",
       "advancedNeeds": "¿Necesitas varios contenedores, dominios personalizados, comandos, una IP estática o reglas de ubicación a nivel de país?",
       "openAdvanced": "Abrir la configuración Avanzada"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Mostrar valores de almacenamiento",
+      "tooLarge": "La carga es demasiado grande para mostrarse.",
+      "loadFailed": "No se pudieron cargar los valores desde Flux Storage.",
+      "noData": "Sin datos.",
+      "notFound": "No se encontró ningún valor almacenado.",
+      "revealFailed": "No se pudieron mostrar los valores de almacenamiento."
     }
   },
   "components": {

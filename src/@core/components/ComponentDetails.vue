@@ -32,8 +32,8 @@
               class="mb-2"
             >
               {{ revealResult.status === 'too-large'
-                ? 'Payload is too large to display.'
-                : (revealResult.message || 'Failed to load values from Flux Storage.') }}
+                ? t('core.fluxStorageReveal.tooLarge')
+                : (revealResult.message || t('core.fluxStorageReveal.loadFailed')) }}
             </VAlert>
             <template v-else>
               <div class="text-caption text-medium-emphasis mb-2 text-truncate">
@@ -49,13 +49,13 @@
             </template>
           </template>
           <VAlert v-else type="error" variant="tonal">
-            {{ revealError || 'No data.' }}
+            {{ revealError || t('core.fluxStorageReveal.noData') }}
           </VAlert>
         </VCardText>
         <VCardActions>
           <VSpacer />
           <VBtn variant="tonal" @click="revealDialog = false">
-            {{ t('common.actions.close') || 'Close' }}
+            {{ t('common.buttons.close') }}
           </VBtn>
         </VCardActions>
       </VCard>
@@ -281,7 +281,7 @@
         :loading="revealing"
         @click="revealStorageField('environmentParametersResolved', t('core.componentDetails.environmentParameters'))"
       >
-        Reveal storage values
+        {{ t('core.fluxStorageReveal.reveal') }}
       </VBtn>
     </div>
 
@@ -305,7 +305,7 @@
         :loading="revealing"
         @click="revealStorageField('commandsResolved', t('core.componentDetails.commands'))"
       >
-        Reveal storage values
+        {{ t('core.fluxStorageReveal.reveal') }}
       </VBtn>
     </div>
 
@@ -445,9 +445,9 @@ async function revealStorageField(resolvedKey, title) {
   try {
     const spec = await fetchResolvedSpec({ appName: props.appName, isEnterprise: props.isEnterprise })
     revealResult.value = extractField(spec, { componentName: props.component?.name, resolvedKey })
-    if (!revealResult.value) revealError.value = 'No storage-backed value found for this field.'
+    if (!revealResult.value) revealError.value = t('core.fluxStorageReveal.notFound')
   } catch (error) {
-    revealError.value = error?.message || 'Failed to reveal storage values.'
+    revealError.value = error?.message || t('core.fluxStorageReveal.revealFailed')
   }
 }
 

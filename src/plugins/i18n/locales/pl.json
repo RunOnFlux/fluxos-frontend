@@ -1280,6 +1280,14 @@
       "reviewDeploy": "Przejrzyj i wdróż",
       "advancedNeeds": "Potrzebujesz wielu kontenerów, własnych domen, poleceń, statycznego IP lub reguł lokalizacji na poziomie kraju?",
       "openAdvanced": "Otwórz ustawienia zaawansowane"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Pokaż wartości z magazynu",
+      "tooLarge": "Dane są zbyt duże, aby je wyświetlić.",
+      "loadFailed": "Nie udało się wczytać wartości z Flux Storage.",
+      "noData": "Brak danych.",
+      "notFound": "Nie znaleziono wartości w magazynie.",
+      "revealFailed": "Nie udało się pokazać wartości z magazynu."
     }
   },
   "pages": {

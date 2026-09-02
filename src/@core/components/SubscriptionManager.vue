@@ -702,7 +702,7 @@
                     </template>
                   </VTooltip>
 
-                  <VTooltip text="Reveal storage values" location="top">
+                  <VTooltip :text="t('core.fluxStorageReveal.reveal')" location="top">
                     <template #activator="{ props }">
                       <VBtn
                         v-if="hasStorageMarker(appDetails.contacts, STORAGE_MARKERS.contacts)"
@@ -1455,7 +1455,7 @@
                     :loading="storageRevealing"
                     @click="revealStorageValues(component, 'environmentParametersResolved', t('core.subscriptionManager.environmentVariables'))"
                   >
-                    Reveal storage values
+                    {{ t('core.fluxStorageReveal.reveal') }}
                   </VBtn>
 
                   <VBtn
@@ -1466,7 +1466,7 @@
                     :loading="storageRevealing"
                     @click="revealStorageValues(component, 'commandsResolved', t('core.subscriptionManager.commands'))"
                   >
-                    Reveal storage values
+                    {{ t('core.fluxStorageReveal.reveal') }}
                   </VBtn>
                 </div>
                 <div class="mb-3">
@@ -3788,8 +3788,8 @@
             class="mb-2"
           >
             {{ storageRevealResult.status === 'too-large'
-              ? 'Payload is too large to display.'
-              : (storageRevealResult.message || 'Failed to load values from Flux Storage.') }}
+              ? t('core.fluxStorageReveal.tooLarge')
+              : (storageRevealResult.message || t('core.fluxStorageReveal.loadFailed')) }}
           </VAlert>
           <template v-else>
             <div class="text-caption text-medium-emphasis mb-2 text-truncate">
@@ -3805,13 +3805,13 @@
           </template>
         </template>
         <VAlert v-else type="error" variant="tonal">
-          {{ storageRevealError || 'No data.' }}
+          {{ storageRevealError || t('core.fluxStorageReveal.noData') }}
         </VAlert>
       </VCardText>
       <VCardActions>
         <VSpacer />
         <VBtn variant="tonal" @click="storageRevealDialog = false">
-          {{ t('common.actions.close') || 'Close' }}
+          {{ t('common.buttons.close') }}
         </VBtn>
       </VCardActions>
     </VCard>
@@ -3859,9 +3859,9 @@ async function revealStorageValues(component, resolvedKey, title) {
     const isEnterprise = props.appSpec?.version >= 8 && !!props.appSpec?.enterprise
     const spec = await fetchResolvedStorageSpec({ appName: props.appSpec?.name, isEnterprise })
     storageRevealResult.value = extractStorageField(spec, { componentName: component?.name, resolvedKey })
-    if (!storageRevealResult.value) storageRevealError.value = 'No storage-backed value found for this field.'
+    if (!storageRevealResult.value) storageRevealError.value = t('core.fluxStorageReveal.notFound')
   } catch (error) {
-    storageRevealError.value = error?.message || 'Failed to reveal storage values.'
+    storageRevealError.value = error?.message || t('core.fluxStorageReveal.revealFailed')
   }
 }
 import geolocations from '@/utils/geolocation'
