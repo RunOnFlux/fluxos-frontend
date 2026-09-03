@@ -614,7 +614,7 @@
 
                 <template #item.timestamp="{ item: timestampItem, column }">
                   <div>
-                    <div v-if="column.title === 'Name'">
+                    <div v-if="column.field === 'name'">
                       <div class="d-flex justify-space-between align-center">
                         <VChip
                           class="current-task-chip"
@@ -636,7 +636,7 @@
                       </div>
                     </div>
 
-                    <div v-if="column.title === 'Time'">
+                    <div v-if="column.field === 'time'">
                       <VChip
                         class="current-task-chip"
                         variant="flat"
@@ -1573,9 +1573,15 @@ function formatDateTime(date, isExpire = false) {
 
 const selectedRestoreOption = ref('FluxDrive')
 
+// Both columns render the same `timestamp` field, so `key` cannot tell them
+// apart in the item slot and `column` carries nothing else stable. `field` is
+// that: the slot used to switch on the column's TITLE, which is translated -
+// t('...name') is "Name" in English and German but "Nom" in French, and
+// t('...time') is "Time" only in English - so the cells matched nothing and
+// rendered blank in most locales.
 const fluxDriveHeaders = computed(() => [
-  { key: 'timestamp', title: t('core.backupAndRestore.name'), sortable: false },
-  { key: 'timestamp', title: t('core.backupAndRestore.time'), sortable: false },
+  { key: 'timestamp', field: 'name', title: t('core.backupAndRestore.name'), sortable: false },
+  { key: 'timestamp', field: 'time', title: t('core.backupAndRestore.time'), sortable: false },
   { title: '', value: 'actions', sortable: false },
 ])
 
