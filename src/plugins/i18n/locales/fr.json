@@ -226,7 +226,8 @@
       "necessaryDescription": "Ces cookies sont indispensables au bon fonctionnement du site Internet. Ils ne peuvent pas être désactivés.",
       "analytics": "Cookies d'analyse",
       "analyticsDescription": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site Web en collectant et en signalant des informations de manière anonyme."
-    }
+    },
+    "notAvailable": "Non disponible"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} supprimé",
       "files": {
         "emptyDirectory": "Répertoire vide"
-      }
+      },
+      "noVolumeData": "Aucune donnée de volume disponible pour ce composant"
     },
     "auditViewer": {
       "title": "Journal d'Audit",
@@ -2914,6 +2916,11 @@
           "networkTx": "Émission sur eth0",
           "ioRead": "Lire",
           "ioWrite": "Écrire"
+        },
+        "encryptedComposition": {
+          "title": "Les composants sont chiffrés",
+          "ownerOnly": "Seul le propriétaire de cette application peut déchiffrer la configuration de ses composants.",
+          "image": "chiffré"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "Nom",
           "status": "Statut",
           "description": "Description"
-        }
+        },
+        "encrypted": "chiffré"
       },
       "register": {
         "landing": {

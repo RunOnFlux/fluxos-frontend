@@ -1,6 +1,7 @@
 {
   "common": {
     "off": "off",
+    "notAvailable": "Not available",
     "buttons": {
       "cancel": "Cancel",
       "close": "Close",
@@ -478,6 +479,7 @@
     },
     "volumeBrowser": {
       "title": "Volume Browser",
+      "noVolumeData": "No volume data available for this component",
       "selectComponent": "Select Component",
       "downloading": "Downloading...",
       "downloadCompleted": "Download Completed",
@@ -2938,6 +2940,11 @@
           "global": "Global Specification"
         },
         "composition": "Composition",
+        "encryptedComposition": {
+          "title": "Components are encrypted",
+          "ownerOnly": "Only this app's owner can decrypt its component configuration.",
+          "image": "encrypted"
+        },
         "messages": {
           "awaitingLaunch": "Application is awaiting launching...",
           "fileChangesDescription": "File changes inside Docker container (Kind: 0 = Modified, Kind: 1 = Added, Kind: 2 = Deleted)",
@@ -3022,6 +3029,7 @@
         "repotagsPlaceholder": "Type and press enter",
         "matchAllTags": "Include all tags (match all)",
         "clearFilters": "Clear All Filters",
+        "encrypted": "encrypted",
         "loading": "Loading...",
         "signInRequired": "Login Required",
         "signInDescription": "To manage and monitor your applications on the Flux network, you need to authenticate with your Flux identity.",

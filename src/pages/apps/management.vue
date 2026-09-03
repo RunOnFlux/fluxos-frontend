@@ -79,6 +79,7 @@
               :api-error="apiError"
               :privilege="privilege"
               :subscriptions="userSubscriptions"
+              @visibleAppsChanged="resolveVisibleApps"
             />
           </div>
         </VWindowItem>
@@ -96,6 +97,7 @@
               :api-error="apiError"
               :privilege="privilege"
               :subscriptions="userSubscriptions"
+              @visibleAppsChanged="resolveVisibleApps"
             />
           </div>
         </VWindowItem>
@@ -248,14 +250,29 @@ async function attemptEnterpriseDecrypt(spec, tag, owner) {
   return { ok: true, extraFields }
 }
 
+// The signed-in zelid, for deciding whether a spec is ours to decrypt.
+function signedInZelid() {
+  try {
+    return qs.parse(localStorage.getItem('zelidauth') || '')?.zelid || null
+  } catch (error) {
+    return null
+  }
+}
+
 async function decryptIfEnterprise(spec, idx = 0) {
   const tag = `[${idx}:${spec.name}]`
   if (!(spec.version >= 8 && spec.enterprise)) return spec
 
+  // Only the owner can decrypt, so for anyone else this is three round trips
+  // per app to be refused at the last one - and on the flux team's list, which
+  // is every app on the network, thousands of them for fields that cannot
+  // arrive.
+  if (spec.owner !== signedInZelid()) return spec
+
   try {
     if (!isWebCryptoAvailable()) {
       console.warn(`${tag} ⚠️ WebCrypto not available, skipping enterprise decryption`)
-      
+
       return spec
     }
 
@@ -305,20 +322,66 @@ async function decryptIfEnterprise(spec, idx = 0) {
   }
 }
 
-// --- 🟦 Decrypt Array Helper (for active/expired) ---
-async function decryptEnterpriseApps(appArray) {
-  const concurrency = 120
-  const results = []
-  for (let i = 0; i < appArray.length; i += concurrency) {
-    const batch = appArray.slice(i, i + concurrency)
-    const batchResults = await Promise.all(
-      batch.map((spec, j) => decryptIfEnterprise(spec, i + j)),
-    )
-    results.push(...batchResults)
-  }
+// Apps whose encrypted fields have already been resolved, by name, so paging
+// back to a row does not pay for it twice.
+const resolvedEncryptedApps = ref(new Map())
 
-  // Filter out null results (apps that were not found)
-  return results.filter(spec => spec !== null)
+/**
+ * Resolve the encrypted fields of the rows currently on screen, and only those.
+ *
+ * The table says what it is showing; this answers for that. Resolving the whole
+ * list instead costs three round trips per enterprise app on the network - over
+ * a thousand of them, to render ten rows - and grows with the network.
+ */
+async function resolveVisibleApps(visible) {
+  const pending = visible.filter(spec => spec?.version >= 8
+    && spec.enterprise
+    && !resolvedEncryptedApps.value.has(spec.name))
+
+  if (!pending.length) return
+
+  const resolved = await Promise.all(pending.map(spec => resolveEncryptedApp(spec)))
+
+  const next = new Map(resolvedEncryptedApps.value)
+
+  resolved.forEach(spec => { if (spec) next.set(spec.name, spec) })
+  resolvedEncryptedApps.value = next
+
+  // Patch the resolved rows back into whichever list holds them, so the table
+  // re-renders with resources it did not have when it first drew them.
+  const patch = list => list.map(spec => next.get(spec.name) || spec)
+
+  activeApps.value = patch(activeApps.value)
+  expiredApps.value = patch(expiredApps.value)
+}
+
+/**
+ * One app's encrypted fields, from whichever source this viewer is entitled to:
+ * a decrypt when they own it, the flux team's component-and-resources endpoint
+ * when they do not.
+ *
+ * Always answers with a resolved row, never with "nothing happened". A row left
+ * untouched is indistinguishable from one whose totals are genuinely zero, which
+ * leaves the table guessing; resourcesWithheld says which it is, decided here
+ * where the reason is known.
+ */
+async function resolveEncryptedApp(spec) {
+  const withheld = { ...spec, resourcesWithheld: true }
+
+  if (spec.owner === signedInZelid()) return decryptIfEnterprise(spec)
+
+  if (privilege.value !== 'fluxteam') return withheld
+
+  const response = await AppsService
+    .getAppComponentNames(spec.name, localStorage.getItem('zelidauth'))
+    .catch(() => null)
+
+  const { status, data } = response?.data || {}
+  if (status !== 'success' || !data?.resources) return withheld
+
+  // Onto a copy, and only the totals: the row renders cpu/ram/hdd, and a
+  // component list here would be a compose that is not one.
+  return { ...spec, ...data.resources }
 }
 
 async function getDaemonBlockCount() {
@@ -352,7 +415,7 @@ async function getActiveApps() {
     }
     const response = await AppsService.myGlobalAppSpecifications(auth.zelid)
     const appsRaw = Array.isArray(response.data.data) ? response.data.data : []
-    activeApps.value = await decryptEnterpriseApps(appsRaw)
+    activeApps.value = appsRaw
   } catch (error) {
     activeApps.value = []
     apiError.value = true
@@ -431,7 +494,7 @@ async function getExpiredApps() {
       || daemonBlockCount.value >= expirationBlockOf(msg))
 
     // Decrypt each expired app as needed
-    expiredApps.value = await decryptEnterpriseApps(expired.map(msg => msg.appSpecifications))
+    expiredApps.value = expired.map(msg => msg.appSpecifications)
   } catch (error) {
     expiredApps.value = []
     showSnackbar(t('menu.application.failedToLoadExpiredApps'))
@@ -449,7 +512,7 @@ async function getAllApps() {
     console.time('getAllApps')
     const { data } = await AppsService.globalAppSpecifications()
     const rawSpecs = data?.data ?? []
-    activeApps.value = await decryptEnterpriseApps(rawSpecs)
+    activeApps.value = rawSpecs
     console.timeEnd('getAllApps')
   } catch (outer) {
     apiError.value = true

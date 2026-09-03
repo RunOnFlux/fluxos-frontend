@@ -44,7 +44,7 @@
     <VSelect
       v-if="appSpecification?.compose"
       v-model="selectedAppVolume"
-      :items="appSpecification.compose.map(c => c.name)"
+      :items="components.map(c => c.name)"
       :disabled="isComposeSingle"
       :label="t('core.volumeBrowser.selectComponent')"
       class="mb-4"
@@ -515,6 +515,14 @@ const props = defineProps({
     required: true,
   },
 
+  // [{ name, masterSlave }]. Where a component list comes from is the caller's
+  // decision - the specification, or the names endpoint for a viewer who may not
+  // read it - so this never reaches into compose itself.
+  components: {
+    type: Array,
+    default: () => [],
+  },
+
 })
 
 // Lazy-load Monaco Editor to reduce main bundle size
@@ -612,11 +620,14 @@ const usagePercentage = computed(() => {
   return (storage.used / storage.total) * 100
 })
 
+// The component list, which is also what isComposeSingle counts and what the
+// dropdown offers. compose is empty for an app this viewer may not decrypt, so
+// it is the source for none of the three.
 watch(
-  () => props.appSpec?.compose,
-  newCompose => {
-    if (newCompose && newCompose.length === 1) {
-      selectedAppVolume.value = newCompose[0].name
+  () => props.components,
+  components => {
+    if (components?.length === 1) {
+      selectedAppVolume.value = components[0].name
     }
   },
   { immediate: true },
@@ -828,9 +839,12 @@ function showToast(type, message, icon = null) {
 
 function getHddByName(applications, appName) {
   if (applications?.compose) {
+    // A viewer who may not read the specification can still pick a component by
+    // name, and there is no sizing to look up for it. Optional, or the lookup
+    // returns undefined and the total is read off it.
     const app = applications.compose.find(application => application.name === appName)
-      
-    return app.hdd
+
+    return app?.hdd ?? 0
   } else {
     return applications.hdd
   }
@@ -874,11 +888,16 @@ async function storageStats() {
 
     volumePath.value = volumeInfo.value?.data?.data
 
-    if (volumeInfo.value?.data?.status === 'success') {
+    // Read through, both ways: a success can carry no mount, and an error body
+    // is not always the shape a message is read from. Both are ordinary answers
+    // here, and neither is worth a TypeError.
+    const body = volumeInfo.value?.data?.data
+
+    if (volumeInfo.value?.data?.status === 'success' && body) {
       storage.total = getHddByName(appSpecification.value, selectedAppVolume.value) * 1024 * 1024 * 1024
-      storage.used = volumeInfo.value.data.data.used
+      storage.used = body.used ?? 0
     } else {
-      showToast('danger', volumeInfo.value.data.data.message || volumeInfo.value.data.data)
+      showToast('danger', body?.message || body || t('core.volumeBrowser.noVolumeData'))
     }
   } catch (error) {
     showToast('danger', error.message || error)

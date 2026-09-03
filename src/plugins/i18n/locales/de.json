@@ -226,7 +226,8 @@
       "necessaryDescription": "Diese Cookies sind für die ordnungsgemäße Funktion der Website unerlässlich. Sie können nicht deaktiviert werden.",
       "analytics": "Analyse-Cookies",
       "analyticsDescription": "Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und melden."
-    }
+    },
+    "notAvailable": "Nicht verfügbar"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} gelöscht",
       "files": {
         "emptyDirectory": "Leeres Verzeichnis"
-      }
+      },
+      "noVolumeData": "Keine Volumendaten für diese Komponente verfügbar"
     },
     "auditViewer": {
       "title": "Audit-Protokoll",
@@ -2915,6 +2917,11 @@
           "networkTx": "TX auf eth0",
           "ioRead": "Lesen",
           "ioWrite": "Schreiben"
+        },
+        "encryptedComposition": {
+          "title": "Komponenten sind verschlüsselt",
+          "ownerOnly": "Nur der Eigentümer dieser App kann die Konfiguration ihrer Komponenten entschlüsseln.",
+          "image": "verschlüsselt"
         }
       },
       "redeploy": {
@@ -2974,7 +2981,8 @@
           "name": "Name",
           "status": "Status",
           "description": "Beschreibung"
-        }
+        },
+        "encrypted": "verschlüsselt"
       },
       "register": {
         "landing": {

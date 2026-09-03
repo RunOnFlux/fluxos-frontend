@@ -226,7 +226,8 @@
       "necessaryDescription": "이러한 쿠키는 웹사이트가 제대로 작동하는 데 필수적입니다. 비활성화할 수 없습니다.",
       "analytics": "분석 쿠키",
       "analyticsDescription": "이러한 쿠키는 익명으로 정보를 수집하고 보고함으로써 방문자가 당사 웹사이트와 상호 작용하는 방식을 이해하는 데 도움이 됩니다."
-    }
+    },
+    "notAvailable": "사용할 수 없음"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name}이(가) 삭제되었습니다",
       "files": {
         "emptyDirectory": "빈 디렉토리"
-      }
+      },
+      "noVolumeData": "이 구성 요소에 대한 볼륨 데이터가 없습니다"
     },
     "auditViewer": {
       "title": "감사 로그",
@@ -2914,6 +2916,11 @@
           "networkTx": "eth0의 TX",
           "ioRead": "읽다",
           "ioWrite": "쓰다"
+        },
+        "encryptedComposition": {
+          "title": "구성 요소가 암호화되어 있습니다",
+          "ownerOnly": "이 앱의 소유자만 구성 요소 설정을 복호화할 수 있습니다.",
+          "image": "암호화됨"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "이름",
           "status": "상태",
           "description": "설명"
-        }
+        },
+        "encrypted": "암호화됨"
       },
       "register": {
         "landing": {

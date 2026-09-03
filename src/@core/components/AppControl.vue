@@ -231,7 +231,7 @@
     style="margin-top: 1px;"
   >
     <VTab
-      v-for="(component, index) in normalizeComponents(props.appSpec)"
+      v-for="(component, index) in componentTabs"
       :key="index"
       :value="index"
       class="v-tabs-pill text-no-transform"
@@ -253,7 +253,7 @@
     :touch="false"
   >
     <VWindowItem
-      v-for="(component, index) in normalizeComponents(props.appSpec)"
+      v-for="(component, index) in componentTabs"
       :key="index"
       :value="index"
     >
@@ -1141,6 +1141,14 @@ const props = defineProps({
     type: Boolean,
     required: true,
   },
+
+  // [{ name, masterSlave }]. Where a component list comes from is the caller's
+  // decision - the specification, or the names endpoint for a viewer who may not
+  // read it - so this never reaches into compose itself.
+  components: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const { t } = useI18n()
@@ -1992,7 +2000,7 @@ const removeAppGlobally = async app => {
 const handleOperation = async (operation, index = null) => {
   let app = props.appSpec.name
   if (index !== null) {
-    app = `${props.appSpec.compose[index].name}_${props.appSpec.name}`
+    app = `${props.components[index].name}_${props.appSpec.name}`
     console.log(app)
   }
   const mode = modeType.value
@@ -2117,11 +2125,12 @@ async function refreshAvailableList() {
   }
 }
 
-function normalizeComponents(data) {
-  if (!data) return []
-
-  return data.version >= 4 ? data.compose : [{ ...data, repoauth: false }]
-}
+// The per-component tabs. A v4+ app's components come from the caller, which
+// knows whether this viewer may read the specification; a v1-3 app is its own
+// single component and has no compose to read.
+const componentTabs = computed(() => (props.appSpec?.version >= 4
+  ? props.components
+  : [{ name: props.appSpec?.name }]))
 </script>
 
 <style scoped>

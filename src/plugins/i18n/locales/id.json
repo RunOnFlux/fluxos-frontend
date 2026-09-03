@@ -226,7 +226,8 @@
       "necessaryDescription": "Cookies ini sangat penting agar situs web dapat berfungsi dengan baik. Mereka tidak dapat dinonaktifkan.",
       "analytics": "Cookie Analisis",
       "analyticsDescription": "Cookies ini dapat membantu kami memahami bagaimana pengunjung berinteraksi dengan situs web kami dengan mengumpulkan dan melaporkan informasi secara anonim."
-    }
+    },
+    "notAvailable": "Tidak tersedia"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} dihapus",
       "files": {
         "emptyDirectory": "Direktori Kosong"
-      }
+      },
+      "noVolumeData": "Tidak ada data volume untuk komponen ini"
     },
     "auditViewer": {
       "title": "Log Audit",
@@ -2914,6 +2916,11 @@
           "networkTx": "TX di eth0",
           "ioRead": "Membaca",
           "ioWrite": "Menulis"
+        },
+        "encryptedComposition": {
+          "title": "Komponen terenkripsi",
+          "ownerOnly": "Hanya pemilik aplikasi ini yang dapat mendekripsi konfigurasi komponennya.",
+          "image": "terenkripsi"
         }
       },
       "redeploy": {
@@ -2973,7 +2980,8 @@
           "name": "Nama",
           "status": "Status",
           "description": "Keterangan"
-        }
+        },
+        "encrypted": "terenkripsi"
       },
       "register": {
         "landing": {
