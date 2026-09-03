@@ -1336,11 +1336,27 @@ function showToast(type, message, icon = null, timeout = 4000) {
 // so there is nothing here to compare against a desired state.
 const SETTLE_REFRESH_MS = [0, 2000, 5000, 10000, 20000]
 
-function refreshUntilSettled() {
-  SETTLE_REFRESH_MS.forEach(ms => {
-    setTimeout(() => eventBus.emit('updateAppStatus'), ms)
-  })
+// Held so they can be cancelled: the last one lands 20 seconds out, long after a
+// user can have navigated away, and an emit from a torn-down panel asks whoever
+// still listens to refetch for a screen nobody is looking at.
+let settleTimers = []
+
+function cancelSettleRefresh() {
+  settleTimers.forEach(clearTimeout)
+  settleTimers = []
 }
+
+function refreshUntilSettled() {
+  // A second operation supersedes the first: its schedule starts from now, and
+  // the older one has nothing left to say.
+  cancelSettleRefresh()
+  settleTimers = SETTLE_REFRESH_MS.map(ms => setTimeout(() => eventBus.emit('updateAppStatus'), ms))
+}
+
+onBeforeUnmount(() => {
+  cancelSettleRefresh()
+  if (snackbarTimeout) clearTimeout(snackbarTimeout)
+})
 
 async function handleAppOperation(app, title, endpoint, delay = 0) {
   output.value = []
@@ -1361,10 +1377,6 @@ async function handleAppOperation(app, title, endpoint, delay = 0) {
     if (response.data?.status === 'success') {
       showToast('success', message)
       refreshUntilSettled()
-      if (title === 'Removing') {
-        eventBus.emit("updateInstanceList")
-        refreshList.value += 1
-      }
     } else {
       showToast('error', message)
     }
@@ -1383,7 +1395,12 @@ const stopApp = app => handleAppOperation(app, t('core.appControl.operations.sto
 const startApp = app => handleAppOperation(app, t('core.appControl.operations.starting'), `/apps/appstart/${app}`, 3000)
 const restartApp = app => handleAppOperation(app, t('core.appControl.operations.restarting'), `/apps/apprestart/${app}`, 3000)
 
-async function handleAppOperationWithOutput(appName, title, endpoint) {
+// isRemoval is passed rather than inferred from `title`. The title is localised -
+// t('core.appControl.operations.removing') is "Removing" only in English, and
+// "Entfernen" / "Suppression" / "削除中" elsewhere - so comparing it against the
+// English literal silently took the wrong branch in every other locale, leaving
+// the instance list stale after a removal for all but English readers.
+async function handleAppOperationWithOutput(appName, title, endpoint, isRemoval = false) {
   output.value = []
   outputs.value = []
   downloadOutput.value = {}
@@ -1422,7 +1439,7 @@ async function handleAppOperationWithOutput(appName, title, endpoint) {
     operationTask.value = last?.data?.message || last?.data || last?.status
     operationTaskStatus.value = last?.status
     
-    if (title === 'Removing') {
+    if (isRemoval) {
       eventBus.emit("updateInstanceList")
       refreshList.value += 1
     } else {
@@ -1433,7 +1450,7 @@ async function handleAppOperationWithOutput(appName, title, endpoint) {
   }
 }
 
-const removeApp = app => handleAppOperationWithOutput(app, t('core.appControl.operations.removing'), `/apps/appremove/${app}`)
+const removeApp = app => handleAppOperationWithOutput(app, t('core.appControl.operations.removing'), `/apps/appremove/${app}`, true)
 const redeployAppSoft = app => handleAppOperationWithOutput(app, t('core.appControl.operations.softReinstalling'), `/apps/redeploy/${app}/false`)
 const redeployAppHard = app => handleAppOperationWithOutput(app, t('core.appControl.operations.hardReinstalling'), `/apps/redeploy/${app}/true`)
 
