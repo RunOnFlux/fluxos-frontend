@@ -712,6 +712,7 @@
       "download": "Download",
       "noMatchingLogs": "No matching logs found for '{keyword}'",
       "noLogsFound": "No logs found",
+      "rolledOver": "— earlier logs rolled over on this node and are no longer available —",
       "errors": {
         "noLogsToDownload": "No logs available to download"
       }

@@ -1020,6 +1020,7 @@
                 :app-specification="appSpecification"
                 :components="componentList"
                 :execute-local-command="executeLocalCommand"
+                :target="selectedIp"
               />
             </div>
 
