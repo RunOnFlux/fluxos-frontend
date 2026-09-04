@@ -272,6 +272,7 @@ import { ref, computed, nextTick, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ClipboardJS from 'clipboard'
 import AnsiToHtml from 'ansi-to-html'
+import { useSnackbar } from '@/composables/useSnackbar'
 
 const props = defineProps({
   appSpecification: { type: Object, required: true },
@@ -284,6 +285,7 @@ const props = defineProps({
 })
   
 const { t } = useI18n()
+const { showSnackbar } = useSnackbar()
   
 const logs = ref([])
 const selectedApp = ref(null)
@@ -559,7 +561,10 @@ async function downloadApplicationLog(appName) {
   } catch (err) {
     downloadingLog.value = false
     console.error('Download error:', err)
-    showToast('danger', err.message || err)
+
+    // showToast has never been defined in this component, so the handler for a
+    // failed download threw on its own error path and the user was told nothing.
+    showSnackbar(err.message || String(err), 'error')
   }
 }
   

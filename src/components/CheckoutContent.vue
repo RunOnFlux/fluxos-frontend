@@ -633,9 +633,13 @@ const { t } = useI18n()
  */
 const trackPurchaseSuccess = actionType => {
   try {
-    // Get plan details for tracking
-    const planDetails = plans.value?.find(p => p.id === props.planId) || {}
-    const price = planDetails.pricePerMonth || planDetails.usd || 0
+    // Get plan details for tracking. selectedPlan is the plan being bought -
+    // there has never been a `plans` collection in this component, so this threw
+    // on every completed checkout and no purchase event was ever recorded. Its
+    // field names differ by source (FluxDrive display data vs the API), hence
+    // the chain.
+    const planDetails = selectedPlan.value || {}
+    const price = planDetails.price ?? planDetails.pricePerMonth ?? planDetails.usd ?? 0
 
     // Track using GA4 recommended 'purchase' event format
     analytics.trackCheckout('purchase', {
@@ -644,7 +648,7 @@ const trackPurchaseSuccess = actionType => {
       currency: 'USD',
       items: [{
         item_id: props.planId,
-        item_name: planDetails.name || props.planId,
+        item_name: planDetails.plan_name || planDetails.name || props.planId,
         item_category: props.gateway || 'unknown',
         price: price,
         quantity: 1,
