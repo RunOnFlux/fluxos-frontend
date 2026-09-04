@@ -8566,8 +8566,11 @@ async function verifyAppSpec() {
           // Show user-friendly toast instead of blocking error
           showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert', 6000)
           
-          // Reset enterprise mode and return gracefully
-          appSpec.value.enterprise = ''
+          // Reset enterprise mode and return gracefully. appSpecTemp is the
+          // clone this function is building; `appSpec` is a prop and not a ref,
+          // so the old line threw here instead of degrading, on exactly the
+          // insecure-origin path it was written to handle.
+          appSpecTemp.enterprise = ''
 
           return
         }
@@ -10375,45 +10378,6 @@ async function initSSPPay() {
     // Reset payment tracking if payment failed
     paymentMethod.value = ''
     paymentAmount.value = 0
-  }
-}
-
-async function initWalletConnect() {
-  try {
-    const account = await getConnectedAccount()
-    if (!account) {
-      showToast('error', 'WalletConnect not connected. Please log into FluxOS first.')
-
-      return
-    }
-
-    showToast('success', 'Using existing WalletConnect session for signing')
-  } catch (error) {
-    console.error(error)
-    showToast('error', error.message)
-  }
-}
-
-async function initMetamask() {
-  try {
-    if (!window.ethereum) {
-      showToast('error', 'Metamask not detected')
-      
-      return
-    }
-    const account = await window.ethereum.request({
-      method: 'eth_requestAccounts',
-    })
-    if (account.length === 0) {
-      showToast('error', 'No account selected')
-      
-      return
-    }
-
-    // This would be for signing the message
-    await siwe(dataToSign.value, account[0])
-  } catch (error) {
-    showToast('error', error.message)
   }
 }
 

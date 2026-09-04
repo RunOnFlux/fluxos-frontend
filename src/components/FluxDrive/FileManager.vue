@@ -2014,7 +2014,7 @@ watch(viewType, newValue => {
 })
 
 // Get payment gateway from API (via useFluxDrive composable)
-const { paymentGateway, cancelSubscription } = useFluxDrive()
+const { paymentGateway, cancelSubscription, checkSubscriptionStatus } = useFluxDrive()
 const isCryptoComSubscription = computed(() => paymentGateway.value === 'cryptocom')
 
 const showUpgradeDialog = ref(false)

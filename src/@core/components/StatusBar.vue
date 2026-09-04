@@ -207,6 +207,7 @@
 </template>
 
 <script setup>
+import axios from "axios"
 import DaemonService from "@/services/DaemonService"
 import FluxService from "@/services/FluxService"
 import { useFluxStore } from "@/stores/flux"

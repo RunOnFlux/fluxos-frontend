@@ -2621,7 +2621,11 @@ function getUploadFolderBackup(saveAs) {
   return `https://${ip.replace(/\./g, '-')}-${port}.node.api.runonflux.io/ioutils/fileupload/backup/${props.appSpec.name}/${restoreRemoteFile.value}/null/${filename}`
 }
 
-async function upload(file, isContentUpload = false) {
+// The isContentUpload branch is gone. It called getUploadFolder(), which has
+// never existed in this component - a scaffold leftover, comment and all - so
+// reaching it threw a ReferenceError. Nothing ever did: the single caller takes
+// the default, and this only ever uploaded a selected file to the backup folder.
+async function upload(file) {
   return new Promise((resolve, reject) => {
     if (typeof XMLHttpRequest === 'undefined') {
       reject('XMLHttpRequest is not supported.')
@@ -2630,12 +2634,7 @@ async function upload(file, isContentUpload = false) {
     }
 
     const xhr = new XMLHttpRequest()
-    let action
-    if (isContentUpload) {
-      action = getUploadFolder() // Assume this method exists in your composition
-    } else {
-      action = getUploadFolderBackup(file.file_name) // Same for this method
-    }
+    const action = getUploadFolderBackup(file.file_name)
 
     if (xhr.upload) {
       xhr.upload.onprogress = function progress(e) {
@@ -2647,13 +2646,8 @@ async function upload(file, isContentUpload = false) {
     }
 
     const formData = new FormData()
-    if (isContentUpload) {
-      const blob = new Blob([file.content], { type: 'text/plain' })
 
-      formData.append(file.file_name, blob)
-    } else {
-      formData.append(file.selected_file.name, file.selected_file)
-    }
+    formData.append(file.selected_file.name, file.selected_file)
 
     file.uploading = true
 

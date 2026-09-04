@@ -130,6 +130,7 @@
     "eslint-plugin-sonarjs": "^4.0.2",
     "eslint-plugin-unicorn": "^56.0.0",
     "eslint-plugin-vue": "^10.3.0",
+    "globals": "^15.15.0",
     "patch-package": "^8.0.1",
     "playwright": "^1.57.0",
     "postcss-html": "1.7.0",

@@ -8,6 +8,8 @@ import pluginRegexp from 'eslint-plugin-regexp'
 import pluginRegex from 'eslint-plugin-regex'
 import vueParser from 'vue-eslint-parser'
 import babelParser from '@babel/eslint-parser'
+import globals from 'globals'
+import autoImportGlobals from './eslintrc-auto-import.cjs'
 
 const baseDir = path.dirname(fileURLToPath(import.meta.url))
 
@@ -36,9 +38,19 @@ export default [
         },
       },
       globals: {
+        ...globals.browser,
+        ...globals.node,
+
+        // unplugin-auto-import writes this file; it is what makes ref, computed,
+        // useRouter and the project's own composables legal without an import.
+        // no-undef needs to know about them or every one of them is an error.
+        ...Object.fromEntries(Object.keys(autoImportGlobals.globals).map(name => [name, 'readonly'])),
         defineProps: 'readonly',
         defineEmits: 'readonly',
         defineExpose: 'readonly',
+        defineOptions: 'readonly',
+        defineSlots: 'readonly',
+        defineModel: 'readonly',
         withDefaults: 'readonly',
       },
     },
@@ -51,6 +63,12 @@ export default [
       regex: pluginRegex,
     },
     rules: {
+      // An identifier that resolves nowhere is a ReferenceError waiting for the
+      // branch that reaches it. Off by default in flat config, and with it off
+      // nine of them accumulated here - a download handler that threw on its own
+      // error path, a cancel that reported failure after succeeding, analytics
+      // that never fired once. Keep it on.
+      'no-undef': 'error',
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'comma-spacing': ['error', { before: false, after: true }],

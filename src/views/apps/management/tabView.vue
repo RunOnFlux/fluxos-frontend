@@ -713,11 +713,6 @@ function isMarketplaceApp(name) {
   return false
 }
 
-const mergedActivatorProps = computed(() => ({
-  ...activatorPropsMenu,
-  ...tooltipActivatorProps,
-}))
-
 const selectedMode = ref('all')
 
 const expanded = ref([])
