@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Các bản sao độc lập của ứng dụng, mỗi bản chạy trên một node khác nhau. Từ 3 bản trở lên mang lại tính sẵn sàng cao nếu một node ngoại tuyến.",
       "hardwareResourceTooltip": "Tài nguyên được phân bổ cho mỗi phiên bản. Một ứng dụng web thông thường cần khoảng 0,5 vCPU / 512 MB.",
       "importComposeShort": "Nhập compose / spec",
-      "importComposeTooltip": "Nhập một docker-compose hoặc thông số kỹ thuật Flux hiện có (JSON/YAML) để điền sẵn biểu mẫu"
+      "importComposeTooltip": "Nhập một docker-compose hoặc thông số kỹ thuật Flux hiện có (JSON/YAML) để điền sẵn biểu mẫu",
+      "noLoginCredentials": "Không tìm thấy thông tin đăng nhập. Vui lòng đăng nhập lại.",
+      "failedToPrepareManualSigning": "Không thể chuẩn bị ký thủ công: {error}",
+      "pleaseEnterSignature": "Vui lòng nhập chữ ký."
     },
     "tosDialog": {
       "loading": "Đang tải Điều khoản dịch vụ..."
@@ -2829,7 +2832,8 @@
           "manage": "Quản lý",
           "install": "Cài đặt",
           "remove": "Di dời",
-          "visit": "Thăm nom"
+          "visit": "Thăm nom",
+          "clone": "Nhân bản"
         },
         "searchIpPlaceholder": "Tìm kiếm IP...",
         "persistentStorage": "Lưu trữ liên tục",

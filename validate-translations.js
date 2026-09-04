@@ -280,6 +280,65 @@ function getFileStats(filePath, keys) {
 }
 
 // Main validation function
+
+/**
+ * Every literal t('some.key') in src/ must resolve to a string in en.json.
+ *
+ * vue-i18n renders the key itself when it misses, so a typo'd or renamed key
+ * does not fail loudly - it puts "core.subscriptionManager.pleaseEnterSignature"
+ * on screen where a sentence belongs. Nothing caught that, and eight of them had
+ * accumulated. Only literal keys are checked; t(variable) and t(`a.${b}`) are
+ * skipped because their value is not knowable here - including the
+ * t('a.prefix.' + suffix) form, whose completed key only exists at runtime.
+ */
+function validateUsedKeys(en) {
+  const issues = []
+  const srcDir = path.join(__dirname, 'src')
+  const literalCall = /\bt\(\s*(['"])([a-zA-Z0-9_.$]+)\1/g
+
+  const resolves = key => {
+    let node = en
+    for (const part of key.split('.')) {
+      if (typeof node !== 'object' || node === null || !(part in node)) return false
+      node = node[part]
+    }
+
+    return typeof node === 'string'
+  }
+
+  const walk = dir => {
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const full = path.join(dir, entry.name)
+      if (entry.isDirectory()) {
+        walk(full)
+      } else if (/\.(vue|js)$/.test(entry.name)) {
+        const content = fs.readFileSync(full, 'utf8')
+        const lines = content.split('\n')
+        for (const match of content.matchAll(literalCall)) {
+          const key = match[2]
+          if (!key.includes('.') || resolves(key)) continue
+
+          // t('a.prefix.' + suffix): the literal is only half the key.
+          const after = content.slice(match.index + match[0].length).match(/^\s*(.)/)
+          if (key.endsWith('.') || (after && after[1] === '+')) continue
+
+          const line = content.slice(0, match.index).split('\n').length
+
+          issues.push({
+            key,
+            location: `${path.relative(__dirname, full)}:${line}`,
+            context: (lines[line - 1] || '').trim().slice(0, 100),
+          })
+        }
+      }
+    }
+  }
+
+  walk(srcDir)
+
+  return issues
+}
+
 function validateTranslations() {
   logSection('FluxOS Frontend Translation Validation Report')
   log(`Generated: ${new Date().toLocaleString()}`, 'cyan')
@@ -430,10 +489,24 @@ function validateTranslations() {
     }
   }
 
+  // Keys used in code that do not exist in en.json
+  logSection('7. Keys Used In Code But Missing From en.json')
+
+  const unresolvedKeys = validateUsedKeys(en)
+  if (unresolvedKeys.length === 0) {
+    log('✓ Every literal t() key resolves', 'green')
+  } else {
+    log(`Found ${unresolvedKeys.length} key(s) that render as the key itself:`, 'red')
+    unresolvedKeys.forEach((issue, i) => {
+      log(`  ${i + 1}. ${issue.key}`, 'yellow')
+      log(`     ${issue.location}`, 'cyan')
+    })
+  }
+
   // Summary
   logSection('SUMMARY')
 
-  const totalIssues = structuralIssues.length + missingInPl.length + missingInEn.length + untranslated.length + namingIssues.length + parameterIssues.length
+  const totalIssues = structuralIssues.length + missingInPl.length + missingInEn.length + untranslated.length + namingIssues.length + parameterIssues.length + unresolvedKeys.length
 
   console.log(`Total Keys (en.json): ${enStats.totalKeys}`)
   console.log(`Total Keys (pl.json): ${plStats.totalKeys}`)
@@ -443,6 +516,7 @@ function validateTranslations() {
   console.log(`Missing in en.json: ${missingInEn.length}`)
   console.log(`Potentially Untranslated: ${untranslated.length}`)
   console.log(`Naming Convention Issues: ${namingIssues.length}`)
+  console.log(`Unresolved Keys Used In Code: ${unresolvedKeys.length}`)
   console.log(`Parameter Syntax Issues: ${parameterIssues.length}`)
   console.log(`Duplicate Values: ${enDuplicates.length}`)
 

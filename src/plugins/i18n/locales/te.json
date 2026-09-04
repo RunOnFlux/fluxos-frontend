@@ -1520,7 +1520,10 @@
       "instancesTooltip": "మీ యాప్ యొక్క స్వతంత్ర కాపీలు, ప్రతి ఒక్కటి వేరే నోడ్‌లో రన్ అవుతుంది. 3 లేదా అంతకంటే ఎక్కువ ఉంటే ఒక నోడ్ ఆఫ్‌లైన్ అయితే అధిక లభ్యతను ఇస్తుంది.",
       "hardwareResourceTooltip": "ప్రతి ఇన్‌స్టెన్స్‌కు కేటాయించిన వనరులు. ఒక సాధారణ వెబ్ యాప్‌కు ≈ 0.5 vCPU / 512 MB అవసరం.",
       "importComposeShort": "compose / spec దిగుమతి చేయండి",
-      "importComposeTooltip": "ఫారమ్‌ను ముందుగా నింపడానికి ఇప్పటికే ఉన్న docker-compose లేదా Flux స్పెసిఫికేషన్‌ను (JSON/YAML) దిగుమతి చేయండి"
+      "importComposeTooltip": "ఫారమ్‌ను ముందుగా నింపడానికి ఇప్పటికే ఉన్న docker-compose లేదా Flux స్పెసిఫికేషన్‌ను (JSON/YAML) దిగుమతి చేయండి",
+      "noLoginCredentials": "లాగిన్ ఆధారాలు కనుగొనబడలేదు. దయచేసి మళ్లీ సైన్ ఇన్ చేయండి.",
+      "failedToPrepareManualSigning": "మాన్యువల్ సంతకాన్ని సిద్ధం చేయడం విఫలమైంది: {error}",
+      "pleaseEnterSignature": "దయచేసి సంతకాన్ని నమోదు చేయండి."
     },
     "tosDialog": {
       "loading": "సేవా నిబంధనలను లోడ్ చేస్తోంది..."
@@ -2829,7 +2832,8 @@
           "manage": "నిర్వహించండి",
           "install": "ఇన్‌స్టాల్ చేయండి",
           "remove": "తొలగించు",
-          "visit": "సందర్శించండి"
+          "visit": "సందర్శించండి",
+          "clone": "క్లోన్"
         },
         "searchIpPlaceholder": "శోధన IP...",
         "persistentStorage": "నిరంతర నిల్వ",

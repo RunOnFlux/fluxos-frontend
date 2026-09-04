@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Unabhängige Kopien Ihrer App, die jeweils auf einem anderen Node laufen. 3 oder mehr bieten Hochverfügbarkeit, falls ein Node offline geht.",
       "hardwareResourceTooltip": "Pro Instanz zugewiesene Ressourcen. Eine typische Web-App benötigt ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Compose / Spezifikation importieren",
-      "importComposeTooltip": "Importieren Sie eine bestehende docker-compose- oder Flux-Spezifikation (JSON/YAML), um das Formular vorauszufüllen"
+      "importComposeTooltip": "Importieren Sie eine bestehende docker-compose- oder Flux-Spezifikation (JSON/YAML), um das Formular vorauszufüllen",
+      "noLoginCredentials": "Keine Anmeldedaten gefunden. Bitte melde dich erneut an.",
+      "failedToPrepareManualSigning": "Manuelle Signatur konnte nicht vorbereitet werden: {error}",
+      "pleaseEnterSignature": "Bitte gib eine Signatur ein."
     },
     "tosDialog": {
       "loading": "Nutzungsbedingungen werden geladen..."
@@ -2830,7 +2833,8 @@
           "manage": "Verwalten",
           "install": "Installieren",
           "remove": "Entfernen",
-          "visit": "Besuchen"
+          "visit": "Besuchen",
+          "clone": "Klonen"
         },
         "searchIpPlaceholder": "IP suchen...",
         "persistentStorage": "Permanenter Speicher",

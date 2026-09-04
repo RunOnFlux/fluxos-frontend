@@ -1520,7 +1520,10 @@
       "instancesTooltip": "您应用的独立副本，每份运行在不同的节点上。3 份或以上可在某个节点离线时提供高可用性。",
       "hardwareResourceTooltip": "为每个实例分配的资源。典型的 Web 应用约需 0.5 vCPU / 512 MB。",
       "importComposeShort": "导入 compose / 配置",
-      "importComposeTooltip": "导入现有的 docker-compose 或 Flux 配置文件（JSON/YAML）以预填表单"
+      "importComposeTooltip": "导入现有的 docker-compose 或 Flux 配置文件（JSON/YAML）以预填表单",
+      "noLoginCredentials": "未找到登录凭据，请重新登录。",
+      "failedToPrepareManualSigning": "无法准备手动签名：{error}",
+      "pleaseEnterSignature": "请输入签名。"
     },
     "tosDialog": {
       "loading": "正在加载服务条款..."
@@ -2829,7 +2832,8 @@
           "manage": "管理",
           "install": "安装",
           "remove": "消除",
-          "visit": "访问"
+          "visit": "访问",
+          "clone": "克隆"
         },
         "searchIpPlaceholder": "搜索IP...",
         "persistentStorage": "持久存储",

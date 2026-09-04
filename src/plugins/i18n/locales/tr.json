@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Her biri farklı bir düğümde çalışan, uygulamanızın bağımsız kopyaları. 3 veya daha fazlası, bir düğüm çevrimdışı olduğunda yüksek kullanılabilirlik sağlar.",
       "hardwareResourceTooltip": "Örnek başına ayrılan kaynaklar. Tipik bir web uygulaması ≈ 0.5 vCPU / 512 MB gerektirir.",
       "importComposeShort": "Compose / spesifikasyon içe aktar",
-      "importComposeTooltip": "Formu önceden doldurmak için mevcut bir docker-compose veya Flux spesifikasyonunu (JSON/YAML) içe aktarın"
+      "importComposeTooltip": "Formu önceden doldurmak için mevcut bir docker-compose veya Flux spesifikasyonunu (JSON/YAML) içe aktarın",
+      "noLoginCredentials": "Giriş bilgileri bulunamadı. Lütfen tekrar giriş yapın.",
+      "failedToPrepareManualSigning": "Manuel imzalama hazırlanamadı: {error}",
+      "pleaseEnterSignature": "Lütfen bir imza girin."
     },
     "tosDialog": {
       "loading": "Hizmet Şartları Yükleniyor..."
@@ -2829,7 +2832,8 @@
           "manage": "Üstesinden gelmek",
           "install": "Düzenlemek",
           "remove": "Kaldırmak",
-          "visit": "Ziyaret etmek"
+          "visit": "Ziyaret etmek",
+          "clone": "Klonla"
         },
         "searchIpPlaceholder": "IP'yi ara...",
         "persistentStorage": "Kalıcı Depolama",

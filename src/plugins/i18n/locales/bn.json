@@ -1520,7 +1520,10 @@
       "instancesTooltip": "আপনার অ্যাপের স্বাধীন কপি, প্রতিটি একটি আলাদা নোডে চলে। ৩ বা তার বেশি হলে কোনো নোড অফলাইন হলেও উচ্চ প্রাপ্যতা দেয়।",
       "hardwareResourceTooltip": "প্রতি ইনস্ট্যান্সে বরাদ্দকৃত সংস্থান। একটি সাধারণ ওয়েব অ্যাপের ≈ 0.5 vCPU / 512 MB প্রয়োজন।",
       "importComposeShort": "compose / spec ইম্পোর্ট করুন",
-      "importComposeTooltip": "ফর্মটি আগে থেকে পূরণ করতে একটি বিদ্যমান docker-compose বা Flux স্পেসিফিকেশন (JSON/YAML) ইম্পোর্ট করুন"
+      "importComposeTooltip": "ফর্মটি আগে থেকে পূরণ করতে একটি বিদ্যমান docker-compose বা Flux স্পেসিফিকেশন (JSON/YAML) ইম্পোর্ট করুন",
+      "noLoginCredentials": "কোনো লগইন শংসাপত্র পাওয়া যায়নি। অনুগ্রহ করে আবার সাইন ইন করুন।",
+      "failedToPrepareManualSigning": "ম্যানুয়াল স্বাক্ষর প্রস্তুত করা যায়নি: {error}",
+      "pleaseEnterSignature": "অনুগ্রহ করে একটি স্বাক্ষর লিখুন।"
     },
     "tosDialog": {
       "loading": "পরিষেবার শর্তাবলী লোড হচ্ছে..."
@@ -2829,7 +2832,8 @@
           "manage": "পরিচালনা করুন",
           "install": "ইনস্টল করুন",
           "remove": "সরান",
-          "visit": "ভিজিট করুন"
+          "visit": "ভিজিট করুন",
+          "clone": "ক্লোন"
         },
         "searchIpPlaceholder": "আইপি অনুসন্ধান করুন...",
         "persistentStorage": "ক্রমাগত স্টোরেজ",

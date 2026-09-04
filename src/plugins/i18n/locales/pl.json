@@ -681,7 +681,10 @@
       "instancesTooltip": "Niezależne kopie Twojej aplikacji, każda działa na innym węźle. 3 lub więcej zapewnia wysoką dostępność w razie odłączenia węzła.",
       "hardwareResourceTooltip": "Zasoby przydzielone na instancję. Typowa aplikacja webowa potrzebuje ≈ 0.5 vCPU / 512 MB.",
       "importComposeShort": "Importuj compose / specyfikację",
-      "importComposeTooltip": "Zaimportuj istniejący docker-compose lub specyfikację Flux (JSON/YAML), aby wstępnie wypełnić formularz"
+      "importComposeTooltip": "Zaimportuj istniejący docker-compose lub specyfikację Flux (JSON/YAML), aby wstępnie wypełnić formularz",
+      "noLoginCredentials": "Nie znaleziono danych logowania. Zaloguj się ponownie.",
+      "failedToPrepareManualSigning": "Nie udało się przygotować ręcznego podpisu: {error}",
+      "pleaseEnterSignature": "Wprowadź podpis."
     },
     "volumePathBuilder": {
       "mountTypeComponentDirectoryLabel": "Katalog Komponentu:",
@@ -1391,7 +1394,8 @@
           "visit": "Odwiedź",
           "manage": "Zarządzaj",
           "remove": "Usuń",
-          "install": "Zainstaluj"
+          "install": "Zainstaluj",
+          "clone": "Klonuj"
         },
         "rootFilesystemTooltip": "Tymczasowa pamięć kontenera. Monitorowanie rootfs pomaga uniknąć problemów z miejscem.",
         "persistentStorageTooltip": "Śledzi pamięć, która utrzymuje się po ponownym uruchomieniu kontenera. Zapobiega nadużyciu dysku.",

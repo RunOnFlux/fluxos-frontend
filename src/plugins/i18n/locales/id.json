@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Salinan independen dari aplikasi Anda, masing-masing berjalan di node yang berbeda. 3 atau lebih memberikan ketersediaan tinggi jika sebuah node offline.",
       "hardwareResourceTooltip": "Sumber daya yang dialokasikan per instance. Aplikasi web pada umumnya membutuhkan ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Impor compose / spec",
-      "importComposeTooltip": "Impor docker-compose atau spesifikasi Flux (JSON/YAML) yang sudah ada untuk mengisi formulir secara otomatis"
+      "importComposeTooltip": "Impor docker-compose atau spesifikasi Flux (JSON/YAML) yang sudah ada untuk mengisi formulir secara otomatis",
+      "noLoginCredentials": "Kredensial masuk tidak ditemukan. Silakan masuk lagi.",
+      "failedToPrepareManualSigning": "Gagal menyiapkan penandatanganan manual: {error}",
+      "pleaseEnterSignature": "Silakan masukkan tanda tangan."
     },
     "tosDialog": {
       "loading": "Memuat Persyaratan Layanan..."
@@ -2829,7 +2832,8 @@
           "manage": "Mengelola",
           "install": "Memasang",
           "remove": "Menghapus",
-          "visit": "Mengunjungi"
+          "visit": "Mengunjungi",
+          "clone": "Klon"
         },
         "searchIpPlaceholder": "Telusuri IP...",
         "persistentStorage": "Penyimpanan Persisten",

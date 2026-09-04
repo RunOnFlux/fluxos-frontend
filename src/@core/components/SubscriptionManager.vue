@@ -3744,7 +3744,7 @@
     :message="manualSignMessage"
     @submit="submitManualSignature"
     @cancel="cancelManualSign"
-    @copy="showToast('success', t('core.subscriptionManager.copiedToClipboard'))"
+    @copy="showToast('success', t('common.messages.copiedToClipboard'))"
   />
 
   <!-- Terms of Service Dialog -->

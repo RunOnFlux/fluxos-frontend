@@ -1538,7 +1538,10 @@
       "instancesTooltip": "Cópias independentes do seu aplicativo, cada uma sendo executada em um nó diferente. 3 ou mais garantem alta disponibilidade caso um nó fique offline.",
       "hardwareResourceTooltip": "Recursos alocados por instância. Um aplicativo web típico precisa de ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Importar compose / especificação",
-      "importComposeTooltip": "Importe um docker-compose ou uma especificação Flux (JSON/YAML) existente para preencher o formulário"
+      "importComposeTooltip": "Importe um docker-compose ou uma especificação Flux (JSON/YAML) existente para preencher o formulário",
+      "noLoginCredentials": "Não foram encontradas credenciais de acesso. Inicie sessão novamente.",
+      "failedToPrepareManualSigning": "Falha ao preparar a assinatura manual: {error}",
+      "pleaseEnterSignature": "Introduza uma assinatura."
     },
     "tosDialog": {
       "loading": "Carregando Termos de Serviço..."
@@ -2847,7 +2850,8 @@
           "manage": "Gerenciar",
           "install": "Instalar",
           "remove": "Remover",
-          "visit": "Visita"
+          "visit": "Visita",
+          "clone": "Clonar"
         },
         "searchIpPlaceholder": "Pesquisar IP...",
         "persistentStorage": "Armazenamento persistente",

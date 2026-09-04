@@ -66,7 +66,7 @@
     </VTooltip>
 
     <!-- Clone Button -->
-    <VTooltip :text="t('pages.apps.manage.tooltips.clone', 'Clone')">
+    <VTooltip :text="t('pages.apps.manage.tooltips.clone')">
       <template #activator="{ props: cloneBtnProps }">
         <VBtn
           v-bind="cloneBtnProps"
