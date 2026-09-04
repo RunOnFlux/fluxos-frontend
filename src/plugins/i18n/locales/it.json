@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Copie indipendenti della tua app, ognuna eseguita su un nodo diverso. 3 o più garantiscono un'elevata disponibilità se un nodo va offline.",
       "hardwareResourceTooltip": "Risorse assegnate per istanza. Una tipica app web necessita di ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Importa compose / spec",
-      "importComposeTooltip": "Importa un docker-compose o una specifica Flux esistente (JSON/YAML) per precompilare il modulo"
+      "importComposeTooltip": "Importa un docker-compose o una specifica Flux esistente (JSON/YAML) per precompilare il modulo",
+      "noLoginCredentials": "Nessuna credenziale di accesso trovata. Accedi di nuovo.",
+      "failedToPrepareManualSigning": "Impossibile preparare la firma manuale: {error}",
+      "pleaseEnterSignature": "Inserisci una firma."
     },
     "tosDialog": {
       "loading": "Caricamento Termini di servizio..."
@@ -2829,7 +2832,8 @@
           "manage": "Maneggio",
           "install": "Installare",
           "remove": "Rimuovere",
-          "visit": "Visita"
+          "visit": "Visita",
+          "clone": "Clona"
         },
         "searchIpPlaceholder": "Cerca IP...",
         "persistentStorage": "Archiviazione persistente",

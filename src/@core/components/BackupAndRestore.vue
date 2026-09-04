@@ -1576,8 +1576,8 @@ const selectedRestoreOption = ref('FluxDrive')
 // Both columns render the same `timestamp` field, so `key` cannot tell them
 // apart in the item slot and `column` carries nothing else stable. `field` is
 // that: the slot used to switch on the column's TITLE, which is translated -
-// t('...name') is "Name" in English and German but "Nom" in French, and
-// t('...time') is "Time" only in English - so the cells matched nothing and
+// the name key is "Name" in English and German but "Nom" in French, and the
+// time key is "Time" only in English - so the cells matched nothing and
 // rendered blank in most locales.
 const fluxDriveHeaders = computed(() => [
   { key: 'timestamp', field: 'name', title: t('core.backupAndRestore.name'), sortable: false },

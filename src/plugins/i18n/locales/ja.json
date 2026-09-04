@@ -1520,7 +1520,10 @@
       "instancesTooltip": "アプリの独立したコピーで、それぞれ別のノードで実行されます。3 つ以上にすると、ノードがオフラインになっても高可用性が得られます。",
       "hardwareResourceTooltip": "インスタンスごとに割り当てられるリソースです。一般的なウェブアプリには約 0.5 vCPU / 512 MB が必要です。",
       "importComposeShort": "compose / 仕様をインポート",
-      "importComposeTooltip": "既存の docker-compose または Flux 仕様（JSON/YAML）をインポートしてフォームに事前入力します"
+      "importComposeTooltip": "既存の docker-compose または Flux 仕様（JSON/YAML）をインポートしてフォームに事前入力します",
+      "noLoginCredentials": "ログイン情報が見つかりません。もう一度サインインしてください。",
+      "failedToPrepareManualSigning": "手動署名の準備に失敗しました: {error}",
+      "pleaseEnterSignature": "署名を入力してください。"
     },
     "tosDialog": {
       "loading": "利用規約を読み込んでいます..."
@@ -2829,7 +2832,8 @@
           "manage": "管理",
           "install": "インストール",
           "remove": "取り除く",
-          "visit": "訪問"
+          "visit": "訪問",
+          "clone": "複製"
         },
         "searchIpPlaceholder": "IPを検索...",
         "persistentStorage": "永続ストレージ",

@@ -1520,7 +1520,10 @@
       "instancesTooltip": "உங்கள் ஆப்பின் சுயாதீன நகல்கள், ஒவ்வொன்றும் வெவ்வேறு நோட்டில் இயங்குகிறது. 3 அல்லது அதற்கு மேற்பட்டவை ஒரு நோட் ஆஃப்லைனாக ஆனால் அதிக கிடைப்பை வழங்குகிறது.",
       "hardwareResourceTooltip": "ஒரு இன்ஸ்டன்சுக்கு ஒதுக்கப்பட்ட வளங்கள். ஒரு பொதுவான வலை ஆப்புக்கு ≈ 0.5 vCPU / 512 MB தேவை.",
       "importComposeShort": "compose / spec இறக்குமதி செய்",
-      "importComposeTooltip": "படிவத்தை முன்கூட்டியே நிரப்ப ஏற்கனவே உள்ள docker-compose அல்லது Flux ஸ்பெசிஃபிகேஷனை (JSON/YAML) இறக்குமதி செய்யுங்கள்"
+      "importComposeTooltip": "படிவத்தை முன்கூட்டியே நிரப்ப ஏற்கனவே உள்ள docker-compose அல்லது Flux ஸ்பெசிஃபிகேஷனை (JSON/YAML) இறக்குமதி செய்யுங்கள்",
+      "noLoginCredentials": "உள்நுழைவு விவரங்கள் கிடைக்கவில்லை. மீண்டும் உள்நுழையவும்.",
+      "failedToPrepareManualSigning": "கைமுறை கையொப்பத்தைத் தயாரிக்க முடியவில்லை: {error}",
+      "pleaseEnterSignature": "கையொப்பத்தை உள்ளிடவும்."
     },
     "tosDialog": {
       "loading": "சேவை விதிமுறைகளை ஏற்றுகிறது..."
@@ -2829,7 +2832,8 @@
           "manage": "நிர்வகிக்கவும்",
           "install": "நிறுவவும்",
           "remove": "அகற்று",
-          "visit": "வருகை"
+          "visit": "வருகை",
+          "clone": "நகல்"
         },
         "searchIpPlaceholder": "ஐபி தேடு...",
         "persistentStorage": "நிலையான சேமிப்பு",

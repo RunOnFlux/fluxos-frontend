@@ -1009,7 +1009,7 @@
         </VCardTitle>
         <VDivider />
         <VCardText class="pa-3">
-          {{ t('pages.administration.manageFlux.dialogs.updateRouterIp.confirm') }}
+          {{ t('pages.administration.manageFlux.dialogs.updateRouterIp.message') }}
         </VCardText>
         <VCardActions class="pa-3 pt-0">
           <VSpacer />
@@ -1082,7 +1082,7 @@
         <VDivider />
         <VCardText class="pa-3">
           <VAlert type="error" variant="tonal" class="mb-2">
-            {{ t('pages.administration.manageFlux.dialogs.restartFluxOs.warning') }}
+            {{ t('pages.administration.manageFlux.sections.nodeConfiguration.restartFluxOs.warning') }}
           </VAlert>
           {{ t('pages.administration.manageFlux.dialogs.confirmProceed') }}
         </VCardText>
@@ -1121,7 +1121,7 @@
             striped
           />
           <p class="text-center text-body-2 text-medium-emphasis mt-4 mb-0">
-            {{ t('pages.administration.manageFlux.dialogs.updateProgress.message') }}
+            {{ t('pages.administration.manageFlux.dialogs.updateProgress.pleaseWait') }}
           </p>
         </VCardText>
       </VCard>

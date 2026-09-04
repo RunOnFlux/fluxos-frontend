@@ -1520,7 +1520,10 @@
       "instancesTooltip": "نسخ مستقلة من تطبيقك، تعمل كل منها على عقدة مختلفة. ثلاث نسخ أو أكثر توفّر توفّرًا عاليًا في حال انقطاع إحدى العقد.",
       "hardwareResourceTooltip": "الموارد المخصصة لكل نسخة. يحتاج تطبيق ويب نموذجي إلى ≈ 0.5 vCPU / 512 MB.",
       "importComposeShort": "استيراد compose / المواصفات",
-      "importComposeTooltip": "استورد ملف docker-compose موجودًا أو مواصفات Flux (JSON/YAML) لملء النموذج مسبقًا"
+      "importComposeTooltip": "استورد ملف docker-compose موجودًا أو مواصفات Flux (JSON/YAML) لملء النموذج مسبقًا",
+      "noLoginCredentials": "لم يتم العثور على بيانات اعتماد تسجيل الدخول. يرجى تسجيل الدخول مرة أخرى.",
+      "failedToPrepareManualSigning": "تعذّر تجهيز التوقيع اليدوي: {error}",
+      "pleaseEnterSignature": "يرجى إدخال توقيع."
     },
     "tosDialog": {
       "loading": "جارٍ تحميل شروط الخدمة..."
@@ -2830,7 +2833,8 @@
           "manage": "يدير",
           "install": "ثَبَّتَ",
           "remove": "يزيل",
-          "visit": "يزور"
+          "visit": "يزور",
+          "clone": "استنساخ"
         },
         "searchIpPlaceholder": "بحث في IP...",
         "persistentStorage": "التخزين المستمر",

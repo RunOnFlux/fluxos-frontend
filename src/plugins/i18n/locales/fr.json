@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Copies indépendantes de votre application, chacune s'exécutant sur un nœud différent. 3 ou plus offre une haute disponibilité si un nœud se déconnecte.",
       "hardwareResourceTooltip": "Ressources allouées par instance. Une application web typique nécessite ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Importer compose / spéc.",
-      "importComposeTooltip": "Importez un docker-compose existant ou une spécification Flux (JSON/YAML) pour préremplir le formulaire"
+      "importComposeTooltip": "Importez un docker-compose existant ou une spécification Flux (JSON/YAML) pour préremplir le formulaire",
+      "noLoginCredentials": "Aucune information de connexion trouvée. Veuillez vous reconnecter.",
+      "failedToPrepareManualSigning": "Échec de la préparation de la signature manuelle : {error}",
+      "pleaseEnterSignature": "Veuillez saisir une signature."
     },
     "tosDialog": {
       "loading": "Chargement des conditions d'utilisation..."
@@ -2829,7 +2832,8 @@
           "manage": "Gérer",
           "install": "Installer",
           "remove": "Retirer",
-          "visit": "Visite"
+          "visit": "Visite",
+          "clone": "Cloner"
         },
         "searchIpPlaceholder": "Rechercher une adresse IP...",
         "persistentStorage": "Stockage persistant",

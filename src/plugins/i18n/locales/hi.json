@@ -1520,7 +1520,10 @@
       "instancesTooltip": "आपके ऐप की स्वतंत्र कॉपियाँ, प्रत्येक एक अलग नोड पर चलती है। 3 या अधिक होने पर किसी नोड के ऑफ़लाइन होने पर उच्च उपलब्धता मिलती है।",
       "hardwareResourceTooltip": "प्रति इंस्टेंस आवंटित संसाधन। एक सामान्य वेब ऐप को ≈ 0.5 vCPU / 512 MB की आवश्यकता होती है।",
       "importComposeShort": "compose / spec इंपोर्ट करें",
-      "importComposeTooltip": "फ़ॉर्म को पहले से भरने के लिए मौजूदा docker-compose या Flux स्पेसिफ़िकेशन (JSON/YAML) इंपोर्ट करें"
+      "importComposeTooltip": "फ़ॉर्म को पहले से भरने के लिए मौजूदा docker-compose या Flux स्पेसिफ़िकेशन (JSON/YAML) इंपोर्ट करें",
+      "noLoginCredentials": "कोई लॉगिन क्रेडेंशियल नहीं मिला। कृपया फिर से साइन इन करें।",
+      "failedToPrepareManualSigning": "मैन्युअल हस्ताक्षर तैयार करने में विफल: {error}",
+      "pleaseEnterSignature": "कृपया एक हस्ताक्षर दर्ज करें।"
     },
     "tosDialog": {
       "loading": "सेवा की शर्तें लोड हो रही हैं..."
@@ -2829,7 +2832,8 @@
           "manage": "प्रबंधित करना",
           "install": "स्थापित करना",
           "remove": "निकालना",
-          "visit": "मिलने जाना"
+          "visit": "मिलने जाना",
+          "clone": "क्लोन"
         },
         "searchIpPlaceholder": "आईपी ​​खोजें...",
         "persistentStorage": "सतत भंडारण",

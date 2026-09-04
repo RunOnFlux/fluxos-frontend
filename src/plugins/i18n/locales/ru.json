@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Независимые копии вашего приложения, каждая работает на отдельном узле. 3 и более обеспечивают высокую доступность при отключении узла.",
       "hardwareResourceTooltip": "Ресурсы, выделенные на каждый экземпляр. Типичному веб-приложению нужно ≈ 0.5 vCPU / 512 MB.",
       "importComposeShort": "Импорт compose / спецификации",
-      "importComposeTooltip": "Импортируйте существующий docker-compose или спецификацию Flux (JSON/YAML) для предзаполнения формы"
+      "importComposeTooltip": "Импортируйте существующий docker-compose или спецификацию Flux (JSON/YAML) для предзаполнения формы",
+      "noLoginCredentials": "Учётные данные для входа не найдены. Пожалуйста, войдите снова.",
+      "failedToPrepareManualSigning": "Не удалось подготовить ручную подпись: {error}",
+      "pleaseEnterSignature": "Введите подпись."
     },
     "tosDialog": {
       "loading": "Загрузка условий использования..."
@@ -2829,7 +2832,8 @@
           "manage": "Управлять",
           "install": "Установить",
           "remove": "Удалять",
-          "visit": "Посещать"
+          "visit": "Посещать",
+          "clone": "Клонировать"
         },
         "searchIpPlaceholder": "Искать IP...",
         "persistentStorage": "Постоянное хранилище",

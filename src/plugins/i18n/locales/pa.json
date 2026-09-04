@@ -1520,7 +1520,10 @@
       "instancesTooltip": "ਤੁਹਾਡੇ ਐਪ ਦੀਆਂ ਸੁਤੰਤਰ ਕਾਪੀਆਂ, ਹਰੇਕ ਵੱਖਰੇ ਨੋਡ 'ਤੇ ਚੱਲਦੀ ਹੈ. 3 ਜਾਂ ਵੱਧ ਹੋਣ 'ਤੇ ਕੋਈ ਨੋਡ ਆਫਲਾਈਨ ਹੋਣ 'ਤੇ ਉੱਚ ਉਪਲਬਧਤਾ ਮਿਲਦੀ ਹੈ.",
       "hardwareResourceTooltip": "ਪ੍ਰਤੀ ਇੰਸਟੈਂਸ ਵੰਡੇ ਗਏ ਸਰੋਤ. ਇੱਕ ਆਮ ਵੈੱਬ ਐਪ ਨੂੰ ≈ 0.5 vCPU / 512 MB ਦੀ ਲੋੜ ਹੁੰਦੀ ਹੈ.",
       "importComposeShort": "compose / spec ਇੰਪੋਰਟ ਕਰੋ",
-      "importComposeTooltip": "ਫਾਰਮ ਪਹਿਲਾਂ ਤੋਂ ਭਰਨ ਲਈ ਮੌਜੂਦਾ docker-compose ਜਾਂ Flux ਸਪੈਸੀਫਿਕੇਸ਼ਨ (JSON/YAML) ਇੰਪੋਰਟ ਕਰੋ"
+      "importComposeTooltip": "ਫਾਰਮ ਪਹਿਲਾਂ ਤੋਂ ਭਰਨ ਲਈ ਮੌਜੂਦਾ docker-compose ਜਾਂ Flux ਸਪੈਸੀਫਿਕੇਸ਼ਨ (JSON/YAML) ਇੰਪੋਰਟ ਕਰੋ",
+      "noLoginCredentials": "ਕੋਈ ਲਾਗਇਨ ਪਰਮਾਣ ਪੱਤਰ ਨਹੀਂ ਮਿਲਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਸਾਈਨ ਇਨ ਕਰੋ।",
+      "failedToPrepareManualSigning": "ਦਸਤੀ ਦਸਤਖਤ ਤਿਆਰ ਕਰਨ ਵਿੱਚ ਅਸਫਲ: {error}",
+      "pleaseEnterSignature": "ਕਿਰਪਾ ਕਰਕੇ ਦਸਤਖਤ ਦਾਖਲ ਕਰੋ।"
     },
     "tosDialog": {
       "loading": "ਸੇਵਾ ਦੀਆਂ ਸ਼ਰਤਾਂ ਲੋਡ ਕੀਤੀਆਂ ਜਾ ਰਹੀਆਂ ਹਨ..."
@@ -2829,7 +2832,8 @@
           "manage": "ਪ੍ਰਬੰਧਿਤ ਕਰੋ",
           "install": "ਇੰਸਟਾਲ ਕਰੋ",
           "remove": "ਹਟਾਓ",
-          "visit": "ਫੇਰੀ"
+          "visit": "ਫੇਰੀ",
+          "clone": "ਕਲੋਨ"
         },
         "searchIpPlaceholder": "IP ਖੋਜੋ...",
         "persistentStorage": "ਸਥਾਈ ਸਟੋਰੇਜ",

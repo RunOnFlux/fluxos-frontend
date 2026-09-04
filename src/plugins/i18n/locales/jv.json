@@ -1520,7 +1520,10 @@
       "instancesTooltip": "Salinan mandiri saka aplikasi sampeyan, saben mlaku ing node sing beda. 3 utawa luwih menehi kasedhiyan dhuwur yen ana node offline.",
       "hardwareResourceTooltip": "Sumber daya sing dialokasi saben instance. Aplikasi web umum butuh ≈ 0.5 vCPU / 512 MB.",
       "importComposeShort": "Impor compose / spec",
-      "importComposeTooltip": "Impor docker-compose utawa spesifikasi Flux (JSON/YAML) sing wis ana kanggo ngisi formulir sadurunge"
+      "importComposeTooltip": "Impor docker-compose utawa spesifikasi Flux (JSON/YAML) sing wis ana kanggo ngisi formulir sadurunge",
+      "noLoginCredentials": "Kredensial mlebu ora ketemu. Mangga mlebu maneh.",
+      "failedToPrepareManualSigning": "Gagal nyiapake tandha tangan manual: {error}",
+      "pleaseEnterSignature": "Mangga lebokake tandha tangan."
     },
     "tosDialog": {
       "loading": "Ngemot Syarat-syarat Layanan..."
@@ -2830,7 +2833,8 @@
           "manage": "Atur",
           "install": "Instal",
           "remove": "Busak",
-          "visit": "Kunjungi"
+          "visit": "Kunjungi",
+          "clone": "Klon"
         },
         "searchIpPlaceholder": "Golek IP...",
         "persistentStorage": "Panyimpenan Terus Ana",

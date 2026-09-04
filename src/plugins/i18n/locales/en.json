@@ -1628,7 +1628,10 @@
         "loadError": "Failed to load Terms of Service. Please visit:",
         "loading": "Loading Terms of Service...",
         "acceptFirst": "Accept Terms of Service first to import"
-      }
+      },
+      "noLoginCredentials": "No login credentials found. Please sign in again.",
+      "failedToPrepareManualSigning": "Failed to prepare manual signing: {error}",
+      "pleaseEnterSignature": "Please enter a signature."
     },
     "tosDialog": {
       "loading": "Loading Terms of Service..."
@@ -2916,7 +2919,8 @@
           "manage": "Manage",
           "install": "Install",
           "remove": "Remove",
-          "visit": "Visit"
+          "visit": "Visit",
+          "clone": "Clone"
         },
         "searchIpPlaceholder": "Search IP...",
         "persistentStorage": "Persistent Storage",

@@ -1520,7 +1520,10 @@
       "instancesTooltip": "तुमच्या अ‍ॅपच्या स्वतंत्र प्रती, प्रत्येक वेगळ्या नोडवर चालणारी. 3 किंवा अधिक असल्यास नोड ऑफलाइन झाल्यास उच्च उपलब्धता मिळते.",
       "hardwareResourceTooltip": "प्रति इन्स्टन्स वाटप केलेली संसाधने. एका सामान्य वेब अ‍ॅपला ≈ 0.5 vCPU / 512 MB लागते.",
       "importComposeShort": "compose / spec इंपोर्ट करा",
-      "importComposeTooltip": "फॉर्म आधीच भरण्यासाठी विद्यमान docker-compose किंवा Flux स्पेसिफिकेशन (JSON/YAML) इंपोर्ट करा"
+      "importComposeTooltip": "फॉर्म आधीच भरण्यासाठी विद्यमान docker-compose किंवा Flux स्पेसिफिकेशन (JSON/YAML) इंपोर्ट करा",
+      "noLoginCredentials": "लॉगिन क्रेडेन्शियल आढळले नाहीत. कृपया पुन्हा साइन इन करा.",
+      "failedToPrepareManualSigning": "मॅन्युअल स्वाक्षरी तयार करण्यात अयशस्वी: {error}",
+      "pleaseEnterSignature": "कृपया स्वाक्षरी प्रविष्ट करा."
     },
     "tosDialog": {
       "loading": "सेवा अटी लोड करत आहे..."
@@ -2829,7 +2832,8 @@
           "manage": "व्यवस्थापित करा",
           "install": "स्थापित करा",
           "remove": "काढा",
-          "visit": "भेट द्या"
+          "visit": "भेट द्या",
+          "clone": "क्लोन"
         },
         "searchIpPlaceholder": "आयपी शोधा...",
         "persistentStorage": "पर्सिस्टंट स्टोरेज",
