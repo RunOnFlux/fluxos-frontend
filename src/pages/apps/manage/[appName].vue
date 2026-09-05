@@ -1021,6 +1021,7 @@
                 :components="componentList"
                 :execute-local-command="executeLocalCommand"
                 :target="selectedIp"
+                :ip-access="ipAccess"
               />
             </div>
 

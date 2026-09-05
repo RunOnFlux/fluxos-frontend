@@ -273,6 +273,8 @@ import { useI18n } from 'vue-i18n'
 import ClipboardJS from 'clipboard'
 import AnsiToHtml from 'ansi-to-html'
 
+import { io } from 'socket.io-client'
+
 const props = defineProps({
   appSpecification: { type: Object, required: true },
   executeLocalCommand: { type: Function, required: true },
@@ -287,6 +289,12 @@ const props = defineProps({
   // position carried across would ask that node for a moment in its log that
   // means nothing here and skip lines to match a count from somewhere else.
   target: { type: String, default: '' },
+
+  // Whether this browser reaches the node by IP rather than through the node
+  // DNS name. The log stream is a socket.io connection to the node itself, so
+  // it has to make the same choice the terminal does; the poll does not,
+  // because executeLocalCommand already made it.
+  ipAccess: { type: Boolean, default: false },
 })
   
 const { t } = useI18n()
@@ -312,6 +320,12 @@ const autoScroll = ref(true)
 const manualInProgress = ref(false)
 const requestInProgress = ref(false)
 const pollingInterval = ref(null)
+
+// The live stream, when this node offers one. A node that does not is not a
+// version check anywhere: the connection simply fails and the poll below is
+// what this viewer has always done.
+const logSocket = ref(null)
+const streaming = ref(false)
 const logsContainer = ref(null)
 const copyBtn = ref(null)
 const filterKeyword = ref('')
@@ -468,46 +482,47 @@ async function fetchLogs() {
 
   if (requestInProgress.value) return
 
+  // The stream is carrying this pane now, and a poll alongside it would append
+  // the same lines a second time.
+  if (streaming.value && !manualInProgress.value) return
+
   requestInProgress.value = true
   noLogs.value = false
 
   try {
     const lines = allLogs.value ? 'all' : lineCount.value || 100
 
-    // Bounded, because the node asks to be called straight back whenever more was
-    // waiting than one answer carries. A burst is drained now rather than one
-    // page per three-second tick, and the bound is what stops a container writing
-    // faster than this can read holding the loop open.
-    for (let page = 0; page < 20; page += 1) {
-      const query = logPosition.value ? `?cursor=${encodeURIComponent(logPosition.value)}` : ''
+    // One request. A node answers a position with everything waiting for it, so
+    // there is never a second page to come straight back for - a reader further
+    // behind than one answer holds is moved to the end of the log and told, and
+    // no number of extra passes would reach the lines it went past.
+    const query = logPosition.value ? `?cursor=${encodeURIComponent(logPosition.value)}` : ''
 
-      const response = await props.executeLocalCommand(`/apps/applogpolling/${appname}/${lines}/${sinceTimestamp.value}${query}`)
-      const data = response?.data ?? {}
-      const received = Array.isArray(data?.logs) ? data.logs : []
+    const response = await props.executeLocalCommand(`/apps/applogpolling/${appname}/${lines}/${sinceTimestamp.value}${query}`)
+    const data = response?.data ?? {}
+    const received = Array.isArray(data?.logs) ? data.logs : []
 
-      // A node that answers positions returns one. A node that predates them
-      // returns the most recent lines and nothing else, which is what this
-      // viewer has always done - so it keeps doing exactly that, per node, with
-      // no version check anywhere.
-      if (typeof data?.cursor !== 'string') {
-        logs.value = received
-        break
-      }
-
+    // A node that answers positions returns one. A node that predates them
+    // returns the most recent lines and nothing else, which is what this viewer
+    // has always done - so it keeps doing exactly that, per node, with no
+    // version check anywhere.
+    if (typeof data?.cursor !== 'string') {
+      logs.value = received
+    } else {
       // The line this viewer had read up to no longer exists on the node: docker
       // discarded the file holding it. What sat between it and the oldest line
       // below is gone for everyone, so it is said rather than skipped over.
       if (data.rolledOver && logs.value.length)
         logs.value.push(t('core.logViewer.rolledOver'))
 
+      // The node declined to read back as far as this viewer had got. Those
+      // lines still exist, unlike rolledOver's, but reaching them costs a read
+      // of the whole retained log on every poll.
+      if (data.skipped && logs.value.length)
+        logs.value.push(t('core.logViewer.skippedPoll'))
+
       logs.value = logPosition.value ? [...logs.value, ...received] : received
       logPosition.value = data.cursor
-
-      // What lies AHEAD of the position just stored, which is the only thing
-      // another pass can fetch. `truncated` is the log holding more than the
-      // line count asked for - behind this reader, unreachable with a cursor,
-      // and true on nearly every first page.
-      if (!data.hasMore) break
     }
 
     if (logs.value.length === 0) noLogs.value = true
@@ -525,12 +540,96 @@ async function fetchLogs() {
   }
 }
   
+// The node pushes lines as the container writes them, so there is no interval
+// and no position arithmetic: a stream has no gap between polls to lose lines
+// in. A node that predates it refuses the namespace and the poll takes over,
+// which is permanent rather than a migration step - the network runs several
+// FluxOS versions at once and always will.
+function startStreaming() {
+  const appname = props.appSpecification?.version >= 4
+    ? `${selectedApp.value}_${props.appSpecification.name}`
+    : props.appSpecification?.name
+
+  if (!appname || !props.target) return false
+
+  const [host, port = 16127] = props.target.split(':')
+  const base = props.ipAccess
+    ? `http://${host}:${port}`
+    : `https://${host.replace(/\./g, '-')}-${port}.node.api.runonflux.io`
+
+  const socket = io(`${base}/applogs`, { transports: ['websocket'], reconnection: false })
+
+  logSocket.value = socket
+
+  socket.on('logs', payload => {
+    const received = Array.isArray(payload?.lines) ? payload.lines : []
+    if (!received.length) return
+    logs.value = [...logs.value, ...received]
+    noLogs.value = false
+    nextTick(() => {
+      if (autoScroll.value && logsContainer.value)
+        logsContainer.value.scrollTop = logsContainer.value.scrollHeight
+    })
+  })
+
+  // The container wrote faster than this connection drained. The node dropped
+  // the excess rather than buffering it, and says how much - a silent gap is
+  // the failure this whole design exists to prevent.
+  socket.on('skipped', payload => {
+    logs.value.push(t('core.logViewer.skipped', { count: payload?.count ?? 0 }))
+  })
+
+  socket.on('ended', () => {
+    streaming.value = false
+
+    // The container stopped. Fall back so the pane keeps working if it is
+    // started again, rather than staying silent until the viewer reloads.
+    if (pollingEnabled.value) startInterval()
+  })
+
+  // Either this node has no stream, or the connection failed. Both mean the
+  // same thing here.
+  const fallBack = () => {
+    if (!streaming.value) {
+      closeStream()
+      if (pollingEnabled.value) startInterval()
+    }
+  }
+
+  socket.on('connect_error', fallBack)
+  socket.on('error', fallBack)
+  socket.on('subscribed', () => { streaming.value = true })
+  socket.on('connect', () => {
+    socket.emit('subscribe', localStorage.getItem('zelidauth'), appname)
+  })
+
+  return true
+}
+
+function closeStream() {
+  if (logSocket.value) {
+    logSocket.value.close()
+    logSocket.value = null
+  }
+  streaming.value = false
+}
+
+function startInterval() {
+  if (pollingInterval.value) return
+  pollingInterval.value = setInterval(() => fetchLogs(), 3000)
+}
+
 function startPolling() {
   stopPolling()
-  pollingInterval.value = setInterval(() => fetchLogs(), 3000)
+
+  // One immediate poll whatever happens: it fills the pane now, and against a
+  // node with no stream it is the only thing that will.
+  fetchLogs()
+  if (!startStreaming()) startInterval()
 }
   
 function stopPolling() {
+  closeStream()
   if (pollingInterval.value) {
     clearInterval(pollingInterval.value)
     pollingInterval.value = null
