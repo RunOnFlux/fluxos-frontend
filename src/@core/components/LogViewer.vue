@@ -503,7 +503,11 @@ async function fetchLogs() {
       logs.value = logPosition.value ? [...logs.value, ...received] : received
       logPosition.value = data.cursor
 
-      if (!data.truncated) break
+      // What lies AHEAD of the position just stored, which is the only thing
+      // another pass can fetch. `truncated` is the log holding more than the
+      // line count asked for - behind this reader, unreachable with a cursor,
+      // and true on nearly every first page.
+      if (!data.hasMore) break
     }
 
     if (logs.value.length === 0) noLogs.value = true
