@@ -579,23 +579,21 @@ function startStreaming() {
     logs.value.push(t('core.logViewer.skipped', { count: payload?.count ?? 0 }))
   })
 
-  socket.on('ended', () => {
-    streaming.value = false
-
-    // The container stopped. Fall back so the pane keeps working if it is
-    // started again, rather than staying silent until the viewer reloads.
-    if (pollingEnabled.value) startInterval()
-  })
-
-  // Either this node has no stream, or the connection failed. Both mean the
-  // same thing here.
+  // The container stopped, this node has no stream, the connection failed, or
+  // the stream broke after it had started. All four end the same way: the poll
+  // takes the pane back.
+  //
+  // And the socket is closed rather than left open. The node closes the feed
+  // when the container stops but it cannot close the connection, so one held
+  // here is a connection per stopped container for as long as this pane is on
+  // screen - and it stays in that container's room, where a feed someone else
+  // opens after a restart is delivered into a pane that is already polling.
   const fallBack = () => {
-    if (!streaming.value) {
-      closeStream()
-      if (pollingEnabled.value) startInterval()
-    }
+    closeStream()
+    if (pollingEnabled.value) startInterval()
   }
 
+  socket.on('ended', fallBack)
   socket.on('connect_error', fallBack)
   socket.on('error', fallBack)
   socket.on('subscribed', () => { streaming.value = true })
