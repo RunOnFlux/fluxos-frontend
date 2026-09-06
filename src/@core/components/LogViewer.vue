@@ -268,11 +268,13 @@
 </template>
   
 <script setup>
-import { ref, computed, nextTick, onBeforeUnmount } from 'vue'
+import { ref, computed, nextTick, onBeforeUnmount, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import ClipboardJS from 'clipboard'
 import AnsiToHtml from 'ansi-to-html'
 import { useSnackbar } from '@/composables/useSnackbar'
+
+import { io } from 'socket.io-client'
 
 const props = defineProps({
   appSpecification: { type: Object, required: true },
@@ -282,6 +284,18 @@ const props = defineProps({
   // decision - the specification, or the names endpoint for a viewer who may not
   // read it - so this never reaches into compose itself.
   components: { type: Array, default: () => [] },
+
+  // Which instance executeLocalCommand talks to. A log position belongs to ONE
+  // node's container: the same app on another node has its own timestamps, so a
+  // position carried across would ask that node for a moment in its log that
+  // means nothing here and skip lines to match a count from somewhere else.
+  target: { type: String, default: '' },
+
+  // Whether this browser reaches the node by IP rather than through the node
+  // DNS name. The log stream is a socket.io connection to the node itself, so
+  // it has to make the same choice the terminal does; the poll does not,
+  // because executeLocalCommand already made it.
+  ipAccess: { type: Boolean, default: false },
 })
   
 const { t } = useI18n()
@@ -295,6 +309,12 @@ const clipboardText = ref('')
 const downloadingLog = ref(false)
 const lineCount = ref(100)
 const sinceTimestamp = ref('')
+
+// Where this viewer has read up to, as the node described it. Opaque on purpose -
+// nodes and this app upgrade independently, so reading it here would make its
+// shape a contract. Null means "start from the most recent lines", which is also
+// what a node that predates positions always answers.
+const logPosition = ref(null)
 const pollingEnabled = ref(false)
 const isLineByLineMode = ref(false)
 const displayTimestamps = ref(true)
@@ -302,6 +322,12 @@ const autoScroll = ref(true)
 const manualInProgress = ref(false)
 const requestInProgress = ref(false)
 const pollingInterval = ref(null)
+
+// The live stream, when this node offers one. A node that does not is not a
+// version check anywhere: the connection simply fails and the poll below is
+// what this viewer has always done.
+const logSocket = ref(null)
+const streaming = ref(false)
 const logsContainer = ref(null)
 const copyBtn = ref(null)
 const filterKeyword = ref('')
@@ -429,12 +455,24 @@ function copyCode() {
   })
 }
   
+// Every manual refresh restates the question - a new line count, a new starting
+// point, all-logs on or off - so it starts from a fresh position rather than
+// continuing one taken under the previous answer.
 async function manualFetchLogs() {
   manualInProgress.value = true
+  resetLogPosition()
   await fetchLogs()
   manualInProgress.value = false
 }
   
+// Anything that changes WHICH log is being read invalidates the position: a
+// different component, a different node, or a different starting point. Carrying
+// one across would skip lines to match a count taken from another log.
+function resetLogPosition() {
+  logPosition.value = null
+  logs.value = []
+}
+
 async function fetchLogs() {
   if (!selectedApp.value) return
 
@@ -446,18 +484,51 @@ async function fetchLogs() {
 
   if (requestInProgress.value) return
 
+  // The stream is carrying this pane now, and a poll alongside it would append
+  // the same lines a second time.
+  if (streaming.value && !manualInProgress.value) return
+
   requestInProgress.value = true
   noLogs.value = false
 
   try {
     const lines = allLogs.value ? 'all' : lineCount.value || 100
-    const response = await props.executeLocalCommand(`/apps/applogpolling/${appname}/${lines}/${sinceTimestamp.value}`)
-    const data = response?.data ?? {}
 
-    logs.value = Array.isArray(data?.logs) ? data.logs : []
-    if (data?.status === 'success' && logs.value.length === 0) {
-      noLogs.value = true
+    // One request. A node answers a position with everything waiting for it, so
+    // there is never a second page to come straight back for - a reader further
+    // behind than one answer holds is moved to the end of the log and told, and
+    // no number of extra passes would reach the lines it went past.
+    const query = logPosition.value ? `?cursor=${encodeURIComponent(logPosition.value)}` : ''
+
+    const response = await props.executeLocalCommand(`/apps/applogpolling/${appname}/${lines}/${sinceTimestamp.value}${query}`)
+    const data = response?.data ?? {}
+    const received = Array.isArray(data?.logs) ? data.logs : []
+
+    // A node that answers positions returns one. A node that predates them
+    // returns the most recent lines and nothing else, which is what this viewer
+    // has always done - so it keeps doing exactly that, per node, with no
+    // version check anywhere.
+    if (typeof data?.cursor !== 'string') {
+      logs.value = received
+    } else {
+      // The line this viewer had read up to no longer exists on the node: docker
+      // discarded the file holding it. What sat between it and the oldest line
+      // below is gone for everyone, so it is said rather than skipped over.
+      if (data.rolledOver && logs.value.length)
+        logs.value.push(t('core.logViewer.rolledOver'))
+
+      // The node declined to read back as far as this viewer had got. Those
+      // lines still exist, unlike rolledOver's, but reaching them costs a read
+      // of the whole retained log on every poll.
+      if (data.skipped && logs.value.length)
+        logs.value.push(t('core.logViewer.skippedPoll'))
+
+      logs.value = logPosition.value ? [...logs.value, ...received] : received
+      logPosition.value = data.cursor
     }
+
+    if (logs.value.length === 0) noLogs.value = true
+
     nextTick(() => {
       if (autoScroll.value && logsContainer.value) {
         logsContainer.value.scrollTop = logsContainer.value.scrollHeight
@@ -471,12 +542,94 @@ async function fetchLogs() {
   }
 }
   
+// The node pushes lines as the container writes them, so there is no interval
+// and no position arithmetic: a stream has no gap between polls to lose lines
+// in. A node that predates it refuses the namespace and the poll takes over,
+// which is permanent rather than a migration step - the network runs several
+// FluxOS versions at once and always will.
+function startStreaming() {
+  const appname = props.appSpecification?.version >= 4
+    ? `${selectedApp.value}_${props.appSpecification.name}`
+    : props.appSpecification?.name
+
+  if (!appname || !props.target) return false
+
+  const [host, port = 16127] = props.target.split(':')
+  const base = props.ipAccess
+    ? `http://${host}:${port}`
+    : `https://${host.replace(/\./g, '-')}-${port}.node.api.runonflux.io`
+
+  const socket = io(`${base}/applogs`, { transports: ['websocket'], reconnection: false })
+
+  logSocket.value = socket
+
+  socket.on('logs', payload => {
+    const received = Array.isArray(payload?.lines) ? payload.lines : []
+    if (!received.length) return
+    logs.value = [...logs.value, ...received]
+    noLogs.value = false
+    nextTick(() => {
+      if (autoScroll.value && logsContainer.value)
+        logsContainer.value.scrollTop = logsContainer.value.scrollHeight
+    })
+  })
+
+  // The container wrote faster than this connection drained. The node dropped
+  // the excess rather than buffering it, and says how much - a silent gap is
+  // the failure this whole design exists to prevent.
+  socket.on('skipped', payload => {
+    logs.value.push(t('core.logViewer.skipped', { count: payload?.count ?? 0 }))
+  })
+
+  // The container stopped, this node has no stream, the connection failed, or
+  // the stream broke after it had started. All four end the same way: the poll
+  // takes the pane back.
+  //
+  // And the socket is closed rather than left open. The node closes the feed
+  // when the container stops but it cannot close the connection, so one held
+  // here is a connection per stopped container for as long as this pane is on
+  // screen - and it stays in that container's room, where a feed someone else
+  // opens after a restart is delivered into a pane that is already polling.
+  const fallBack = () => {
+    closeStream()
+    if (pollingEnabled.value) startInterval()
+  }
+
+  socket.on('ended', fallBack)
+  socket.on('connect_error', fallBack)
+  socket.on('error', fallBack)
+  socket.on('subscribed', () => { streaming.value = true })
+  socket.on('connect', () => {
+    socket.emit('subscribe', localStorage.getItem('zelidauth'), appname)
+  })
+
+  return true
+}
+
+function closeStream() {
+  if (logSocket.value) {
+    logSocket.value.close()
+    logSocket.value = null
+  }
+  streaming.value = false
+}
+
+function startInterval() {
+  if (pollingInterval.value) return
+  pollingInterval.value = setInterval(() => fetchLogs(), 3000)
+}
+
 function startPolling() {
   stopPolling()
-  pollingInterval.value = setInterval(() => fetchLogs(), 3000)
+
+  // One immediate poll whatever happens: it fills the pane now, and against a
+  // node with no stream it is the only thing that will.
+  fetchLogs()
+  if (!startStreaming()) startInterval()
 }
   
 function stopPolling() {
+  closeStream()
   if (pollingInterval.value) {
     clearInterval(pollingInterval.value)
     pollingInterval.value = null
@@ -487,7 +640,16 @@ function togglePolling() {
   pollingEnabled.value ? startPolling() : stopPolling()
 }
   
+// The instance selector lives in the page above this, and this component is not
+// remounted when it changes - so without this a position taken on one node would
+// be sent to another.
+watch(() => props.target, () => {
+  resetLogPosition()
+  if (selectedApp.value) manualFetchLogs()
+})
+
 function handleContainerChange() {
+  resetLogPosition()
   if (selectedApp.value) {
     manualFetchLogs()
   }

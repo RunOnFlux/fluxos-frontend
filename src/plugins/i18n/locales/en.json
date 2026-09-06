@@ -712,6 +712,9 @@
       "download": "Download",
       "noMatchingLogs": "No matching logs found for '{keyword}'",
       "noLogsFound": "No logs found",
+      "rolledOver": "— earlier logs rolled over on this node and are no longer available —",
+      "skipped": "— {count} lines were written faster than this viewer could receive them and were not delivered —",
+      "skippedPoll": "— this viewer fell too far behind and some lines were not delivered —",
       "errors": {
         "noLogsToDownload": "No logs available to download"
       }
