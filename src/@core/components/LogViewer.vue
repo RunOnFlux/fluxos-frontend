@@ -326,6 +326,10 @@ const pollingInterval = ref(null)
 // what this viewer has always done.
 const logSocket = ref(null)
 const streaming = ref(false)
+
+// The container the open stream is following, as the node named it. What the
+// pane asked for is a component name; what arrives is addressed by container.
+const streamContainer = ref(null)
 const logsContainer = ref(null)
 const copyBtn = ref(null)
 const filterKeyword = ref('')
@@ -562,6 +566,12 @@ function startStreaming() {
   logSocket.value = socket
 
   socket.on('logs', payload => {
+    // The node names the container on every batch, so one sent for a component
+    // this pane is no longer showing is dropped rather than rendered under the
+    // new one's name. Accepted when unnamed, which is the backfill this socket
+    // asked for and an older node's message shape.
+    if (payload?.container && streamContainer.value && payload.container !== streamContainer.value) return
+
     const received = Array.isArray(payload?.lines) ? payload.lines : []
     if (!received.length) return
     logs.value = [...logs.value, ...received]
@@ -596,7 +606,10 @@ function startStreaming() {
   socket.on('ended', fallBack)
   socket.on('connect_error', fallBack)
   socket.on('error', fallBack)
-  socket.on('subscribed', () => { streaming.value = true })
+  socket.on('subscribed', payload => {
+    streamContainer.value = payload?.container ?? null
+    streaming.value = true
+  })
   socket.on('connect', () => {
     socket.emit('subscribe', localStorage.getItem('zelidauth'), appname)
   })
@@ -609,6 +622,7 @@ function closeStream() {
     logSocket.value.close()
     logSocket.value = null
   }
+  streamContainer.value = null
   streaming.value = false
 }
 
@@ -640,17 +654,34 @@ function togglePolling() {
   
 // The instance selector lives in the page above this, and this component is not
 // remounted when it changes - so without this a position taken on one node would
-// be sent to another.
+// be sent to another, and the stream would go on being served by the node the
+// pane has left.
 watch(() => props.target, () => {
-  resetLogPosition()
-  if (selectedApp.value) manualFetchLogs()
+  restartForNewLog()
 })
 
+// The stream follows the component the pane is showing. A socket left on the
+// previous one goes on pushing that container's lines into a pane showing
+// another component's name, and the poll that filled it is overwritten by logs
+// from somewhere else.
+//
+// Closed and reopened rather than moved with an unsubscribe: the network runs
+// several FluxOS versions at once and always will, and a node that predates a
+// connection following more than one container refuses the second subscribe -
+// which would leave the pane silently following what it was told to leave.
 function handleContainerChange() {
+  restartForNewLog()
+}
+
+// Everything that changes WHICH log the pane is reading goes through here: a
+// different component, or a different node.
+function restartForNewLog() {
+  closeStream()
   resetLogPosition()
-  if (selectedApp.value) {
-    manualFetchLogs()
-  }
+  if (!selectedApp.value) return
+
+  if (pollingEnabled.value) startPolling()
+  else manualFetchLogs()
 }
 
 
