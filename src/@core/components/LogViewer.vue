@@ -589,6 +589,14 @@ function startStreaming() {
     logs.value.push(t('core.logViewer.skipped', { count: payload?.count ?? 0 }))
   })
 
+  // A line longer than the node will hold was handed over cut. Not the same as
+  // `skipped`, which counts lines that never arrived: this one is on the pane
+  // already, missing its tail, and the marker is what says the pane is not
+  // showing everything the container wrote on it.
+  socket.on('truncated', payload => {
+    logs.value.push(t('core.logViewer.truncated', { characters: payload?.characters ?? 0 }))
+  })
+
   // The container stopped, this node has no stream, the connection failed, or
   // the stream broke after it had started. All four end the same way: the poll
   // takes the pane back.
