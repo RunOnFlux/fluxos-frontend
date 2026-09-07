@@ -378,22 +378,10 @@ const isComposeSingle = computed(() => {
   return componentOptions.value.length === 1
 })
 
-watchEffect(() => {
-  if (hasRun.value) return
-
-  if (props.appSpecification && props.appSpecification?.version <= 3) {
-    selectedApp.value = props.appSpecification.name
-    manualFetchLogs()
-    hasRun.value = true
-
-  // Exactly one, not "fewer than two": an empty list satisfies "fewer than two"
-  // and has no [0] to select.
-  } else if (componentOptions.value.length === 1) {
-    [selectedApp.value] = componentOptions.value
-    manualFetchLogs()
-    hasRun.value = true
-  }
-})
+// The three blocks below sit above the watchEffect rather than after it, because
+// that watchEffect fetches during setup and the fetch reaches all three. A const
+// declared after it is still in its dead zone when it runs, which is a throw out
+// of setup and a pane that never mounts.
 
 // Each line rendered once and remembered by its position in the log, so a line
 // already on screen is not parsed and sanitized again every time another one
@@ -415,6 +403,44 @@ function cachedHtml(id, log, timestamps) {
 function clearFormatCache() {
   formatCache.clear()
 }
+
+// The pane appends now, and a stream is unbounded: every line on it is a DOM
+// node built from sanitized HTML, so without a ceiling a chatty container makes
+// the tab unusable after a few minutes. The oldest go first - they have been
+// read, and the download button still hands over the whole log.
+const MAX_PANE_LINES = 5000
+
+// A stream does not open on an empty log. The node opens one with docker's own
+// `tail`, and backfills a viewer joining one already running, so the first lines
+// it sends are lines the poll that filled this pane has already fetched. They
+// are dropped rather than shown twice.
+//
+// Matched whole, against the line as the node sent it. Every line carries
+// docker's nanosecond timestamp, so a line matches only by being that same line
+// - two identical messages a second apart do not.
+//
+// Against the pane as it stands when the batch arrives, not as it stood when the
+// socket was opened: a connection slower than the poll's interval leaves lines
+// fetched in between, and those are the ones the backfill will overlap.
+const OPENING_OVERLAP_LINES = 1000
+const expectingOverlap = ref(false)
+
+watchEffect(() => {
+  if (hasRun.value) return
+
+  if (props.appSpecification && props.appSpecification?.version <= 3) {
+    selectedApp.value = props.appSpecification.name
+    manualFetchLogs()
+    hasRun.value = true
+
+  // Exactly one, not "fewer than two": an empty list satisfies "fewer than two"
+  // and has no [0] to select.
+  } else if (componentOptions.value.length === 1) {
+    [selectedApp.value] = componentOptions.value
+    manualFetchLogs()
+    hasRun.value = true
+  }
+})
 
 const filteredLogs = computed(() => {
   const keyword = filterKeyword.value.trim().toLowerCase()
@@ -564,27 +590,6 @@ function resetLogPosition() {
   logGeneration.value += 1
   requestInProgress.value = false
 }
-
-// The pane appends now, and a stream is unbounded: every line on it is a DOM
-// node built from sanitized HTML, so without a ceiling a chatty container makes
-// the tab unusable after a few minutes. The oldest go first - they have been
-// read, and the download button still hands over the whole log.
-const MAX_PANE_LINES = 5000
-
-// A stream does not open on an empty log. The node opens one with docker's own
-// `tail`, and backfills a viewer joining one already running, so the first lines
-// it sends are lines the poll that filled this pane has already fetched. They
-// are dropped rather than shown twice.
-//
-// Matched whole, against the line as the node sent it. Every line carries
-// docker's nanosecond timestamp, so a line matches only by being that same line
-// - two identical messages a second apart do not.
-//
-// Against the pane as it stands when the batch arrives, not as it stood when the
-// socket was opened: a connection slower than the poll's interval leaves lines
-// fetched in between, and those are the ones the backfill will overlap.
-const OPENING_OVERLAP_LINES = 1000
-const expectingOverlap = ref(false)
 
 function dropOpeningOverlap(received) {
   if (!expectingOverlap.value) return received
