@@ -704,6 +704,11 @@
       "download": "Unduh",
       "noMatchingLogs": "Ora ana log sing cocog ditemokake kanggo '{keyword}'",
       "noLogsFound": "Ora ana log sing ditemokake",
+      "rolledOver": "— log sadurunge wis dirotasi ing node iki lan wis ora kasedhiya —",
+      "skipped": "— {count} baris ditulis luwih cepet tinimbang sing bisa ditampa panampil iki lan ora dikirim —",
+      "truncated": "— {characters} karakter dipotong saka baris sing kedawan lan ora dikirim —",
+      "skippedPoll": "— panampil iki keri banget lan sawetara baris ora dikirim —",
+      "streamEnded": "— siaran langsung wis rampung; panel diwiwiti maneh saka baris paling anyar —",
       "errors": {
         "noLogsToDownload": "Ora ana log kasedhiya kanggo diundhuh"
       }

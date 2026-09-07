@@ -704,6 +704,11 @@
       "download": "İndirmek",
       "noMatchingLogs": "'{keyword}' için eşleşen günlük bulunamadı",
       "noLogsFound": "Günlük bulunamadı",
+      "rolledOver": "— önceki günlükler bu düğümde döndürüldü ve artık kullanılamıyor —",
+      "skipped": "— {count} satır bu görüntüleyicinin alabileceğinden daha hızlı yazıldı ve teslim edilmedi —",
+      "truncated": "— aşırı uzun bir satırdan {characters} karakter kesildi ve teslim edilmedi —",
+      "skippedPoll": "— bu görüntüleyici çok geride kaldı ve bazı satırlar teslim edilmedi —",
+      "streamEnded": "— canlı yayın sona erdi; panel en son satırlardan yeniden başlıyor —",
       "errors": {
         "noLogsToDownload": "İndirilebilecek günlük yok"
       }

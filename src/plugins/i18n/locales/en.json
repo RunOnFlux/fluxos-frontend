@@ -716,6 +716,7 @@
       "skipped": "— {count} lines were written faster than this viewer could receive them and were not delivered —",
       "truncated": "— {characters} characters were cut from an over-long line and not delivered —",
       "skippedPoll": "— this viewer fell too far behind and some lines were not delivered —",
+      "streamEnded": "— the live stream ended; the pane restarts from the most recent lines —",
       "errors": {
         "noLogsToDownload": "No logs available to download"
       }

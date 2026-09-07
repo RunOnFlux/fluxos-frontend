@@ -237,15 +237,21 @@
         </VIcon>
         {{ t('core.logViewer.download') }}
       </VBtn>
-      <!-- Log entries -->
+      <!--
+        Log entries. Keyed by the line's position in the log rather than by
+        anything drawn from its text: the pane appends now, so a key that
+        changes on every render - a random one, or a timestamp two lines can
+        share - would tear down and rebuild every line on screen each time one
+        arrives.
+      -->
       <template v-if="filteredLogs.length > 0">
         <div
-          v-for="log in filteredLogs"
-          :key="extractTimestamp(log) + Math.random()"
-          v-sanitize-html="formatLog(log)"
+          v-for="entry in filteredLogs"
+          :key="entry.id"
+          v-sanitize-html="entry.html"
           class="log-entry"
-          :class="{ selected: selectedLog.includes(extractTimestamp(log)) }"
-          @click="isLineByLineMode && toggleLogSelection(log)"
+          :class="{ selected: selectedLog.includes(extractTimestamp(entry.text)) }"
+          @click="isLineByLineMode && toggleLogSelection(entry.text)"
         />
       </template>
 
@@ -313,6 +319,17 @@ const sinceTimestamp = ref('')
 // shape a contract. Null means "start from the most recent lines", which is also
 // what a node that predates positions always answers.
 const logPosition = ref(null)
+
+// Which log the pane is reading, counted up whenever that changes. A request in
+// flight when the pane moves answers about the log it has left, and carries that
+// node's position with it - so the reply is dropped rather than rendered, and the
+// position it offered is never adopted.
+const logGeneration = ref(0)
+
+// How many lines have been trimmed off the top of the pane. Added to a line's
+// index it gives that line's place in the whole log, which is what the list is
+// keyed and the rendered HTML cached by - both have to survive the trimming.
+const droppedLines = ref(0)
 const pollingEnabled = ref(false)
 const isLineByLineMode = ref(false)
 const displayTimestamps = ref(true)
@@ -326,6 +343,16 @@ const pollingInterval = ref(null)
 // what this viewer has always done.
 const logSocket = ref(null)
 const streaming = ref(false)
+
+// Whether the node moves the position along as it streams. One that does leaves
+// the pane able to resume the poll exactly where the stream stopped; one that
+// does not leaves the position where the poll that opened the stream put it,
+// which is why the fallback below cannot simply hand it back.
+const streamPositioned = ref(false)
+
+// Counted up by every stop and every start, so a start that was waiting on its
+// first fetch when another one began knows not to open a second socket.
+const pollSession = ref(0)
 
 // The container the open stream is following, as the node named it. What the
 // pane asked for is a component name; what arrives is addressed by container.
@@ -366,11 +393,49 @@ watchEffect(() => {
   }
 })
 
-const filteredLogs = computed(() => {
-  if (!filterKeyword.value.trim()) return logs.value
-  const keyword = filterKeyword.value.toLowerCase()
+// Each line rendered once and remembered by its position in the log, so a line
+// already on screen is not parsed and sanitized again every time another one
+// arrives. Held against the line's text and the timestamp setting it was
+// rendered under, which is everything its markup depends on.
+const formatCache = new Map()
 
-  return logs.value.filter(log => log.toLowerCase().includes(keyword))
+function cachedHtml(id, log, timestamps) {
+  const hit = formatCache.get(id)
+  if (hit?.log === log && hit.timestamps === timestamps) return hit.html
+
+  const html = formatLog(log)
+
+  formatCache.set(id, { log, timestamps, html })
+
+  return html
+}
+
+function clearFormatCache() {
+  formatCache.clear()
+}
+
+const filteredLogs = computed(() => {
+  const keyword = filterKeyword.value.trim().toLowerCase()
+
+  // Read here, not only inside formatLog, so that turning it off re-renders the
+  // pane rather than leaving the lines already on it as they were.
+  const timestamps = displayTimestamps.value
+
+  // The id is the line's position in the whole log, not in this array: it has to
+  // survive both the filter and the trimming of the oldest lines, or the keys it
+  // gives the list would shift under every line whenever either happens.
+  const offset = droppedLines.value
+  const entries = []
+
+  logs.value.forEach((log, index) => {
+    if (keyword && !log.toLowerCase().includes(keyword)) return
+
+    const id = offset + index
+
+    entries.push({ id, text: log, html: cachedHtml(id, log, timestamps) })
+  })
+
+  return entries
 })
   
   
@@ -389,8 +454,12 @@ function unselectText() {
   selectedLog.value = []
 }
   
+// One converter for the whole pane. `toHtml` keeps no state between calls unless
+// it is built with `stream`, which this is not, so a line renders the same
+// whichever call renders it - and a stream renders a great many of them.
+const ansiToHtml = new AnsiToHtml()
+
 function formatLog(log) {
-  const ansiToHtml = new AnsiToHtml()
   if (!log) return ''
 
   if (displayTimestamps.value) {
@@ -415,7 +484,7 @@ function formatLog(log) {
   
 function copyCode() {
   let text = isLineByLineMode.value && selectedLog.value.length
-    ? filteredLogs.value.filter(l => selectedLog.value.includes(extractTimestamp(l))).join('\n')
+    ? filteredLogs.value.filter(entry => selectedLog.value.includes(extractTimestamp(entry.text))).map(entry => entry.text).join('\n')
     : logs.value.join('\n')
 
   text = text.replace(/\x1B\[[0-9;]*[a-z]/gi, '')
@@ -461,6 +530,16 @@ function copyCode() {
 // point, all-logs on or off - so it starts from a fresh position rather than
 // continuing one taken under the previous answer.
 async function manualFetchLogs() {
+  // A restated question while the stream is running has to move the stream with
+  // it. The stream is what fills this pane; a fetch made alongside one would be
+  // appended over lines the stream is still delivering, and the new line count
+  // would last only until the next batch arrived.
+  if (streaming.value) {
+    restartForNewLog()
+
+    return
+  }
+
   manualInProgress.value = true
   resetLogPosition()
   await fetchLogs()
@@ -470,9 +549,76 @@ async function manualFetchLogs() {
 // Anything that changes WHICH log is being read invalidates the position: a
 // different component, a different node, or a different starting point. Carrying
 // one across would skip lines to match a count taken from another log.
+//
+// It also moves the generation on, which drops the reply to a request still in
+// flight - that reply describes the log the pane has left, and offers a position
+// belonging to the node it came from - and frees the slot that request held, so
+// the one the pane wants now is not turned away by it.
 function resetLogPosition() {
   logPosition.value = null
   logs.value = []
+  droppedLines.value = 0
+  clearFormatCache()
+  logGeneration.value += 1
+  requestInProgress.value = false
+}
+
+// The pane appends now, and a stream is unbounded: every line on it is a DOM
+// node built from sanitized HTML, so without a ceiling a chatty container makes
+// the tab unusable after a few minutes. The oldest go first - they have been
+// read, and the download button still hands over the whole log.
+const MAX_PANE_LINES = 5000
+
+// A stream does not open on an empty log. The node opens it with docker's own
+// `tail`, and backfills a viewer joining one already running, so the first lines
+// it sends are lines the poll that filled this pane has just fetched. They are
+// held here while the stream opens and dropped when they arrive, so the pane
+// shows each of them once.
+//
+// Matched whole, against the line as the node sent it. Every line carries
+// docker's nanosecond timestamp, so a line matches only by being that same line
+// - two identical messages a second apart do not.
+const OPENING_OVERLAP_LINES = 1000
+const openingLines = new Set()
+
+function noteOpeningLines() {
+  openingLines.clear()
+  logs.value.slice(-OPENING_OVERLAP_LINES).forEach(line => openingLines.add(line))
+}
+
+function dropOpeningOverlap(received) {
+  if (!openingLines.size) return received
+
+  const fresh = received.filter(line => !openingLines.has(line))
+
+  // Something the pane had not already read: the overlap is behind us, and
+  // nothing further can be in it.
+  if (fresh.length) openingLines.clear()
+
+  return fresh
+}
+
+function appendLines(received) {
+  const next = [...logs.value, ...received]
+
+  // A viewer who turned "display all logs" on asked for the whole log, and gets
+  // it. The ceiling is for the live tail nobody asked the length of.
+  const excess = allLogs.value ? 0 : next.length - MAX_PANE_LINES
+
+  if (excess <= 0) {
+    logs.value = next
+
+    return
+  }
+
+  // Cached HTML is keyed by a line's place in the whole log, so the entries for
+  // the lines that just left have to go with them or the map grows for as long
+  // as the stream runs.
+  for (let id = droppedLines.value; id < droppedLines.value + excess; id += 1)
+    formatCache.delete(id)
+
+  droppedLines.value += excess
+  logs.value = next.slice(excess)
 }
 
 async function fetchLogs() {
@@ -490,6 +636,8 @@ async function fetchLogs() {
   // the same lines a second time.
   if (streaming.value && !manualInProgress.value) return
 
+  const generation = logGeneration.value
+
   requestInProgress.value = true
   noLogs.value = false
 
@@ -503,6 +651,12 @@ async function fetchLogs() {
     const query = logPosition.value ? `?cursor=${encodeURIComponent(logPosition.value)}` : ''
 
     const response = await props.executeLocalCommand(`/apps/applogpolling/${appname}/${lines}/${sinceTimestamp.value}${query}`)
+
+    // The pane moved on while this was in flight - another component, another
+    // node, or a refresh that restated the question. This answer describes the
+    // log it has left, so nothing here is rendered and nothing is adopted.
+    if (generation !== logGeneration.value) return
+
     const data = response?.data ?? {}
     const received = Array.isArray(data?.logs) ? data.logs : []
 
@@ -512,6 +666,8 @@ async function fetchLogs() {
     // version check anywhere.
     if (typeof data?.cursor !== 'string') {
       logs.value = received
+      droppedLines.value = 0
+      clearFormatCache()
     } else {
       // The line this viewer had read up to no longer exists on the node: docker
       // discarded the file holding it. What sat between it and the oldest line
@@ -525,11 +681,15 @@ async function fetchLogs() {
       if (data.skipped && logs.value.length)
         logs.value.push(t('core.logViewer.skippedPoll'))
 
-      logs.value = logPosition.value ? [...logs.value, ...received] : received
+      // Appended, never replaced. On the first answer the pane is empty and the
+      // two are the same thing; after that the pane holds what came before -
+      // earlier polls, or the stream this poll has just taken over from - and
+      // the node answered with only what came after it.
+      appendLines(received)
       logPosition.value = data.cursor
     }
 
-    if (logs.value.length === 0) noLogs.value = true
+    if (data?.status === 'success' && logs.value.length === 0) noLogs.value = true
 
     nextTick(() => {
       if (autoScroll.value && logsContainer.value) {
@@ -537,10 +697,17 @@ async function fetchLogs() {
       }
     })
   } catch (err) {
+    // A request the pane has already abandoned failing is not a reason to stop
+    // the one that replaced it.
+    if (generation !== logGeneration.value) return
+
     console.error('Failed to fetch logs:', err)
     stopPolling()
   } finally {
-    requestInProgress.value = false
+    // The slot belongs to whatever the pane is reading now: a request abandoned
+    // mid-flight gave it up when the generation moved, and clearing it here
+    // would take it from the request that has since claimed it.
+    if (generation === logGeneration.value) requestInProgress.value = false
   }
 }
   
@@ -554,12 +721,16 @@ function startStreaming() {
     ? `${selectedApp.value}_${props.appSpecification.name}`
     : props.appSpecification?.name
 
-  if (!appname || !props.target) return false
+  if (!appname || !props.target) return
 
   const [host, port = 16127] = props.target.split(':')
   const base = props.ipAccess
     ? `http://${host}:${port}`
     : `https://${host.replace(/\./g, '-')}-${port}.node.api.runonflux.io`
+
+  // Taken before the socket opens, while the pane holds exactly what the poll
+  // put there and nothing the stream has sent.
+  noteOpeningLines()
 
   const socket = io(`${base}/applogs`, { transports: ['websocket'], reconnection: false })
 
@@ -572,9 +743,18 @@ function startStreaming() {
     // asked for and an older node's message shape.
     if (payload?.container && streamContainer.value && payload.container !== streamContainer.value) return
 
-    const received = Array.isArray(payload?.lines) ? payload.lines : []
+    // A node that names a position on the batch keeps the poll's position moving
+    // while the stream carries the pane, so the fallback below can resume from
+    // where the stream stopped. One that does not leaves it where the poll that
+    // opened the stream put it, and the fallback starts the pane again instead.
+    if (typeof payload?.cursor === 'string') {
+      logPosition.value = payload.cursor
+      streamPositioned.value = true
+    }
+
+    const received = dropOpeningOverlap(Array.isArray(payload?.lines) ? payload.lines : [])
     if (!received.length) return
-    logs.value = [...logs.value, ...received]
+    appendLines(received)
     noLogs.value = false
     nextTick(() => {
       if (autoScroll.value && logsContainer.value)
@@ -586,7 +766,7 @@ function startStreaming() {
   // the excess rather than buffering it, and says how much - a silent gap is
   // the failure this whole design exists to prevent.
   socket.on('skipped', payload => {
-    logs.value.push(t('core.logViewer.skipped', { count: payload?.count ?? 0 }))
+    appendLines([t('core.logViewer.skipped', { count: payload?.count ?? 0 })])
   })
 
   // A line longer than the node will hold was handed over cut. Not the same as
@@ -594,7 +774,7 @@ function startStreaming() {
   // already, missing its tail, and the marker is what says the pane is not
   // showing everything the container wrote on it.
   socket.on('truncated', payload => {
-    logs.value.push(t('core.logViewer.truncated', { characters: payload?.characters ?? 0 }))
+    appendLines([t('core.logViewer.truncated', { characters: payload?.characters ?? 0 })])
   })
 
   // The container stopped, this node has no stream, the connection failed, or
@@ -607,13 +787,47 @@ function startStreaming() {
   // screen - and it stays in that container's room, where a feed someone else
   // opens after a restart is delivered into a pane that is already polling.
   const fallBack = () => {
+    // Only for the socket the pane is still on, and so only once. Closing a
+    // socket disconnects it, which arrives here like any other disconnect - and
+    // a close this pane asked for, to follow another component or another node,
+    // is not the stream failing underneath it. closeStream lets the reference go
+    // before it closes anything, so "still the current socket" is the whole test.
+    if (logSocket.value !== socket) return
+
+    // Whether a stream was ever running, not whether this socket existed. A node
+    // with no `/applogs` refuses the connection before any of this began, and
+    // there the poll is simply carrying on with a position it took moments ago
+    // and can still use.
+    const wasStreaming = streaming.value
+    const resumable = streamPositioned.value
+
     closeStream()
-    if (pollingEnabled.value) startInterval()
+    if (!pollingEnabled.value) return
+
+    // The stream delivered lines for as long as it ran without moving the
+    // position, so the one the pane holds is the one the opening poll took. Hand
+    // it back and the node answers with everything since - all of it already on
+    // the pane. The pane starts again from the most recent lines instead, and
+    // says so: what the container wrote between the stream breaking and the
+    // first poll after it is not reachable from here, and a silent gap is the
+    // failure this whole design exists to prevent.
+    if (wasStreaming && !resumable) {
+      resetLogPosition()
+      logs.value = [t('core.logViewer.streamEnded')]
+    }
+
+    startInterval()
   }
 
   socket.on('ended', fallBack)
   socket.on('connect_error', fallBack)
   socket.on('error', fallBack)
+
+  // A connection lost rather than closed: the node went away, the websocket
+  // dropped, a proxy timed out. Nothing else follows it - this socket does not
+  // reconnect - so without this the pane would sit on a stream that had already
+  // gone, with the poll standing down for it.
+  socket.on('disconnect', fallBack)
   socket.on('subscribed', payload => {
     streamContainer.value = payload?.container ?? null
     streaming.value = true
@@ -621,17 +835,19 @@ function startStreaming() {
   socket.on('connect', () => {
     socket.emit('subscribe', localStorage.getItem('zelidauth'), appname)
   })
-
-  return true
 }
 
 function closeStream() {
-  if (logSocket.value) {
-    logSocket.value.close()
-    logSocket.value = null
-  }
+  const socket = logSocket.value
+
+  // Let go of it first. Closing emits a disconnect, and the handler above reads
+  // this reference to tell a stream that failed from one this pane put down.
+  logSocket.value = null
+  if (socket) socket.close()
   streamContainer.value = null
   streaming.value = false
+  streamPositioned.value = false
+  openingLines.clear()
 }
 
 function startInterval() {
@@ -639,16 +855,36 @@ function startInterval() {
   pollingInterval.value = setInterval(() => fetchLogs(), 3000)
 }
 
-function startPolling() {
+async function startPolling() {
   stopPolling()
 
-  // One immediate poll whatever happens: it fills the pane now, and against a
-  // node with no stream it is the only thing that will.
-  fetchLogs()
-  if (!startStreaming()) startInterval()
+  const session = pollSession.value
+
+  // The interval runs from the start and stands down only once the node has
+  // answered `subscribed` - fetchLogs returns early while the stream is carrying
+  // the pane, so a live one costs no requests. A connection that hangs, or a
+  // node that takes it and then refuses the subscribe, leaves a pane that is
+  // polling rather than one that is doing nothing at all.
+  startInterval()
+
+  // One immediate poll: it fills the pane now rather than three seconds from
+  // now, and against a node with no stream it is the only thing that will.
+  //
+  // Awaited before the socket opens. The stream's own backfill appends to this
+  // pane, and an answer landing after it would be appended on top of lines it
+  // already covers - or, on the first answer, replace the pane it had filled.
+  await fetchLogs()
+
+  // Whatever the pane is doing now, it is not what this call was started for:
+  // another start, a stop, or a move to another log came in while that request
+  // was in flight, and opening a socket here would be a second one.
+  if (session !== pollSession.value || !pollingEnabled.value) return
+
+  startStreaming()
 }
-  
+
 function stopPolling() {
+  pollSession.value += 1
   closeStream()
   if (pollingInterval.value) {
     clearInterval(pollingInterval.value)

@@ -704,6 +704,11 @@
       "download": "Descargar",
       "noMatchingLogs": "No se encontraron registros coincidentes para '{keyword}'",
       "noLogsFound": "No se encontraron registros",
+      "rolledOver": "— los registros anteriores rotaron en este nodo y ya no están disponibles —",
+      "skipped": "— {count} líneas se escribieron más rápido de lo que este visor pudo recibirlas y no se entregaron —",
+      "truncated": "— {characters} caracteres se recortaron de una línea demasiado larga y no se entregaron —",
+      "skippedPoll": "— este visor se quedó demasiado atrás y algunas líneas no se entregaron —",
+      "streamEnded": "— la transmisión en vivo terminó; el panel se reinicia desde las líneas más recientes —",
       "errors": {
         "noLogsToDownload": "No hay registros disponibles para descargar"
       }

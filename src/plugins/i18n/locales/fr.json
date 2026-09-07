@@ -704,6 +704,11 @@
       "download": "Télécharger",
       "noMatchingLogs": "Aucun journal correspondant trouvé pour '{keyword}'",
       "noLogsFound": "Aucun journal trouvé",
+      "rolledOver": "— les journaux antérieurs ont été effacés par rotation sur ce nœud et ne sont plus disponibles —",
+      "skipped": "— {count} lignes ont été écrites plus vite que cette visionneuse ne pouvait les recevoir et n'ont pas été livrées —",
+      "truncated": "— {characters} caractères ont été coupés d'une ligne trop longue et n'ont pas été livrés —",
+      "skippedPoll": "— cette visionneuse a pris trop de retard et certaines lignes n'ont pas été livrées —",
+      "streamEnded": "— le flux en direct s'est terminé ; le panneau reprend à partir des lignes les plus récentes —",
       "errors": {
         "noLogsToDownload": "Aucun journal disponible au téléchargement"
       }
