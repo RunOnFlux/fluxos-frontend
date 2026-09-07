@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Gagal ngetung rega",
       "subscription": "Langganan:",
       "expiresInUnderWeek": "Kadaluwarsa kurang saka seminggu. Perbarui langganan kanggo nganyari.",
+      "extensionPendingConfirmation": "Perpanjangan langganan sampeyan isih dikonfirmasi dening jaringan. Enteni konfirmasine — ngirim saiki bakal diétung saka langganan sadurungé.",
       "notAvailable": "Ora Kasedhiya",
       "testApplicationDescription": "Uji instalasi/diluncurake aplikasi sampeyan kanggo mesthekake spesifikasi sampeyan mlaku kanthi bener.",
       "installationLogAppears": "Log instalasi bakal katon ing ngisor iki sawise rampung.",

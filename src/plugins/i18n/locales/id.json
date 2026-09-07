@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Gagal menghitung harga",
       "subscription": "Berlangganan:",
       "expiresInUnderWeek": "Kedaluwarsa dalam waktu kurang dari seminggu. Perpanjangan langganan untuk memperbarui.",
+      "extensionPendingConfirmation": "Perpanjangan langganan Anda masih dikonfirmasi oleh jaringan. Tunggu konfirmasinya — mengirim sekarang akan dihitung dari langganan sebelumnya.",
       "notAvailable": "Tidak Tersedia",
       "testApplicationDescription": "Uji pemasangan/peluncuran aplikasi Anda untuk memastikan spesifikasi Anda berfungsi dengan benar.",
       "installationLogAppears": "Log instalasi akan muncul di bawah setelah selesai.",

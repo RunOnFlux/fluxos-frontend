@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "无法计算价格",
       "subscription": "订阅：",
       "expiresInUnderWeek": "一周内到期。续订即可更新。",
+      "extensionPendingConfirmation": "您的订阅延长仍在等待网络确认。请等待确认完成——现在提交将按之前的订阅计算。",
       "notAvailable": "无法使用",
       "testApplicationDescription": "测试您的应用程序安装/启动，以确保您的规范正常工作。",
       "installationLogAppears": "完成后，安装日志将出现在下面。",

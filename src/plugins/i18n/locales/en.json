@@ -1436,6 +1436,7 @@
       "failedToCalculatePrice": "Failed to calculate price",
       "subscription": "Subscription:",
       "expiresInUnderWeek": "Expires in under a week. Renewal subscription to update.",
+      "extensionPendingConfirmation": "Your subscription extension is still being confirmed by the network. Wait for it to confirm — sending now would be measured against the previous subscription.",
       "notAvailable": "Not Available",
       "testApplicationDescription": "Test your application install/launch to ensure your specifications work correctly.",
       "installationLogAppears": "The installation log will appear below once completed.",

@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "価格の計算に失敗しました",
       "subscription": "サブスクリプション：",
       "expiresInUnderWeek": "有効期限は 1 週間以内です。更新するための更新サブスクリプション。",
+      "extensionPendingConfirmation": "サブスクリプションの延長はまだネットワークで承認中です。承認をお待ちください。今送信すると、以前のサブスクリプションを基準に計算されます。",
       "notAvailable": "利用不可",
       "testApplicationDescription": "アプリケーションのインストール/起動をテストして、仕様が正しく機能することを確認します。",
       "installationLogAppears": "完了すると、インストール ログが下に表示されます。",

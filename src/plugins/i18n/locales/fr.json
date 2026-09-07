@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Échec du calcul du prix",
       "subscription": "Abonnement:",
       "expiresInUnderWeek": "Expire dans moins d’une semaine. Renouvellement d'abonnement à mettre à jour.",
+      "extensionPendingConfirmation": "L'extension de votre abonnement est encore en cours de confirmation par le réseau. Attendez la confirmation : envoyer maintenant serait calculé sur l'abonnement précédent.",
       "notAvailable": "Pas disponible",
       "testApplicationDescription": "Testez l’installation/le lancement de votre application pour vous assurer que vos spécifications fonctionnent correctement.",
       "installationLogAppears": "Le journal d'installation apparaîtra ci-dessous une fois terminé.",

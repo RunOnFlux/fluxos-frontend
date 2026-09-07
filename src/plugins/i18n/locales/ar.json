@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "فشل في حساب السعر",
       "subscription": "الاشتراك:",
       "expiresInUnderWeek": "تنتهي في أقل من أسبوع. تجديد الاشتراك للتحديث.",
+      "extensionPendingConfirmation": "لا يزال تمديد اشتراكك قيد التأكيد من الشبكة. انتظر التأكيد — الإرسال الآن سيُحتسب على الاشتراك السابق.",
       "notAvailable": "غير متوفر",
       "testApplicationDescription": "اختبر تثبيت/تشغيل التطبيق الخاص بك للتأكد من أن مواصفاتك تعمل بشكل صحيح.",
       "installationLogAppears": "سيظهر سجل التثبيت أدناه بمجرد اكتماله.",

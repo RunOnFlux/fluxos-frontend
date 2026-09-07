@@ -375,6 +375,7 @@
       "managementAction": "Działanie zarządcze",
       "paymentWindowTime": "Pozostało 30 minut",
       "expiresInUnderWeek": "Wygasa za mniej niż tydzień",
+      "extensionPendingConfirmation": "Przedłużenie subskrypcji jest wciąż potwierdzane przez sieć. Poczekaj na potwierdzenie — wysłanie teraz zostałoby policzone według poprzedniej subskrypcji.",
       "testAndPay": "Przetestuj i zapłać",
       "multipleCurrencySupport": "Obsługa wielu walut",
       "publicKeyScoreLabel": "Wynik Klucza Publicznego:",

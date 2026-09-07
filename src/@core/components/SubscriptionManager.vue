@@ -5045,6 +5045,18 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
       }))
     }
 
+    // A replaced spec is a fresh read from the network, and a height that differs
+    // from the snapshot's means a message has landed since it was taken - an
+    // extension, most often. The snapshot is what an update without renewal is
+    // measured from, so it follows the chain: left behind, the update writes back
+    // the subscription the owner had before they paid to extend it.
+    if (typeof newSpec.height === 'number' && newSpec.height !== snapshotSourceHeight.value) {
+      originalExpireSnapshot.value = newSpec.expire ?? defaultExpireFor(newSpec.height)
+      snapshotSourceHeight.value = newSpec.height
+      adoptChainSpec(newSpec)
+      console.log('Newer app message seen - expire snapshot retaken:', originalExpireSnapshot.value, 'at height', newSpec.height)
+    }
+
     // Set up renewal settings
     // Find the correct renewalIndex based on original expire value with fork-aware conversion
     const foundIndex = renewalIndexForSpec(newSpec)
@@ -5265,10 +5277,132 @@ const originalExpireSnapshot = ref(null)
 const originalAppSpecSnapshot = ref(null)
 const testedSpecSnapshot = ref(null)
 
+// The message height originalExpireSnapshot was read from. An expire only means
+// something next to the message it was published with, so the two travel
+// together: when a newer message arrives, both are retaken.
+const snapshotSourceHeight = ref(null)
+
+/**
+ * EXPIRY IS THE CHAIN'S, NOT THIS FORM'S
+ *
+ * An app expires at (height of its last message + expire), so an update without
+ * renewal re-sends the blocks that are left in order to land on the same date.
+ * That makes the number a billing figure, not a display one: send one that is
+ * too small and the owner loses subscription they already paid for.
+ *
+ * The spec this form edits is a copy the page fetched on load, and nothing
+ * rewrites its height/expire when an extension lands - from this session, from
+ * another tab, or from a Stripe auto-renewal the UI never sees. So the chain's
+ * own answer is kept here, refreshed before it is needed, and anything asking
+ * "how much is left" takes the larger of the two.
+ */
+const chainExpiry = ref(null)      // { height, expire, hash } as last read from the network
+const pendingExtension = ref(null) // { hash, expire, fromHeight, paid } sent from here, not on chain yet
+
+// The expire a spec is treated as having when it carries none: v5 and older have
+// no expire field, and the node dates them a month post-fork, a week before it.
+function defaultExpireFor(height) {
+  return typeof height === 'number' && height >= FORK_BLOCK_HEIGHT ? 88000 : 22000
+}
+
+// Blocks left on a (height, expire) pair, counted in blocks of the current era.
+// A pre-fork block is two minutes and a post-fork block thirty seconds, so a
+// subscription that starts before the fork and runs past it spends what remains
+// four times faster - the same conversion the node makes.
+function remainingBlocksFor(height, expire, current) {
+  if (typeof height !== 'number' || typeof expire !== 'number' || !current) return null
+
+  const minutesPerBlockNow = current >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+
+  let remainingMinutes
+  if (height < FORK_BLOCK_HEIGHT && current >= FORK_BLOCK_HEIGHT) {
+    const elapsedMinutes = ((FORK_BLOCK_HEIGHT - height) * 2) + ((current - FORK_BLOCK_HEIGHT) * 0.5)
+
+    remainingMinutes = (expire * 2) - elapsedMinutes
+  } else {
+    remainingMinutes = (height + expire - current) * minutesPerBlockNow
+  }
+
+  return Math.floor(remainingMinutes / minutesPerBlockNow)
+}
+
+// What the chain says is left, or null when it has not been read yet.
+function chainRemainingBlocks(current) {
+  if (!chainExpiry.value) return null
+
+  return remainingBlocksFor(chainExpiry.value.height, chainExpiry.value.expire, current)
+}
+
+// An extension is no longer pending once the chain carries it: either the
+// message this session sent, or a later message at least as long as the one it
+// asked for (the same extension paid for through another route).
+function reconcilePendingExtension(spec) {
+  const pending = pendingExtension.value
+  if (!pending || !spec) return
+
+  const landed = (!!pending.hash && spec.hash === pending.hash)
+    || (typeof spec.height === 'number'
+      && typeof pending.fromHeight === 'number'
+      && spec.height > pending.fromHeight
+      && typeof spec.expire === 'number'
+      && typeof pending.expire === 'number'
+      && spec.expire >= pending.expire)
+
+  if (landed) {
+    console.log('Extension confirmed on chain - releasing the update hold')
+    pendingExtension.value = null
+  }
+}
+
+// Record a message the chain has accepted as the truth about this app's expiry.
+function adoptChainSpec(spec) {
+  if (!spec || typeof spec.height !== 'number') return false
+
+  chainExpiry.value = {
+    height: spec.height,
+    expire: spec.expire ?? defaultExpireFor(spec.height),
+    hash: spec.hash ?? null,
+  }
+
+  // A message the snapshot has not seen answers the same question it does -
+  // what this subscription was before anything here touched it - and answers it
+  // more recently, so the snapshot moves up to it.
+  if (typeof snapshotSourceHeight.value !== 'number' || spec.height > snapshotSourceHeight.value) {
+    originalExpireSnapshot.value = chainExpiry.value.expire
+    snapshotSourceHeight.value = chainExpiry.value.height
+  }
+
+  reconcilePendingExtension(spec)
+
+  return true
+}
+
+// Read the app's live specification. Cheap, cache-bypassed, and the only way to
+// see an extension that landed outside this form.
+async function refreshChainExpiry() {
+  if (props.newApp) return false
+
+  const appName = props.appSpec?.name || appDetails.value?.name
+  if (!appName) return false
+
+  try {
+    const response = await AppsService.getAppSpecifics(appName)
+    const spec = response?.data?.status === 'success' ? response.data.data : null
+
+    return adoptChainSpec(spec)
+  } catch (error) {
+    console.error('Failed to read live app specification for expiry:', error)
+
+    return false
+  }
+}
+
 onMounted(() => {
   // Fork-aware default for original expire snapshot
   const defaultExpire = (props.appSpec?.height && props.appSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
   originalExpireSnapshot.value = props.appSpec?.expire ?? defaultExpire
+  snapshotSourceHeight.value = props.appSpec?.height ?? null
+  if (!props.newApp) adoptChainSpec(props.appSpec)
 
   // Store original app spec for comparison (excluding expire field)
   // Using cloneDeep for better performance
@@ -5506,42 +5640,21 @@ watch(signature, newSignature => {
 })
 
 // 2️⃣  current remaining blocks based on the *original* value
-// FORK-AWARE: Calculate adjusted expiry block height accounting for fork transition
+// FORK-AWARE, and CHAIN-AWARE: the renewal periods are built on top of this
+// number, so it takes the longer of what the edited copy says and what the
+// network last reported. A copy that has not seen an extension would otherwise
+// price the next renewal as if the extension had never been bought.
 const originalExpireBlocks = computed(() => {
-  if (!currentBlockHeight.value || typeof props.appSpec?.height !== 'number') return null
-  if (!originalExpireSnapshot.value) return null
+  if (!currentBlockHeight.value) return null
+  if (!originalExpireSnapshot.value || typeof props.appSpec?.height !== 'number') return null
 
-  const registrationHeight = props.appSpec.height
-  const expireIn = originalExpireSnapshot.value
+  const local = remainingBlocksFor(props.appSpec.height, originalExpireSnapshot.value, currentBlockHeight.value)
+  const chain = chainRemainingBlocks(currentBlockHeight.value)
 
-  // Calculate naive expiry (registration + expire blocks)
-  const naiveExpiry = registrationHeight + expireIn
+  if (local === null) return chain
+  if (chain === null) return local
 
-  let adjustedExpiryBlock = naiveExpiry
-
-  // If app was registered before fork and naive expiry is after fork,
-  // we need to adjust to maintain the intended duration
-  if (registrationHeight < FORK_BLOCK_HEIGHT && naiveExpiry > FORK_BLOCK_HEIGHT) {
-    // Calculate intended subscription duration based on registration time
-    const blockTimeAtRegistration = 2 // Pre-fork: 2 min/block
-    const subscriptionDurationMinutes = expireIn * blockTimeAtRegistration
-
-    // Calculate pre-fork time consumed
-    const preForkBlocks = FORK_BLOCK_HEIGHT - registrationHeight
-    const preForkMinutes = preForkBlocks * 2
-
-    // Calculate remaining time that needs to be in post-fork blocks
-    const remainingMinutes = subscriptionDurationMinutes - preForkMinutes
-
-    // Convert remaining minutes to post-fork blocks
-    const postForkBlocks = remainingMinutes / 0.5
-
-    // Actual expiry block accounting for fork transition
-    adjustedExpiryBlock = FORK_BLOCK_HEIGHT + postForkBlocks
-  }
-
-  // Return remaining blocks: adjusted expiry - current block
-  return adjustedExpiryBlock - currentBlockHeight.value
+  return Math.max(local, chain)
 })
 
 // Base renewal periods in blocks (before adding currentExpire)
@@ -6022,6 +6135,17 @@ watch(hasCalculatedPrice, (newValue, oldValue) => {
     newValue,
     appSpecPrice: appSpecPrice?.value,
   })
+})
+
+// An extension only holds the rest of the session once it has been paid for: an
+// unpaid one never reaches the chain and is simply replaced by whatever is
+// signed next. The flag lives on pendingExtension rather than on the payment
+// state, which is wiped as soon as the Test & Pay tab is left.
+watch(paymentProcessing, started => {
+  if (started && pendingExtension.value && !pendingExtension.value.paid) {
+    pendingExtension.value = { ...pendingExtension.value, paid: true }
+    console.log('Extension paid - holding updates until the chain confirms it')
+  }
 })
 
 // Watch managementAction to restore/apply correct expire when switching modes
@@ -7979,6 +8103,32 @@ watch(tab, async newVal => {
 
     console.log('🔄 Tab 99 - After expire fix:', props.appSpec?.expire)
 
+    // Ask the network what this app's subscription looks like right now, before
+    // measuring what is left of it. The copy being edited was fetched when the
+    // page loaded; an extension that landed since - from this session, another
+    // tab, or a Stripe auto-renewal - exists only in this read.
+    if (!props.newApp && versionFlags.value.supportsExpire) {
+      await refreshChainExpiry()
+    }
+
+    // An extension this session paid for and the chain has not accepted yet
+    // cannot be measured at all: the read above still describes the subscription
+    // it replaces, and any message signed now would be measured from that. Hold,
+    // rather than sign away what was just paid for. The hold lifts by itself -
+    // the read above clears it the moment the extension appears on chain.
+    if (!props.newApp && pendingExtension.value?.paid && managementAction.value !== 'cancel') {
+      const message = t('core.subscriptionManager.extensionPendingConfirmation')
+
+      verifyAppSpecError.value = message
+      verifyAppSpecResponse.value = false
+      isVeryfitying.value = false
+      hasValidatedSpec.value = true
+      hasCheckedExpiry.value = checkedExpiry
+      showToast('error', message)
+
+      return
+    }
+
     await fetchBlockHeight()
     checkedExpiry = true
 
@@ -8499,6 +8649,18 @@ async function verifyAppSpec() {
       }
     }
 
+    // Last check before this is signed: whatever the form arrived at, the message
+    // must not carry less subscription than the chain says is left, or the update
+    // shortens what the owner paid for. Cheap, and it does not depend on which
+    // path set expire above.
+    if (!props.newApp && !renewalEnabled.value && managementAction.value === 'update' && appSpecTemp.version >= 6) {
+      const chainRemaining = chainRemainingBlocks(blockHeight.value)
+      if (chainRemaining !== null && chainRemaining > 0 && chainRemaining > (appSpecTemp.expire ?? 0)) {
+        console.log(`[V${appSpecTemp.version}] UPDATE - raising expire to the chain's remaining blocks:`, chainRemaining, 'was', appSpecTemp.expire)
+        appSpecTemp.expire = chainRemaining
+      }
+    }
+
     // Check if this is a marketplace app (for tracking/display purposes only)
     // Like Flux Home UI: marketplace info used ONLY for UI, NOT for pricing
     const appName = appSpecTemp.name
@@ -8857,6 +9019,17 @@ async function fetchBlockHeight() {
 
             // If remainingMinutes <= 0, keep negative blocksToExpire (will be caught by validation)
 
+            // An update re-sends what is left, so a copy that has not seen an
+            // extension would send the app back to the subscription it had
+            // before. Where the chain knows better, the chain wins.
+            const chainRemaining = chainRemainingBlocks(blockHeight.value)
+            if (chainRemaining !== null && chainRemaining > blocksToExpire.value) {
+              console.log('Chain reports more subscription left than the local spec:', chainRemaining, 'vs', blocksToExpire.value)
+              blocksToExpire.value = chainRemaining
+              remainingMinutes = chainRemaining * (blockHeight.value >= FORK_BLOCK_HEIGHT ? 0.5 : 2)
+              isExpiryValid.value = remainingMinutes >= minMinutes
+            }
+
             console.log('Expiry validation:', {
               height,
               blockHeight: blockHeight.value,
@@ -8984,6 +9157,20 @@ async function propagateSignedMessage() {
 
     if (response.data?.status === 'success') {
       registrationHash.value = response.data.data
+
+      // Remember an extension until the chain carries it. Between here and
+      // confirmation the network still reports the subscription being replaced,
+      // so nothing else may be measured against it - see the hold in the
+      // validate step.
+      if (!props.newApp && (managementAction.value === 'renewal' || renewalEnabled.value)) {
+        pendingExtension.value = {
+          hash: response.data.data,
+          expire: appSpecFormated.value?.expire ?? null,
+          fromHeight: chainExpiry.value?.height ?? props.appSpec?.height ?? null,
+          paid: false,
+        }
+        console.log('Extension propagated - watching for its payment:', pendingExtension.value)
+      }
 
       // Sync appDetails.name with the lowercased name from appSpecFormated
       // This ensures the "Manage Application" button URL matches the registered app name
@@ -10213,6 +10400,17 @@ const startPaymentMonitoring = async () => {
             paymentProcessing.value = false
             paymentCompleted.value = true
 
+            // The confirmed message is the app's subscription from here on:
+            // adopting it moves both the chain reference and the snapshot an
+            // update is measured from, so whatever this session does next starts
+            // from what was just published. It runs before the spec snapshot
+            // below, which reads the height it writes - taken the other way
+            // round, that height alone would later read as an edit by the user.
+            if (adoptChainSpec(currentAppSpec) && props.appSpec) {
+              props.appSpec.height = chainExpiry.value.height
+              console.log('📸 Expiry moved to the confirmed message:', chainExpiry.value)
+            }
+
             // Update the original spec snapshot to the deployed spec (so future changes can be detected)
             if (props.appSpec) {
               const specCopy = cloneDeep(props.appSpec)
@@ -10263,6 +10461,13 @@ const cancelPaymentMonitoring = () => {
   paymentConfirmed.value = false
   paymentMethod.value = ''
   paymentAmount.value = 0
+
+  // An extension that is no longer being paid for will never reach the chain,
+  // so it stops holding back the rest of the session.
+  if (pendingExtension.value) {
+    console.log('Payment abandoned - releasing the update hold')
+    pendingExtension.value = null
+  }
 
   showToast('info', 'Payment monitoring cancelled')
 }

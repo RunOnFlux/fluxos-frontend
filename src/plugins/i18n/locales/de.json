@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Preis konnte nicht berechnet werden",
       "subscription": "Abonnement:",
       "expiresInUnderWeek": "Läuft in weniger als einer Woche ab. Verlängerungsabonnement zum Aktualisieren.",
+      "extensionPendingConfirmation": "Die Verlängerung deines Abonnements wird noch vom Netzwerk bestätigt. Warte auf die Bestätigung – jetzt zu senden würde am vorherigen Abonnement gemessen.",
       "notAvailable": "Nicht verfügbar",
       "testApplicationDescription": "Testen Sie die Installation/den Start Ihrer Anwendung, um sicherzustellen, dass Ihre Spezifikationen korrekt funktionieren.",
       "installationLogAppears": "Das Installationsprotokoll wird nach Abschluss unten angezeigt.",

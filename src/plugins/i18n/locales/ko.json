@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "가격을 계산하지 못했습니다.",
       "subscription": "신청:",
       "expiresInUnderWeek": "일주일 이내에 만료됩니다. 업데이트하려면 구독을 갱신하세요.",
+      "extensionPendingConfirmation": "구독 연장이 아직 네트워크에서 확인되는 중입니다. 확인될 때까지 기다려 주세요 — 지금 보내면 이전 구독 기준으로 계산됩니다.",
       "notAvailable": "사용할 수 없음",
       "testApplicationDescription": "애플리케이션 설치/실행을 테스트하여 사양이 올바르게 작동하는지 확인하세요.",
       "installationLogAppears": "완료되면 설치 로그가 아래에 나타납니다.",

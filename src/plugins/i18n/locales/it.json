@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Impossibile calcolare il prezzo",
       "subscription": "Sottoscrizione:",
       "expiresInUnderWeek": "Scade tra meno di una settimana. Rinnovo abbonamento per aggiornamento.",
+      "extensionPendingConfirmation": "L'estensione del tuo abbonamento è ancora in fase di conferma dalla rete. Attendi la conferma: inviare ora verrebbe calcolato sull'abbonamento precedente.",
       "notAvailable": "Non disponibile",
       "testApplicationDescription": "Testa l'installazione/avvio dell'applicazione per assicurarti che le specifiche funzionino correttamente.",
       "installationLogAppears": "Il registro di installazione verrà visualizzato di seguito una volta completato.",

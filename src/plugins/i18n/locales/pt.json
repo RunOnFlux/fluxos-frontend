@@ -1339,6 +1339,7 @@
       "failedToCalculatePrice": "Falha ao calcular o preço",
       "subscription": "Subscrição:",
       "expiresInUnderWeek": "Expira em menos de uma semana. Renovação da assinatura para atualização.",
+      "extensionPendingConfirmation": "A extensão da sua subscrição ainda está a ser confirmada pela rede. Aguarde a confirmação — enviar agora seria calculado com base na subscrição anterior.",
       "notAvailable": "Não disponível",
       "testApplicationDescription": "Teste a instalação/inicialização do seu aplicativo para garantir que suas especificações funcionem corretamente.",
       "installationLogAppears": "O log de instalação aparecerá abaixo depois de concluído.",

@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Không tính được giá",
       "subscription": "Đăng ký:",
       "expiresInUnderWeek": "Hết hạn trong vòng chưa đầy một tuần. Đăng ký gia hạn để cập nhật.",
+      "extensionPendingConfirmation": "Phần gia hạn đăng ký của bạn vẫn đang được mạng xác nhận. Hãy đợi xác nhận — gửi ngay bây giờ sẽ được tính theo gói đăng ký trước đó.",
       "notAvailable": "Không có sẵn",
       "testApplicationDescription": "Kiểm tra quá trình cài đặt/khởi chạy ứng dụng của bạn để đảm bảo thông số kỹ thuật của bạn hoạt động chính xác.",
       "installationLogAppears": "Nhật ký cài đặt sẽ xuất hiện bên dưới sau khi hoàn tất.",

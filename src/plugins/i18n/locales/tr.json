@@ -1321,6 +1321,7 @@
       "failedToCalculatePrice": "Fiyat hesaplanamadı",
       "subscription": "Abonelik:",
       "expiresInUnderWeek": "Bir haftadan kısa sürede sona eriyor. Güncellemek için aboneliğin yenilenmesi.",
+      "extensionPendingConfirmation": "Abonelik uzatmanız hâlâ ağ tarafından onaylanıyor. Onaylanmasını bekleyin — şimdi göndermek önceki aboneliğe göre hesaplanır.",
       "notAvailable": "Müsait değil",
       "testApplicationDescription": "Belirtimlerinizin doğru çalıştığından emin olmak için uygulama yüklemenizi/başlatmanızı test edin.",
       "installationLogAppears": "Kurulum günlüğü tamamlandığında aşağıda görünecektir.",
