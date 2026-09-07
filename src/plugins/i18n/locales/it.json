@@ -704,6 +704,11 @@
       "download": "Scaricamento",
       "noMatchingLogs": "Nessun log corrispondente trovato per '{keyword}'",
       "noLogsFound": "Nessun registro trovato",
+      "rolledOver": "— i log precedenti sono stati ruotati su questo nodo e non sono più disponibili —",
+      "skipped": "— {count} righe sono state scritte più velocemente di quanto questo visualizzatore potesse riceverle e non sono state consegnate —",
+      "truncated": "— {characters} caratteri sono stati tagliati da una riga troppo lunga e non sono stati consegnati —",
+      "skippedPoll": "— questo visualizzatore è rimasto troppo indietro e alcune righe non sono state consegnate —",
+      "streamEnded": "— lo streaming in diretta è terminato; il pannello riparte dalle righe più recenti —",
       "errors": {
         "noLogsToDownload": "Nessun registro disponibile per il download"
       }

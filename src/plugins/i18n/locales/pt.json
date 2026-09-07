@@ -704,6 +704,11 @@
       "download": "Download",
       "noMatchingLogs": "Nenhum registro correspondente encontrado para '{keyword}'",
       "noLogsFound": "Nenhum registro encontrado",
+      "rolledOver": "— os registros anteriores foram rotacionados neste nó e não estão mais disponíveis —",
+      "skipped": "— {count} linhas foram escritas mais rápido do que este visualizador conseguiu recebê-las e não foram entregues —",
+      "truncated": "— {characters} caracteres foram cortados de uma linha longa demais e não foram entregues —",
+      "skippedPoll": "— este visualizador ficou muito atrasado e algumas linhas não foram entregues —",
+      "streamEnded": "— a transmissão ao vivo terminou; o painel recomeça a partir das linhas mais recentes —",
       "errors": {
         "noLogsToDownload": "Nenhum registro disponível para download"
       }

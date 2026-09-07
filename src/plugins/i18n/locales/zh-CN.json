@@ -704,6 +704,11 @@
       "download": "下载",
       "noMatchingLogs": "未找到“{keyword}”的匹配日志",
       "noLogsFound": "没有找到日志",
+      "rolledOver": "— 此节点上较早的日志已轮转，不再可用 —",
+      "skipped": "— {count} 行的写入速度超过此查看器的接收速度，未能送达 —",
+      "truncated": "— 某一行过长，{characters} 个字符被截断，未能送达 —",
+      "skippedPoll": "— 此查看器落后太多，部分日志行未能送达 —",
+      "streamEnded": "— 实时流已结束；面板将从最新的日志行重新开始 —",
       "errors": {
         "noLogsToDownload": "没有可供下载的日志"
       }

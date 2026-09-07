@@ -704,6 +704,11 @@
       "download": "다운로드",
       "noMatchingLogs": "'{keyword}'에 대해 일치하는 로그가 없습니다.",
       "noLogsFound": "로그를 찾을 수 없습니다.",
+      "rolledOver": "— 이 노드에서 이전 로그가 순환되어 더 이상 사용할 수 없습니다 —",
+      "skipped": "— {count}줄이 이 뷰어가 수신할 수 있는 속도보다 빠르게 기록되어 전달되지 않았습니다 —",
+      "truncated": "— 너무 긴 줄에서 {characters}자가 잘려 전달되지 않았습니다 —",
+      "skippedPoll": "— 이 뷰어가 너무 뒤처져 일부 줄이 전달되지 않았습니다 —",
+      "streamEnded": "— 실시간 스트림이 종료되었습니다. 패널이 최신 줄부터 다시 시작합니다 —",
       "errors": {
         "noLogsToDownload": "다운로드할 수 있는 로그가 없습니다."
       }

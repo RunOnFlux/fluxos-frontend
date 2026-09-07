@@ -704,6 +704,11 @@
       "download": "Unduh",
       "noMatchingLogs": "Tidak ditemukan log yang cocok untuk '{keyword}'",
       "noLogsFound": "Tidak ada log yang ditemukan",
+      "rolledOver": "— log sebelumnya telah dirotasi di node ini dan tidak lagi tersedia —",
+      "skipped": "— {count} baris ditulis lebih cepat daripada yang dapat diterima penampil ini dan tidak terkirim —",
+      "truncated": "— {characters} karakter dipotong dari baris yang terlalu panjang dan tidak terkirim —",
+      "skippedPoll": "— penampil ini tertinggal terlalu jauh dan sebagian baris tidak terkirim —",
+      "streamEnded": "— siaran langsung berakhir; panel dimulai lagi dari baris terbaru —",
       "errors": {
         "noLogsToDownload": "Tidak ada log yang tersedia untuk diunduh"
       }

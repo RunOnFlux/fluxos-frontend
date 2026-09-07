@@ -704,6 +704,11 @@
       "download": "Tải xuống",
       "noMatchingLogs": "Không tìm thấy nhật ký phù hợp cho '{keyword}'",
       "noLogsFound": "Không tìm thấy nhật ký nào",
+      "rolledOver": "— nhật ký cũ hơn đã bị xoay vòng trên nút này và không còn khả dụng —",
+      "skipped": "— {count} dòng được ghi nhanh hơn khả năng nhận của trình xem này và không được gửi đến —",
+      "truncated": "— {characters} ký tự đã bị cắt khỏi một dòng quá dài và không được gửi đến —",
+      "skippedPoll": "— trình xem này bị tụt lại quá xa và một số dòng không được gửi đến —",
+      "streamEnded": "— luồng trực tiếp đã kết thúc; khung hiển thị bắt đầu lại từ các dòng mới nhất —",
       "errors": {
         "noLogsToDownload": "Không có nhật ký nào để tải xuống"
       }

@@ -704,6 +704,11 @@
       "download": "Herunterladen",
       "noMatchingLogs": "Für „{keyword}“ wurden keine passenden Protokolle gefunden.",
       "noLogsFound": "Keine Protokolle gefunden",
+      "rolledOver": "— ältere Protokolle wurden auf diesem Node rotiert und sind nicht mehr verfügbar —",
+      "skipped": "— {count} Zeilen wurden schneller geschrieben, als dieser Betrachter sie empfangen konnte, und wurden nicht zugestellt —",
+      "truncated": "— {characters} Zeichen wurden aus einer zu langen Zeile entfernt und nicht zugestellt —",
+      "skippedPoll": "— dieser Betrachter ist zu weit zurückgefallen; einige Zeilen wurden nicht zugestellt —",
+      "streamEnded": "— der Live-Stream wurde beendet; die Ansicht beginnt erneut mit den neuesten Zeilen —",
       "errors": {
         "noLogsToDownload": "Es sind keine Protokolle zum Herunterladen verfügbar"
       }
