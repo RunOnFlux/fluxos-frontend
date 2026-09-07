@@ -55,7 +55,7 @@
       <div class="d-flex flex-wrap align-center">
         <VSelect
           v-model="selectedApp"
-          :items="appSpec?.compose ? appSpec.compose.map(c => c.name) : [appSpec.name]"
+          :items="appSpec?.version >= 4 ? componentNames : [appSpec.name]"
           :label="t('core.terminal.selectComponent')"
           dense
           density="comfortable"
@@ -270,6 +270,14 @@ const props = defineProps({
     type: Function,
     required: true,
   },
+
+  // [{ name, masterSlave }]. Where a component list comes from is the caller's
+  // decision - the specification, or the names endpoint for a viewer who may not
+  // read it - so this never reaches into compose itself.
+  components: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const { t } = useI18n()
@@ -312,19 +320,24 @@ const envInputValue = ref('')
 const enableUser = ref(false)
 const enableEnvironment = ref(false)
 
+const componentNames = computed(() => props.components.map(component => component.name))
+
 const isComposeSingle = computed(() => {
   if (props.appSpec?.version <= 3) {
     return true
   }
 
-  return props.appSpec.compose?.length === 1
+  return componentNames.value.length === 1
 })
 
 watchEffect(() => {
   if (props.appSpec && props.appSpec?.version <= 3) {
     selectedApp.value = props.appSpec.name
-  } else if (props.appSpec && props.appSpec?.compose && props.appSpec?.compose.length < 2) {
-    selectedApp.value = props.appSpec?.compose[0].name
+
+  // Exactly one, not "fewer than two": an empty list satisfies "fewer than two"
+  // and has no [0] to select.
+  } else if (componentNames.value.length === 1) {
+    [selectedApp.value] = componentNames.value
   }
 })
 
@@ -385,7 +398,7 @@ function connectTerminal(terminalId, name) {
   }
 
   if (props.appSpec.version >= 4) {
-    const found = props.appSpec.compose?.some(c => c.name === termData.selectedApp)
+    const found = componentNames.value.includes(termData.selectedApp)
     if (!found) {
       showToast('danger', t('core.terminal.errors.selectContainer'))
       closeTerminal(terminalId)

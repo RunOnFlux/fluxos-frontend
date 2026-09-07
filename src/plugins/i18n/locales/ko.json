@@ -226,7 +226,8 @@
       "necessaryDescription": "이러한 쿠키는 웹사이트가 제대로 작동하는 데 필수적입니다. 비활성화할 수 없습니다.",
       "analytics": "분석 쿠키",
       "analyticsDescription": "이러한 쿠키는 익명으로 정보를 수집하고 보고함으로써 방문자가 당사 웹사이트와 상호 작용하는 방식을 이해하는 데 도움이 됩니다."
-    }
+    },
+    "notAvailable": "사용할 수 없음"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name}이(가) 삭제되었습니다",
       "files": {
         "emptyDirectory": "빈 디렉토리"
-      }
+      },
+      "noVolumeData": "이 구성 요소에 대한 볼륨 데이터가 없습니다"
     },
     "auditViewer": {
       "title": "감사 로그",
@@ -702,6 +704,11 @@
       "download": "다운로드",
       "noMatchingLogs": "'{keyword}'에 대해 일치하는 로그가 없습니다.",
       "noLogsFound": "로그를 찾을 수 없습니다.",
+      "rolledOver": "— 이 노드에서 이전 로그가 순환되어 더 이상 사용할 수 없습니다 —",
+      "skipped": "— {count}줄이 이 뷰어가 수신할 수 있는 속도보다 빠르게 기록되어 전달되지 않았습니다 —",
+      "truncated": "— 너무 긴 줄에서 {characters}자가 잘려 전달되지 않았습니다 —",
+      "skippedPoll": "— 이 뷰어가 너무 뒤처져 일부 줄이 전달되지 않았습니다 —",
+      "streamEnded": "— 실시간 스트림이 종료되었습니다. 패널이 최신 줄부터 다시 시작합니다 —",
       "errors": {
         "noLogsToDownload": "다운로드할 수 있는 로그가 없습니다."
       }
@@ -1108,6 +1115,7 @@
       "instancesWarningOne": "분산형 네트워크에 권장되는 최소 인스턴스 수는 3개입니다. 인스턴스가 1개뿐이므로 앱을 실행하는 노드가 재부팅되거나 종료되면 앱이 몇 분 동안 가동 중지될 수 있습니다.",
       "instancesWarningSyncthing": "분산형 영구 저장소가 있는 앱의 최소 인스턴스는 2개입니다. 더 적은 수의 인스턴스를 사용하려면 볼륨 경로 설정에서 데이터 동기화를 비활성화하세요.",
       "instancesAutoAdjusted": "데이터 동기화에 최소 {to}개의 인스턴스가 필요하므로 인스턴스가 {from}에서 {to}로 자동 조정되었습니다.",
+      "renewalPeriodAutoAdjusted": "갱신 기간이 자동으로 {from}에서 {to}(으)로 조정되었습니다",
       "instancesWarningLegacy": "인스턴스를 3 미만으로 줄이는 것은 사양 버전 8 이상의 앱에서만 사용할 수 있습니다. 이 기능을 활성화하려면 앱 사양을 업데이트하세요.",
       "period": "기간",
       "renewal": "갱신",
@@ -1276,6 +1284,8 @@
       "visitFluxNode": "FluxNode 방문",
       "signMessage": "메시지 서명",
       "retrySigning": "서명 재시도",
+      "sessionExpired": "세션이 만료되었습니다. 다시 로그인해 주세요.",
+      "signInAgain": "다시 로그인",
       "cancelSigning": "서명 취소",
       "enablePaymentAnyway": "어쨌든 결제 활성화",
       "testCompleted": "테스트 완료",
@@ -1316,6 +1326,7 @@
       "failedToCalculatePrice": "가격을 계산하지 못했습니다.",
       "subscription": "신청:",
       "expiresInUnderWeek": "일주일 이내에 만료됩니다. 업데이트하려면 구독을 갱신하세요.",
+      "extensionPendingConfirmation": "구독 연장이 아직 네트워크에서 확인되는 중입니다. 확인될 때까지 기다려 주세요 — 지금 보내면 이전 구독 기준으로 계산됩니다.",
       "notAvailable": "사용할 수 없음",
       "testApplicationDescription": "애플리케이션 설치/실행을 테스트하여 사양이 올바르게 작동하는지 확인하세요.",
       "installationLogAppears": "완료되면 설치 로그가 아래에 나타납니다.",
@@ -1515,7 +1526,10 @@
       "instancesTooltip": "앱의 독립된 복사본으로, 각각 다른 노드에서 실행됩니다. 3개 이상이면 노드가 오프라인이 되어도 높은 가용성을 제공합니다.",
       "hardwareResourceTooltip": "인스턴스당 할당되는 리소스입니다. 일반적인 웹 앱에는 약 0.5 vCPU / 512 MB가 필요합니다.",
       "importComposeShort": "compose / 사양 가져오기",
-      "importComposeTooltip": "기존 docker-compose 또는 Flux 사양(JSON/YAML)을 가져와 양식을 미리 채웁니다"
+      "importComposeTooltip": "기존 docker-compose 또는 Flux 사양(JSON/YAML)을 가져와 양식을 미리 채웁니다",
+      "noLoginCredentials": "로그인 자격 증명을 찾을 수 없습니다. 다시 로그인해 주세요.",
+      "failedToPrepareManualSigning": "수동 서명을 준비하지 못했습니다: {error}",
+      "pleaseEnterSignature": "서명을 입력해 주세요."
     },
     "tosDialog": {
       "loading": "서비스 약관 로드 중..."
@@ -1624,6 +1638,14 @@
       "reviewDeploy": "검토 및 배포",
       "advancedNeeds": "여러 컨테이너, 사용자 지정 도메인, 명령, 고정 IP 또는 국가 단위 위치 규칙이 필요하신가요?",
       "openAdvanced": "고급 설정 열기"
+    },
+    "fluxStorageReveal": {
+      "reveal": "스토리지 값 표시",
+      "tooLarge": "데이터가 너무 커서 표시할 수 없습니다.",
+      "loadFailed": "Flux Storage에서 값을 불러오지 못했습니다.",
+      "noData": "데이터가 없습니다.",
+      "notFound": "저장된 값을 찾을 수 없습니다.",
+      "revealFailed": "스토리지 값을 표시하지 못했습니다."
     }
   },
   "components": {
@@ -2816,7 +2838,8 @@
           "manage": "관리하다",
           "install": "설치하다",
           "remove": "제거하다",
-          "visit": "방문하다"
+          "visit": "방문하다",
+          "clone": "복제"
         },
         "searchIpPlaceholder": "IP 검색...",
         "persistentStorage": "영구 저장소",
@@ -2903,6 +2926,11 @@
           "networkTx": "eth0의 TX",
           "ioRead": "읽다",
           "ioWrite": "쓰다"
+        },
+        "encryptedComposition": {
+          "title": "구성 요소가 암호화되어 있습니다",
+          "ownerOnly": "이 앱의 소유자만 구성 요소 설정을 복호화할 수 있습니다.",
+          "image": "암호화됨"
         }
       },
       "redeploy": {
@@ -2962,7 +2990,8 @@
           "name": "이름",
           "status": "상태",
           "description": "설명"
-        }
+        },
+        "encrypted": "암호화됨"
       },
       "register": {
         "landing": {
@@ -5128,6 +5157,7 @@
       "windrose": "협동 해적 서바이벌 전용 서버",
       "projectzomboid": "스팀 창작마당 모드, 최대 32명",
       "valheim": "크로스플레이 서바이벌 서버, 최대 10인",
+      "terraria": "TShock 플러그인 & 명령어, 매시간 월드 백업",
       "fivem": "txAdmin과 MySQL이 포함된 롤플레이 서버",
       "wordpress": "탈중앙화된 검열 저항 WordPress",
       "n8n": "셀프 호스팅 n8n 워크플로 자동화",

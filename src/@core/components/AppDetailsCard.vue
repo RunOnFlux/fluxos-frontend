@@ -42,6 +42,54 @@
     >
       {{ snackbar.message }}
     </VSnackbar>
+
+    <!-- Flux Storage contacts reveal dialog -->
+    <VDialog v-model="revealDialog" max-width="700">
+      <VCard>
+        <VCardTitle class="bg-primary text-white d-flex align-center">
+          <VIcon icon="mdi-cloud-download-outline" class="mr-2" />
+          {{ t('core.appDetailsCard.contacts') }} — Flux Storage
+        </VCardTitle>
+        <VCardText class="pt-4">
+          <div v-if="revealing" class="text-center pa-6">
+            <VProgressCircular indeterminate color="primary" />
+          </div>
+          <template v-else-if="revealResult">
+            <VAlert
+              v-if="revealResult.status !== 'ok'"
+              type="warning"
+              variant="tonal"
+              class="mb-2"
+            >
+              {{ revealResult.status === 'too-large'
+                ? t('core.fluxStorageReveal.tooLarge')
+                : (revealResult.message || t('core.fluxStorageReveal.loadFailed')) }}
+            </VAlert>
+            <template v-else>
+              <div class="text-caption text-medium-emphasis mb-2 text-truncate">
+                {{ revealResult.url }}
+              </div>
+              <VTable density="compact">
+                <tbody>
+                  <tr v-for="(value, i) in revealResult.values" :key="i">
+                    <td><kbd class="resource-kbd">{{ value }}</kbd></td>
+                  </tr>
+                </tbody>
+              </VTable>
+            </template>
+          </template>
+          <VAlert v-else type="error" variant="tonal">
+            {{ revealError || t('core.fluxStorageReveal.noData') }}
+          </VAlert>
+        </VCardText>
+        <VCardActions>
+          <VSpacer />
+          <VBtn variant="tonal" @click="revealDialog = false">
+            {{ t('common.buttons.close') }}
+          </VBtn>
+        </VCardActions>
+      </VCard>
+    </VDialog>
     <ListEntry
       :title="t('core.appDetailsCard.name')"
       :data="app.name"
@@ -81,6 +129,18 @@
       kbd-variant="secondary"
       hide-if-empty
     />
+    <div v-if="contactsHasStorageMarker" class="ms-2 mb-3">
+      <VBtn
+        size="x-small"
+        variant="tonal"
+        color="primary"
+        prepend-icon="mdi-cloud-download-outline"
+        :loading="revealing"
+        @click="revealContacts"
+      >
+        {{ t('core.fluxStorageReveal.reveal') }}
+      </VBtn>
+    </div>
     <ListEntry
       :title="t('core.appDetailsCard.geolocation')"
       title-icon="mdi-earth"
@@ -182,6 +242,7 @@ import { useI18n } from 'vue-i18n'
 import geolocations from "@/utils/geolocation"
 import ExplorerService from '@/services/ExplorerService'
 import DaemonService from '@/services/DaemonService'
+import { useFluxStorageReveal, hasStorageMarker, STORAGE_MARKERS } from '@/composables/useFluxStorageReveal'
 
 const props = defineProps({
   app: Object,
@@ -209,6 +270,30 @@ const props = defineProps({
 })
 
 const { t } = useI18n()
+
+// On-demand Flux Storage reveal for F_S_CONTACTS. Default view keeps showing the raw link.
+const { revealing, fetchResolvedSpec, extractField } = useFluxStorageReveal()
+const revealDialog = ref(false)
+const revealResult = ref(null)
+const revealError = ref('')
+
+const contactsHasStorageMarker = computed(
+  () => hasStorageMarker(props.app?.contacts, STORAGE_MARKERS.contacts),
+)
+
+async function revealContacts() {
+  revealResult.value = null
+  revealError.value = ''
+  revealDialog.value = true
+  try {
+    const isEnterprise = props.app?.version >= 8 && !!props.app?.enterprise
+    const spec = await fetchResolvedSpec({ appName: props.app?.name, isEnterprise })
+    revealResult.value = extractField(spec, { resolvedKey: 'contactsResolved' })
+    if (!revealResult.value) revealError.value = t('core.fluxStorageReveal.notFound')
+  } catch (error) {
+    revealError.value = error?.message || t('core.fluxStorageReveal.revealFailed')
+  }
+}
 
 // PON Fork configuration - block height where chain speed increases 4x
 const FORK_BLOCK_HEIGHT = 2020000

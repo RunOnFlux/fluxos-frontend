@@ -226,7 +226,8 @@
       "necessaryDescription": "Cookies ini sangat penting agar situs web dapat berfungsi dengan baik. Mereka tidak dapat dinonaktifkan.",
       "analytics": "Cookie Analisis",
       "analyticsDescription": "Cookies ini dapat membantu kami memahami bagaimana pengunjung berinteraksi dengan situs web kami dengan mengumpulkan dan melaporkan informasi secara anonim."
-    }
+    },
+    "notAvailable": "Tidak tersedia"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} dihapus",
       "files": {
         "emptyDirectory": "Direktori Kosong"
-      }
+      },
+      "noVolumeData": "Tidak ada data volume untuk komponen ini"
     },
     "auditViewer": {
       "title": "Log Audit",
@@ -702,6 +704,11 @@
       "download": "Unduh",
       "noMatchingLogs": "Tidak ditemukan log yang cocok untuk '{keyword}'",
       "noLogsFound": "Tidak ada log yang ditemukan",
+      "rolledOver": "— log sebelumnya telah dirotasi di node ini dan tidak lagi tersedia —",
+      "skipped": "— {count} baris ditulis lebih cepat daripada yang dapat diterima penampil ini dan tidak terkirim —",
+      "truncated": "— {characters} karakter dipotong dari baris yang terlalu panjang dan tidak terkirim —",
+      "skippedPoll": "— penampil ini tertinggal terlalu jauh dan sebagian baris tidak terkirim —",
+      "streamEnded": "— siaran langsung berakhir; panel dimulai lagi dari baris terbaru —",
       "errors": {
         "noLogsToDownload": "Tidak ada log yang tersedia untuk diunduh"
       }
@@ -1108,6 +1115,7 @@
       "instancesWarningOne": "Minimum yang direkomendasikan untuk jaringan terdesentralisasi adalah 3 contoh. Dengan hanya 1 instance, aplikasi Anda mungkin mengalami downtime selama beberapa menit jika node yang menjalankan aplikasi di-boot ulang atau dimatikan.",
       "instancesWarningSyncthing": "Instance minimum untuk aplikasi dengan penyimpanan persisten terdesentralisasi adalah 2. Untuk menggunakan lebih sedikit instance, nonaktifkan sinkronisasi data di pengaturan jalur volume.",
       "instancesAutoAdjusted": "Instance secara otomatis disesuaikan dari {from} menjadi {to} karena sinkronisasi data memerlukan minimum {to} instance.",
+      "renewalPeriodAutoAdjusted": "Periode perpanjangan otomatis disesuaikan dari {from} ke {to}",
       "instancesWarningLegacy": "Mengurangi instance di bawah 3 hanya tersedia untuk aplikasi dengan spesifikasi versi 8 atau lebih tinggi. Perbarui spesifikasi aplikasi Anda untuk mengaktifkan fitur ini.",
       "period": "Periode",
       "renewal": "Pembaruan",
@@ -1276,6 +1284,8 @@
       "visitFluxNode": "Kunjungi FluxNode",
       "signMessage": "Tandatangani Pesan",
       "retrySigning": "Coba Lagi Menandatangani",
+      "sessionExpired": "Sesi Anda telah berakhir. Silakan masuk lagi.",
+      "signInAgain": "Masuk Lagi",
       "cancelSigning": "Batalkan Penandatanganan",
       "enablePaymentAnyway": "Tetap Aktifkan Pembayaran",
       "testCompleted": "Tes Selesai",
@@ -1316,6 +1326,7 @@
       "failedToCalculatePrice": "Gagal menghitung harga",
       "subscription": "Berlangganan:",
       "expiresInUnderWeek": "Kedaluwarsa dalam waktu kurang dari seminggu. Perpanjangan langganan untuk memperbarui.",
+      "extensionPendingConfirmation": "Perpanjangan langganan Anda masih dikonfirmasi oleh jaringan. Tunggu konfirmasinya — mengirim sekarang akan dihitung dari langganan sebelumnya.",
       "notAvailable": "Tidak Tersedia",
       "testApplicationDescription": "Uji pemasangan/peluncuran aplikasi Anda untuk memastikan spesifikasi Anda berfungsi dengan benar.",
       "installationLogAppears": "Log instalasi akan muncul di bawah setelah selesai.",
@@ -1515,7 +1526,10 @@
       "instancesTooltip": "Salinan independen dari aplikasi Anda, masing-masing berjalan di node yang berbeda. 3 atau lebih memberikan ketersediaan tinggi jika sebuah node offline.",
       "hardwareResourceTooltip": "Sumber daya yang dialokasikan per instance. Aplikasi web pada umumnya membutuhkan ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Impor compose / spec",
-      "importComposeTooltip": "Impor docker-compose atau spesifikasi Flux (JSON/YAML) yang sudah ada untuk mengisi formulir secara otomatis"
+      "importComposeTooltip": "Impor docker-compose atau spesifikasi Flux (JSON/YAML) yang sudah ada untuk mengisi formulir secara otomatis",
+      "noLoginCredentials": "Kredensial masuk tidak ditemukan. Silakan masuk lagi.",
+      "failedToPrepareManualSigning": "Gagal menyiapkan penandatanganan manual: {error}",
+      "pleaseEnterSignature": "Silakan masukkan tanda tangan."
     },
     "tosDialog": {
       "loading": "Memuat Persyaratan Layanan..."
@@ -1624,6 +1638,14 @@
       "reviewDeploy": "Tinjau & terapkan",
       "advancedNeeds": "Perlu beberapa kontainer, domain khusus, perintah, IP statis, atau aturan lokasi tingkat negara?",
       "openAdvanced": "Buka pengaturan Lanjutan"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Tampilkan nilai penyimpanan",
+      "tooLarge": "Muatan terlalu besar untuk ditampilkan.",
+      "loadFailed": "Gagal memuat nilai dari Flux Storage.",
+      "noData": "Tidak ada data.",
+      "notFound": "Tidak ada nilai tersimpan yang ditemukan.",
+      "revealFailed": "Gagal menampilkan nilai penyimpanan."
     }
   },
   "components": {
@@ -2816,7 +2838,8 @@
           "manage": "Mengelola",
           "install": "Memasang",
           "remove": "Menghapus",
-          "visit": "Mengunjungi"
+          "visit": "Mengunjungi",
+          "clone": "Klon"
         },
         "searchIpPlaceholder": "Telusuri IP...",
         "persistentStorage": "Penyimpanan Persisten",
@@ -2903,6 +2926,11 @@
           "networkTx": "TX di eth0",
           "ioRead": "Membaca",
           "ioWrite": "Menulis"
+        },
+        "encryptedComposition": {
+          "title": "Komponen terenkripsi",
+          "ownerOnly": "Hanya pemilik aplikasi ini yang dapat mendekripsi konfigurasi komponennya.",
+          "image": "terenkripsi"
         }
       },
       "redeploy": {
@@ -2962,7 +2990,8 @@
           "name": "Nama",
           "status": "Status",
           "description": "Keterangan"
-        }
+        },
+        "encrypted": "terenkripsi"
       },
       "register": {
         "landing": {
@@ -5128,6 +5157,7 @@
       "windrose": "Server khusus survival bajak laut co-op",
       "projectzomboid": "Mod Steam Workshop, hingga 32 pemain",
       "valheim": "Server survival dengan crossplay, hingga 10 pemain",
+      "terraria": "Plugin & perintah TShock, backup dunia tiap jam",
       "fivem": "Server roleplay dengan txAdmin dan MySQL",
       "wordpress": "WordPress terdesentralisasi dan tahan sensor",
       "n8n": "Otomatisasi alur kerja n8n self-hosted",

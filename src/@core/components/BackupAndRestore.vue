@@ -614,7 +614,7 @@
 
                 <template #item.timestamp="{ item: timestampItem, column }">
                   <div>
-                    <div v-if="column.title === 'Name'">
+                    <div v-if="column.field === 'name'">
                       <div class="d-flex justify-space-between align-center">
                         <VChip
                           class="current-task-chip"
@@ -636,7 +636,7 @@
                       </div>
                     </div>
 
-                    <div v-if="column.title === 'Time'">
+                    <div v-if="column.field === 'time'">
                       <VChip
                         class="current-task-chip"
                         variant="flat"
@@ -1573,9 +1573,15 @@ function formatDateTime(date, isExpire = false) {
 
 const selectedRestoreOption = ref('FluxDrive')
 
+// Both columns render the same `timestamp` field, so `key` cannot tell them
+// apart in the item slot and `column` carries nothing else stable. `field` is
+// that: the slot used to switch on the column's TITLE, which is translated -
+// the name key is "Name" in English and German but "Nom" in French, and the
+// time key is "Time" only in English - so the cells matched nothing and
+// rendered blank in most locales.
 const fluxDriveHeaders = computed(() => [
-  { key: 'timestamp', title: t('core.backupAndRestore.name'), sortable: false },
-  { key: 'timestamp', title: t('core.backupAndRestore.time'), sortable: false },
+  { key: 'timestamp', field: 'name', title: t('core.backupAndRestore.name'), sortable: false },
+  { key: 'timestamp', field: 'time', title: t('core.backupAndRestore.time'), sortable: false },
   { title: '', value: 'actions', sortable: false },
 ])
 
@@ -2615,7 +2621,11 @@ function getUploadFolderBackup(saveAs) {
   return `https://${ip.replace(/\./g, '-')}-${port}.node.api.runonflux.io/ioutils/fileupload/backup/${props.appSpec.name}/${restoreRemoteFile.value}/null/${filename}`
 }
 
-async function upload(file, isContentUpload = false) {
+// The isContentUpload branch is gone. It called getUploadFolder(), which has
+// never existed in this component - a scaffold leftover, comment and all - so
+// reaching it threw a ReferenceError. Nothing ever did: the single caller takes
+// the default, and this only ever uploaded a selected file to the backup folder.
+async function upload(file) {
   return new Promise((resolve, reject) => {
     if (typeof XMLHttpRequest === 'undefined') {
       reject('XMLHttpRequest is not supported.')
@@ -2624,12 +2634,7 @@ async function upload(file, isContentUpload = false) {
     }
 
     const xhr = new XMLHttpRequest()
-    let action
-    if (isContentUpload) {
-      action = getUploadFolder() // Assume this method exists in your composition
-    } else {
-      action = getUploadFolderBackup(file.file_name) // Same for this method
-    }
+    const action = getUploadFolderBackup(file.file_name)
 
     if (xhr.upload) {
       xhr.upload.onprogress = function progress(e) {
@@ -2641,13 +2646,8 @@ async function upload(file, isContentUpload = false) {
     }
 
     const formData = new FormData()
-    if (isContentUpload) {
-      const blob = new Blob([file.content], { type: 'text/plain' })
 
-      formData.append(file.file_name, blob)
-    } else {
-      formData.append(file.selected_file.name, file.selected_file)
-    }
+    formData.append(file.selected_file.name, file.selected_file)
 
     file.uploading = true
 

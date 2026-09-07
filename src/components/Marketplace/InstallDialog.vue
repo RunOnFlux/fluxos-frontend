@@ -1608,6 +1608,7 @@
 import { ref, reactive, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useLoginSheet } from '@/composables/useLoginSheet'
+import { isSessionExpiringSoon, isAuthError } from '@/utils/session'
 import { storeToRefs } from 'pinia'
 import { useTheme } from 'vuetify'
 import { useMarketplace } from '@/composables/useMarketplace'
@@ -3219,8 +3220,28 @@ const resetSigningState = () => {
   paymentBridgeMaintenance.value = false
 }
 
+// The login session is gone: clear the stale signature and ask for a fresh login.
+const handleExpiredSession = () => {
+  signStepCompleted.value = [false, false]
+  signingProgress.value = { signing: false, registering: false }
+  signingErrors.value.signing = t('components.fluxDrive.apiKeys.sessionExpired')
+  deploymentSignature.value = null
+  deploymentTimestamp.value = null
+  deploymentAppSpec.value = null
+  showSnackbar(t('components.fluxDrive.apiKeys.sessionExpired'), 'error', 6000)
+  openLoginBottomSheet()
+}
+
 // FluxOS-compatible signing methods using existing signing infrastructure
 const signApplicationMessage = async () => {
+  // A session the node has already dropped will refuse the registration after
+  // the wallet has signed it, and re-signing cannot help — ask for a login now.
+  if (isSessionExpiringSoon()) {
+    handleExpiredSession()
+
+    return
+  }
+
   // Reset cancellation flag for new signing attempt
   signingCancelled = false
   signingProgress.value.signing = true
@@ -4195,6 +4216,14 @@ const registerApplication = async () => {
 
   } catch (error) {
     console.error('Registration error:', error)
+
+    if (isAuthError(error)) {
+      // The message signed fine; the node rejected our session.
+      handleExpiredSession()
+
+      return
+    }
+
     const errorMessage = 'Failed to register application: ' + error.message
     signingErrors.value.registering = errorMessage
     showSnackbar(errorMessage, 'error', 6000)

@@ -231,7 +231,7 @@
     style="margin-top: 1px;"
   >
     <VTab
-      v-for="(component, index) in normalizeComponents(props.appSpec)"
+      v-for="(component, index) in componentTabs"
       :key="index"
       :value="index"
       class="v-tabs-pill text-no-transform"
@@ -253,7 +253,7 @@
     :touch="false"
   >
     <VWindowItem
-      v-for="(component, index) in normalizeComponents(props.appSpec)"
+      v-for="(component, index) in componentTabs"
       :key="index"
       :value="index"
     >
@@ -1109,6 +1109,7 @@ import { eventBus } from "@/utils/eventBus"
 import axios from 'axios'
 import { PerfectScrollbar } from "vue3-perfect-scrollbar"
 import qs from "qs"
+import { isSessionExpired } from '@/utils/session'
 import AppsService from "@/services/AppsService"
 
 const props = defineProps({
@@ -1139,6 +1140,14 @@ const props = defineProps({
   isComposeSingle: {
     type: Boolean,
     required: true,
+  },
+
+  // [{ name, masterSlave }]. Where a component list comes from is the caller's
+  // decision - the specification, or the names endpoint for a viewer who may not
+  // read it - so this never reaches into compose itself.
+  components: {
+    type: Array,
+    default: () => [],
   },
 })
 
@@ -1314,6 +1323,41 @@ function showToast(type, message, icon = null, timeout = 4000) {
   }, timeout)
 }
 
+// `success` on appstart/appstop/apprestart/appkill means the request was ACCEPTED,
+// not that the container has reached the state asked for - the response body says
+// which of the two happened ("Application X stopped" vs "will be stopped: reason").
+// A single refetch therefore reads the old state whenever the container is still
+// moving, and nothing looks again: the panel sits on a stale state beside a green
+// toast until something else happens to refresh it.
+//
+// Refreshed on a spreading schedule instead, so it converges on what actually
+// happened without polling the node hard. Bounded rather than conditional: the
+// status this component holds is fetched by whoever listens for updateAppStatus,
+// so there is nothing here to compare against a desired state.
+const SETTLE_REFRESH_MS = [0, 2000, 5000, 10000, 20000]
+
+// Held so they can be cancelled: the last one lands 20 seconds out, long after a
+// user can have navigated away, and an emit from a torn-down panel asks whoever
+// still listens to refetch for a screen nobody is looking at.
+let settleTimers = []
+
+function cancelSettleRefresh() {
+  settleTimers.forEach(clearTimeout)
+  settleTimers = []
+}
+
+function refreshUntilSettled() {
+  // A second operation supersedes the first: its schedule starts from now, and
+  // the older one has nothing left to say.
+  cancelSettleRefresh()
+  settleTimers = SETTLE_REFRESH_MS.map(ms => setTimeout(() => eventBus.emit('updateAppStatus'), ms))
+}
+
+onBeforeUnmount(() => {
+  cancelSettleRefresh()
+  if (snackbarTimeout) clearTimeout(snackbarTimeout)
+})
+
 async function handleAppOperation(app, title, endpoint, delay = 0) {
   output.value = []
   operationTask.value = ''
@@ -1332,11 +1376,7 @@ async function handleAppOperation(app, title, endpoint, delay = 0) {
 
     if (response.data?.status === 'success') {
       showToast('success', message)
-      eventBus.emit("updateAppStatus")
-      if (title === 'Removing') {
-        eventBus.emit("updateInstanceList")
-        refreshList.value += 1
-      }
+      refreshUntilSettled()
     } else {
       showToast('error', message)
     }
@@ -1355,7 +1395,12 @@ const stopApp = app => handleAppOperation(app, t('core.appControl.operations.sto
 const startApp = app => handleAppOperation(app, t('core.appControl.operations.starting'), `/apps/appstart/${app}`, 3000)
 const restartApp = app => handleAppOperation(app, t('core.appControl.operations.restarting'), `/apps/apprestart/${app}`, 3000)
 
-async function handleAppOperationWithOutput(appName, title, endpoint) {
+// isRemoval is passed rather than inferred from `title`. The title is localised -
+// t('core.appControl.operations.removing') is "Removing" only in English, and
+// "Entfernen" / "Suppression" / "削除中" elsewhere - so comparing it against the
+// English literal silently took the wrong branch in every other locale, leaving
+// the instance list stale after a removal for all but English readers.
+async function handleAppOperationWithOutput(appName, title, endpoint, isRemoval = false) {
   output.value = []
   outputs.value = []
   downloadOutput.value = {}
@@ -1394,9 +1439,9 @@ async function handleAppOperationWithOutput(appName, title, endpoint) {
     operationTask.value = last?.data?.message || last?.data || last?.status
     operationTaskStatus.value = last?.status
     
-    if (title === 'Removing') {
+    if (isRemoval) {
       eventBus.emit("updateInstanceList")
-      refreshLis.value += 1
+      refreshList.value += 1
     } else {
       eventBus.emit("updateAppStatus")
     }
@@ -1405,7 +1450,7 @@ async function handleAppOperationWithOutput(appName, title, endpoint) {
   }
 }
 
-const removeApp = app => handleAppOperationWithOutput(app, t('core.appControl.operations.removing'), `/apps/appremove/${app}`)
+const removeApp = app => handleAppOperationWithOutput(app, t('core.appControl.operations.removing'), `/apps/appremove/${app}`, true)
 const redeployAppSoft = app => handleAppOperationWithOutput(app, t('core.appControl.operations.softReinstalling'), `/apps/redeploy/${app}/false`)
 const redeployAppHard = app => handleAppOperationWithOutput(app, t('core.appControl.operations.hardReinstalling'), `/apps/redeploy/${app}/true`)
 
@@ -1972,7 +2017,7 @@ const removeAppGlobally = async app => {
 const handleOperation = async (operation, index = null) => {
   let app = props.appSpec.name
   if (index !== null) {
-    app = `${props.appSpec.compose[index].name}_${props.appSpec.name}`
+    app = `${props.components[index].name}_${props.appSpec.name}`
     console.log(app)
   }
   const mode = modeType.value
@@ -2073,12 +2118,7 @@ async function getZelidAuthority() {
   const zelidauth = localStorage.getItem("zelidauth")
   const auth = qs.parse(zelidauth || "")
 
-  const timestamp = Date.now()
-  const maxTime = 1.5 * 60 * 60 * 1000 // 1.5 hours
-  const mesTime = auth?.loginPhrase?.substring(0, 13) || 0
-  const expiryTime = +mesTime + maxTime
-
-  if (+mesTime > 0 && timestamp < expiryTime) {
+  if (!isSessionExpired(auth)) {
     globalZelidAuthorized.value = true
   } else {
     globalZelidAuthorized.value = false
@@ -2102,11 +2142,12 @@ async function refreshAvailableList() {
   }
 }
 
-function normalizeComponents(data) {
-  if (!data) return []
-
-  return data.version >= 4 ? data.compose : [{ ...data, repoauth: false }]
-}
+// The per-component tabs. A v4+ app's components come from the caller, which
+// knows whether this viewer may read the specification; a v1-3 app is its own
+// single component and has no compose to read.
+const componentTabs = computed(() => (props.appSpec?.version >= 4
+  ? props.components
+  : [{ name: props.appSpec?.name }]))
 </script>
 
 <style scoped>

@@ -2,6 +2,7 @@ import IDService from '@/services/IDService'
 import AppsService from '@/services/AppsService'
 import { useFluxStore } from "@/stores/flux"
 import { clearStickyBackendDNS } from '@/utils/stickyBackend'
+import { isSessionExpired } from '@/utils/session'
 import { consumeConsoleHandoff } from '@/utils/consoleHandoff'
 import qs from 'qs'
 
@@ -57,30 +58,42 @@ export const setupGuards = router => {
       const auth = qs.parse(zelidauth)
       const fluxStore = useFluxStore()
 
-      if (auth && auth.zelid && auth.signature && auth.loginPhrase) {
-        try {
-          const response = await withTimeout(
-            IDService.checkUserLogged(auth.zelid, auth.signature, auth.loginPhrase),
-            GUARD_TIMEOUT_MS,
-          )
-          const privilege = response?.data?.data?.message || 'none'
-
-          fluxStore.setPrivilege(privilege)
-
-          if (privilege === 'none') {
-            localStorage.removeItem('zelidauth')
-            clearStickyBackendDNS() // Clear sticky backend on invalid session
-          }
-        } catch (error) {
-          console.log('API error:', error)
-          fluxStore.setPrivilege('none')
-          localStorage.removeItem('zelidauth')
-          clearStickyBackendDNS() // Clear sticky backend on API error
-        }
-      } else {
+      const dropSession = () => {
         fluxStore.setPrivilege('none')
         localStorage.removeItem('zelidauth')
-        clearStickyBackendDNS() // Clear sticky backend on invalid auth format
+        clearStickyBackendDNS()
+      }
+
+      if (auth && auth.zelid && auth.signature && auth.loginPhrase) {
+        if (isSessionExpired(auth)) {
+          // The loginPhrase says the node has already dropped this session;
+          // no need to ask, and no point keeping the credentials around.
+          dropSession()
+        } else {
+          try {
+            const response = await withTimeout(
+              IDService.checkUserLogged(auth.zelid, auth.signature, auth.loginPhrase),
+              GUARD_TIMEOUT_MS,
+            )
+            const privilege = response?.data?.data?.message || 'none'
+
+            fluxStore.setPrivilege(privilege)
+
+            // Only an answer from a node is grounds for dropping the session.
+            if (privilege === 'none') {
+              dropSession()
+            }
+          } catch (error) {
+            // A timeout or a network blip says nothing about whether the
+            // session is still good. Throwing the credentials away here was
+            // what forced people to log back in after every hiccup, so keep
+            // them: navigation is still gated on the privilege we know, and
+            // the next navigation re-checks.
+            console.log('API error:', error)
+          }
+        }
+      } else {
+        dropSession()
       }
 
       // ✅ Global privilege-based restriction

@@ -103,6 +103,7 @@
             <tr>
               <th>{{ t('components.fluxDrive.apiKeys.colName') }}</th>
               <th>{{ t('components.fluxDrive.apiKeys.colKey') }}</th>
+              <th>{{ t('components.fluxDrive.apiKeys.colScopes') }}</th>
               <th>{{ t('components.fluxDrive.apiKeys.colCreated') }}</th>
               <th>{{ t('components.fluxDrive.apiKeys.colLastUsed') }}</th>
               <th class="text-end">{{ t('components.fluxDrive.apiKeys.colActions') }}</th>
@@ -112,6 +113,20 @@
             <tr v-for="key in apiKeys" :key="key.id">
               <td>{{ key.name }}</td>
               <td><code>{{ key.prefix }}&hellip;</code></td>
+              <td>
+                <span v-if="isFullAccess(key)" class="text-medium-emphasis">{{ t('components.fluxDrive.apiKeys.fullAccess') }}</span>
+                <template v-else>
+                  <VChip
+                    v-for="scope in key.scopes"
+                    :key="scope"
+                    size="x-small"
+                    label
+                    class="me-1"
+                  >
+                    {{ t(`components.fluxDrive.apiKeys.scope_${scope}`) }}
+                  </VChip>
+                </template>
+              </td>
               <td>{{ formatDate(key.createdAt) }}</td>
               <td>
                 <span v-if="key.lastUsedAt">{{ formatDate(key.lastUsedAt) }}</span>
@@ -149,6 +164,24 @@
             autofocus
             @keyup.enter="submitCreate"
           />
+
+          <!-- Granular permissions; hidden against a bridge that doesn't enforce scopes yet. -->
+          <div v-if="scopesSupported" class="mt-6">
+            <div class="text-body-2 mb-1">{{ t('components.fluxDrive.apiKeys.scopesLabel') }}</div>
+            <div class="text-caption text-medium-emphasis mb-1">{{ t('components.fluxDrive.apiKeys.scopesHint') }}</div>
+            <VCheckbox
+              v-for="scope in ALL_SCOPES"
+              :key="scope"
+              v-model="newKeyScopes"
+              :value="scope"
+              :label="t(`components.fluxDrive.apiKeys.scopeDesc_${scope}`)"
+              density="compact"
+              hide-details
+            />
+            <div v-if="newKeyScopes.length === 0" class="text-caption text-error mt-1">
+              {{ t('components.fluxDrive.apiKeys.scopesRequired') }}
+            </div>
+          </div>
         </VCardText>
         <VCardActions>
           <VSpacer />
@@ -243,16 +276,21 @@ const {
   apiKeysLegacyCount,
   apiKeysMax,
   hasActiveSubscription,
+  config,
   fetchApiKeys,
   createApiKey,
   revokeApiKey,
   revokeLegacyApiKeys,
 } = useFluxDrive()
 
+// Canonical scope order, mirroring the bridge (helpers/apiKeys.js).
+const ALL_SCOPES = ['read', 'write', 'list', 'delete']
+
 const showCreateDialog = ref(false)
 const showRevealDialog = ref(false)
 const showRevokeDialog = ref(false)
 const newKeyName = ref('')
+const newKeyScopes = ref([...ALL_SCOPES])
 const createdKey = ref(null)
 const createError = ref('')
 const loadError = ref('')
@@ -262,6 +300,14 @@ const revokeTarget = ref(null)
 
 // Legacy plaintext keys count against the same cap the bridge enforces.
 const atKeyLimit = computed(() => apiKeys.value.length + apiKeysLegacyCount.value >= apiKeysMax.value)
+
+// Only offer scope selection against a bridge that actually enforces scopes; an older bridge
+// would silently ignore them and mint a full-access key labelled as restricted.
+const scopesSupported = computed(() => Boolean(config.value?.features?.apiKeyScopes))
+
+// Keys minted before scopes existed have no scopes field; the bridge also reports them as
+// holding every scope. Either way the honest label is "full access", not four chips.
+const isFullAccess = key => !Array.isArray(key.scopes) || ALL_SCOPES.every(s => key.scopes.includes(s))
 
 // The bridge returns a ready-made `Basic` header; recover the FluxID from it so the example
 // command is copy-paste runnable rather than a placeholder the user has to edit.
@@ -291,14 +337,16 @@ const formatDate = ms => {
 
 const openCreateDialog = () => {
   newKeyName.value = ''
+  newKeyScopes.value = [...ALL_SCOPES]
   createError.value = ''
   showCreateDialog.value = true
 }
 
 const submitCreate = async () => {
   createError.value = ''
+  if (scopesSupported.value && newKeyScopes.value.length === 0) return
   try {
-    const result = await createApiKey(newKeyName.value.trim())
+    const result = await createApiKey(newKeyName.value.trim(), scopesSupported.value ? newKeyScopes.value : undefined)
 
     createdKey.value = result
     showCreateDialog.value = false

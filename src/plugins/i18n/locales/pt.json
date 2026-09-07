@@ -226,7 +226,8 @@
       "necessaryDescription": "Estes cookies são essenciais para o bom funcionamento do site. Eles não podem ser desativados.",
       "analytics": "Cookies analíticos",
       "analyticsDescription": "Estes cookies ajudam-nos a compreender como os visitantes interagem com o nosso website, recolhendo e reportando informações de forma anónima."
-    }
+    },
+    "notAvailable": "Não disponível"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} excluído",
       "files": {
         "emptyDirectory": "Diretório vazio"
-      }
+      },
+      "noVolumeData": "Não há dados de volume para este componente"
     },
     "auditViewer": {
       "title": "Registo de Auditoria",
@@ -702,6 +704,11 @@
       "download": "Download",
       "noMatchingLogs": "Nenhum registro correspondente encontrado para '{keyword}'",
       "noLogsFound": "Nenhum registro encontrado",
+      "rolledOver": "— os registros anteriores foram rotacionados neste nó e não estão mais disponíveis —",
+      "skipped": "— {count} linhas foram escritas mais rápido do que este visualizador conseguiu recebê-las e não foram entregues —",
+      "truncated": "— {characters} caracteres foram cortados de uma linha longa demais e não foram entregues —",
+      "skippedPoll": "— este visualizador ficou muito atrasado e algumas linhas não foram entregues —",
+      "streamEnded": "— a transmissão ao vivo terminou; o painel recomeça a partir das linhas mais recentes —",
       "errors": {
         "noLogsToDownload": "Nenhum registro disponível para download"
       }
@@ -1126,6 +1133,7 @@
       "instancesWarningOne": "O mínimo recomendado para uma rede descentralizada é de 3 instâncias. Com apenas uma instância, seu aplicativo poderá passar por alguns minutos de inatividade se o nó que executa o aplicativo for reinicializado ou desligado.",
       "instancesWarningSyncthing": "O mínimo de instâncias para aplicativos com armazenamento persistente descentralizado é 2. Para usar menos instâncias, desative a sincronização de dados nas configurações do caminho do volume.",
       "instancesAutoAdjusted": "Instâncias ajustadas automaticamente de {from} para {to} porque a sincronização de dados requer no mínimo {to} instâncias.",
+      "renewalPeriodAutoAdjusted": "Período de renovação ajustado automaticamente de {from} para {to}",
       "instancesWarningLegacy": "A redução de instâncias abaixo de 3 está disponível apenas para aplicativos com especificação versão 8 ou superior. Atualize as especificações do seu aplicativo para ativar esse recurso.",
       "period": "Período",
       "renewal": "Renovação",
@@ -1294,6 +1302,8 @@
       "visitFluxNode": "Visite FluxNode",
       "signMessage": "Assinar mensagem",
       "retrySigning": "Tentar assinar novamente",
+      "sessionExpired": "A sua sessão expirou. Inicie sessão novamente.",
+      "signInAgain": "Iniciar sessão novamente",
       "cancelSigning": "Cancelar assinatura",
       "enablePaymentAnyway": "Habilite o pagamento mesmo assim",
       "testCompleted": "Teste concluído",
@@ -1334,6 +1344,7 @@
       "failedToCalculatePrice": "Falha ao calcular o preço",
       "subscription": "Subscrição:",
       "expiresInUnderWeek": "Expira em menos de uma semana. Renovação da assinatura para atualização.",
+      "extensionPendingConfirmation": "A extensão da sua subscrição ainda está a ser confirmada pela rede. Aguarde a confirmação — enviar agora seria calculado com base na subscrição anterior.",
       "notAvailable": "Não disponível",
       "testApplicationDescription": "Teste a instalação/inicialização do seu aplicativo para garantir que suas especificações funcionem corretamente.",
       "installationLogAppears": "O log de instalação aparecerá abaixo depois de concluído.",
@@ -1533,7 +1544,10 @@
       "instancesTooltip": "Cópias independentes do seu aplicativo, cada uma sendo executada em um nó diferente. 3 ou mais garantem alta disponibilidade caso um nó fique offline.",
       "hardwareResourceTooltip": "Recursos alocados por instância. Um aplicativo web típico precisa de ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Importar compose / especificação",
-      "importComposeTooltip": "Importe um docker-compose ou uma especificação Flux (JSON/YAML) existente para preencher o formulário"
+      "importComposeTooltip": "Importe um docker-compose ou uma especificação Flux (JSON/YAML) existente para preencher o formulário",
+      "noLoginCredentials": "Não foram encontradas credenciais de acesso. Inicie sessão novamente.",
+      "failedToPrepareManualSigning": "Falha ao preparar a assinatura manual: {error}",
+      "pleaseEnterSignature": "Introduza uma assinatura."
     },
     "tosDialog": {
       "loading": "Carregando Termos de Serviço..."
@@ -1642,6 +1656,14 @@
       "reviewDeploy": "Revisar e implantar",
       "advancedNeeds": "Precisa de vários contêineres, domínios personalizados, comandos, um IP estático ou regras de localização em nível de país?",
       "openAdvanced": "Abrir configurações avançadas"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Mostrar valores de armazenamento",
+      "tooLarge": "O conteúdo é demasiado grande para ser apresentado.",
+      "loadFailed": "Falha ao carregar os valores do Flux Storage.",
+      "noData": "Sem dados.",
+      "notFound": "Nenhum valor armazenado encontrado.",
+      "revealFailed": "Falha ao mostrar os valores de armazenamento."
     }
   },
   "components": {
@@ -2834,7 +2856,8 @@
           "manage": "Gerenciar",
           "install": "Instalar",
           "remove": "Remover",
-          "visit": "Visita"
+          "visit": "Visita",
+          "clone": "Clonar"
         },
         "searchIpPlaceholder": "Pesquisar IP...",
         "persistentStorage": "Armazenamento persistente",
@@ -2921,6 +2944,11 @@
           "networkTx": "TX na eth0",
           "ioRead": "Ler",
           "ioWrite": "Escrever"
+        },
+        "encryptedComposition": {
+          "title": "Os componentes estão cifrados",
+          "ownerOnly": "Apenas o proprietário desta aplicação pode decifrar a configuração dos seus componentes.",
+          "image": "cifrado"
         }
       },
       "redeploy": {
@@ -2980,7 +3008,8 @@
           "name": "Nome",
           "status": "Status",
           "description": "Descrição"
-        }
+        },
+        "encrypted": "cifrado"
       },
       "register": {
         "landing": {
@@ -5146,6 +5175,7 @@
       "windrose": "Servidores dedicados de sobrevivência pirata cooperativa",
       "projectzomboid": "Mods da Steam Workshop, até 32 jogadores",
       "valheim": "Servidores de sobrevivência com crossplay, até 10 jogadores",
+      "terraria": "Plugins e comandos TShock, backups do mundo a cada hora",
       "fivem": "Servidores de roleplay com txAdmin e MySQL",
       "wordpress": "WordPress descentralizado e resistente à censura",
       "n8n": "Automação de fluxos n8n auto-hospedada",

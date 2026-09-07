@@ -54,7 +54,7 @@
             active-apps-tab
             :api-error="apiError"
             show-status
-            :show-control="isFluxAdminLoggedIn"
+            :show-control="isFluxTeamLoggedIn"
             privilege="none"
           />
         </div>
@@ -69,7 +69,7 @@
             :current-block-height="daemonBlockCount"
             active-apps-tab
             :api-error="apiError"
-            :show-install="isFluxAdminLoggedIn"
+            :show-install="isFluxTeamLoggedIn"
             privilege="none"
           />
         </div>
@@ -186,7 +186,23 @@ onMounted(async () => {
   console.log("Initial data fetching complete")
 })
 
-const isFluxAdminLoggedIn = computed(() => privilege.value === 'fluxteam' || privilege.value === 'admin')
+// The flux team alone, for both of the things this gates: the per-app control
+// verbs and installing an app onto this node. Hosting an app is not owning it -
+// an operator who can remove one can script that against every install and keep
+// a customer's app off the node indefinitely, which the customer experiences as
+// an app that will not stay deployed.
+//
+// This leads the backend rather than following it. Today FluxOS still admits the
+// node operator to both: the control verbs take 'appownerabove' and installing
+// takes 'adminandfluxteam', and both of those accept userconfig.initial.zelid.
+// RunOnFlux/flux#1780 is what removes them - it drops the operator from
+// verifyAppOwnerOrHigherSession and moves installAppLocally to FLUX_TEAM - and it
+// is not on flux's development branch yet.
+//
+// So until that ships an operator loses two buttons here that would still work.
+// That is the deliberate direction: a capability withdrawn early is recoverable,
+// a button that silently 401s after the backend lands is not.
+const isFluxTeamLoggedIn = computed(() => privilege.value === 'fluxteam')
 
 onBeforeUnmount(() => {
   eventBus.off('backendURLChanged', loadInstalledApps)

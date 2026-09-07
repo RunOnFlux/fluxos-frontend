@@ -226,7 +226,8 @@
       "necessaryDescription": "这些 cookie 对于网站的正常运行至关重要。它们不能被禁用。",
       "analytics": "分析 Cookie",
       "analyticsDescription": "这些 cookie 通过匿名收集和报告信息帮助我们了解访问者如何与我们的网站互动。"
-    }
+    },
+    "notAvailable": "不可用"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name}已删除",
       "files": {
         "emptyDirectory": "空目录"
-      }
+      },
+      "noVolumeData": "此组件没有卷数据"
     },
     "auditViewer": {
       "title": "审计日志",
@@ -702,6 +704,11 @@
       "download": "下载",
       "noMatchingLogs": "未找到“{keyword}”的匹配日志",
       "noLogsFound": "没有找到日志",
+      "rolledOver": "— 此节点上较早的日志已轮转，不再可用 —",
+      "skipped": "— {count} 行的写入速度超过此查看器的接收速度，未能送达 —",
+      "truncated": "— 某一行过长，{characters} 个字符被截断，未能送达 —",
+      "skippedPoll": "— 此查看器落后太多，部分日志行未能送达 —",
+      "streamEnded": "— 实时流已结束；面板将从最新的日志行重新开始 —",
       "errors": {
         "noLogsToDownload": "没有可供下载的日志"
       }
@@ -1108,6 +1115,7 @@
       "instancesWarningOne": "建议去中心化网络的最少实例数为 3 个。如果只有 1 个实例，如果运行应用程序的节点重新启动或关闭，您的应用程序可能会遇到几分钟的停机时间。",
       "instancesWarningSyncthing": "具有去中心化持久存储的应用程序的最小实例数为 2。要使用更少的实例，请在卷路径设置中禁用数据同步。",
       "instancesAutoAdjusted": "由于数据同步需要至少 {to} 个实例，实例已自动从 {from} 调整为 {to}。",
+      "renewalPeriodAutoAdjusted": "续订期限已自动从 {from} 调整为 {to}",
       "instancesWarningLegacy": "将实例减少到 3 以下仅适用于规范版本 8 或更高版本的应用程序。更新您的应用程序规范以启用此功能。",
       "period": "时期",
       "renewal": "更新",
@@ -1276,6 +1284,8 @@
       "visitFluxNode": "访问 FluxNode",
       "signMessage": "签名留言",
       "retrySigning": "重试签名",
+      "sessionExpired": "会话已过期，请重新登录。",
+      "signInAgain": "重新登录",
       "cancelSigning": "取消签名",
       "enablePaymentAnyway": "无论如何启用付款",
       "testCompleted": "测试完成",
@@ -1316,6 +1326,7 @@
       "failedToCalculatePrice": "无法计算价格",
       "subscription": "订阅：",
       "expiresInUnderWeek": "一周内到期。续订即可更新。",
+      "extensionPendingConfirmation": "您的订阅延长仍在等待网络确认。请等待确认完成——现在提交将按之前的订阅计算。",
       "notAvailable": "无法使用",
       "testApplicationDescription": "测试您的应用程序安装/启动，以确保您的规范正常工作。",
       "installationLogAppears": "完成后，安装日志将出现在下面。",
@@ -1515,7 +1526,10 @@
       "instancesTooltip": "您应用的独立副本，每份运行在不同的节点上。3 份或以上可在某个节点离线时提供高可用性。",
       "hardwareResourceTooltip": "为每个实例分配的资源。典型的 Web 应用约需 0.5 vCPU / 512 MB。",
       "importComposeShort": "导入 compose / 配置",
-      "importComposeTooltip": "导入现有的 docker-compose 或 Flux 配置文件（JSON/YAML）以预填表单"
+      "importComposeTooltip": "导入现有的 docker-compose 或 Flux 配置文件（JSON/YAML）以预填表单",
+      "noLoginCredentials": "未找到登录凭据，请重新登录。",
+      "failedToPrepareManualSigning": "无法准备手动签名：{error}",
+      "pleaseEnterSignature": "请输入签名。"
     },
     "tosDialog": {
       "loading": "正在加载服务条款..."
@@ -1624,6 +1638,14 @@
       "reviewDeploy": "审核并部署",
       "advancedNeeds": "需要多个容器、自定义域名、命令、静态 IP 或国家/地区级别的位置规则？",
       "openAdvanced": "打开高级设置"
+    },
+    "fluxStorageReveal": {
+      "reveal": "显示存储值",
+      "tooLarge": "内容过大，无法显示。",
+      "loadFailed": "无法从 Flux Storage 加载值。",
+      "noData": "暂无数据。",
+      "notFound": "未找到已存储的值。",
+      "revealFailed": "无法显示存储值。"
     }
   },
   "components": {
@@ -2816,7 +2838,8 @@
           "manage": "管理",
           "install": "安装",
           "remove": "消除",
-          "visit": "访问"
+          "visit": "访问",
+          "clone": "克隆"
         },
         "searchIpPlaceholder": "搜索IP...",
         "persistentStorage": "持久存储",
@@ -2903,6 +2926,11 @@
           "networkTx": "eth0 上的 TX",
           "ioRead": "读",
           "ioWrite": "写"
+        },
+        "encryptedComposition": {
+          "title": "组件已加密",
+          "ownerOnly": "只有此应用的所有者才能解密其组件配置。",
+          "image": "已加密"
         }
       },
       "redeploy": {
@@ -2962,7 +2990,8 @@
           "name": "姓名",
           "status": "地位",
           "description": "描述"
-        }
+        },
+        "encrypted": "已加密"
       },
       "register": {
         "landing": {
@@ -5128,6 +5157,7 @@
       "windrose": "合作海盗生存专用服务器",
       "projectzomboid": "Steam 创意工坊模组，最多 32 名玩家",
       "valheim": "跨平台生存服务器，最多 10 名玩家",
+      "terraria": "TShock 插件与指令，每小时世界备份",
       "fivem": "含 txAdmin 与 MySQL 的角色扮演服务器",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",

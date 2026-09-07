@@ -73,46 +73,74 @@ function shouldBypassStickyBackend(url) {
 }
 
 /**
+ * Requests that must reach the node holding the session even before a session
+ * exists in storage: /id/loginphrase mints the phrase (and the pin), and
+ * /id/verifylogin has to be answered by that same node for the session to be
+ * created where the pin points.
+ */
+const LOGIN_FLOW_ENDPOINTS = ['/id/loginphrase', '/id/emergencyphrase', '/id/verifylogin', '/id/checkprivilege']
+
+function isLoginFlowEndpoint(url) {
+  if (!url) return false
+
+  return LOGIN_FLOW_ENDPOINTS.some(pattern => url.includes(pattern))
+}
+
+/**
+ * Endpoints that mint a loginPhrase, and therefore identify the node that will
+ * hold the resulting session.
+ */
+function isPhraseEndpoint(url) {
+  if (!url) return false
+
+  return url.includes('/id/loginphrase') || url.includes('/id/emergencyphrase')
+}
+
+/**
+ * A single blip is not proof the pinned node is gone. Dropping the pin on the
+ * first timeout stranded the session — nothing re-pins it, so every later
+ * request round-robins onto nodes that never heard of the session and the user
+ * has to log out and back in. Only give the pin up once a node has failed us
+ * twice in a row.
+ */
+const STICKY_FAILURE_LIMIT = 2
+let stickyFailures = 0
+
+/**
  * Creates an axios instance with sticky backend support
  *
  * Sticky Backend Strategy:
- * - When using round-robin DNS (api.runonflux.io) and user is authenticated,
- *   all requests are routed to the same backend node that generated the loginPhrase
+ * - When using round-robin DNS (api.runonflux.io), requests belonging to a
+ *   session are routed to the same backend node that generated the loginPhrase
  * - This prevents authentication failures caused by loginPhrase being stored on a specific node
- * - Sticky backend is stored in sessionStorage (per-tab, survives refresh)
+ * - The pin lives in localStorage for as long as the session it belongs to
  * - Some APIs can be excluded from sticky backend via STICKY_BACKEND_EXCLUSIONS
  *
  * See: STICKY_BACKEND_IMPLEMENTATION_PLAN.md
  */
 export default function Api() {
-  let baseURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
-
-  // Apply sticky backend if conditions are met
-  if (isAuthenticated() && isRoundRobinBackend(baseURL)) {
-    const stickyBackend = getStickyBackendDNS()
-    if (stickyBackend) {
-      baseURL = stickyBackend
-      console.log('[ApiClient] Using sticky backend:', baseURL)
-    }
-  }
+  const roundRobinURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
 
   const instance = axios.create({
-    baseURL,
+    baseURL: roundRobinURL,
   })
 
-  // Request interceptor: Override baseURL for excluded APIs
+  // Request interceptor: route each request to the pinned node or round-robin
   instance.interceptors.request.use(
     config => {
-      // If this URL should bypass sticky backend, use round-robin DNS
-      if (shouldBypassStickyBackend(config.url)) {
-        const roundRobinURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
+      if (!isRoundRobinBackend(roundRobinURL)) return config
 
-        // Only override if we're currently using a sticky backend (IP-based DNS)
-        // and the original backend is round-robin
-        if (getStickyBackendDNS() && isRoundRobinBackend(roundRobinURL)) {
-          config.baseURL = roundRobinURL
-          console.log('[ApiClient] Bypassing sticky backend for:', config.url, '- Using round-robin:', roundRobinURL)
-        }
+      // Stateless / deliberately load-balanced endpoints always round-robin.
+      if (shouldBypassStickyBackend(config.url)) {
+        console.log('[ApiClient] Bypassing sticky backend for:', config.url, '- Using round-robin:', roundRobinURL)
+
+        return config
+      }
+
+      const stickyBackend = getStickyBackendDNS()
+      if (stickyBackend && (isAuthenticated() || isLoginFlowEndpoint(config.url))) {
+        config.baseURL = stickyBackend
+        console.log('[ApiClient] Using sticky backend:', stickyBackend)
       }
 
       return config
@@ -120,25 +148,32 @@ export default function Api() {
     error => Promise.reject(error),
   )
 
-  // Response interceptor: Capture node IP from loginphrase response
   instance.interceptors.response.use(
     response => {
-      // Check if this is a loginphrase response AND we're using round-robin backend
-      if (response.config.url && response.config.url.includes('/id/loginphrase') && isRoundRobinBackend(baseURL)) {
-        const nodeIP = extractNodeIPFromResponse(response)
-        if (nodeIP) {
-          const dnsFormat = ipToDNSFormat(nodeIP)
-          if (dnsFormat) {
-            setStickyBackendDNS(dnsFormat)
-            console.log('[ApiClient] Set sticky backend:', dnsFormat)
-          } else {
-            console.warn('[ApiClient] Could not convert node IP to DNS format:', nodeIP)
-          }
-        } else {
-          console.warn('[ApiClient] Could not extract node IP from loginphrase response')
+      const url = response.config?.url
+      if (!isRoundRobinBackend(roundRobinURL)) return response
+
+      // Only an answer from the pinned node itself clears its failure streak.
+      if (response.config?.baseURL && response.config.baseURL === getStickyBackendDNS()) {
+        stickyFailures = 0
+      }
+
+      // A phrase response identifies the node that will hold the session.
+      if (isPhraseEndpoint(url)) {
+        const phrase = typeof response.data?.data === 'string' ? response.data.data : undefined
+
+        pinNodeFromResponse(response, phrase)
+      }
+
+      // Self-heal: a checkprivilege that comes back with a real privilege proves
+      // this node holds the session, so re-pin to it if the pin was lost.
+      if (url?.includes('/id/checkprivilege') && !getStickyBackendDNS()) {
+        const privilege = response.data?.data?.message
+        if (privilege && privilege !== 'none') {
+          pinNodeFromResponse(response)
         }
       }
-      
+
       return response
     },
     error => {
@@ -148,30 +183,58 @@ export default function Api() {
         const is5xxError = error.response && error.response.status >= 500
 
         if (isNetworkError || is5xxError) {
-          console.warn('[ApiClient] Sticky backend failed, clearing and retrying with round-robin')
-          clearStickyBackendDNS()
+          stickyFailures += 1
 
           // Prevent infinite retry loop
           if (error.config.__isRetryAfterSticky) {
             console.error('[ApiClient] Retry after unstick also failed')
-            
+
             return Promise.reject(error)
           }
 
+          if (stickyFailures >= STICKY_FAILURE_LIMIT) {
+            console.warn('[ApiClient] Sticky backend failed repeatedly, clearing and retrying with round-robin')
+            clearStickyBackendDNS()
+          } else {
+            console.warn('[ApiClient] Sticky backend request failed, retrying with round-robin (pin kept)')
+          }
+
           // Retry the request with round-robin backend
-          const roundRobinURL = localStorage.getItem('backendURL') || getDetectedBackendURL()
           error.config.baseURL = roundRobinURL
           error.config.__isRetryAfterSticky = true
 
           console.log('[ApiClient] Retrying request with backend:', roundRobinURL)
-          
+
           return axios.request(error.config)
         }
       }
-      
+
       return Promise.reject(error)
     },
   )
 
   return instance
+}
+
+/**
+ * Pins the node that answered a response, when it can be identified.
+ * @param {AxiosResponse} response
+ * @param {string} [loginPhrase] - phrase this node minted, when the response carries one
+ */
+function pinNodeFromResponse(response, loginPhrase) {
+  const nodeIP = extractNodeIPFromResponse(response)
+  if (!nodeIP) {
+    console.warn('[ApiClient] Could not extract node IP from response:', response.config?.url)
+
+    return
+  }
+
+  const dnsFormat = ipToDNSFormat(nodeIP)
+  if (!dnsFormat) {
+    console.warn('[ApiClient] Could not convert node IP to DNS format:', nodeIP)
+
+    return
+  }
+
+  setStickyBackendDNS(dnsFormat, loginPhrase)
 }

@@ -701,6 +701,23 @@
                       </VBtn>
                     </template>
                   </VTooltip>
+
+                  <VTooltip :text="t('core.fluxStorageReveal.reveal')" location="top">
+                    <template #activator="{ props }">
+                      <VBtn
+                        v-if="hasStorageMarker(appDetails.contacts, STORAGE_MARKERS.contacts)"
+                        v-bind="props"
+                        icon
+                        variant="flat"
+                        color="primary"
+                        class="ml-2"
+                        :loading="storageRevealing"
+                        @click="revealStorageValues(null, 'contactsResolved', t('core.subscriptionManager.contact'))"
+                      >
+                        <VIcon size="24">mdi-cloud-download</VIcon>
+                      </VBtn>
+                    </template>
+                  </VTooltip>
                 </div>
               </fieldset>
             </div>
@@ -1429,6 +1446,28 @@
                       </VTooltip>
                     </VBtn>
                   </VBadge>
+
+                  <VBtn
+                    v-if="hasStorageMarker(component.environmentParameters, STORAGE_MARKERS.environmentParameters)"
+                    variant="tonal"
+                    color="primary"
+                    prepend-icon="mdi-cloud-download-outline"
+                    :loading="storageRevealing"
+                    @click="revealStorageValues(component, 'environmentParametersResolved', t('core.subscriptionManager.environmentVariables'))"
+                  >
+                    {{ t('core.fluxStorageReveal.reveal') }}
+                  </VBtn>
+
+                  <VBtn
+                    v-if="hasStorageMarker(component.commands, STORAGE_MARKERS.commands)"
+                    variant="tonal"
+                    color="primary"
+                    prepend-icon="mdi-cloud-download-outline"
+                    :loading="storageRevealing"
+                    @click="revealStorageValues(component, 'commandsResolved', t('core.subscriptionManager.commands'))"
+                  >
+                    {{ t('core.fluxStorageReveal.reveal') }}
+                  </VBtn>
                 </div>
                 <div class="mb-3">
                   <div class="d-flex align-center mb-3">
@@ -2481,12 +2520,23 @@
             <div class="d-flex justify-center align-center mt-4">
               <!-- Sign Message Button (only for non-SSO logins) -->
               <VBtn
-                v-if="hasCalculatedPrice && !signature && !isSigning && !signingFailed && loginType !== 'sso' && !(hasValidatedSpec && verifyAppSpecResponse === false) && !(hasCalculatedPrice && !appSpecPrice?.flux && appSpecPrice?.flux !== 0) && !(hasCheckedExpiry && !isExpiryValid && !newApp)"
+                v-if="hasCalculatedPrice && !signature && !isSigning && !signingFailed && !sessionExpired && loginType !== 'sso' && !(hasValidatedSpec && verifyAppSpecResponse === false) && !(hasCalculatedPrice && !appSpecPrice?.flux && appSpecPrice?.flux !== 0) && !(hasCheckedExpiry && !isExpiryValid && !newApp)"
                 variant="flat"
                 style="width: 100%"
                 @click="dataSign()"
               >
                 <VIcon start size="24">mdi-file-sign</VIcon> {{ t('core.subscriptionManager.signMessage') }}
+              </VBtn>
+
+              <!-- Sign in again (the session, not the message, was rejected) -->
+              <VBtn
+                v-else-if="sessionExpired && !signature"
+                variant="flat"
+                color="error"
+                style="width: 100%"
+                @click="openLoginBottomSheet()"
+              >
+                <VIcon start size="20">mdi-login-variant</VIcon> {{ t('core.subscriptionManager.signInAgain') }}
               </VBtn>
 
               <!-- Retry Signing Button (when signing or registration failed) -->
@@ -3694,7 +3744,7 @@
     :message="manualSignMessage"
     @submit="submitManualSignature"
     @cancel="cancelManualSign"
-    @copy="showToast('success', t('core.subscriptionManager.copiedToClipboard'))"
+    @copy="showToast('success', t('common.messages.copiedToClipboard'))"
   />
 
   <!-- Terms of Service Dialog -->
@@ -3718,6 +3768,54 @@
       <span>{{ t('core.subscriptionManager.tos.errorMessage') }}</span>
     </div>
   </VSnackbar>
+
+  <!-- Flux Storage reveal dialog (shared across env / commands / contacts) -->
+  <VDialog v-model="storageRevealDialog" max-width="700">
+    <VCard>
+      <VCardTitle class="bg-primary text-white d-flex align-center">
+        <VIcon icon="mdi-cloud-download-outline" class="mr-2" />
+        {{ storageRevealTitle }} — Flux Storage
+      </VCardTitle>
+      <VCardText class="pt-4">
+        <div v-if="storageRevealing" class="text-center pa-6">
+          <VProgressCircular indeterminate color="primary" />
+        </div>
+        <template v-else-if="storageRevealResult">
+          <VAlert
+            v-if="storageRevealResult.status !== 'ok'"
+            type="warning"
+            variant="tonal"
+            class="mb-2"
+          >
+            {{ storageRevealResult.status === 'too-large'
+              ? t('core.fluxStorageReveal.tooLarge')
+              : (storageRevealResult.message || t('core.fluxStorageReveal.loadFailed')) }}
+          </VAlert>
+          <template v-else>
+            <div class="text-caption text-medium-emphasis mb-2 text-truncate">
+              {{ storageRevealResult.url }}
+            </div>
+            <VTable density="compact">
+              <tbody>
+                <tr v-for="(value, i) in storageRevealResult.values" :key="i">
+                  <td><kbd>{{ value }}</kbd></td>
+                </tr>
+              </tbody>
+            </VTable>
+          </template>
+        </template>
+        <VAlert v-else type="error" variant="tonal">
+          {{ storageRevealError || t('core.fluxStorageReveal.noData') }}
+        </VAlert>
+      </VCardText>
+      <VCardActions>
+        <VSpacer />
+        <VBtn variant="tonal" @click="storageRevealDialog = false">
+          {{ t('common.buttons.close') }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
 </template>
 
 <script setup>
@@ -3739,6 +3837,33 @@ const props = defineProps({
 // Define emits
 defineEmits(['specConverted'])
 const { t } = useI18n()
+
+// On-demand Flux Storage reveal (F_S_ENV / F_S_CMD / F_S_CONTACTS) for the update flow.
+// Lets the owner see what is stored behind a link before editing; raw links stay as-is.
+const {
+  revealing: storageRevealing,
+  fetchResolvedSpec: fetchResolvedStorageSpec,
+  extractField: extractStorageField,
+} = useFluxStorageReveal()
+const storageRevealDialog = ref(false)
+const storageRevealTitle = ref('')
+const storageRevealResult = ref(null)
+const storageRevealError = ref('')
+
+async function revealStorageValues(component, resolvedKey, title) {
+  storageRevealTitle.value = title
+  storageRevealResult.value = null
+  storageRevealError.value = ''
+  storageRevealDialog.value = true
+  try {
+    const isEnterprise = props.appSpec?.version >= 8 && !!props.appSpec?.enterprise
+    const spec = await fetchResolvedStorageSpec({ appName: props.appSpec?.name, isEnterprise })
+    storageRevealResult.value = extractStorageField(spec, { componentName: component?.name, resolvedKey })
+    if (!storageRevealResult.value) storageRevealError.value = t('core.fluxStorageReveal.notFound')
+  } catch (error) {
+    storageRevealError.value = error?.message || t('core.fluxStorageReveal.revealFailed')
+  }
+}
 import geolocations from '@/utils/geolocation'
 import qs from 'qs'
 import { signWithWalletConnect, getConnectedAccount, payWithSSP, payWithZelcore, signWithSSP, signWithZelcore } from '@/utils/walletService'
@@ -3770,6 +3895,9 @@ import { detectSecretEnvVars } from '@/utils/detectSecrets'
 import { isValidPort, isPortBanned, generateRandomPort } from '@/utils/fluxPorts'
 import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } from '@/utils/specConverter'
 import { usePriceEstimate } from '@/composables/usePriceEstimate'
+import { useLoginSheet } from '@/composables/useLoginSheet'
+import { isSessionExpiringSoon, isAuthError } from '@/utils/session'
+import { useFluxStorageReveal, hasStorageMarker, STORAGE_MARKERS } from '@/composables/useFluxStorageReveal'
 
 // Import payment images
 import StripeImg from '@images/Stripe.svg?url'
@@ -3815,6 +3943,12 @@ const websocket = ref(null)
 const loginType  = ref(localStorage.getItem('loginType'))
 const isSigning = ref(false) // Track if signing is in progress
 const signingFailed = ref(false) // Track if signing failed
+
+// Set when the failure was the login session rather than the message: signing
+// again cannot help, only a fresh login can.
+const sessionExpired = ref(false)
+
+const { showLoginSheet, openLoginBottomSheet } = useLoginSheet()
 const clipboardInstance = ref(null) // ClipboardJS instance for proper cleanup
 const tab = ref(0)
 const previousTab = ref(0) // Track previous tab for TOS validation
@@ -4447,10 +4581,6 @@ function handleSpecImport(spec) {
       props.appSpec.owner = spec.owner
       appDetails.value.owner = spec.owner
     }
-    if (spec.repotag) props.appSpec.repotag = spec.repotag
-    if (spec.port) props.appSpec.port = spec.port
-    if (spec.domains) props.appSpec.domains = spec.domains
-    if (spec.tiered !== undefined) props.appSpec.tiered = spec.tiered
     if (spec.version) props.appSpec.version = spec.version
 
     // Contacts - required field, provide default if missing
@@ -4463,7 +4593,7 @@ function handleSpecImport(spec) {
     // Decode geolocation into UI state (allowed/forbidden rows)
     decodeGeolocation(props.appSpec.geolocation)
 
-    if (spec.expire) props.appSpec.expire = spec.expire
+    if (spec.expire != null) props.appSpec.expire = spec.expire
     if (spec.nodes) {
       props.appSpec.nodes = spec.nodes || []
       appDetails.value.nodes = Array.isArray(spec.nodes) ? spec.nodes.join(', ') : spec.nodes
@@ -4517,6 +4647,15 @@ function handleSpecImport(spec) {
       if (spec.tiered !== undefined) component.tiered = spec.tiered
       props.appSpec.compose = [component]
     }
+
+    // The appSpec watcher only fires on reference changes, so it never sees
+    // the in-place mutations above. Derive the same form state it would set
+    // so the enterprise toggle and renewal period reflect the imported spec.
+    const importedRenewalIndex = renewalIndexForSpec(props.appSpec)
+    if (importedRenewalIndex !== null) {
+      appDetails.value.renewalIndex = importedRenewalIndex
+    }
+    isPrivateApp.value = privateAppForSpec(props.appSpec)
 
     // If currently on Validate & Register tab, trigger re-validation
     if (tab.value === 99) {
@@ -4788,6 +4927,74 @@ function cancelSubscription() {
 // but the full definition depends on reactive refs that come later
 let renewalOptionsForWatcher = null
 
+// Derive whether a spec represents a private (enterprise) app.
+// For v7: nodes present. For v8+: non-empty encrypted enterprise content, or
+// the wasEnterprise marker carried by cloned/redeployed specs whose
+// encrypted blob was stripped by the management list decryption.
+function privateAppForSpec(spec) {
+  if (!spec) return false
+  if (spec.version === 7 && spec.nodes && spec.nodes.length > 0) return true
+  if (spec.version >= 8 && ((spec.enterprise && spec.enterprise !== '') || spec.wasEnterprise)) return true
+
+  return false
+}
+
+// Map a spec's expire (with pre-fork conversion) onto a renewal option index.
+// Returns null while renewal options are not initialized yet.
+function renewalIndexForSpec(spec) {
+  if (!spec) return null
+
+  let expireForMatching
+  if (spec.version < 6) {
+    // Spec < 6: Always use 88000 (fixed 1 month)
+    expireForMatching = 88000
+  } else {
+    // Spec >= 6: Use original expire value from API
+    const defaultExpire = 88000
+    const originalExpire = spec.expire ?? defaultExpire
+    expireForMatching = originalExpire
+
+    // Fork-aware conversion for renewalIndex matching:
+    // Apps registered before fork have expire in pre-fork blocks
+    // Convert to post-fork equivalent to match renewal options
+    if (spec.height && spec.height < FORK_BLOCK_HEIGHT) {
+      expireForMatching = Math.round(originalExpire * 4)
+      console.log('Fork-aware conversion for renewalIndex: original', originalExpire, '× 4 =', expireForMatching)
+    }
+  }
+
+  console.log('Setting renewalIndex - expire for matching:', expireForMatching, 'original expire:', spec.expire, 'spec version:', spec.version, 'height:', spec.height)
+
+  // Find exact match in renewal options
+  // Use the forward declaration to avoid temporal dead zone errors on first run
+  const options = renewalOptionsForWatcher
+  if (!options || options.length === 0) return null
+
+  let foundIndex = options.findIndex(opt => opt.value === expireForMatching)
+
+  // If no exact match, find closest renewal option
+  if (foundIndex === -1) {
+    const fallbackIndex = Math.min(2, options.length - 1)
+    let closestIndex = fallbackIndex
+    let closestDiff = Math.abs(options[fallbackIndex].value - expireForMatching)
+
+    options.forEach((opt, idx) => {
+      const diff = Math.abs(opt.value - expireForMatching)
+      if (diff < closestDiff) {
+        closestDiff = diff
+        closestIndex = idx
+      }
+    })
+
+    foundIndex = closestIndex
+    console.log('No exact match - closest option at index:', foundIndex, 'value:', options[foundIndex].value, 'diff:', Math.abs(options[foundIndex].value - expireForMatching))
+  } else {
+    console.log('Found exact match at index:', foundIndex, 'value:', options[foundIndex].value)
+  }
+
+  return foundIndex
+}
+
 // Watch for changes in appSpec to update appDetails
 watch(() => props.appSpec, (newSpec, oldSpec) => {
   console.log('SubscriptionManager: appSpec changed:', newSpec)
@@ -4823,15 +5030,7 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
     console.log('SubscriptionManager: appDetails.owner after update:', appDetails.value.owner)
     
     // Determine if this is a private app based on existing data
-    // For v7: check if nodes exist
-    // For v8+: check if enterprise field has encrypted content
-    if (newSpec.version === 7 && newSpec.nodes && newSpec.nodes.length > 0) {
-      isPrivateApp.value = true
-    } else if (newSpec.version >= 8 && newSpec.enterprise && newSpec.enterprise !== '') {
-      isPrivateApp.value = true
-    } else {
-      isPrivateApp.value = false
-    }
+    isPrivateApp.value = privateAppForSpec(newSpec)
     
     appDetails.value.nodes = newSpec.nodes ? newSpec.nodes.join(', ') : ''
 
@@ -4846,55 +5045,22 @@ watch(() => props.appSpec, (newSpec, oldSpec) => {
       }))
     }
 
-    // Set up renewal settings
-    // Find the correct renewalIndex based on original expire value with fork-aware conversion
-    let expireForMatching
-
-    if (newSpec.version < 6) {
-      // Spec < 6: Always use 88000 (fixed 1 month)
-      expireForMatching = 88000
-    } else {
-      // Spec >= 6: Use original expire value from API
-      const defaultExpire = 88000
-      const originalExpire = newSpec.expire ?? defaultExpire
-      expireForMatching = originalExpire
-
-      // Fork-aware conversion for renewalIndex matching:
-      // Apps registered before fork have expire in pre-fork blocks
-      // Convert to post-fork equivalent to match renewal options
-      if (newSpec.height && newSpec.height < FORK_BLOCK_HEIGHT) {
-        expireForMatching = Math.round(originalExpire * 4)
-        console.log('Fork-aware conversion for renewalIndex: original', originalExpire, '× 4 =', expireForMatching)
-      }
+    // A replaced spec is a fresh read from the network, and a height that differs
+    // from the snapshot's means a message has landed since it was taken - an
+    // extension, most often. The snapshot is what an update without renewal is
+    // measured from, so it follows the chain: left behind, the update writes back
+    // the subscription the owner had before they paid to extend it.
+    if (typeof newSpec.height === 'number' && newSpec.height !== snapshotSourceHeight.value) {
+      originalExpireSnapshot.value = newSpec.expire ?? defaultExpireFor(newSpec.height)
+      snapshotSourceHeight.value = newSpec.height
+      adoptChainSpec(newSpec)
+      console.log('Newer app message seen - expire snapshot retaken:', originalExpireSnapshot.value, 'at height', newSpec.height)
     }
 
-    console.log('Setting renewalIndex - expire for matching:', expireForMatching, 'original expire:', newSpec.expire, 'spec version:', newSpec.version, 'height:', newSpec.height)
-
-    // Find exact match in renewal options
-    // Use the forward declaration to avoid temporal dead zone errors on first run
-    const options = renewalOptionsForWatcher
-    if (options && options.length > 0) {
-      let foundIndex = options.findIndex(opt => opt.value === expireForMatching)
-
-      // If no exact match, find closest renewal option
-      if (foundIndex === -1) {
-        let closestIndex = 2  // Default to 1 month (88000)
-        let closestDiff = Math.abs(options[2].value - expireForMatching)
-
-        options.forEach((opt, idx) => {
-          const diff = Math.abs(opt.value - expireForMatching)
-          if (diff < closestDiff) {
-            closestDiff = diff
-            closestIndex = idx
-          }
-        })
-
-        foundIndex = closestIndex
-        console.log('No exact match - closest option at index:', foundIndex, 'value:', options[foundIndex].value, 'diff:', Math.abs(options[foundIndex].value - expireForMatching))
-      } else {
-        console.log('Found exact match at index:', foundIndex, 'value:', options[foundIndex].value)
-      }
-
+    // Set up renewal settings
+    // Find the correct renewalIndex based on original expire value with fork-aware conversion
+    const foundIndex = renewalIndexForSpec(newSpec)
+    if (foundIndex !== null) {
       appDetails.value.renewalIndex = foundIndex
     } else {
       // Options not available yet (first immediate run), use default
@@ -5111,10 +5277,132 @@ const originalExpireSnapshot = ref(null)
 const originalAppSpecSnapshot = ref(null)
 const testedSpecSnapshot = ref(null)
 
+// The message height originalExpireSnapshot was read from. An expire only means
+// something next to the message it was published with, so the two travel
+// together: when a newer message arrives, both are retaken.
+const snapshotSourceHeight = ref(null)
+
+/**
+ * EXPIRY IS THE CHAIN'S, NOT THIS FORM'S
+ *
+ * An app expires at (height of its last message + expire), so an update without
+ * renewal re-sends the blocks that are left in order to land on the same date.
+ * That makes the number a billing figure, not a display one: send one that is
+ * too small and the owner loses subscription they already paid for.
+ *
+ * The spec this form edits is a copy the page fetched on load, and nothing
+ * rewrites its height/expire when an extension lands - from this session, from
+ * another tab, or from a Stripe auto-renewal the UI never sees. So the chain's
+ * own answer is kept here, refreshed before it is needed, and anything asking
+ * "how much is left" takes the larger of the two.
+ */
+const chainExpiry = ref(null)      // { height, expire, hash } as last read from the network
+const pendingExtension = ref(null) // { hash, expire, fromHeight, paid } sent from here, not on chain yet
+
+// The expire a spec is treated as having when it carries none: v5 and older have
+// no expire field, and the node dates them a month post-fork, a week before it.
+function defaultExpireFor(height) {
+  return typeof height === 'number' && height >= FORK_BLOCK_HEIGHT ? 88000 : 22000
+}
+
+// Blocks left on a (height, expire) pair, counted in blocks of the current era.
+// A pre-fork block is two minutes and a post-fork block thirty seconds, so a
+// subscription that starts before the fork and runs past it spends what remains
+// four times faster - the same conversion the node makes.
+function remainingBlocksFor(height, expire, current) {
+  if (typeof height !== 'number' || typeof expire !== 'number' || !current) return null
+
+  const minutesPerBlockNow = current >= FORK_BLOCK_HEIGHT ? 0.5 : 2
+
+  let remainingMinutes
+  if (height < FORK_BLOCK_HEIGHT && current >= FORK_BLOCK_HEIGHT) {
+    const elapsedMinutes = ((FORK_BLOCK_HEIGHT - height) * 2) + ((current - FORK_BLOCK_HEIGHT) * 0.5)
+
+    remainingMinutes = (expire * 2) - elapsedMinutes
+  } else {
+    remainingMinutes = (height + expire - current) * minutesPerBlockNow
+  }
+
+  return Math.floor(remainingMinutes / minutesPerBlockNow)
+}
+
+// What the chain says is left, or null when it has not been read yet.
+function chainRemainingBlocks(current) {
+  if (!chainExpiry.value) return null
+
+  return remainingBlocksFor(chainExpiry.value.height, chainExpiry.value.expire, current)
+}
+
+// An extension is no longer pending once the chain carries it: either the
+// message this session sent, or a later message at least as long as the one it
+// asked for (the same extension paid for through another route).
+function reconcilePendingExtension(spec) {
+  const pending = pendingExtension.value
+  if (!pending || !spec) return
+
+  const landed = (!!pending.hash && spec.hash === pending.hash)
+    || (typeof spec.height === 'number'
+      && typeof pending.fromHeight === 'number'
+      && spec.height > pending.fromHeight
+      && typeof spec.expire === 'number'
+      && typeof pending.expire === 'number'
+      && spec.expire >= pending.expire)
+
+  if (landed) {
+    console.log('Extension confirmed on chain - releasing the update hold')
+    pendingExtension.value = null
+  }
+}
+
+// Record a message the chain has accepted as the truth about this app's expiry.
+function adoptChainSpec(spec) {
+  if (!spec || typeof spec.height !== 'number') return false
+
+  chainExpiry.value = {
+    height: spec.height,
+    expire: spec.expire ?? defaultExpireFor(spec.height),
+    hash: spec.hash ?? null,
+  }
+
+  // A message the snapshot has not seen answers the same question it does -
+  // what this subscription was before anything here touched it - and answers it
+  // more recently, so the snapshot moves up to it.
+  if (typeof snapshotSourceHeight.value !== 'number' || spec.height > snapshotSourceHeight.value) {
+    originalExpireSnapshot.value = chainExpiry.value.expire
+    snapshotSourceHeight.value = chainExpiry.value.height
+  }
+
+  reconcilePendingExtension(spec)
+
+  return true
+}
+
+// Read the app's live specification. Cheap, cache-bypassed, and the only way to
+// see an extension that landed outside this form.
+async function refreshChainExpiry() {
+  if (props.newApp) return false
+
+  const appName = props.appSpec?.name || appDetails.value?.name
+  if (!appName) return false
+
+  try {
+    const response = await AppsService.getAppSpecifics(appName)
+    const spec = response?.data?.status === 'success' ? response.data.data : null
+
+    return adoptChainSpec(spec)
+  } catch (error) {
+    console.error('Failed to read live app specification for expiry:', error)
+
+    return false
+  }
+}
+
 onMounted(() => {
   // Fork-aware default for original expire snapshot
   const defaultExpire = (props.appSpec?.height && props.appSpec.height >= FORK_BLOCK_HEIGHT) ? 88000 : 22000
   originalExpireSnapshot.value = props.appSpec?.expire ?? defaultExpire
+  snapshotSourceHeight.value = props.appSpec?.height ?? null
+  if (!props.newApp) adoptChainSpec(props.appSpec)
 
   // Store original app spec for comparison (excluding expire field)
   // Using cloneDeep for better performance
@@ -5352,42 +5640,21 @@ watch(signature, newSignature => {
 })
 
 // 2️⃣  current remaining blocks based on the *original* value
-// FORK-AWARE: Calculate adjusted expiry block height accounting for fork transition
+// FORK-AWARE, and CHAIN-AWARE: the renewal periods are built on top of this
+// number, so it takes the longer of what the edited copy says and what the
+// network last reported. A copy that has not seen an extension would otherwise
+// price the next renewal as if the extension had never been bought.
 const originalExpireBlocks = computed(() => {
-  if (!currentBlockHeight.value || typeof props.appSpec?.height !== 'number') return null
-  if (!originalExpireSnapshot.value) return null
+  if (!currentBlockHeight.value) return null
+  if (!originalExpireSnapshot.value || typeof props.appSpec?.height !== 'number') return null
 
-  const registrationHeight = props.appSpec.height
-  const expireIn = originalExpireSnapshot.value
+  const local = remainingBlocksFor(props.appSpec.height, originalExpireSnapshot.value, currentBlockHeight.value)
+  const chain = chainRemainingBlocks(currentBlockHeight.value)
 
-  // Calculate naive expiry (registration + expire blocks)
-  const naiveExpiry = registrationHeight + expireIn
+  if (local === null) return chain
+  if (chain === null) return local
 
-  let adjustedExpiryBlock = naiveExpiry
-
-  // If app was registered before fork and naive expiry is after fork,
-  // we need to adjust to maintain the intended duration
-  if (registrationHeight < FORK_BLOCK_HEIGHT && naiveExpiry > FORK_BLOCK_HEIGHT) {
-    // Calculate intended subscription duration based on registration time
-    const blockTimeAtRegistration = 2 // Pre-fork: 2 min/block
-    const subscriptionDurationMinutes = expireIn * blockTimeAtRegistration
-
-    // Calculate pre-fork time consumed
-    const preForkBlocks = FORK_BLOCK_HEIGHT - registrationHeight
-    const preForkMinutes = preForkBlocks * 2
-
-    // Calculate remaining time that needs to be in post-fork blocks
-    const remainingMinutes = subscriptionDurationMinutes - preForkMinutes
-
-    // Convert remaining minutes to post-fork blocks
-    const postForkBlocks = remainingMinutes / 0.5
-
-    // Actual expiry block accounting for fork transition
-    adjustedExpiryBlock = FORK_BLOCK_HEIGHT + postForkBlocks
-  }
-
-  // Return remaining blocks: adjusted expiry - current block
-  return adjustedExpiryBlock - currentBlockHeight.value
+  return Math.max(local, chain)
 })
 
 // Base renewal periods in blocks (before adding currentExpire)
@@ -5826,8 +6093,20 @@ watch(() => appDetails.value.renewalIndex, newIndex => {
 // This can happen when remaining subscription time increases (fewer extension options available)
 watch(() => renewalOptions.value.length, newLength => {
   if (appDetails.value.renewalIndex >= newLength) {
+    const oldExpire = props.appSpec?.expire
+    const clampedIndex = Math.max(0, newLength - 1)
+
     // Clamp to last available option
-    appDetails.value.renewalIndex = Math.max(0, newLength - 1)
+    appDetails.value.renewalIndex = clampedIndex
+
+    // Silent jumps between priced periods are confusing — inform the user
+    // when they are actively choosing a period (not during initial load).
+    if (renewalEnabled.value || props.newApp) {
+      showToast('info', t('core.subscriptionManager.renewalPeriodAutoAdjusted', {
+        from: typeof oldExpire === 'number' ? formatBlocksAsDuration(oldExpire) : '',
+        to: renewalOptions.value[clampedIndex]?.label || '',
+      }))
+    }
   }
 })
 
@@ -5856,6 +6135,17 @@ watch(hasCalculatedPrice, (newValue, oldValue) => {
     newValue,
     appSpecPrice: appSpecPrice?.value,
   })
+})
+
+// An extension only holds the rest of the session once it has been paid for: an
+// unpaid one never reaches the chain and is simply replaced by whatever is
+// signed next. The flag lives on pendingExtension rather than on the payment
+// state, which is wiped as soon as the Test & Pay tab is left.
+watch(paymentProcessing, started => {
+  if (started && pendingExtension.value && !pendingExtension.value.paid) {
+    pendingExtension.value = { ...pendingExtension.value, paid: true }
+    console.log('Extension paid - holding updates until the chain confirms it')
+  }
 })
 
 // Watch managementAction to restore/apply correct expire when switching modes
@@ -7148,8 +7438,14 @@ defineExpose({
   // form drives expire from renewalIndex, so map the blocks back to the index.
   setPeriodBlocks: blocks => {
     const opts = renewalOptions.value
-    const idx = opts.findIndex(o => o.value === blocks)
-    if (idx >= 0) appDetails.value.renewalIndex = idx
+    if (!opts.length) return
+    let idx = opts.findIndex(o => o.value === blocks)
+    if (idx < 0) {
+      // No exact match (options are offset by remaining subscription time) —
+      // fall back to the closest period instead of silently doing nothing.
+      idx = opts.reduce((best, opt, i) => (Math.abs(opt.value - blocks) < Math.abs(opts[best].value - blocks) ? i : best), 0)
+    }
+    appDetails.value.renewalIndex = idx
   },
 })
 
@@ -7807,6 +8103,32 @@ watch(tab, async newVal => {
 
     console.log('🔄 Tab 99 - After expire fix:', props.appSpec?.expire)
 
+    // Ask the network what this app's subscription looks like right now, before
+    // measuring what is left of it. The copy being edited was fetched when the
+    // page loaded; an extension that landed since - from this session, another
+    // tab, or a Stripe auto-renewal - exists only in this read.
+    if (!props.newApp && versionFlags.value.supportsExpire) {
+      await refreshChainExpiry()
+    }
+
+    // An extension this session paid for and the chain has not accepted yet
+    // cannot be measured at all: the read above still describes the subscription
+    // it replaces, and any message signed now would be measured from that. Hold,
+    // rather than sign away what was just paid for. The hold lifts by itself -
+    // the read above clears it the moment the extension appears on chain.
+    if (!props.newApp && pendingExtension.value?.paid && managementAction.value !== 'cancel') {
+      const message = t('core.subscriptionManager.extensionPendingConfirmation')
+
+      verifyAppSpecError.value = message
+      verifyAppSpecResponse.value = false
+      isVeryfitying.value = false
+      hasValidatedSpec.value = true
+      hasCheckedExpiry.value = checkedExpiry
+      showToast('error', message)
+
+      return
+    }
+
     await fetchBlockHeight()
     checkedExpiry = true
 
@@ -8075,6 +8397,11 @@ async function verifyAppSpec() {
   try {
     const appSpecTemp = cloneDeep(props.appSpec)
 
+    // wasEnterprise (clone/redeploy of decrypted apps) and _isV3Original
+    // (spec adapter flag) are UI-only markers; never send them to the backend.
+    delete appSpecTemp.wasEnterprise
+    delete appSpecTemp._isV3Original
+
     // ========================================================================
     // CONVERT APP NAME TO LOWERCASE (only for new app registration)
     // App name changes are not allowed on updates
@@ -8322,6 +8649,18 @@ async function verifyAppSpec() {
       }
     }
 
+    // Last check before this is signed: whatever the form arrived at, the message
+    // must not carry less subscription than the chain says is left, or the update
+    // shortens what the owner paid for. Cheap, and it does not depend on which
+    // path set expire above.
+    if (!props.newApp && !renewalEnabled.value && managementAction.value === 'update' && appSpecTemp.version >= 6) {
+      const chainRemaining = chainRemainingBlocks(blockHeight.value)
+      if (chainRemaining !== null && chainRemaining > 0 && chainRemaining > (appSpecTemp.expire ?? 0)) {
+        console.log(`[V${appSpecTemp.version}] UPDATE - raising expire to the chain's remaining blocks:`, chainRemaining, 'was', appSpecTemp.expire)
+        appSpecTemp.expire = chainRemaining
+      }
+    }
+
     // Check if this is a marketplace app (for tracking/display purposes only)
     // Like Flux Home UI: marketplace info used ONLY for UI, NOT for pricing
     const appName = appSpecTemp.name
@@ -8389,8 +8728,11 @@ async function verifyAppSpec() {
           // Show user-friendly toast instead of blocking error
           showToast('warning', 'Enterprise features require HTTPS or localhost. Please access this application using a secure connection.', 'mdi-alert', 6000)
           
-          // Reset enterprise mode and return gracefully
-          appSpec.value.enterprise = ''
+          // Reset enterprise mode and return gracefully. appSpecTemp is the
+          // clone this function is building; `appSpec` is a prop and not a ref,
+          // so the old line threw here instead of degrading, on exactly the
+          // insecure-origin path it was written to handle.
+          appSpecTemp.enterprise = ''
 
           return
         }
@@ -8677,6 +9019,17 @@ async function fetchBlockHeight() {
 
             // If remainingMinutes <= 0, keep negative blocksToExpire (will be caught by validation)
 
+            // An update re-sends what is left, so a copy that has not seen an
+            // extension would send the app back to the subscription it had
+            // before. Where the chain knows better, the chain wins.
+            const chainRemaining = chainRemainingBlocks(blockHeight.value)
+            if (chainRemaining !== null && chainRemaining > blocksToExpire.value) {
+              console.log('Chain reports more subscription left than the local spec:', chainRemaining, 'vs', blocksToExpire.value)
+              blocksToExpire.value = chainRemaining
+              remainingMinutes = chainRemaining * (blockHeight.value >= FORK_BLOCK_HEIGHT ? 0.5 : 2)
+              isExpiryValid.value = remainingMinutes >= minMinutes
+            }
+
             console.log('Expiry validation:', {
               height,
               blockHeight: blockHeight.value,
@@ -8727,8 +9080,19 @@ async function dataSign() {
   if (marketPlaceApp) {
     isMarketplaceApp.value = true
   }
+
+  // A login session the node has already dropped (or is about to) will refuse
+  // the registration after the wallet has happily signed it. Catch that here so
+  // the user is sent to log in instead of re-signing a message that cannot land.
+  if (isSessionExpiringSoon()) {
+    handleExpiredSession()
+
+    return
+  }
+
   isSigning.value = true
   signingFailed.value = false // Reset failed state when starting new sign attempt
+  sessionExpired.value = false
   timestamp.value = Date.now()
   dataToSign.value = `${updatetype.value}${version}${JSON.stringify(appSpecFormated.value)}${timestamp.value}`
   await signMethod()
@@ -8749,6 +9113,22 @@ function cancelSigning() {
     signClient.value = null
   }
   showToast('info', 'Signing cancelled')
+}
+
+// Once a fresh session exists, put the signing controls back.
+watch(showLoginSheet, open => {
+  if (!open && sessionExpired.value && !isSessionExpiringSoon()) {
+    sessionExpired.value = false
+  }
+})
+
+// The login session is gone: drop the stale signature and ask for a fresh login.
+function handleExpiredSession() {
+  isSigning.value = false
+  signature.value = ''
+  signingFailed.value = false
+  sessionExpired.value = true
+  showToast('error', t('core.subscriptionManager.sessionExpired'))
 }
 
 // Propagate signed message
@@ -8777,6 +9157,20 @@ async function propagateSignedMessage() {
 
     if (response.data?.status === 'success') {
       registrationHash.value = response.data.data
+
+      // Remember an extension until the chain carries it. Between here and
+      // confirmation the network still reports the subscription being replaced,
+      // so nothing else may be measured against it - see the hold in the
+      // validate step.
+      if (!props.newApp && (managementAction.value === 'renewal' || renewalEnabled.value)) {
+        pendingExtension.value = {
+          hash: response.data.data,
+          expire: appSpecFormated.value?.expire ?? null,
+          fromHeight: chainExpiry.value?.height ?? props.appSpec?.height ?? null,
+          paid: false,
+        }
+        console.log('Extension propagated - watching for its payment:', pendingExtension.value)
+      }
 
       // Sync appDetails.name with the lowercased name from appSpecFormated
       // This ensures the "Manage Application" button URL matches the registered app name
@@ -8835,11 +9229,17 @@ async function propagateSignedMessage() {
       errorMessage = error.message
     }
 
-    showToast('error', errorMessage)
+    if (isAuthError(error)) {
+      // The message was signed fine; the node rejected our session. Say so,
+      // instead of offering a re-sign that will fail the same way.
+      handleExpiredSession()
+    } else {
+      showToast('error', errorMessage)
 
-    // Reset signature so user must sign again
-    signature.value = ''
-    signingFailed.value = true
+      // Reset signature so user must sign again
+      signature.value = ''
+      signingFailed.value = true
+    }
   } finally {
     isPropagating.value = false
   }
@@ -10000,6 +10400,17 @@ const startPaymentMonitoring = async () => {
             paymentProcessing.value = false
             paymentCompleted.value = true
 
+            // The confirmed message is the app's subscription from here on:
+            // adopting it moves both the chain reference and the snapshot an
+            // update is measured from, so whatever this session does next starts
+            // from what was just published. It runs before the spec snapshot
+            // below, which reads the height it writes - taken the other way
+            // round, that height alone would later read as an edit by the user.
+            if (adoptChainSpec(currentAppSpec) && props.appSpec) {
+              props.appSpec.height = chainExpiry.value.height
+              console.log('📸 Expiry moved to the confirmed message:', chainExpiry.value)
+            }
+
             // Update the original spec snapshot to the deployed spec (so future changes can be detected)
             if (props.appSpec) {
               const specCopy = cloneDeep(props.appSpec)
@@ -10050,6 +10461,13 @@ const cancelPaymentMonitoring = () => {
   paymentConfirmed.value = false
   paymentMethod.value = ''
   paymentAmount.value = 0
+
+  // An extension that is no longer being paid for will never reach the chain,
+  // so it stops holding back the rest of the session.
+  if (pendingExtension.value) {
+    console.log('Payment abandoned - releasing the update hold')
+    pendingExtension.value = null
+  }
 
   showToast('info', 'Payment monitoring cancelled')
 }
@@ -10165,45 +10583,6 @@ async function initSSPPay() {
     // Reset payment tracking if payment failed
     paymentMethod.value = ''
     paymentAmount.value = 0
-  }
-}
-
-async function initWalletConnect() {
-  try {
-    const account = await getConnectedAccount()
-    if (!account) {
-      showToast('error', 'WalletConnect not connected. Please log into FluxOS first.')
-
-      return
-    }
-
-    showToast('success', 'Using existing WalletConnect session for signing')
-  } catch (error) {
-    console.error(error)
-    showToast('error', error.message)
-  }
-}
-
-async function initMetamask() {
-  try {
-    if (!window.ethereum) {
-      showToast('error', 'Metamask not detected')
-      
-      return
-    }
-    const account = await window.ethereum.request({
-      method: 'eth_requestAccounts',
-    })
-    if (account.length === 0) {
-      showToast('error', 'No account selected')
-      
-      return
-    }
-
-    // This would be for signing the message
-    await siwe(dataToSign.value, account[0])
-  } catch (error) {
-    showToast('error', error.message)
   }
 }
 

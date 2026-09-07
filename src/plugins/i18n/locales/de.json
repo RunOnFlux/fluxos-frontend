@@ -226,7 +226,8 @@
       "necessaryDescription": "Diese Cookies sind für die ordnungsgemäße Funktion der Website unerlässlich. Sie können nicht deaktiviert werden.",
       "analytics": "Analyse-Cookies",
       "analyticsDescription": "Diese Cookies helfen uns zu verstehen, wie Besucher mit unserer Website interagieren, indem sie Informationen anonym sammeln und melden."
-    }
+    },
+    "notAvailable": "Nicht verfügbar"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} gelöscht",
       "files": {
         "emptyDirectory": "Leeres Verzeichnis"
-      }
+      },
+      "noVolumeData": "Keine Volumendaten für diese Komponente verfügbar"
     },
     "auditViewer": {
       "title": "Audit-Protokoll",
@@ -702,6 +704,11 @@
       "download": "Herunterladen",
       "noMatchingLogs": "Für „{keyword}“ wurden keine passenden Protokolle gefunden.",
       "noLogsFound": "Keine Protokolle gefunden",
+      "rolledOver": "— ältere Protokolle wurden auf diesem Node rotiert und sind nicht mehr verfügbar —",
+      "skipped": "— {count} Zeilen wurden schneller geschrieben, als dieser Betrachter sie empfangen konnte, und wurden nicht zugestellt —",
+      "truncated": "— {characters} Zeichen wurden aus einer zu langen Zeile entfernt und nicht zugestellt —",
+      "skippedPoll": "— dieser Betrachter ist zu weit zurückgefallen; einige Zeilen wurden nicht zugestellt —",
+      "streamEnded": "— der Live-Stream wurde beendet; die Ansicht beginnt erneut mit den neuesten Zeilen —",
       "errors": {
         "noLogsToDownload": "Es sind keine Protokolle zum Herunterladen verfügbar"
       }
@@ -1108,6 +1115,7 @@
       "instancesWarningOne": "Für ein dezentrales Netzwerk werden mindestens 3 Instanzen empfohlen. Bei nur einer Instanz kann es bei Ihrer App zu einer Ausfallzeit von einigen Minuten kommen, wenn der Knoten, auf dem die App ausgeführt wird, neu gestartet oder heruntergefahren wird.",
       "instancesWarningSyncthing": "Die Mindestinstanzen für Apps mit dezentralem persistenten Speicher betragen 2. Um weniger Instanzen zu verwenden, deaktivieren Sie die Datensynchronisierung in den Volume-Pfadeinstellungen.",
       "instancesAutoAdjusted": "Instanzen automatisch von {from} auf {to} angepasst, da die Datensynchronisierung mindestens {to} Instanzen erfordert.",
+      "renewalPeriodAutoAdjusted": "Verlängerungszeitraum automatisch von {from} auf {to} angepasst",
       "instancesWarningLegacy": "Die Reduzierung von Instanzen unter 3 ist nur für Apps mit Spezifikationsversion 8 oder höher verfügbar. Aktualisieren Sie Ihre App-Spezifikation, um diese Funktion zu aktivieren.",
       "period": "Zeitraum",
       "renewal": "Erneuerung",
@@ -1276,6 +1284,8 @@
       "visitFluxNode": "Besuchen Sie FluxNode",
       "signMessage": "Nachricht unterschreiben",
       "retrySigning": "Versuchen Sie es erneut",
+      "sessionExpired": "Deine Sitzung ist abgelaufen. Bitte melde dich erneut an.",
+      "signInAgain": "Erneut anmelden",
       "cancelSigning": "Signieren abbrechen",
       "enablePaymentAnyway": "Aktivieren Sie „Zahlung trotzdem“.",
       "testCompleted": "Test abgeschlossen",
@@ -1316,6 +1326,7 @@
       "failedToCalculatePrice": "Preis konnte nicht berechnet werden",
       "subscription": "Abonnement:",
       "expiresInUnderWeek": "Läuft in weniger als einer Woche ab. Verlängerungsabonnement zum Aktualisieren.",
+      "extensionPendingConfirmation": "Die Verlängerung deines Abonnements wird noch vom Netzwerk bestätigt. Warte auf die Bestätigung – jetzt zu senden würde am vorherigen Abonnement gemessen.",
       "notAvailable": "Nicht verfügbar",
       "testApplicationDescription": "Testen Sie die Installation/den Start Ihrer Anwendung, um sicherzustellen, dass Ihre Spezifikationen korrekt funktionieren.",
       "installationLogAppears": "Das Installationsprotokoll wird nach Abschluss unten angezeigt.",
@@ -1515,7 +1526,10 @@
       "instancesTooltip": "Unabhängige Kopien Ihrer App, die jeweils auf einem anderen Node laufen. 3 oder mehr bieten Hochverfügbarkeit, falls ein Node offline geht.",
       "hardwareResourceTooltip": "Pro Instanz zugewiesene Ressourcen. Eine typische Web-App benötigt ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Compose / Spezifikation importieren",
-      "importComposeTooltip": "Importieren Sie eine bestehende docker-compose- oder Flux-Spezifikation (JSON/YAML), um das Formular vorauszufüllen"
+      "importComposeTooltip": "Importieren Sie eine bestehende docker-compose- oder Flux-Spezifikation (JSON/YAML), um das Formular vorauszufüllen",
+      "noLoginCredentials": "Keine Anmeldedaten gefunden. Bitte melde dich erneut an.",
+      "failedToPrepareManualSigning": "Manuelle Signatur konnte nicht vorbereitet werden: {error}",
+      "pleaseEnterSignature": "Bitte gib eine Signatur ein."
     },
     "tosDialog": {
       "loading": "Nutzungsbedingungen werden geladen..."
@@ -1624,6 +1638,14 @@
       "reviewDeploy": "Überprüfen & bereitstellen",
       "advancedNeeds": "Benötigen Sie mehrere Container, eigene Domains, Befehle, eine statische IP oder Standortregeln auf Länderebene?",
       "openAdvanced": "Erweiterte Einstellungen öffnen"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Speicherwerte anzeigen",
+      "tooLarge": "Die Nutzlast ist zu groß für die Anzeige.",
+      "loadFailed": "Werte konnten nicht aus Flux Storage geladen werden.",
+      "noData": "Keine Daten.",
+      "notFound": "Kein gespeicherter Wert gefunden.",
+      "revealFailed": "Speicherwerte konnten nicht angezeigt werden."
     }
   },
   "components": {
@@ -2817,7 +2839,8 @@
           "manage": "Verwalten",
           "install": "Installieren",
           "remove": "Entfernen",
-          "visit": "Besuchen"
+          "visit": "Besuchen",
+          "clone": "Klonen"
         },
         "searchIpPlaceholder": "IP suchen...",
         "persistentStorage": "Permanenter Speicher",
@@ -2904,6 +2927,11 @@
           "networkTx": "TX auf eth0",
           "ioRead": "Lesen",
           "ioWrite": "Schreiben"
+        },
+        "encryptedComposition": {
+          "title": "Komponenten sind verschlüsselt",
+          "ownerOnly": "Nur der Eigentümer dieser App kann die Konfiguration ihrer Komponenten entschlüsseln.",
+          "image": "verschlüsselt"
         }
       },
       "redeploy": {
@@ -2963,7 +2991,8 @@
           "name": "Name",
           "status": "Status",
           "description": "Beschreibung"
-        }
+        },
+        "encrypted": "verschlüsselt"
       },
       "register": {
         "landing": {
@@ -5129,6 +5158,7 @@
       "windrose": "Dedizierte Server für Koop-Piraten-Survival",
       "projectzomboid": "Steam-Workshop-Mods, bis zu 32 Spieler",
       "valheim": "Survival-Server mit Crossplay, bis zu 10 Spieler",
+      "terraria": "TShock-Plugins & -Befehle, stündliche Welt-Backups",
       "fivem": "Roleplay-Server mit txAdmin und MySQL",
       "wordpress": "Dezentrales, zensurresistentes WordPress",
       "n8n": "Selbst gehostete n8n-Workflow-Automatisierung",

@@ -1,3 +1,5 @@
+import qs from 'qs'
+
 /**
  * Sticky Backend Utility Module
  *
@@ -134,46 +136,113 @@ export function isRoundRobinBackend(url) {
 }
 
 /**
- * Retrieves sticky backend from sessionStorage
- * @returns {string|null}
+ * The node pin is stored next to the loginPhrase it belongs to, in localStorage
+ * rather than sessionStorage.
+ *
+ * The session it pins lives in localStorage and outlives the tab, so a pin kept
+ * per-tab left a restored tab "logged in" with no node to talk to: the next
+ * /id/checkprivilege landed on an arbitrary node, came back `none`, and the
+ * router guard threw the session away. Storing the loginPhrase alongside the
+ * pin keeps the two from drifting apart — a pin belonging to some other login
+ * is ignored rather than trusted.
  */
-export function getStickyBackendDNS() {
+const STICKY_KEY = 'stickyBackendDNS'
+
+/**
+ * Reads the raw stored record, tolerating the legacy plain-string form and the
+ * sessionStorage location it used to live in.
+ * @returns {{dns: string, loginPhrase: string|null}|null}
+ */
+function readStickyRecord() {
   try {
-    return sessionStorage.getItem('stickyBackendDNS')
+    const raw = localStorage.getItem(STICKY_KEY) ?? sessionStorage.getItem(STICKY_KEY)
+    if (!raw) return null
+
+    if (!raw.startsWith('{')) {
+      return { dns: raw, loginPhrase: null }
+    }
+
+    const parsed = JSON.parse(raw)
+
+    return parsed?.dns ? { dns: parsed.dns, loginPhrase: parsed.loginPhrase ?? null } : null
   } catch (error) {
-    console.error('Error reading stickyBackendDNS from sessionStorage:', error)
-    
+    console.error('Error reading stickyBackendDNS:', error)
+
     return null
   }
 }
 
 /**
- * Stores sticky backend in sessionStorage
- * @param {string} dnsUrl - "https://185-209-30-228-16127.node.api.runonflux.io"
+ * Current session's loginPhrase, or null while nobody is logged in.
+ * @returns {string|null}
  */
-export function setStickyBackendDNS(dnsUrl) {
-  if (!dnsUrl) return
-
+function currentLoginPhrase() {
   try {
-    sessionStorage.setItem('stickyBackendDNS', dnsUrl)
-    console.log('[StickyBackend] Set sticky backend:', dnsUrl)
+    const zelidauth = localStorage.getItem('zelidauth')
+    if (!zelidauth) return null
+
+    return qs.parse(zelidauth)?.loginPhrase || null
   } catch (error) {
-    console.error('Error saving stickyBackendDNS to sessionStorage:', error)
+    return null
   }
 }
 
 /**
- * Clears sticky backend from sessionStorage
+ * Retrieves the pinned backend for the current session.
+ * @returns {string|null}
+ */
+export function getStickyBackendDNS() {
+  const record = readStickyRecord()
+  if (!record) return null
+
+  const loginPhrase = currentLoginPhrase()
+  if (record.loginPhrase && loginPhrase && record.loginPhrase !== loginPhrase) {
+    // The two disagree, so one of them is stale. A phrase carries its mint time
+    // in its first 13 characters: a pin minted before the stored session belongs
+    // to a login that has been superseded, while a newer one is a login still in
+    // progress (re-authenticating over an expired session) and must be kept.
+    if (Number(record.loginPhrase.substring(0, 13)) < Number(loginPhrase.substring(0, 13))) {
+      clearStickyBackendDNS()
+
+      return null
+    }
+  }
+
+  return record.dns
+}
+
+/**
+ * Pins the backend node for the current session.
+ * @param {string} dnsUrl - "https://185-209-30-228-16127.node.api.runonflux.io"
+ * @param {string} [loginPhrase] - the phrase this node minted; defaults to the
+ *   phrase of the session already in storage
+ */
+export function setStickyBackendDNS(dnsUrl, loginPhrase = currentLoginPhrase()) {
+  if (!dnsUrl) return
+
+  try {
+    localStorage.setItem(STICKY_KEY, JSON.stringify({ dns: dnsUrl, loginPhrase: loginPhrase || null }))
+    sessionStorage.removeItem(STICKY_KEY)
+    console.log('[StickyBackend] Set sticky backend:', dnsUrl)
+  } catch (error) {
+    console.error('Error saving stickyBackendDNS:', error)
+  }
+}
+
+/**
+ * Clears the pinned backend node.
  */
 export function clearStickyBackendDNS() {
   try {
-    const currentSticky = sessionStorage.getItem('stickyBackendDNS')
-    if (currentSticky) {
-      sessionStorage.removeItem('stickyBackendDNS')
-      console.log('[StickyBackend] Cleared sticky backend:', currentSticky)
+    const current = readStickyRecord()
+
+    localStorage.removeItem(STICKY_KEY)
+    sessionStorage.removeItem(STICKY_KEY)
+    if (current) {
+      console.log('[StickyBackend] Cleared sticky backend:', current.dns)
     }
   } catch (error) {
-    console.error('Error clearing stickyBackendDNS from sessionStorage:', error)
+    console.error('Error clearing stickyBackendDNS:', error)
   }
 }
 

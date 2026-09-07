@@ -71,6 +71,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    base: process.env.BASE_URL || '/',
     plugins: [
       injectInitialTheme(),
       VueRouter({

@@ -321,6 +321,8 @@
       "publicKeyLabel": "Klucz Publiczny:",
       "blockchainConfirmationTime": "Czas potwierdzenia blockchain",
       "retrySigning": "Ponów podpisywanie",
+      "sessionExpired": "Twoja sesja wygasła. Zaloguj się ponownie.",
+      "signInAgain": "Zaloguj się ponownie",
       "autoSelect": "Automatyczny wybór",
       "testCompleted": "Test ukończony",
       "instancesWarningTwo": "Minimalna zalecana ilość dla sieci zdecentralizowanej to 3 instancje.",
@@ -373,6 +375,7 @@
       "managementAction": "Działanie zarządcze",
       "paymentWindowTime": "Pozostało 30 minut",
       "expiresInUnderWeek": "Wygasa za mniej niż tydzień",
+      "extensionPendingConfirmation": "Przedłużenie subskrypcji jest wciąż potwierdzane przez sieć. Poczekaj na potwierdzenie — wysłanie teraz zostałoby policzone według poprzedniej subskrypcji.",
       "testAndPay": "Przetestuj i zapłać",
       "multipleCurrencySupport": "Obsługa wielu walut",
       "publicKeyScoreLabel": "Wynik Klucza Publicznego:",
@@ -446,6 +449,7 @@
       "thirtyMinutesRemaining": "Pozostało 30 minut",
       "instancesWarningSyncthing": "Minimalna liczba instancji dla aplikacji z zdecentralizowaną trwałą pamięcią to 2. Aby użyć mniejszej liczby instancji, wyłącz synchronizację danych w ustawieniach ścieżki woluminu.",
       "instancesAutoAdjusted": "Instancje zostały automatycznie dostosowane z {from} do {to}, ponieważ synchronizacja danych wymaga minimum {to} instancji.",
+      "renewalPeriodAutoAdjusted": "Okres odnowienia automatycznie dostosowany z {from} na {to}",
       "afterCancellationExpire": "Po anulowaniu Twoja aplikacja wygaśnie około",
       "enterpriseNodesTabDescription": "Tylko wybrane węzły Enterprise będą mogły uruchomić Twoją aplikację i są używane do szyfrowania. Tylko te węzły mogą uzyskać dostęp do Twojego prywatnego obrazu i sekretów.",
       "commands": "Polecenia",
@@ -678,7 +682,10 @@
       "instancesTooltip": "Niezależne kopie Twojej aplikacji, każda działa na innym węźle. 3 lub więcej zapewnia wysoką dostępność w razie odłączenia węzła.",
       "hardwareResourceTooltip": "Zasoby przydzielone na instancję. Typowa aplikacja webowa potrzebuje ≈ 0.5 vCPU / 512 MB.",
       "importComposeShort": "Importuj compose / specyfikację",
-      "importComposeTooltip": "Zaimportuj istniejący docker-compose lub specyfikację Flux (JSON/YAML), aby wstępnie wypełnić formularz"
+      "importComposeTooltip": "Zaimportuj istniejący docker-compose lub specyfikację Flux (JSON/YAML), aby wstępnie wypełnić formularz",
+      "noLoginCredentials": "Nie znaleziono danych logowania. Zaloguj się ponownie.",
+      "failedToPrepareManualSigning": "Nie udało się przygotować ręcznego podpisu: {error}",
+      "pleaseEnterSignature": "Wprowadź podpis."
     },
     "volumePathBuilder": {
       "mountTypeComponentDirectoryLabel": "Katalog Komponentu:",
@@ -849,7 +856,8 @@
       "name": "Nazwa",
       "downloadFolderAsArchive": "Pobierz folder jako archiwum",
       "folderCreated": "Folder {folder} utworzony!",
-      "directoryDownloadInitiated": "Pobieranie katalogu rozpoczęte. Proszę czekać..."
+      "directoryDownloadInitiated": "Pobieranie katalogu rozpoczęte. Proszę czekać...",
+      "noVolumeData": "Brak danych wolumenu dla tego komponentu"
     },
     "notifications": {
       "newCount": "{count} Nowe",
@@ -969,6 +977,11 @@
       "download": "Pobierz",
       "lineSelection": "Tryb wyboru wiersza",
       "noLogsFound": "Nie znaleziono logów",
+      "rolledOver": "— wcześniejsze logi zostały zrotowane na tym węźle i nie są już dostępne —",
+      "skipped": "— {count} wierszy zapisano szybciej, niż ta przeglądarka mogła je odebrać, i nie zostały dostarczone —",
+      "truncated": "— {characters} znaków zostało obciętych ze zbyt długiego wiersza i nie zostało dostarczonych —",
+      "skippedPoll": "— ta przeglądarka pozostała zbyt daleko w tyle i część wierszy nie została dostarczona —",
+      "streamEnded": "— transmisja na żywo zakończyła się; panel zaczyna od najnowszych wierszy —",
       "copy": "Kopiuj",
       "unselect": "Odznacz",
       "logsSince": "Logi od",
@@ -1277,6 +1290,14 @@
       "reviewDeploy": "Przejrzyj i wdróż",
       "advancedNeeds": "Potrzebujesz wielu kontenerów, własnych domen, poleceń, statycznego IP lub reguł lokalizacji na poziomie kraju?",
       "openAdvanced": "Otwórz ustawienia zaawansowane"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Pokaż wartości z magazynu",
+      "tooLarge": "Dane są zbyt duże, aby je wyświetlić.",
+      "loadFailed": "Nie udało się wczytać wartości z Flux Storage.",
+      "noData": "Brak danych.",
+      "notFound": "Nie znaleziono wartości w magazynie.",
+      "revealFailed": "Nie udało się pokazać wartości z magazynu."
     }
   },
   "pages": {
@@ -1379,7 +1400,8 @@
           "visit": "Odwiedź",
           "manage": "Zarządzaj",
           "remove": "Usuń",
-          "install": "Zainstaluj"
+          "install": "Zainstaluj",
+          "clone": "Klonuj"
         },
         "rootFilesystemTooltip": "Tymczasowa pamięć kontenera. Monitorowanie rootfs pomaga uniknąć problemów z miejscem.",
         "persistentStorageTooltip": "Śledzi pamięć, która utrzymuje się po ponownym uruchomieniu kontenera. Zapobiega nadużyciu dysku.",
@@ -1387,7 +1409,12 @@
         "persistentStorage": "Trwała pamięć",
         "rootFilesystem": "Główny system plików (rootfs)",
         "composition": "Kompozycja",
-        "searchIpPlaceholder": "Szukaj IP..."
+        "searchIpPlaceholder": "Szukaj IP...",
+        "encryptedComposition": {
+          "title": "Komponenty są zaszyfrowane",
+          "ownerOnly": "Tylko właściciel tej aplikacji może odszyfrować konfigurację jej komponentów.",
+          "image": "zaszyfrowane"
+        }
       },
       "register": {
         "orbit": {
@@ -1708,7 +1735,8 @@
         "checking": "Sprawdzanie...",
         "signInDescription": "Aby zarządzać i monitorować swoje aplikacje w sieci Flux, musisz uwierzytelnić się za pomocą swojej tożsamości Flux.",
         "minHdd": "Min. HDD (GB)",
-        "locations": "Lokalizacje"
+        "locations": "Lokalizacje",
+        "encrypted": "zaszyfrowane"
       },
       "redeploy": {
         "tooltip": "Wdróż ponownie",
@@ -4898,7 +4926,8 @@
       "shortTitle": "Gwarancja zwrotu pieniędzy",
       "description": "Wypróbuj naszą usługę bez ryzyka. Jeśli nie będziesz w pełni zadowolony w ciągu pierwszych 30 dni, zwrócimy Ci pieniądze bez zadawania pytań."
     },
-    "off": "taniej"
+    "off": "taniej",
+    "notAvailable": "Niedostępne"
   },
   "menu": {
     "application": {
@@ -5132,6 +5161,7 @@
       "windrose": "Dedykowane serwery pirackiego survivalu w co-op",
       "projectzomboid": "Mody ze Steam Workshop, do 32 graczy",
       "valheim": "Serwery survivalowe z crossplayem, do 10 graczy",
+      "terraria": "Wtyczki i komendy TShock, kopie świata co godzinę",
       "fivem": "Serwery roleplay z txAdmin i MySQL",
       "wordpress": "Zdecentralizowany WordPress odporny na cenzurę",
       "n8n": "Samodzielnie hostowana automatyzacja n8n",

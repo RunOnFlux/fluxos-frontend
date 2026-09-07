@@ -3,11 +3,12 @@
     Crawlable internal-link section: real <a href> anchors (NOT window.open) with
     keyword-rich anchor text pointing to each dedicated hosting landing site.
     Rendered on the prerendered homepage so the links are in the static snapshot
-    and pass link equity from cloud.runonflux.com to the product subdomains.
+    and pass link equity from cloud.runonflux.com to the games hub and the
+    product subdomains.
     Links are followed on purpose (no rel="nofollow") — these are first-party
     related properties we want search engines to associate and rank.
     Each card shows the destination's social share image (og:image) as a banner
-    on top, hot-linked from the subdomain, lazily loaded and hidden on load error.
+    on top, hot-linked from the destination, lazily loaded and hidden on load error.
   -->
   <section class="hosting-links" aria-labelledby="hosting-links-title">
     <div class="container">
@@ -63,19 +64,26 @@ const onImgError = e => {
   e.target.style.display = 'none'
 }
 
+// Every game site now lives under the runonflux.com/games hub; the old
+// <game>.runonflux.com subdomains only 301 into it, so link to the hub URL
+// directly and skip the redirect hop. The apps below still have their own
+// subdomains and stay as they are.
+const GAMES_HUB = 'https://runonflux.com/games'
+
 // Anchor text is intentionally hardcoded English keyword phrasing: these are
-// the exact commercial search terms each subdomain targets, and they must stay
+// the exact commercial search terms each destination targets, and they must stay
 // stable across locales for SEO. `img` is each destination's og:image (social
-// share preview), hot-linked from the subdomain. Descriptions are translatable.
+// share preview), hot-linked from the site itself. Descriptions are translatable.
 const services = [
-  { anchor: 'Minecraft Server Hosting', url: 'https://minecraft.runonflux.com', img: 'https://minecraft.runonflux.com/games/minecraft/banner.webp', desc: 'minecraft' },
-  { anchor: 'Palworld Server Hosting', url: 'https://palworld.runonflux.com', img: 'https://palworld.runonflux.com/games/palworld/banner.webp', desc: 'palworld' },
-  { anchor: 'Enshrouded Server Hosting', url: 'https://enshrouded.runonflux.com', img: 'https://enshrouded.runonflux.com/games/enshrouded/banner.webp', desc: 'enshrouded' },
-  { anchor: 'Rust Server Hosting', url: 'https://rust.runonflux.com', img: 'https://rust.runonflux.com/games/rust/banner.webp', desc: 'rust' },
-  { anchor: 'Windrose Server Hosting', url: 'https://windrose.runonflux.com', img: 'https://windrose.runonflux.com/games/windrose/banner.webp', desc: 'windrose' },
-  { anchor: 'Project Zomboid Server Hosting', url: 'https://projectzomboid.runonflux.com', img: 'https://projectzomboid.runonflux.com/games/projectzomboid/banner.webp', desc: 'projectzomboid' },
-  { anchor: 'Valheim Server Hosting', url: 'https://valheim.runonflux.com', img: 'https://valheim.runonflux.com/apps/valheim/banner.webp', desc: 'valheim' },
-  { anchor: 'FiveM Server Hosting', url: 'https://fivem.runonflux.com', img: 'https://fivem.runonflux.com/apps/fivem/banner.webp', desc: 'fivem' },
+  { anchor: 'Minecraft Server Hosting', url: `${GAMES_HUB}/minecraft`, img: `${GAMES_HUB}/apps/minecraft/og/home.webp`, desc: 'minecraft' },
+  { anchor: 'Palworld Server Hosting', url: `${GAMES_HUB}/palworld`, img: `${GAMES_HUB}/apps/palworld/og/home.webp`, desc: 'palworld' },
+  { anchor: 'Enshrouded Server Hosting', url: `${GAMES_HUB}/enshrouded`, img: `${GAMES_HUB}/apps/enshrouded/og/home.webp`, desc: 'enshrouded' },
+  { anchor: 'Rust Server Hosting', url: `${GAMES_HUB}/rust`, img: `${GAMES_HUB}/apps/rust/og/home.webp`, desc: 'rust' },
+  { anchor: 'Windrose Server Hosting', url: `${GAMES_HUB}/windrose`, img: `${GAMES_HUB}/apps/windrose/og/home.webp`, desc: 'windrose' },
+  { anchor: 'Project Zomboid Server Hosting', url: `${GAMES_HUB}/zomboid`, img: `${GAMES_HUB}/apps/zomboid/og/home.webp`, desc: 'projectzomboid' },
+  { anchor: 'Valheim Server Hosting', url: `${GAMES_HUB}/valheim`, img: `${GAMES_HUB}/apps/valheim/og/home.webp`, desc: 'valheim' },
+  { anchor: 'Terraria Server Hosting', url: `${GAMES_HUB}/terraria`, img: `${GAMES_HUB}/apps/terraria/og/home.webp`, desc: 'terraria' },
+  { anchor: 'FiveM Server Hosting', url: `${GAMES_HUB}/fivem`, img: `${GAMES_HUB}/apps/fivem/og/home.webp`, desc: 'fivem' },
   { anchor: 'Web3 WordPress Hosting', url: 'https://wordpress.runonflux.com', img: 'https://wordpress.runonflux.com/apps/wordpress/banner.webp', desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: 'https://n8n.runonflux.com', img: 'https://n8n.runonflux.com/apps/n8n/banner.webp', desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: 'https://openclaw.runonflux.com', img: 'https://openclaw.runonflux.com/apps/openclaw/banner.webp', desc: 'openclaw' },

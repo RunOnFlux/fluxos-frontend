@@ -15,6 +15,9 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const LATEST_SPEC_VERSION: typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']
   const MemoryMonitor: typeof import('./utils/memoryMonitor.js')['MemoryMonitor']
+  const SESSION_MAX_AGE_MS: typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']
+  const SESSION_SIGNING_MARGIN_MS: typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']
+  const STORAGE_MARKERS: typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const alphaDashValidator: typeof import('./@core/utils/validators.js')['alphaDashValidator']
   const alphaValidator: typeof import('./@core/utils/validators.js')['alphaValidator']
@@ -113,15 +116,19 @@ declare global {
   const getOptimizedImagePath: typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']
   const getPictureSources: typeof import('./composables/useOptimizedImage.js')['getPictureSources']
   const getRedirectResult: typeof import('./utils/firebase.js')['getRedirectResult']
+  const getSessionExpiry: typeof import('./utils/session.js')['getSessionExpiry']
+  const getSessionRemainingMs: typeof import('./utils/session.js')['getSessionRemainingMs']
   const getSpecFromPermanentMessages: typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']
   const getSsoEmail: typeof import('./utils/firebase.js')['getSsoEmail']
   const getStickyBackendDNS: typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']
+  const getStoredAuth: typeof import('./utils/session.js')['getStoredAuth']
   const getUser: typeof import('./utils/firebase.js')['getUser']
   const getWagmiAdapterAsync: typeof import('./utils/walletService.js')['getWagmiAdapterAsync']
   const h: typeof import('vue')['h']
   const hasAnalyticsConsent: typeof import('./composables/useCookieConsent.js')['hasAnalyticsConsent']
   const hasConsent: typeof import('./composables/useCookieConsent.js')['hasConsent']
   const hasPasswordProvider: typeof import('./utils/firebase.js')['hasPasswordProvider']
+  const hasStorageMarker: typeof import('./composables/useFluxStorageReveal.js')['hasStorageMarker']
   const hasWalletConnectSession: typeof import('./utils/walletService.js')['hasWalletConnectSession']
   const hexToRgb: typeof import('./@core/utils/colorConverter.js')['hexToRgb']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -131,6 +138,7 @@ declare global {
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const integerValidator: typeof import('./@core/utils/validators.js')['integerValidator']
   const ipToDNSFormat: typeof import('./utils/stickyBackend.js')['ipToDNSFormat']
+  const isAuthError: typeof import('./utils/session.js')['isAuthError']
   const isAuthenticated: typeof import('./utils/stickyBackend.js')['isAuthenticated']
   const isBrowserMetaMaskAvailable: typeof import('./utils/walletService.js')['isBrowserMetaMaskAvailable']
   const isDefined: typeof import('@vueuse/core')['isDefined']
@@ -148,6 +156,8 @@ declare global {
   const isRoundRobinBackend: typeof import('./utils/stickyBackend.js')['isRoundRobinBackend']
   const isSSPAvailable: typeof import('./utils/walletService.js')['isSSPAvailable']
   const isSecretEnvKey: typeof import('./utils/detectSecrets.js')['isSecretEnvKey']
+  const isSessionExpired: typeof import('./utils/session.js')['isSessionExpired']
+  const isSessionExpiringSoon: typeof import('./utils/session.js')['isSessionExpiringSoon']
   const isToday: typeof import('./@core/utils/helpers.js')['isToday']
   const isValidPort: typeof import('./utils/fluxPorts.js')['isValidPort']
   const isWebCryptoAvailable: typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']
@@ -169,6 +179,7 @@ declare global {
   const markRaw: typeof import('vue')['markRaw']
   const memoryMonitor: typeof import('./utils/memoryMonitor.js')['default']
   const nextTick: typeof import('vue')['nextTick']
+  const normalizeSpecForRedeploy: typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
   const onBeforeRouteLeave: typeof import('vue-router/auto')['onBeforeRouteLeave']
@@ -336,6 +347,7 @@ declare global {
   const useFloor: typeof import('@vueuse/math')['useFloor']
   const useFluxDrive: typeof import('./composables/useFluxDrive.js')['useFluxDrive']
   const useFluxShare: typeof import('./composables/useFluxShare.js')['useFluxShare']
+  const useFluxStorageReveal: typeof import('./composables/useFluxStorageReveal.js')['useFluxStorageReveal']
   const useFocus: typeof import('@vueuse/core')['useFocus']
   const useFocusWithin: typeof import('@vueuse/core')['useFocusWithin']
   const useFps: typeof import('@vueuse/core')['useFps']
@@ -504,6 +516,9 @@ declare module 'vue' {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly LATEST_SPEC_VERSION: UnwrapRef<typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']>
     readonly MemoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['MemoryMonitor']>
+    readonly SESSION_MAX_AGE_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']>
+    readonly SESSION_SIGNING_MARGIN_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']>
+    readonly STORAGE_MARKERS: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly alphaDashValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaDashValidator']>
     readonly alphaValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaValidator']>
@@ -601,15 +616,19 @@ declare module 'vue' {
     readonly getMetaMaskSDK: UnwrapRef<typeof import('./utils/walletService.js')['getMetaMaskSDK']>
     readonly getOptimizedImagePath: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getOptimizedImagePath']>
     readonly getPictureSources: UnwrapRef<typeof import('./composables/useOptimizedImage.js')['getPictureSources']>
+    readonly getSessionExpiry: UnwrapRef<typeof import('./utils/session.js')['getSessionExpiry']>
+    readonly getSessionRemainingMs: UnwrapRef<typeof import('./utils/session.js')['getSessionRemainingMs']>
     readonly getSpecFromPermanentMessages: UnwrapRef<typeof import('./utils/specConverter.js')['getSpecFromPermanentMessages']>
     readonly getSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['getSsoEmail']>
     readonly getStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['getStickyBackendDNS']>
+    readonly getStoredAuth: UnwrapRef<typeof import('./utils/session.js')['getStoredAuth']>
     readonly getUser: UnwrapRef<typeof import('./utils/firebase.js')['getUser']>
     readonly getWagmiAdapterAsync: UnwrapRef<typeof import('./utils/walletService.js')['getWagmiAdapterAsync']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly hasAnalyticsConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['hasAnalyticsConsent']>
     readonly hasConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['hasConsent']>
     readonly hasPasswordProvider: UnwrapRef<typeof import('./utils/firebase.js')['hasPasswordProvider']>
+    readonly hasStorageMarker: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['hasStorageMarker']>
     readonly hasWalletConnectSession: UnwrapRef<typeof import('./utils/walletService.js')['hasWalletConnectSession']>
     readonly hexToRgb: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['hexToRgb']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
@@ -619,6 +638,7 @@ declare module 'vue' {
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly integerValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['integerValidator']>
     readonly ipToDNSFormat: UnwrapRef<typeof import('./utils/stickyBackend.js')['ipToDNSFormat']>
+    readonly isAuthError: UnwrapRef<typeof import('./utils/session.js')['isAuthError']>
     readonly isAuthenticated: UnwrapRef<typeof import('./utils/stickyBackend.js')['isAuthenticated']>
     readonly isBrowserMetaMaskAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isBrowserMetaMaskAvailable']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
@@ -635,6 +655,8 @@ declare module 'vue' {
     readonly isRoundRobinBackend: UnwrapRef<typeof import('./utils/stickyBackend.js')['isRoundRobinBackend']>
     readonly isSSPAvailable: UnwrapRef<typeof import('./utils/walletService.js')['isSSPAvailable']>
     readonly isSecretEnvKey: UnwrapRef<typeof import('./utils/detectSecrets.js')['isSecretEnvKey']>
+    readonly isSessionExpired: UnwrapRef<typeof import('./utils/session.js')['isSessionExpired']>
+    readonly isSessionExpiringSoon: UnwrapRef<typeof import('./utils/session.js')['isSessionExpiringSoon']>
     readonly isToday: UnwrapRef<typeof import('./@core/utils/helpers.js')['isToday']>
     readonly isValidPort: UnwrapRef<typeof import('./utils/fluxPorts.js')['isValidPort']>
     readonly isWebCryptoAvailable: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['isWebCryptoAvailable']>
@@ -656,6 +678,7 @@ declare module 'vue' {
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly memoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['default']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly normalizeSpecForRedeploy: UnwrapRef<typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
     readonly onBeforeRouteLeave: UnwrapRef<typeof import('vue-router/auto')['onBeforeRouteLeave']>
@@ -823,6 +846,7 @@ declare module 'vue' {
     readonly useFloor: UnwrapRef<typeof import('@vueuse/math')['useFloor']>
     readonly useFluxDrive: UnwrapRef<typeof import('./composables/useFluxDrive.js')['useFluxDrive']>
     readonly useFluxShare: UnwrapRef<typeof import('./composables/useFluxShare.js')['useFluxShare']>
+    readonly useFluxStorageReveal: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['useFluxStorageReveal']>
     readonly useFocus: UnwrapRef<typeof import('@vueuse/core')['useFocus']>
     readonly useFocusWithin: UnwrapRef<typeof import('@vueuse/core')['useFocusWithin']>
     readonly useFps: UnwrapRef<typeof import('@vueuse/core')['useFps']>

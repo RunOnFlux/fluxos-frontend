@@ -226,7 +226,8 @@
       "necessaryDescription": "Questi cookie sono essenziali per il corretto funzionamento del sito web. Non possono essere disabilitati.",
       "analytics": "Cookie analitici",
       "analyticsDescription": "Questi cookie ci aiutano a capire come i visitatori interagiscono con il nostro sito Web raccogliendo e segnalando informazioni in modo anonimo."
-    }
+    },
+    "notAvailable": "Non disponibile"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} eliminato",
       "files": {
         "emptyDirectory": "Directory vuota"
-      }
+      },
+      "noVolumeData": "Nessun dato di volume disponibile per questo componente"
     },
     "auditViewer": {
       "title": "Registro di Audit",
@@ -702,6 +704,11 @@
       "download": "Scaricamento",
       "noMatchingLogs": "Nessun log corrispondente trovato per '{keyword}'",
       "noLogsFound": "Nessun registro trovato",
+      "rolledOver": "— i log precedenti sono stati ruotati su questo nodo e non sono più disponibili —",
+      "skipped": "— {count} righe sono state scritte più velocemente di quanto questo visualizzatore potesse riceverle e non sono state consegnate —",
+      "truncated": "— {characters} caratteri sono stati tagliati da una riga troppo lunga e non sono stati consegnati —",
+      "skippedPoll": "— questo visualizzatore è rimasto troppo indietro e alcune righe non sono state consegnate —",
+      "streamEnded": "— lo streaming in diretta è terminato; il pannello riparte dalle righe più recenti —",
       "errors": {
         "noLogsToDownload": "Nessun registro disponibile per il download"
       }
@@ -1108,6 +1115,7 @@
       "instancesWarningOne": "Il minimo consigliato per una rete decentralizzata è 3 istanze. Con solo 1 istanza, la tua app potrebbe riscontrare alcuni minuti di inattività se il nodo che esegue l'app viene riavviato o arrestato.",
       "instancesWarningSyncthing": "Le istanze minime per le app con archiviazione persistente decentralizzata sono 2. Per utilizzare meno istanze, disabilita la sincronizzazione dei dati nelle impostazioni del percorso del volume.",
       "instancesAutoAdjusted": "Istanze regolate automaticamente da {from} a {to} perché la sincronizzazione dei dati richiede un minimo di {to} istanze.",
+      "renewalPeriodAutoAdjusted": "Periodo di rinnovo modificato automaticamente da {from} a {to}",
       "instancesWarningLegacy": "La riduzione delle istanze al di sotto di 3 è disponibile solo per le app con la versione specifica 8 o successiva. Aggiorna le specifiche dell'app per abilitare questa funzionalità.",
       "period": "Periodo",
       "renewal": "Rinnovo",
@@ -1276,6 +1284,8 @@
       "visitFluxNode": "Visita FluxNode",
       "signMessage": "Firma il messaggio",
       "retrySigning": "Riprova a firmare",
+      "sessionExpired": "La tua sessione è scaduta. Accedi di nuovo.",
+      "signInAgain": "Accedi di nuovo",
       "cancelSigning": "Annulla firma",
       "enablePaymentAnyway": "Abilita comunque il pagamento",
       "testCompleted": "Prova completata",
@@ -1316,6 +1326,7 @@
       "failedToCalculatePrice": "Impossibile calcolare il prezzo",
       "subscription": "Sottoscrizione:",
       "expiresInUnderWeek": "Scade tra meno di una settimana. Rinnovo abbonamento per aggiornamento.",
+      "extensionPendingConfirmation": "L'estensione del tuo abbonamento è ancora in fase di conferma dalla rete. Attendi la conferma: inviare ora verrebbe calcolato sull'abbonamento precedente.",
       "notAvailable": "Non disponibile",
       "testApplicationDescription": "Testa l'installazione/avvio dell'applicazione per assicurarti che le specifiche funzionino correttamente.",
       "installationLogAppears": "Il registro di installazione verrà visualizzato di seguito una volta completato.",
@@ -1515,7 +1526,10 @@
       "instancesTooltip": "Copie indipendenti della tua app, ognuna eseguita su un nodo diverso. 3 o più garantiscono un'elevata disponibilità se un nodo va offline.",
       "hardwareResourceTooltip": "Risorse assegnate per istanza. Una tipica app web necessita di ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Importa compose / spec",
-      "importComposeTooltip": "Importa un docker-compose o una specifica Flux esistente (JSON/YAML) per precompilare il modulo"
+      "importComposeTooltip": "Importa un docker-compose o una specifica Flux esistente (JSON/YAML) per precompilare il modulo",
+      "noLoginCredentials": "Nessuna credenziale di accesso trovata. Accedi di nuovo.",
+      "failedToPrepareManualSigning": "Impossibile preparare la firma manuale: {error}",
+      "pleaseEnterSignature": "Inserisci una firma."
     },
     "tosDialog": {
       "loading": "Caricamento Termini di servizio..."
@@ -1624,6 +1638,14 @@
       "reviewDeploy": "Rivedi e distribuisci",
       "advancedNeeds": "Hai bisogno di più container, domini personalizzati, comandi, un IP statico o regole di posizione a livello di paese?",
       "openAdvanced": "Apri le impostazioni Avanzate"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Mostra i valori di archiviazione",
+      "tooLarge": "Il payload è troppo grande per essere visualizzato.",
+      "loadFailed": "Impossibile caricare i valori da Flux Storage.",
+      "noData": "Nessun dato.",
+      "notFound": "Nessun valore archiviato trovato.",
+      "revealFailed": "Impossibile mostrare i valori di archiviazione."
     }
   },
   "components": {
@@ -2816,7 +2838,8 @@
           "manage": "Maneggio",
           "install": "Installare",
           "remove": "Rimuovere",
-          "visit": "Visita"
+          "visit": "Visita",
+          "clone": "Clona"
         },
         "searchIpPlaceholder": "Cerca IP...",
         "persistentStorage": "Archiviazione persistente",
@@ -2903,6 +2926,11 @@
           "networkTx": "TX su eth0",
           "ioRead": "Leggere",
           "ioWrite": "Scrivere"
+        },
+        "encryptedComposition": {
+          "title": "I componenti sono cifrati",
+          "ownerOnly": "Solo il proprietario di questa app può decifrare la configurazione dei suoi componenti.",
+          "image": "cifrato"
         }
       },
       "redeploy": {
@@ -2962,7 +2990,8 @@
           "name": "Nome",
           "status": "Stato",
           "description": "Descrizione"
-        }
+        },
+        "encrypted": "cifrato"
       },
       "register": {
         "landing": {
@@ -5128,6 +5157,7 @@
       "windrose": "Server dedicati di sopravvivenza piratesca in co-op",
       "projectzomboid": "Mod Steam Workshop, fino a 32 giocatori",
       "valheim": "Server survival con crossplay, fino a 10 giocatori",
+      "terraria": "Plugin e comandi TShock, backup del mondo ogni ora",
       "fivem": "Server roleplay con txAdmin e MySQL",
       "wordpress": "WordPress decentralizzato e resistente alla censura",
       "n8n": "Automazione dei flussi n8n self-hosted",

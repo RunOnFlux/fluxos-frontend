@@ -226,7 +226,8 @@
       "necessaryDescription": "Ces cookies sont indispensables au bon fonctionnement du site Internet. Ils ne peuvent pas être désactivés.",
       "analytics": "Cookies d'analyse",
       "analyticsDescription": "Ces cookies nous aident à comprendre comment les visiteurs interagissent avec notre site Web en collectant et en signalant des informations de manière anonyme."
-    }
+    },
+    "notAvailable": "Non disponible"
   },
   "menu": {
     "home": {
@@ -514,7 +515,8 @@
       "deleted": "{name} supprimé",
       "files": {
         "emptyDirectory": "Répertoire vide"
-      }
+      },
+      "noVolumeData": "Aucune donnée de volume disponible pour ce composant"
     },
     "auditViewer": {
       "title": "Journal d'Audit",
@@ -702,6 +704,11 @@
       "download": "Télécharger",
       "noMatchingLogs": "Aucun journal correspondant trouvé pour '{keyword}'",
       "noLogsFound": "Aucun journal trouvé",
+      "rolledOver": "— les journaux antérieurs ont été effacés par rotation sur ce nœud et ne sont plus disponibles —",
+      "skipped": "— {count} lignes ont été écrites plus vite que cette visionneuse ne pouvait les recevoir et n'ont pas été livrées —",
+      "truncated": "— {characters} caractères ont été coupés d'une ligne trop longue et n'ont pas été livrés —",
+      "skippedPoll": "— cette visionneuse a pris trop de retard et certaines lignes n'ont pas été livrées —",
+      "streamEnded": "— le flux en direct s'est terminé ; le panneau reprend à partir des lignes les plus récentes —",
       "errors": {
         "noLogsToDownload": "Aucun journal disponible au téléchargement"
       }
@@ -1108,6 +1115,7 @@
       "instancesWarningOne": "Le minimum recommandé pour un réseau décentralisé est de 3 instances. Avec une seule instance, votre application peut connaître quelques minutes d'arrêt si le nœud exécutant l'application est redémarré ou arrêté.",
       "instancesWarningSyncthing": "Le nombre minimum d'instances pour les applications avec stockage persistant décentralisé est de 2. Pour utiliser moins d'instances, désactivez la synchronisation des données dans les paramètres du chemin du volume.",
       "instancesAutoAdjusted": "Instances automatiquement ajustées de {from} à {to} car la synchronisation des données nécessite un minimum de {to} instances.",
+      "renewalPeriodAutoAdjusted": "Période de renouvellement automatiquement ajustée de {from} à {to}",
       "instancesWarningLegacy": "La réduction des instances en dessous de 3 n'est disponible que pour les applications avec la version de spécification 8 ou supérieure. Mettez à jour la spécification de votre application pour activer cette fonctionnalité.",
       "period": "Période",
       "renewal": "Renouvellement",
@@ -1276,6 +1284,8 @@
       "visitFluxNode": "Visitez FluxNode",
       "signMessage": "Message de signature",
       "retrySigning": "Réessayer de signer",
+      "sessionExpired": "Votre session a expiré. Veuillez vous reconnecter.",
+      "signInAgain": "Se reconnecter",
       "cancelSigning": "Annuler la signature",
       "enablePaymentAnyway": "Activer le paiement quand même",
       "testCompleted": "Test terminé",
@@ -1316,6 +1326,7 @@
       "failedToCalculatePrice": "Échec du calcul du prix",
       "subscription": "Abonnement:",
       "expiresInUnderWeek": "Expire dans moins d’une semaine. Renouvellement d'abonnement à mettre à jour.",
+      "extensionPendingConfirmation": "L'extension de votre abonnement est encore en cours de confirmation par le réseau. Attendez la confirmation : envoyer maintenant serait calculé sur l'abonnement précédent.",
       "notAvailable": "Pas disponible",
       "testApplicationDescription": "Testez l’installation/le lancement de votre application pour vous assurer que vos spécifications fonctionnent correctement.",
       "installationLogAppears": "Le journal d'installation apparaîtra ci-dessous une fois terminé.",
@@ -1515,7 +1526,10 @@
       "instancesTooltip": "Copies indépendantes de votre application, chacune s'exécutant sur un nœud différent. 3 ou plus offre une haute disponibilité si un nœud se déconnecte.",
       "hardwareResourceTooltip": "Ressources allouées par instance. Une application web typique nécessite ≈ 0,5 vCPU / 512 MB.",
       "importComposeShort": "Importer compose / spéc.",
-      "importComposeTooltip": "Importez un docker-compose existant ou une spécification Flux (JSON/YAML) pour préremplir le formulaire"
+      "importComposeTooltip": "Importez un docker-compose existant ou une spécification Flux (JSON/YAML) pour préremplir le formulaire",
+      "noLoginCredentials": "Aucune information de connexion trouvée. Veuillez vous reconnecter.",
+      "failedToPrepareManualSigning": "Échec de la préparation de la signature manuelle : {error}",
+      "pleaseEnterSignature": "Veuillez saisir une signature."
     },
     "tosDialog": {
       "loading": "Chargement des conditions d'utilisation..."
@@ -1624,6 +1638,14 @@
       "reviewDeploy": "Vérifier et déployer",
       "advancedNeeds": "Besoin de plusieurs conteneurs, de domaines personnalisés, de commandes, d'une IP statique ou de règles d'emplacement au niveau des pays ?",
       "openAdvanced": "Ouvrir les paramètres avancés"
+    },
+    "fluxStorageReveal": {
+      "reveal": "Afficher les valeurs de stockage",
+      "tooLarge": "La charge utile est trop volumineuse pour être affichée.",
+      "loadFailed": "Échec du chargement des valeurs depuis Flux Storage.",
+      "noData": "Aucune donnée.",
+      "notFound": "Aucune valeur stockée trouvée.",
+      "revealFailed": "Échec de l'affichage des valeurs de stockage."
     }
   },
   "components": {
@@ -2816,7 +2838,8 @@
           "manage": "Gérer",
           "install": "Installer",
           "remove": "Retirer",
-          "visit": "Visite"
+          "visit": "Visite",
+          "clone": "Cloner"
         },
         "searchIpPlaceholder": "Rechercher une adresse IP...",
         "persistentStorage": "Stockage persistant",
@@ -2903,6 +2926,11 @@
           "networkTx": "Émission sur eth0",
           "ioRead": "Lire",
           "ioWrite": "Écrire"
+        },
+        "encryptedComposition": {
+          "title": "Les composants sont chiffrés",
+          "ownerOnly": "Seul le propriétaire de cette application peut déchiffrer la configuration de ses composants.",
+          "image": "chiffré"
         }
       },
       "redeploy": {
@@ -2962,7 +2990,8 @@
           "name": "Nom",
           "status": "Statut",
           "description": "Description"
-        }
+        },
+        "encrypted": "chiffré"
       },
       "register": {
         "landing": {
@@ -5128,6 +5157,7 @@
       "windrose": "Serveurs dédiés de survie pirate en coopération",
       "projectzomboid": "Mods Steam Workshop, jusqu'à 32 joueurs",
       "valheim": "Serveurs de survie avec crossplay, jusqu'à 10 joueurs",
+      "terraria": "Plugins & commandes TShock, sauvegardes du monde toutes les heures",
       "fivem": "Serveurs roleplay avec txAdmin et MySQL",
       "wordpress": "WordPress décentralisé et résistant à la censure",
       "n8n": "Automatisation de workflows n8n auto-hébergée",

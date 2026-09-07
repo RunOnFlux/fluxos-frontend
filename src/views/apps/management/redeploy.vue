@@ -31,6 +31,7 @@ import { useRouter } from "vue-router"
 import { ref } from "vue"
 import { useI18n } from "vue-i18n"
 import qs from "qs"
+import { normalizeSpecForRedeploy } from '@/utils/redeploySpec'
 
 const props = defineProps({
   row: {
@@ -47,7 +48,7 @@ function redeployApp(appSpecs, isFromActive = false) {
   console.log('🚀 [REDEPLOY] Starting redeploy with appSpecs:', appSpecs)
   console.log('🚀 [REDEPLOY] Full structure:', JSON.stringify(appSpecs, null, 2))
 
-  const specs = { ...appSpecs }
+  const specs = normalizeSpecForRedeploy(appSpecs)
 
   const zelidauth = localStorage.getItem("zelidauth")
   const auth = qs.parse(zelidauth)
