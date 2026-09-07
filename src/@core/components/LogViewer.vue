@@ -569,31 +569,30 @@ function resetLogPosition() {
 // read, and the download button still hands over the whole log.
 const MAX_PANE_LINES = 5000
 
-// A stream does not open on an empty log. The node opens it with docker's own
+// A stream does not open on an empty log. The node opens one with docker's own
 // `tail`, and backfills a viewer joining one already running, so the first lines
-// it sends are lines the poll that filled this pane has just fetched. They are
-// held here while the stream opens and dropped when they arrive, so the pane
-// shows each of them once.
+// it sends are lines the poll that filled this pane has already fetched. They
+// are dropped rather than shown twice.
 //
 // Matched whole, against the line as the node sent it. Every line carries
 // docker's nanosecond timestamp, so a line matches only by being that same line
 // - two identical messages a second apart do not.
+//
+// Against the pane as it stands when the batch arrives, not as it stood when the
+// socket was opened: a connection slower than the poll's interval leaves lines
+// fetched in between, and those are the ones the backfill will overlap.
 const OPENING_OVERLAP_LINES = 1000
-const openingLines = new Set()
-
-function noteOpeningLines() {
-  openingLines.clear()
-  logs.value.slice(-OPENING_OVERLAP_LINES).forEach(line => openingLines.add(line))
-}
+const expectingOverlap = ref(false)
 
 function dropOpeningOverlap(received) {
-  if (!openingLines.size) return received
+  if (!expectingOverlap.value) return received
 
-  const fresh = received.filter(line => !openingLines.has(line))
+  const seen = new Set(logs.value.slice(-OPENING_OVERLAP_LINES))
+  const fresh = received.filter(line => !seen.has(line))
 
   // Something the pane had not already read: the overlap is behind us, and
-  // nothing further can be in it.
-  if (fresh.length) openingLines.clear()
+  // nothing that follows can be in it.
+  if (fresh.length) expectingOverlap.value = false
 
   return fresh
 }
@@ -728,9 +727,9 @@ function startStreaming() {
     ? `http://${host}:${port}`
     : `https://${host.replace(/\./g, '-')}-${port}.node.api.runonflux.io`
 
-  // Taken before the socket opens, while the pane holds exactly what the poll
-  // put there and nothing the stream has sent.
-  noteOpeningLines()
+  // From here until the stream sends a line the pane has not already read, what
+  // arrives is measured against what is on it.
+  expectingOverlap.value = true
 
   const socket = io(`${base}/applogs`, { transports: ['websocket'], reconnection: false })
 
@@ -847,7 +846,7 @@ function closeStream() {
   streamContainer.value = null
   streaming.value = false
   streamPositioned.value = false
-  openingLines.clear()
+  expectingOverlap.value = false
 }
 
 function startInterval() {
