@@ -2,10 +2,18 @@
  * Session helpers
  *
  * A FluxOS login is a `zelidauth` triplet (zelid + signature + loginPhrase) kept
- * in localStorage. The node that minted the loginPhrase is the only one that
- * holds the session, and it drops the session 1.5 hours after minting — the
- * loginPhrase carries its own mint time in its first 13 characters, so the
- * expiry is knowable client-side without asking a node.
+ * in localStorage. The loginPhrase carries its own mint time in its first 13
+ * characters, so the expiry is knowable client-side without asking a node.
+ *
+ * How long the network accepts it, from FluxOS:
+ *   - the node that minted it stores a loggedUsers record with a 14 day TTL
+ *     (serviceManager.js, ensureIndexes on loggedUsers)
+ *   - every other node has no record and falls back to accepting any phrase
+ *     minted within 16 hours, provided the signature checks out
+ *     (verificationHelperUtils.js, verifyUserSession)
+ *
+ * Requests are spread across nodes, so 16 hours is the number that holds
+ * everywhere and the only safe one to plan around.
  *
  * Knowing it client-side matters: a long deploy form can outlive the session,
  * and the wallet will happily sign a message that the node then refuses. Signing
@@ -15,8 +23,15 @@
 
 import qs from 'qs'
 
-/** How long a node keeps a login session after minting the loginPhrase. */
-export const SESSION_MAX_AGE_MS = 1.5 * 60 * 60 * 1000
+/**
+ * How long we treat a login as usable.
+ *
+ * An hour short of the network's 16 hour limit: we would rather end the session
+ * ourselves, with a clear prompt, than have a node reject it mid-deploy. The
+ * margin also absorbs clock skew, since the mint time comes from a node's clock
+ * and the comparison happens against the browser's.
+ */
+export const SESSION_MAX_AGE_MS = 15 * 60 * 60 * 1000
 
 /**
  * Treat a session that is about to expire as already expired when we are about
