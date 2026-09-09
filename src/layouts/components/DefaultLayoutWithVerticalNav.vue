@@ -8,7 +8,7 @@ import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
 import NavBarMemoryMonitor from "@/layouts/components/NavBarMemoryMonitor.vue"
 import NavBarStatusBarToggle from "@/layouts/components/NavBarStatusBarToggle.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
-import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
+// import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
 import NavBarI18n from "@core/components/I18n.vue"
 import { VerticalNavLayout } from "@layouts"
 import { useSnackbar } from '@/composables/useSnackbar'
@@ -202,12 +202,13 @@ onMounted(() => {
         </IconBtn>
         <div class="d-none d-md-flex align-center ga-2">
           <BackendSelector />
-          <FluxAIToggler />
+          <!-- FluxAI is not answering, so the entry point is hidden rather than removed - restore these four lines once the service is back. -->
+          <!-- <FluxAIToggler /> -->
         </div>
         <VSpacer />
         <div class="d-md-none d-flex align-center ga-2">
           <BackendSelector />
-          <FluxAIToggler />
+          <!-- <FluxAIToggler /> -->
         </div>
         <IconBtn
           class="d-none d-lg-block"
