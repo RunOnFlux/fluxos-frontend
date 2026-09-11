@@ -200,6 +200,13 @@ export default {
     
     return Api().get('/flux/blockedrepositories', axiosConfig)
   },
+
+  // The enterprise app owners the node holds, flattened from the policy document it
+  // fetches and shape-validates every 6h. Distinct from AppsService.getEnterpriseNodes(),
+  // which scores every node in the network for suitability and returns ~1MB.
+  getEnterpriseAppOwners() {
+    return Api().get('/flux/enterpriseappowners')
+  },
   getMarketPlaceURL() {
     return Api().get('/flux/marketplaceurl')
   },
