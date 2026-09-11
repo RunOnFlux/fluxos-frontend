@@ -104,9 +104,6 @@ export default {
     
     return Api().post('/apps/checkdockerexistance', JSON.stringify(data), axiosConfig)
   },
-  appsRegInformation() {
-    return Api().get('/apps/registrationinformation')
-  },
   appsDeploymentInformation() {
     return Api().get('/apps/deploymentinformation')
   },
