@@ -2617,23 +2617,6 @@
               "warning": "Yeniden başlatma kapanacak ve Flux Gravity'yi hemen yeniden başlatacaktır. Yenilemeniz ve tekrar giriş yapmanız gerekecek.",
               "button": "Flux Gravity'yi yeniden başlatın"
             }
-          },
-          "securityAccess": {
-            "title": "Güvenlik ve Erişim Kontrolü",
-            "blockedPorts": {
-              "title": "Engellenen Bağlantı Noktaları",
-              "subtitle": "Bağlantı noktası erişim kontrolü",
-              "tooltip": "Belirli bağlantı noktalarının uygulamalar tarafından kullanılmasını engelleyin. En fazla 100 bağlantı noktası ekleyebilirsiniz.",
-              "hint": "Bağlantı noktası eklemek için Enter tuşuna basın (100'e kadar)",
-              "button": "Engellenen Bağlantı Noktalarını Güncelle"
-            },
-            "blockedRepos": {
-              "title": "Engellenen Depolar",
-              "subtitle": "Depo kısıtlamaları",
-              "tooltip": "Belirli Docker depolarının düğümünüzde konuşlandırılmasını hariç tutun.",
-              "hint": "Depo eklemek için Enter'a basın",
-              "button": "Engellenen Depoları Güncelle"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "Yönlendirici IP Adresi",
           "apiPort": "API Bağlantı Noktası",
-          "blockedPorts": "Engellenen Bağlantı Noktaları",
-          "blockedRepositories": "Engellenen Depolar",
           "type": "Tip"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Bağlantı noktası numarasını yazın ve Enter'a basın",
-          "repositoryPlaceholder": "Depo adını yazın ve Enter'a basın"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Kimliği doğrulanmadı",
@@ -2759,19 +2738,9 @@
             "message": "Yönlendiricinin IP adresini güncellemek istediğinizden emin misiniz?",
             "button": "Güncelleme"
           },
-          "updateBlockedPorts": {
-            "title": "Engellenen Bağlantı Noktalarını Güncelle",
-            "message": "Engellenen bağlantı noktalarını güncellemek istediğinizden emin misiniz?",
-            "button": "Güncelleme"
-          },
           "updateApiPort": {
             "title": "API Bağlantı Noktasını Güncelle",
             "message": "API bağlantı noktasını güncellemek istediğinizden emin misiniz?",
-            "button": "Güncelleme"
-          },
-          "updateBlockedRepos": {
-            "title": "Engellenen Depoları Güncelle",
-            "message": "Engellenen veri havuzlarını güncellemek istediğinizden emin misiniz?",
             "button": "Güncelleme"
           },
           "restartFluxOs": {

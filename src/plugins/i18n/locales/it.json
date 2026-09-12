@@ -2617,23 +2617,6 @@
               "warning": "Il riavvio chiuderà e riavvierà immediatamente Flux Gravity. Dovrai aggiornare e accedere nuovamente.",
               "button": "Riavvia la gravità del flusso"
             }
-          },
-          "securityAccess": {
-            "title": "Sicurezza e controllo degli accessi",
-            "blockedPorts": {
-              "title": "Porte bloccate",
-              "subtitle": "Controllo degli accessi ai porti",
-              "tooltip": "Impedisci l'utilizzo di porte specifiche da parte delle applicazioni. Puoi aggiungere fino a 100 porte.",
-              "hint": "Premi Invio per aggiungere una porta (fino a 100)",
-              "button": "Aggiorna le porte bloccate"
-            },
-            "blockedRepos": {
-              "title": "Repository bloccati",
-              "subtitle": "Restrizioni del repository",
-              "tooltip": "Escludi repository Docker specifici dalla distribuzione sul tuo nodo.",
-              "hint": "Premi Invio per aggiungere il repository",
-              "button": "Aggiorna repository bloccati"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "Indirizzo IP del router",
           "apiPort": "Porta API",
-          "blockedPorts": "Porte bloccate",
-          "blockedRepositories": "Repository bloccati",
           "type": "Tipo"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Digitare il numero di porta e premere Invio",
-          "repositoryPlaceholder": "Digita il nome del repository e premi Invio"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Non autenticato",
@@ -2759,19 +2738,9 @@
             "message": "Sei sicuro di voler aggiornare l'indirizzo IP del router?",
             "button": "Aggiornamento"
           },
-          "updateBlockedPorts": {
-            "title": "Aggiorna le porte bloccate",
-            "message": "Sei sicuro di voler aggiornare le porte bloccate?",
-            "button": "Aggiornamento"
-          },
           "updateApiPort": {
             "title": "Aggiorna porta API",
             "message": "Sei sicuro di voler aggiornare la porta API?",
-            "button": "Aggiornamento"
-          },
-          "updateBlockedRepos": {
-            "title": "Aggiorna repository bloccati",
-            "message": "Sei sicuro di voler aggiornare i repository bloccati?",
             "button": "Aggiornamento"
           },
           "restartFluxOs": {

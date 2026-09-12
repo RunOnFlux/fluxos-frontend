@@ -2618,23 +2618,6 @@
               "warning": "Miwiti ulang bakal nutup lan langsung miwiti maneh Flux Gravity. Sampeyan kudu nyegerake lan mlebu maneh.",
               "button": "Miwiti Ulang Flux Gravity"
             }
-          },
-          "securityAccess": {
-            "title": "Keamanan & Kontrol Akses",
-            "blockedPorts": {
-              "title": "Port Sing Diblokir",
-              "subtitle": "Kontrol akses port",
-              "tooltip": "Mblokir port tartamtu supaya ora digunakake dening aplikasi. Sampeyan bisa nambah nganti 100 port.",
-              "hint": "Pencet Enter kanggo nambah port (nganti 100)",
-              "button": "Nganyari Port Sing Diblokir"
-            },
-            "blockedRepos": {
-              "title": "Repositori Sing Diblokir",
-              "subtitle": "Watesan repositori",
-              "tooltip": "Nyegah repositori Docker tartamtu supaya ora disebarake ing node sampeyan.",
-              "hint": "Pencet Enter kanggo nambah repositori",
-              "button": "Nganyari Repositori Sing Diblokir"
-            }
           }
         },
         "logs": {
@@ -2719,14 +2702,10 @@
         "labels": {
           "routerIpAddress": "Alamat IP Router",
           "apiPort": "Port API",
-          "blockedPorts": "Port Sing Diblokir",
-          "blockedRepositories": "Repositori Sing Diblokir",
           "type": "Jinis"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Ketik nomer port lan pencet Enter",
-          "repositoryPlaceholder": "Ketik jeneng repositori lan pencet Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Ora diautentikasi",
@@ -2760,19 +2739,9 @@
             "message": "Apa sampeyan yakin arep nganyari alamat IP router?",
             "button": "Nganyari"
           },
-          "updateBlockedPorts": {
-            "title": "Nganyari Port Sing Diblokir",
-            "message": "Apa sampeyan yakin arep nganyari port sing diblokir?",
-            "button": "Nganyari"
-          },
           "updateApiPort": {
             "title": "Nganyari Port API",
             "message": "Apa sampeyan yakin arep nganyari port API?",
-            "button": "Nganyari"
-          },
-          "updateBlockedRepos": {
-            "title": "Nganyari Repositori Sing Diblokir",
-            "message": "Apa sampeyan yakin arep nganyari repositori sing diblokir?",
             "button": "Nganyari"
           },
           "restartFluxOs": {
