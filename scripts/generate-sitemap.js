@@ -16,6 +16,37 @@ const __dirname = path.dirname(__filename)
 // Base URL for all sitemap entries
 const BASE_URL = 'https://cloud.runonflux.com'
 
+/**
+ * TRAILING SLASHES, AND WHY THEY ARE NOT UNIFORM.
+ *
+ * The build emits every prerendered route as `dist/<route>/index.html`, so the static host
+ * serves it as a DIRECTORY and 301s the slash-less form onto it:
+ *
+ *   GET /marketplace        301 -> /marketplace/
+ *   GET /marketplace/dopex  301 -> /marketplace/dopex/
+ *
+ * Listing the slash-less form in the sitemap therefore advertises a redirect. Search Console
+ * reported exactly that on 2026-09-12: 14 URLs from this sitemap sat under "Page with redirect"
+ * rather than being indexed, and the URL Inspection API showed Google had indexed the SLASH form
+ * and picked it as canonical, overriding the slash-less rel=canonical the page declares:
+ *
+ *   /marketplace/   googleCanonical=/marketplace/   userCanonical=/marketplace
+ *
+ * The `/compare` tree is the exception and must NOT get a slash. It is not in the prerender's
+ * route list (scripts/fetch-prerender-routes.js), so there is no directory for it: the SPA
+ * fallback in public/_redirects answers the slash-less URL with 200, and that is the form Google
+ * has indexed (8 of the 11 compare pages, canonical confirmed slash-less). Adding a slash there
+ * would point the sitemap away from the URL that is actually in the index.
+ *
+ * So the rule is: prerendered route -> trailing slash. Not prerendered -> leave it alone.
+ * If `/compare` is ever added to the prerender list, flip `prerendered` on those entries too.
+ */
+const withCanonicalSlash = (loc, prerendered) => {
+  if (!prerendered || loc.endsWith('/')) return loc
+
+  return `${loc}/`
+}
+
 // API Configuration
 const MARKETPLACE_API_URL = 'https://api.marketplace.runonflux.io'
 const API_VERSION = 1
@@ -43,6 +74,7 @@ const staticUrls = [
   // High Priority Pages
   {
     loc: '/',
+    prerendered: true,
     source: 'src/pages/dashboards/home.vue',
     priority: SEO_PRIORITY.HIGHEST,
     changefreq: 'daily',
@@ -50,6 +82,7 @@ const staticUrls = [
   },
   {
     loc: '/cost-calculator',
+    prerendered: true,
     source: 'src/pages/cost-calculator.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
@@ -57,6 +90,7 @@ const staticUrls = [
   },
   {
     loc: '/flux-drive',
+    prerendered: true,
     source: 'src/pages/flux-drive.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
@@ -64,6 +98,7 @@ const staticUrls = [
   },
   {
     loc: '/marketplace/games',
+    prerendered: true,
     source: 'src/pages/marketplace/games/index.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
@@ -77,6 +112,7 @@ const staticUrls = [
   // Comparison hub + pages (see src/content/comparisons.js)
   {
     loc: '/compare',
+    prerendered: false,
     source: 'src/pages/compare/index.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
@@ -84,6 +120,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-aws',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -91,6 +128,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-digitalocean',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -98,6 +136,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-google-cloud',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -105,6 +144,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-azure',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -112,6 +152,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-vultr',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -119,6 +160,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-linode',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -126,6 +168,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-akash',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -133,6 +176,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/cheapest-cloud-hosting',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
@@ -140,6 +184,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/what-is-decentralized-cloud-hosting',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
@@ -147,6 +192,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/web3-hosting-explained',
+    prerendered: false,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
@@ -156,6 +202,7 @@ const staticUrls = [
   // Dashboard Pages
   {
     loc: '/dashboards/overview',
+    prerendered: true,
     source: 'src/pages/dashboards/overview.vue',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'daily',
@@ -163,6 +210,7 @@ const staticUrls = [
   },
   {
     loc: '/marketplace',
+    prerendered: true,
     source: 'src/pages/marketplace/index.vue',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'weekly',
@@ -170,6 +218,7 @@ const staticUrls = [
   },
   {
     loc: '/dashboards/resources',
+    prerendered: true,
     source: 'src/pages/dashboards/resources.vue',
     priority: SEO_PRIORITY.STANDARD,
     changefreq: 'daily',
@@ -177,6 +226,7 @@ const staticUrls = [
   },
   {
     loc: '/dashboards/locations',
+    prerendered: true,
     source: 'src/pages/dashboards/locations.vue',
     priority: SEO_PRIORITY.STANDARD,
     changefreq: 'weekly',
@@ -184,6 +234,7 @@ const staticUrls = [
   },
   {
     loc: '/apps/register',
+    prerendered: true,
     source: 'src/pages/apps/register/index.vue',
     priority: SEO_PRIORITY.STANDARD,
     changefreq: 'monthly',
@@ -336,8 +387,9 @@ function escapeXml(str) {
 /**
  * Generate XML for a single URL entry
  */
-function generateUrlEntry({ loc, priority, changefreq, description, lastmod }) {
-  const fullUrl = loc.startsWith('http') ? loc : `${BASE_URL}${loc}`
+function generateUrlEntry({ loc, priority, changefreq, description, lastmod, prerendered = true }) {
+  const canonicalPath = withCanonicalSlash(loc, prerendered)
+  const fullUrl = canonicalPath.startsWith('http') ? canonicalPath : `${BASE_URL}${canonicalPath}`
 
   return `
   <!-- ${description} -->
