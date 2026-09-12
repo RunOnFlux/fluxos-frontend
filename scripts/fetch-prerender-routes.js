@@ -12,6 +12,7 @@ import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
+import { comparisonList } from '../src/content/comparisons.js'
 import { isRetiredRoute } from './retired-routes.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -28,6 +29,29 @@ const GAMES_CATEGORY_UUIDS = [
   '7ce5a03c-b808-478b-94a1-2a1b3eaaeb36', // NewGames
 ]
 
+/**
+ * The comparison hub and every page under it.
+ *
+ * DERIVED from the content module, not listed by hand, so a comparison added to
+ * src/content/comparisons.js is prerendered the day it is authored. That file is plain ESM
+ * data with no imports of its own, which is why a build script can read it directly.
+ *
+ * These were missing until 2026-09-12, and the consequence was not subtle. With no route in
+ * this list there is no dist/compare/<slug>/index.html, so the SPA fallback in public/_redirects
+ * answered those URLs with the app shell — whose rel=canonical is the HOMEPAGE. Every comparison
+ * page was telling a non-rendering crawler it was a duplicate of '/'. Search Console had three
+ * of them unindexed on that date, and the other eight were indexed only because Google executed
+ * the JavaScript; Bing and the AI crawlers, which largely do not, saw nothing but the shell.
+ *
+ * The pages were written to be prerendered — see the header of src/content/comparisons.js and
+ * the router-settling guard in src/pages/compare/[slug].vue — so this is an omission being
+ * corrected, not a new capability.
+ */
+const COMPARE_ROUTES = [
+  '/compare',
+  ...comparisonList.map(entry => `/compare/${entry.slug}`),
+]
+
 // Static routes that should always be pre-rendered
 const STATIC_ROUTES = [
   '/', // Homepage (LandingServices) — fully static i18n content, safe to prerender
@@ -39,6 +63,7 @@ const STATIC_ROUTES = [
   '/dashboards/overview',
   '/dashboards/resources',
   '/dashboards/locations',
+  ...COMPARE_ROUTES,
 ]
 
 /**

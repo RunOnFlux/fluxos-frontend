@@ -32,14 +32,19 @@ const BASE_URL = 'https://cloud.runonflux.com'
  *
  *   /marketplace/   googleCanonical=/marketplace/   userCanonical=/marketplace
  *
- * The `/compare` tree is the exception and must NOT get a slash. It is not in the prerender's
- * route list (scripts/fetch-prerender-routes.js), so there is no directory for it: the SPA
- * fallback in public/_redirects answers the slash-less URL with 200, and that is the form Google
- * has indexed (8 of the 11 compare pages, canonical confirmed slash-less). Adding a slash there
- * would point the sitemap away from the URL that is actually in the index.
+ * The rule is therefore: prerendered route -> trailing slash. Not prerendered -> leave it alone,
+ * because the SPA fallback in public/_redirects answers those URLs with 200 at the exact path
+ * and no directory exists to redirect to.
  *
- * So the rule is: prerendered route -> trailing slash. Not prerendered -> leave it alone.
- * If `/compare` is ever added to the prerender list, flip `prerendered` on those entries too.
+ * TODAY EVERY ROUTE HERE IS PRERENDERED, so every entry carries `prerendered: true` and the
+ * whole sitemap ends in a slash. The flag is kept per entry rather than assumed, because the
+ * `/compare` tree spent a while on the other side of it: it was absent from the prerender list
+ * and Google had indexed its slash-less URLs. Both halves were fixed together on 2026-09-12,
+ * and the flag is what makes the next such route fail loudly in review instead of quietly
+ * advertising a slash it does not have.
+ *
+ * ADDING A ROUTE: if it is in scripts/fetch-prerender-routes.js, it is `prerendered: true`.
+ * The two files have to agree, and there is no test that enforces it.
  */
 const withCanonicalSlash = (loc, prerendered) => {
   if (!prerendered || loc.endsWith('/')) return loc
@@ -112,7 +117,7 @@ const staticUrls = [
   // Comparison hub + pages (see src/content/comparisons.js)
   {
     loc: '/compare',
-    prerendered: false,
+    prerendered: true,
     source: 'src/pages/compare/index.vue',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'weekly',
@@ -120,7 +125,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-aws',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -128,7 +133,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-digitalocean',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -136,7 +141,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-google-cloud',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -144,7 +149,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-azure',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -152,7 +157,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-vultr',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -160,7 +165,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-linode',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -168,7 +173,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/flux-vs-akash',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.MEDIUM,
     changefreq: 'monthly',
@@ -176,7 +181,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/cheapest-cloud-hosting',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
@@ -184,7 +189,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/what-is-decentralized-cloud-hosting',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
@@ -192,7 +197,7 @@ const staticUrls = [
   },
   {
     loc: '/compare/web3-hosting-explained',
-    prerendered: false,
+    prerendered: true,
     source: 'src/content/comparisons.js',
     priority: SEO_PRIORITY.HIGH,
     changefreq: 'monthly',
