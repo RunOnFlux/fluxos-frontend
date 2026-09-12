@@ -2199,6 +2199,20 @@
         }
       }
     },
+    "agentMcpToggler": {
+      "button": "AI Agents",
+      "tooltip": "Let AI agents deploy on Flux Cloud through the official MCP server",
+      "title": "Deploy with AI agents",
+      "intro": "Flux Cloud has an official MCP server. Claude, ChatGPT, Cursor, Windsurf, OpenCode and any other MCP host can quote, deploy, pay for and manage apps on Flux Cloud for you.",
+      "hostedTitle": "Hosted server",
+      "hostedText": "Nothing to install. Add this URL as a remote MCP server in your AI host.",
+      "localTitle": "Local server",
+      "localText": "Runs on your machine, so private keys never leave it. Needs Node.js.",
+      "keysNote": "The agent creates a dedicated Flux ID and payment address for you. Fund that address with only what a deployment needs and never share the keys of a wallet you use elsewhere.",
+      "docs": "Documentation",
+      "copied": "Copied to clipboard",
+      "copyFailed": "Could not copy"
+    },
     "fluxAIToggler": {
       "askFluxAI": "Ask FluxAI",
       "tooltip": "Get instant answers about Flux products, deployment, and app management",
