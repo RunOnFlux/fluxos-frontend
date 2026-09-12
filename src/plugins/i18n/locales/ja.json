@@ -2617,23 +2617,6 @@
               "warning": "再起動すると、Flux Gravity が終了し、すぐに再起動されます。更新して再度ログインする必要があります。",
               "button": "リスタート磁束重力"
             }
-          },
-          "securityAccess": {
-            "title": "セキュリティとアクセス制御",
-            "blockedPorts": {
-              "title": "ブロックされたポート",
-              "subtitle": "ポートアクセス制御",
-              "tooltip": "特定のポートがアプリケーションによって使用されないようにブロックします。最大 100 個のポートを追加できます。",
-              "hint": "Enter を押してポートを追加します (最大 100)",
-              "button": "ブロックされたポートを更新する"
-            },
-            "blockedRepos": {
-              "title": "ブロックされたリポジトリ",
-              "subtitle": "リポジトリの制限事項",
-              "tooltip": "特定の Docker リポジトリをノードへのデプロイから除外します。",
-              "hint": "Enterを押してリポジトリを追加します",
-              "button": "ブロックされたリポジトリを更新する"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "ルーターのIPアドレス",
           "apiPort": "APIポート",
-          "blockedPorts": "ブロックされたポート",
-          "blockedRepositories": "ブロックされたリポジトリ",
           "type": "タイプ"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "ポート番号を入力して Enter キーを押します",
-          "repositoryPlaceholder": "リポジトリ名を入力して Enter キーを押します"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "認証されていません",
@@ -2759,19 +2738,9 @@
             "message": "ルーターの IP アドレスを更新してもよろしいですか?",
             "button": "アップデート"
           },
-          "updateBlockedPorts": {
-            "title": "ブロックされたポートを更新する",
-            "message": "ブロックされたポートを更新してもよろしいですか?",
-            "button": "アップデート"
-          },
           "updateApiPort": {
             "title": "APIポートの更新",
             "message": "API ポートを更新してもよろしいですか?",
-            "button": "アップデート"
-          },
-          "updateBlockedRepos": {
-            "title": "ブロックされたリポジトリを更新する",
-            "message": "ブロックされたリポジトリを更新してもよろしいですか?",
             "button": "アップデート"
           },
           "restartFluxOs": {

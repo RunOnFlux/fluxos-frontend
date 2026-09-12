@@ -213,111 +213,6 @@
           </VCardText>
         </VCard>
 
-        <!-- Security & Access Control Section -->
-        <VCard class="mb-3" elevation="1">
-          <VCardTitle class="d-flex align-center pa-4 bg-surface">
-            <VAvatar color="primary" variant="flat" size="28" class="mr-2">
-              <VIcon icon="mdi-shield-lock" size="18" color="white" />
-            </VAvatar>
-            <span class="text-body-1">{{ t('pages.administration.manageFlux.sections.securityAccess.title') }}</span>
-          </VCardTitle>
-          <VDivider />
-          <VCardText class="pa-3">
-            <VRow>
-              <!-- Blocked Ports -->
-              <VCol cols="12" lg="6">
-                <VCard variant="outlined" class="h-100">
-                  <VCardText class="pa-3">
-                    <div class="d-flex align-center mb-4">
-                      <VAvatar color="primary" variant="flat" size="28" class="mr-2">
-                        <VIcon icon="mdi-shield-lock-outline" size="18" color="white" />
-                      </VAvatar>
-                      <div class="flex-grow-1">
-                        <h3 class="text-body-1 font-weight-bold">{{ t('pages.administration.manageFlux.sections.securityAccess.blockedPorts.title') }}</h3>
-                        <p class="text-caption text-medium-emphasis mb-0">{{ t('pages.administration.manageFlux.sections.securityAccess.blockedPorts.subtitle') }}</p>
-                      </div>
-                      <VTooltip location="top">
-                        <template #activator="{ props }">
-                          <VIcon v-bind="props" icon="mdi-information-outline" size="20" color="grey" />
-                        </template>
-                        <span>{{ t('pages.administration.manageFlux.sections.securityAccess.blockedPorts.tooltip') }}</span>
-                      </VTooltip>
-                    </div>
-                    <VCombobox
-                      v-model="blockedPortsInput"
-                      :label="t('pages.administration.manageFlux.labels.blockedPorts')"
-                      prepend-inner-icon="mdi-lock"
-                      variant="outlined"
-                      chips
-                      multiple
-                      closable-chips
-                      class="mb-3"
-                      :hint="t('pages.administration.manageFlux.sections.securityAccess.blockedPorts.hint')"
-                      persistent-hint
-                      :placeholder="t('pages.administration.manageFlux.placeholders.portPlaceholder')"
-                    />
-                    <VBtn
-                      block
-                      color="primary"
-                      variant="flat"
-                      size="default"
-                      @click="adjustBlockedPortsDialog = true"
-                    >
-                      <VIcon icon="mdi-shield-lock" size="20" class="mr-2" />
-                      {{ t('pages.administration.manageFlux.sections.securityAccess.blockedPorts.button') }}
-                    </VBtn>
-                  </VCardText>
-                </VCard>
-              </VCol>
-
-              <!-- Blocked Repositories -->
-              <VCol cols="12" lg="6">
-                <VCard variant="outlined" class="h-100">
-                  <VCardText class="pa-3">
-                    <div class="d-flex align-center mb-4">
-                      <VAvatar color="primary" variant="flat" size="28" class="mr-2">
-                        <VIcon icon="mdi-docker" size="18" color="white" />
-                      </VAvatar>
-                      <div class="flex-grow-1">
-                        <h3 class="text-body-1 font-weight-bold">{{ t('pages.administration.manageFlux.sections.securityAccess.blockedRepos.title') }}</h3>
-                        <p class="text-caption text-medium-emphasis mb-0">{{ t('pages.administration.manageFlux.sections.securityAccess.blockedRepos.subtitle') }}</p>
-                      </div>
-                      <VTooltip location="top">
-                        <template #activator="{ props }">
-                          <VIcon v-bind="props" icon="mdi-information-outline" size="20" color="grey" />
-                        </template>
-                        <span>{{ t('pages.administration.manageFlux.sections.securityAccess.blockedRepos.tooltip') }}</span>
-                      </VTooltip>
-                    </div>
-                    <VCombobox
-                      v-model="blockedRepositoriesInput"
-                      :label="t('pages.administration.manageFlux.labels.blockedRepositories')"
-                      prepend-inner-icon="mdi-docker"
-                      variant="outlined"
-                      chips
-                      multiple
-                      closable-chips
-                      class="mb-3"
-                      :hint="t('pages.administration.manageFlux.sections.securityAccess.blockedRepos.hint')"
-                      persistent-hint
-                      :placeholder="t('pages.administration.manageFlux.placeholders.repositoryPlaceholder')"
-                    />
-                    <VBtn
-                      block
-                      color="primary"
-                      variant="flat"
-                      size="default"
-                      @click="adjustBlockedRepositoriesDialog = true"
-                    >
-                      <VIcon icon="mdi-docker" size="20" class="mr-2" />
-                      {{ t('pages.administration.manageFlux.sections.securityAccess.blockedRepos.button') }}
-                    </VBtn>
-                  </VCardText>
-                </VCard>
-              </VCol>
-            </VRow>
-          </VCardText>
-        </VCard>
       </VWindowItem>
 
       <!-- Logs Tab -->
@@ -1019,24 +914,6 @@
       </VCard>
     </VDialog>
 
-    <VDialog v-model="adjustBlockedPortsDialog" max-width="500">
-      <VCard>
-        <VCardTitle class="d-flex align-center pa-3 bg-primary">
-          <VIcon icon="mdi-shield-lock-outline" size="28" color="white" class="mr-2" />
-          <span class="text-white">{{ t('pages.administration.manageFlux.dialogs.updateBlockedPorts.title') }}</span>
-        </VCardTitle>
-        <VDivider />
-        <VCardText class="pa-3">
-          {{ t('pages.administration.manageFlux.dialogs.updateBlockedPorts.message') }}
-        </VCardText>
-        <VCardActions class="pa-3 pt-0">
-          <VSpacer />
-          <VBtn color="error" variant="flat" size="small" @click="adjustBlockedPortsDialog = false">{{ t('pages.administration.manageFlux.dialogs.cancel') }}</VBtn>
-          <VBtn color="primary" variant="flat" size="small" @click="adjustBlockedPorts">{{ t('pages.administration.manageFlux.dialogs.update') }}</VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
-
     <VDialog v-model="adjustAPIPortDialog" max-width="500">
       <VCard>
         <VCardTitle class="d-flex align-center pa-3 bg-primary">
@@ -1051,24 +928,6 @@
           <VSpacer />
           <VBtn color="error" variant="flat" size="small" @click="adjustAPIPortDialog = false">{{ t('pages.administration.manageFlux.dialogs.cancel') }}</VBtn>
           <VBtn color="primary" variant="flat" size="small" @click="adjustAPIPort">{{ t('pages.administration.manageFlux.dialogs.update') }}</VBtn>
-        </VCardActions>
-      </VCard>
-    </VDialog>
-
-    <VDialog v-model="adjustBlockedRepositoriesDialog" max-width="500">
-      <VCard>
-        <VCardTitle class="d-flex align-center pa-3 bg-primary">
-          <VIcon icon="mdi-docker" size="28" color="white" class="mr-2" />
-          <span class="text-white">{{ t('pages.administration.manageFlux.dialogs.updateBlockedRepos.title') }}</span>
-        </VCardTitle>
-        <VDivider />
-        <VCardText class="pa-3">
-          {{ t('pages.administration.manageFlux.dialogs.updateBlockedRepos.message') }}
-        </VCardText>
-        <VCardActions class="pa-3 pt-0">
-          <VSpacer />
-          <VBtn color="error" variant="flat" size="small" @click="adjustBlockedRepositoriesDialog = false">{{ t('pages.administration.manageFlux.dialogs.cancel') }}</VBtn>
-          <VBtn color="primary" variant="flat" size="small" @click="adjustBlockedRepositories">{{ t('pages.administration.manageFlux.dialogs.update') }}</VBtn>
         </VCardActions>
       </VCard>
     </VDialog>
@@ -1425,16 +1284,12 @@ const benchmarkInfoParsed = ref(null)
 
 // Form inputs
 const routerIPInput = ref('')
-const blockedPortsInput = ref([])
 const apiPortInput = ref(16127)
-const blockedRepositoriesInput = ref([])
 
 // Dialog states
 const updateFluxDialog = ref(false)
 const adjustRouterIPDialog = ref(false)
-const adjustBlockedPortsDialog = ref(false)
 const adjustAPIPortDialog = ref(false)
-const adjustBlockedRepositoriesDialog = ref(false)
 const restartFluxOSDialog = ref(false)
 const updateProgressDialog = ref(false)
 const updateProgress = ref(0)
@@ -1517,22 +1372,10 @@ const getRouterIP = async () => {
     routerIPInput.value = response.data
 }
 
-const getBlockedPorts = async () => {
-  const response = await callAPI('/flux/blockedports')
-  if (response?.status === 'success' && response.data)
-    blockedPortsInput.value = Array.isArray(response.data) ? response.data : []
-}
-
 const getAPIPort = async () => {
   const response = await callAPI('/flux/apiport')
   if (response?.status === 'success' && response.data)
     apiPortInput.value = response.data
-}
-
-const getBlockedRepositories = async () => {
-  const response = await callAPI('/flux/blockedrepositories')
-  if (response?.status === 'success' && response.data)
-    blockedRepositoriesInput.value = Array.isArray(response.data) ? response.data : []
 }
 
 // Action methods
@@ -1605,16 +1448,6 @@ const adjustRouterIP = async () => {
     showSnackbar(response.data.message || response.data, 'success', 3000, 'mdi-check-circle')
 }
 
-const adjustBlockedPorts = async () => {
-  adjustBlockedPortsDialog.value = false
-  const blockedPorts = blockedPortsInput.value.map(port => Number(port)).filter(port => !isNaN(port))
-  const response = await callAPI('/flux/adjustblockedports', 'POST', { blockedPorts })
-  if (response?.status === 'error')
-    showSnackbar(response.data.message || response.data, 'error', 3000, 'mdi-alert-circle')
-  else
-    showSnackbar(response.data.message || response.data, 'success', 3000, 'mdi-check-circle')
-}
-
 const adjustAPIPort = async () => {
   adjustAPIPortDialog.value = false
   const apiPort = apiPortInput.value
@@ -1627,16 +1460,6 @@ const adjustAPIPort = async () => {
   }
 
   const response = await callAPI(`/flux/adjustapiport/${apiPort}`)
-  if (response?.status === 'error')
-    showSnackbar(response.data.message || response.data, 'error', 3000, 'mdi-alert-circle')
-  else
-    showSnackbar(response.data.message || response.data, 'success', 3000, 'mdi-check-circle')
-}
-
-const adjustBlockedRepositories = async () => {
-  adjustBlockedRepositoriesDialog.value = false
-  const blockedRepositories = blockedRepositoriesInput.value.filter(repo => repo && typeof repo === 'string')
-  const response = await callAPI('/flux/adjustblockedrepositories', 'POST', { blockedRepositories })
   if (response?.status === 'error')
     showSnackbar(response.data.message || response.data, 'error', 3000, 'mdi-alert-circle')
   else
@@ -2156,9 +1979,7 @@ onMounted(() => {
   })
 
   getRouterIP()
-  getBlockedPorts()
   getAPIPort()
-  getBlockedRepositories()
   fetchDaemonInfo()
   fetchBenchmarkInfo()
 })

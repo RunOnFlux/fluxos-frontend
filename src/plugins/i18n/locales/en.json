@@ -2718,23 +2718,6 @@
               "warning": "Restarting will close and immediately restart Flux Gravity. You'll need to refresh and log in again.",
               "button": "Restart Flux Gravity"
             }
-          },
-          "securityAccess": {
-            "title": "Security & Access Control",
-            "blockedPorts": {
-              "title": "Blocked Ports",
-              "subtitle": "Port access control",
-              "tooltip": "Block specific ports from being used by applications. You can add up to 100 ports.",
-              "hint": "Press Enter to add port (up to 100)",
-              "button": "Update Blocked Ports"
-            },
-            "blockedRepos": {
-              "title": "Blocked Repositories",
-              "subtitle": "Repository restrictions",
-              "tooltip": "Exclude specific Docker repositories from being deployed on your node.",
-              "hint": "Press Enter to add repository",
-              "button": "Update Blocked Repos"
-            }
           }
         },
         "logs": {
@@ -2819,14 +2802,10 @@
         "labels": {
           "routerIpAddress": "Router IP Address",
           "apiPort": "API Port",
-          "blockedPorts": "Blocked Ports",
-          "blockedRepositories": "Blocked Repositories",
           "type": "Type"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Type port number and press Enter",
-          "repositoryPlaceholder": "Type repository name and press Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Not authenticated",
@@ -2860,19 +2839,9 @@
             "message": "Are you sure you want to update the router IP address?",
             "button": "Update"
           },
-          "updateBlockedPorts": {
-            "title": "Update Blocked Ports",
-            "message": "Are you sure you want to update the blocked ports?",
-            "button": "Update"
-          },
           "updateApiPort": {
             "title": "Update API Port",
             "message": "Are you sure you want to update the API port?",
-            "button": "Update"
-          },
-          "updateBlockedRepos": {
-            "title": "Update Blocked Repositories",
-            "message": "Are you sure you want to update the blocked repositories?",
             "button": "Update"
           },
           "restartFluxOs": {

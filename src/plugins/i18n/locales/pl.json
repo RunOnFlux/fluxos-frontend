@@ -3277,23 +3277,6 @@
             },
             "title": "Aktualizacje systemu"
           },
-          "securityAccess": {
-            "blockedPorts": {
-              "tooltip": "Zablokuj określone porty przed użyciem przez aplikacje. Możesz dodać do 100 portów.",
-              "title": "Zablokowane porty",
-              "hint": "Naciśnij Enter, aby dodać port (do 100)",
-              "button": "Zaktualizuj zablokowane porty",
-              "subtitle": "Kontrola dostępu do portów"
-            },
-            "blockedRepos": {
-              "title": "Zablokowane repozytoria",
-              "button": "Zaktualizuj zablokowane repozytoria",
-              "hint": "Naciśnij Enter, aby dodać repozytorium",
-              "tooltip": "Wyklucz określone repozytoria Docker z wdrażania na swoim węźle.",
-              "subtitle": "Ograniczenia repozytoriów"
-            },
-            "title": "Bezpieczeństwo i kontrola dostępu"
-          },
           "nodeConfiguration": {
             "routerIp": {
               "title": "IP routera",
@@ -3359,9 +3342,7 @@
           }
         },
         "placeholders": {
-          "repositoryPlaceholder": "Wpisz nazwę repozytorium i naciśnij Enter",
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Wpisz numer portu i naciśnij Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "dialogs": {
           "updateProgress": {
@@ -3384,20 +3365,10 @@
             "title": "Uruchom ponownie Benchmark",
             "confirm": "Czy na pewno chcesz ponownie uruchomić Benchmark?"
           },
-          "updateBlockedRepos": {
-            "button": "Aktualizuj",
-            "title": "Aktualizuj zablokowane repozytoria",
-            "message": "Czy na pewno chcesz zaktualizować zablokowane repozytoria?"
-          },
           "restartFluxOs": {
             "title": "Potwierdź ponowne uruchomienie",
             "button": "Uruchom ponownie",
             "message": "Czy na pewno chcesz ponownie uruchomić Flux Gravity? Spowoduje to tymczasowe przerwanie wszystkich usług."
-          },
-          "updateBlockedPorts": {
-            "button": "Aktualizuj",
-            "message": "Czy na pewno chcesz zaktualizować zablokowane porty?",
-            "title": "Aktualizuj zablokowane porty"
           },
           "startBenchmark": {
             "confirm": "Czy na pewno chcesz uruchomić Benchmark?",
@@ -3477,10 +3448,8 @@
           }
         },
         "labels": {
-          "blockedRepositories": "Zablokowane Repozytoria",
           "apiPort": "Port API",
           "routerIpAddress": "Adres IP Routera",
-          "blockedPorts": "Zablokowane Porty",
           "type": "Typ"
         },
         "messages": {
