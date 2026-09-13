@@ -2617,23 +2617,6 @@
               "warning": "El reinicio se cerrará y reiniciará inmediatamente Flux Gravity. Deberá actualizar e iniciar sesión nuevamente.",
               "button": "Reiniciar la gravedad del flujo"
             }
-          },
-          "securityAccess": {
-            "title": "Seguridad y control de acceso",
-            "blockedPorts": {
-              "title": "Puertos bloqueados",
-              "subtitle": "Control de acceso al puerto",
-              "tooltip": "Bloquea puertos específicos para que no sean utilizados por aplicaciones. Puede agregar hasta 100 puertos.",
-              "hint": "Presione Enter para agregar puerto (hasta 100)",
-              "button": "Actualizar puertos bloqueados"
-            },
-            "blockedRepos": {
-              "title": "Repositorios bloqueados",
-              "subtitle": "Restricciones del repositorio",
-              "tooltip": "Excluya repositorios de Docker específicos para que no se implementen en su nodo.",
-              "hint": "Presione Enter para agregar el repositorio",
-              "button": "Actualizar repositorios bloqueados"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "Dirección IP del enrutador",
           "apiPort": "Puerto API",
-          "blockedPorts": "Puertos bloqueados",
-          "blockedRepositories": "Repositorios bloqueados",
           "type": "Tipo"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Escriba el número de puerto y presione Enter",
-          "repositoryPlaceholder": "Escriba el nombre del repositorio y presione Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "No autenticado",
@@ -2759,19 +2738,9 @@
             "message": "¿Está seguro de que desea actualizar la dirección IP del enrutador?",
             "button": "Actualizar"
           },
-          "updateBlockedPorts": {
-            "title": "Actualizar puertos bloqueados",
-            "message": "¿Está seguro de que desea actualizar los puertos bloqueados?",
-            "button": "Actualizar"
-          },
           "updateApiPort": {
             "title": "Actualizar puerto API",
             "message": "¿Está seguro de que desea actualizar el puerto API?",
-            "button": "Actualizar"
-          },
-          "updateBlockedRepos": {
-            "title": "Actualizar repositorios bloqueados",
-            "message": "¿Estás seguro de que deseas actualizar los repositorios bloqueados?",
             "button": "Actualizar"
           },
           "restartFluxOs": {

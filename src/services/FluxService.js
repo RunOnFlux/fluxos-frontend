@@ -119,36 +119,12 @@ export default {
       },
     })
   },
-  adjustBlockedPorts(zelidauthHeader, blockedPorts) {
-    const data = { blockedPorts }
-
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-
-    
-    return Api().post('/flux/adjustblockedports', data, axiosConfig)
-  },
   adjustAPIPort(zelidauthHeader, apiport) {
     return Api().get(`/flux/adjustapiport/${apiport}`, {
       headers: {
         zelidauth: zelidauthHeader,
       },
     })
-  },
-  adjustBlockedRepositories(zelidauthHeader, blockedRepositories) {
-    const data = { blockedRepositories }
-
-    const axiosConfig = {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    }
-
-    
-    return Api().post('/flux/adjustblockedrepositories', data, axiosConfig)
   },
   getKadenaAccount() {
     const axiosConfig = {
@@ -170,16 +146,6 @@ export default {
     
     return Api().get('/flux/routerip', axiosConfig)
   },
-  getBlockedPorts() {
-    const axiosConfig = {
-      headers: {
-        'x-apicache-bypass': true,
-      },
-    }
-
-    
-    return Api().get('/flux/blockedports', axiosConfig)
-  },
   getAPIPort() {
     const axiosConfig = {
       headers: {
@@ -189,16 +155,6 @@ export default {
 
     
     return Api().get('/flux/apiport', axiosConfig)
-  },
-  getBlockedRepositories() {
-    const axiosConfig = {
-      headers: {
-        'x-apicache-bypass': true,
-      },
-    }
-
-    
-    return Api().get('/flux/blockedrepositories', axiosConfig)
   },
   getMarketPlaceURL() {
     return Api().get('/flux/marketplaceurl')

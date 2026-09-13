@@ -2617,23 +2617,6 @@
               "warning": "重新启动将关闭并立即重新启动 Flux Gravity。您需要刷新并再次登录。",
               "button": "重新启动通量重力"
             }
-          },
-          "securityAccess": {
-            "title": "安全与访问控制",
-            "blockedPorts": {
-              "title": "被阻止的端口",
-              "subtitle": "端口访问控制",
-              "tooltip": "阻止应用程序使用特定端口。您最多可以添加 100 个端口。",
-              "hint": "按 Enter 添加端口（最多 100 个）",
-              "button": "更新被阻止的端口"
-            },
-            "blockedRepos": {
-              "title": "被阻止的存储库",
-              "subtitle": "存储库限制",
-              "tooltip": "排除在您的节点上部署的特定 Docker 存储库。",
-              "hint": "按 Enter 添加存储库",
-              "button": "更新被阻止的仓库"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "路由器IP地址",
           "apiPort": "API端口",
-          "blockedPorts": "被阻止的端口",
-          "blockedRepositories": "被阻止的存储库",
           "type": "类型"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "输入端口号并按 Enter 键",
-          "repositoryPlaceholder": "输入存储库名称并按 Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "未经过身份验证",
@@ -2759,19 +2738,9 @@
             "message": "您确定要更新路由器 IP 地址吗？",
             "button": "更新"
           },
-          "updateBlockedPorts": {
-            "title": "更新被阻止的端口",
-            "message": "您确定要更新被阻止的端口吗？",
-            "button": "更新"
-          },
           "updateApiPort": {
             "title": "更新API端口",
             "message": "您确定要更新 API 端口吗？",
-            "button": "更新"
-          },
-          "updateBlockedRepos": {
-            "title": "更新被阻止的存储库",
-            "message": "您确定要更新被阻止的存储库吗？",
             "button": "更新"
           },
           "restartFluxOs": {

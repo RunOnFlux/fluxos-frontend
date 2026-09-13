@@ -2617,23 +2617,6 @@
               "warning": "Restart akan menutup dan segera me-restart Flux Gravity. Anda harus menyegarkan dan masuk lagi.",
               "button": "Mulai ulang Gravitasi Flux"
             }
-          },
-          "securityAccess": {
-            "title": "Keamanan & Kontrol Akses",
-            "blockedPorts": {
-              "title": "Port yang Diblokir",
-              "subtitle": "Kontrol akses pelabuhan",
-              "tooltip": "Blokir port tertentu agar tidak digunakan oleh aplikasi. Anda dapat menambahkan hingga 100 port.",
-              "hint": "Tekan Enter untuk menambahkan port (hingga 100)",
-              "button": "Perbarui Port yang Diblokir"
-            },
-            "blockedRepos": {
-              "title": "Repositori yang Diblokir",
-              "subtitle": "Pembatasan repositori",
-              "tooltip": "Kecualikan repositori Docker tertentu agar tidak diterapkan pada node Anda.",
-              "hint": "Tekan Enter untuk menambahkan repositori",
-              "button": "Perbarui Repo yang Diblokir"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "Alamat IP Perute",
           "apiPort": "Port API",
-          "blockedPorts": "Port yang Diblokir",
-          "blockedRepositories": "Repositori yang Diblokir",
           "type": "Jenis"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Ketik nomor port dan tekan Enter",
-          "repositoryPlaceholder": "Ketik nama repositori dan tekan Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Tidak diautentikasi",
@@ -2759,19 +2738,9 @@
             "message": "Apakah Anda yakin ingin memperbarui alamat IP router?",
             "button": "Perbarui"
           },
-          "updateBlockedPorts": {
-            "title": "Perbarui Port yang Diblokir",
-            "message": "Apakah Anda yakin ingin memperbarui port yang diblokir?",
-            "button": "Perbarui"
-          },
           "updateApiPort": {
             "title": "Perbarui Port API",
             "message": "Apakah Anda yakin ingin memperbarui port API?",
-            "button": "Perbarui"
-          },
-          "updateBlockedRepos": {
-            "title": "Perbarui Repositori yang Diblokir",
-            "message": "Apakah Anda yakin ingin memperbarui repositori yang diblokir?",
             "button": "Perbarui"
           },
           "restartFluxOs": {
