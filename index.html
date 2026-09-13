@@ -434,6 +434,10 @@
       // Function to initialize Kapa widget with disclaimer
       function initKapaWidget(disclaimer) {
         if (document.getElementById('kapa-widget-script')) return
+        // The widget only opens from the FluxAI button; when that entry point is
+        // not rendered (FluxAI disabled), loading the widget just produces
+        // failed requests to kapa.ai.
+        if (!document.getElementById('flux-ai-button')) return
         const kapaScript = document.createElement('script')
         kapaScript.defer = true
         kapaScript.id = 'kapa-widget-script'
