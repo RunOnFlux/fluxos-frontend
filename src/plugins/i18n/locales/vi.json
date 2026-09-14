@@ -2617,23 +2617,6 @@
               "warning": "Việc khởi động lại sẽ đóng và khởi động lại Flux Gravity ngay lập tức. Bạn sẽ cần phải làm mới và đăng nhập lại.",
               "button": "Khởi động lại trọng lực thông lượng"
             }
-          },
-          "securityAccess": {
-            "title": "Kiểm soát bảo mật và truy cập",
-            "blockedPorts": {
-              "title": "Cổng bị chặn",
-              "subtitle": "Kiểm soát truy cập cổng",
-              "tooltip": "Chặn các cổng cụ thể khỏi bị ứng dụng sử dụng. Bạn có thể thêm tối đa 100 cổng.",
-              "hint": "Nhấn Enter để thêm cổng (tối đa 100)",
-              "button": "Cập nhật các cổng bị chặn"
-            },
-            "blockedRepos": {
-              "title": "Kho lưu trữ bị chặn",
-              "subtitle": "Hạn chế về kho lưu trữ",
-              "tooltip": "Loại trừ các kho Docker cụ thể được triển khai trên nút của bạn.",
-              "hint": "Nhấn Enter để thêm kho lưu trữ",
-              "button": "Cập nhật các kho lưu trữ bị chặn"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "Địa chỉ IP của bộ định tuyến",
           "apiPort": "Cổng API",
-          "blockedPorts": "Cổng bị chặn",
-          "blockedRepositories": "Kho lưu trữ bị chặn",
           "type": "Kiểu"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Nhập số cổng và nhấn Enter",
-          "repositoryPlaceholder": "Nhập tên kho lưu trữ và nhấn Enter"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Chưa được xác thực",
@@ -2759,19 +2738,9 @@
             "message": "Bạn có chắc chắn muốn cập nhật địa chỉ IP của bộ định tuyến không?",
             "button": "Cập nhật"
           },
-          "updateBlockedPorts": {
-            "title": "Cập nhật các cổng bị chặn",
-            "message": "Bạn có chắc chắn muốn cập nhật các cổng bị chặn không?",
-            "button": "Cập nhật"
-          },
           "updateApiPort": {
             "title": "Cập nhật cổng API",
             "message": "Bạn có chắc chắn muốn cập nhật cổng API không?",
-            "button": "Cập nhật"
-          },
-          "updateBlockedRepos": {
-            "title": "Cập nhật kho lưu trữ bị chặn",
-            "message": "Bạn có chắc chắn muốn cập nhật các kho lưu trữ bị chặn không?",
             "button": "Cập nhật"
           },
           "restartFluxOs": {

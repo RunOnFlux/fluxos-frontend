@@ -2617,23 +2617,6 @@
               "warning": "Le redémarrage se fermera et redémarrera immédiatement Flux Gravity. Vous devrez actualiser et vous reconnecter.",
               "button": "Redémarrer la gravité du flux"
             }
-          },
-          "securityAccess": {
-            "title": "Sécurité et contrôle d'accès",
-            "blockedPorts": {
-              "title": "Ports bloqués",
-              "subtitle": "Contrôle d'accès aux ports",
-              "tooltip": "Empêchez des ports spécifiques d'être utilisés par des applications. Vous pouvez ajouter jusqu'à 100 ports.",
-              "hint": "Appuyez sur Entrée pour ajouter un port (jusqu'à 100)",
-              "button": "Mettre à jour les ports bloqués"
-            },
-            "blockedRepos": {
-              "title": "Dépôts bloqués",
-              "subtitle": "Restrictions du référentiel",
-              "tooltip": "Excluez les référentiels Docker spécifiques du déploiement sur votre nœud.",
-              "hint": "Appuyez sur Entrée pour ajouter un référentiel",
-              "button": "Mettre à jour les dépôts bloqués"
-            }
           }
         },
         "logs": {
@@ -2718,14 +2701,10 @@
         "labels": {
           "routerIpAddress": "Adresse IP du routeur",
           "apiPort": "Port API",
-          "blockedPorts": "Ports bloqués",
-          "blockedRepositories": "Dépôts bloqués",
           "type": "Taper"
         },
         "placeholders": {
-          "routerIpPlaceholder": "192.168.1.1",
-          "portPlaceholder": "Tapez le numéro de port et appuyez sur Entrée",
-          "repositoryPlaceholder": "Tapez le nom du référentiel et appuyez sur Entrée"
+          "routerIpPlaceholder": "192.168.1.1"
         },
         "messages": {
           "notAuthenticated": "Non authentifié",
@@ -2759,19 +2738,9 @@
             "message": "Êtes-vous sûr de vouloir mettre à jour l'adresse IP du routeur ?",
             "button": "Mise à jour"
           },
-          "updateBlockedPorts": {
-            "title": "Mettre à jour les ports bloqués",
-            "message": "Êtes-vous sûr de vouloir mettre à jour les ports bloqués ?",
-            "button": "Mise à jour"
-          },
           "updateApiPort": {
             "title": "Mettre à jour le port API",
             "message": "Êtes-vous sûr de vouloir mettre à jour le port API ?",
-            "button": "Mise à jour"
-          },
-          "updateBlockedRepos": {
-            "title": "Mettre à jour les référentiels bloqués",
-            "message": "Êtes-vous sûr de vouloir mettre à jour les référentiels bloqués ?",
             "button": "Mise à jour"
           },
           "restartFluxOs": {
