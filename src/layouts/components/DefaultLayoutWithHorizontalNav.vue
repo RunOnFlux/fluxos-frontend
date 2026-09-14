@@ -10,7 +10,7 @@ import NavbarThemeSwitcher from "@/layouts/components/NavbarThemeSwitcher.vue"
 import NavBarMemoryMonitor from "@/layouts/components/NavBarMemoryMonitor.vue"
 import NavBarStatusBarToggle from "@/layouts/components/NavBarStatusBarToggle.vue"
 import UserProfile from "@/layouts/components/UserProfile.vue"
-// import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
+import FluxAIToggler from "@/layouts/components/FluxAIToggler.vue"
 import AgentMcpToggler from "@/layouts/components/AgentMcpToggler.vue"
 import NavBarI18n from "@core/components/I18n.vue"
 import LoginModal from "@/@core/components/LoginModal.vue"
@@ -110,7 +110,7 @@ const handleLoginSuccess = () => {
       <VDivider vertical class="navbar-divider" />
       <BackendSelector />
       <!-- FluxAI is not answering, so the entry point is hidden rather than removed - restore these four lines once the service is back. -->
-      <!-- <FluxAIToggler class="ml-2" /> -->
+      <FluxAIToggler class="ml-2" />
       <AgentMcpToggler class="ml-2" />
 
       <VSpacer />

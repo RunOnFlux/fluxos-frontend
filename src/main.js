@@ -84,7 +84,7 @@ window.addEventListener('error', event => {
     if (!url) return false
 
     // Match same origin (e.g., https://cloud.runonflux.io)
-    // This excludes third-party scripts like kapa.ai
+    // This excludes third-party scripts such as the docs assistant widget
     return url.startsWith(window.location.origin)
   }
 
