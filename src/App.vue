@@ -54,12 +54,20 @@ onMounted(() => {
   fluxStore.fetchTrustpilot()
 })
 
+// The docs assistant (loaded from index.html) follows the OS theme unless
+// told otherwise; keep it on the app's theme, now and on every switch.
+const syncAssistantTheme = () => {
+  if (window.ownllm) window.ownllm.setTheme(global.current.value.dark ? 'dark' : 'light')
+}
+window.addEventListener('ownllm-ready', syncAssistantTheme)
+
 watch(
   () => global.current.value.dark,
   val => {
     // Disable transitions during theme change to prevent wave effect
     disableTransitions()
     updateLogoByTheme()
+    syncAssistantTheme()
 
     // Re-enable transitions after theme change is complete
     enableTransitions()

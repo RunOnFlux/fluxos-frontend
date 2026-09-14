@@ -84,6 +84,7 @@ const services = [
   { anchor: 'Valheim Server Hosting', url: `${GAMES_HUB}/valheim`, img: `${GAMES_HUB}/apps/valheim/og/home.webp`, desc: 'valheim' },
   { anchor: 'Terraria Server Hosting', url: `${GAMES_HUB}/terraria`, img: `${GAMES_HUB}/apps/terraria/og/home.webp`, desc: 'terraria' },
   { anchor: 'FiveM Server Hosting', url: `${GAMES_HUB}/fivem`, img: `${GAMES_HUB}/apps/fivem/og/home.webp`, desc: 'fivem' },
+  { anchor: 'RuneScape: Dragonwilds Server Hosting', url: `${GAMES_HUB}/dragonwilds`, img: `${GAMES_HUB}/apps/dragonwilds/og/home.webp`, desc: 'dragonwilds' },
   { anchor: 'Web3 WordPress Hosting', url: 'https://wordpress.runonflux.com', img: 'https://wordpress.runonflux.com/apps/wordpress/banner.webp', desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: 'https://n8n.runonflux.com', img: 'https://n8n.runonflux.com/apps/n8n/banner.webp', desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: 'https://openclaw.runonflux.com', img: 'https://openclaw.runonflux.com/apps/openclaw/banner.webp', desc: 'openclaw' },

@@ -1,8 +1,17 @@
+import FluxService from '@/services/FluxService'
 import { ref } from 'vue'
 
-// Source of truth for which app owners are allowed to pick priority/enterprise nodes.
-// Maps node public keys to arrays of owner zelids, e.g. { "<pubkey>": ["<zelid>"] }.
-const GITHUB_ENTERPRISE_NODES_URL = 'https://raw.githubusercontent.com/RunOnFlux/flux/master/helpers/enterprisenodes.json'
+// Which app owners are allowed to pick priority/enterprise nodes.
+//
+// Read from the connected node rather than from GitHub. The node fetches the policy
+// document every 6h, rejects it wholesale if the shape is wrong, and keeps its last
+// valid copy - so it answers with something that has been checked. A raw GitHub fetch
+// from the browser has none of that: an error page or a maintenance response parses
+// into an empty owner set and every eligible owner silently loses the tab.
+//
+// It also means this composable does not need to know where policy lives. That
+// location has already moved once (RunOnFlux/flux helpers/ -> fluxos-network-policy),
+// and the helpers/ copy this used to read is queued for deletion.
 
 // Module-level cache. It lives for the lifetime of the loaded app (the current
 // page session) and is shared across every component/route. A full website
@@ -12,24 +21,18 @@ const isLoaded = ref(false)
 let fetchPromise = null
 
 async function fetchEnterpriseOwners() {
-  const response = await fetch(GITHUB_ENTERPRISE_NODES_URL)
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`)
+  const response = await FluxService.getEnterpriseAppOwners()
+  const payload = response?.data
+
+  // FluxOS answers { status, data }, and reports failure in the body with a 200. A
+  // non-success status or a non-array payload is thrown rather than coerced: the
+  // caller keeps the previous set and retries, which beats quietly deciding that
+  // nobody is an enterprise owner.
+  if (payload?.status !== 'success' || !Array.isArray(payload.data)) {
+    throw new Error(`Unexpected response from /flux/enterpriseappowners: ${JSON.stringify(payload)?.slice(0, 200)}`)
   }
 
-  const data = await response.json()
-
-  // Flatten every owner zelid from the map into a single lookup set.
-  const owners = new Set()
-  Object.values(data || {}).forEach(addresses => {
-    if (Array.isArray(addresses)) {
-      addresses.forEach(address => {
-        if (address) owners.add(address)
-      })
-    }
-  })
-
-  return owners
+  return new Set(payload.data.filter(Boolean))
 }
 
 export function useEnterpriseOwners() {
