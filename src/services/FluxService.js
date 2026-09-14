@@ -105,13 +105,6 @@ export default {
       },
     })
   },
-  adjustKadena(zelidauthHeader, account, chainid) {
-    return Api().get(`/flux/adjustkadena/${account}/${chainid}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
   adjustRouterIP(zelidauthHeader, routerip) {
     return Api().get(`/flux/adjustrouterip/${routerip}`, {
       headers: {
@@ -125,16 +118,6 @@ export default {
         zelidauth: zelidauthHeader,
       },
     })
-  },
-  getKadenaAccount() {
-    const axiosConfig = {
-      headers: {
-        'x-apicache-bypass': true,
-      },
-    }
-
-    
-    return Api().get('/flux/kadena', axiosConfig)
   },
   getRouterIP() {
     const axiosConfig = {
