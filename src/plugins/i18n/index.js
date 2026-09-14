@@ -91,7 +91,7 @@ export default async function (app) {
 
   app.use(i18n)
 
-  // Emit i18n-ready event for index.html Kapa AI widget initialization
+  // Emit i18n-ready event (index.html listens for it to load deferred scripts)
   // This prevents 404 errors when trying to fetch locale JSON files directly
   if (typeof window !== 'undefined') {
     // Wait for next tick to ensure i18n is fully initialized

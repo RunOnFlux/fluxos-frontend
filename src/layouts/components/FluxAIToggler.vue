@@ -18,6 +18,7 @@
       color="grey"
       size="small"
       class="d-none d-md-flex align-center"
+      @click="openFluxAI"
     >
       <VIcon
         icon="mdi-chat-processing"
@@ -37,12 +38,12 @@ import { useI18n } from 'vue-i18n'
 
 const { t } = useI18n()
 
+// The widget is loaded from index.html after app-ready with no launcher of
+// its own; this button is its launcher. If it has not mounted yet (a very
+// early click), open it on its ready event instead of doing nothing.
 const openFluxAI = () => {
-  // Trigger the same click as desktop button
-  const desktopBtn = document.getElementById('flux-ai-button')
-  if (desktopBtn) {
-    desktopBtn.click()
-  }
+  if (window.ownllm) return window.ownllm.open()
+  window.addEventListener('ownllm-ready', () => window.ownllm.open(), { once: true })
 }
 </script>
 
