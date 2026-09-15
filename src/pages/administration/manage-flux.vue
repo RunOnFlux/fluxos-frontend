@@ -814,10 +814,10 @@
                 <VCardText class="pa-2">
                   <div class="d-flex flex-wrap ga-2">
                     <VChip prepend-icon="mdi-arrow-down-bold" size="small" color="success" variant="tonal">
-                      <span class="font-weight-medium">{{ benchmarkInfoParsed.download_speed?.toFixed(2) }} Mbps</span>
+                      <span class="font-weight-medium">{{ formatMbps(benchmarkInfoParsed.download_speed) }}</span>
                     </VChip>
                     <VChip prepend-icon="mdi-arrow-up-bold" size="small" color="info" variant="tonal">
-                      <span class="font-weight-medium">{{ benchmarkInfoParsed.upload_speed?.toFixed(2) }} Mbps</span>
+                      <span class="font-weight-medium">{{ formatMbps(benchmarkInfoParsed.upload_speed) }}</span>
                     </VChip>
                     <VChip prepend-icon="mdi-clock-outline" size="small" color="warning" variant="tonal">
                       <span class="font-weight-medium">Ping: {{ benchmarkInfoParsed.ping }} ms</span>
@@ -1782,6 +1782,14 @@ const formatValue = value => {
   }
   
   return String(value)
+}
+
+// A bandwidth figure, or N/A: fluxbench reports null for a node that holds no
+// measurement, and a chip reading " Mbps" says nothing.
+const formatMbps = value => {
+  if (value === null || value === undefined) return 'N/A'
+
+  return `${value.toFixed(2)} Mbps`
 }
 
 const getDaemonIcon = key => {
