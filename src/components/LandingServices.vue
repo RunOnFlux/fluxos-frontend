@@ -157,7 +157,7 @@ const serviceUrls = {
   fluxDrive: '/flux-drive',
   fluxEdge: 'https://runonflux.com/fluxedge/',
   fluxMarketplace: '/marketplace',
-  wordPressOnFlux: 'https://wordpress.runonflux.com',
+  wordPressOnFlux: 'https://runonflux.com/apps/wordpress',
 }
 
 // External URLs are exposed as a real <a href> on the explore chip (see template)

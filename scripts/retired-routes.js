@@ -20,10 +20,10 @@
 export const RETIRED_ROUTES = Object.freeze([
   {
     from: '/marketplace/wordpress',
-    to: 'https://wordpress.runonflux.com/',
+    to: 'https://runonflux.com/apps/wordpress',
     title: 'WordPress Hosting has moved',
-    body: 'WordPress hosting on Flux now lives on its own site.',
-    linkText: 'Continue to wordpress.runonflux.com',
+    body: 'WordPress hosting on Flux now lives in the Flux Apps hub.',
+    linkText: 'Continue to WordPress hosting on Flux',
   },
   {
     from: '/apps/register/orbit',

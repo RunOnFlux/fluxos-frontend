@@ -110,7 +110,7 @@ const staticUrls = [
     description: 'Games Landing Page',
   },
 
-  // WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
+  // WordPress hosting moved to the apps hub (runonflux.com/apps/wordpress).
   // /marketplace/wordpress 301s there, so it is deliberately absent from the
   // sitemap — the dedicated site owns the WordPress search intent.
 

@@ -11,11 +11,11 @@
   status = 301
   force = true
 
-# WordPress hosting moved to the dedicated site (wordpress.runonflux.com).
+# WordPress hosting moved to the apps hub (runonflux.com/apps/wordpress).
 # Exact path only — /marketplace/wordpress/configure keeps serving the deploy funnel.
 [[redirects]]
   from = "/marketplace/wordpress"
-  to = "https://wordpress.runonflux.com/"
+  to = "https://runonflux.com/apps/wordpress"
   status = 301
   force = true
 
