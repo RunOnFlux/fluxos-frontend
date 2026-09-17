@@ -9,7 +9,7 @@
     },
     {
       "source": "/marketplace/wordpress",
-      "destination": "https://wordpress.runonflux.com/",
+      "destination": "https://runonflux.com/apps/wordpress",
       "permanent": true
     }
   ],

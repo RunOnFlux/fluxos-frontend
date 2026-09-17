@@ -66,9 +66,11 @@ const onImgError = e => {
 
 // Every game site now lives under the runonflux.com/games hub; the old
 // <game>.runonflux.com subdomains only 301 into it, so link to the hub URL
-// directly and skip the redirect hop. The apps below still have their own
-// subdomains and stay as they are.
+// directly and skip the redirect hop. The same happened to n8n, WordPress, OpenClaw
+// and Hermes on 2026-09-17: they are sections of runonflux.com/apps now. Orbit still
+// has its own subdomain and stays as it is.
 const GAMES_HUB = 'https://runonflux.com/games'
+const APPS_HUB = 'https://runonflux.com/apps'
 
 // Anchor text is intentionally hardcoded English keyword phrasing: these are
 // the exact commercial search terms each destination targets, and they must stay
@@ -85,10 +87,10 @@ const services = [
   { anchor: 'Terraria Server Hosting', url: `${GAMES_HUB}/terraria`, img: `${GAMES_HUB}/apps/terraria/og/home.webp`, desc: 'terraria' },
   { anchor: 'FiveM Server Hosting', url: `${GAMES_HUB}/fivem`, img: `${GAMES_HUB}/apps/fivem/og/home.webp`, desc: 'fivem' },
   { anchor: 'RuneScape: Dragonwilds Server Hosting', url: `${GAMES_HUB}/dragonwilds`, img: `${GAMES_HUB}/apps/dragonwilds/og/home.webp`, desc: 'dragonwilds' },
-  { anchor: 'Web3 WordPress Hosting', url: 'https://wordpress.runonflux.com', img: 'https://wordpress.runonflux.com/apps/wordpress/banner.webp', desc: 'wordpress' },
-  { anchor: 'n8n Hosting', url: 'https://n8n.runonflux.com', img: 'https://n8n.runonflux.com/apps/n8n/banner.webp', desc: 'n8n' },
-  { anchor: 'OpenClaw AI Assistant Hosting', url: 'https://openclaw.runonflux.com', img: 'https://openclaw.runonflux.com/apps/openclaw/banner.webp', desc: 'openclaw' },
-  { anchor: 'Hermes AI Agent Hosting', url: 'https://hermes.runonflux.com', img: 'https://hermes.runonflux.com/apps/hermes/banner.webp', desc: 'hermes' },
+  { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
+  { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
+  { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
+  { anchor: 'Hermes AI Agent Hosting', url: `${APPS_HUB}/hermes`, img: `${APPS_HUB}/apps/hermes/banner.webp`, desc: 'hermes' },
   { anchor: 'Orbit — Deploy with Git', url: 'https://orbit.runonflux.com', img: 'https://orbit.runonflux.com/og-banner.webp', desc: 'orbit' },
 ].map(s => ({ ...s, desc: t(`hostingLinks.services.${s.desc}`) }))
 </script>

@@ -406,7 +406,7 @@ const relatedLinks = computed(() => [
     description: t('pages.apps.register.landing.relatedLinks.marketplaceDesc'),
   },
   {
-    to: 'https://wordpress.runonflux.com',
+    to: 'https://runonflux.com/apps/wordpress',
     icon: 'mdi-wordpress',
     color: 'info',
     title: t('pages.apps.register.landing.relatedLinks.wordpress'),
