@@ -2446,6 +2446,26 @@
           </div>
 
           <!--
+            The hardware half. Nodes big enough and free right now, counted per public
+            IP because FluxOS places one instance per address - several nodes behind one
+            address can only ever host one between them. A warning, never a block: the
+            network accepts these registrations and capacity does free up.
+          -->
+          <div v-else-if="capacityAdvice" class="mt-3">
+            <VAlert
+              type="warning"
+              variant="tonal"
+              density="compact"
+              class="mx-3"
+            >
+              <template #title>
+                <span class="text-subtitle-2 font-weight-bold">{{ capacityTitle }}</span>
+              </template>
+              <p class="mb-0">{{ capacityBody }}</p>
+            </VAlert>
+          </div>
+
+          <!--
             A shortfall the node reports but cannot stand behind: its location table may
             be mis-attributing the geography, so the registration is allowed through. It
             is not a refusal, and it is certainly not a pass.
@@ -3998,6 +4018,7 @@ import { getDetectedBackendURL } from "@/utils/backend"
 import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
 import { checkPlacement, changesPlacement } from '@/utils/placementFeasibility'
+import { assessCapacity, appHardware } from '@/utils/nodeCapacity'
 import ExplorerService from '@/services/ExplorerService'
 import DaemonService from '@/services/DaemonService'
 import StorageService from '@/services/StorageService'
@@ -4895,10 +4916,18 @@ const verifyAppSpecError = ref(null)
 const placementAdvice = ref(null)
 const isCheckingPlacement = ref(false)
 
+// Whether the chosen locations hold nodes that can actually RUN this app. A different
+// question from placementAdvice, which counts geography and nothing else - the network
+// leaves hardware to install time, so nothing before payment asked it until now. Null
+// when the selection is comfortable or when the node list could not be read.
+const capacityAdvice = ref(null)
+
 // The row appears only when there is something to report. An unanswerable question -
 // no session, no location table on the node, a spec that names its own nodes - leaves
 // the Review panel exactly as it was before this check existed.
-const showPlacementRow = computed(() => isCheckingPlacement.value || !!placementAdvice.value)
+const showPlacementRow = computed(() => isCheckingPlacement.value
+  || !!placementAdvice.value
+  || !!capacityAdvice.value)
 
 // Anything the network answered that is worth reading but does not refuse: instances it
 // reports it cannot seat (without being able to prove it, so the registration stands),
@@ -4915,9 +4944,39 @@ const placementRowLabel = computed(() => {
     : t('core.subscriptionManager.tabPriorityNodes')
 })
 
+// One sentence per shortfall, and they are three different shortfalls: 'short' is
+// arithmetic no waiting changes, 'full' is a queue, 'tight' is a selection with no slack.
+const capacityTitle = computed(() => {
+  const advice = capacityAdvice.value
+  if (!advice) return ''
+
+  return t(`core.subscriptionManager.capacity${advice.kind === 'short' ? 'Short' : advice.kind === 'full' ? 'Full' : 'Tight'}Title`)
+})
+
+const capacityBody = computed(() => {
+  const advice = capacityAdvice.value
+  if (!advice) return ''
+
+  const params = {
+    ips: advice.ipCount,
+    free: advice.freeIpCount,
+    instances: advice.instances,
+    missing: Math.max(advice.instances - (advice.kind === 'short' ? advice.ipCount : advice.freeIpCount), 0),
+  }
+
+  if (advice.kind === 'short') return t('core.subscriptionManager.capacityShortBody', params)
+  if (advice.kind === 'tight') return t('core.subscriptionManager.capacityTightBody', params)
+
+  return t(advice.freeIpCount === 0
+    ? 'core.subscriptionManager.capacityFullBodyNone'
+    : 'core.subscriptionManager.capacityFullBody', params)
+})
+
 const placementWarning = computed(() => {
   const advice = placementAdvice.value
-  if (!advice || advice.refused) return false
+  if (advice?.refused) return false
+  if (capacityAdvice.value) return true
+  if (!advice) return false
 
   return advice.satisfiable === false || !!advice.constrained || !!advice.coarsenedEntries?.length
 })
@@ -8199,6 +8258,7 @@ watch(tab, async newVal => {
     verifyAppSpecResponse.value = null
     verifyAppSpecError.value = null
     placementAdvice.value = null
+    capacityAdvice.value = null
     appSpecPrice.value = null
     blockHeight.value = null
     isExpiryValid.value = false
@@ -8318,9 +8378,28 @@ watch(tab, async newVal => {
     // cancellation, an environment edit - and neither may this.
     if (versionFlags.value.supportsGeolocation
       && (props.newApp || changesPlacement(props.appSpec, originalAppSpecSnapshot.value))) {
+      // One spinner for both halves: the node list behind the capacity half is several
+      // megabytes on a cold tab, and letting the row settle on the first answer only to
+      // change again on the second reads as the screen contradicting itself.
       isCheckingPlacement.value = true
       try {
         placementAdvice.value = await checkPlacement(props.appSpec)
+
+        // Hardware and free room, which the network deliberately does not judge before
+        // install. Advisory only - it warns and never holds the registration up, because
+        // the network accepts these and capacity does free up. Skipped after a refusal:
+        // the owner has one thing to fix, not two.
+        capacityAdvice.value = placementAdvice.value?.refused
+          ? null
+          : await assessCapacity({
+            geolocation: props.appSpec.geolocation,
+            hw: appHardware(props.appSpec.compose),
+            instances: props.appSpec.instances,
+            isEnterprise: isPrivateApp.value,
+            nodes: props.appSpec.nodes,
+          })
+      } catch {
+        capacityAdvice.value = null
       } finally {
         isCheckingPlacement.value = false
       }
