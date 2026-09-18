@@ -1544,9 +1544,67 @@
           color="primary"
           variant="flat"
           icon="mdi-arrow-right-circle"
+          :loading="checkingPlacement"
+          :disabled="!canProceed || checkingPlacement"
           @click="nextStep"
-          :disabled="!canProceed"
         />
+      </VCardActions>
+    </VCard>
+  </VDialog>
+
+  <!--
+    The network will not accept these locations. Not a warning, so the only way on
+    is back to the location step. 
+  -->
+  <VDialog :model-value="!!placementRefusal" max-width="520" @update:model-value="placementRefusal = null">
+    <VCard rounded="xl" class="overflow-hidden">
+      <VCardTitle class="d-flex align-center gap-3 bg-error text-white" style="height: 52px; padding-inline: 16px;">
+        <VIcon :icon="placementRefusal?.reason === 'pinnedNodes' ? 'mdi-server-off' : 'mdi-map-marker-off'" size="26" />
+        <span class="text-h6">
+          {{ placementRefusal?.reason === 'pinnedNodes'
+            ? t('core.subscriptionManager.placementPinnedTitle')
+            : t('core.subscriptionManager.placementRefusedTitle') }}
+        </span>
+      </VCardTitle>
+      <VCardText class="pt-5">
+        {{ placementRefusal?.reason === 'pinnedNodes'
+          ? t('core.subscriptionManager.placementPinnedBody', {
+            nodes: placementRefusal?.candidateCount,
+            instances: placementRefusal?.instances,
+          })
+          : t('core.subscriptionManager.placementRefusedBody', {
+            nodes: placementRefusal?.candidateCount,
+            instances: placementRefusal?.instances,
+          }) }}
+      </VCardText>
+      <VCardActions class="px-4 pb-4">
+        <VSpacer />
+        <VBtn color="primary" variant="flat" @click="placementRefusal = null">
+          {{ t('common.buttons.close') }}
+        </VBtn>
+      </VCardActions>
+    </VCard>
+  </VDialog>
+
+  <!--
+    The locations hold too little room for the app. Not a refusal, so there is a way
+    past it - but the way past has to be a deliberate click, not a default. 
+  -->
+  <VDialog :model-value="!!capacityWarning" max-width="540" @update:model-value="capacityWarning = null">
+    <VCard rounded="xl" class="overflow-hidden">
+      <VCardTitle class="d-flex align-center gap-3 bg-warning text-white" style="height: 52px; padding-inline: 16px;">
+        <VIcon icon="mdi-server-off" size="26" />
+        <span class="text-h6">{{ capacityTitle }}</span>
+      </VCardTitle>
+      <VCardText class="pt-5">{{ capacityBody }}</VCardText>
+      <VCardActions class="px-4 pb-4 flex-wrap">
+        <VSpacer />
+        <VBtn variant="text" @click="acceptCapacityWarning">
+          {{ t('core.subscriptionManager.capacityContinueAnyway') }}
+        </VBtn>
+        <VBtn color="primary" variant="flat" @click="capacityWarning = null">
+          {{ t('core.subscriptionManager.capacityChangeLocations') }}
+        </VBtn>
       </VCardActions>
     </VCard>
   </VDialog>
@@ -1620,6 +1678,8 @@ import StorageService from '@/services/StorageService'
 import { useFluxStore } from '@/stores/flux'
 import { getDetectedBackendURL } from '@/utils/backend'
 import geolocationData from '@/utils/geolocation'
+import { checkPlacement } from '@/utils/placementFeasibility'
+import { assessCapacity } from '@/utils/nodeCapacity'
 import { paymentBridge } from '@/utils/fiatGateways'
 import { getUser, getSsoEmail } from '@/utils/firebase'
 import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'
@@ -1720,6 +1780,56 @@ const deployedAppName = computed(() => {
 
 // Wizard state
 const currentStep = ref(0)
+
+// The network's verdict on the chosen locations, asked when the customer leaves the
+// location step. Null unless it came back as a refusal - an unanswerable question (no
+// session, no location table on the node) leaves the wizard exactly as it was.
+const placementRefusal = ref(null)
+const checkingPlacement = ref(false)
+
+// Whether the chosen locations hold nodes that can actually RUN this app: big enough,
+// and with the room free right now. The network judges neither before install, and the
+// picker's own counts come from a geo-only projection, so nothing on this wizard asked
+// it. Warned once per selection - accepting it must not re-prompt on the way back.
+const capacityWarning = ref(null)
+const acceptedCapacity = ref(new Set())
+
+// One sentence per shortfall, and they are three different shortfalls: 'short' is
+// arithmetic no waiting changes, 'full' is a queue, 'tight' is a selection with no slack.
+const capacityTitle = computed(() => {
+  const advice = capacityWarning.value
+  if (!advice) return ''
+
+  return t(`core.subscriptionManager.capacity${advice.kind === 'short' ? 'Short' : advice.kind === 'full' ? 'Full' : 'Tight'}Title`)
+})
+
+const capacityBody = computed(() => {
+  const advice = capacityWarning.value
+  if (!advice) return ''
+
+  const params = {
+    ips: advice.ipCount,
+    free: advice.freeIpCount,
+    instances: advice.instances,
+    missing: Math.max(advice.instances - (advice.kind === 'short' ? advice.ipCount : advice.freeIpCount), 0),
+  }
+
+  if (advice.kind === 'short') return t('core.subscriptionManager.capacityShortBody', params)
+  if (advice.kind === 'tight') return t('core.subscriptionManager.capacityTightBody', params)
+
+  return t(advice.freeIpCount === 0
+    ? 'core.subscriptionManager.capacityFullBodyNone'
+    : 'core.subscriptionManager.capacityFullBody', params)
+})
+
+// Accepting it advances the step the warning interrupted, and remembers the selection so
+// stepping back and forward does not ask again about an answer already given.
+const acceptCapacityWarning = () => {
+  const advice = capacityWarning.value
+  if (advice) acceptedCapacity.value.add(advice.selectionKey)
+  capacityWarning.value = null
+  nextStep()
+}
 const totalSteps = computed(() => {
   // WordPress has only 3 steps: Sign/Registry -> Payment -> Deploy
   if (isWordPress.value) {
@@ -3001,7 +3111,7 @@ const stepItems = computed(() => {
 })
 
 // Methods
-const nextStep = () => {
+const nextStep = async () => {
   // Clear any countdown intervals when manually advancing
   if (redirectCountdownInterval.value) {
     clearInterval(redirectCountdownInterval.value)
@@ -3013,6 +3123,63 @@ const nextStep = () => {
   if (!isWordPress.value && currentStep.value === 2) {
     if (!validateGeolocations()) {
       showSnackbar(t('core.subscriptionManager.geolocationErrorsFound'), 'error', 4000)
+
+      return
+    }
+
+    // Then ask the network whether those locations can hold the instance count. A
+    // selection it can prove too small is refused at registration, so there is no
+    // "continue anyway" to offer: the customer would sign, and be told no, on the
+    // payment step. An unanswerable question never holds the wizard up.
+    checkingPlacement.value = true
+
+    const baseComponents = detailedApp.value?.compose || props.app.compose || []
+
+    let placement = null
+    try {
+      placement = await checkPlacement({
+        version: 8,
+        geolocation: getGeolocationCodes(),
+        instances: config.value.instances,
+        compose: baseComponents.map(c => ({ containerData: c.containerData ?? '' })),
+        nodes: props.app.nodes || [],
+      })
+    } finally {
+      checkingPlacement.value = false
+    }
+
+    if (placement?.refused) {
+      placementRefusal.value = placement
+
+      return
+    }
+
+    // Then the half the network leaves to install time. A warning, not a gate: the
+    // registration is accepted and capacity frees up, so there is a way past it.
+    const geolocation = getGeolocationCodes()
+
+    checkingPlacement.value = true
+
+    let capacity = null
+    try {
+      capacity = await assessCapacity({
+        geolocation,
+        hw: {
+          cpu: Number(config.value.cpu) || 0,
+          ramGB: (Number(config.value.ram) || 0) / 1000,
+          hddGB: Number(config.value.storage) || 0,
+        },
+        instances: config.value.instances,
+        isEnterprise: !!props.app.isAutoEnterprise,
+        nodes: props.app.nodes || [],
+      })
+    } finally {
+      checkingPlacement.value = false
+    }
+
+    const selectionKey = `${[...geolocation].sort().join('|')}::${config.value.cpu}/${config.value.ram}/${config.value.storage}/${config.value.instances}`
+    if (capacity && !acceptedCapacity.value.has(selectionKey)) {
+      capacityWarning.value = { ...capacity, selectionKey }
 
       return
     }

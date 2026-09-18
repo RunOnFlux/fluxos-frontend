@@ -357,6 +357,19 @@ export default {
   appUpdateVerification(data) {
     return Api().post('/apps/verifyappupdatespecifications', JSON.stringify(data))
   },
+
+  // How many nodes and fault domains a prospective spec's geolocation holds, asked
+  // before the spec is signed. Not in STICKY_BACKEND_EXCLUSIONS on purpose: the answer
+  // needs a session, and the sticky node is the one that certainly holds it.
+  placementFeasibility(zelidauthHeader, data) {
+    const axiosConfig = {
+      headers: {
+        zelidauth: zelidauthHeader,
+      },
+    }
+
+    return Api().post('/apps/placementfeasibility', JSON.stringify(data), axiosConfig)
+  },
   getAppMonitoring(zelidauthHeader, app) {
     const axiosConfig = {
       headers: {

@@ -13,23 +13,30 @@ declare global {
   const COOKIE_MAX_AGE_1_YEAR: typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']
   const EVENT_STYLES: typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']
   const EffectScope: typeof import('vue')['EffectScope']
+  const IP_HEADROOM: typeof import('./utils/nodeCapacity.js')['IP_HEADROOM']
   const LATEST_SPEC_VERSION: typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']
   const MemoryMonitor: typeof import('./utils/memoryMonitor.js')['MemoryMonitor']
+  const OS_RESERVE: typeof import('./utils/nodeCapacity.js')['OS_RESERVE']
   const SESSION_MAX_AGE_MS: typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']
   const SESSION_SIGNING_MARGIN_MS: typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']
   const STORAGE_MARKERS: typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const alphaDashValidator: typeof import('./@core/utils/validators.js')['alphaDashValidator']
   const alphaValidator: typeof import('./@core/utils/validators.js')['alphaValidator']
+  const appHardware: typeof import('./utils/nodeCapacity.js')['appHardware']
   const appKit: typeof import('./utils/walletService.js')['appKit']
   const arrayBufferToBase64: typeof import('./utils/enterpriseCrypto.js')['arrayBufferToBase64']
+  const assessCapacity: typeof import('./utils/nodeCapacity.js')['assessCapacity']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const auth: typeof import('./utils/firebase.js')['auth']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const avatarText: typeof import('./@core/utils/formatters.js')['avatarText']
   const base64ToUint8Array: typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']
   const betweenValidator: typeof import('./@core/utils/validators.js')['betweenValidator']
+  const capacityForGeolocation: typeof import('./utils/nodeCapacity.js')['capacityForGeolocation']
   const changePassword: typeof import('./utils/firebase.js')['changePassword']
+  const changesPlacement: typeof import('./utils/placementFeasibility.js')['changesPlacement']
+  const checkPlacement: typeof import('./utils/placementFeasibility.js')['checkPlacement']
   const checkWebCryptoAvailability: typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']
   const clearConsent: typeof import('./composables/useCookieConsent.js')['clearConsent']
   const clearStickyBackendDNS: typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']
@@ -83,6 +90,7 @@ declare global {
   const eventBus: typeof import('./utils/eventBus.js')['eventBus']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const extractNodeIPFromResponse: typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']
+  const fetchFluxNodes: typeof import('./utils/nodeCapacity.js')['fetchFluxNodes']
   const fiatGateways: typeof import('./utils/fiatGateways.js')['default']
   const findUploadFailure: typeof import('./utils/uploadResponse.js')['findUploadFailure']
   const firebase: typeof import('./utils/firebase.js')['firebase']
@@ -179,6 +187,9 @@ declare global {
   const markRaw: typeof import('vue')['markRaw']
   const memoryMonitor: typeof import('./utils/memoryMonitor.js')['default']
   const nextTick: typeof import('vue')['nextTick']
+  const nodeFitsApp: typeof import('./utils/nodeCapacity.js')['nodeFitsApp']
+  const nodeHasRoom: typeof import('./utils/nodeCapacity.js')['nodeHasRoom']
+  const nodesInGeolocation: typeof import('./utils/nodeCapacity.js')['nodesInGeolocation']
   const normalizeSpecForRedeploy: typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -209,6 +220,7 @@ declare global {
   const payWithSSP: typeof import('./utils/walletService.js')['payWithSSP']
   const payWithZelcore: typeof import('./utils/walletService.js')['payWithZelcore']
   const paymentBridge: typeof import('./utils/fiatGateways.js')['paymentBridge']
+  const placementShape: typeof import('./utils/placementFeasibility.js')['placementShape']
   const pollOperation: typeof import('./utils/volumeOperations.js')['pollOperation']
   const prefixWithPlus: typeof import('./@core/utils/formatters.js')['prefixWithPlus']
   const provide: typeof import('vue')['provide']
@@ -494,6 +506,7 @@ declare global {
   const watchWalletAccount: typeof import('./utils/walletService.js')['watchWalletAccount']
   const watchWithFilter: typeof import('@vueuse/core')['watchWithFilter']
   const whenever: typeof import('@vueuse/core')['whenever']
+  const wouldRefuseRegistration: typeof import('./utils/placementFeasibility.js')['wouldRefuseRegistration']
 }
 // for type re-export
 declare global {
@@ -514,23 +527,30 @@ declare module 'vue' {
     readonly COOKIE_MAX_AGE_1_YEAR: UnwrapRef<typeof import('./utils/constants.js')['COOKIE_MAX_AGE_1_YEAR']>
     readonly EVENT_STYLES: UnwrapRef<typeof import('./@core/utils/eventStyles.js')['EVENT_STYLES']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly IP_HEADROOM: UnwrapRef<typeof import('./utils/nodeCapacity.js')['IP_HEADROOM']>
     readonly LATEST_SPEC_VERSION: UnwrapRef<typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']>
     readonly MemoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['MemoryMonitor']>
+    readonly OS_RESERVE: UnwrapRef<typeof import('./utils/nodeCapacity.js')['OS_RESERVE']>
     readonly SESSION_MAX_AGE_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']>
     readonly SESSION_SIGNING_MARGIN_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']>
     readonly STORAGE_MARKERS: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly alphaDashValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaDashValidator']>
     readonly alphaValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaValidator']>
+    readonly appHardware: UnwrapRef<typeof import('./utils/nodeCapacity.js')['appHardware']>
     readonly appKit: UnwrapRef<typeof import('./utils/walletService.js')['appKit']>
     readonly arrayBufferToBase64: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['arrayBufferToBase64']>
+    readonly assessCapacity: UnwrapRef<typeof import('./utils/nodeCapacity.js')['assessCapacity']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly auth: UnwrapRef<typeof import('./utils/firebase.js')['auth']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly avatarText: UnwrapRef<typeof import('./@core/utils/formatters.js')['avatarText']>
     readonly base64ToUint8Array: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']>
     readonly betweenValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['betweenValidator']>
+    readonly capacityForGeolocation: UnwrapRef<typeof import('./utils/nodeCapacity.js')['capacityForGeolocation']>
     readonly changePassword: UnwrapRef<typeof import('./utils/firebase.js')['changePassword']>
+    readonly changesPlacement: UnwrapRef<typeof import('./utils/placementFeasibility.js')['changesPlacement']>
+    readonly checkPlacement: UnwrapRef<typeof import('./utils/placementFeasibility.js')['checkPlacement']>
     readonly checkWebCryptoAvailability: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']>
     readonly clearConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['clearConsent']>
     readonly clearStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']>
@@ -584,6 +604,7 @@ declare module 'vue' {
     readonly eventBus: UnwrapRef<typeof import('./utils/eventBus.js')['eventBus']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly extractNodeIPFromResponse: UnwrapRef<typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']>
+    readonly fetchFluxNodes: UnwrapRef<typeof import('./utils/nodeCapacity.js')['fetchFluxNodes']>
     readonly fiatGateways: UnwrapRef<typeof import('./utils/fiatGateways.js')['default']>
     readonly findUploadFailure: UnwrapRef<typeof import('./utils/uploadResponse.js')['findUploadFailure']>
     readonly firebase: UnwrapRef<typeof import('./utils/firebase.js')['firebase']>
@@ -678,6 +699,9 @@ declare module 'vue' {
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly memoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['default']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
+    readonly nodeFitsApp: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodeFitsApp']>
+    readonly nodeHasRoom: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodeHasRoom']>
+    readonly nodesInGeolocation: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodesInGeolocation']>
     readonly normalizeSpecForRedeploy: UnwrapRef<typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
@@ -708,6 +732,7 @@ declare module 'vue' {
     readonly payWithSSP: UnwrapRef<typeof import('./utils/walletService.js')['payWithSSP']>
     readonly payWithZelcore: UnwrapRef<typeof import('./utils/walletService.js')['payWithZelcore']>
     readonly paymentBridge: UnwrapRef<typeof import('./utils/fiatGateways.js')['paymentBridge']>
+    readonly placementShape: UnwrapRef<typeof import('./utils/placementFeasibility.js')['placementShape']>
     readonly pollOperation: UnwrapRef<typeof import('./utils/volumeOperations.js')['pollOperation']>
     readonly prefixWithPlus: UnwrapRef<typeof import('./@core/utils/formatters.js')['prefixWithPlus']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
@@ -992,5 +1017,6 @@ declare module 'vue' {
     readonly watchWalletAccount: UnwrapRef<typeof import('./utils/walletService.js')['watchWalletAccount']>
     readonly watchWithFilter: UnwrapRef<typeof import('@vueuse/core')['watchWithFilter']>
     readonly whenever: UnwrapRef<typeof import('@vueuse/core')['whenever']>
+    readonly wouldRefuseRegistration: UnwrapRef<typeof import('./utils/placementFeasibility.js')['wouldRefuseRegistration']>
   }
 }

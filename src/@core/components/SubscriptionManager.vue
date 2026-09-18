@@ -2378,8 +2378,154 @@
             <p class="mb-0">{{ t('core.subscriptionManager.resourceIncreaseWarningMessage') }}</p>
           </VAlert>
 
-          <!-- Spec Validation -->
-          <div class="spec-row">
+          <!--
+            What the network says about where this spec can go. Shown only once there is
+            something to report: a worldwide app is never asked, and a question that came
+            back unanswerable leaves the panel as it was.
+          -->
+          <div v-if="showPlacementRow" class="spec-row">
+            <div class="label-cell">{{ placementRowLabel }}</div>
+            <div class="value-cell d-flex align-center justify-end pr-4">
+              <div v-if="isCheckingPlacement" class="d-flex justify-center">
+                <VProgressCircular indeterminate color="primary" size="24" />
+              </div>
+              <div v-else-if="placementAdvice?.refused" class="d-flex justify-center">
+                <VIcon color="error" size="22">mdi-close-circle</VIcon>
+              </div>
+              <div v-else-if="placementWarning" class="d-flex justify-center">
+                <VIcon color="warning" size="22">mdi-alert-circle</VIcon>
+              </div>
+              <div v-else-if="placementAdvice" class="d-flex justify-center">
+                <VIcon color="success" size="22">mdi-check-circle</VIcon>
+              </div>
+            </div>
+          </div>
+
+          <!--
+            A refusal is not a warning: the network rejects this registration, so there
+            is no "register anyway" to offer. The way out is the Geolocation tab.
+          -->
+          <div v-if="placementAdvice?.refused" class="mt-3">
+            <VAlert
+              type="error"
+              variant="tonal"
+              density="compact"
+              class="mx-3"
+            >
+              <template #title>
+                <span class="text-subtitle-2 font-weight-bold">
+                  {{ placementAdvice.reason === 'pinnedNodes'
+                    ? t('core.subscriptionManager.placementPinnedTitle')
+                    : t('core.subscriptionManager.placementRefusedTitle') }}
+                </span>
+              </template>
+              <p class="mb-2">
+                {{ placementAdvice.reason === 'pinnedNodes'
+                  ? t('core.subscriptionManager.placementPinnedBody', {
+                    nodes: placementAdvice.candidateCount,
+                    instances: placementAdvice.instances,
+                  })
+                  : t('core.subscriptionManager.placementRefusedBody', {
+                    nodes: placementAdvice.candidateCount,
+                    instances: placementAdvice.instances,
+                  }) }}
+              </p>
+              <VBtn
+                v-if="placementAdvice.reason !== 'pinnedNodes' || showPriorityNodesTab"
+                size="small"
+                color="error"
+                variant="tonal"
+                :prepend-icon="placementAdvice.reason === 'pinnedNodes' ? 'mdi-server-network' : 'mdi-earth'"
+                @click="tab = placementAdvice.reason === 'pinnedNodes' ? 2 : 1"
+              >
+                {{ placementAdvice.reason === 'pinnedNodes'
+                  ? t('core.subscriptionManager.placementOpenNodes')
+                  : t('core.subscriptionManager.placementOpenGeolocation') }}
+              </VBtn>
+            </VAlert>
+          </div>
+
+          <!--
+            The hardware half. Nodes big enough and free right now, counted per public
+            IP because FluxOS places one instance per address - several nodes behind one
+            address can only ever host one between them. A warning, never a block: the
+            network accepts these registrations and capacity does free up.
+          -->
+          <div v-else-if="capacityAdvice" class="mt-3">
+            <VAlert
+              type="warning"
+              variant="tonal"
+              density="compact"
+              class="mx-3"
+            >
+              <template #title>
+                <span class="text-subtitle-2 font-weight-bold">{{ capacityTitle }}</span>
+              </template>
+              <p class="mb-0">{{ capacityBody }}</p>
+            </VAlert>
+          </div>
+
+          <!--
+            A shortfall the node reports but cannot stand behind: its location table may
+            be mis-attributing the geography, so the registration is allowed through. It
+            is not a refusal, and it is certainly not a pass.
+          -->
+          <div v-else-if="placementAdvice && placementAdvice.satisfiable === false" class="mt-3">
+            <VAlert
+              type="warning"
+              variant="tonal"
+              density="compact"
+              class="mx-3"
+            >
+              {{ t('core.subscriptionManager.placementShortBody', {
+                nodes: placementAdvice.candidateCount,
+                instances: placementAdvice.instances,
+              }) }}
+            </VAlert>
+          </div>
+
+          <!--
+            Deliverable, with less resiliency than the instance count implies. The
+            network registers this without complaint, so it only ever informs.
+          -->
+          <div v-else-if="placementAdvice?.constrained" class="mt-3">
+            <VAlert
+              type="warning"
+              variant="tonal"
+              density="compact"
+              class="mx-3"
+            >
+              {{ t('core.subscriptionManager.placementConstrained', {
+                instances: placementAdvice.instances,
+                domains: placementAdvice.domainCount,
+                perDomain: placementAdvice.maxPerDomain,
+              }) }}
+            </VAlert>
+          </div>
+
+          <!--
+            A region the network's location table does not recognise is answered at
+            country granularity, so the app reaches further than the picker implied.
+          -->
+          <div v-if="placementAdvice?.coarsenedEntries?.length" class="mt-3">
+            <VAlert
+              type="info"
+              variant="tonal"
+              density="compact"
+              class="mx-3"
+            >
+              {{ t('core.subscriptionManager.placementCoarsened', {
+                entries: placementAdvice.coarsenedEntries.join(', '),
+              }) }}
+            </VAlert>
+          </div>
+
+          <!--
+            Spec Validation. Skipped entirely when placement was refused: the spec was
+            never sent to the validator, so a red cross here would name the wrong
+            problem. 
+          -->
+          <div v-if="!placementAdvice?.refused" class="spec-row">
             <div class="label-cell">{{ t('core.subscriptionManager.validateAppSpec') }}</div>
             <div class="value-cell d-flex align-center justify-end pr-4">
               <div v-if="isVeryfitying" class="d-flex justify-center">
@@ -2395,7 +2541,7 @@
           </div>
 
           <!-- Show error message if validation failed -->
-          <div v-if="hasValidatedSpec && verifyAppSpecResponse === false && verifyAppSpecError" class="mt-3">
+          <div v-if="hasValidatedSpec && verifyAppSpecResponse === false && verifyAppSpecError && !placementAdvice?.refused" class="mt-3">
             <VAlert
               type="error"
               variant="tonal"
@@ -3871,6 +4017,8 @@ import { getUser, getSsoEmail } from '@/utils/firebase'
 import { getDetectedBackendURL } from "@/utils/backend"
 import { paymentBridge } from '@/utils/fiatGateways'
 import AppsService from "@/services/AppsService"
+import { checkPlacement, changesPlacement } from '@/utils/placementFeasibility'
+import { assessCapacity, appHardware } from '@/utils/nodeCapacity'
 import ExplorerService from '@/services/ExplorerService'
 import DaemonService from '@/services/DaemonService'
 import StorageService from '@/services/StorageService'
@@ -4758,6 +4906,80 @@ const timeOptions = { shortDate: { year: 'numeric', month: '2-digit', day: '2-di
 const isVeryfitying = ref(false)
 const verifyAppSpecResponse = ref(null)
 const verifyAppSpecError = ref(null)
+
+// What the network says about where this spec can be placed. Asked on the Review tab,
+// before the spec is signed or paid for.
+//   null       - not asked, or asked and unanswerable (no session, no location table,
+//                a spec that names its own nodes). Never blocks.
+//   .refused   - the network would refuse this registration. Blocks.
+//   .constrained - synced instances will share a provider. Warns only.
+const placementAdvice = ref(null)
+const isCheckingPlacement = ref(false)
+
+// Whether the chosen locations hold nodes that can actually RUN this app. A different
+// question from placementAdvice, which counts geography and nothing else - the network
+// leaves hardware to install time, so nothing before payment asked it until now. Null
+// when the selection is comfortable or when the node list could not be read.
+const capacityAdvice = ref(null)
+
+// The row appears only when there is something to report. An unanswerable question -
+// no session, no location table on the node, a spec that names its own nodes - leaves
+// the Review panel exactly as it was before this check existed.
+const showPlacementRow = computed(() => isCheckingPlacement.value
+  || !!placementAdvice.value
+  || !!capacityAdvice.value)
+
+// Anything the network answered that is worth reading but does not refuse: instances it
+// reports it cannot seat (without being able to prove it, so the registration stands),
+// synced instances that will share a provider, and region pins its location table does
+// not recognise. None of these is a green tick.
+// A pinned spec's refusal is about the machines it names, not about a map, and the row
+// has to say so - sending someone to widen locations they never narrowed is the whole
+// mistake this label exists to avoid.
+const placementRowLabel = computed(() => {
+  if (placementAdvice.value?.reason !== 'pinnedNodes') return t('core.subscriptionManager.placementCheck')
+
+  return props.appSpec?.version === 7
+    ? t('core.subscriptionManager.tabEnterpriseNodes')
+    : t('core.subscriptionManager.tabPriorityNodes')
+})
+
+// One sentence per shortfall, and they are three different shortfalls: 'short' is
+// arithmetic no waiting changes, 'full' is a queue, 'tight' is a selection with no slack.
+const capacityTitle = computed(() => {
+  const advice = capacityAdvice.value
+  if (!advice) return ''
+
+  return t(`core.subscriptionManager.capacity${advice.kind === 'short' ? 'Short' : advice.kind === 'full' ? 'Full' : 'Tight'}Title`)
+})
+
+const capacityBody = computed(() => {
+  const advice = capacityAdvice.value
+  if (!advice) return ''
+
+  const params = {
+    ips: advice.ipCount,
+    free: advice.freeIpCount,
+    instances: advice.instances,
+    missing: Math.max(advice.instances - (advice.kind === 'short' ? advice.ipCount : advice.freeIpCount), 0),
+  }
+
+  if (advice.kind === 'short') return t('core.subscriptionManager.capacityShortBody', params)
+  if (advice.kind === 'tight') return t('core.subscriptionManager.capacityTightBody', params)
+
+  return t(advice.freeIpCount === 0
+    ? 'core.subscriptionManager.capacityFullBodyNone'
+    : 'core.subscriptionManager.capacityFullBody', params)
+})
+
+const placementWarning = computed(() => {
+  const advice = placementAdvice.value
+  if (advice?.refused) return false
+  if (capacityAdvice.value) return true
+  if (!advice) return false
+
+  return advice.satisfiable === false || !!advice.constrained || !!advice.coarsenedEntries?.length
+})
 const appSpecPrice = ref(null)
 const blockHeight = ref(null)
 const isExpiryValid = ref(false)
@@ -8035,6 +8257,8 @@ watch(tab, async newVal => {
     signedSpecSnapshot.value = null
     verifyAppSpecResponse.value = null
     verifyAppSpecError.value = null
+    placementAdvice.value = null
+    capacityAdvice.value = null
     appSpecPrice.value = null
     blockHeight.value = null
     isExpiryValid.value = false
@@ -8142,6 +8366,64 @@ watch(tab, async newVal => {
       showToast('error', t('core.subscriptionManager.geolocationErrorsFound'))
 
       return
+    }
+
+    // --- STEP 0.4: Ask the network where this spec can be placed ---
+    // Before the Enterprise question and before the spec is formatted, signed or paid
+    // for: a selection the network can prove too small is refused at registration, so
+    // asking someone to decide about encryption first is the wrong conversation.
+    //
+    // Only when placement is actually at stake. The network never gates an update that
+    // leaves instances, geolocation and component sizing alone - a renewal, a
+    // cancellation, an environment edit - and neither may this.
+    if (versionFlags.value.supportsGeolocation
+      && (props.newApp || changesPlacement(props.appSpec, originalAppSpecSnapshot.value))) {
+      // One spinner for both halves: the node list behind the capacity half is several
+      // megabytes on a cold tab, and letting the row settle on the first answer only to
+      // change again on the second reads as the screen contradicting itself.
+      isCheckingPlacement.value = true
+      try {
+        placementAdvice.value = await checkPlacement(props.appSpec)
+
+        // Hardware and free room, which the network deliberately does not judge before
+        // install. Advisory only - it warns and never holds the registration up, because
+        // the network accepts these and capacity does free up. Skipped after a refusal:
+        // the owner has one thing to fix, not two.
+        capacityAdvice.value = placementAdvice.value?.refused
+          ? null
+          : await assessCapacity({
+            geolocation: props.appSpec.geolocation,
+            hw: appHardware(props.appSpec.compose),
+            instances: props.appSpec.instances,
+            isEnterprise: isPrivateApp.value,
+            nodes: props.appSpec.nodes,
+          })
+      } catch {
+        capacityAdvice.value = null
+      } finally {
+        isCheckingPlacement.value = false
+      }
+
+      if (placementAdvice.value?.refused) {
+        const message = placementAdvice.value.reason === 'pinnedNodes'
+          ? t('core.subscriptionManager.placementPinnedShort', {
+            nodes: placementAdvice.value.candidateCount,
+            instances: placementAdvice.value.instances,
+          })
+          : t('core.subscriptionManager.placementRefusedShort', {
+            nodes: placementAdvice.value.candidateCount,
+            instances: placementAdvice.value.instances,
+          })
+
+        verifyAppSpecError.value = message
+        verifyAppSpecResponse.value = false
+        isVeryfitying.value = false
+        hasValidatedSpec.value = true
+        hasCheckedExpiry.value = checkedExpiry
+        showToast('error', message)
+
+        return
+      }
     }
 
     // --- STEP 0.5: Warn before registering as a public (non-enterprise) app ---
