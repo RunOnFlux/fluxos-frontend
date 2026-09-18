@@ -1544,9 +1544,44 @@
           color="primary"
           variant="flat"
           icon="mdi-arrow-right-circle"
+          :loading="checkingPlacement"
+          :disabled="!canProceed || checkingPlacement"
           @click="nextStep"
-          :disabled="!canProceed"
         />
+      </VCardActions>
+    </VCard>
+  </VDialog>
+
+  <!--
+    The network will not accept these locations. Not a warning, so the only way on
+    is back to the location step. 
+  -->
+  <VDialog :model-value="!!placementRefusal" max-width="520" @update:model-value="placementRefusal = null">
+    <VCard rounded="xl" class="overflow-hidden">
+      <VCardTitle class="d-flex align-center gap-3 bg-error text-white" style="height: 52px; padding-inline: 16px;">
+        <VIcon :icon="placementRefusal?.reason === 'pinnedNodes' ? 'mdi-server-off' : 'mdi-map-marker-off'" size="26" />
+        <span class="text-h6">
+          {{ placementRefusal?.reason === 'pinnedNodes'
+            ? t('core.subscriptionManager.placementPinnedTitle')
+            : t('core.subscriptionManager.placementRefusedTitle') }}
+        </span>
+      </VCardTitle>
+      <VCardText class="pt-5">
+        {{ placementRefusal?.reason === 'pinnedNodes'
+          ? t('core.subscriptionManager.placementPinnedBody', {
+            nodes: placementRefusal?.candidateCount,
+            instances: placementRefusal?.instances,
+          })
+          : t('core.subscriptionManager.placementRefusedBody', {
+            nodes: placementRefusal?.candidateCount,
+            instances: placementRefusal?.instances,
+          }) }}
+      </VCardText>
+      <VCardActions class="px-4 pb-4">
+        <VSpacer />
+        <VBtn color="primary" variant="flat" @click="placementRefusal = null">
+          {{ t('common.buttons.close') }}
+        </VBtn>
       </VCardActions>
     </VCard>
   </VDialog>
@@ -1620,6 +1655,7 @@ import StorageService from '@/services/StorageService'
 import { useFluxStore } from '@/stores/flux'
 import { getDetectedBackendURL } from '@/utils/backend'
 import geolocationData from '@/utils/geolocation'
+import { checkPlacement } from '@/utils/placementFeasibility'
 import { paymentBridge } from '@/utils/fiatGateways'
 import { getUser, getSsoEmail } from '@/utils/firebase'
 import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'
@@ -1720,6 +1756,12 @@ const deployedAppName = computed(() => {
 
 // Wizard state
 const currentStep = ref(0)
+
+// The network's verdict on the chosen locations, asked when the customer leaves the
+// location step. Null unless it came back as a refusal - an unanswerable question (no
+// session, no location table on the node) leaves the wizard exactly as it was.
+const placementRefusal = ref(null)
+const checkingPlacement = ref(false)
 const totalSteps = computed(() => {
   // WordPress has only 3 steps: Sign/Registry -> Payment -> Deploy
   if (isWordPress.value) {
@@ -3001,7 +3043,7 @@ const stepItems = computed(() => {
 })
 
 // Methods
-const nextStep = () => {
+const nextStep = async () => {
   // Clear any countdown intervals when manually advancing
   if (redirectCountdownInterval.value) {
     clearInterval(redirectCountdownInterval.value)
@@ -3013,6 +3055,33 @@ const nextStep = () => {
   if (!isWordPress.value && currentStep.value === 2) {
     if (!validateGeolocations()) {
       showSnackbar(t('core.subscriptionManager.geolocationErrorsFound'), 'error', 4000)
+
+      return
+    }
+
+    // Then ask the network whether those locations can hold the instance count. A
+    // selection it can prove too small is refused at registration, so there is no
+    // "continue anyway" to offer: the customer would sign, and be told no, on the
+    // payment step. An unanswerable question never holds the wizard up.
+    checkingPlacement.value = true
+
+    const baseComponents = detailedApp.value?.compose || props.app.compose || []
+
+    let placement = null
+    try {
+      placement = await checkPlacement({
+        version: 8,
+        geolocation: getGeolocationCodes(),
+        instances: config.value.instances,
+        compose: baseComponents.map(c => ({ containerData: c.containerData ?? '' })),
+        nodes: props.app.nodes || [],
+      })
+    } finally {
+      checkingPlacement.value = false
+    }
+
+    if (placement?.refused) {
+      placementRefusal.value = placement
 
       return
     }

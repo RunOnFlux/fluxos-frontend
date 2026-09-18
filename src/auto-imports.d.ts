@@ -30,6 +30,8 @@ declare global {
   const base64ToUint8Array: typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']
   const betweenValidator: typeof import('./@core/utils/validators.js')['betweenValidator']
   const changePassword: typeof import('./utils/firebase.js')['changePassword']
+  const changesPlacement: typeof import('./utils/placementFeasibility.js')['changesPlacement']
+  const checkPlacement: typeof import('./utils/placementFeasibility.js')['checkPlacement']
   const checkWebCryptoAvailability: typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']
   const clearConsent: typeof import('./composables/useCookieConsent.js')['clearConsent']
   const clearStickyBackendDNS: typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']
@@ -209,6 +211,7 @@ declare global {
   const payWithSSP: typeof import('./utils/walletService.js')['payWithSSP']
   const payWithZelcore: typeof import('./utils/walletService.js')['payWithZelcore']
   const paymentBridge: typeof import('./utils/fiatGateways.js')['paymentBridge']
+  const placementShape: typeof import('./utils/placementFeasibility.js')['placementShape']
   const pollOperation: typeof import('./utils/volumeOperations.js')['pollOperation']
   const prefixWithPlus: typeof import('./@core/utils/formatters.js')['prefixWithPlus']
   const provide: typeof import('vue')['provide']
@@ -494,6 +497,7 @@ declare global {
   const watchWalletAccount: typeof import('./utils/walletService.js')['watchWalletAccount']
   const watchWithFilter: typeof import('@vueuse/core')['watchWithFilter']
   const whenever: typeof import('@vueuse/core')['whenever']
+  const wouldRefuseRegistration: typeof import('./utils/placementFeasibility.js')['wouldRefuseRegistration']
 }
 // for type re-export
 declare global {
@@ -531,6 +535,8 @@ declare module 'vue' {
     readonly base64ToUint8Array: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['base64ToUint8Array']>
     readonly betweenValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['betweenValidator']>
     readonly changePassword: UnwrapRef<typeof import('./utils/firebase.js')['changePassword']>
+    readonly changesPlacement: UnwrapRef<typeof import('./utils/placementFeasibility.js')['changesPlacement']>
+    readonly checkPlacement: UnwrapRef<typeof import('./utils/placementFeasibility.js')['checkPlacement']>
     readonly checkWebCryptoAvailability: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['checkWebCryptoAvailability']>
     readonly clearConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['clearConsent']>
     readonly clearStickyBackendDNS: UnwrapRef<typeof import('./utils/stickyBackend.js')['clearStickyBackendDNS']>
@@ -708,6 +714,7 @@ declare module 'vue' {
     readonly payWithSSP: UnwrapRef<typeof import('./utils/walletService.js')['payWithSSP']>
     readonly payWithZelcore: UnwrapRef<typeof import('./utils/walletService.js')['payWithZelcore']>
     readonly paymentBridge: UnwrapRef<typeof import('./utils/fiatGateways.js')['paymentBridge']>
+    readonly placementShape: UnwrapRef<typeof import('./utils/placementFeasibility.js')['placementShape']>
     readonly pollOperation: UnwrapRef<typeof import('./utils/volumeOperations.js')['pollOperation']>
     readonly prefixWithPlus: UnwrapRef<typeof import('./@core/utils/formatters.js')['prefixWithPlus']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
@@ -992,5 +999,6 @@ declare module 'vue' {
     readonly watchWalletAccount: UnwrapRef<typeof import('./utils/walletService.js')['watchWalletAccount']>
     readonly watchWithFilter: UnwrapRef<typeof import('@vueuse/core')['watchWithFilter']>
     readonly whenever: UnwrapRef<typeof import('@vueuse/core')['whenever']>
+    readonly wouldRefuseRegistration: UnwrapRef<typeof import('./utils/placementFeasibility.js')['wouldRefuseRegistration']>
   }
 }
