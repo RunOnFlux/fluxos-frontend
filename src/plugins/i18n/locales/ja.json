@@ -307,7 +307,8 @@
       "manageDaemon": "デーモンの管理",
       "manageBenchmark": "ベンチマークの管理",
       "manageUsers": "ユーザーの管理",
-      "loggedSessions": "ログに記録されたセッション"
+      "loggedSessions": "ログに記録されたセッション",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "フラックスXDAO"
@@ -2736,6 +2737,17 @@
             "warning": "これによりベンチマークが停止します。"
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

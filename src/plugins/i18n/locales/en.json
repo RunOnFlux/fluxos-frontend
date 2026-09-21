@@ -307,7 +307,8 @@
       "manageDaemon": "Manage Daemon",
       "manageBenchmark": "Manage Benchmark",
       "manageUsers": "Manage Users",
-      "loggedSessions": "Logged Sessions"
+      "loggedSessions": "Logged Sessions",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flux XDAO"
@@ -2836,6 +2837,17 @@
             "warning": "This will stop the benchmark."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

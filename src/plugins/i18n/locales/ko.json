@@ -307,7 +307,8 @@
       "manageDaemon": "데몬 관리",
       "manageBenchmark": "벤치마크 관리",
       "manageUsers": "사용자 관리",
-      "loggedSessions": "기록된 세션"
+      "loggedSessions": "기록된 세션",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "플럭스 XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "이렇게 하면 벤치마크가 중지됩니다."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

@@ -307,7 +307,8 @@
       "manageDaemon": "Quản lý Daemon",
       "manageBenchmark": "Quản lý điểm chuẩn",
       "manageUsers": "Quản lý người dùng",
-      "loggedSessions": "Phiên đã ghi"
+      "loggedSessions": "Phiên đã ghi",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Thông lượng XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "Điều này sẽ dừng điểm chuẩn."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

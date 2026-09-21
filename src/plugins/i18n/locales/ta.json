@@ -307,7 +307,8 @@
       "manageDaemon": "டீமனை நிர்வகி",
       "manageBenchmark": "பெஞ்ச்மார்க்கை நிர்வகிக்கவும்",
       "manageUsers": "பயனர்களை நிர்வகிக்கவும்",
-      "loggedSessions": "பதிவு செய்யப்பட்ட அமர்வுகள்"
+      "loggedSessions": "பதிவு செய்யப்பட்ட அமர்வுகள்",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "ஃப்ளக்ஸ் XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "இது அளவுகோலை நிறுத்தும்."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

@@ -307,7 +307,8 @@
       "manageDaemon": "管理守护进程",
       "manageBenchmark": "管理基准",
       "manageUsers": "管理用户",
-      "loggedSessions": "记录的会话"
+      "loggedSessions": "记录的会话",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "助焊剂 XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "这将停止基准测试。"
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

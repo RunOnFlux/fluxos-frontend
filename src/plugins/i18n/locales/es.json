@@ -307,7 +307,8 @@
       "manageDaemon": "Administrar demonio",
       "manageBenchmark": "Administrar punto de referencia",
       "manageUsers": "Administrar usuarios",
-      "loggedSessions": "Sesiones registradas"
+      "loggedSessions": "Sesiones registradas",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "Flujo XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "Esto detendrá el punto de referencia."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

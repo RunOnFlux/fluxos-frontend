@@ -307,7 +307,8 @@
       "manageDaemon": "إدارة الشيطان",
       "manageBenchmark": "إدارة المعيار",
       "manageUsers": "إدارة المستخدمين",
-      "loggedSessions": "الجلسات المسجلة"
+      "loggedSessions": "الجلسات المسجلة",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "تدفق XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "هذا سوف يوقف المعيار."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

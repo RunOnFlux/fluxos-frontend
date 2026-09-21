@@ -3555,6 +3555,17 @@
         "errorLoadingEvents": "Nie udało się załadować zdarzeń Docker",
         "recentEvents": "Ostatnie zdarzenia",
         "noEventsAvailable": "Brak dostępnych zdarzeń Docker"
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "xdao": {
@@ -4912,7 +4923,8 @@
       "loggedSessions": "Zalogowane sesje",
       "title": "Administracja",
       "manageDaemon": "Zarządzaj Daemonem",
-      "manageBenchmark": "Zarządzaj Benchmarkiem"
+      "manageBenchmark": "Zarządzaj Benchmarkiem",
+      "fluxShare": "FluxShare"
     },
     "dashboard": {
       "rewards": "Nagrody",

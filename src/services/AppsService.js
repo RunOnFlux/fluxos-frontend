@@ -262,6 +262,24 @@ export default {
       },
     })
   },
+
+  // What is left of FluxShare: an operator collects files a previous release
+  // let them put on the node. Read only - see RunOnFlux/flux#1809.
+  fluxShareGetFolder(zelidauthHeader, folder) {
+    return Api().get(`/apps/fluxshare/getfolder/${folder}`, {
+      headers: {
+        zelidauth: zelidauthHeader,
+      },
+    })
+  },
+  fluxShareDownloadFile(zelidauthHeader, file) {
+    return Api().get(`/apps/fluxshare/getfile/${file}`, {
+      headers: {
+        zelidauth: zelidauthHeader,
+      },
+      responseType: 'blob',
+    })
+  },
   appPrice(data) {
     return Api().post('/apps/calculateprice', JSON.stringify(data))
   },

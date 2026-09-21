@@ -307,7 +307,8 @@
       "manageDaemon": "ডেমন পরিচালনা করুন",
       "manageBenchmark": "বেঞ্চমার্ক পরিচালনা করুন",
       "manageUsers": "ব্যবহারকারীদের পরিচালনা করুন",
-      "loggedSessions": "লগ সেশন"
+      "loggedSessions": "লগ সেশন",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "ফ্লাক্স এক্সডিএও"
@@ -2736,6 +2737,17 @@
             "warning": "এটি বেঞ্চমার্ক বন্ধ করবে।"
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

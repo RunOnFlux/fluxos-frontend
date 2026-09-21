@@ -307,7 +307,8 @@
       "manageDaemon": "డెమోన్‌ని నిర్వహించండి",
       "manageBenchmark": "బెంచ్‌మార్క్‌ని నిర్వహించండి",
       "manageUsers": "వినియోగదారులను నిర్వహించండి",
-      "loggedSessions": "లాగిన్ చేసిన సెషన్‌లు"
+      "loggedSessions": "లాగిన్ చేసిన సెషన్‌లు",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "ఫ్లక్స్ XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "ఇది బెంచ్‌మార్క్‌ను నిలిపివేస్తుంది."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

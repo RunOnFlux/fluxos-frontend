@@ -307,7 +307,8 @@
       "manageDaemon": "डिमन व्यवस्थापित करा",
       "manageBenchmark": "बेंचमार्क व्यवस्थापित करा",
       "manageUsers": "वापरकर्ते व्यवस्थापित करा",
-      "loggedSessions": "लॉग केलेले सत्र"
+      "loggedSessions": "लॉग केलेले सत्र",
+      "fluxShare": "FluxShare"
     },
     "fluxXdao": {
       "title": "फ्लक्स XDAO"
@@ -2736,6 +2737,17 @@
             "warning": "हे बेंचमार्क थांबवेल."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {
