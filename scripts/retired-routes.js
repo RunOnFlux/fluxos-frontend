@@ -27,10 +27,10 @@ export const RETIRED_ROUTES = Object.freeze([
   },
   {
     from: '/apps/register/orbit',
-    to: 'https://orbit.runonflux.com/',
+    to: 'https://runonflux.com/apps/orbit',
     title: 'Orbit has moved',
-    body: 'Deploying to Flux straight from a Git repository now lives on its own site.',
-    linkText: 'Continue to orbit.runonflux.com',
+    body: 'Deploying to Flux straight from a Git repository now lives in the Flux Apps hub.',
+    linkText: 'Continue to Orbit on Flux',
   },
 ])
 

@@ -168,9 +168,9 @@ import { useRouter } from 'vue-router'
 const { t } = useI18n()
 const router = useRouter()
 
-// Git deployments now live on a dedicated site. We keep the internal
-// apps-register-orbit page in place in case we need to bring it back.
-const ORBIT_SITE_URL = 'https://orbit.runonflux.com'
+// Git deployments live in the Flux Apps hub (they were on orbit.runonflux.com before). We keep
+// the internal apps-register-orbit page in place in case we need to bring it back.
+const ORBIT_SITE_URL = 'https://runonflux.com/apps/orbit'
 
 const selectedMethod = ref(null)
 
