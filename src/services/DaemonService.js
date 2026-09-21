@@ -77,13 +77,6 @@ export default {
       },
     })
   },
-  getWalletInfo(zelidauthHeader) {
-    return Api().get('/daemon/getwalletinfo', {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
   listFluxNodeConf(zelidauthHeader) {
     return Api().get('/daemon/listzelnodeconf', {
       headers: {
@@ -107,13 +100,6 @@ export default {
   },
   stopDaemon(zelidauthHeader) {
     return Api().get('/daemon/stop', {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  rescanDaemon(zelidauthHeader, height) {
-    return Api().get(`/daemon/rescanblockchain/${height}`, {
       headers: {
         zelidauth: zelidauthHeader,
       },
