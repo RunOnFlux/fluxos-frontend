@@ -308,7 +308,6 @@
       "manageBenchmark": "బెంచ్‌మార్క్‌ని నిర్వహించండి",
       "manageUsers": "వినియోగదారులను నిర్వహించండి",
       "loggedSessions": "లాగిన్ చేసిన సెషన్‌లు",
-      "myFluxShare": "నా FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "డాకర్ ఈవెంట్‌లు ఏవీ అందుబాటులో లేవు",
         "errorLoadingEvents": "డాకర్ ఈవెంట్‌లను లోడ్ చేయడంలో విఫలమైంది"
       },
-      "fluxShare": {
-        "loadingTitle": "FluxShare లోడ్ అవుతోంది...",
-        "title": "FluxShare",
-        "subtitle": "మీ ఫైల్‌లను నిర్వహించండి మరియు వాటిని ఇతరులతో భాగస్వామ్యం చేయండి",
-        "storageUsage": "నిల్వ వినియోగం",
-        "used": "ఉపయోగించారు",
-        "available": "అందుబాటులో ఉంది",
-        "fileManager": "ఫైల్ మేనేజర్",
-        "upload": "అప్‌లోడ్ చేయండి",
-        "newFolder": "కొత్త ఫోల్డర్",
-        "emptyFolder": "ఈ ఫోల్డర్ ఖాళీగా ఉంది",
-        "folder": "ఫోల్డర్",
-        "file": "ఫైల్",
-        "columns": {
-          "name": "పేరు",
-          "modified": "సవరించబడింది",
-          "type": "టైప్ చేయండి",
-          "size": "పరిమాణం",
-          "actions": "చర్యలు"
-        },
-        "download": "డౌన్‌లోడ్ చేయండి",
-        "downloadZip": "జిప్‌గా డౌన్‌లోడ్ చేయండి",
-        "rename": "పేరు మార్చండి",
-        "share": "షేర్ చేయండి",
-        "unshare": "భాగస్వామ్యం చేయవద్దు",
-        "copyLink": "షేర్ లింక్‌ని కాపీ చేయండి",
-        "delete": "తొలగించు",
-        "createFolder": "ఫోల్డర్‌ని సృష్టించండి",
-        "folderName": "ఫోల్డర్ పేరు",
-        "renameItem": "పేరు మార్చండి",
-        "newName": "కొత్త పేరు",
-        "confirmDelete": "తొలగించడాన్ని నిర్ధారించండి",
-        "deleteConfirmMessage": "మీరు ఖచ్చితంగా \"{name}\"ని తొలగించాలనుకుంటున్నారా?",
-        "confirmDownload": "డౌన్‌లోడ్‌ని నిర్ధారించండి",
-        "downloadFileConfirm": "\"{name}\" ఫైల్‌ని డౌన్‌లోడ్ చేయాలా?",
-        "downloadFolderConfirm": "\"{name}\" ఫోల్డర్‌ని జిప్‌గా డౌన్‌లోడ్ చేయాలా?",
-        "uploadFiles": "ఫైల్‌లను అప్‌లోడ్ చేయండి",
-        "dropFilesHere": "ఫైల్‌లను ఇక్కడ వదలండి",
-        "clickToUpload": "లేదా అప్‌లోడ్ చేయడానికి క్లిక్ చేయండి",
-        "maxFileSize": "గరిష్ట ఫైల్ పరిమాణం: 5GB",
-        "messages": {
-          "folderCreated": "ఫోల్డర్ విజయవంతంగా సృష్టించబడింది",
-          "fileDeleted": "\"{name}\" విజయవంతంగా తొలగించబడింది",
-          "folderDeleted": "\"{name}\" విజయవంతంగా తొలగించబడింది",
-          "renamed": "\"{old}\" పేరు \"{new}\"గా మార్చబడింది",
-          "fileShared": "\"{name}\" ఇప్పుడు భాగస్వామ్యం చేయబడింది",
-          "fileUnshared": "\"{name}\" ఇకపై భాగస్వామ్యం చేయబడదు",
-          "fileUploaded": "\"{name}\" విజయవంతంగా అప్‌లోడ్ చేయబడింది"
-        },
-        "errors": {
-          "storageStatsFailed": "నిల్వ గణాంకాలను లోడ్ చేయడంలో విఫలమైంది",
-          "loadFolderFailed": "ఫోల్డర్‌ను లోడ్ చేయడంలో విఫలమైంది",
-          "folderExists": "\"{name}\" ఫోల్డర్ ఇప్పటికే ఉంది",
-          "createFolderFailed": "ఫోల్డర్‌ని సృష్టించడం విఫలమైంది",
-          "deleteFileFailed": "ఫైల్‌ని తొలగించడంలో విఫలమైంది",
-          "folderNotEmpty": "\"{name}\" ఫోల్డర్ ఖాళీగా లేదు",
-          "deleteFolderFailed": "ఫోల్డర్‌ను తొలగించడంలో విఫలమైంది",
-          "invalidName": "పేరులో \"/\" ఉండకూడదు",
-          "renameFailed": "పేరు మార్చడంలో విఫలమైంది",
-          "shareFailed": "ఫైల్‌ను భాగస్వామ్యం చేయడంలో విఫలమైంది",
-          "unshareFailed": "ఫైల్ భాగస్వామ్యాన్ని తీసివేయడంలో విఫలమైంది",
-          "downloadFailed": "డౌన్‌లోడ్ చేయడంలో విఫలమైంది",
-          "duplicateFile": "\"{name}\" ఫైల్ ఇప్పటికే అప్‌లోడ్ క్యూలో ఉంది",
-          "fileTooLarge": "ఫైల్ \"{name}\" 5GB పరిమితిని మించిపోయింది",
-          "uploadFailed": "అప్‌లోడ్ విఫలమైంది",
-          "insufficientStorage": "ఫైల్ \"{name}\" ({fileSize} MB) అందుబాటులో ఉన్న నిల్వను మించిపోయింది ({available} MB)"
-        }
-      },
       "manageUsers": {
         "title": "వినియోగదారులను నిర్వహించండి",
         "subtitle": "లాగిన్ చేసిన వినియోగదారులను మరియు సక్రియ సెషన్‌లను వీక్షించండి మరియు నిర్వహించండి",
@@ -2806,6 +2737,17 @@
             "warning": "ఇది బెంచ్‌మార్క్‌ను నిలిపివేస్తుంది."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

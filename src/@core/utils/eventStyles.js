@@ -54,17 +54,6 @@ export const EVENT_STYLES = {
   'backup.listLocal': { icon: 'mdi-format-list-bulleted', color: 'warning' },
   'backup.remoteSize': { icon: 'mdi-cloud-outline', color: 'warning' },
 
-  // FluxShare — success (green)
-  'fluxshare.upload': { icon: 'mdi-cloud-upload', color: 'success' },
-  'fluxshare.createFolder': { icon: 'mdi-folder-plus', color: 'success' },
-  'fluxshare.removeFile': { icon: 'mdi-file-remove', color: 'success' },
-  'fluxshare.removeFolder': { icon: 'mdi-folder-remove', color: 'success' },
-  'fluxshare.share': { icon: 'mdi-share-variant', color: 'success' },
-  'fluxshare.unshare': { icon: 'mdi-share-off', color: 'success' },
-  'fluxshare.rename': { icon: 'mdi-rename-box', color: 'success' },
-  'fluxshare.downloadFolder': { icon: 'mdi-folder-download', color: 'success' },
-  'fluxshare.browse': { icon: 'mdi-folder-open', color: 'success' },
-  'fluxshare.stats': { icon: 'mdi-chart-pie', color: 'success' },
 
   // Administration — error (red)
   'flux.softUpdate': { icon: 'mdi-update', color: 'error' },

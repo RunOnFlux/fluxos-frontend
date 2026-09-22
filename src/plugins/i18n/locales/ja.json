@@ -308,7 +308,6 @@
       "manageBenchmark": "ベンチマークの管理",
       "manageUsers": "ユーザーの管理",
       "loggedSessions": "ログに記録されたセッション",
-      "myFluxShare": "私のFluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "利用可能な Docker イベントがありません",
         "errorLoadingEvents": "Docker イベントのロードに失敗しました"
       },
-      "fluxShare": {
-        "loadingTitle": "FluxShare を読み込み中...",
-        "title": "FluxShare",
-        "subtitle": "ファイルを管理して他の人と共有する",
-        "storageUsage": "ストレージの使用量",
-        "used": "使用済み",
-        "available": "利用可能",
-        "fileManager": "ファイルマネージャー",
-        "upload": "アップロード",
-        "newFolder": "新しいフォルダー",
-        "emptyFolder": "このフォルダは空です",
-        "folder": "フォルダ",
-        "file": "ファイル",
-        "columns": {
-          "name": "名前",
-          "modified": "修正済み",
-          "type": "タイプ",
-          "size": "サイズ",
-          "actions": "アクション"
-        },
-        "download": "ダウンロード",
-        "downloadZip": "ZIP形式でダウンロード",
-        "rename": "名前の変更",
-        "share": "共有",
-        "unshare": "共有を解除する",
-        "copyLink": "共有リンクをコピー",
-        "delete": "消去",
-        "createFolder": "フォルダーの作成",
-        "folderName": "フォルダ名",
-        "renameItem": "名前の変更",
-        "newName": "新しい名前",
-        "confirmDelete": "削除の確認",
-        "deleteConfirmMessage": "「{name}」を削除してもよろしいですか?",
-        "confirmDownload": "ダウンロードの確認",
-        "downloadFileConfirm": "ファイル「{name}」をダウンロードしますか?",
-        "downloadFolderConfirm": "フォルダー「{name}」を ZIP としてダウンロードしますか?",
-        "uploadFiles": "ファイルをアップロードする",
-        "dropFilesHere": "ここにファイルをドロップします",
-        "clickToUpload": "またはクリックしてアップロード",
-        "maxFileSize": "最大ファイルサイズ：5GB",
-        "messages": {
-          "folderCreated": "フォルダーが正常に作成されました",
-          "fileDeleted": "「{name}」は正常に削除されました",
-          "folderDeleted": "「{name}」は正常に削除されました",
-          "renamed": "「{old}」の名前が「{new}」に変更されました",
-          "fileShared": "「{name}」は共有されました",
-          "fileUnshared": "「{name}」は共有されなくなりました",
-          "fileUploaded": "「{name}」は正常にアップロードされました"
-        },
-        "errors": {
-          "storageStatsFailed": "ストレージ統計のロードに失敗しました",
-          "loadFolderFailed": "フォルダーの読み込みに失敗しました",
-          "folderExists": "フォルダー「{name}」はすでに存在します",
-          "createFolderFailed": "フォルダーの作成に失敗しました",
-          "deleteFileFailed": "ファイルの削除に失敗しました",
-          "folderNotEmpty": "フォルダ「{name}」は空ではありません",
-          "deleteFolderFailed": "フォルダの削除に失敗しました",
-          "invalidName": "名前に「/」を含めることはできません",
-          "renameFailed": "名前の変更に失敗しました",
-          "shareFailed": "ファイルの共有に失敗しました",
-          "unshareFailed": "ファイルの共有解除に失敗しました",
-          "downloadFailed": "ダウンロードに失敗しました",
-          "duplicateFile": "ファイル「{name}」はすでにアップロード キュー内にあります",
-          "fileTooLarge": "ファイル「{name}」は 5GB の制限を超えています",
-          "uploadFailed": "アップロードに失敗しました",
-          "insufficientStorage": "ファイル「{name}」（{fileSize} MB）が利用可能なストレージ（{available} MB）を超えています"
-        }
-      },
       "manageUsers": {
         "title": "ユーザーの管理",
         "subtitle": "ログインしたユーザーとアクティブなセッションを表示および管理する",
@@ -2806,6 +2737,17 @@
             "warning": "これによりベンチマークが停止します。"
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

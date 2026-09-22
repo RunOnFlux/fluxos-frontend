@@ -308,7 +308,6 @@
       "manageBenchmark": "Karşılaştırmayı Yönet",
       "manageUsers": "Kullanıcıları Yönet",
       "loggedSessions": "Günlüğe Kaydedilen Oturumlar",
-      "myFluxShare": "Benim FluxShare'im",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "Docker etkinliği yok",
         "errorLoadingEvents": "Docker etkinlikleri yüklenemedi"
       },
-      "fluxShare": {
-        "loadingTitle": "FluxShare yükleniyor...",
-        "title": "FluxShare",
-        "subtitle": "Dosyalarınızı yönetin ve başkalarıyla paylaşın",
-        "storageUsage": "Depolama Kullanımı",
-        "used": "kullanılmış",
-        "available": "Mevcut",
-        "fileManager": "Dosya Yöneticisi",
-        "upload": "Yüklemek",
-        "newFolder": "Yeni Klasör",
-        "emptyFolder": "Bu klasör boş",
-        "folder": "Dosya",
-        "file": "Dosya",
-        "columns": {
-          "name": "İsim",
-          "modified": "Değiştirildi",
-          "type": "Tip",
-          "size": "Boyut",
-          "actions": "Eylemler"
-        },
-        "download": "İndirmek",
-        "downloadZip": "ZIP olarak indir",
-        "rename": "Yeniden isimlendirmek",
-        "share": "Paylaşmak",
-        "unshare": "Paylaşımı iptal et",
-        "copyLink": "Paylaşma Bağlantısını Kopyala",
-        "delete": "Silmek",
-        "createFolder": "Klasör Oluştur",
-        "folderName": "Klasör Adı",
-        "renameItem": "Yeniden isimlendirmek",
-        "newName": "Yeni Ad",
-        "confirmDelete": "Silmeyi Onayla",
-        "deleteConfirmMessage": "\"{name}\" dosyasını silmek istediğinizden emin misiniz?",
-        "confirmDownload": "İndirmeyi Onayla",
-        "downloadFileConfirm": "\"{name}\" dosyası indirilsin mi?",
-        "downloadFolderConfirm": "\"{name}\" klasörü ZIP olarak indirilsin mi?",
-        "uploadFiles": "Dosyaları Yükle",
-        "dropFilesHere": "Dosyaları buraya bırakın",
-        "clickToUpload": "veya yüklemek için tıklayın",
-        "maxFileSize": "Maksimum dosya boyutu: 5GB",
-        "messages": {
-          "folderCreated": "Klasör başarıyla oluşturuldu",
-          "fileDeleted": "\"{name}\" başarıyla silindi",
-          "folderDeleted": "\"{name}\" başarıyla silindi",
-          "renamed": "\"{old}\", \"{new}\" olarak yeniden adlandırıldı",
-          "fileShared": "\"{name}\" artık paylaşılıyor",
-          "fileUnshared": "\"{name}\" artık paylaşılmıyor",
-          "fileUploaded": "\"{name}\" başarıyla yüklendi"
-        },
-        "errors": {
-          "storageStatsFailed": "Depolama istatistikleri yüklenemedi",
-          "loadFolderFailed": "Klasör yüklenemedi",
-          "folderExists": "\"{name}\" klasörü zaten mevcut",
-          "createFolderFailed": "Klasör oluşturulamadı",
-          "deleteFileFailed": "Dosya silinemedi",
-          "folderNotEmpty": "\"{name}\" klasörü boş değil",
-          "deleteFolderFailed": "Klasör silinemedi",
-          "invalidName": "Ad \"/\" içeremez",
-          "renameFailed": "Yeniden adlandırılamadı",
-          "shareFailed": "Dosya paylaşılamadı",
-          "unshareFailed": "Dosyanın paylaşımı kaldırılamadı",
-          "downloadFailed": "İndirilemedi",
-          "duplicateFile": "\"{name}\" dosyası zaten yükleme kuyruğunda",
-          "fileTooLarge": "\"{name}\" dosyası 5 GB sınırını aşıyor",
-          "uploadFailed": "Yükleme başarısız oldu",
-          "insufficientStorage": "\"{name}\" dosyası ({fileSize} MB) kullanılabilir depolama alanını ({available} MB) aşıyor"
-        }
-      },
       "manageUsers": {
         "title": "Kullanıcıları Yönet",
         "subtitle": "Oturum açmış kullanıcıları ve etkin oturumları görüntüleyin ve yönetin",
@@ -2806,6 +2737,17 @@
             "warning": "Bu, kıyaslamayı durduracaktır."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

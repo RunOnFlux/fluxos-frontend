@@ -308,7 +308,6 @@
       "manageBenchmark": "Administrar punto de referencia",
       "manageUsers": "Administrar usuarios",
       "loggedSessions": "Sesiones registradas",
-      "myFluxShare": "FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "No hay eventos de Docker disponibles",
         "errorLoadingEvents": "No se pudieron cargar los eventos de Docker"
       },
-      "fluxShare": {
-        "loadingTitle": "Cargando FluxShare...",
-        "title": "FluxShare",
-        "subtitle": "Manage your files and share them with others",
-        "storageUsage": "Uso de almacenamiento",
-        "used": "usado",
-        "available": "Disponible",
-        "fileManager": "Gestor de archivos",
-        "upload": "Subir",
-        "newFolder": "Nueva carpeta",
-        "emptyFolder": "Esta carpeta está vacía",
-        "folder": "Carpeta",
-        "file": "Archivo",
-        "columns": {
-          "name": "Nombre",
-          "modified": "Modificado",
-          "type": "Tipo",
-          "size": "Tamaño",
-          "actions": "Comportamiento"
-        },
-        "download": "Descargar",
-        "downloadZip": "Download as ZIP",
-        "rename": "Rebautizar",
-        "share": "Compartir",
-        "unshare": "Dejar de compartir",
-        "copyLink": "Copiar enlace compartido",
-        "delete": "Borrar",
-        "createFolder": "Crear carpeta",
-        "folderName": "Nombre de la carpeta",
-        "renameItem": "Rebautizar",
-        "newName": "Nuevo nombre",
-        "confirmDelete": "Confirmar eliminación",
-        "deleteConfirmMessage": "¿Está seguro de que desea eliminar \"{name}\"?",
-        "confirmDownload": "Confirmar descarga",
-        "downloadFileConfirm": "¿Descargar el archivo \"{name}\"?",
-        "downloadFolderConfirm": "¿Descargar la carpeta \"{name}\" como ZIP?",
-        "uploadFiles": "Subir archivos",
-        "dropFilesHere": "Suelta archivos aquí",
-        "clickToUpload": "o haga clic para subir",
-        "maxFileSize": "Tamaño máximo de archivo: 5 GB",
-        "messages": {
-          "folderCreated": "Carpeta creada exitosamente",
-          "fileDeleted": "\"{name}\" eliminado correctamente",
-          "folderDeleted": "\"{name}\" eliminado correctamente",
-          "renamed": "\"{old}\" ha cambiado de nombre a \"{new}\"",
-          "fileShared": "\"{name}\" ahora está compartido",
-          "fileUnshared": "\"{name}\" ya no se comparte",
-          "fileUploaded": "\"{name}\" subido correctamente"
-        },
-        "errors": {
-          "storageStatsFailed": "No se pudieron cargar las estadísticas de almacenamiento",
-          "loadFolderFailed": "No se pudo cargar la carpeta",
-          "folderExists": "La carpeta \"{name}\" ya existe",
-          "createFolderFailed": "No se pudo crear la carpeta",
-          "deleteFileFailed": "No se pudo eliminar el archivo",
-          "folderNotEmpty": "La carpeta \"{name}\" no está vacía",
-          "deleteFolderFailed": "No se pudo eliminar la carpeta",
-          "invalidName": "El nombre no puede contener \"/\"",
-          "renameFailed": "No se pudo cambiar el nombre",
-          "shareFailed": "No se pudo compartir el archivo",
-          "unshareFailed": "No se pudo dejar de compartir el archivo",
-          "downloadFailed": "No se pudo descargar",
-          "duplicateFile": "El archivo \"{name}\" ya está en la cola de carga",
-          "fileTooLarge": "El archivo \"{name}\" supera el límite de 5 GB",
-          "uploadFailed": "Error al subir",
-          "insufficientStorage": "El archivo \"{name}\" ({fileSize} MB) excede el almacenamiento disponible ({available} MB)"
-        }
-      },
       "manageUsers": {
         "title": "Administrar usuarios",
         "subtitle": "Ver y administrar usuarios registrados y sesiones activas",
@@ -2806,6 +2737,17 @@
             "warning": "Esto detendrá el punto de referencia."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flux-share-upload"
+    class="file-upload"
     @drop.prevent="addFile"
     @dragover.prevent
   >
@@ -19,7 +19,7 @@
       @change="handleFiles"
     >
 
-    <VCard class="flux-share-upload-drop ma-3"
+    <VCard class="file-upload-drop ma-3"
     >
       <VCardText class="text-center">
         <VIcon size="64">
@@ -658,7 +658,7 @@ const uploadGroup = (uploadUrl, group) => new Promise(resolve => {
 </script>
 
 <style scoped>
-.flux-share-upload-drop {
+.file-upload-drop {
   height: 250px;
   border: 2px dashed var(--v-theme-primary);
   display: flex;

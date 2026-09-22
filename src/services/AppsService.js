@@ -262,75 +262,22 @@ export default {
       },
     })
   },
-  getFolder(zelidauthHeader, folder, options = {}) {
+
+  // What is left of FluxShare: an operator collects files a previous release
+  // let them put on the node. Read only - see RunOnFlux/flux#1809.
+  fluxShareGetFolder(zelidauthHeader, folder) {
     return Api().get(`/apps/fluxshare/getfolder/${folder}`, {
       headers: {
         zelidauth: zelidauthHeader,
       },
-      ...options,
     })
   },
-  createFolder(zelidauthHeader, folder) {
-    return Api().get(`/apps/fluxshare/createfolder/${folder}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  getFile(zelidauthHeader, file) {
+  fluxShareDownloadFile(zelidauthHeader, file) {
     return Api().get(`/apps/fluxshare/getfile/${file}`, {
       headers: {
         zelidauth: zelidauthHeader,
       },
-    })
-  },
-  removeFile(zelidauthHeader, file) {
-    return Api().get(`/apps/fluxshare/removefile/${file}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  shareFile(zelidauthHeader, file) {
-    return Api().get(`/apps/fluxshare/sharefile/${file}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  unshareFile(zelidauthHeader, file) {
-    return Api().get(`/apps/fluxshare/unsharefile/${file}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  removeFolder(zelidauthHeader, folder) {
-    return Api().get(`/apps/fluxshare/removefolder/${folder}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  fileExists(zelidauthHeader, file) {
-    return Api().get(`/apps/fluxshare/fileexists/${file}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  storageStats(zelidauthHeader) {
-    return Api().get('/apps/fluxshare/stats', {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
-  renameFileFolder(zelidauthHeader, oldpath, newname) {
-    return Api().get(`/apps/fluxshare/rename/${oldpath}/${newname}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
+      responseType: 'blob',
     })
   },
   appPrice(data) {
