@@ -91,7 +91,7 @@ const services = [
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
   { anchor: 'Hermes AI Agent Hosting', url: `${APPS_HUB}/hermes`, img: `${APPS_HUB}/apps/hermes/banner.webp`, desc: 'hermes' },
-  { anchor: 'Orbit — Deploy with Git', url: 'https://orbit.runonflux.com', img: 'https://orbit.runonflux.com/og-banner.webp', desc: 'orbit' },
+  { anchor: 'Orbit — Deploy with Git', url: `${APPS_HUB}/orbit`, img: `${APPS_HUB}/apps/orbit/banner.webp`, desc: 'orbit' },
 ].map(s => ({ ...s, desc: t(`hostingLinks.services.${s.desc}`) }))
 </script>
 

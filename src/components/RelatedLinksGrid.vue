@@ -74,7 +74,7 @@ const props = defineProps({
 
 const { t, te, tm, locale, messages } = useI18n()
 
-// Links to other sites (runonflux.com/apps/wordpress, orbit.runonflux.com, ...)
+// Links to other sites (runonflux.com/apps/wordpress, runonflux.com/apps/orbit, ...)
 // are absolute URLs — RouterLink cannot resolve those, so render a plain anchor.
 const isExternal = to => typeof to === 'string' && /^https?:\/\//i.test(to)
 
