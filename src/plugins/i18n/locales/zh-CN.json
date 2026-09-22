@@ -308,7 +308,6 @@
       "manageBenchmark": "管理基准",
       "manageUsers": "管理用户",
       "loggedSessions": "记录的会话",
-      "myFluxShare": "我的 FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "没有可用的 Docker 事件",
         "errorLoadingEvents": "无法加载 Docker 事件"
       },
-      "fluxShare": {
-        "loadingTitle": "正在加载 FluxShare...",
-        "title": "FluxShare",
-        "subtitle": "管理您的文件并与他人共享",
-        "storageUsage": "存储使用情况",
-        "used": "用过的",
-        "available": "可用的",
-        "fileManager": "文件管理器",
-        "upload": "上传",
-        "newFolder": "新建文件夹",
-        "emptyFolder": "该文件夹是空的",
-        "folder": "文件夹",
-        "file": "文件",
-        "columns": {
-          "name": "姓名",
-          "modified": "修改的",
-          "type": "类型",
-          "size": "尺寸",
-          "actions": "行动"
-        },
-        "download": "下载",
-        "downloadZip": "下载为 ZIP",
-        "rename": "重命名",
-        "share": "分享",
-        "unshare": "取消分享",
-        "copyLink": "复制分享链接",
-        "delete": "删除",
-        "createFolder": "创建文件夹",
-        "folderName": "文件夹名称",
-        "renameItem": "重命名",
-        "newName": "新名称",
-        "confirmDelete": "确认删除",
-        "deleteConfirmMessage": "您确定要删除“{name}”吗？",
-        "confirmDownload": "确认下载",
-        "downloadFileConfirm": "下载文件“{name}”？",
-        "downloadFolderConfirm": "下载 ZIP 文件夹“{name}”？",
-        "uploadFiles": "上传文件",
-        "dropFilesHere": "将文件拖放到此处",
-        "clickToUpload": "或点击上传",
-        "maxFileSize": "最大文件大小：5GB",
-        "messages": {
-          "folderCreated": "文件夹创建成功",
-          "fileDeleted": "“{name}”已成功删除",
-          "folderDeleted": "“{name}”已成功删除",
-          "renamed": "“{old}”重命名为“{new}”",
-          "fileShared": "“{name}”现已共享",
-          "fileUnshared": "“{name}”不再共享",
-          "fileUploaded": "“{name}”上传成功"
-        },
-        "errors": {
-          "storageStatsFailed": "无法加载存储统计信息",
-          "loadFolderFailed": "加载文件夹失败",
-          "folderExists": "文件夹“{name}”已存在",
-          "createFolderFailed": "创建文件夹失败",
-          "deleteFileFailed": "删除文件失败",
-          "folderNotEmpty": "文件夹“{name}”不为空",
-          "deleteFolderFailed": "删除文件夹失败",
-          "invalidName": "名称不能包含“/”",
-          "renameFailed": "重命名失败",
-          "shareFailed": "共享文件失败",
-          "unshareFailed": "无法取消共享文件",
-          "downloadFailed": "下载失败",
-          "duplicateFile": "文件“{name}”已在上传队列中",
-          "fileTooLarge": "文件“{name}”超出 5GB 限制",
-          "uploadFailed": "上传失败",
-          "insufficientStorage": "文件“{name}”({fileSize} MB) 超出可用存储空间 ({available} MB)"
-        }
-      },
       "manageUsers": {
         "title": "管理用户",
         "subtitle": "查看和管理登录的用户和活动会话",
@@ -2806,6 +2737,17 @@
             "warning": "这将停止基准测试。"
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

@@ -324,5 +324,25 @@
     "confirmAction": "Are you sure you want to proceed?",
     "noChanges": "No changes detected",
     "unsavedChanges": "You have unsaved changes"
+  },
+  "menu": {
+    "administration": {
+      "fluxShare": "FluxShare"
+    }
+  },
+  "pages": {
+    "administration": {
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
+      }
+    }
   }
 }

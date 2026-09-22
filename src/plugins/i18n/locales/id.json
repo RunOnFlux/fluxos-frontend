@@ -308,7 +308,6 @@
       "manageBenchmark": "Kelola Tolok Ukur",
       "manageUsers": "Kelola Pengguna",
       "loggedSessions": "Sesi yang Dicatat",
-      "myFluxShare": "FluxShare saya",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "Tidak ada acara Docker yang tersedia",
         "errorLoadingEvents": "Gagal memuat acara Docker"
       },
-      "fluxShare": {
-        "loadingTitle": "Memuat FluxShare...",
-        "title": "FluxShare",
-        "subtitle": "Kelola file Anda dan bagikan dengan orang lain",
-        "storageUsage": "Penggunaan Penyimpanan",
-        "used": "digunakan",
-        "available": "Tersedia",
-        "fileManager": "Manajer File",
-        "upload": "Mengunggah",
-        "newFolder": "Folder Baru",
-        "emptyFolder": "Folder ini kosong",
-        "folder": "Map",
-        "file": "Mengajukan",
-        "columns": {
-          "name": "Nama",
-          "modified": "Dimodifikasi",
-          "type": "Jenis",
-          "size": "Ukuran",
-          "actions": "Tindakan"
-        },
-        "download": "Unduh",
-        "downloadZip": "Unduh sebagai ZIP",
-        "rename": "Ganti nama",
-        "share": "Membagikan",
-        "unshare": "Batalkan pembagian",
-        "copyLink": "Salin Bagikan Tautan",
-        "delete": "Menghapus",
-        "createFolder": "Buat Folder",
-        "folderName": "Nama Folder",
-        "renameItem": "Ganti nama",
-        "newName": "Nama Baru",
-        "confirmDelete": "Konfirmasi Hapus",
-        "deleteConfirmMessage": "Apakah Anda yakin ingin menghapus \"{name}\"?",
-        "confirmDownload": "Konfirmasikan Unduhan",
-        "downloadFileConfirm": "Unduh file \"{name}\"?",
-        "downloadFolderConfirm": "Unduh folder \"{name}\" sebagai ZIP?",
-        "uploadFiles": "Unggah File",
-        "dropFilesHere": "Letakkan file di sini",
-        "clickToUpload": "atau klik untuk mengunggah",
-        "maxFileSize": "Ukuran file maksimum: 5GB",
-        "messages": {
-          "folderCreated": "Folder berhasil dibuat",
-          "fileDeleted": "\"{name}\" berhasil dihapus",
-          "folderDeleted": "\"{name}\" berhasil dihapus",
-          "renamed": "\"{old}\" diganti namanya menjadi \"{new}\"",
-          "fileShared": "\"{name}\" kini dibagikan",
-          "fileUnshared": "\"{name}\" tidak lagi dibagikan",
-          "fileUploaded": "\"{name}\" berhasil diunggah"
-        },
-        "errors": {
-          "storageStatsFailed": "Gagal memuat statistik penyimpanan",
-          "loadFolderFailed": "Gagal memuat folder",
-          "folderExists": "Folder \"{name}\" sudah ada",
-          "createFolderFailed": "Gagal membuat folder",
-          "deleteFileFailed": "Gagal menghapus file",
-          "folderNotEmpty": "Folder \"{name}\" tidak kosong",
-          "deleteFolderFailed": "Gagal menghapus folder",
-          "invalidName": "Nama tidak boleh mengandung \"/\"",
-          "renameFailed": "Gagal mengganti nama",
-          "shareFailed": "Gagal membagikan file",
-          "unshareFailed": "Gagal membatalkan pembagian file",
-          "downloadFailed": "Gagal mengunduh",
-          "duplicateFile": "File \"{name}\" sudah ada dalam antrian unggah",
-          "fileTooLarge": "File \"{name}\" melebihi batas 5 GB",
-          "uploadFailed": "Gagal mengunggah",
-          "insufficientStorage": "File \"{name}\" ({fileSize} MB) melebihi penyimpanan yang tersedia ({available} MB)"
-        }
-      },
       "manageUsers": {
         "title": "Kelola Pengguna",
         "subtitle": "Melihat dan mengelola pengguna yang login dan sesi aktif",
@@ -2806,6 +2737,17 @@
             "warning": "Ini akan menghentikan benchmark."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

@@ -308,7 +308,6 @@
       "manageBenchmark": "Управление тестом",
       "manageUsers": "Управление пользователями",
       "loggedSessions": "Зарегистрированные сеансы",
-      "myFluxShare": "Мой FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "Нет доступных событий Docker",
         "errorLoadingEvents": "Не удалось загрузить события Docker."
       },
-      "fluxShare": {
-        "loadingTitle": "Загрузка FluxShare...",
-        "title": "FluxShare",
-        "subtitle": "Управляйте своими файлами и делитесь ими с другими",
-        "storageUsage": "Использование хранилища",
-        "used": "использовал",
-        "available": "Доступный",
-        "fileManager": "Файловый менеджер",
-        "upload": "Загрузить",
-        "newFolder": "Новая папка",
-        "emptyFolder": "Эта папка пуста",
-        "folder": "Папка",
-        "file": "Файл",
-        "columns": {
-          "name": "Имя",
-          "modified": "Модифицированный",
-          "type": "Тип",
-          "size": "Размер",
-          "actions": "Действия"
-        },
-        "download": "Скачать",
-        "downloadZip": "Скачать в формате ZIP",
-        "rename": "Переименовать",
-        "share": "Делиться",
-        "unshare": "Отменить общий доступ",
-        "copyLink": "Копировать ссылку Поделиться",
-        "delete": "Удалить",
-        "createFolder": "Создать папку",
-        "folderName": "Имя папки",
-        "renameItem": "Переименовать",
-        "newName": "Новое имя",
-        "confirmDelete": "Подтвердить удаление",
-        "deleteConfirmMessage": "Вы уверены, что хотите удалить \"{name}\"?",
-        "confirmDownload": "Подтвердить загрузку",
-        "downloadFileConfirm": "Скачать файл \"{name}\"?",
-        "downloadFolderConfirm": "Загрузить папку \"{name}\" в формате ZIP?",
-        "uploadFiles": "Загрузить файлы",
-        "dropFilesHere": "Перетащите сюда файлы",
-        "clickToUpload": "или нажмите, чтобы загрузить",
-        "maxFileSize": "Максимальный размер файла: 5 ГБ",
-        "messages": {
-          "folderCreated": "Папка успешно создана",
-          "fileDeleted": "\"{name}\" успешно удалено",
-          "folderDeleted": "\"{name}\" успешно удалено",
-          "renamed": "\"{old}\" переименован в \"{new}\"",
-          "fileShared": "\"{name}\" теперь доступен для общего доступа",
-          "fileUnshared": "\"{name}\" больше не доступен для общего доступа",
-          "fileUploaded": "\"{name}\" успешно загружено"
-        },
-        "errors": {
-          "storageStatsFailed": "Не удалось загрузить статистику хранилища.",
-          "loadFolderFailed": "Не удалось загрузить папку",
-          "folderExists": "Папка \"{name}\" уже существует.",
-          "createFolderFailed": "Не удалось создать папку",
-          "deleteFileFailed": "Не удалось удалить файл",
-          "folderNotEmpty": "Папка \"{name}\" не пуста.",
-          "deleteFolderFailed": "Не удалось удалить папку",
-          "invalidName": "Имя не может содержать \"/\"",
-          "renameFailed": "Не удалось переименовать",
-          "shareFailed": "Не удалось поделиться файлом",
-          "unshareFailed": "Не удалось отменить общий доступ к файлу.",
-          "downloadFailed": "Не удалось скачать",
-          "duplicateFile": "Файл \"{name}\" уже находится в очереди на загрузку.",
-          "fileTooLarge": "Размер файла \"{name}\" превышает лимит в 5 ГБ.",
-          "uploadFailed": "Загрузка не удалась",
-          "insufficientStorage": "Файл \"{name}\" ({fileSize} МБ) превышает доступное пространство ({available} МБ)"
-        }
-      },
       "manageUsers": {
         "title": "Управление пользователями",
         "subtitle": "Просмотр и управление зарегистрированными пользователями и активными сеансами",
@@ -2806,6 +2737,17 @@
             "warning": "Это остановит тест."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {

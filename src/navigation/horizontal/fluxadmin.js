@@ -16,11 +16,14 @@ export default [
         icon: { icon: 'mdi-fingerprint', size: 20 },
         privilege: ['admin', 'fluxteam'],
       },
+
+      // The operator alone: these are their own files on their own hardware,
+      // and the node has never let the flux team read them.
       {
         title: 'menu.administration.fluxShare',
         to: 'administration-flux-share',
-        icon: { icon: 'mdi-share-variant', size: 20 },
-        privilege: ['admin', 'fluxteam'],
+        icon: { icon: 'mdi-download-outline', size: 20 },
+        privilege: ['admin'],
       },
 
       // {

@@ -1,242 +1,138 @@
-<template>
-  <div>
-    <!-- Loading State -->
-    <LoadingSpinner
-      v-if="initialLoading"
-      icon="mdi-share-variant"
-      :title="t('pages.administration.fluxShare.loadingTitle')"
-    />
-
-    <!-- Content -->
-    <div v-else>
-      <!-- Page Header -->
-      <div class="mb-3">
-        <div class="d-flex align-center mb-2">
-          <VAvatar color="primary" variant="flat" size="48" class="mr-3">
-            <VIcon icon="mdi-share-variant" size="32" color="white" />
-          </VAvatar>
-          <div>
-            <h2 class="text-h5 font-weight-bold">{{ t('pages.administration.fluxShare.title') }}</h2>
-            <p class="text-body-2 text-medium-emphasis mb-0">
-              {{ t('pages.administration.fluxShare.subtitle') }}
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Storage Info Card -->
-      <VCard class="mb-3" elevation="1">
-        <VCardTitle class="d-flex align-center pa-3 bg-surface">
-          <VIcon icon="mdi-harddisk" size="24" class="mr-2" />
-          <span class="text-body-1 font-weight-medium">{{ t('pages.administration.fluxShare.storageUsage') }}</span>
-          <VSpacer />
-          <VBtn
-            icon
-            variant="text"
-            size="small"
-            :loading="loadingStorage"
-            @click="fetchStorageStats"
-          >
-            <VIcon icon="mdi-refresh" />
-          </VBtn>
-        </VCardTitle>
-        <VDivider />
-        <VCardText class="pa-3">
-          <div class="position-relative mb-2">
-            <VProgressLinear
-              :model-value="storagePercentage"
-              height="20"
-              rounded
-              :color="storagePercentage > 90 ? 'error' : storagePercentage > 75 ? 'warning' : 'primary'"
-            />
-            <div class="progress-label">
-              {{ storagePercentage.toFixed(1) }}%
-            </div>
-          </div>
-          <div class="d-flex align-center justify-start ga-2">
-            <VChip
-              size="small"
-              color="grey"
-              variant="tonal"
-            >
-              <VIcon icon="mdi-database" size="16" class="mr-1" />
-              {{ t('pages.administration.fluxShare.available') }}: {{ storage.available.toFixed(2) }} GB
-            </VChip>
-            <VChip
-              size="small"
-              color="grey"
-              variant="tonal"
-            >
-              <VIcon icon="mdi-harddisk" size="16" class="mr-1" />
-              {{ storage.used.toFixed(2) }} GB / {{ storage.total.toFixed(2) }} GB
-            </VChip>
-          </div>
-        </VCardText>
-      </VCard>
-
-      <!-- File Manager -->
-      <FluxShareFileManager
-        ref="fileManagerRef"
-        :available-storage="storage.available"
-        @upload-requested="showUploadDialog = true"
-      />
-
-      <!-- Upload Dialog -->
-      <VDialog
-        v-model="showUploadDialog"
-        max-width="600"
-        persistent
-      >
-        <VCard>
-          <VCardTitle class="d-flex align-center px-4 py-2 bg-primary">
-            <VIcon icon="mdi-cloud-upload" class="mr-2" color="white" />
-            <span class="text-white">{{ t('pages.administration.fluxShare.uploadFiles') }}</span>
-            <VSpacer />
-            <VBtn
-              icon
-              variant="text"
-              size="small"
-              color="white"
-              @click="closeUploadDialog"
-            >
-              <VIcon icon="mdi-close" />
-            </VBtn>
-          </VCardTitle>
-          <VDivider />
-          <VCardText class="pa-4">
-            <FluxShareFileUpload
-              :upload-url="getUploadUrl()"
-              :headers="{ zelidauth: getZelidAuth() }"
-              :available-storage="storage.available"
-              @complete="onUploadComplete"
-              @error="onUploadError"
-            />
-          </VCardText>
-        </VCard>
-      </VDialog>
-    </div>
-  </div>
-</template>
-
 <script setup>
-import { ref, onMounted, onUnmounted, watch } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useSEONoIndex } from '@/composables/useSEO'
-import { useFluxShare } from '@/composables/useFluxShare'
-import { useFluxStore } from '@/stores/flux'
-import LoadingSpinner from '@/components/Marketplace/LoadingSpinner.vue'
-import FluxShareFileManager from '@/components/FluxShare/FluxShareFileManager.vue'
-import FluxShareFileUpload from '@/components/FluxShare/FluxShareFileUpload.vue'
+import AppsService from '@/services/AppsService'
 
-// Prevent indexing of admin page
-useSEONoIndex()
-
+// What is left of FluxShare: the files a previous release let an operator put
+// on this node, so they can be collected. There is nothing to upload with,
+// rename with or delete with - the node stopped being a file host, and the
+// backend keeps only a listing and a download (RunOnFlux/flux#1809).
 const { t } = useI18n()
-const fluxStore = useFluxStore()
 
-const {
-  loading,
-  loadingStorage,
-  storage,
-  storagePercentage,
-  isLoggedIn,
-  isAdmin,
-  getZelidAuth,
-  getUploadUrl,
-  fetchStorageStats,
-  loadFolder,
-  refresh,
-  resetState,
-} = useFluxShare()
+const entries = ref([])
+const loading = ref(false)
+const failure = ref('')
+const breadcrumb = ref([])
 
-// Local state
-const initialLoading = ref(true)
-const showUploadDialog = ref(false)
-const fileManagerRef = ref(null)
+const currentFolder = computed(() => breadcrumb.value.join('/'))
 
-// Initialize data
-const initializeData = async () => {
-  initialLoading.value = true
+const zelidauth = () => localStorage.getItem('zelidauth')
 
-  // Ensure minimum loading time for smooth UX
-  const startTime = Date.now()
+const humanSize = bytes => {
+  if (bytes === null || bytes === undefined) return '—'
+  const units = ['B', 'KB', 'MB', 'GB', 'TB']
+  let n = bytes
+  let u = 0
+  while (n >= 1024 && u < units.length - 1) { n /= 1024; u += 1 }
 
-  await Promise.all([
-    fetchStorageStats(),
-    loadFolder(''),
-  ])
+  return `${n.toFixed(u === 0 ? 0 : 1)} ${units[u]}`
+}
 
-  const elapsed = Date.now() - startTime
-  const minDelay = 1000
-
-  if (elapsed < minDelay) {
-    await new Promise(resolve => setTimeout(resolve, minDelay - elapsed))
+const load = async () => {
+  loading.value = true
+  failure.value = ''
+  try {
+    const response = await AppsService.fluxShareGetFolder(zelidauth(), encodeURIComponent(currentFolder.value))
+    if (response.data.status === 'success') {
+      // Directories first, then by name, so a folder is never lost among files.
+      entries.value = [...response.data.data].sort((a, b) => (
+        a.isDirectory === b.isDirectory ? a.name.localeCompare(b.name) : (a.isDirectory ? -1 : 1)
+      ))
+    } else {
+      failure.value = response.data.data?.message || t('pages.administration.fluxShare.loadFailed')
+      entries.value = []
+    }
+  } catch (error) {
+    failure.value = error.message
+    entries.value = []
+  } finally {
+    loading.value = false
   }
-
-  initialLoading.value = false
 }
 
-// Close upload dialog
-const closeUploadDialog = () => {
-  showUploadDialog.value = false
+const open = name => { breadcrumb.value.push(name); load() }
+const upTo = index => { breadcrumb.value = breadcrumb.value.slice(0, index); load() }
+
+const download = async entry => {
+  const target = [...breadcrumb.value, entry.name].join('/')
+
+  const response = await AppsService.fluxShareDownloadFile(zelidauth(), encodeURIComponent(target))
+
+  // The body is the file; the browser saves it under its own name.
+  const url = URL.createObjectURL(new Blob([response.data]))
+  const link = document.createElement('a')
+
+  link.href = url
+  link.download = entry.name
+  link.click()
+  URL.revokeObjectURL(url)
 }
 
-// Handle upload complete
-const onUploadComplete = () => {
-  refresh()
-}
-
-// Handle upload error
-const onUploadError = error => {
-  console.error('Upload error:', error)
-}
-
-// Watch for login state changes
-watch(() => fluxStore.privilege, newPrivilege => {
-  if (newPrivilege === 'admin' || newPrivilege === 'fluxteam') {
-    initializeData()
-  } else {
-    resetState()
-  }
-})
-
-onMounted(() => {
-  if (isAdmin.value) {
-    initializeData()
-  } else {
-    initialLoading.value = false
-  }
-})
-
-onUnmounted(() => {
-  // Clean up state and cancel pending requests when leaving the page
-  resetState()
-})
+onMounted(load)
 </script>
 
-<style scoped>
-.progress-label {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-size: 12px;
-  font-weight: 700;
-  color: rgb(var(--v-theme-on-surface));
-  text-shadow:
-    -1px -1px 0 rgba(var(--v-theme-surface), 0.8),
-    1px -1px 0 rgba(var(--v-theme-surface), 0.8),
-    -1px 1px 0 rgba(var(--v-theme-surface), 0.8),
-    1px 1px 0 rgba(var(--v-theme-surface), 0.8),
-    0 0 3px rgba(var(--v-theme-surface), 0.9);
-  pointer-events: none;
-  z-index: 1;
-}
-</style>
+<template>
+  <VCard>
+    <VCardItem>
+      <VCardTitle>{{ t('pages.administration.fluxShare.title') }}</VCardTitle>
+      <VCardSubtitle>{{ t('pages.administration.fluxShare.readOnlyNotice') }}</VCardSubtitle>
+    </VCardItem>
 
-<route lang="yaml">
-meta:
-  privilege:
-    - admin
-    - fluxteam
-</route>
+    <VCardText>
+      <VBreadcrumbs
+        :items="[{ title: t('pages.administration.fluxShare.root'), disabled: false }, ...breadcrumb.map(b => ({ title: b }))]"
+        density="compact"
+        class="pa-0 mb-3"
+      >
+        <template #title="{ item, index }">
+          <a href="#" @click.prevent="upTo(index)">{{ item.title }}</a>
+        </template>
+      </VBreadcrumbs>
+
+      <VAlert v-if="failure" type="error" variant="tonal" class="mb-3">
+        {{ failure }}
+      </VAlert>
+
+      <VProgressLinear v-if="loading" indeterminate class="mb-3" />
+
+      <VTable v-if="entries.length">
+        <thead>
+          <tr>
+            <th>{{ t('pages.administration.fluxShare.name') }}</th>
+            <th>{{ t('pages.administration.fluxShare.size') }}</th>
+            <th>{{ t('pages.administration.fluxShare.modified') }}</th>
+            <th />
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="entry in entries" :key="entry.name">
+            <td>
+              <VIcon :icon="entry.isDirectory ? 'mdi-folder' : 'mdi-file-outline'" size="18" class="mr-2" />
+              <a v-if="entry.isDirectory" href="#" @click.prevent="open(entry.name)">{{ entry.name }}</a>
+              <span v-else>{{ entry.name }}</span>
+            </td>
+            <td>{{ humanSize(entry.size) }}</td>
+            <td>{{ new Date(entry.modifiedAt).toLocaleString() }}</td>
+            <td class="text-end">
+              <VBtn
+                v-if="!entry.isDirectory"
+                size="small"
+                variant="tonal"
+                prepend-icon="mdi-download"
+                @click="download(entry)"
+              >
+                {{ t('pages.administration.fluxShare.download') }}
+              </VBtn>
+            </td>
+          </tr>
+        </tbody>
+      </VTable>
+
+      <!--
+        Most nodes never had a share directory at all, so empty is the
+        ordinary answer rather than a fault.
+      -->
+      <VAlert v-else-if="!loading && !failure" type="info" variant="tonal">
+        {{ t('pages.administration.fluxShare.empty') }}
+      </VAlert>
+    </VCardText>
+  </VCard>
+</template>

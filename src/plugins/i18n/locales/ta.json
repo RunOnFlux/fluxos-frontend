@@ -308,7 +308,6 @@
       "manageBenchmark": "பெஞ்ச்மார்க்கை நிர்வகிக்கவும்",
       "manageUsers": "பயனர்களை நிர்வகிக்கவும்",
       "loggedSessions": "பதிவு செய்யப்பட்ட அமர்வுகள்",
-      "myFluxShare": "எனது FluxShare",
       "fluxShare": "FluxShare"
     },
     "fluxXdao": {
@@ -2502,74 +2501,6 @@
         "noEventsAvailable": "டோக்கர் நிகழ்வுகள் எதுவும் இல்லை",
         "errorLoadingEvents": "டோக்கர் நிகழ்வுகளை ஏற்றுவதில் தோல்வி"
       },
-      "fluxShare": {
-        "loadingTitle": "FluxShare ஐ ஏற்றுகிறது...",
-        "title": "FluxShare",
-        "subtitle": "உங்கள் கோப்புகளை நிர்வகித்து மற்றவர்களுடன் பகிரவும்",
-        "storageUsage": "சேமிப்பக பயன்பாடு",
-        "used": "பயன்படுத்தப்பட்டது",
-        "available": "கிடைக்கும்",
-        "fileManager": "கோப்பு மேலாளர்",
-        "upload": "பதிவேற்றவும்",
-        "newFolder": "புதிய கோப்புறை",
-        "emptyFolder": "இந்தக் கோப்புறை காலியாக உள்ளது",
-        "folder": "கோப்புறை",
-        "file": "கோப்பு",
-        "columns": {
-          "name": "பெயர்",
-          "modified": "மாற்றியமைக்கப்பட்டது",
-          "type": "வகை",
-          "size": "அளவு",
-          "actions": "செயல்கள்"
-        },
-        "download": "பதிவிறக்கவும்",
-        "downloadZip": "ZIP ஆக பதிவிறக்கவும்",
-        "rename": "மறுபெயரிடவும்",
-        "share": "பகிரவும்",
-        "unshare": "பகிர்வதை நீக்கு",
-        "copyLink": "பகிர்வு இணைப்பை நகலெடுக்கவும்",
-        "delete": "நீக்கு",
-        "createFolder": "கோப்புறையை உருவாக்கவும்",
-        "folderName": "கோப்புறை பெயர்",
-        "renameItem": "மறுபெயரிடவும்",
-        "newName": "புதிய பெயர்",
-        "confirmDelete": "நீக்குவதை உறுதிப்படுத்தவும்",
-        "deleteConfirmMessage": "\"{name}\" ஐ நிச்சயமாக நீக்க விரும்புகிறீர்களா?",
-        "confirmDownload": "பதிவிறக்கத்தை உறுதிப்படுத்தவும்",
-        "downloadFileConfirm": "\"{name}\" கோப்பைப் பதிவிறக்கவா?",
-        "downloadFolderConfirm": "\"{name}\" கோப்புறையை ZIP ஆகப் பதிவிறக்கவா?",
-        "uploadFiles": "கோப்புகளைப் பதிவேற்றவும்",
-        "dropFilesHere": "கோப்புகளை இங்கே விடவும்",
-        "clickToUpload": "அல்லது பதிவேற்ற கிளிக் செய்யவும்",
-        "maxFileSize": "அதிகபட்ச கோப்பு அளவு: 5 ஜிபி",
-        "messages": {
-          "folderCreated": "கோப்புறை வெற்றிகரமாக உருவாக்கப்பட்டது",
-          "fileDeleted": "\"{name}\" வெற்றிகரமாக நீக்கப்பட்டது",
-          "folderDeleted": "\"{name}\" வெற்றிகரமாக நீக்கப்பட்டது",
-          "renamed": "\"{old}\" \"{new}\" என மறுபெயரிடப்பட்டது",
-          "fileShared": "\"{name}\" இப்போது பகிரப்பட்டது",
-          "fileUnshared": "\"{name}\" இனி பகிரப்படாது",
-          "fileUploaded": "\"{name}\" வெற்றிகரமாக பதிவேற்றப்பட்டது"
-        },
-        "errors": {
-          "storageStatsFailed": "சேமிப்பக புள்ளிவிவரங்களை ஏற்றுவதில் தோல்வி",
-          "loadFolderFailed": "கோப்புறையை ஏற்ற முடியவில்லை",
-          "folderExists": "\"{name}\" கோப்புறை ஏற்கனவே உள்ளது",
-          "createFolderFailed": "கோப்புறையை உருவாக்க முடியவில்லை",
-          "deleteFileFailed": "கோப்பை நீக்க முடியவில்லை",
-          "folderNotEmpty": "\"{name}\" கோப்புறை காலியாக இல்லை",
-          "deleteFolderFailed": "கோப்புறையை நீக்க முடியவில்லை",
-          "invalidName": "பெயரில் \"/\" இருக்கக்கூடாது",
-          "renameFailed": "மறுபெயரிடுவதில் தோல்வி",
-          "shareFailed": "கோப்பைப் பகிர முடியவில்லை",
-          "unshareFailed": "கோப்பு பகிர்வை நீக்க முடியவில்லை",
-          "downloadFailed": "பதிவிறக்கம் செய்ய முடியவில்லை",
-          "duplicateFile": "\"{name}\" கோப்பு ஏற்கனவே பதிவேற்ற வரிசையில் உள்ளது",
-          "fileTooLarge": "கோப்பு \"{name}\" 5ஜிபி வரம்பை மீறுகிறது",
-          "uploadFailed": "பதிவேற்றம் தோல்வியடைந்தது",
-          "insufficientStorage": "\"{name}\" கோப்பு ({fileSize} MB) கிடைக்கக்கூடிய சேமிப்பகத்தை விட அதிகமாக உள்ளது ({available} MB)"
-        }
-      },
       "manageUsers": {
         "title": "பயனர்களை நிர்வகிக்கவும்",
         "subtitle": "உள்நுழைந்த பயனர்களையும் செயலில் உள்ள அமர்வுகளையும் கண்டு நிர்வகிக்கவும்",
@@ -2806,6 +2737,17 @@
             "warning": "இது அளவுகோலை நிறுத்தும்."
           }
         }
+      },
+      "fluxShare": {
+        "title": "FluxShare",
+        "readOnlyNotice": "Files previously stored on this node. Download only — uploading and sharing have been removed.",
+        "root": "FluxShare",
+        "name": "Name",
+        "size": "Size",
+        "modified": "Modified",
+        "download": "Download",
+        "empty": "There are no files stored on this node.",
+        "loadFailed": "Could not read the FluxShare directory"
       }
     },
     "apps": {
