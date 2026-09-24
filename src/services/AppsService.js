@@ -255,13 +255,6 @@ export default {
       },
     })
   },
-  rescanGlobalApps(zelidauthHeader, height, removelastinformation) {
-    return Api().get(`/apps/rescanglobalappsinformation/${height}/${removelastinformation}`, {
-      headers: {
-        zelidauth: zelidauthHeader,
-      },
-    })
-  },
 
   // What is left of FluxShare: an operator collects files a previous release
   // let them put on the node. Read only - see RunOnFlux/flux#1809.
