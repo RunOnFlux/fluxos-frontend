@@ -248,6 +248,7 @@ declare global {
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const resolveVuetifyTheme: typeof import('./@core/utils/vuetify.js')['resolveVuetifyTheme']
   const rgbaToHex: typeof import('./@core/utils/colorConverter.js')['rgbaToHex']
+  const roundUpToCharmPrice: typeof import('./utils/networkPrice.js')['roundUpToCharmPrice']
   const sanitizeHtml: typeof import('./utils/sanitizeHtml.js')['default']
   const sanitizeUnicodeForSigning: typeof import('./utils/walletService.js')['sanitizeUnicodeForSigning']
   const saveConsent: typeof import('./composables/useCookieConsent.js')['saveConsent']
@@ -265,6 +266,7 @@ declare global {
   const signWithZelcore: typeof import('./utils/walletService.js')['signWithZelcore']
   const startedJob: typeof import('./utils/volumeOperations.js')['startedJob']
   const storeToRefs: typeof import('pinia')['storeToRefs']
+  const subscriptionTotalUsd: typeof import('./utils/networkPrice.js')['subscriptionTotalUsd']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
   const templateRef: typeof import('@vueuse/core')['templateRef']
@@ -759,6 +761,7 @@ declare module 'vue' {
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly resolveVuetifyTheme: UnwrapRef<typeof import('./@core/utils/vuetify.js')['resolveVuetifyTheme']>
     readonly rgbaToHex: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['rgbaToHex']>
+    readonly roundUpToCharmPrice: UnwrapRef<typeof import('./utils/networkPrice.js')['roundUpToCharmPrice']>
     readonly sanitizeHtml: UnwrapRef<typeof import('./utils/sanitizeHtml.js')['default']>
     readonly sanitizeUnicodeForSigning: UnwrapRef<typeof import('./utils/walletService.js')['sanitizeUnicodeForSigning']>
     readonly saveConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['saveConsent']>
@@ -776,6 +779,7 @@ declare module 'vue' {
     readonly signWithZelcore: UnwrapRef<typeof import('./utils/walletService.js')['signWithZelcore']>
     readonly startedJob: UnwrapRef<typeof import('./utils/volumeOperations.js')['startedJob']>
     readonly storeToRefs: UnwrapRef<typeof import('pinia')['storeToRefs']>
+    readonly subscriptionTotalUsd: UnwrapRef<typeof import('./utils/networkPrice.js')['subscriptionTotalUsd']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
