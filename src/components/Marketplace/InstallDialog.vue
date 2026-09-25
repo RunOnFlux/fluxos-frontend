@@ -1681,6 +1681,7 @@ import geolocationData from '@/utils/geolocation'
 import { checkPlacement } from '@/utils/placementFeasibility'
 import { assessCapacity } from '@/utils/nodeCapacity'
 import { paymentBridge } from '@/utils/fiatGateways'
+import { subscriptionTotalUsd } from '@/utils/networkPrice'
 import { getUser, getSsoEmail } from '@/utils/firebase'
 import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, isWebCryptoAvailable } from '@/utils/enterpriseCrypto'
 import { payWithZelcore, payWithSSP, isSSPAvailable, isZelcoreAvailable, isBrowserMetaMaskAvailable, getConnectedAccount, hasWalletConnectSession, signWithWalletConnect as walletServiceSignWithWalletConnect, watchWalletAccount, signWithSSP as walletServiceSignWithSSP, signWithZelcore as walletServiceSignWithZelcore, sanitizeUnicodeForSigning } from '@/utils/walletService'
@@ -2647,8 +2648,8 @@ const estimatedFluxPrice = computed(() => {
   if (fluxPerUsd > 0 && monthly > 0) {
     // Monthly Flux = monthly USD × fluxPerUsd
     // Total Flux = monthly Flux × months × (1 - discount/100)
-    const monthlyFlux = monthly * fluxPerUsd
-    const totalFlux = monthlyFlux * months * (1 - discount / 100)
+    // Follows the USD total, which ends the way the network ends it (see utils/networkPrice)
+    const totalFlux = subscriptionTotalUsd(monthly, months, discount) * fluxPerUsd
 
     return totalFlux.toFixed(2)
   }
@@ -2793,18 +2794,21 @@ const estimatedCost = computed(() => {
 
   const months = config.value.subscriptionMonths || 1
   const discount = currentDiscount.value || 0
-  const total = baseMonthlyPrice * months * (1 - discount / 100)
+
+  // Rounded up to .49/.99 like the network rounds the whole order, or a multi-month total can
+  // fall below its quote and be refused by the payment bridge (see utils/networkPrice)
+  const total = subscriptionTotalUsd(baseMonthlyPrice, months, discount)
 
   return total.toFixed(2)
 })
 
 // Total USD cost for the entire subscription period
 const totalCost = computed(() => {
-  // Calculate client-side: monthly price × months × (1 - discount/100)
+  // Calculate client-side: monthly price × months × (1 - discount/100), ended like the network ends it
   const monthly = monthlyPrice.value || 0
   const months = config.value.subscriptionMonths || 1
   const discount = currentDiscount.value || 0
-  const total = monthly * months * (1 - discount / 100)
+  const total = subscriptionTotalUsd(monthly, months, discount)
 
   if (isNaN(total)) {
     return '$0.00'
