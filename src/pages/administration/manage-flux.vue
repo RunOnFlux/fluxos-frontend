@@ -820,7 +820,7 @@
                       <span class="font-weight-medium">{{ formatMbps(benchmarkInfoParsed.upload_speed) }}</span>
                     </VChip>
                     <VChip prepend-icon="mdi-clock-outline" size="small" color="warning" variant="tonal">
-                      <span class="font-weight-medium">Ping: {{ benchmarkInfoParsed.ping }} ms</span>
+                      <span class="font-weight-medium">Ping: {{ formatPing(benchmarkInfoParsed.ping) }}</span>
                     </VChip>
                   </div>
                 </VCardText>
@@ -1790,6 +1790,14 @@ const formatMbps = value => {
   if (value === null || value === undefined) return 'N/A'
 
   return `${value.toFixed(2)} Mbps`
+}
+
+// The ping from the same test, or N/A when fluxbench reports null with the
+// speeds.
+const formatPing = value => {
+  if (value === null || value === undefined) return 'N/A'
+
+  return `${value} ms`
 }
 
 const getDaemonIcon = key => {
