@@ -89,6 +89,7 @@ const services = [
   { anchor: 'RuneScape: Dragonwilds Server Hosting', url: `${GAMES_HUB}/dragonwilds`, img: `${GAMES_HUB}/apps/dragonwilds/og/home.webp`, desc: 'dragonwilds' },
   { anchor: 'V Rising Server Hosting', url: `${GAMES_HUB}/vrising`, img: `${GAMES_HUB}/apps/vrising/og/home.webp`, desc: 'vrising' },
   { anchor: 'Satisfactory Server Hosting', url: `${GAMES_HUB}/satisfactory`, img: `${GAMES_HUB}/apps/satisfactory/og/home.webp`, desc: 'satisfactory' },
+  { anchor: '7 Days to Die Server Hosting', url: `${GAMES_HUB}/7-days-to-die`, img: `${GAMES_HUB}/apps/7dtd/og/home.webp`, desc: 'sevendaystodie' },
   { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
