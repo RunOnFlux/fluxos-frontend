@@ -92,6 +92,7 @@ const services = [
   { anchor: '7 Days to Die Server Hosting', url: `${GAMES_HUB}/7-days-to-die`, img: `${GAMES_HUB}/apps/7dtd/og/home.webp`, desc: 'sevendaystodie' },
   { anchor: 'ARK: Survival Ascended Server Hosting', url: `${GAMES_HUB}/ark`, img: `${GAMES_HUB}/apps/ark/og/home.webp`, desc: 'ark' },
   { anchor: 'Hytale Server Hosting', url: `${GAMES_HUB}/hytale`, img: `${GAMES_HUB}/apps/hytale/og/home.webp`, desc: 'hytale' },
+  { anchor: 'Arma Reforger Server Hosting', url: `${GAMES_HUB}/arma-reforger`, img: `${GAMES_HUB}/apps/arma-reforger/og/home.webp`, desc: 'armareforger' },
   { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
