@@ -5201,6 +5201,7 @@
       "garrysmod": "Sandbox servers with your Workshop collection, any gamemode, an RCON console and server.cfg as a form",
       "factorio": "Factory building servers on the stable release, with Space Age on or off, an RCON console, saves and mods",
       "unturned": "Zombie survival servers with your Steam login token, official or Workshop maps, RocketMod plugins and automatic backups",
+      "dontstarvetogether": "Survival servers with the Caves on every plan, any play style, Workshop mods with their settings and a server console",
       "wordpress": "Decentralized, censorship-resistant WordPress",
       "n8n": "Self-hosted n8n workflow automation",
       "openclaw": "Self-hosted, model-agnostic AI assistant",

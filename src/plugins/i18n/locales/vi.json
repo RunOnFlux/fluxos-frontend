@@ -5101,6 +5101,7 @@
       "garrysmod": "Máy chủ sandbox với bộ sưu tập Workshop của bạn, mọi chế độ chơi, bảng điều khiển RCON và server.cfg dạng biểu mẫu",
       "factorio": "Máy chủ xây dựng nhà máy trên bản ổn định, bật hoặc tắt Space Age, bảng điều khiển RCON, bản lưu và mod",
       "unturned": "Máy chủ sinh tồn zombie với token đăng nhập Steam của bạn, bản đồ chính thức hoặc từ Workshop, plugin RocketMod và sao lưu tự động",
+      "dontstarvetogether": "Máy chủ sinh tồn có Hang động trong mọi gói, mọi phong cách chơi, mod Workshop kèm cài đặt và bảng điều khiển máy chủ",
       "wordpress": "WordPress phi tập trung, chống kiểm duyệt",
       "n8n": "Tự lưu trữ tự động hóa quy trình n8n",
       "openclaw": "Trợ lý AI tự lưu trữ, không phụ thuộc mô hình",

@@ -5101,6 +5101,7 @@
       "garrysmod": "沙盒服务器，支持您的创意工坊合集、任意游戏模式、RCON 控制台，并可通过表单编辑 server.cfg",
       "factorio": "工厂建造服务器，默认使用稳定版，可开启或关闭 Space Age，支持 RCON 控制台、存档和模组",
       "unturned": "僵尸生存服务器，支持您的 Steam 登录令牌、官方或创意工坊地图、RocketMod 插件以及自动备份",
+      "dontstarvetogether": "每个套餐都包含洞穴的生存服务器，支持任意游戏风格、带设置的 Workshop 模组和服务器控制台",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",
       "openclaw": "自托管、模型无关的 AI 助手",

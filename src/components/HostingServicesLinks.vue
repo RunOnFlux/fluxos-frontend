@@ -96,6 +96,7 @@ const services = [
   { anchor: "Garry's Mod Server Hosting", url: `${GAMES_HUB}/garrys-mod`, img: `${GAMES_HUB}/apps/garrys-mod/og/home.webp`, desc: 'garrysmod' },
   { anchor: 'Factorio Server Hosting', url: `${GAMES_HUB}/factorio`, img: `${GAMES_HUB}/apps/factorio/og/home.webp`, desc: 'factorio' },
   { anchor: 'Unturned Server Hosting', url: `${GAMES_HUB}/unturned`, img: `${GAMES_HUB}/apps/unturned/og/home.webp`, desc: 'unturned' },
+  { anchor: "Don't Starve Together Server Hosting", url: `${GAMES_HUB}/dont-starve-together`, img: `${GAMES_HUB}/apps/dont-starve-together/og/home.webp`, desc: 'dontstarvetogether' },
   { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
