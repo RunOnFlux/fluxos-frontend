@@ -7,6 +7,7 @@
 export {}
 declare global {
   const $api: typeof import('./utils/api.js')['$api']
+  const AppNotStoppedError: typeof import('./utils/partialRestore.js')['AppNotStoppedError']
   const BANNED_PORTS: typeof import('./utils/fluxPorts.js')['BANNED_PORTS']
   const COMPARISON_SPEC: typeof import('./composables/usePricingComparison.js')['COMPARISON_SPEC']
   const COMPETITOR_PRICING_AS_OF: typeof import('./composables/usePricingComparison.js')['COMPETITOR_PRICING_AS_OF']
@@ -17,6 +18,8 @@ declare global {
   const LATEST_SPEC_VERSION: typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']
   const MemoryMonitor: typeof import('./utils/memoryMonitor.js')['MemoryMonitor']
   const OS_RESERVE: typeof import('./utils/nodeCapacity.js')['OS_RESERVE']
+  const PARTIAL_MARKER: typeof import('./utils/partialRestore.js')['PARTIAL_MARKER']
+  const PARTIAL_STAGING: typeof import('./utils/partialRestore.js')['PARTIAL_STAGING']
   const SESSION_MAX_AGE_MS: typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']
   const SESSION_SIGNING_MARGIN_MS: typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']
   const STORAGE_MARKERS: typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']
@@ -111,6 +114,7 @@ declare global {
   const geolocation: typeof import('./utils/geolocation.js')['default']
   const getActivePinia: typeof import('pinia')['getActivePinia']
   const getAndConvertSpec: typeof import('./utils/specConverter.js')['getAndConvertSpec']
+  const getAppRunState: typeof import('./utils/partialRestore.js')['getAppRunState']
   const getConnectedAccount: typeof import('./utils/walletService.js')['getConnectedAccount']
   const getConsent: typeof import('./composables/useCookieConsent.js')['getConsent']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
@@ -144,6 +148,7 @@ declare global {
   const initializeWalletSDKs: typeof import('./utils/walletService.js')['initializeWalletSDKs']
   const inject: typeof import('vue')['inject']
   const injectLocal: typeof import('@vueuse/core')['injectLocal']
+  const inspectBackupArchive: typeof import('./utils/partialRestore.js')['inspectBackupArchive']
   const integerValidator: typeof import('./@core/utils/validators.js')['integerValidator']
   const ipToDNSFormat: typeof import('./utils/stickyBackend.js')['ipToDNSFormat']
   const isAuthError: typeof import('./utils/session.js')['isAuthError']
@@ -190,6 +195,7 @@ declare global {
   const nodeFitsApp: typeof import('./utils/nodeCapacity.js')['nodeFitsApp']
   const nodeHasRoom: typeof import('./utils/nodeCapacity.js')['nodeHasRoom']
   const nodesInGeolocation: typeof import('./utils/nodeCapacity.js')['nodesInGeolocation']
+  const normalizeEntry: typeof import('./utils/partialRestore.js')['normalizeEntry']
   const normalizeSpecForRedeploy: typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -215,6 +221,7 @@ declare global {
   const operationKindLabel: typeof import('./utils/volumeOperations.js')['operationKindLabel']
   const operationProgressText: typeof import('./utils/volumeOperations.js')['operationProgressText']
   const paginationMeta: typeof import('./utils/paginationMeta.js')['paginationMeta']
+  const partialArchiveAt: typeof import('./utils/partialRestore.js')['partialArchiveAt']
   const passwordValidator: typeof import('./@core/utils/validators.js')['passwordValidator']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const payWithSSP: typeof import('./utils/walletService.js')['payWithSSP']
@@ -247,7 +254,9 @@ declare global {
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const resolveVuetifyTheme: typeof import('./@core/utils/vuetify.js')['resolveVuetifyTheme']
+  const restorePartialArchive: typeof import('./utils/partialRestore.js')['restorePartialArchive']
   const rgbaToHex: typeof import('./@core/utils/colorConverter.js')['rgbaToHex']
+  const rootsOf: typeof import('./utils/partialRestore.js')['rootsOf']
   const roundUpToCharmPrice: typeof import('./utils/networkPrice.js')['roundUpToCharmPrice']
   const sanitizeHtml: typeof import('./utils/sanitizeHtml.js')['default']
   const sanitizeUnicodeForSigning: typeof import('./utils/walletService.js')['sanitizeUnicodeForSigning']
@@ -269,6 +278,7 @@ declare global {
   const subscriptionTotalUsd: typeof import('./utils/networkPrice.js')['subscriptionTotalUsd']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
+  const tarEntries: typeof import('./utils/partialRestore.js')['tarEntries']
   const templateRef: typeof import('@vueuse/core')['templateRef']
   const throttledRef: typeof import('@vueuse/core')['throttledRef']
   const throttledWatch: typeof import('@vueuse/core')['throttledWatch']
@@ -507,6 +517,7 @@ declare global {
   const watchWalletAccount: typeof import('./utils/walletService.js')['watchWalletAccount']
   const watchWithFilter: typeof import('@vueuse/core')['watchWithFilter']
   const whenever: typeof import('@vueuse/core')['whenever']
+  const withAppStopped: typeof import('./utils/partialRestore.js')['withAppStopped']
   const wouldRefuseRegistration: typeof import('./utils/placementFeasibility.js')['wouldRefuseRegistration']
 }
 // for type re-export
@@ -514,6 +525,9 @@ declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from 'vue'
   import('vue')
+  // @ts-ignore
+  export type { AppNotStoppedError } from './utils/partialRestore.js'
+  import('./utils/partialRestore.js')
 }
 
 // for vue template auto import
@@ -522,6 +536,7 @@ declare module 'vue' {
   interface GlobalComponents {}
   interface ComponentCustomProperties {
     readonly $api: UnwrapRef<typeof import('./utils/api.js')['$api']>
+    readonly AppNotStoppedError: UnwrapRef<typeof import('./utils/partialRestore.js')['AppNotStoppedError']>
     readonly BANNED_PORTS: UnwrapRef<typeof import('./utils/fluxPorts.js')['BANNED_PORTS']>
     readonly COMPARISON_SPEC: UnwrapRef<typeof import('./composables/usePricingComparison.js')['COMPARISON_SPEC']>
     readonly COMPETITOR_PRICING_AS_OF: UnwrapRef<typeof import('./composables/usePricingComparison.js')['COMPETITOR_PRICING_AS_OF']>
@@ -532,6 +547,8 @@ declare module 'vue' {
     readonly LATEST_SPEC_VERSION: UnwrapRef<typeof import('./utils/specConverter.js')['LATEST_SPEC_VERSION']>
     readonly MemoryMonitor: UnwrapRef<typeof import('./utils/memoryMonitor.js')['MemoryMonitor']>
     readonly OS_RESERVE: UnwrapRef<typeof import('./utils/nodeCapacity.js')['OS_RESERVE']>
+    readonly PARTIAL_MARKER: UnwrapRef<typeof import('./utils/partialRestore.js')['PARTIAL_MARKER']>
+    readonly PARTIAL_STAGING: UnwrapRef<typeof import('./utils/partialRestore.js')['PARTIAL_STAGING']>
     readonly SESSION_MAX_AGE_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']>
     readonly SESSION_SIGNING_MARGIN_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']>
     readonly STORAGE_MARKERS: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']>
@@ -626,6 +643,7 @@ declare module 'vue' {
     readonly geolocation: UnwrapRef<typeof import('./utils/geolocation.js')['default']>
     readonly getActivePinia: UnwrapRef<typeof import('pinia')['getActivePinia']>
     readonly getAndConvertSpec: UnwrapRef<typeof import('./utils/specConverter.js')['getAndConvertSpec']>
+    readonly getAppRunState: UnwrapRef<typeof import('./utils/partialRestore.js')['getAppRunState']>
     readonly getConnectedAccount: UnwrapRef<typeof import('./utils/walletService.js')['getConnectedAccount']>
     readonly getConsent: UnwrapRef<typeof import('./composables/useCookieConsent.js')['getConsent']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
@@ -658,6 +676,7 @@ declare module 'vue' {
     readonly initializeWalletSDKs: UnwrapRef<typeof import('./utils/walletService.js')['initializeWalletSDKs']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
     readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
+    readonly inspectBackupArchive: UnwrapRef<typeof import('./utils/partialRestore.js')['inspectBackupArchive']>
     readonly integerValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['integerValidator']>
     readonly ipToDNSFormat: UnwrapRef<typeof import('./utils/stickyBackend.js')['ipToDNSFormat']>
     readonly isAuthError: UnwrapRef<typeof import('./utils/session.js')['isAuthError']>
@@ -703,6 +722,7 @@ declare module 'vue' {
     readonly nodeFitsApp: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodeFitsApp']>
     readonly nodeHasRoom: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodeHasRoom']>
     readonly nodesInGeolocation: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodesInGeolocation']>
+    readonly normalizeEntry: UnwrapRef<typeof import('./utils/partialRestore.js')['normalizeEntry']>
     readonly normalizeSpecForRedeploy: UnwrapRef<typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
@@ -728,6 +748,7 @@ declare module 'vue' {
     readonly operationKindLabel: UnwrapRef<typeof import('./utils/volumeOperations.js')['operationKindLabel']>
     readonly operationProgressText: UnwrapRef<typeof import('./utils/volumeOperations.js')['operationProgressText']>
     readonly paginationMeta: UnwrapRef<typeof import('./utils/paginationMeta.js')['paginationMeta']>
+    readonly partialArchiveAt: UnwrapRef<typeof import('./utils/partialRestore.js')['partialArchiveAt']>
     readonly passwordValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['passwordValidator']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly payWithSSP: UnwrapRef<typeof import('./utils/walletService.js')['payWithSSP']>
@@ -760,7 +781,9 @@ declare module 'vue' {
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly resolveVuetifyTheme: UnwrapRef<typeof import('./@core/utils/vuetify.js')['resolveVuetifyTheme']>
+    readonly restorePartialArchive: UnwrapRef<typeof import('./utils/partialRestore.js')['restorePartialArchive']>
     readonly rgbaToHex: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['rgbaToHex']>
+    readonly rootsOf: UnwrapRef<typeof import('./utils/partialRestore.js')['rootsOf']>
     readonly roundUpToCharmPrice: UnwrapRef<typeof import('./utils/networkPrice.js')['roundUpToCharmPrice']>
     readonly sanitizeHtml: UnwrapRef<typeof import('./utils/sanitizeHtml.js')['default']>
     readonly sanitizeUnicodeForSigning: UnwrapRef<typeof import('./utils/walletService.js')['sanitizeUnicodeForSigning']>
@@ -782,6 +805,7 @@ declare module 'vue' {
     readonly subscriptionTotalUsd: UnwrapRef<typeof import('./utils/networkPrice.js')['subscriptionTotalUsd']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly tarEntries: UnwrapRef<typeof import('./utils/partialRestore.js')['tarEntries']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
@@ -1019,6 +1043,7 @@ declare module 'vue' {
     readonly watchWalletAccount: UnwrapRef<typeof import('./utils/walletService.js')['watchWalletAccount']>
     readonly watchWithFilter: UnwrapRef<typeof import('@vueuse/core')['watchWithFilter']>
     readonly whenever: UnwrapRef<typeof import('@vueuse/core')['whenever']>
+    readonly withAppStopped: UnwrapRef<typeof import('./utils/partialRestore.js')['withAppStopped']>
     readonly wouldRefuseRegistration: UnwrapRef<typeof import('./utils/placementFeasibility.js')['wouldRefuseRegistration']>
   }
 }
