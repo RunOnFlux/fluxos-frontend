@@ -1365,6 +1365,14 @@ import axios from "axios"
 import { storeToRefs } from "pinia"
 import { useConfigStore } from "@core/stores/config"
 import { useI18n } from 'vue-i18n'
+import {
+  AppNotStoppedError,
+  inspectBackupArchive,
+  partialArchiveAt,
+  restorePartialArchive,
+  withAppStopped,
+} from '@/utils/partialRestore'
+import { findUploadFailure } from '@/utils/uploadResponse'
 
 const props = defineProps({
   appSpec: { 
@@ -1624,12 +1632,130 @@ const deleteRestoreBackup = async (restoreItem, timestamp = 0) => {
   return false
 }
 
+// Partial backups (utils/partialRestore.js) hold only the data an app cannot
+// rebuild by itself, such as a game's world, and must never go through
+// appendrestoretask: it empties appdata before it unpacks, which would delete
+// everything the archive does not carry - for a game, its install.
+
+// executeLocalCommand without the page's error banner: a 503 from a file
+// operation is the node busy with another one, and is waited out.
+const volumeExecute = (command, postObject = null, skipCache = false) =>
+  props.executeLocalCommand(command, postObject, null, skipCache, true)
+
+function partialStepText(step) {
+  const keys = {
+    downloading: 'partialDownloading',
+    uploading: 'partialUploading',
+    unpacking: 'partialUnpacking',
+    stopping: 'partialStopping',
+    replacing: 'partialReplacing',
+    starting: 'partialStarting',
+  }
+
+  return keys[step] ? t(`core.backupAndRestore.${keys[step]}`) : ''
+}
+
+// Puts an archive the browser holds into backup/upload, where the upload
+// restore takes it from, and returns its path on the volume.
+async function uploadBackupArchive(blob, component) {
+  const name = `backup_${String(component).toLowerCase()}.tar.gz`
+  const body = new FormData()
+
+  body.append(name, blob, name)
+
+  const response = await fetch(getUploadFolderBackup(name, component), {
+    method: 'POST',
+    headers: zelidHeader.value,
+    body,
+  })
+
+  // Refusals come back as HTTP 200, so the body is what says it landed.
+  const text = await response.text().catch(() => '')
+  const failure = findUploadFailure(text)
+  if (!response.ok || failure) {
+    throw new Error(failure?.message || t('core.backupAndRestore.uploadErrorWithStatus', { fileName: name, status: response.status }))
+  }
+
+  return `backup/upload/${name}`
+}
+
+// Downloads a partial archive into the browser. They are kilobytes.
+async function downloadBackupArchive(url) {
+  const response = await fetch(url, { cache: 'no-store' })
+  if (!response.ok) throw new Error(t('core.backupAndRestore.partialDownloadFailed', { status: response.status }))
+
+  return response.blob()
+}
+
+/**
+ * Restores partial archives over the app's files, one component at a time.
+ *
+ * @param {Array<{component: string, roots: string[], blob?: Blob, archivePath?: string}>} items
+ * @param {(text: string) => void} setStatus
+ * @returns {Promise<'running'|'stopped'|'unknown'>} the app's state afterwards
+ */
+async function restorePartialBackups(items, setStatus) {
+  let startState = 'stopped'
+  for (const item of items) {
+    let { archivePath } = item
+    if (!archivePath) {
+      setStatus(partialStepText('uploading'))
+      archivePath = await uploadBackupArchive(item.blob, item.component)
+    }
+    await restorePartialArchive({
+      execute: volumeExecute,
+      appname: props.appSpec.name,
+      component: item.component,
+      archivePath,
+      roots: item.roots,
+      onStep: step => setStatus(partialStepText(step)),
+      runStopped: async fn => {
+        startState = await withAppStopped(volumeExecute, props.appSpec.name, fn, {
+          onPhase: phase => setStatus(partialStepText(phase)),
+        })
+      },
+    })
+
+    // The uploaded copy has been unpacked; appendrestoretask does not leave its own behind either.
+    await volumeExecute(`/apps/removeobject/${props.appSpec.name}/${item.component}/${encodeURIComponent(archivePath)}`).catch(() => {})
+  }
+
+  return startState
+}
+
+function partialFailureText(error) {
+  if (error instanceof AppNotStoppedError) return t('core.backupAndRestore.partialNotStopped')
+
+  return error?.message || t('core.backupAndRestore.restoreFailed')
+}
+
+function partialDoneText(startState) {
+  return startState === 'unknown'
+    ? t('core.backupAndRestore.partialDoneNotStarted', { tab: t('pages.apps.manage.tabs.control') })
+    : t('core.backupAndRestore.restoreCompletedSuccessfully')
+}
+
 const restoreFromLocalFile = async () => {
   showTopUpload.value = false
   restoreFromUpload.value = true
   restoreFromUploadStatus.value = t('core.backupAndRestore.uploading')
 
   try {
+    // Which files are partial backups is read from the files themselves,
+    // before anything is sent. A full archive costs its first block.
+    const partialRoots = {}
+    for (const f of files.value) {
+      if (!f.selected_file) continue
+      try {
+        const inspected = await inspectBackupArchive(f.selected_file.stream())
+        if (inspected.partial) partialRoots[f.component] = inspected.roots
+      } catch (error) {
+        // A partial backup that cannot be restored is refused here. Anything
+        // else this cannot read is left to the node, as before.
+        if (error.partial) throw error
+      }
+    }
+
     // Process the file uploads
     const uploadPromises = files.value.map(f =>
       new Promise(async (resolve, reject) => {
@@ -1655,12 +1781,32 @@ const restoreFromLocalFile = async () => {
       entry.progress = 0
     })
 
+    const partialItems = files.value
+      .filter(f => partialRoots[f.component])
+      .map(f => ({ component: f.component, roots: partialRoots[f.component], archivePath: `backup/upload/${f.file_name}` }))
+    const fullFiles = files.value.filter(f => !partialRoots[f.component])
+
+    let partialStartState = null
+    if (partialItems.length) {
+      partialStartState = await restorePartialBackups(partialItems, text => { restoreFromUploadStatus.value = text })
+    }
+
+    if (!fullFiles.length) {
+      restoreFromUpload.value = false
+      restoreFromUploadStatus.value = ''
+      loadBackupList('upload', 'files')
+      changeAlert('success', partialDoneText(partialStartState), 'showTopUpload', true)
+      showToast('success', partialDoneText(partialStartState))
+
+      return
+    }
+
     restoreFromUploadStatus.value = t('core.backupAndRestore.initializingRestoreJobs')
 
     const postLayout = buildPostBody('restore', 'upload')
     let postRestoreData
 
-    for (const componentName of files.value) {
+    for (const componentName of fullFiles) {
       postRestoreData = updateJobStatus(postLayout, componentName.component, 'restore')
     }
 
@@ -1716,6 +1862,7 @@ const restoreFromLocalFile = async () => {
     console.error('Upload failed', error)
     restoreFromUpload.value = false
     restoreFromUploadStatus.value = 'Error during upload'
+    if (error instanceof Error) changeAlert('danger', partialFailureText(error), 'showTopUpload', true)
     showToast('error', t('core.backupAndRestore.restoreFailed'))
   }
 }
@@ -1738,11 +1885,41 @@ const restoreFromRemoteFile = async () => {
       Connection: 'keep-alive',
     }
 
+    // A remote archive is read from the browser where its server allows it
+    // (CORS), and a full one costs its first block. One that cannot be read is
+    // left to the node, as before.
+    const partialItems = []
+    for (const item of restoreRemoteUrlItems.value) {
+      const partial = await partialArchiveAt(item.url)
+      if (partial) {
+        restoreFromRemoteURLStatus.value = partialStepText('downloading')
+        partialItems.push({ component: item.component, roots: partial.roots, blob: await downloadBackupArchive(item.url) })
+      }
+    }
+    const fullItems = restoreRemoteUrlItems.value.filter(item => !partialItems.some(partial => partial.component === item.component))
+
+    let partialStartState = null
+    if (partialItems.length) {
+      partialStartState = await restorePartialBackups(partialItems, text => { restoreFromRemoteURLStatus.value = text })
+    }
+
+    if (!fullItems.length) {
+      downloadingFromUrl.value = false
+      restoreFromRemoteURLStatus.value = ''
+      restoreRemoteUrlItems.value = []
+      changeAlert('success', partialDoneText(partialStartState), 'showTopRemote', true)
+      showToast('success', partialDoneText(partialStartState))
+
+      return
+    }
+
+    restoreFromRemoteURLStatus.value = t('core.backupAndRestore.initializingRestoreJobs')
+
     const postLayout = buildPostBody('restore', 'remote')
     let postBackupData
 
-    for (const componentName of restoreRemoteUrlItems.value) {
-      postBackupData = updateJobStatus(postLayout, componentName.component, 'restore', restoreRemoteUrlItems.value)
+    for (const componentName of fullItems) {
+      postBackupData = updateJobStatus(postLayout, componentName.component, 'restore', fullItems)
     }
 
     const url = props.currentInstanceIp.split(':')[0]
@@ -1788,6 +1965,7 @@ const restoreFromRemoteFile = async () => {
     console.error('Upload failed', error)
     downloadingFromUrl.value = false
     restoreFromRemoteURLStatus.value = 'Error during upload'
+    changeAlert('danger', partialFailureText(error), 'showTopRemote', true)
     showToast('error', t('core.backupAndRestore.restoreFailed'))
   }
 }
@@ -2356,6 +2534,7 @@ function addAllBackupComponents(timestamp) {
       timestamp: checkpoint.timestamp,
        
       file_size: component.file_size,
+      profile: component.profile || null,
     }))
 
     newComponents.value = filteredComponents
@@ -2375,6 +2554,7 @@ function addComponent(selected, timestamp) {
       timestamp,
        
       file_size: selected.file_size,
+      profile: selected.profile || null,
     }
   } else {
     // If the component doesn't exist, add it to the array
@@ -2385,20 +2565,59 @@ function addComponent(selected, timestamp) {
       file_url: selected.file_url,
        
       file_size: selected.file_size,
+      profile: selected.profile || null,
     })
   }
 }
 
 async function restoreFromFluxDrive(newComponents) {
-  const restoreItems = newComponents.map(item => ({
-    component: item.component,
-     
-    file_size: item.file_size,
-    url: item.file_url,
-  }))
-
   restoringFromFluxDrive.value = true
   restoreFromFluxDriveStatus.value = t('core.backupAndRestore.initializingRestoreJobs')
+
+  // The middleware names the profile of a partial backup. Such an archive is
+  // read before anything changes, and when it cannot be, nothing is restored:
+  // appendrestoretask would empty appdata and keep only what the archive holds.
+  const partialItems = []
+  let partialStartState = null
+  try {
+    for (const item of newComponents.filter(component => component.profile)) {
+      const partial = await partialArchiveAt(item.file_url)
+      if (partial === null) throw new Error(t('core.backupAndRestore.partialUnreadable'))
+      if (partial) {
+        restoreFromFluxDriveStatus.value = partialStepText('downloading')
+        partialItems.push({ component: item.component, roots: partial.roots, blob: await downloadBackupArchive(item.file_url) })
+      }
+    }
+    if (partialItems.length) {
+      partialStartState = await restorePartialBackups(partialItems, text => { restoreFromFluxDriveStatus.value = text })
+    }
+  } catch (error) {
+    console.error('Error during partial restore:', error)
+    restoringFromFluxDrive.value = false
+    restoreFromFluxDriveStatus.value = ''
+    changeAlert('danger', partialFailureText(error), 'showTopFluxDrive', true)
+    showToast('error', t('core.backupAndRestore.restoreFailed'))
+
+    return
+  }
+
+  const restoreItems = newComponents
+    .filter(item => !partialItems.some(partial => partial.component === item.component))
+    .map(item => ({
+      component: item.component,
+       
+      file_size: item.file_size,
+      url: item.file_url,
+    }))
+
+  if (!restoreItems.length) {
+    restoringFromFluxDrive.value = false
+    restoreFromFluxDriveStatus.value = ''
+    changeAlert('success', partialDoneText(partialStartState), 'showTopFluxDrive', true)
+    showToast('success', partialDoneText(partialStartState))
+
+    return
+  }
 
   const zelidauth = localStorage.getItem('zelidauth')
 
@@ -2609,16 +2828,16 @@ const removeFile = file => {
   )
 }
 
-function getUploadFolderBackup(saveAs) {
+function getUploadFolderBackup(saveAs, component = restoreRemoteFile.value) {
   const ip = props.currentInstanceIp.split(':')[0]
   const port = props.currentInstanceIp.split(':')[1] || 16127
   const filename = encodeURIComponent(saveAs)
   
   if (props.ipAccess) {
-    return `http://${ip}:${port}/ioutils/fileupload/backup/${props.appSpec.name}/${restoreRemoteFile.value}/null/${filename}`
+    return `http://${ip}:${port}/ioutils/fileupload/backup/${props.appSpec.name}/${component}/null/${filename}`
   }
   
-  return `https://${ip.replace(/\./g, '-')}-${port}.node.api.runonflux.io/ioutils/fileupload/backup/${props.appSpec.name}/${restoreRemoteFile.value}/null/${filename}`
+  return `https://${ip.replace(/\./g, '-')}-${port}.node.api.runonflux.io/ioutils/fileupload/backup/${props.appSpec.name}/${component}/null/${filename}`
 }
 
 // The isContentUpload branch is gone. It called getUploadFolder(), which has
