@@ -5112,6 +5112,7 @@
       "factorio": "安定版で動く工場建設サーバー、Space AgeのオンとオフやRCONコンソール、セーブとMODに対応",
       "unturned": "Steamログイントークン、公式またはWorkshopマップ、RocketModプラグイン、自動バックアップに対応したゾンビサバイバルサーバー",
       "dontstarvetogether": "すべてのプランで洞窟付きのサバイバルサーバー、あらゆるプレイスタイル、設定付きのWorkshop MOD、サーバーコンソール",
+      "corekeeper": "IP経由のクロスプレイ、30のワールドスロット、MOD、管理者とBANをブラウザで扱える地下サバイバルサーバー",
       "wordpress": "分散型で検閲耐性のある WordPress",
       "n8n": "セルフホストの n8n ワークフロー自動化",
       "openclaw": "セルフホストでモデル非依存の AI アシスタント",
