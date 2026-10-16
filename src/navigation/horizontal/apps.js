@@ -17,9 +17,12 @@ export default [
     exact: true,
   },
   {
+    // The games live in the games hub now.
     title: 'menu.application.marketplaceGames',
     icon: { icon: 'mdi-gamepad', size: 20 },
-    to: 'marketplace-games',
+    href: 'https://runonflux.com/games/',
+    target: '_blank',
+    rel: 'noopener noreferrer',
   },
   {
     title: 'menu.application.marketplaceWordPress',

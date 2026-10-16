@@ -101,14 +101,6 @@ const staticUrls = [
     changefreq: 'weekly',
     description: 'FluxDrive',
   },
-  {
-    loc: '/marketplace/games',
-    prerendered: true,
-    source: 'src/pages/marketplace/games/index.vue',
-    priority: SEO_PRIORITY.HIGH,
-    changefreq: 'weekly',
-    description: 'Games Landing Page',
-  },
 
   // WordPress hosting moved to the apps hub (runonflux.com/apps/wordpress).
   // /marketplace/wordpress 301s there, so it is deliberately absent from the

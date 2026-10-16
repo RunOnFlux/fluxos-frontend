@@ -48,7 +48,6 @@ const FALLBACK_ROUTES = Object.freeze([
   // Main landing pages
   '/', // Homepage (LandingServices) — fully static i18n content, safe to prerender
   '/marketplace',
-  '/marketplace/games',
   '/flux-drive',
   '/apps/register',
   '/cost-calculator',
