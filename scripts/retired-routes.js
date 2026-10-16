@@ -19,6 +19,13 @@
  */
 export const RETIRED_ROUTES = Object.freeze([
   {
+    from: '/marketplace/games',
+    to: 'https://runonflux.com/games/',
+    title: 'Game server hosting has moved',
+    body: 'Every game on Flux now lives in the Flux games hub.',
+    linkText: 'Continue to game server hosting on Flux',
+  },
+  {
     from: '/marketplace/wordpress',
     to: 'https://runonflux.com/apps/wordpress',
     title: 'WordPress Hosting has moved',

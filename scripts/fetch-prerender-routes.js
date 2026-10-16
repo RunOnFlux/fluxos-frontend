@@ -56,7 +56,6 @@ const COMPARE_ROUTES = [
 const STATIC_ROUTES = [
   '/', // Homepage (LandingServices) — fully static i18n content, safe to prerender
   '/marketplace',
-  '/marketplace/games',
   '/flux-drive',
   '/apps/register',
   '/cost-calculator',
