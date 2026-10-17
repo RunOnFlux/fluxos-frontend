@@ -100,6 +100,7 @@ const services = [
   { anchor: 'Core Keeper Server Hosting', url: `${GAMES_HUB}/core-keeper`, img: `${GAMES_HUB}/apps/core-keeper/og/home.webp`, desc: 'corekeeper' },
   { anchor: 'tModLoader Server Hosting', url: `${GAMES_HUB}/tmodloader`, img: `${GAMES_HUB}/apps/tmodloader/og/home.webp`, desc: 'tmodloader' },
   { anchor: 'The Isle Server Hosting', url: `${GAMES_HUB}/the-isle`, img: `${GAMES_HUB}/apps/the-isle/og/home.webp`, desc: 'theisle' },
+  { anchor: 'Euro Truck Simulator 2 Server Hosting', url: `${GAMES_HUB}/euro-truck-simulator-2`, img: `${GAMES_HUB}/apps/euro-truck-simulator-2/og/home.webp`, desc: 'eurotrucksimulator2' },
   { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
