@@ -418,29 +418,42 @@ const getFluxNodeCount = async () => {
   }
 }
 
-const generateEconomics = async fluxnodecounts => {
-  let perCumulusNode = 2.8125
-  let perNimbusNode = 4.6875
-  let perStratusNode = 11.25
+// Block subsidy at a PON height, as fluxd GetBlockSubsidy computes it: 14 FLUX,
+// cut by 10% every 1051200 blocks (a year of 30 sec blocks), at most 20 times.
+// Worked in satoshis with the same rounding as the daemon.
+const ponBlockSubsidy = blockHeight => {
+  const reductions = Math.min(Math.floor((blockHeight - 2020000) / 1051200), 20)
+  let subsidy = 1400000000
+  for (let i = 0; i < reductions; i++) {
+    subsidy = Math.floor((subsidy * 9) / 10)
+  }
 
+  return subsidy / 1e8
+}
+
+const generateEconomics = async fluxnodecounts => {
   // Get block height first to determine which multipliers to use
   const blockHeight = await getBlockHeight()
 
   // PON Fork at block 2020000: reward multipliers and chain speed change
   // Pre-fork multipliers: Cumulus 0.075, Nimbus 0.125, Stratus 0.3
-  // Post-fork multipliers: Cumulus 0.074, Nimbus 0.259, Stratus 0.666
+  // Post-fork multipliers: 1, 3.5 and 9 parts of 14 of the block subsidy
+  // (fluxd GetFluxnodeSubsidy). The subsidy includes the 0.5 part dev fund,
+  // so the denominator is 14, not 13.5.
   const isPostFork = blockHeight >= 2020000
 
-  const cumulusMultiplier = isPostFork ? 0.074 : 0.075
-  const nimbusMultiplier = isPostFork ? 0.259 : 0.125
-  const stratusMultiplier = isPostFork ? 0.666 : 0.3
+  const cumulusMultiplier = isPostFork ? 1 / 14 : 0.075
+  const nimbusMultiplier = isPostFork ? 3.5 / 14 : 0.125
+  const stratusMultiplier = isPostFork ? 9 / 14 : 0.3
+
+  // Used when the daemon cannot be asked: the subsidy at this height
+  // (37.5 FLUX before PON, which gives the old 2.8125 / 4.6875 / 11.25)
+  let blockSubsidy = isPostFork ? ponBlockSubsidy(blockHeight) : 37.5
 
   try {
     const response = await DashboardService.blockReward()
     if (response.data.status !== "error") {
-      perCumulusNode = (response.data.data.miner * cumulusMultiplier).toFixed(4)
-      perNimbusNode = (response.data.data.miner * nimbusMultiplier).toFixed(4)
-      perStratusNode = (response.data.data.miner * stratusMultiplier).toFixed(4)
+      blockSubsidy = response.data.data.miner
     } else {
       showError(response.data.data.message || response.data.data)
     }
@@ -448,6 +461,10 @@ const generateEconomics = async fluxnodecounts => {
     console.error("Error fetching block reward:", error)
     showError(t("pages.dashboard.rewards.errors.failedToFetchBlockReward"))
   }
+
+  const perCumulusNode = blockSubsidy * cumulusMultiplier
+  const perNimbusNode = blockSubsidy * nimbusMultiplier
+  const perStratusNode = blockSubsidy * stratusMultiplier
 
   const stratuses = fluxnodecounts["stratus-enabled"]
   const nimbuses = fluxnodecounts["nimbus-enabled"]
