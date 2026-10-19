@@ -26,7 +26,9 @@
 //   1. unpack into a staging folder under `backup/` while the app still runs,
 //      which proves the archive is whole before anything is touched (`backup/`
 //      is outside the container and kept out of Syncthing);
-//   2. with the app stopped, delete each root from appdata;
+//   2. with the app stopped, clear what the middleware's restore rules name in
+//      the folders the archive restores into (foldersToClear), then delete
+//      each root from appdata;
 //   3. move the staging folder onto appdata. A folder over a folder MERGES in
 //      FluxOS, so this puts the roots back and keeps the rest;
 //   4. start the app and tidy up.
@@ -185,6 +187,66 @@ export function rootsOf(names) {
   return roots
 }
 
+// Whether a folder (relative to appdata) matches a rule's folder pattern,
+// segment by segment: `*` stands for exactly one segment, never for a `/`.
+const folderMatches = (folder, pattern) => {
+  const parts = folder.split('/')
+  const wanted = normalizeEntry(pattern).split('/')
+
+  return parts.length === wanted.length && wanted.every((part, i) => part === '*' || part === parts[i])
+}
+
+// The folders a partial restore clears besides the roots it replaces, from the
+// middleware's restore rules (/getrestorerules, `clear` of a component).
+//
+// A profile can split a folder: V Rising's archive holds ONE autosave per
+// world, loose in `Saves/v4/<world>/`, and a newer autosave left there on the
+// node is what the server loads, so the restore would change nothing. Each
+// rule names the folders that happens in (`folder`, relative to appdata, `*`
+// for one segment) and the files that are game state there (`name`, a RegExp
+// source, with `flags`). A folder is cleared when the archive restores entries
+// into it: the parent of a root, top-level roots aside.
+//
+// @param {string[]} roots  from rootsOf
+// @param {Array<{folder: string, name: string, flags?: string}>} rules
+// @returns {Array<{folder: string, name: RegExp}>}
+export function foldersToClear(roots, rules) {
+  const targets = []
+  const seen = new Set()
+  for (const rule of rules || []) {
+    // Without `g` or `y`, test() keeps no state between names.
+    const name = new RegExp(rule.name, String(rule.flags || '').replace(/[gy]/g, ''))
+    for (const root of roots) {
+      const parts = normalizeEntry(root).split('/')
+      if (parts.length < 2) continue
+      const folder = parts.slice(0, -1).join('/')
+      if (!folderMatches(folder, rule.folder)) continue
+      const key = `${folder}\n${name}`
+      if (seen.has(key)) continue
+      seen.add(key)
+      targets.push({ folder, name })
+    }
+  }
+
+  return targets
+}
+
+// The entries of a node folder listing (getfolderinfo) that clearing `target`
+// removes: the files whose name matches and that the archive does not put
+// back itself. Folders and links are left alone.
+//
+// @param {Array<{name: string, isFile?: boolean}>} listing
+// @param {{folder: string, name: RegExp}} target  from foldersToClear
+// @param {string[]} roots
+export function entriesToClear(listing, target, roots) {
+  const restored = new Set(roots.map(normalizeEntry))
+
+  return (listing || []).filter(entry => entry?.isFile === true
+    && typeof entry.name === 'string'
+    && target.name.test(entry.name)
+    && !restored.has(`${target.folder}/${entry.name}`))
+}
+
 // An error about an archive that did start with the marker: it is a partial
 // backup, just not one that can be restored, so a caller must not hand it to
 // appendrestoretask instead.
@@ -280,11 +342,11 @@ const errorMessage = data => {
  *
  * @param {Function} execute (command, postObject) => axios response, or nothing after a logout
  */
-async function settle(execute, command, postObject = null) {
+async function settle(execute, command, postObject = null, skipCache = false) {
   for (let attempt = 0; ; attempt += 1) {
     let response
     try {
-      response = await execute(command, postObject)
+      response = await execute(command, postObject, skipCache)
     } catch (error) {
       const refusal = describeRefusal(error)
       if (refusal && attempt < MAX_BUSY_RETRIES) {
@@ -319,13 +381,20 @@ async function settle(execute, command, postObject = null) {
  * @param {string} p.component
  * @param {string} p.archivePath   the archive, relative to the volume root
  * @param {string[]} p.roots       from inspectBackupArchive
+ * @param {Array<{folder: string, name: string, flags?: string}>} [p.clear] the
+ *        component's restore rules (/getrestorerules): what else is removed
+ *        from the folders the archive restores into, see foldersToClear
  * @param {(fn: () => Promise<void>) => Promise<void>} p.runStopped runs fn with the app
  *        stopped and starts it again afterwards (withAppStopped)
  * @param {(step: string) => void} [p.onStep] called with 'unpacking' and 'replacing'
  */
 export async function restorePartialArchive({
-  execute, appname, component, archivePath, roots, runStopped, onStep = () => {},
+  execute, appname, component, archivePath, roots, clear = [], runStopped, onStep = () => {},
 }) {
+  // Worked out before anything changes, so a rule that does not compile stops
+  // the restore here.
+  const targets = foldersToClear(roots, clear)
+
   const operate = async (route, source, destination) => {
     const data = await settle(execute, `/apps/${route}`, {
       appname, component, source, destination, overwrite: true,
@@ -340,6 +409,14 @@ export async function restorePartialArchive({
     }
   }
 
+  // Past FluxOS's apicache: the listing must be the folder as it is now.
+  const list = async path => {
+    const data = await settle(execute, `/apps/getfolderinfo/${appname}/${component}/${encodeURIComponent(path)}`, null, true)
+    if (data?.status === 'success') return Array.isArray(data.data) ? data.data : []
+    if (isMissing(data)) return []
+    throw new Error(errorMessage(data) || `Could not list ${path}.`)
+  }
+
   onStep('unpacking')
   await remove(PARTIAL_STAGING)
   await operate('extractobject', archivePath, PARTIAL_STAGING)
@@ -347,6 +424,15 @@ export async function restorePartialArchive({
 
   await runStopped(async () => {
     onStep('replacing')
+
+    // Before the roots go: what the archive leaves out of a folder it restores
+    // into and the game would load in place of the restored files. A folder
+    // the node does not have holds nothing to clear.
+    for (const target of targets) {
+      for (const entry of entriesToClear(await list(`appdata/${target.folder}`), target, roots)) {
+        await remove(`appdata/${target.folder}/${entry.name}`)
+      }
+    }
     for (const root of roots) {
       await remove(`appdata/${root}`)
     }

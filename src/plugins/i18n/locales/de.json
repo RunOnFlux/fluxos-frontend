@@ -769,6 +769,7 @@
       "partialStarting": "App wird gestartet...",
       "partialDownloadFailed": "Die Sicherung konnte nicht heruntergeladen werden (HTTP {status}). Es wurde nichts geändert.",
       "partialUnreadable": "Diese Sicherung enthält nur einen Teil der App-Daten und konnte nicht gelesen werden, daher wurde nichts geändert. Versuchen Sie es in einigen Minuten erneut.",
+      "partialRulesUnavailable": "Die Wiederherstellungsregeln für diese Sicherung konnten nicht gelesen werden ({reason}), daher wurde nichts geändert. Versuchen Sie es in einigen Minuten erneut.",
       "partialNotStopped": "Die App wurde nicht gestoppt, daher wurde nichts geändert. Versuchen Sie es in einigen Minuten erneut.",
       "partialDoneNotStarted": "Wiederherstellung abgeschlossen, aber die App hat ihren Start nicht bestätigt. Wenn sie in einigen Minuten noch offline ist, starten Sie sie im Tab {tab}.",
       "restoreFailed": "Wiederherstellung fehlgeschlagen",

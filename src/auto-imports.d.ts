@@ -90,6 +90,7 @@ declare global {
   const encryptAesKeyWithRsaKey: typeof import('./utils/enterpriseCrypto.js')['encryptAesKeyWithRsaKey']
   const encryptEnterpriseWithAes: typeof import('./utils/enterpriseCrypto.js')['encryptEnterpriseWithAes']
   const encryptMessage: typeof import('./utils/enterpriseCrypto.js')['encryptMessage']
+  const entriesToClear: typeof import('./utils/partialRestore.js')['entriesToClear']
   const eventBus: typeof import('./utils/eventBus.js')['eventBus']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const extractNodeIPFromResponse: typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']
@@ -98,6 +99,7 @@ declare global {
   const findUploadFailure: typeof import('./utils/uploadResponse.js')['findUploadFailure']
   const firebase: typeof import('./utils/firebase.js')['firebase']
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
+  const foldersToClear: typeof import('./utils/partialRestore.js')['foldersToClear']
   const forgetSsoEmail: typeof import('./utils/firebase.js')['forgetSsoEmail']
   const formatDate: typeof import('./@core/utils/formatters.js')['formatDate']
   const formatDateToMonthShort: typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']
@@ -619,6 +621,7 @@ declare module 'vue' {
     readonly encryptAesKeyWithRsaKey: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptAesKeyWithRsaKey']>
     readonly encryptEnterpriseWithAes: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptEnterpriseWithAes']>
     readonly encryptMessage: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['encryptMessage']>
+    readonly entriesToClear: UnwrapRef<typeof import('./utils/partialRestore.js')['entriesToClear']>
     readonly eventBus: UnwrapRef<typeof import('./utils/eventBus.js')['eventBus']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly extractNodeIPFromResponse: UnwrapRef<typeof import('./utils/stickyBackend.js')['extractNodeIPFromResponse']>
@@ -627,6 +630,7 @@ declare module 'vue' {
     readonly findUploadFailure: UnwrapRef<typeof import('./utils/uploadResponse.js')['findUploadFailure']>
     readonly firebase: UnwrapRef<typeof import('./utils/firebase.js')['firebase']>
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
+    readonly foldersToClear: UnwrapRef<typeof import('./utils/partialRestore.js')['foldersToClear']>
     readonly forgetSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['forgetSsoEmail']>
     readonly formatDate: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDate']>
     readonly formatDateToMonthShort: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']>

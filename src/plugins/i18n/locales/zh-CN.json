@@ -769,6 +769,7 @@
       "partialStarting": "正在启动应用...",
       "partialDownloadFailed": "无法下载备份 (HTTP {status})。未做任何更改。",
       "partialUnreadable": "此备份只包含应用的部分数据且无法读取，因此未做任何更改。请几分钟后重试。",
+      "partialRulesUnavailable": "无法读取此备份的恢复规则（{reason}），因此未做任何更改。请几分钟后重试。",
       "partialNotStopped": "应用未停止，因此未做任何更改。请几分钟后重试。",
       "partialDoneNotStarted": "恢复已完成，但应用未确认已启动。如果几分钟后仍处于离线状态，请在{tab}选项卡中启动它。",
       "restoreFailed": "恢复失败",

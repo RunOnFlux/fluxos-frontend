@@ -769,6 +769,7 @@
       "partialStarting": "A iniciar a aplicação...",
       "partialDownloadFailed": "Não foi possível transferir a cópia de segurança (HTTP {status}). Nada foi alterado.",
       "partialUnreadable": "Esta cópia de segurança contém apenas parte dos dados da aplicação e não pôde ser lida, por isso nada foi alterado. Tente novamente dentro de alguns minutos.",
+      "partialRulesUnavailable": "Não foi possível ler as regras de restauro desta cópia de segurança ({reason}), por isso nada foi alterado. Tente novamente dentro de alguns minutos.",
       "partialNotStopped": "A aplicação não parou, por isso nada foi alterado. Tente novamente dentro de alguns minutos.",
       "partialDoneNotStarted": "Restauração concluída, mas a aplicação não confirmou que arrancou. Se continuar offline dentro de alguns minutos, inicie-a no separador {tab}.",
       "restoreFailed": "Falha na restauração",

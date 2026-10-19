@@ -769,6 +769,7 @@
       "partialStarting": "Avvio dell'app in corso...",
       "partialDownloadFailed": "Impossibile scaricare il backup (HTTP {status}). Non è stato modificato nulla.",
       "partialUnreadable": "Questo backup contiene solo una parte dei dati dell'app e non è stato possibile leggerlo, quindi non è stato modificato nulla. Riprova tra qualche minuto.",
+      "partialRulesUnavailable": "Non è stato possibile leggere le regole di ripristino di questo backup ({reason}), quindi non è stato modificato nulla. Riprova tra qualche minuto.",
       "partialNotStopped": "L'app non si è arrestata, quindi non è stato modificato nulla. Riprova tra qualche minuto.",
       "partialDoneNotStarted": "Ripristino completato, ma l'app non ha confermato l'avvio. Se è ancora offline tra qualche minuto, avviala dalla scheda {tab}.",
       "restoreFailed": "Ripristino non riuscito",

@@ -769,6 +769,7 @@
       "partialStarting": "Iniciando la aplicación...",
       "partialDownloadFailed": "No se pudo descargar la copia de seguridad (HTTP {status}). No se cambió nada.",
       "partialUnreadable": "Esta copia de seguridad contiene solo parte de los datos de la aplicación y no se pudo leer, así que no se cambió nada. Inténtelo de nuevo en unos minutos.",
+      "partialRulesUnavailable": "No se pudieron leer las reglas de restauración de esta copia de seguridad ({reason}), así que no se cambió nada. Inténtelo de nuevo en unos minutos.",
       "partialNotStopped": "La aplicación no se detuvo, así que no se cambió nada. Inténtelo de nuevo en unos minutos.",
       "partialDoneNotStarted": "Restauración completada, pero la aplicación no confirmó que se inició. Si sigue sin conexión en unos minutos, iníciela desde la pestaña {tab}.",
       "restoreFailed": "Restauración fallida",

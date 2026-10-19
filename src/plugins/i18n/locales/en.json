@@ -777,6 +777,7 @@
       "partialStarting": "Starting the app...",
       "partialDownloadFailed": "The backup could not be downloaded (HTTP {status}). Nothing was changed.",
       "partialUnreadable": "This backup holds only part of the app's data and could not be read, so nothing was changed. Try again in a few minutes.",
+      "partialRulesUnavailable": "The restore rules for this backup could not be read ({reason}), so nothing was changed. Try again in a few minutes.",
       "partialNotStopped": "The app did not stop, so nothing was changed. Try again in a few minutes.",
       "partialDoneNotStarted": "Restore completed, but the app did not confirm it started. If it is still offline in a few minutes, start it from the {tab} tab.",
       "restoreFailed": "Restore failed",
