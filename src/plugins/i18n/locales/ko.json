@@ -769,6 +769,7 @@
       "partialStarting": "앱을 시작하는 중...",
       "partialDownloadFailed": "백업을 다운로드할 수 없습니다 (HTTP {status}). 아무것도 변경되지 않았습니다.",
       "partialUnreadable": "이 백업에는 앱 데이터의 일부만 포함되어 있고 읽을 수 없어 아무것도 변경되지 않았습니다. 몇 분 후에 다시 시도하세요.",
+      "partialRulesUnavailable": "이 백업의 복원 규칙을 읽을 수 없어({reason}) 아무것도 변경되지 않았습니다. 몇 분 후에 다시 시도하세요.",
       "partialNotStopped": "앱이 중지되지 않아 아무것도 변경되지 않았습니다. 몇 분 후에 다시 시도하세요.",
       "partialDoneNotStarted": "복원이 완료되었지만 앱이 시작되었는지 확인되지 않았습니다. 몇 분 후에도 오프라인이면 {tab} 탭에서 시작하세요.",
       "restoreFailed": "복원 실패",
