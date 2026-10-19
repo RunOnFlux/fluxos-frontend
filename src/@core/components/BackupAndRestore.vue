@@ -1688,13 +1688,46 @@ async function downloadBackupArchive(url) {
 }
 
 /**
+ * What a partial restore clears besides the paths it replaces, per component:
+ * the middleware's /getrestorerules, `{ <component>: { profile, clear } }`.
+ * Asked once per restore, before anything changes. Without an answer nothing
+ * is restored: game state the archive leaves out (V Rising's newer autosaves)
+ * would stay beside the restored files and be loaded in their place.
+ */
+async function getRestoreRules() {
+  let response
+  try {
+    const zelidauth = localStorage.getItem('zelidauth')
+
+    const axiosConfig = {
+      headers: {
+        zelidauth,
+      },
+    }
+
+    response = await axios.get(`${fluxDriveEndPoint.value}/getrestorerules?appname=${encodeURIComponent(props.appSpec.name)}`, axiosConfig)
+  } catch (error) {
+    console.error('Error receiving the restore rules', error)
+    throw new Error(t('core.backupAndRestore.partialRulesUnavailable', { reason: error.message }))
+  }
+
+  const rules = response.data?.data
+  if (response.data?.status !== 'success' || !rules || typeof rules !== 'object') {
+    throw new Error(t('core.backupAndRestore.partialRulesUnavailable', { reason: rules?.message || response.data?.status || `HTTP ${response.status}` }))
+  }
+
+  return rules
+}
+
+/**
  * Restores partial archives over the app's files, one component at a time.
  *
  * @param {Array<{component: string, roots: string[], blob?: Blob, archivePath?: string}>} items
+ * @param {object} rules from getRestoreRules
  * @param {(text: string) => void} setStatus
  * @returns {Promise<'running'|'stopped'|'unknown'>} the app's state afterwards
  */
-async function restorePartialBackups(items, setStatus) {
+async function restorePartialBackups(items, rules, setStatus) {
   let startState = 'stopped'
   for (const item of items) {
     let { archivePath } = item
@@ -1708,6 +1741,7 @@ async function restorePartialBackups(items, setStatus) {
       component: item.component,
       archivePath,
       roots: item.roots,
+      clear: rules[item.component]?.clear || [],
       onStep: step => setStatus(partialStepText(step)),
       runStopped: async fn => {
         startState = await withAppStopped(volumeExecute, props.appSpec.name, fn, {
@@ -1755,6 +1789,7 @@ const restoreFromLocalFile = async () => {
         if (error.partial) throw error
       }
     }
+    const restoreRules = Object.keys(partialRoots).length ? await getRestoreRules() : null
 
     // Process the file uploads
     const uploadPromises = files.value.map(f =>
@@ -1788,7 +1823,7 @@ const restoreFromLocalFile = async () => {
 
     let partialStartState = null
     if (partialItems.length) {
-      partialStartState = await restorePartialBackups(partialItems, text => { restoreFromUploadStatus.value = text })
+      partialStartState = await restorePartialBackups(partialItems, restoreRules, text => { restoreFromUploadStatus.value = text })
     }
 
     if (!fullFiles.length) {
@@ -1900,7 +1935,7 @@ const restoreFromRemoteFile = async () => {
 
     let partialStartState = null
     if (partialItems.length) {
-      partialStartState = await restorePartialBackups(partialItems, text => { restoreFromRemoteURLStatus.value = text })
+      partialStartState = await restorePartialBackups(partialItems, await getRestoreRules(), text => { restoreFromRemoteURLStatus.value = text })
     }
 
     if (!fullItems.length) {
@@ -2574,22 +2609,25 @@ async function restoreFromFluxDrive(newComponents) {
   restoringFromFluxDrive.value = true
   restoreFromFluxDriveStatus.value = t('core.backupAndRestore.initializingRestoreJobs')
 
-  // The middleware names the profile of a partial backup. Such an archive is
-  // read before anything changes, and when it cannot be, nothing is restored:
-  // appendrestoretask would empty appdata and keep only what the archive holds.
+  // Every archive is read before anything changes: a full one costs its first
+  // block. The middleware names the profile of a partial backup, but one
+  // registered without it (a partial archive uploaded as a manual backup) is
+  // still told by its marker. appendrestoretask would empty appdata and keep
+  // only what the archive holds. When an archive with a profile cannot be
+  // read, nothing is restored; one without is left to the node, as before.
   const partialItems = []
   let partialStartState = null
   try {
-    for (const item of newComponents.filter(component => component.profile)) {
+    for (const item of newComponents) {
       const partial = await partialArchiveAt(item.file_url)
-      if (partial === null) throw new Error(t('core.backupAndRestore.partialUnreadable'))
+      if (partial === null && item.profile) throw new Error(t('core.backupAndRestore.partialUnreadable'))
       if (partial) {
         restoreFromFluxDriveStatus.value = partialStepText('downloading')
         partialItems.push({ component: item.component, roots: partial.roots, blob: await downloadBackupArchive(item.file_url) })
       }
     }
     if (partialItems.length) {
-      partialStartState = await restorePartialBackups(partialItems, text => { restoreFromFluxDriveStatus.value = text })
+      partialStartState = await restorePartialBackups(partialItems, await getRestoreRules(), text => { restoreFromFluxDriveStatus.value = text })
     }
   } catch (error) {
     console.error('Error during partial restore:', error)

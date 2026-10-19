@@ -769,6 +769,7 @@
       "partialStarting": "Đang khởi động ứng dụng...",
       "partialDownloadFailed": "Không thể tải xuống bản sao lưu (HTTP {status}). Không có gì bị thay đổi.",
       "partialUnreadable": "Bản sao lưu này chỉ chứa một phần dữ liệu của ứng dụng và không thể đọc được, vì vậy không có gì bị thay đổi. Hãy thử lại sau vài phút.",
+      "partialRulesUnavailable": "Không thể đọc các quy tắc khôi phục của bản sao lưu này ({reason}), vì vậy không có gì bị thay đổi. Hãy thử lại sau vài phút.",
       "partialNotStopped": "Ứng dụng không dừng, vì vậy không có gì bị thay đổi. Hãy thử lại sau vài phút.",
       "partialDoneNotStarted": "Khôi phục hoàn tất, nhưng ứng dụng không xác nhận đã khởi động. Nếu vẫn ngoại tuyến sau vài phút, hãy khởi động nó từ tab {tab}.",
       "restoreFailed": "Khôi phục không thành công",

@@ -242,6 +242,7 @@
       "partialStarting": "Uruchamianie aplikacji...",
       "partialDownloadFailed": "Nie udało się pobrać kopii zapasowej (HTTP {status}). Nic nie zostało zmienione.",
       "partialUnreadable": "Ta kopia zapasowa zawiera tylko część danych aplikacji i nie można jej odczytać, więc nic nie zostało zmienione. Spróbuj ponownie za kilka minut.",
+      "partialRulesUnavailable": "Nie udało się odczytać reguł przywracania tej kopii zapasowej ({reason}), więc nic nie zostało zmienione. Spróbuj ponownie za kilka minut.",
       "partialNotStopped": "Aplikacja się nie zatrzymała, więc nic nie zostało zmienione. Spróbuj ponownie za kilka minut.",
       "partialDoneNotStarted": "Przywracanie zakończone, ale aplikacja nie potwierdziła uruchomienia. Jeśli za kilka minut nadal będzie offline, uruchom ją w zakładce {tab}.",
       "backupsInventory": "Inwentarz kopii zapasowych",

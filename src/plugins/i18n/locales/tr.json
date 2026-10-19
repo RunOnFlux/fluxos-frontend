@@ -769,6 +769,7 @@
       "partialStarting": "Uygulama başlatılıyor...",
       "partialDownloadFailed": "Yedek indirilemedi (HTTP {status}). Hiçbir şey değiştirilmedi.",
       "partialUnreadable": "Bu yedek uygulama verilerinin yalnızca bir kısmını içeriyor ve okunamadı, bu yüzden hiçbir şey değiştirilmedi. Birkaç dakika sonra tekrar deneyin.",
+      "partialRulesUnavailable": "Bu yedeğin geri yükleme kuralları okunamadı ({reason}), bu yüzden hiçbir şey değiştirilmedi. Birkaç dakika sonra tekrar deneyin.",
       "partialNotStopped": "Uygulama durmadı, bu yüzden hiçbir şey değiştirilmedi. Birkaç dakika sonra tekrar deneyin.",
       "partialDoneNotStarted": "Geri yükleme tamamlandı, ancak uygulama başladığını doğrulamadı. Birkaç dakika sonra hâlâ çevrimdışıysa, {tab} sekmesinden başlatın.",
       "restoreFailed": "Geri yükleme başarısız oldu",
