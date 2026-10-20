@@ -3649,6 +3649,7 @@ const generateDeploymentMessage = async () => {
         const envData = {
           envid: envId,
           env: component.environmentParameters,
+          app: appName,
         }
 
         try {

@@ -8533,6 +8533,16 @@ function storageRecordOwner() {
   return owner || currentUserZelid.value
 }
 
+/**
+ * The app a Flux Storage env or cmd upload is made for.
+ * @returns {string}
+ */
+function storageRecordApp() {
+  return props.newApp
+    ? appDetails.value.name
+    : (props.appSpec?.name || appDetails.value.name)
+}
+
 async function uploadEnvToFluxStorage(componentIndex) {
   try {
     isUploadingEnv.value = true
@@ -8562,7 +8572,8 @@ async function uploadEnvToFluxStorage(componentIndex) {
 
     const envid = crypto.randomUUID().replaceAll('-', '')
     const owner = storageRecordOwner()
-    const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner })
+    const app = storageRecordApp()
+    const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner, app })
 
     if (data?.status === 'error') {
       showToast('danger', data?.message || 'Upload failed')
@@ -8610,7 +8621,8 @@ async function uploadCmdToFluxStorage(componentIndex) {
 
     const cmdid = crypto.randomUUID().replaceAll('-', '')
     const owner = storageRecordOwner()
-    const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner })
+    const app = storageRecordApp()
+    const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner, app })
 
     if (data?.status === 'error') {
       showToast('danger', data?.message || 'Upload failed')
