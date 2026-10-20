@@ -36,7 +36,7 @@ class StorageService {
       console.log('🔐 Uploading environment variables to Flux Storage:', { envid: data.envid, envCount: data.env.length })
 
       const client = this.getStorageClient()
-      const response = await client.post(`/v${this.apiVersion}/env`, data)
+      const response = await client.post(`/v${this.apiVersion}/env`, this.withOwner(data))
 
       if (response.status === 200 || response.status === 201) {
         console.log('✅ Environment variables uploaded successfully to Flux Storage')
@@ -70,7 +70,7 @@ class StorageService {
       console.log('📧 Uploading contacts to Flux Storage:', data)
 
       const client = this.getStorageClient()
-      const response = await client.post(`/v${this.apiVersion}/contacts`, data)
+      const response = await client.post(`/v${this.apiVersion}/contacts`, this.withOwner(data))
 
       if (response.status === 200 || response.status === 201) {
         console.log('✅ Contacts uploaded successfully to Flux Storage')
@@ -93,23 +93,46 @@ class StorageService {
   }
 
   /**
-   * Generate a random environment ID (matching FluxCloud's implementation)
-   * @returns {string} Random environment ID
+   * A storage id: 32 random hex characters.
+   * @returns {string} 32-hex-character id
    */
+  generateStorageId() {
+    return crypto.randomUUID().replaceAll('-', '')
+  }
+
   generateEnvId() {
-    const timestamp = Date.now()
-    const random = Math.floor(Math.random() * 1000) + 1000
-    
-    return `${timestamp}${random}`
+    return this.generateStorageId()
+  }
+
+  generateContactsId() {
+    return this.generateStorageId()
   }
 
   /**
-   * Generate a random contacts ID (matching FluxCloud's implementation)
-   * @returns {string} Random contacts ID
+   * The FluxID the current session is logged in as, from zelidauth, or '' when unavailable.
+   * @returns {string}
    */
-  generateContactsId() {
-    // FluxCloud uses: (math.Random().nextDouble() * 999999999999999).floor().toString()
-    return Math.floor(Math.random() * 999999999999999).toString()
+  getOwner() {
+    try {
+      const auth = localStorage.getItem('zelidauth')
+
+      return auth ? (new URLSearchParams(auth).get('zelid') || '') : ''
+    } catch (error) {
+      return ''
+    }
+  }
+
+  /**
+   * The upload body with its owner set; storage requires an owner on every upload.
+   * A caller that already set an owner is left as-is.
+   * @param {Object} data
+   * @returns {Object}
+   */
+  withOwner(data) {
+    if (data && data.owner) return data
+    const owner = this.getOwner()
+
+    return owner ? { ...data, owner } : data
   }
 
   /**

@@ -8546,8 +8546,9 @@ async function uploadEnvToFluxStorage(componentIndex) {
       return
     }
 
-    const envid = Math.floor(Math.random() * 999999999999999).toString()
-    const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray })
+    const envid = crypto.randomUUID().replaceAll('-', '')
+    const owner = appDetails.value.owner || currentUserZelid.value
+    const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner })
 
     if (data?.status === 'error') {
       showToast('danger', data?.message || 'Upload failed')
@@ -8593,8 +8594,9 @@ async function uploadCmdToFluxStorage(componentIndex) {
       return
     }
 
-    const cmdid = Math.floor(Math.random() * 999999999999999).toString()
-    const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray })
+    const cmdid = crypto.randomUUID().replaceAll('-', '')
+    const owner = appDetails.value.owner || currentUserZelid.value
+    const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner })
 
     if (data?.status === 'error') {
       showToast('danger', data?.message || 'Upload failed')
@@ -8649,10 +8651,12 @@ async function uploadContactsToFluxStorage() {
       return
     }
 
-    const contactsid = Math.floor(Math.random() * 999999999999999).toString()
+    const contactsid = crypto.randomUUID().replaceAll('-', '')
+    const owner = appDetails.value.owner || currentUserZelid.value
     const { data } = await axios.post('https://storage.runonflux.io/v1/contacts', {
       contactsid,
       contacts: contactsArray,
+      owner,
     })
 
     if (data?.status === 'error') {
