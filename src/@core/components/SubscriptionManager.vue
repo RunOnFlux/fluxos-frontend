@@ -8519,6 +8519,20 @@ watch(tab, async (newVal, oldVal) => {
   }
 })
 
+/**
+ * The owner a Flux Storage upload is stamped with: the owner who signs the message that will
+ * reference it. A new app is signed by its own owner; an update by the owner before it, which in an
+ * ownership transfer is not the owner the form now names.
+ * @returns {string}
+ */
+function storageRecordOwner() {
+  const owner = props.newApp
+    ? appDetails.value.owner
+    : (originalAppSpecSnapshot.value?.owner || props.appSpec?.owner)
+
+  return owner || currentUserZelid.value
+}
+
 async function uploadEnvToFluxStorage(componentIndex) {
   try {
     isUploadingEnv.value = true
@@ -8547,7 +8561,7 @@ async function uploadEnvToFluxStorage(componentIndex) {
     }
 
     const envid = crypto.randomUUID().replaceAll('-', '')
-    const owner = appDetails.value.owner || currentUserZelid.value
+    const owner = storageRecordOwner()
     const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner })
 
     if (data?.status === 'error') {
@@ -8595,7 +8609,7 @@ async function uploadCmdToFluxStorage(componentIndex) {
     }
 
     const cmdid = crypto.randomUUID().replaceAll('-', '')
-    const owner = appDetails.value.owner || currentUserZelid.value
+    const owner = storageRecordOwner()
     const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner })
 
     if (data?.status === 'error') {
@@ -8652,7 +8666,7 @@ async function uploadContactsToFluxStorage() {
     }
 
     const contactsid = crypto.randomUUID().replaceAll('-', '')
-    const owner = appDetails.value.owner || currentUserZelid.value
+    const owner = storageRecordOwner()
     const { data } = await axios.post('https://storage.runonflux.io/v1/contacts', {
       contactsid,
       contacts: contactsArray,
