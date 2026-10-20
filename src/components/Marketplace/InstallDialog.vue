@@ -3831,6 +3831,7 @@ const generateDeploymentMessage = async () => {
           await StorageService.uploadEnv({
             envid,
             env: component.environmentParameters,
+            app: globalAppSpec.name,
           })
 
           // Replace environmentParameters with storage reference
