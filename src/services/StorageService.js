@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getStoredAuth } from '@/utils/session'
 
 /**
  * Storage Service for interacting with Flux Storage API
@@ -32,19 +33,13 @@ class StorageService {
    * @returns {Promise<Object>} Upload response
    */
   async uploadEnv(data) {
+    const body = this.withOwner(data)
+    let response
     try {
       console.log('🔐 Uploading environment variables to Flux Storage:', { envid: data.envid, envCount: data.env.length })
 
       const client = this.getStorageClient()
-      const response = await client.post(`/v${this.apiVersion}/env`, data)
-
-      if (response.status === 200 || response.status === 201) {
-        console.log('✅ Environment variables uploaded successfully to Flux Storage')
-
-        return response.data
-      }
-
-      throw new Error(`Storage upload failed with status: ${response.status}`)
+      response = await client.post(`/v${this.apiVersion}/env`, body)
     } catch (error) {
       console.error('❌ Failed to upload environment variables to Flux Storage:', error)
 
@@ -56,6 +51,15 @@ class StorageService {
         throw new Error(`Storage upload error: ${error.message}`)
       }
     }
+    this.assertStored(response)
+
+    if (response.status === 200 || response.status === 201) {
+      console.log('✅ Environment variables uploaded successfully to Flux Storage')
+
+      return response.data
+    }
+
+    throw new Error(`Storage upload failed with status: ${response.status}`)
   }
 
   /**
@@ -66,19 +70,13 @@ class StorageService {
    * @returns {Promise<Object>} Upload response
    */
   async uploadContacts(data) {
+    const body = this.withOwner(data)
+    let response
     try {
-      console.log('📧 Uploading contacts to Flux Storage:', data)
+      console.log('📧 Uploading contacts to Flux Storage:', data.contactsid)
 
       const client = this.getStorageClient()
-      const response = await client.post(`/v${this.apiVersion}/contacts`, data)
-
-      if (response.status === 200 || response.status === 201) {
-        console.log('✅ Contacts uploaded successfully to Flux Storage')
-
-        return response.data
-      }
-
-      throw new Error(`Storage upload failed with status: ${response.status}`)
+      response = await client.post(`/v${this.apiVersion}/contacts`, body)
     } catch (error) {
       console.error('❌ Failed to upload contacts to Flux Storage:', error)
 
@@ -90,26 +88,83 @@ class StorageService {
         throw new Error(`Storage upload error: ${error.message}`)
       }
     }
+    this.assertStored(response)
+
+    if (response.status === 200 || response.status === 201) {
+      console.log('✅ Contacts uploaded successfully to Flux Storage')
+
+      return response.data
+    }
+
+    throw new Error(`Storage upload failed with status: ${response.status}`)
   }
 
   /**
-   * Generate a random environment ID (matching FluxCloud's implementation)
-   * @returns {string} Random environment ID
+   * The message Flux Storage gives with a refused upload, or null when the upload was stored.
+   * @param {Object} data - The response body
+   * @returns {string|null}
+   */
+  refusalMessage(data) {
+    if (data?.status !== 'error') return null
+
+    return data.data?.message || data.message || 'Flux Storage refused the upload'
+  }
+
+  /**
+   * Flux Storage answers a refused upload with HTTP 200 and `{status: 'error'}`; this throws its
+   * message so a refused upload is never taken as stored.
+   * @param {Object} response - The axios response
+   */
+  assertStored(response) {
+    const message = this.refusalMessage(response?.data)
+    if (message) throw new Error(message)
+  }
+
+  /**
+   * A storage id: 32 random hex characters.
+   * @returns {string} 32-hex-character id
+   */
+  generateStorageId() {
+    return Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('')
+  }
+
+  /**
+   * Generate an environment ID
+   * @returns {string} 32-hex-character id
    */
   generateEnvId() {
-    const timestamp = Date.now()
-    const random = Math.floor(Math.random() * 1000) + 1000
-    
-    return `${timestamp}${random}`
+    return this.generateStorageId()
   }
 
   /**
-   * Generate a random contacts ID (matching FluxCloud's implementation)
-   * @returns {string} Random contacts ID
+   * Generate a contacts ID
+   * @returns {string} 32-hex-character id
    */
   generateContactsId() {
-    // FluxCloud uses: (math.Random().nextDouble() * 999999999999999).floor().toString()
-    return Math.floor(Math.random() * 999999999999999).toString()
+    return this.generateStorageId()
+  }
+
+  /**
+   * The FluxID the current session is logged in as, or '' when there is no login.
+   * @returns {string}
+   */
+  getOwner() {
+    return getStoredAuth()?.zelid || ''
+  }
+
+  /**
+   * The upload body with its owner set; storage requires an owner on every upload.
+   * A caller that already set an owner is left as-is; with no owner and no login, the upload is
+   * refused here.
+   * @param {Object} data
+   * @returns {Object}
+   */
+  withOwner(data) {
+    if (data && data.owner) return data
+    const owner = this.getOwner()
+    if (!owner) throw new Error('Log in to upload to Flux Storage')
+
+    return { ...data, owner }
   }
 
   /**

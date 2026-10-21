@@ -4044,7 +4044,7 @@ import { isValidPort, isPortBanned, generateRandomPort } from '@/utils/fluxPorts
 import { convertToLatestVersion, LATEST_SPEC_VERSION as SPEC_LATEST_VERSION } from '@/utils/specConverter'
 import { usePriceEstimate } from '@/composables/usePriceEstimate'
 import { useLoginSheet } from '@/composables/useLoginSheet'
-import { isSessionExpiringSoon, isAuthError } from '@/utils/session'
+import { isSessionExpiringSoon, isAuthError, getStoredAuth } from '@/utils/session'
 import { useFluxStorageReveal, hasStorageMarker, STORAGE_MARKERS } from '@/composables/useFluxStorageReveal'
 
 // Import payment images
@@ -4336,20 +4336,7 @@ const { loadEnterpriseOwners, isEnterpriseOwner } = useEnterpriseOwners()
 
 // The owner whose entitlement matters: the logged-in user when registering a new
 // app, or the app's own owner when managing an existing one.
-const currentUserZelid = computed(() => {
-  try {
-    const zelidauth = localStorage.getItem('zelidauth')
-    if (zelidauth) {
-      const auth = qs.parse(zelidauth)
-
-      return auth?.zelid || ''
-    }
-  } catch (error) {
-    console.error('Failed to parse zelidauth for enterprise owner check:', error)
-  }
-
-  return ''
-})
+const currentUserZelid = computed(() => getStoredAuth()?.zelid || '')
 
 const entitlementOwnerZelid = computed(() => {
   return props.newApp
@@ -8519,6 +8506,48 @@ watch(tab, async (newVal, oldVal) => {
   }
 })
 
+/**
+ * The owner a Flux Storage upload is stamped with: the owner who signs the message that will
+ * reference it. A new app is signed by its own owner; an update by the owner before it, which in an
+ * ownership transfer is not the owner the form now names.
+ * @returns {string}
+ */
+function storageRecordOwner() {
+  const owner = props.newApp
+    ? appDetails.value.owner
+    : (originalAppSpecSnapshot.value?.owner || props.appSpec?.owner)
+
+  return owner || currentUserZelid.value
+}
+
+/**
+ * The app a Flux Storage env or cmd upload is made for.
+ * @returns {string}
+ */
+function storageRecordApp() {
+  return props.newApp
+    ? (appDetails.value.name || '').toLowerCase()
+    : (props.appSpec?.name || appDetails.value.name)
+}
+
+// Each Flux Storage env or cmd link made on this form, with the app it was uploaded for and the
+// entries it replaced, so a rename of a new app can put the entries back for a fresh upload.
+const storageUploads = new Map()
+
+watch(() => appDetails.value.name, () => {
+  if (!props.newApp) return
+  const app = storageRecordApp()
+  const stale = [...storageUploads].filter(([, upload]) => upload.app !== app)
+  if (!stale.length) return
+  stale.forEach(([link, upload]) => {
+    const field = upload.kind === 'env' ? 'environmentParameters' : 'commands'
+    const component = (props.appSpec?.compose || []).find(c => (c[field] || []).includes(link))
+    if (component) component[field] = [...component[field].filter(item => item !== link), ...upload.entries]
+    storageUploads.delete(link)
+  })
+  showToast('warning', 'The app name changed: upload the environment and commands to Flux Storage again')
+})
+
 async function uploadEnvToFluxStorage(componentIndex) {
   try {
     isUploadingEnv.value = true
@@ -8542,20 +8571,34 @@ async function uploadEnvToFluxStorage(componentIndex) {
     // Skip if table already contains a pointer
     if (envArray.some(line => line.includes('F_S_ENV='))) {
       showToast('warning', 'Environment parameters are already in Flux Storage')
-      
+
       return
     }
 
-    const envid = Math.floor(Math.random() * 999999999999999).toString()
-    const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray })
+    const app = storageRecordApp()
+    if (!app) {
+      showToast('warning', 'Enter the app name before uploading to Flux Storage')
+
+      return
+    }
+
+    const envid = StorageService.generateEnvId()
+    const owner = storageRecordOwner()
+    if (!owner) {
+      showToast('warning', 'Log in to upload to Flux Storage')
+
+      return
+    }
+    const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner, app })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.message || 'Upload failed')
+      showToast('danger', StorageService.refusalMessage(data))
       
       return
     }
 
     const pointer = `F_S_ENV=https://storage.runonflux.io/v1/env/${envid}`
+    storageUploads.set(pointer, { kind: 'env', app, entries: envArray })
     showToast('success', 'Successful upload of Environment to Flux Storage')
 
     // Clear the table and add a single "normal" entry with the upload link
@@ -8589,20 +8632,34 @@ async function uploadCmdToFluxStorage(componentIndex) {
     // Skip if pointer already exists
     if (cmdArray.some(e => e.includes('F_S_CMD='))) {
       showToast('warning', 'Commands are already in Flux Storage')
-      
+
       return
     }
 
-    const cmdid = Math.floor(Math.random() * 999999999999999).toString()
-    const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray })
+    const app = storageRecordApp()
+    if (!app) {
+      showToast('warning', 'Enter the app name before uploading to Flux Storage')
+
+      return
+    }
+
+    const cmdid = StorageService.generateStorageId()
+    const owner = storageRecordOwner()
+    if (!owner) {
+      showToast('warning', 'Log in to upload to Flux Storage')
+
+      return
+    }
+    const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner, app })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.message || 'Upload failed')
+      showToast('danger', StorageService.refusalMessage(data))
       
       return
     }
 
     const pointer = `F_S_CMD=https://storage.runonflux.io/v1/cmd/${cmdid}`
+    storageUploads.set(pointer, { kind: 'cmd', app, entries: cmdArray })
 
     showToast('success', 'Successful upload of Commands to Flux Storage')
 
@@ -8635,7 +8692,6 @@ async function uploadContactsToFluxStorage() {
 
     // Normalize from VCombobox (strings or objects)
     const contactsArray = appDetails.value.contacts
-    console.log(contactsArray)
 
     if (contactsArray.length === 0) {
       showToast('warning', 'No contacts to upload')
@@ -8649,14 +8705,21 @@ async function uploadContactsToFluxStorage() {
       return
     }
 
-    const contactsid = Math.floor(Math.random() * 999999999999999).toString()
+    const contactsid = StorageService.generateContactsId()
+    const owner = storageRecordOwner()
+    if (!owner) {
+      showToast('warning', 'Log in to upload to Flux Storage')
+
+      return
+    }
     const { data } = await axios.post('https://storage.runonflux.io/v1/contacts', {
       contactsid,
       contacts: contactsArray,
+      owner,
     })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.message || 'Upload failed')
+      showToast('danger', StorageService.refusalMessage(data))
       
       return
     }
@@ -8898,11 +8961,12 @@ async function verifyAppSpec() {
       const hasStorageReference = validContacts.some(c => c.startsWith('F_S_CONTACTS='))
       if (!hasStorageReference && validContacts.length > 0) {
         try {
-          console.log('📧 Auto-uploading contacts to Flux Storage:', validContacts)
+          console.log('📧 Auto-uploading contacts to Flux Storage')
           const contactsId = StorageService.generateContactsId()
           const contactsData = {
             contactsid: contactsId,
             contacts: validContacts,
+            owner: storageRecordOwner(),
           }
           await StorageService.uploadContacts(contactsData)
           const storageReference = StorageService.getContactsStorageReference(contactsId)
