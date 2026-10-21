@@ -121,16 +121,27 @@ class StorageService {
   }
 
   /**
-   * A storage id: 32 random hex characters.
-   * @returns {string} 32-hex-character id
+   * A storage id: 20 random characters from [0-9A-Za-z], about 119 bits.
+   * The contacts reference `F_S_CONTACTS=https://storage.runonflux.io/v1/contacts/<id>` must fit the
+   * 75 characters FluxOS allows a contact, which leaves at most 21 for the id.
+   * @returns {string} 20-character id
    */
   generateStorageId() {
-    return Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('')
+    const alphabet = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+    let id = ''
+    while (id.length < 20) {
+      for (const byte of crypto.getRandomValues(new Uint8Array(32))) {
+        // 248 is the largest multiple of 62 below 256; higher bytes are dropped so every character is equally likely.
+        if (byte < 248 && id.length < 20) id += alphabet[byte % 62]
+      }
+    }
+
+    return id
   }
 
   /**
    * Generate an environment ID
-   * @returns {string} 32-hex-character id
+   * @returns {string} 20-character id
    */
   generateEnvId() {
     return this.generateStorageId()
@@ -138,7 +149,7 @@ class StorageService {
 
   /**
    * Generate a contacts ID
-   * @returns {string} 32-hex-character id
+   * @returns {string} 20-character id
    */
   generateContactsId() {
     return this.generateStorageId()
