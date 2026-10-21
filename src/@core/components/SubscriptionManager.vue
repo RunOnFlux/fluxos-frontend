@@ -8526,7 +8526,7 @@ function storageRecordOwner() {
  */
 function storageRecordApp() {
   return props.newApp
-    ? appDetails.value.name
+    ? (appDetails.value.name || '').toLowerCase()
     : (props.appSpec?.name || appDetails.value.name)
 }
 
@@ -8534,17 +8534,15 @@ function storageRecordApp() {
 // entries it replaced, so a rename of a new app can put the entries back for a fresh upload.
 const storageUploads = new Map()
 
-watch(() => appDetails.value.name, name => {
+watch(() => appDetails.value.name, () => {
   if (!props.newApp) return
-  const stale = [...storageUploads].filter(([, upload]) => upload.app !== name)
+  const app = storageRecordApp()
+  const stale = [...storageUploads].filter(([, upload]) => upload.app !== app)
   if (!stale.length) return
   stale.forEach(([link, upload]) => {
-    const component = props.appSpec?.compose?.[upload.componentIndex]
-    if (component) {
-      const field = upload.kind === 'env' ? 'environmentParameters' : 'commands'
-      const current = component[field] || []
-      if (current.includes(link)) component[field] = [...current.filter(item => item !== link), ...upload.entries]
-    }
+    const field = upload.kind === 'env' ? 'environmentParameters' : 'commands'
+    const component = (props.appSpec?.compose || []).find(c => (c[field] || []).includes(link))
+    if (component) component[field] = [...component[field].filter(item => item !== link), ...upload.entries]
     storageUploads.delete(link)
   })
   showToast('warning', 'The app name changed: upload the environment and commands to Flux Storage again')
@@ -8586,16 +8584,21 @@ async function uploadEnvToFluxStorage(componentIndex) {
 
     const envid = StorageService.generateEnvId()
     const owner = storageRecordOwner()
+    if (!owner) {
+      showToast('warning', 'Log in to upload to Flux Storage')
+
+      return
+    }
     const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner, app })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.data?.message || data?.message || 'Upload failed')
+      showToast('danger', StorageService.refusalMessage(data))
       
       return
     }
 
     const pointer = `F_S_ENV=https://storage.runonflux.io/v1/env/${envid}`
-    storageUploads.set(pointer, { kind: 'env', app, componentIndex, entries: envArray })
+    storageUploads.set(pointer, { kind: 'env', app, entries: envArray })
     showToast('success', 'Successful upload of Environment to Flux Storage')
 
     // Clear the table and add a single "normal" entry with the upload link
@@ -8642,16 +8645,21 @@ async function uploadCmdToFluxStorage(componentIndex) {
 
     const cmdid = StorageService.generateStorageId()
     const owner = storageRecordOwner()
+    if (!owner) {
+      showToast('warning', 'Log in to upload to Flux Storage')
+
+      return
+    }
     const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner, app })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.data?.message || data?.message || 'Upload failed')
+      showToast('danger', StorageService.refusalMessage(data))
       
       return
     }
 
     const pointer = `F_S_CMD=https://storage.runonflux.io/v1/cmd/${cmdid}`
-    storageUploads.set(pointer, { kind: 'cmd', app, componentIndex, entries: cmdArray })
+    storageUploads.set(pointer, { kind: 'cmd', app, entries: cmdArray })
 
     showToast('success', 'Successful upload of Commands to Flux Storage')
 
@@ -8699,6 +8707,11 @@ async function uploadContactsToFluxStorage() {
 
     const contactsid = StorageService.generateContactsId()
     const owner = storageRecordOwner()
+    if (!owner) {
+      showToast('warning', 'Log in to upload to Flux Storage')
+
+      return
+    }
     const { data } = await axios.post('https://storage.runonflux.io/v1/contacts', {
       contactsid,
       contacts: contactsArray,
@@ -8706,7 +8719,7 @@ async function uploadContactsToFluxStorage() {
     })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.data?.message || data?.message || 'Upload failed')
+      showToast('danger', StorageService.refusalMessage(data))
       
       return
     }
