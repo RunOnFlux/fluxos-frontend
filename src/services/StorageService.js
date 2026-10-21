@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { getStoredAuth } from '@/utils/session'
 
 /**
  * Storage Service for interacting with Flux Storage API
@@ -97,42 +98,46 @@ class StorageService {
    * @returns {string} 32-hex-character id
    */
   generateStorageId() {
-    return crypto.randomUUID().replaceAll('-', '')
+    return Array.from(crypto.getRandomValues(new Uint8Array(16)), b => b.toString(16).padStart(2, '0')).join('')
   }
 
+  /**
+   * Generate an environment ID
+   * @returns {string} 32-hex-character id
+   */
   generateEnvId() {
     return this.generateStorageId()
   }
 
+  /**
+   * Generate a contacts ID
+   * @returns {string} 32-hex-character id
+   */
   generateContactsId() {
     return this.generateStorageId()
   }
 
   /**
-   * The FluxID the current session is logged in as, from zelidauth, or '' when unavailable.
+   * The FluxID the current session is logged in as, or '' when there is no login.
    * @returns {string}
    */
   getOwner() {
-    try {
-      const auth = localStorage.getItem('zelidauth')
-
-      return auth ? (new URLSearchParams(auth).get('zelid') || '') : ''
-    } catch (error) {
-      return ''
-    }
+    return getStoredAuth()?.zelid || ''
   }
 
   /**
    * The upload body with its owner set; storage requires an owner on every upload.
-   * A caller that already set an owner is left as-is.
+   * A caller that already set an owner is left as-is; with no owner and no login, the upload is
+   * refused here.
    * @param {Object} data
    * @returns {Object}
    */
   withOwner(data) {
     if (data && data.owner) return data
     const owner = this.getOwner()
+    if (!owner) throw new Error('Log in to upload to Flux Storage')
 
-    return owner ? { ...data, owner } : data
+    return { ...data, owner }
   }
 
   /**

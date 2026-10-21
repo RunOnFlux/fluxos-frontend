@@ -3539,7 +3539,7 @@ const uploadEmailToStorage = async () => {
 
   try {
 
-    // Generate unique contacts ID (matching FluxCloud's approach)
+    // Generate unique contacts ID
     const contactsId = StorageService.generateContactsId()
 
     // Prepare contacts data for upload
@@ -3827,7 +3827,7 @@ const generateDeploymentMessage = async () => {
 
       if (!alreadyUploaded) {
         try {
-          const envid = StorageService.generateContactsId() // Use same generator as FluxCloud
+          const envid = StorageService.generateEnvId()
           await StorageService.uploadEnv({
             envid,
             env: component.environmentParameters,
