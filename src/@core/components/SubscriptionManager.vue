@@ -8589,7 +8589,7 @@ async function uploadEnvToFluxStorage(componentIndex) {
     const { data } = await axios.post('https://storage.runonflux.io/v1/env', { envid, env: envArray, owner, app })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.message || 'Upload failed')
+      showToast('danger', data?.data?.message || data?.message || 'Upload failed')
       
       return
     }
@@ -8645,7 +8645,7 @@ async function uploadCmdToFluxStorage(componentIndex) {
     const { data } = await axios.post('https://storage.runonflux.io/v1/cmd', { cmdid, cmd: cmdArray, owner, app })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.message || 'Upload failed')
+      showToast('danger', data?.data?.message || data?.message || 'Upload failed')
       
       return
     }
@@ -8684,7 +8684,6 @@ async function uploadContactsToFluxStorage() {
 
     // Normalize from VCombobox (strings or objects)
     const contactsArray = appDetails.value.contacts
-    console.log(contactsArray)
 
     if (contactsArray.length === 0) {
       showToast('warning', 'No contacts to upload')
@@ -8707,7 +8706,7 @@ async function uploadContactsToFluxStorage() {
     })
 
     if (data?.status === 'error') {
-      showToast('danger', data?.message || 'Upload failed')
+      showToast('danger', data?.data?.message || data?.message || 'Upload failed')
       
       return
     }
@@ -8949,7 +8948,7 @@ async function verifyAppSpec() {
       const hasStorageReference = validContacts.some(c => c.startsWith('F_S_CONTACTS='))
       if (!hasStorageReference && validContacts.length > 0) {
         try {
-          console.log('📧 Auto-uploading contacts to Flux Storage:', validContacts)
+          console.log('📧 Auto-uploading contacts to Flux Storage')
           const contactsId = StorageService.generateContactsId()
           const contactsData = {
             contactsid: contactsId,

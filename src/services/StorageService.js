@@ -38,6 +38,7 @@ class StorageService {
 
       const client = this.getStorageClient()
       const response = await client.post(`/v${this.apiVersion}/env`, this.withOwner(data))
+      this.assertStored(response)
 
       if (response.status === 200 || response.status === 201) {
         console.log('✅ Environment variables uploaded successfully to Flux Storage')
@@ -68,10 +69,11 @@ class StorageService {
    */
   async uploadContacts(data) {
     try {
-      console.log('📧 Uploading contacts to Flux Storage:', data)
+      console.log('📧 Uploading contacts to Flux Storage:', data.contactsid)
 
       const client = this.getStorageClient()
       const response = await client.post(`/v${this.apiVersion}/contacts`, this.withOwner(data))
+      this.assertStored(response)
 
       if (response.status === 200 || response.status === 201) {
         console.log('✅ Contacts uploaded successfully to Flux Storage')
@@ -90,6 +92,17 @@ class StorageService {
       } else {
         throw new Error(`Storage upload error: ${error.message}`)
       }
+    }
+  }
+
+  /**
+   * Flux Storage answers a refused upload with HTTP 200 and `{status: 'error'}`; this throws its
+   * message so a refused upload is never taken as stored.
+   * @param {Object} response - The axios response
+   */
+  assertStored(response) {
+    if (response?.data?.status === 'error') {
+      throw new Error(response.data.data?.message || 'Flux Storage refused the upload')
     }
   }
 
