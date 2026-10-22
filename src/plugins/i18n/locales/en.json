@@ -5220,6 +5220,7 @@
       "teamfortress2": "Team Fortress 2 servers with stock and Workshop maps, SourceMod admins and plugins, bans and a live server console in your browser",
       "arksurvivalevolved": "ARK: Survival Evolved servers with all twelve maps, rates and breeding from your browser, Workshop mods and a private RCON console",
       "vintagestory": "Vintage Story servers with every world setting, mods from the official ModDB, roles, the whitelist and backups in your browser",
+      "beammp": "BeamMP servers for BeamNG.drive multiplayer with every map, mods from the BeamNG.com repository, Lua plugins, a whitelist and a live console in your browser",
       "wordpress": "Decentralized, censorship-resistant WordPress",
       "n8n": "Self-hosted n8n workflow automation",
       "openclaw": "Self-hosted, model-agnostic AI assistant",
