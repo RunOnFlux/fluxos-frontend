@@ -105,6 +105,7 @@ const services = [
   { anchor: 'ARK: Survival Evolved Server Hosting', url: `${GAMES_HUB}/ark-survival-evolved`, img: `${GAMES_HUB}/apps/ark-survival-evolved/og/home.webp`, desc: 'arksurvivalevolved' },
   { anchor: 'Vintage Story Server Hosting', url: `${GAMES_HUB}/vintage-story`, img: `${GAMES_HUB}/apps/vintage-story/og/home.webp`, desc: 'vintagestory' },
   { anchor: 'BeamMP Server Hosting', url: `${GAMES_HUB}/beammp`, img: `${GAMES_HUB}/apps/beammp/og/home.webp`, desc: 'beammp' },
+  { anchor: 'Soulmask Server Hosting', url: `${GAMES_HUB}/soulmask`, img: `${GAMES_HUB}/apps/soulmask/og/home.webp`, desc: 'soulmask' },
   { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },

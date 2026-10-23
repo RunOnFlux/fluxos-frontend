@@ -5121,6 +5121,7 @@
       "arksurvivalevolved": "ARK: Survival Evolved 服务器：全部十二张地图、在浏览器中设置倍率和繁殖、创意工坊模组，以及私有 RCON 控制台",
       "vintagestory": "Vintage Story 服务器：全部世界设置、官方 ModDB 模组、角色、白名单和备份，都在浏览器中管理",
       "beammp": "适用于 BeamNG.drive 多人游戏的 BeamMP 服务器，提供全部地图、BeamNG.com 仓库中的模组、Lua 插件、白名单以及浏览器中的实时控制台",
+      "soulmask": "Cloud Mist Forest 或 Shifting Sands 地图上的 Soulmask 服务器，支持 PvE 或 PvP，可即时应用的玩法预设、世界备份与上传、封禁以及浏览器中的实时控制台",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",
       "openclaw": "自托管、模型无关的 AI 助手",
