@@ -5122,6 +5122,7 @@
       "vintagestory": "모든 월드 설정, 공식 ModDB 모드, 역할, 화이트리스트와 백업을 브라우저에서 관리하는 Vintage Story 서버",
       "beammp": "BeamNG.drive 멀티플레이용 BeamMP 서버. 모든 맵, BeamNG.com 저장소의 모드, Lua 플러그인, 화이트리스트, 실시간 콘솔을 브라우저에서",
       "soulmask": "Cloud Mist Forest 또는 Shifting Sands의 Soulmask 서버. PvE 또는 PvP, 즉시 적용되는 게임플레이 프리셋, 월드 백업과 업로드, 차단, 실시간 콘솔을 브라우저에서",
+      "conanexiles": "Conan Exiles Enhanced 서버. 로드 순서대로 적용되는 Workshop 모드, PvP 및 레이드 일정, 배율과 규칙, 실시간 RCON 콘솔, 차단, 매일 백업을 브라우저에서",
       "wordpress": "탈중앙화된 검열 저항 WordPress",
       "n8n": "셀프 호스팅 n8n 워크플로 자동화",
       "openclaw": "셀프 호스팅, 모델 독립적 AI 어시스턴트",
