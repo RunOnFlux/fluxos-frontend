@@ -5122,6 +5122,7 @@
       "vintagestory": "Vintage Story-Server mit allen Welteinstellungen, Mods aus der offiziellen ModDB, Rollen, Whitelist und Backups im Browser",
       "beammp": "BeamMP-Server für BeamNG.drive-Multiplayer mit allen Karten, Mods aus dem BeamNG.com-Repository, Lua-Plugins, Whitelist und Live-Konsole im Browser",
       "soulmask": "Soulmask-Server auf Cloud Mist Forest oder Shifting Sands, PvE oder PvP, mit live angewendeten Gameplay-Presets, Welt-Backups und -Uploads, Banns und Live-Konsole im Browser",
+      "conanexiles": "Conan Exiles Enhanced-Server mit Workshop-Mods in Ladereihenfolge, PvP- und Raid-Zeitplan, Raten und Regeln, Live-RCON-Konsole, Banns und täglichen Backups im Browser",
       "wordpress": "Dezentrales, zensurresistentes WordPress",
       "n8n": "Selbst gehostete n8n-Workflow-Automatisierung",
       "openclaw": "Selbst gehosteter, modellunabhängiger KI-Assistent",
