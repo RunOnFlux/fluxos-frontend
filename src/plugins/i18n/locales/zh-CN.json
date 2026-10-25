@@ -5123,6 +5123,7 @@
       "beammp": "适用于 BeamNG.drive 多人游戏的 BeamMP 服务器，提供全部地图、BeamNG.com 仓库中的模组、Lua 插件、白名单以及浏览器中的实时控制台",
       "soulmask": "Cloud Mist Forest 或 Shifting Sands 地图上的 Soulmask 服务器，支持 PvE 或 PvP，可即时应用的玩法预设、世界备份与上传、封禁以及浏览器中的实时控制台",
       "conanexiles": "Conan Exiles Enhanced 服务器，按加载顺序启用 Workshop 模组，PvP 与突袭时间表、倍率与规则、实时 RCON 控制台、封禁以及每日备份，全部在浏览器中完成",
+      "sonsoftheforest": "Sons of the Forest 服务器，提供全部服务器设置与自定义游戏规则、存档位、你的合作存档、所有者以及备份，全部在浏览器中完成",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",
       "openclaw": "自托管、模型无关的 AI 助手",
