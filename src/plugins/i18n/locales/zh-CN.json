@@ -5125,6 +5125,7 @@
       "conanexiles": "Conan Exiles Enhanced 服务器，按加载顺序启用 Workshop 模组，PvP 与突袭时间表、倍率与规则、实时 RCON 控制台、封禁以及每日备份，全部在浏览器中完成",
       "sonsoftheforest": "Sons of the Forest 服务器，提供全部服务器设置与自定义游戏规则、存档位、你的合作存档、所有者以及备份，全部在浏览器中完成",
       "counterstrike2": "Counter-Strike 2 服务器，支持所有游戏模式、Workshop 地图、Metamod 和 CounterStrikeSharp 插件、管理员、封禁与备份，全在浏览器中管理",
+      "abioticfactor": "支持跨平台联机的 Abiotic Factor 服务器，所有沙盒规则、世界与你的 PC 存档、管理员、封禁和备份，都可在浏览器中管理",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",
       "openclaw": "自托管、模型无关的 AI 助手",
