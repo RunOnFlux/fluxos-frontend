@@ -4397,7 +4397,7 @@ const registerApplication = async () => {
       return
     }
 
-    const errorMessage = 'Failed to register application: ' + error.message
+    const errorMessage = 'Failed to register application: ' + (error.response?.data?.data?.message || error.message)
     signingErrors.value.registering = errorMessage
     showSnackbar(errorMessage, 'error', 6000)
 

@@ -9,6 +9,7 @@ import {
   ipToDNSFormat,
 } from '@/utils/stickyBackend'
 import axios from 'axios'
+import { isAdmissionUnavailable, retryAdmission } from '@/services/admissionRetry'
 
 
 const sourceCancelToken = axios.CancelToken.source()
@@ -177,6 +178,8 @@ export default function Api() {
       return response
     },
     error => {
+      if (isAdmissionUnavailable(error)) return retryAdmission(instance, error)
+
       // Error interceptor: Handle sticky backend failures
       if (error.config && getStickyBackendDNS()) {
         const isNetworkError = !error.response
