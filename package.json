@@ -10,6 +10,7 @@
     "build:analyze": "vite build && start dist/stats.html",
     "preview": "vite preview --host 0.0.0.0 --port 3005",
     "lint": "eslint . --fix",
+    "test": "node --test \"src/**/*.test.js\"",
     "prerender": "node scripts/prerender.js",
     "fetch:routes": "node scripts/fetch-prerender-routes.js",
     "build:icons": "node scripts/build-optimized-icons.js && tsx src/plugins/iconify/build-icons.js",
