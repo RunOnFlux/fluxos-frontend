@@ -112,6 +112,7 @@ const services = [
   { anchor: 'Abiotic Factor Server Hosting', url: `${GAMES_HUB}/abiotic-factor`, img: `${GAMES_HUB}/apps/abiotic-factor/og/home.webp`, desc: 'abioticfactor' },
   { anchor: 'SCUM Server Hosting', url: `${GAMES_HUB}/scum`, img: `${GAMES_HUB}/apps/scum/og/home.webp`, desc: 'scum' },
   { anchor: 'The Forest Server Hosting', url: `${GAMES_HUB}/the-forest`, img: `${GAMES_HUB}/apps/the-forest/og/home.webp`, desc: 'theforest' },
+  { anchor: 'Icarus Server Hosting', url: `${GAMES_HUB}/icarus`, img: `${GAMES_HUB}/apps/icarus/og/home.webp`, desc: 'icarus' },
   { anchor: 'Web3 WordPress Hosting', url: `${APPS_HUB}/wordpress`, img: `${APPS_HUB}/apps/wordpress/banner.webp`, desc: 'wordpress' },
   { anchor: 'n8n Hosting', url: `${APPS_HUB}/n8n`, img: `${APPS_HUB}/apps/n8n/banner.webp`, desc: 'n8n' },
   { anchor: 'OpenClaw AI Assistant Hosting', url: `${APPS_HUB}/openclaw`, img: `${APPS_HUB}/apps/openclaw/banner.webp`, desc: 'openclaw' },
