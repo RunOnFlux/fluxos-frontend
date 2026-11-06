@@ -304,6 +304,7 @@
       "systemInfo": "Information",
       "dockerEvents": "Docker-Ereignisse",
       "manageFlux": "Verwalten Sie die Flussgravitation",
+      "nodeStatus": "Knotenstatus",
       "manageDaemon": "Daemon verwalten",
       "manageBenchmark": "Benchmark verwalten",
       "manageUsers": "Benutzer verwalten",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Knotenstatus",
+          "subtitle": "Protokolle, Daemon-Status und Benchmark-Ergebnisse"
+        },
         "title": "Verwalten Sie die Flussgravitation",
         "subtitle": "Konfigurieren und verwalten Sie Ihre Flux-Knoteneinstellungen",
         "tabs": {

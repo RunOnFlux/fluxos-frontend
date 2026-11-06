@@ -304,6 +304,7 @@
       "systemInfo": "Bilgi",
       "dockerEvents": "Docker Etkinlikleri",
       "manageFlux": "Akı Yerçekimini Yönetin",
+      "nodeStatus": "Düğüm Durumu",
       "manageDaemon": "Daemon'u Yönet",
       "manageBenchmark": "Karşılaştırmayı Yönet",
       "manageUsers": "Kullanıcıları Yönet",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Düğüm Durumu",
+          "subtitle": "Günlükler, daemon durumu ve kıyaslama sonuçları"
+        },
         "title": "Akı Yerçekimini Yönetin",
         "subtitle": "Flux düğümü ayarlarınızı yapılandırın ve yönetin",
         "tabs": {

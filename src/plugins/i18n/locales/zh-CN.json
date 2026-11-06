@@ -304,6 +304,7 @@
       "systemInfo": "信息",
       "dockerEvents": "码头工人事件",
       "manageFlux": "管理通量重力",
+      "nodeStatus": "节点状态",
       "manageDaemon": "管理守护进程",
       "manageBenchmark": "管理基准",
       "manageUsers": "管理用户",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "节点状态",
+          "subtitle": "日志、守护进程状态和基准结果"
+        },
         "title": "管理通量重力",
         "subtitle": "配置和管理您的 Flux 节点设置",
         "tabs": {

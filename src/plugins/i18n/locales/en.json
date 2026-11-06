@@ -304,6 +304,7 @@
       "systemInfo": "Information",
       "dockerEvents": "Docker Events",
       "manageFlux": "Manage Flux Gravity",
+      "nodeStatus": "Node Status",
       "manageDaemon": "Manage Daemon",
       "manageBenchmark": "Manage Benchmark",
       "manageUsers": "Manage Users",
@@ -2640,6 +2641,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Node Status",
+          "subtitle": "Logs, daemon status and benchmark results"
+        },
         "title": "Manage Flux Gravity",
         "subtitle": "Configure and manage your Flux node settings",
         "tabs": {

@@ -304,6 +304,7 @@
       "systemInfo": "Thông tin",
       "dockerEvents": "Sự kiện Docker",
       "manageFlux": "Quản lý trọng lực thông lượng",
+      "nodeStatus": "Trạng thái nút",
       "manageDaemon": "Quản lý Daemon",
       "manageBenchmark": "Quản lý điểm chuẩn",
       "manageUsers": "Quản lý người dùng",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Trạng thái nút",
+          "subtitle": "Nhật ký, trạng thái daemon và kết quả benchmark"
+        },
         "title": "Quản lý thông lượng trọng lực",
         "subtitle": "Định cấu hình và quản lý cài đặt nút Flux của bạn",
         "tabs": {
