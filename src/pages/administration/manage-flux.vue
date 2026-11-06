@@ -7,9 +7,9 @@
           <VIcon icon="mdi-cog" size="32" color="white" />
         </VAvatar>
         <div>
-          <h2 class="text-h5 font-weight-bold">{{ t('pages.administration.manageFlux.title') }}</h2>
+          <h2 class="text-h5 font-weight-bold">{{ t(arcane ? 'pages.administration.manageFlux.nodeStatus.title' : 'pages.administration.manageFlux.title') }}</h2>
           <p class="text-body-2 text-medium-emphasis mb-0">
-            {{ t('pages.administration.manageFlux.subtitle') }}
+            {{ t(arcane ? 'pages.administration.manageFlux.nodeStatus.subtitle' : 'pages.administration.manageFlux.subtitle') }}
           </p>
         </div>
       </div>
@@ -18,7 +18,7 @@
     <!-- Tabs -->
     <VCard class="mb-3" elevation="2">
       <VTabs v-model="currentTab" bg-color="surface" color="primary">
-        <VTab value="settings">
+        <VTab v-if="!arcane" value="settings">
           <VIcon icon="mdi-cog" size="22" class="mr-2" />
           <span class="text-subtitle-1 font-weight-medium">{{ t('pages.administration.manageFlux.tabs.settings') }}</span>
         </VTab>
@@ -390,7 +390,7 @@
 
       <!-- Daemon Tab -->
       <VWindowItem value="daemon">
-        <VCard elevation="1">
+        <VCard v-if="!arcane" elevation="1">
           <VCardTitle class="d-flex align-center pa-4 bg-surface">
             <VIcon icon="mdi-server" size="24" color="grey" class="mr-2" />
             <span class="text-h6">{{ t('pages.administration.manageFlux.daemon.control.title') }}</span>
@@ -615,7 +615,7 @@
 
       <!-- Benchmark Tab -->
       <VWindowItem value="benchmark">
-        <VCard elevation="1">
+        <VCard v-if="!arcane" elevation="1">
           <VCardTitle class="d-flex align-center pa-4 bg-surface">
             <VIcon icon="mdi-speedometer" size="24" color="grey" class="mr-2" />
             <span class="text-h6">{{ t('pages.administration.manageFlux.benchmark.control.title') }}</span>
@@ -1215,6 +1215,7 @@ import { useSEONoIndex } from '@/composables/useSEO'
 import { useSnackbar } from '@/composables/useSnackbar'
 import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import axios from 'axios'
+import { storeToRefs } from 'pinia'
 import { useFluxStore } from '@/stores/flux'
 import { getDetectedBackendURL } from '@/utils/backend'
 
@@ -1242,6 +1243,14 @@ const editorTheme = computed(() => {
 
 // Tab state
 const currentTab = ref('settings')
+
+// ArcaneOS manages its own daemon, benchmark, ports and updates, so these controls are a legacy
+// node's and the node refuses them.
+const { arcane } = storeToRefs(fluxStore)
+
+watch(arcane, isArcane => {
+  if (isArcane) currentTab.value = 'logs'
+}, { immediate: true })
 const logsTab = ref('flux')
 
 // Logs state

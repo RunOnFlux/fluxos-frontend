@@ -3299,6 +3299,10 @@
     },
     "administration": {
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Stan węzła",
+          "subtitle": "Logi, stan demona i wyniki benchmarku"
+        },
         "sections": {
           "systemUpdates": {
             "fluxUpdate": {
@@ -4931,6 +4935,7 @@
       "dockerEvents": "Zdarzenia Docker",
       "manageUsers": "Zarządzaj użytkownikami",
       "manageFlux": "Zarządzaj Flux Gravity",
+      "nodeStatus": "Stan węzła",
       "loggedSessions": "Zalogowane sesje",
       "title": "Administracja",
       "manageDaemon": "Zarządzaj Daemonem",

@@ -304,6 +304,7 @@
       "systemInfo": "Information",
       "dockerEvents": "Événements Docker",
       "manageFlux": "Gérer la gravité du flux",
+      "nodeStatus": "État du nœud",
       "manageDaemon": "Gérer le démon",
       "manageBenchmark": "Gérer le benchmark",
       "manageUsers": "Gérer les utilisateurs",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "État du nœud",
+          "subtitle": "Journaux, état du démon et résultats du benchmark"
+        },
         "title": "Gérer la gravité du flux",
         "subtitle": "Configurez et gérez les paramètres de votre nœud Flux",
         "tabs": {

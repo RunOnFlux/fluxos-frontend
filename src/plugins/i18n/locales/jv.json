@@ -304,6 +304,7 @@
       "systemInfo": "Informasi",
       "dockerEvents": "Acara Docker",
       "manageFlux": "Atur Flux Gravity",
+      "nodeStatus": "Status Node",
       "manageDaemon": "Atur Daemon",
       "manageBenchmark": "Atur Benchmark",
       "manageUsers": "Atur Panganggo",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Status Node",
+          "subtitle": "Log, status daemon, lan asil benchmark"
+        },
         "title": "Atur Flux Gravity",
         "subtitle": "Konfigurasi lan atur setelan node Flux sampeyan",
         "tabs": {
