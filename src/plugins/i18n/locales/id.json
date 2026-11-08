@@ -304,6 +304,7 @@
       "systemInfo": "Informasi",
       "dockerEvents": "Acara Docker",
       "manageFlux": "Kelola Flux Gravitasi",
+      "nodeStatus": "Status Node",
       "manageDaemon": "Kelola Daemon",
       "manageBenchmark": "Kelola Tolok Ukur",
       "manageUsers": "Kelola Pengguna",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Status Node",
+          "subtitle": "Log, status daemon, dan hasil benchmark"
+        },
         "title": "Kelola Flux Gravitasi",
         "subtitle": "Konfigurasikan dan kelola pengaturan node Flux Anda",
         "tabs": {

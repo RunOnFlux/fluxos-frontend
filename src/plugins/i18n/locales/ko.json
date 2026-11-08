@@ -304,6 +304,7 @@
       "systemInfo": "정보",
       "dockerEvents": "도커 이벤트",
       "manageFlux": "자속 중력 관리",
+      "nodeStatus": "노드 상태",
       "manageDaemon": "데몬 관리",
       "manageBenchmark": "벤치마크 관리",
       "manageUsers": "사용자 관리",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "노드 상태",
+          "subtitle": "로그, 데몬 상태 및 벤치마크 결과"
+        },
         "title": "자속 중력 관리",
         "subtitle": "Flux 노드 설정 구성 및 관리",
         "tabs": {

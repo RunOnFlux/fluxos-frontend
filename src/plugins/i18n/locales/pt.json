@@ -304,6 +304,7 @@
       "systemInfo": "Informação",
       "dockerEvents": "Eventos Docker",
       "manageFlux": "Gerenciar a gravidade do fluxo",
+      "nodeStatus": "Estado do nó",
       "manageDaemon": "Gerenciar Daemon",
       "manageBenchmark": "Gerenciar referência",
       "manageUsers": "Gerenciar usuários",
@@ -2558,6 +2559,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Estado do nó",
+          "subtitle": "Registos, estado do daemon e resultados do benchmark"
+        },
         "title": "Gerenciar a gravidade do fluxo",
         "subtitle": "Configure e gerencie as configurações do seu nó Flux",
         "tabs": {

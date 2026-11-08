@@ -5,6 +5,7 @@ import axios from "axios"
 import DashboardService from "@/services/DashboardService"
 import AppsService from "@/services/AppsService"
 import qs from "qs"
+import { getDetectedBackendURL } from "@/utils/backend"
 
 export const useFluxStore = defineStore("flux", {
   state: () => ({
@@ -18,6 +19,7 @@ export const useFluxStore = defineStore("flux", {
       apiPort: "",
     },
     privilege: "none",
+    arcane: false,
     zelid: "",
     fluxVersion: "",
     loginType: "",
@@ -48,6 +50,16 @@ export const useFluxStore = defineStore("flux", {
   },
 
   actions: {
+    async detectArcane() {
+      try {
+        const backend = localStorage.getItem('backendURL') || getDetectedBackendURL()
+        const { data } = await axios.get(`${backend}/flux/isarcaneos`)
+
+        this.arcane = data.data === true
+      } catch {
+        this.arcane = false
+      }
+    },
     async fetchFluxIDs() {
       try {
         const response = await Api().get("/flux/fluxids")

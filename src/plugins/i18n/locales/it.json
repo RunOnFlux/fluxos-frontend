@@ -304,6 +304,7 @@
       "systemInfo": "Informazioni",
       "dockerEvents": "Eventi Docker",
       "manageFlux": "Gestisci la gravità del flusso",
+      "nodeStatus": "Stato del nodo",
       "manageDaemon": "Gestisci demone",
       "manageBenchmark": "Gestisci benchmark",
       "manageUsers": "Gestisci utenti",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Stato del nodo",
+          "subtitle": "Log, stato del daemon e risultati del benchmark"
+        },
         "title": "Gestisci la gravità del flusso",
         "subtitle": "Configura e gestisci le impostazioni del tuo nodo Flux",
         "tabs": {

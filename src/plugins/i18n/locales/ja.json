@@ -304,6 +304,7 @@
       "systemInfo": "情報",
       "dockerEvents": "ドッカーイベント",
       "manageFlux": "磁束重力の管理",
+      "nodeStatus": "ノードの状態",
       "manageDaemon": "デーモンの管理",
       "manageBenchmark": "ベンチマークの管理",
       "manageUsers": "ユーザーの管理",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "ノードの状態",
+          "subtitle": "ログ、デーモンの状態、ベンチマーク結果"
+        },
         "title": "磁束重力の管理",
         "subtitle": "Flux ノード設定の構成と管理",
         "tabs": {

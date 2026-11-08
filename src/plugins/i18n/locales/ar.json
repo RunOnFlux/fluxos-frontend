@@ -304,6 +304,7 @@
       "systemInfo": "معلومة",
       "dockerEvents": "أحداث عامل الميناء",
       "manageFlux": "إدارة تدفق الجاذبية",
+      "nodeStatus": "حالة العقدة",
       "manageDaemon": "إدارة الشيطان",
       "manageBenchmark": "إدارة المعيار",
       "manageUsers": "إدارة المستخدمين",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "حالة العقدة",
+          "subtitle": "السجلات وحالة البرنامج الخفي ونتائج المعيار"
+        },
         "title": "إدارة تدفق الجاذبية",
         "subtitle": "قم بتكوين وإدارة إعدادات عقدة Flux الخاصة بك",
         "tabs": {
