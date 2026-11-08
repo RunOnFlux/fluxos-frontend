@@ -1970,7 +1970,8 @@ const fetchBenchmarkInfo = async () => {
   }
 }
 
-// Watch for main tab changes to load logs when logs tab is opened
+// Watch for main tab changes to load logs when logs tab is opened. Immediate, because on ArcaneOS
+// the page can already open on the logs tab (set above, before this watcher exists).
 watch(currentTab, newTab => {
   if (newTab === 'logs') {
     // Auto-load logs based on current logs sub-tab
@@ -1982,7 +1983,7 @@ watch(currentTab, newTab => {
       fetchBenchmarkLogs()
     }
   }
-})
+}, { immediate: true })
 
 // Watch for logs sub-tab changes
 watch(logsTab, newTab => {
@@ -2003,8 +2004,11 @@ onMounted(() => {
     page: 'manage_flux',
   })
 
-  getRouterIP()
-  getAPIPort()
+  // ArcaneOS refuses these, and the settings tab that shows them is gone
+  if (!arcane.value) {
+    getRouterIP()
+    getAPIPort()
+  }
   fetchDaemonInfo()
   fetchBenchmarkInfo()
 })
