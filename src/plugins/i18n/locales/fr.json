@@ -304,6 +304,7 @@
       "systemInfo": "Information",
       "dockerEvents": "Événements Docker",
       "manageFlux": "Gérer la gravité du flux",
+      "nodeStatus": "État du nœud",
       "manageDaemon": "Gérer le démon",
       "manageBenchmark": "Gérer le benchmark",
       "manageUsers": "Gérer les utilisateurs",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "État du nœud",
+          "subtitle": "Journaux, état du démon et résultats du benchmark"
+        },
         "title": "Gérer la gravité du flux",
         "subtitle": "Configurez et gérez les paramètres de votre nœud Flux",
         "tabs": {
@@ -5128,6 +5133,8 @@
       "abioticfactor": "Serveurs Abiotic Factor avec crossplay, toutes les règles du bac à sable, mondes et votre sauvegarde PC, administrateurs, bannissements et sauvegardes dans votre navigateur",
       "scum": "Serveurs SCUM avec tous les réglages du serveur, listes de joueurs, règles de jeu et sauvegardes de la partie dans votre navigateur",
       "theforest": "Serveurs The Forest avec tous les réglages du serveur, cinq emplacements de sauvegarde, votre partie coopérative et des sauvegardes dans votre navigateur",
+      "icarus": "Serveurs Icarus avec tous les paramètres serveur, mondes que vous pouvez changer, importer et exporter, admins, bannissements et sauvegardes dans votre navigateur",
+      "killingfloor2": "Serveurs Killing Floor 2 avec tous les paramètres serveur, éditeur de rotation des cartes, cartes et mutateurs du Workshop, joueurs en direct avec expulsion et bannissement, et sauvegardes dans votre navigateur",
       "wordpress": "WordPress décentralisé et résistant à la censure",
       "n8n": "Automatisation de workflows n8n auto-hébergée",
       "openclaw": "Assistant IA auto-hébergé, indépendant du modèle",

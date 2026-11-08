@@ -304,6 +304,7 @@
       "systemInfo": "Information",
       "dockerEvents": "Docker Events",
       "manageFlux": "Manage Flux Gravity",
+      "nodeStatus": "Node Status",
       "manageDaemon": "Manage Daemon",
       "manageBenchmark": "Manage Benchmark",
       "manageUsers": "Manage Users",
@@ -2640,6 +2641,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Node Status",
+          "subtitle": "Logs, daemon status and benchmark results"
+        },
         "title": "Manage Flux Gravity",
         "subtitle": "Configure and manage your Flux node settings",
         "tabs": {
@@ -5228,6 +5233,8 @@
       "abioticfactor": "Abiotic Factor servers with crossplay, every sandbox rule, worlds and your PC save, admins and bans, and backups in your browser",
       "scum": "SCUM servers with every server setting, player lists, game rules and save backups in your browser",
       "theforest": "The Forest servers with every server setting, five save slots, your co-op save and backups in your browser",
+      "icarus": "Icarus servers with every server setting, prospects you can switch, upload and download, admins, bans and backups in your browser",
+      "killingfloor2": "Killing Floor 2 servers with every server setting, a map cycle editor, Workshop maps and mutators, live players with kick and ban, and backups in your browser",
       "wordpress": "Decentralized, censorship-resistant WordPress",
       "n8n": "Self-hosted n8n workflow automation",
       "openclaw": "Self-hosted, model-agnostic AI assistant",

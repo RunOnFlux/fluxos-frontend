@@ -304,6 +304,7 @@
       "systemInfo": "Information",
       "dockerEvents": "Docker-Ereignisse",
       "manageFlux": "Verwalten Sie die Flussgravitation",
+      "nodeStatus": "Knotenstatus",
       "manageDaemon": "Daemon verwalten",
       "manageBenchmark": "Benchmark verwalten",
       "manageUsers": "Benutzer verwalten",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "Knotenstatus",
+          "subtitle": "Protokolle, Daemon-Status und Benchmark-Ergebnisse"
+        },
         "title": "Verwalten Sie die Flussgravitation",
         "subtitle": "Konfigurieren und verwalten Sie Ihre Flux-Knoteneinstellungen",
         "tabs": {
@@ -5128,6 +5133,8 @@
       "abioticfactor": "Abiotic Factor-Server mit Crossplay, allen Sandbox-Regeln, Welten und deinem PC-Spielstand, Admins, Sperren und Backups in deinem Browser",
       "scum": "SCUM-Server mit allen Servereinstellungen, Spielerlisten, Spielregeln und Spielstand-Backups in deinem Browser",
       "theforest": "The-Forest-Server mit allen Servereinstellungen, fünf Spielstand-Slots, deinem Koop-Spielstand und Backups in deinem Browser",
+      "icarus": "Icarus-Server mit allen Servereinstellungen, Welten zum Wechseln, Hochladen und Herunterladen, Admins, Sperren und Backups in deinem Browser",
+      "killingfloor2": "Killing-Floor-2-Server mit allen Servereinstellungen, einem Map-Cycle-Editor, Workshop-Karten und Mutatoren, Live-Spielern mit Kick und Bann sowie Backups in deinem Browser",
       "wordpress": "Dezentrales, zensurresistentes WordPress",
       "n8n": "Selbst gehostete n8n-Workflow-Automatisierung",
       "openclaw": "Selbst gehosteter, modellunabhängiger KI-Assistent",

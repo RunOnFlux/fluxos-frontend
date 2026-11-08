@@ -1,5 +1,6 @@
 <script setup>
 import navItemsRaw from "@/navigation/horizontal"
+import { namedForNode } from "@/navigation/nodeStatus"
 import { themeConfig } from "@themeConfig"
 
 // Components
@@ -38,7 +39,7 @@ const { privilege, hasUserApps, isUserAppsChecked } = storeToRefs(fluxStore)
 
 // Computed navItems that filters "My Applications" based on login and app ownership
 const navItems = computed(() => {
-  return navItemsRaw.filter(item => {
+  return namedForNode(navItemsRaw, fluxStore.arcane).filter(item => {
     // Filter out "My Applications" if user is not logged in or has no apps
     if (item.to === 'apps-management') {
       // Show only if user is logged in AND has apps (or check hasn't completed yet)
@@ -72,6 +73,7 @@ watch(privilege, (newPrivilege, oldPrivilege) => {
 
 // Check user apps on mount if already logged in
 onMounted(() => {
+  fluxStore.detectArcane()
   if (privilege.value !== 'none') {
     fluxStore.checkUserApps()
   }

@@ -304,6 +304,7 @@
       "systemInfo": "信息",
       "dockerEvents": "码头工人事件",
       "manageFlux": "管理通量重力",
+      "nodeStatus": "节点状态",
       "manageDaemon": "管理守护进程",
       "manageBenchmark": "管理基准",
       "manageUsers": "管理用户",
@@ -2540,6 +2541,10 @@
         }
       },
       "manageFlux": {
+        "nodeStatus": {
+          "title": "节点状态",
+          "subtitle": "日志、守护进程状态和基准结果"
+        },
         "title": "管理通量重力",
         "subtitle": "配置和管理您的 Flux 节点设置",
         "tabs": {
@@ -5128,6 +5133,8 @@
       "abioticfactor": "支持跨平台联机的 Abiotic Factor 服务器，所有沙盒规则、世界与你的 PC 存档、管理员、封禁和备份，都可在浏览器中管理",
       "scum": "SCUM 服务器，支持所有服务器设置、玩家名单、游戏规则和存档备份，在浏览器中即可管理",
       "theforest": "The Forest 服务器，支持所有服务器设置、五个存档位、上传你的合作存档和备份，在浏览器中即可管理",
+      "icarus": "在浏览器中管理包含所有服务器设置的 Icarus 服务器，可切换、上传和下载的世界，以及管理员、封禁和备份",
+      "killingfloor2": "在浏览器中管理包含所有服务器设置的 Killing Floor 2 服务器，地图轮换编辑器，创意工坊地图与变异器，在线玩家的踢出和封禁，以及备份",
       "wordpress": "去中心化、抗审查的 WordPress",
       "n8n": "自托管的 n8n 工作流自动化",
       "openclaw": "自托管、模型无关的 AI 助手",
