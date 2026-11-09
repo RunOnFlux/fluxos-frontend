@@ -126,6 +126,7 @@
 import { ref, computed, onMounted, watch } from "vue"
 import { useI18n } from 'vue-i18n'
 import qs from "qs"
+import { historyOwners } from "@/utils/ssoZelids"
 import axios from "axios"
 import Management from "@/views/apps/management/manage.vue"
 import MyAppsTab from "@/views/apps/management/tabView.vue"
@@ -459,11 +460,11 @@ async function getExpiredApps() {
       return
     }
 
-    const response = await AppsService.permanentMessagesOwner(auth.zelid).catch(() => ({
-      data: { data: [] },
-    }))
+    // An SSO account's apps that expired under its ZelID from before the key rotation are still its own.
+    const responses = await Promise.all(historyOwners(auth.zelid).map(owner =>
+      AppsService.permanentMessagesOwner(owner).catch(() => ({ data: { data: [] } }))))
 
-    const appMessages = response.data.data || []
+    const appMessages = responses.flatMap(response => response.data.data || [])
     const adjustedPermMessages = []
 
     appMessages.forEach(msg => {
