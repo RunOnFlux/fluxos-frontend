@@ -74,6 +74,11 @@ const sharedState = {
   apiKeysCreating: ref(false),
   apiKeysLegacyCount: ref(0),
   apiKeysMax: ref(10),
+
+  // Address the bridge sends expiry reminders to ('' when none is set)
+  subscriptionEmail: ref(''),
+  subscriptionEmailLoading: ref(false),
+  subscriptionEmailSaving: ref(false),
 }
 
 export function useFluxDrive() {
@@ -3068,6 +3073,7 @@ export function useFluxDrive() {
     sharedState.subscriptionChecked.value = false
     sharedState.subscriptionPeriodEnd.value = null
     sharedState.paymentGateway.value = ''
+    sharedState.subscriptionEmail.value = ''
     sharedState.storageInfoFetched.value = false
     sharedState.filesLoaded.value = false
     sharedState.usedStorage.value = 0
@@ -3175,6 +3181,59 @@ export function useFluxDrive() {
     await fetchApiKeys()
   }
 
+  // ---------------------------------------------------------------------------
+  // Expiry reminder email
+  //
+  // The bridge emails this address 7 days and 1 day before the plan ends and again when it has
+  // ended. It lives on the subscription: read back through the subscription READ, set or cleared
+  // (empty string) through /api/v1/subscriptions/email.
+  // ---------------------------------------------------------------------------
+
+  /** POSTs to a subscriptions endpoint and normalizes bridge errors into thrown Errors. */
+  const subscriptionRequest = async (path, extra = {}) => {
+    const response = await fetch(`${bridgeURL}/api/v1/subscriptions${path}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: buildAuthBody(extra),
+    })
+
+    const result = await response.json()
+
+    // Same contract as the API key endpoints: an expired login is {warning} with HTTP 200.
+    if (result?.warning) throw new Error(t('components.fluxDrive.expiryEmail.sessionExpired'))
+    if (result?.error) throw new Error(result.error)
+    if (!response.ok) throw new Error(`Request failed (${response.status})`)
+
+    return result
+  }
+
+  const fetchSubscriptionEmail = async () => {
+    sharedState.subscriptionEmailLoading.value = true
+    try {
+      const result = await subscriptionRequest('', { action: 'READ' })
+
+      sharedState.subscriptionEmail.value = typeof result?.email === 'string' ? result.email : ''
+
+      return sharedState.subscriptionEmail.value
+    } finally {
+      sharedState.subscriptionEmailLoading.value = false
+    }
+  }
+
+  /** Saves the address, or removes it when `email` is empty. Returns the stored address. */
+  const saveSubscriptionEmail = async email => {
+    sharedState.subscriptionEmailSaving.value = true
+    try {
+      const result = await subscriptionRequest('/email', { email: email ?? '' })
+
+      sharedState.subscriptionEmail.value = typeof result?.email === 'string' ? result.email : ''
+
+      return sharedState.subscriptionEmail.value
+    } finally {
+      sharedState.subscriptionEmailSaving.value = false
+    }
+  }
+
   return {
     // State
     isLoggedIn,
@@ -3228,6 +3287,13 @@ export function useFluxDrive() {
     createApiKey,
     revokeApiKey,
     revokeLegacyApiKeys,
+
+    // Expiry reminder email
+    subscriptionEmail: sharedState.subscriptionEmail,
+    subscriptionEmailLoading: sharedState.subscriptionEmailLoading,
+    subscriptionEmailSaving: sharedState.subscriptionEmailSaving,
+    fetchSubscriptionEmail,
+    saveSubscriptionEmail,
 
     // Computed
     storagePercentage,

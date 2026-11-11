@@ -203,6 +203,7 @@ declare global {
   const nodeHasRoom: typeof import('./utils/nodeCapacity.js')['nodeHasRoom']
   const nodesInGeolocation: typeof import('./utils/nodeCapacity.js')['nodesInGeolocation']
   const normalizeEntry: typeof import('./utils/partialRestore.js')['normalizeEntry']
+  const normalizeFluxDriveEmail: typeof import('./utils/fluxDriveEmail.js')['normalizeFluxDriveEmail']
   const normalizeSpecForRedeploy: typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']
   const onActivated: typeof import('vue')['onActivated']
   const onBeforeMount: typeof import('vue')['onBeforeMount']
@@ -738,6 +739,7 @@ declare module 'vue' {
     readonly nodeHasRoom: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodeHasRoom']>
     readonly nodesInGeolocation: UnwrapRef<typeof import('./utils/nodeCapacity.js')['nodesInGeolocation']>
     readonly normalizeEntry: UnwrapRef<typeof import('./utils/partialRestore.js')['normalizeEntry']>
+    readonly normalizeFluxDriveEmail: UnwrapRef<typeof import('./utils/fluxDriveEmail.js')['normalizeFluxDriveEmail']>
     readonly normalizeSpecForRedeploy: UnwrapRef<typeof import('./utils/redeploySpec.js')['normalizeSpecForRedeploy']>
     readonly onActivated: UnwrapRef<typeof import('vue')['onActivated']>
     readonly onBeforeMount: UnwrapRef<typeof import('vue')['onBeforeMount']>
