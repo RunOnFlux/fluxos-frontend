@@ -1687,6 +1687,7 @@ import { importRsaPublicKey, encryptAesKeyWithRsaKey, encryptEnterpriseWithAes, 
 import { payWithZelcore, payWithSSP, isSSPAvailable, isZelcoreAvailable, isBrowserMetaMaskAvailable, getConnectedAccount, hasWalletConnectSession, signWithWalletConnect as walletServiceSignWithWalletConnect, watchWalletAccount, signWithSSP as walletServiceSignWithSSP, signWithZelcore as walletServiceSignWithZelcore, sanitizeUnicodeForSigning } from '@/utils/walletService'
 import axios from 'axios'
 import qs from 'query-string'
+import { SSO_SIGN_MESSAGE_URL } from '@/utils/ssoZelids'
 import ManualSignDialog from '@/@core/components/ManualSignDialog.vue'
 
 // Import wallet logos
@@ -4222,7 +4223,7 @@ const signWithSSO = async message => {
     }
 
     const result = await axios.post(
-      'https://service.fluxcore.ai/api/signMessage',
+      SSO_SIGN_MESSAGE_URL,
       { message },
       { headers },
     )

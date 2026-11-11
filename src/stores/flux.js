@@ -6,6 +6,7 @@ import DashboardService from "@/services/DashboardService"
 import AppsService from "@/services/AppsService"
 import qs from "qs"
 import { getDetectedBackendURL } from "@/utils/backend"
+import { historyOwners } from "@/utils/ssoZelids"
 
 export const useFluxStore = defineStore("flux", {
   state: () => ({
@@ -456,10 +457,9 @@ export const useFluxStore = defineStore("flux", {
         }
 
         // Check for expired apps
-        const expiredResponse = await AppsService.permanentMessagesOwner(auth.zelid).catch(() => ({
-          data: { data: [] },
-        }))
-        const expiredApps = expiredResponse.data.data || []
+        const expiredResponses = await Promise.all(historyOwners(auth.zelid).map(owner =>
+          AppsService.permanentMessagesOwner(owner).catch(() => ({ data: { data: [] } }))))
+        const expiredApps = expiredResponses.flatMap(response => response.data.data || [])
 
         this.userApps.hasApps = expiredApps.length > 0
         this.userApps.isChecked = true

@@ -22,6 +22,9 @@ declare global {
   const PARTIAL_STAGING: typeof import('./utils/partialRestore.js')['PARTIAL_STAGING']
   const SESSION_MAX_AGE_MS: typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']
   const SESSION_SIGNING_MARGIN_MS: typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']
+  const SSO_BASE: typeof import('./utils/ssoZelids.js')['SSO_BASE']
+  const SSO_SIGN_IN_URL: typeof import('./utils/ssoZelids.js')['SSO_SIGN_IN_URL']
+  const SSO_SIGN_MESSAGE_URL: typeof import('./utils/ssoZelids.js')['SSO_SIGN_MESSAGE_URL']
   const STORAGE_MARKERS: typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']
   const acceptHMRUpdate: typeof import('pinia')['acceptHMRUpdate']
   const alphaDashValidator: typeof import('./@core/utils/validators.js')['alphaDashValidator']
@@ -101,6 +104,7 @@ declare global {
   const firebaseApp: typeof import('./utils/firebase.js')['firebaseApp']
   const foldersToClear: typeof import('./utils/partialRestore.js')['foldersToClear']
   const forgetSsoEmail: typeof import('./utils/firebase.js')['forgetSsoEmail']
+  const forgetSsoPreviousZelid: typeof import('./utils/ssoZelids.js')['forgetSsoPreviousZelid']
   const formatDate: typeof import('./@core/utils/formatters.js')['formatDate']
   const formatDateToMonthShort: typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']
   const freezePrerenderedSnapshot: typeof import('./utils/prerenderSnapshot.js')['freezePrerenderedSnapshot']
@@ -145,6 +149,7 @@ declare global {
   const hasStorageMarker: typeof import('./composables/useFluxStorageReveal.js')['hasStorageMarker']
   const hasWalletConnectSession: typeof import('./utils/walletService.js')['hasWalletConnectSession']
   const hexToRgb: typeof import('./@core/utils/colorConverter.js')['hexToRgb']
+  const historyOwners: typeof import('./utils/ssoZelids.js')['historyOwners']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const importRsaPublicKey: typeof import('./utils/enterpriseCrypto.js')['importRsaPublicKey']
   const initializeWalletSDKs: typeof import('./utils/walletService.js')['initializeWalletSDKs']
@@ -251,6 +256,7 @@ declare global {
   const regexValidator: typeof import('./@core/utils/validators.js')['regexValidator']
   const registerPlugins: typeof import('./@core/utils/plugins.js')['registerPlugins']
   const rememberSsoEmail: typeof import('./utils/firebase.js')['rememberSsoEmail']
+  const rememberSsoPreviousZelid: typeof import('./utils/ssoZelids.js')['rememberSsoPreviousZelid']
   const requiredValidator: typeof import('./@core/utils/validators.js')['requiredValidator']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
@@ -553,6 +559,9 @@ declare module 'vue' {
     readonly PARTIAL_STAGING: UnwrapRef<typeof import('./utils/partialRestore.js')['PARTIAL_STAGING']>
     readonly SESSION_MAX_AGE_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_MAX_AGE_MS']>
     readonly SESSION_SIGNING_MARGIN_MS: UnwrapRef<typeof import('./utils/session.js')['SESSION_SIGNING_MARGIN_MS']>
+    readonly SSO_BASE: UnwrapRef<typeof import('./utils/ssoZelids.js')['SSO_BASE']>
+    readonly SSO_SIGN_IN_URL: UnwrapRef<typeof import('./utils/ssoZelids.js')['SSO_SIGN_IN_URL']>
+    readonly SSO_SIGN_MESSAGE_URL: UnwrapRef<typeof import('./utils/ssoZelids.js')['SSO_SIGN_MESSAGE_URL']>
     readonly STORAGE_MARKERS: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['STORAGE_MARKERS']>
     readonly acceptHMRUpdate: UnwrapRef<typeof import('pinia')['acceptHMRUpdate']>
     readonly alphaDashValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['alphaDashValidator']>
@@ -632,6 +641,7 @@ declare module 'vue' {
     readonly firebaseApp: UnwrapRef<typeof import('./utils/firebase.js')['firebaseApp']>
     readonly foldersToClear: UnwrapRef<typeof import('./utils/partialRestore.js')['foldersToClear']>
     readonly forgetSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['forgetSsoEmail']>
+    readonly forgetSsoPreviousZelid: UnwrapRef<typeof import('./utils/ssoZelids.js')['forgetSsoPreviousZelid']>
     readonly formatDate: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDate']>
     readonly formatDateToMonthShort: UnwrapRef<typeof import('./@core/utils/formatters.js')['formatDateToMonthShort']>
     readonly freezePrerenderedSnapshot: UnwrapRef<typeof import('./utils/prerenderSnapshot.js')['freezePrerenderedSnapshot']>
@@ -675,6 +685,7 @@ declare module 'vue' {
     readonly hasStorageMarker: UnwrapRef<typeof import('./composables/useFluxStorageReveal.js')['hasStorageMarker']>
     readonly hasWalletConnectSession: UnwrapRef<typeof import('./utils/walletService.js')['hasWalletConnectSession']>
     readonly hexToRgb: UnwrapRef<typeof import('./@core/utils/colorConverter.js')['hexToRgb']>
+    readonly historyOwners: UnwrapRef<typeof import('./utils/ssoZelids.js')['historyOwners']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly importRsaPublicKey: UnwrapRef<typeof import('./utils/enterpriseCrypto.js')['importRsaPublicKey']>
     readonly initializeWalletSDKs: UnwrapRef<typeof import('./utils/walletService.js')['initializeWalletSDKs']>
@@ -780,6 +791,7 @@ declare module 'vue' {
     readonly regexValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['regexValidator']>
     readonly registerPlugins: UnwrapRef<typeof import('./@core/utils/plugins.js')['registerPlugins']>
     readonly rememberSsoEmail: UnwrapRef<typeof import('./utils/firebase.js')['rememberSsoEmail']>
+    readonly rememberSsoPreviousZelid: UnwrapRef<typeof import('./utils/ssoZelids.js')['rememberSsoPreviousZelid']>
     readonly requiredValidator: UnwrapRef<typeof import('./@core/utils/validators.js')['requiredValidator']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>

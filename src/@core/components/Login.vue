@@ -671,6 +671,7 @@ import axios from "axios"
 
 import { storeToRefs } from "pinia"
 import qs from "qs"
+import { SSO_SIGN_IN_URL, rememberSsoPreviousZelid } from "@/utils/ssoZelids"
 import { computed, nextTick, onMounted, onUnmounted, ref } from "vue"
 import { useI18n } from "vue-i18n"
 import { eventBus } from "@/utils/eventBus"
@@ -860,7 +861,7 @@ const handleSignedInUser = async (user, provider = 'email') => {
       }
 
       const fluxLogin = await axios.post(
-        "https://service.fluxcore.ai/api/signInOrUp",
+        SSO_SIGN_IN_URL,
         { message: loginPhrase.value },
         { headers },
       )
@@ -882,6 +883,7 @@ const handleSignedInUser = async (user, provider = 'email') => {
         localStorage.setItem('loginType', 'sso')
         localStorage.setItem("zelidauth", qs.stringify(authLogin))
         rememberSsoEmail(user.email)
+        await rememberSsoPreviousZelid(token)
 
         // Track successful SSO authentication with specific provider
         const analytics = useAnalytics()
