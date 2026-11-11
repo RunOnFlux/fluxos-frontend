@@ -62,6 +62,7 @@ declare module 'vue' {
     DiscoverCard: typeof import('./components/Marketplace/DiscoverCard.vue')['default']
     DropZone: typeof import('./@core/components/DropZone.vue')['default']
     ErrorHeader: typeof import('./components/ErrorHeader.vue')['default']
+    ExpiryEmail: typeof import('./components/FluxDrive/ExpiryEmail.vue')['default']
     ExpiryLabel: typeof import('./@core/components/ExpiryLabel.vue')['default']
     FAQPanel: typeof import('./components/Marketplace/Panels/FAQPanel.vue')['default']
     FeatureShowcase: typeof import('./components/FeatureShowcase.vue')['default']

@@ -11,6 +11,7 @@ import { clearStickyBackendDNS } from "@/utils/stickyBackend"
 
 // Aliased: this component already has a local `auth` holding the parsed zelidauth.
 import { auth as firebaseAuth, forgetSsoEmail, hasPasswordProvider } from "@/utils/firebase"
+import { forgetSsoPreviousZelid } from "@/utils/ssoZelids"
 import ChangePasswordDialog from "@core/components/ChangePasswordDialog.vue"
 import { paymentBridge } from "@/utils/fiatGateways"
 import { useI18n } from "vue-i18n"
@@ -94,6 +95,7 @@ async function logout() {
   localStorage.removeItem("zelidauth")
   localStorage.removeItem("loginType")
   forgetSsoEmail()
+  forgetSsoPreviousZelid()
   clearStickyBackendDNS() // Clear sticky backend on logout
   fluxStore.setPrivilege("none")
   fluxStore.setZelid("")

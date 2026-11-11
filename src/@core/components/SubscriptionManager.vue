@@ -4012,6 +4012,7 @@ async function revealStorageValues(component, resolvedKey, title) {
 }
 import geolocations from '@/utils/geolocation'
 import qs from 'qs'
+import { SSO_SIGN_MESSAGE_URL } from '@/utils/ssoZelids'
 import { signWithWalletConnect, getConnectedAccount, payWithSSP, payWithZelcore, signWithSSP, signWithZelcore } from '@/utils/walletService'
 import { getUser, getSsoEmail } from '@/utils/firebase'
 import { getDetectedBackendURL } from "@/utils/backend"
@@ -10951,7 +10952,7 @@ async function initSignFluxSSO() {
       Authorization: `Bearer ${token}`,
     }
 
-    const res = await axios.post('https://service.fluxcore.ai/api/signMessage', { message }, { headers })
+    const res = await axios.post(SSO_SIGN_MESSAGE_URL, { message }, { headers })
     if (res.data?.status !== 'success' || !res.data?.signature) {
       showToast('error', 'SSO signing failed')
       isSigning.value = false

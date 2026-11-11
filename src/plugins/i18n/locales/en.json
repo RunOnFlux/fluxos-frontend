@@ -2528,6 +2528,20 @@
         },
         "customizable": "Customizable"
       },
+      "expiryEmail": {
+        "title": "Expiry Reminders",
+        "description": "We'll email you 7 days and 1 day before your plan expires, and when it expires, so you can renew before your files are removed.",
+        "label": "Email address",
+        "placeholder": "you{'@'}example.com",
+        "save": "Save",
+        "remove": "Remove",
+        "current": "Reminders go to {email}.",
+        "none": "No email set. You won't be reminded before your plan expires.",
+        "invalid": "Enter a valid email address.",
+        "saved": "Reminder email saved",
+        "removed": "Reminder email removed",
+        "sessionExpired": "Your session has expired. Please sign in again."
+      },
       "apiKeys": {
         "title": "API Keys",
         "description": "Generate an API key to use FluxDrive programmatically from your own apps and scripts.",
