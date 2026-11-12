@@ -3,6 +3,9 @@
   "version": "3.20.30",
   "private": true,
   "type": "module",
+  "arcane": {
+    "requires": {}
+  },
   "scripts": {
     "dev": "vite --logLevel info",
     "build": "npm run generate:sitemap && cross-env PHASED_BUILD=1 vite build && node scripts/post-build-redirect-stubs.js && node scripts/post-build-optimize-images.js && node scripts/post-build-compress.js",
