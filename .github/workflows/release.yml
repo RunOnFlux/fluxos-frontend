@@ -30,7 +30,11 @@ jobs:
       - name: Install Playwright Chromium
         run: npx playwright install chromium
 
+      # The build needs a heap of about 2.5 GB. Node's default is a quarter of the runner's
+      # memory, which is too little on an 8 GB runner, so the limit is stated.
       - name: Build for SEO
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         run: npm run build:seo
 
       - name: Create dist tarball
