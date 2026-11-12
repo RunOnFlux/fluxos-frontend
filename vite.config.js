@@ -122,13 +122,15 @@ export default defineConfig(({ mode }) => {
           filepath: './eslintrc-auto-import.cjs',
         },
       }),
+      // The locale files are not listed in `include`: they are bundled as plain JSON and
+      // vue-i18n compiles a message when it is first used (`runtimeOnly: false` ships the
+      // compiler). Compiled at build time, every message becomes three nested object literals
+      // that Rollup has to analyse: about 1 GB of build memory for 24 locales, and locale chunks
+      // a third larger.
       VueI18nPlugin({
         runtimeOnly: false,
         compositionOnly: true,
         strictMessage: false,
-        include: [
-          fileURLToPath(new URL('./src/plugins/i18n/locales/*.json', import.meta.url)),
-        ],
       }),
       svgLoader(),
       // Monaco Editor - bundle editor files locally instead of loading from CDN
