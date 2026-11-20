@@ -11,6 +11,14 @@
             <div class="text-caption text-medium-emphasis">
               {{ t('components.fluxDrive.fileManager.subtitle') }}
             </div>
+            <div
+              v-if="showPaidThrough"
+              class="d-flex align-center text-body-2 mt-1"
+              :class="paidThroughWarn ? 'text-warning' : 'text-medium-emphasis'"
+            >
+              <VIcon icon="mdi-calendar-clock" size="16" class="mr-1" />
+              <span>{{ paidThroughText }}</span>
+            </div>
           </div>
         </div>
         <VSpacer />
@@ -2845,6 +2853,33 @@ const subscriptionExpiryMessage = computed(() => {
     return `${days} days remaining • Expires ${formattedSubscriptionEndDateTime.value}`
   }
 })
+
+// The banner above only covers a plan that has lapsed, so an active subscriber had no way to see
+// when their paid period ends. /storage returns period_end for every plan; show it under the title.
+// Past period_end an active plan is a Stripe or crypto.com renewal waiting on its webhook - hidden.
+const showPaidThrough = computed(() =>
+  subscriptionChecked.value &&
+  hasActiveSubscription.value &&
+  !!subscriptionPeriodEnd.value &&
+  subscriptionDaysLeft.value >= 0,
+)
+
+const paidThroughText = computed(() => {
+  const days = subscriptionDaysLeft.value
+  const date = days === 0 ? formattedSubscriptionEndDateTime.value : formattedSubscriptionEndDate.value
+  const remaining = days === 0
+    ? t('components.fluxDrive.fileManager.endsToday')
+    : t('components.fluxDrive.fileManager.daysLeft', { count: days })
+
+  return `${t('components.fluxDrive.fileManager.paidThrough', { date })} · ${remaining}`
+})
+
+// Stripe and crypto.com renew on their own at period_end, so only a plan that has to be renewed by
+// hand is flagged in its last week - the same rule the reminder emails follow. The gateway is best
+// effort (/storage does not return it), which is why this only changes the colour, not the words.
+const paidThroughWarn = computed(() =>
+  subscriptionDaysLeft.value <= 7 && !['stripe', 'cryptocom'].includes(paymentGateway.value),
+)
 
 // Override fileHeaders with translated versions
 const fileHeaders = computed(() => [
