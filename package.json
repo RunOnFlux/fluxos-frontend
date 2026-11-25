@@ -57,7 +57,7 @@
     "dompurify": "^3.2.7",
     "draggable-resizable-vue3": "^1.0.94-beta",
     "element-plus": "^2.11.7",
-    "esbuild": "^0.25.2",
+    "esbuild": "^0.28.1",
     "eventemitter2": "^6.4.9",
     "firebase": "^11.6.0",
     "highlight.js": "^11.11.1",
