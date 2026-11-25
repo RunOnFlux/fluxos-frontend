@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Setup Node.js 22
         run: |
@@ -22,21 +22,61 @@ jobs:
           nvm use 22
           echo "$HOME/.nvm/versions/node/$(nvm current)/bin" >> $GITHUB_PATH
 
+      # From package-lock.json alone: a release is built from the dependencies its commit names,
+      # and the install fails if package.json and the lockfile disagree.
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright Chromium
         run: npx playwright install chromium
 
+      # The build needs a heap of about 2.5 GB. Node's default is a quarter of the runner's
+      # memory, which is too little on an 8 GB runner, so the limit is stated.
       - name: Build for SEO
+        env:
+          NODE_OPTIONS: --max-old-space-size=4096
         run: npm run build:seo
 
       - name: Create dist tarball
         run: tar -czvf dist.tar.gz dist
 
       - name: Upload dist.tar.gz to release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           files: dist.tar.gz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ArcaneOS nodes take the UI as a signed component. fluxos-component-manifest's sign-manifest
+  # run offers the newest full release that carries dist.tar.gz, with the `arcane.requires` of
+  # the tag's package.json (the lowest version of each other component this UI works beside), so
+  # it is dispatched once the tarball is on the release. The dispatch carries no input: the run
+  # reads the releases itself. The job is skipped while the repository variable
+  # MANIFEST_DISPATCH_APP_CLIENT_ID is unset.
+  dispatch-manifest:
+    needs: build-and-upload
+    if: ${{ !github.event.release.prerelease && vars.MANIFEST_DISPATCH_APP_CLIENT_ID != '' }}
+    runs-on: ubuntu-latest
+    # Holds the dispatch app's key, which the build job and the dependencies it runs never see.
+    # Its deployment policy admits release tags (v*).
+    environment: arcane-manifest-dispatch
+    permissions: {}
+
+    steps:
+      # An installation token for fluxos-component-manifest, Actions write and nothing else
+      # whatever the app is later granted. It expires within the hour and is revoked when the job
+      # ends.
+      - name: Mint the dispatch token
+        id: dispatch-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ vars.MANIFEST_DISPATCH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.MANIFEST_DISPATCH_APP_KEY }}
+          owner: ${{ github.repository_owner }}
+          repositories: fluxos-component-manifest
+          permission-actions: write
+
+      - name: Dispatch the manifest run
+        env:
+          GH_TOKEN: ${{ steps.dispatch-token.outputs.token }}
+        run: gh workflow run sign-manifest.yml --repo "$GITHUB_REPOSITORY_OWNER/fluxos-component-manifest" --ref master

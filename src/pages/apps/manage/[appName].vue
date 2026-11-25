@@ -2549,7 +2549,11 @@ function enableHistoryStatisticsChange() {
   }
 }
 
+// The points cap belongs to the live view, which adds one sample per poll. A history
+// series arrives whole, covers the selected time range, and is drawn once by its caller.
 function LimitChartItems(chart) {
+  if (enableHistoryStatistics.value) return
+
   const datasetLength = chart.data.datasets[0].data.length
   if (datasetLength > selectedPoints.value) {
     const excess = datasetLength - selectedPoints.value
@@ -2677,20 +2681,6 @@ function processStatsData(statsData, timeStamp = null) {
     diskUsageDocker = null
     diskUsageRootFs= null
   }
-
-  console.log("Resource Metrics:", {
-    "CPU Size": cpuSize,
-    "CPU Percent": cpuPercent,
-    "Memory Usage (MB)": memoryUsageMB,
-    "Memory Usage (%)": memoryUsagePercentage,
-    "Network RX Bytes": networkRxBytes,
-    "Network TX Bytes": networkTxBytes,
-    "I/O Read Bytes": ioReadBytes,
-    "I/O Write Bytes": ioWriteBytes,
-    "Disk Usage Mounts": diskUsageMounts,
-    "Disk Usage Volume": diskUsageDocker,
-    "Disk Usage RootFS": diskUsageRootFs,
-  })
 
   insertChartData(
     cpuPercent,
