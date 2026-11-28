@@ -4235,7 +4235,9 @@
         "signUp": "Zarejestruj się",
         "perDay": "/ dzień",
         "dailyCost": "Koszt dzienny",
-        "title": "FluxDrive Storage Plans"
+        "title": "FluxDrive Storage Plans",
+        "addMonth": "Dodaj 30 dni",
+        "downgradeLater": "Dostępne po zakończeniu obecnego planu"
       },
       "storageInfo": {
         "usedSpace": "Wykorzystane miejsce",

@@ -2475,7 +2475,9 @@
           "globalDistribution": "ਗਲੋਬਲ ਵੰਡ",
           "unlimitedBandwidth": "ਅਸੀਮਤ ਬੈਂਡਵਿਡਥ"
         },
-        "customizable": "ਅਨੁਕੂਲਿਤ"
+        "customizable": "ਅਨੁਕੂਲਿਤ",
+        "addMonth": "30 ਦਿਨ ਜੋੜੋ",
+        "downgradeLater": "ਮੌਜੂਦਾ ਪਲਾਨ ਖਤਮ ਹੋਣ 'ਤੇ ਉਪਲਬਧ"
       }
     }
   },

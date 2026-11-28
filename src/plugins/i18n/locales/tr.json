@@ -2475,7 +2475,9 @@
           "globalDistribution": "Küresel Dağıtım",
           "unlimitedBandwidth": "Sınırsız Bant Genişliği"
         },
-        "customizable": "Özelleştirilebilir"
+        "customizable": "Özelleştirilebilir",
+        "addMonth": "30 gün ekle",
+        "downgradeLater": "Mevcut planınız bittiğinde kullanılabilir"
       }
     }
   },

@@ -2475,7 +2475,9 @@
           "globalDistribution": "全球分布",
           "unlimitedBandwidth": "无限带宽"
         },
-        "customizable": "可定制"
+        "customizable": "可定制",
+        "addMonth": "增加 30 天",
+        "downgradeLater": "当前套餐结束后可用"
       }
     }
   },

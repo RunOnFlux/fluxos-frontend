@@ -2475,7 +2475,9 @@
           "globalDistribution": "Panyebaran Global",
           "unlimitedBandwidth": "Bandwidth Tanpa Watesan"
         },
-        "customizable": "Bisa Disesuaikan"
+        "customizable": "Bisa Disesuaikan",
+        "addMonth": "Tambah 30 dina",
+        "downgradeLater": "Kasedhiya sawise paket saiki rampung"
       }
     }
   },

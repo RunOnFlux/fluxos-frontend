@@ -2475,7 +2475,9 @@
           "globalDistribution": "글로벌 유통",
           "unlimitedBandwidth": "무제한 대역폭"
         },
-        "customizable": "맞춤형"
+        "customizable": "맞춤형",
+        "addMonth": "30일 추가",
+        "downgradeLater": "현재 플랜이 끝나면 사용할 수 있습니다"
       }
     }
   },

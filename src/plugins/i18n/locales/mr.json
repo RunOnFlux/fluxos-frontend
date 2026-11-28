@@ -2475,7 +2475,9 @@
           "globalDistribution": "जागतिक वितरण",
           "unlimitedBandwidth": "अमर्यादित बँडविड्थ"
         },
-        "customizable": "सानुकूल करण्यायोग्य"
+        "customizable": "सानुकूल करण्यायोग्य",
+        "addMonth": "30 दिवस जोडा",
+        "downgradeLater": "सध्याचा प्लॅन संपल्यावर उपलब्ध"
       }
     }
   },

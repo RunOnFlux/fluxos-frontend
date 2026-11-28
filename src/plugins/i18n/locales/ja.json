@@ -2475,7 +2475,9 @@
           "globalDistribution": "世界的な分布",
           "unlimitedBandwidth": "無制限の帯域幅"
         },
-        "customizable": "カスタマイズ可能"
+        "customizable": "カスタマイズ可能",
+        "addMonth": "30日追加",
+        "downgradeLater": "現在のプラン終了後に利用できます"
       }
     }
   },

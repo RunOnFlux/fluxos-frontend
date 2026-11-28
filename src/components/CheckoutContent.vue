@@ -205,7 +205,10 @@
                   <VIcon icon="mdi-wallet" class="me-2" />
                   {{ t('components.checkoutContent.fluxPay') }}
                 </VTab>
-                <VTab value="cryptocom">
+                <VTab
+                  v-if="!isEarlyRenewal"
+                  value="cryptocom"
+                >
                   <VIcon icon="mdi-credit-card-multiple" class="me-2" />
                   {{ t('components.checkoutContent.cryptoCom') }}
                 </VTab>
@@ -540,6 +543,7 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, watch } from 'vue'
 import { useFluxStore } from '@/stores/flux'
+import { useFluxDrive } from '@/composables/useFluxDrive'
 import { useSnackbar } from '@/composables/useSnackbar'
 import { useAnalytics } from '@/plugins/metrics/composables/useAnalytics'
 import ClipboardJS from 'clipboard'
@@ -680,6 +684,34 @@ const SSPLogoThemeImg = computed(() => {
 const loading = ref(true)
 const selectedPlan = ref(null)
 const activePaymentMethod = ref(props.gateway)
+
+// Renewing a plan that is still running (Flux Pay is prepaid; Crypto.com renews by itself).
+// The backend adds the new 30 days after the current period, so no days are lost.
+const { hasActiveSubscription, paymentGateway } = useFluxDrive()
+const isEarlyRenewal = computed(() =>
+  props.actionType === 'renew' && hasActiveSubscription.value && paymentGateway.value !== 'cryptocom',
+)
+
+// period_end (unix seconds) of the user's current subscription, or 0 when unknown.
+const fetchSubscriptionPeriodEnd = async auth => {
+  try {
+    const response = await fetch('https://api.fluxdrive.runonflux.io/api/v1/subscriptions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        action: 'READ',
+        zelid: auth.zelid || fluxStore.zelid,
+        signature: auth.signature || '',
+        loginPhrase: auth.loginPhrase || '',
+      }),
+    })
+    const result = await response.json()
+
+    return Number(result?.period_end) || 0
+  } catch {
+    return 0
+  }
+}
 
 // Separate loading states for each payment method
 const initializingFluxPayment = ref(false)
@@ -1512,6 +1544,10 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
         hasPeriodEnd: !!initialReadResult.period_end,
         hasSubscriptionExpired: hasSubscriptionExpired,
         periodEnd: initialReadResult.period_end,
+
+        // A plan that is still running has no expired error to clear: an early renewal is
+        // confirmed once the subscription's period_end moves past this one instead.
+        runningPeriodEnd: hasSubscriptionExpired ? null : await fetchSubscriptionPeriodEnd(auth),
       }
 
       console.log('📸 Initial /read state captured:', {
@@ -1842,7 +1878,14 @@ const monitorPayment = async (paymentId, subId, paymentAddr, paymentType = 'flux
               return // Continue monitoring, will retry in next interval
             }
 
-            if (initialReadState && initialReadState.hasSubscriptionExpired && !hasSubscriptionExpiredNow) {
+            const extended = !!(
+              initialReadState &&
+              !initialReadState.hasSubscriptionExpired &&
+              initialReadState.runningPeriodEnd &&
+              (await fetchSubscriptionPeriodEnd(auth)) > initialReadState.runningPeriodEnd
+            )
+
+            if (extended || (initialReadState && initialReadState.hasSubscriptionExpired && !hasSubscriptionExpiredNow)) {
               // Success: Had subscription expired error before, now it's gone (renewed)
               console.log('✅ Renewal confirmed - subscription expired error with period_end disappeared!')
               console.log('Previous state: error =', initialReadState.hasError, ', period_end =', initialReadState.periodEnd)

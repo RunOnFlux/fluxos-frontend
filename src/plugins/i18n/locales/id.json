@@ -2475,7 +2475,9 @@
           "globalDistribution": "Distribusi Global",
           "unlimitedBandwidth": "Bandwidth Tidak Terbatas"
         },
-        "customizable": "Dapat disesuaikan"
+        "customizable": "Dapat disesuaikan",
+        "addMonth": "Tambah 30 hari",
+        "downgradeLater": "Tersedia setelah paket saat ini berakhir"
       }
     }
   },

@@ -2475,7 +2475,9 @@
           "globalDistribution": "التوزيع العالمي",
           "unlimitedBandwidth": "عرض النطاق الترددي غير محدود"
         },
-        "customizable": "قابلة للتخصيص"
+        "customizable": "قابلة للتخصيص",
+        "addMonth": "إضافة 30 يومًا",
+        "downgradeLater": "متاح عند انتهاء خطتك الحالية"
       }
     }
   },

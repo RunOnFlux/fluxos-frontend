@@ -2475,7 +2475,9 @@
           "globalDistribution": "वैश्विक वितरण",
           "unlimitedBandwidth": "असीमित बैंडविड्थ"
         },
-        "customizable": "अनुकूलन"
+        "customizable": "अनुकूलन",
+        "addMonth": "30 दिन जोड़ें",
+        "downgradeLater": "आपका मौजूदा प्लान खत्म होने पर उपलब्ध"
       }
     }
   },

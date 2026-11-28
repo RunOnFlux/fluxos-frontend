@@ -2475,7 +2475,9 @@
           "globalDistribution": "Phân phối toàn cầu",
           "unlimitedBandwidth": "Băng thông không giới hạn"
         },
-        "customizable": "Có thể tùy chỉnh"
+        "customizable": "Có thể tùy chỉnh",
+        "addMonth": "Thêm 30 ngày",
+        "downgradeLater": "Dùng được khi gói hiện tại kết thúc"
       }
     }
   },
