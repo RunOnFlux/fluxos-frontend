@@ -2475,7 +2475,9 @@
           "globalDistribution": "গ্লোবাল ডিস্ট্রিবিউশন",
           "unlimitedBandwidth": "সীমাহীন ব্যান্ডউইথ"
         },
-        "customizable": "কাস্টমাইজযোগ্য"
+        "customizable": "কাস্টমাইজযোগ্য",
+        "addMonth": "৩০ দিন যোগ করুন",
+        "downgradeLater": "বর্তমান প্ল্যান শেষ হলে পাওয়া যাবে"
       }
     }
   },

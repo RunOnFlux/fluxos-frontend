@@ -82,6 +82,25 @@
             <VIcon start>mdi-cancel</VIcon>
             {{ t('pages.fluxDrive.cancel') }}
           </VBtn>
+          <template v-else-if="getPlanStatus(plan.id) === 'current' && canRenewEarly">
+            <div class="text-caption text-success text-center mb-1">
+              <VIcon size="14">mdi-check</VIcon>
+              {{ t('components.fluxDrive.pricingPlans.current') }}
+            </div>
+            <VBtn
+              block
+              color="primary"
+              variant="flat"
+              size="large"
+              class="plan-btn"
+              :loading="subscribing && selectedPlan === plan.id"
+              :disabled="subscribing"
+              @click="emit('selectPlan', plan.id, 'renew')"
+            >
+              <VIcon start>mdi-calendar-plus</VIcon>
+              {{ t('components.fluxDrive.pricingPlans.addMonth') }}
+            </VBtn>
+          </template>
           <VBtn
             v-else-if="getPlanStatus(plan.id) === 'current'"
             block
@@ -108,6 +127,12 @@
             <VIcon start>{{ getButtonIcon(plan) }}</VIcon>
             {{ getButtonConfig(plan).text }}
           </VBtn>
+          <div
+            v-if="isLoggedIn && getPlanStatus(plan.id) === 'downgrade' && hasActiveSubscription"
+            class="text-caption text-medium-emphasis text-center mt-1"
+          >
+            {{ t('components.fluxDrive.pricingPlans.downgradeLater') }}
+          </div>
         </div>
       </div>
     </div>
@@ -138,6 +163,12 @@ const {
   getPlanStatus,
   paymentGateway,
 } = useFluxDrive()
+
+// A Flux Pay plan is prepaid for 30 days; paying again while it runs adds 30 days after the
+// current period. Crypto.com (and old Stripe) plans renew by themselves.
+const canRenewEarly = computed(() =>
+  hasActiveSubscription.value && paymentGateway.value !== 'cryptocom' && paymentGateway.value !== 'stripe',
+)
 
 // Get button configuration based on plan status
 const getButtonConfig = plan => {

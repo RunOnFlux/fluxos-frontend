@@ -2475,7 +2475,9 @@
           "globalDistribution": "Distribution mondiale",
           "unlimitedBandwidth": "Bande passante illimitée"
         },
-        "customizable": "Personnalisable"
+        "customizable": "Personnalisable",
+        "addMonth": "Ajouter 30 jours",
+        "downgradeLater": "Disponible à la fin de votre offre actuelle"
       }
     }
   },

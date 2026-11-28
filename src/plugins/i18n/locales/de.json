@@ -2475,7 +2475,9 @@
           "globalDistribution": "Globaler Vertrieb",
           "unlimitedBandwidth": "Unbegrenzte Bandbreite"
         },
-        "customizable": "Anpassbar"
+        "customizable": "Anpassbar",
+        "addMonth": "30 Tage hinzufügen",
+        "downgradeLater": "Verfügbar, sobald dein aktueller Plan endet"
       }
     }
   },

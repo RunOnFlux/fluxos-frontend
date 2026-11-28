@@ -2529,7 +2529,9 @@
           "globalDistribution": "Global Distribution",
           "unlimitedBandwidth": "Unlimited Bandwidth"
         },
-        "customizable": "Customizable"
+        "customizable": "Customizable",
+        "addMonth": "Add 30 days",
+        "downgradeLater": "Available once your current plan ends"
       },
       "expiryEmail": {
         "title": "Expiry Reminders",
